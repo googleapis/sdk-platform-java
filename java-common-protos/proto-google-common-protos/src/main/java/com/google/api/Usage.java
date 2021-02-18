@@ -145,6 +145,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   * For Google APIs, a Terms of Service requirement must be included here.
+   * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+   * Other Google APIs should include
+   * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+   * included based on the business needs.
    * </pre>
    *
    * <code>repeated string requirements = 1;</code>
@@ -161,6 +166,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   * For Google APIs, a Terms of Service requirement must be included here.
+   * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+   * Other Google APIs should include
+   * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+   * included based on the business needs.
    * </pre>
    *
    * <code>repeated string requirements = 1;</code>
@@ -177,6 +187,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   * For Google APIs, a Terms of Service requirement must be included here.
+   * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+   * Other Google APIs should include
+   * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+   * included based on the business needs.
    * </pre>
    *
    * <code>repeated string requirements = 1;</code>
@@ -194,6 +209,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   * For Google APIs, a Terms of Service requirement must be included here.
+   * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+   * Other Google APIs should include
+   * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+   * included based on the business needs.
    * </pre>
    *
    * <code>repeated string requirements = 1;</code>
@@ -757,6 +777,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -773,6 +798,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -789,6 +819,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -806,6 +841,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -823,6 +863,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -847,6 +892,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -870,6 +920,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -890,6 +945,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>
@@ -909,6 +969,11 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     * For Google APIs, a Terms of Service requirement must be included here.
+     * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+     * Other Google APIs should include
+     * "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+     * included based on the business needs.
      * </pre>
      *
      * <code>repeated string requirements = 1;</code>

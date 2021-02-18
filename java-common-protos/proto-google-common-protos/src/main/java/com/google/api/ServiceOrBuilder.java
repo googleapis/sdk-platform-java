@@ -27,41 +27,6 @@ public interface ServiceOrBuilder
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
-   * </pre>
-   *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-   *
-   * @return Whether the configVersion field is set.
-   */
-  boolean hasConfigVersion();
-  /**
-   *
-   *
-   * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
-   * </pre>
-   *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-   *
-   * @return The configVersion.
-   */
-  com.google.protobuf.UInt32Value getConfigVersion();
-  /**
-   *
-   *
-   * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
-   * </pre>
-   *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-   */
-  com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder();
-
-  /**
-   *
-   *
-   * <pre>
    * The service name, which is a DNS-like logical identifier for the
    * service, such as `calendar.googleapis.com`. The service name
    * typically goes through DNS verification to make sure the owner
@@ -88,37 +53,6 @@ public interface ServiceOrBuilder
    * @return The bytes for name.
    */
   com.google.protobuf.ByteString getNameBytes();
-
-  /**
-   *
-   *
-   * <pre>
-   * A unique ID for a specific instance of this message, typically assigned
-   * by the client for tracking purpose. Must be no longer than 63 characters
-   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
-   * empty, the server may choose to generate one instead.
-   * </pre>
-   *
-   * <code>string id = 33;</code>
-   *
-   * @return The id.
-   */
-  java.lang.String getId();
-  /**
-   *
-   *
-   * <pre>
-   * A unique ID for a specific instance of this message, typically assigned
-   * by the client for tracking purpose. Must be no longer than 63 characters
-   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
-   * empty, the server may choose to generate one instead.
-   * </pre>
-   *
-   * <code>string id = 33;</code>
-   *
-   * @return The bytes for id.
-   */
-  com.google.protobuf.ByteString getIdBytes();
 
   /**
    *
@@ -169,6 +103,37 @@ public interface ServiceOrBuilder
    * @return The bytes for producerProjectId.
    */
   com.google.protobuf.ByteString getProducerProjectIdBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * A unique ID for a specific instance of this message, typically assigned
+   * by the client for tracking purpose. Must be no longer than 63 characters
+   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
+   * empty, the server may choose to generate one instead.
+   * </pre>
+   *
+   * <code>string id = 33;</code>
+   *
+   * @return The id.
+   */
+  java.lang.String getId();
+  /**
+   *
+   *
+   * <pre>
+   * A unique ID for a specific instance of this message, typically assigned
+   * by the client for tracking purpose. Must be no longer than 63 characters
+   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
+   * empty, the server may choose to generate one instead.
+   * </pre>
+   *
+   * <code>string id = 33;</code>
+   *
+   * @return The bytes for id.
+   */
+  com.google.protobuf.ByteString getIdBytes();
 
   /**
    *
@@ -1072,4 +1037,39 @@ public interface ServiceOrBuilder
    * <code>.google.api.SourceInfo source_info = 37;</code>
    */
   com.google.api.SourceInfoOrBuilder getSourceInfoOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated. The service config compiler always sets this field to `3`.
+   * </pre>
+   *
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   *
+   * @return Whether the configVersion field is set.
+   */
+  boolean hasConfigVersion();
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated. The service config compiler always sets this field to `3`.
+   * </pre>
+   *
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   *
+   * @return The configVersion.
+   */
+  com.google.protobuf.UInt32Value getConfigVersion();
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated. The service config compiler always sets this field to `3`.
+   * </pre>
+   *
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   */
+  com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder();
 }

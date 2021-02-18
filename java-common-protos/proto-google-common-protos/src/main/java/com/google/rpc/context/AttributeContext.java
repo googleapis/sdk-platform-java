@@ -5708,7 +5708,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service receives the first byte of
+     * The timestamp when the `destination` service receives the last byte of
      * the request.
      * </pre>
      *
@@ -5721,7 +5721,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service receives the first byte of
+     * The timestamp when the `destination` service receives the last byte of
      * the request.
      * </pre>
      *
@@ -5734,7 +5734,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service receives the first byte of
+     * The timestamp when the `destination` service receives the last byte of
      * the request.
      * </pre>
      *
@@ -6478,7 +6478,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service receives the first byte of
+     * The timestamp when the `destination` service receives the last byte of
      * the request.
      * </pre>
      *
@@ -6494,7 +6494,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service receives the first byte of
+     * The timestamp when the `destination` service receives the last byte of
      * the request.
      * </pre>
      *
@@ -6510,7 +6510,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service receives the first byte of
+     * The timestamp when the `destination` service receives the last byte of
      * the request.
      * </pre>
      *
@@ -8081,7 +8081,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8096,7 +8096,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8115,7 +8115,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8138,7 +8138,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8158,7 +8158,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8182,7 +8182,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8203,7 +8203,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8218,7 +8218,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8235,7 +8235,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service receives the first byte of
+       * The timestamp when the `destination` service receives the last byte of
        * the request.
        * </pre>
        *
@@ -8887,7 +8887,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service generates the first byte of
+     * The timestamp when the `destination` service sends the last byte of
      * the response.
      * </pre>
      *
@@ -8900,7 +8900,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service generates the first byte of
+     * The timestamp when the `destination` service sends the last byte of
      * the response.
      * </pre>
      *
@@ -8913,13 +8913,57 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service generates the first byte of
+     * The timestamp when the `destination` service sends the last byte of
      * the response.
      * </pre>
      *
      * <code>.google.protobuf.Timestamp time = 4;</code>
      */
     com.google.protobuf.TimestampOrBuilder getTimeOrBuilder();
+
+    /**
+     *
+     *
+     * <pre>
+     * The length of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     *
+     * @return Whether the backendLatency field is set.
+     */
+    boolean hasBackendLatency();
+    /**
+     *
+     *
+     * <pre>
+     * The length of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     *
+     * @return The backendLatency.
+     */
+    com.google.protobuf.Duration getBackendLatency();
+    /**
+     *
+     *
+     * <pre>
+     * The length of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     */
+    com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder();
   }
   /**
    *
@@ -9009,6 +9053,21 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
                 if (subBuilder != null) {
                   subBuilder.mergeFrom(time_);
                   time_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 42:
+              {
+                com.google.protobuf.Duration.Builder subBuilder = null;
+                if (backendLatency_ != null) {
+                  subBuilder = backendLatency_.toBuilder();
+                }
+                backendLatency_ =
+                    input.readMessage(com.google.protobuf.Duration.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(backendLatency_);
+                  backendLatency_ = subBuilder.buildPartial();
                 }
 
                 break;
@@ -9207,7 +9266,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service generates the first byte of
+     * The timestamp when the `destination` service sends the last byte of
      * the response.
      * </pre>
      *
@@ -9223,7 +9282,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service generates the first byte of
+     * The timestamp when the `destination` service sends the last byte of
      * the response.
      * </pre>
      *
@@ -9239,7 +9298,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The timestamp when the `destination` service generates the first byte of
+     * The timestamp when the `destination` service sends the last byte of
      * the response.
      * </pre>
      *
@@ -9248,6 +9307,63 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
       return getTime();
+    }
+
+    public static final int BACKEND_LATENCY_FIELD_NUMBER = 5;
+    private com.google.protobuf.Duration backendLatency_;
+    /**
+     *
+     *
+     * <pre>
+     * The length of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     *
+     * @return Whether the backendLatency field is set.
+     */
+    @java.lang.Override
+    public boolean hasBackendLatency() {
+      return backendLatency_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The length of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     *
+     * @return The backendLatency.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Duration getBackendLatency() {
+      return backendLatency_ == null
+          ? com.google.protobuf.Duration.getDefaultInstance()
+          : backendLatency_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The length of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder() {
+      return getBackendLatency();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -9274,6 +9390,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           output, internalGetHeaders(), HeadersDefaultEntryHolder.defaultEntry, 3);
       if (time_ != null) {
         output.writeMessage(4, getTime());
+      }
+      if (backendLatency_ != null) {
+        output.writeMessage(5, getBackendLatency());
       }
       unknownFields.writeTo(output);
     }
@@ -9303,6 +9422,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       if (time_ != null) {
         size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getTime());
       }
+      if (backendLatency_ != null) {
+        size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getBackendLatency());
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -9326,6 +9448,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       if (hasTime()) {
         if (!getTime().equals(other.getTime())) return false;
       }
+      if (hasBackendLatency() != other.hasBackendLatency()) return false;
+      if (hasBackendLatency()) {
+        if (!getBackendLatency().equals(other.getBackendLatency())) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -9348,6 +9474,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       if (hasTime()) {
         hash = (37 * hash) + TIME_FIELD_NUMBER;
         hash = (53 * hash) + getTime().hashCode();
+      }
+      if (hasBackendLatency()) {
+        hash = (37 * hash) + BACKEND_LATENCY_FIELD_NUMBER;
+        hash = (53 * hash) + getBackendLatency().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -9528,6 +9658,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           time_ = null;
           timeBuilder_ = null;
         }
+        if (backendLatencyBuilder_ == null) {
+          backendLatency_ = null;
+        } else {
+          backendLatency_ = null;
+          backendLatencyBuilder_ = null;
+        }
         return this;
       }
 
@@ -9564,6 +9700,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           result.time_ = time_;
         } else {
           result.time_ = timeBuilder_.build();
+        }
+        if (backendLatencyBuilder_ == null) {
+          result.backendLatency_ = backendLatency_;
+        } else {
+          result.backendLatency_ = backendLatencyBuilder_.build();
         }
         onBuilt();
         return result;
@@ -9626,6 +9767,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableHeaders().mergeFrom(other.internalGetHeaders());
         if (other.hasTime()) {
           mergeTime(other.getTime());
+        }
+        if (other.hasBackendLatency()) {
+          mergeBackendLatency(other.getBackendLatency());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9946,7 +10090,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -9961,7 +10105,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -9980,7 +10124,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10003,7 +10147,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10023,7 +10167,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10047,7 +10191,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10068,7 +10212,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10083,7 +10227,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10100,7 +10244,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The timestamp when the `destination` service generates the first byte of
+       * The timestamp when the `destination` service sends the last byte of
        * the response.
        * </pre>
        *
@@ -10121,6 +10265,218 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           time_ = null;
         }
         return timeBuilder_;
+      }
+
+      private com.google.protobuf.Duration backendLatency_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Duration,
+              com.google.protobuf.Duration.Builder,
+              com.google.protobuf.DurationOrBuilder>
+          backendLatencyBuilder_;
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       *
+       * @return Whether the backendLatency field is set.
+       */
+      public boolean hasBackendLatency() {
+        return backendLatencyBuilder_ != null || backendLatency_ != null;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       *
+       * @return The backendLatency.
+       */
+      public com.google.protobuf.Duration getBackendLatency() {
+        if (backendLatencyBuilder_ == null) {
+          return backendLatency_ == null
+              ? com.google.protobuf.Duration.getDefaultInstance()
+              : backendLatency_;
+        } else {
+          return backendLatencyBuilder_.getMessage();
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      public Builder setBackendLatency(com.google.protobuf.Duration value) {
+        if (backendLatencyBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          backendLatency_ = value;
+          onChanged();
+        } else {
+          backendLatencyBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      public Builder setBackendLatency(com.google.protobuf.Duration.Builder builderForValue) {
+        if (backendLatencyBuilder_ == null) {
+          backendLatency_ = builderForValue.build();
+          onChanged();
+        } else {
+          backendLatencyBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      public Builder mergeBackendLatency(com.google.protobuf.Duration value) {
+        if (backendLatencyBuilder_ == null) {
+          if (backendLatency_ != null) {
+            backendLatency_ =
+                com.google.protobuf.Duration.newBuilder(backendLatency_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            backendLatency_ = value;
+          }
+          onChanged();
+        } else {
+          backendLatencyBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      public Builder clearBackendLatency() {
+        if (backendLatencyBuilder_ == null) {
+          backendLatency_ = null;
+          onChanged();
+        } else {
+          backendLatency_ = null;
+          backendLatencyBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      public com.google.protobuf.Duration.Builder getBackendLatencyBuilder() {
+
+        onChanged();
+        return getBackendLatencyFieldBuilder().getBuilder();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      public com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder() {
+        if (backendLatencyBuilder_ != null) {
+          return backendLatencyBuilder_.getMessageOrBuilder();
+        } else {
+          return backendLatency_ == null
+              ? com.google.protobuf.Duration.getDefaultInstance()
+              : backendLatency_;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The length of time it takes the backend service to fully respond to a
+       * request. Measured from when the destination service starts to send the
+       * request to the backend until when the destination service receives the
+       * complete response from the backend.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration backend_latency = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Duration,
+              com.google.protobuf.Duration.Builder,
+              com.google.protobuf.DurationOrBuilder>
+          getBackendLatencyFieldBuilder() {
+        if (backendLatencyBuilder_ == null) {
+          backendLatencyBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.protobuf.Duration,
+                  com.google.protobuf.Duration.Builder,
+                  com.google.protobuf.DurationOrBuilder>(
+                  getBackendLatency(), getParentForChildren(), isClean());
+          backendLatency_ = null;
+        }
+        return backendLatencyBuilder_;
       }
 
       @java.lang.Override
@@ -10339,6 +10695,316 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
     java.lang.String getLabelsOrThrow(java.lang.String key);
+
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     *
+     * @return The uid.
+     */
+    java.lang.String getUid();
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     *
+     * @return The bytes for uid.
+     */
+    com.google.protobuf.ByteString getUidBytes();
+
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    int getAnnotationsCount();
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    boolean containsAnnotations(java.lang.String key);
+    /** Use {@link #getAnnotationsMap()} instead. */
+    @java.lang.Deprecated
+    java.util.Map<java.lang.String, java.lang.String> getAnnotations();
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap();
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    java.lang.String getAnnotationsOrDefault(java.lang.String key, java.lang.String defaultValue);
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    java.lang.String getAnnotationsOrThrow(java.lang.String key);
+
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     *
+     * @return The displayName.
+     */
+    java.lang.String getDisplayName();
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     *
+     * @return The bytes for displayName.
+     */
+    com.google.protobuf.ByteString getDisplayNameBytes();
+
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     *
+     * @return Whether the createTime field is set.
+     */
+    boolean hasCreateTime();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     *
+     * @return The createTime.
+     */
+    com.google.protobuf.Timestamp getCreateTime();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder();
+
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     *
+     * @return Whether the updateTime field is set.
+     */
+    boolean hasUpdateTime();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     *
+     * @return The updateTime.
+     */
+    com.google.protobuf.Timestamp getUpdateTime();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder();
+
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     *
+     * @return Whether the deleteTime field is set.
+     */
+    boolean hasDeleteTime();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     *
+     * @return The deleteTime.
+     */
+    com.google.protobuf.Timestamp getDeleteTime();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder();
+
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     *
+     * @return The etag.
+     */
+    java.lang.String getEtag();
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     *
+     * @return The bytes for etag.
+     */
+    com.google.protobuf.ByteString getEtagBytes();
+
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     *
+     * @return The location.
+     */
+    java.lang.String getLocation();
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     *
+     * @return The bytes for location.
+     */
+    com.google.protobuf.ByteString getLocationBytes();
   }
   /**
    *
@@ -10365,6 +11031,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       service_ = "";
       name_ = "";
       type_ = "";
+      uid_ = "";
+      displayName_ = "";
+      etag_ = "";
+      location_ = "";
     }
 
     @java.lang.Override
@@ -10433,6 +11103,94 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
                 labels_.getMutableMap().put(labels__.getKey(), labels__.getValue());
                 break;
               }
+            case 42:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                uid_ = s;
+                break;
+              }
+            case 50:
+              {
+                if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                  annotations_ =
+                      com.google.protobuf.MapField.newMapField(
+                          AnnotationsDefaultEntryHolder.defaultEntry);
+                  mutable_bitField0_ |= 0x00000002;
+                }
+                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> annotations__ =
+                    input.readMessage(
+                        AnnotationsDefaultEntryHolder.defaultEntry.getParserForType(),
+                        extensionRegistry);
+                annotations_.getMutableMap().put(annotations__.getKey(), annotations__.getValue());
+                break;
+              }
+            case 58:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                displayName_ = s;
+                break;
+              }
+            case 66:
+              {
+                com.google.protobuf.Timestamp.Builder subBuilder = null;
+                if (createTime_ != null) {
+                  subBuilder = createTime_.toBuilder();
+                }
+                createTime_ =
+                    input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(createTime_);
+                  createTime_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 74:
+              {
+                com.google.protobuf.Timestamp.Builder subBuilder = null;
+                if (updateTime_ != null) {
+                  subBuilder = updateTime_.toBuilder();
+                }
+                updateTime_ =
+                    input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(updateTime_);
+                  updateTime_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 82:
+              {
+                com.google.protobuf.Timestamp.Builder subBuilder = null;
+                if (deleteTime_ != null) {
+                  subBuilder = deleteTime_.toBuilder();
+                }
+                deleteTime_ =
+                    input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(deleteTime_);
+                  deleteTime_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 90:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                etag_ = s;
+                break;
+              }
+            case 98:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                location_ = s;
+                break;
+              }
             default:
               {
                 if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -10463,6 +11221,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       switch (number) {
         case 4:
           return internalGetLabels();
+        case 6:
+          return internalGetAnnotations();
         default:
           throw new RuntimeException("Invalid map field number: " + number);
       }
@@ -10754,6 +11514,489 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return map.get(key);
     }
 
+    public static final int UID_FIELD_NUMBER = 5;
+    private volatile java.lang.Object uid_;
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     *
+     * @return The uid.
+     */
+    @java.lang.Override
+    public java.lang.String getUid() {
+      java.lang.Object ref = uid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        uid_ = s;
+        return s;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     *
+     * @return The bytes for uid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getUidBytes() {
+      java.lang.Object ref = uid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        uid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ANNOTATIONS_FIELD_NUMBER = 6;
+
+    private static final class AnnotationsDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
+          com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
+              com.google.rpc.context.AttributeContextProto
+                  .internal_static_google_rpc_context_AttributeContext_Resource_AnnotationsEntry_descriptor,
+              com.google.protobuf.WireFormat.FieldType.STRING,
+              "",
+              com.google.protobuf.WireFormat.FieldType.STRING,
+              "");
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String> annotations_;
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        internalGetAnnotations() {
+      if (annotations_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            AnnotationsDefaultEntryHolder.defaultEntry);
+      }
+      return annotations_;
+    }
+
+    public int getAnnotationsCount() {
+      return internalGetAnnotations().getMap().size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    @java.lang.Override
+    public boolean containsAnnotations(java.lang.String key) {
+      if (key == null) {
+        throw new java.lang.NullPointerException();
+      }
+      return internalGetAnnotations().getMap().containsKey(key);
+    }
+    /** Use {@link #getAnnotationsMap()} instead. */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, java.lang.String> getAnnotations() {
+      return getAnnotationsMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    @java.lang.Override
+    public java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap() {
+      return internalGetAnnotations().getMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    @java.lang.Override
+    public java.lang.String getAnnotationsOrDefault(
+        java.lang.String key, java.lang.String defaultValue) {
+      if (key == null) {
+        throw new java.lang.NullPointerException();
+      }
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     * More info: https://kubernetes.io/docs/user-guide/annotations
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    @java.lang.Override
+    public java.lang.String getAnnotationsOrThrow(java.lang.String key) {
+      if (key == null) {
+        throw new java.lang.NullPointerException();
+      }
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public static final int DISPLAY_NAME_FIELD_NUMBER = 7;
+    private volatile java.lang.Object displayName_;
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     *
+     * @return The displayName.
+     */
+    @java.lang.Override
+    public java.lang.String getDisplayName() {
+      java.lang.Object ref = displayName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        displayName_ = s;
+        return s;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     *
+     * @return The bytes for displayName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getDisplayNameBytes() {
+      java.lang.Object ref = displayName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        displayName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CREATE_TIME_FIELD_NUMBER = 8;
+    private com.google.protobuf.Timestamp createTime_;
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     *
+     * @return Whether the createTime field is set.
+     */
+    @java.lang.Override
+    public boolean hasCreateTime() {
+      return createTime_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     *
+     * @return The createTime.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Timestamp getCreateTime() {
+      return createTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : createTime_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder() {
+      return getCreateTime();
+    }
+
+    public static final int UPDATE_TIME_FIELD_NUMBER = 9;
+    private com.google.protobuf.Timestamp updateTime_;
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     *
+     * @return Whether the updateTime field is set.
+     */
+    @java.lang.Override
+    public boolean hasUpdateTime() {
+      return updateTime_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     *
+     * @return The updateTime.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Timestamp getUpdateTime() {
+      return updateTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : updateTime_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder() {
+      return getUpdateTime();
+    }
+
+    public static final int DELETE_TIME_FIELD_NUMBER = 10;
+    private com.google.protobuf.Timestamp deleteTime_;
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     *
+     * @return Whether the deleteTime field is set.
+     */
+    @java.lang.Override
+    public boolean hasDeleteTime() {
+      return deleteTime_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     *
+     * @return The deleteTime.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Timestamp getDeleteTime() {
+      return deleteTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : deleteTime_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder() {
+      return getDeleteTime();
+    }
+
+    public static final int ETAG_FIELD_NUMBER = 11;
+    private volatile java.lang.Object etag_;
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     *
+     * @return The etag.
+     */
+    @java.lang.Override
+    public java.lang.String getEtag() {
+      java.lang.Object ref = etag_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        etag_ = s;
+        return s;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     *
+     * @return The bytes for etag.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getEtagBytes() {
+      java.lang.Object ref = etag_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        etag_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LOCATION_FIELD_NUMBER = 12;
+    private volatile java.lang.Object location_;
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     *
+     * @return The location.
+     */
+    @java.lang.Override
+    public java.lang.String getLocation() {
+      java.lang.Object ref = location_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        location_ = s;
+        return s;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     *
+     * @return The bytes for location.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getLocationBytes() {
+      java.lang.Object ref = location_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        location_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
 
     @java.lang.Override
@@ -10779,6 +12022,29 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
           output, internalGetLabels(), LabelsDefaultEntryHolder.defaultEntry, 4);
+      if (!getUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uid_);
+      }
+      com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
+          output, internalGetAnnotations(), AnnotationsDefaultEntryHolder.defaultEntry, 6);
+      if (!getDisplayNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, displayName_);
+      }
+      if (createTime_ != null) {
+        output.writeMessage(8, getCreateTime());
+      }
+      if (updateTime_ != null) {
+        output.writeMessage(9, getUpdateTime());
+      }
+      if (deleteTime_ != null) {
+        output.writeMessage(10, getDeleteTime());
+      }
+      if (!getEtagBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 11, etag_);
+      }
+      if (!getLocationBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 12, location_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -10807,6 +12073,37 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
                 .build();
         size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, labels__);
       }
+      if (!getUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uid_);
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
+          internalGetAnnotations().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String> annotations__ =
+            AnnotationsDefaultEntryHolder.defaultEntry
+                .newBuilderForType()
+                .setKey(entry.getKey())
+                .setValue(entry.getValue())
+                .build();
+        size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, annotations__);
+      }
+      if (!getDisplayNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, displayName_);
+      }
+      if (createTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, getCreateTime());
+      }
+      if (updateTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream.computeMessageSize(9, getUpdateTime());
+      }
+      if (deleteTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream.computeMessageSize(10, getDeleteTime());
+      }
+      if (!getEtagBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, etag_);
+      }
+      if (!getLocationBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, location_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -10827,6 +12124,23 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       if (!getName().equals(other.getName())) return false;
       if (!getType().equals(other.getType())) return false;
       if (!internalGetLabels().equals(other.internalGetLabels())) return false;
+      if (!getUid().equals(other.getUid())) return false;
+      if (!internalGetAnnotations().equals(other.internalGetAnnotations())) return false;
+      if (!getDisplayName().equals(other.getDisplayName())) return false;
+      if (hasCreateTime() != other.hasCreateTime()) return false;
+      if (hasCreateTime()) {
+        if (!getCreateTime().equals(other.getCreateTime())) return false;
+      }
+      if (hasUpdateTime() != other.hasUpdateTime()) return false;
+      if (hasUpdateTime()) {
+        if (!getUpdateTime().equals(other.getUpdateTime())) return false;
+      }
+      if (hasDeleteTime() != other.hasDeleteTime()) return false;
+      if (hasDeleteTime()) {
+        if (!getDeleteTime().equals(other.getDeleteTime())) return false;
+      }
+      if (!getEtag().equals(other.getEtag())) return false;
+      if (!getLocation().equals(other.getLocation())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -10848,6 +12162,30 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         hash = (37 * hash) + LABELS_FIELD_NUMBER;
         hash = (53 * hash) + internalGetLabels().hashCode();
       }
+      hash = (37 * hash) + UID_FIELD_NUMBER;
+      hash = (53 * hash) + getUid().hashCode();
+      if (!internalGetAnnotations().getMap().isEmpty()) {
+        hash = (37 * hash) + ANNOTATIONS_FIELD_NUMBER;
+        hash = (53 * hash) + internalGetAnnotations().hashCode();
+      }
+      hash = (37 * hash) + DISPLAY_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getDisplayName().hashCode();
+      if (hasCreateTime()) {
+        hash = (37 * hash) + CREATE_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getCreateTime().hashCode();
+      }
+      if (hasUpdateTime()) {
+        hash = (37 * hash) + UPDATE_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getUpdateTime().hashCode();
+      }
+      if (hasDeleteTime()) {
+        hash = (37 * hash) + DELETE_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getDeleteTime().hashCode();
+      }
+      hash = (37 * hash) + ETAG_FIELD_NUMBER;
+      hash = (53 * hash) + getEtag().hashCode();
+      hash = (37 * hash) + LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + getLocation().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10975,6 +12313,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         switch (number) {
           case 4:
             return internalGetLabels();
+          case 6:
+            return internalGetAnnotations();
           default:
             throw new RuntimeException("Invalid map field number: " + number);
         }
@@ -10985,6 +12325,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         switch (number) {
           case 4:
             return internalGetMutableLabels();
+          case 6:
+            return internalGetMutableAnnotations();
           default:
             throw new RuntimeException("Invalid map field number: " + number);
         }
@@ -11024,6 +12366,33 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         type_ = "";
 
         internalGetMutableLabels().clear();
+        uid_ = "";
+
+        internalGetMutableAnnotations().clear();
+        displayName_ = "";
+
+        if (createTimeBuilder_ == null) {
+          createTime_ = null;
+        } else {
+          createTime_ = null;
+          createTimeBuilder_ = null;
+        }
+        if (updateTimeBuilder_ == null) {
+          updateTime_ = null;
+        } else {
+          updateTime_ = null;
+          updateTimeBuilder_ = null;
+        }
+        if (deleteTimeBuilder_ == null) {
+          deleteTime_ = null;
+        } else {
+          deleteTime_ = null;
+          deleteTimeBuilder_ = null;
+        }
+        etag_ = "";
+
+        location_ = "";
+
         return this;
       }
 
@@ -11057,6 +12426,27 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         result.type_ = type_;
         result.labels_ = internalGetLabels();
         result.labels_.makeImmutable();
+        result.uid_ = uid_;
+        result.annotations_ = internalGetAnnotations();
+        result.annotations_.makeImmutable();
+        result.displayName_ = displayName_;
+        if (createTimeBuilder_ == null) {
+          result.createTime_ = createTime_;
+        } else {
+          result.createTime_ = createTimeBuilder_.build();
+        }
+        if (updateTimeBuilder_ == null) {
+          result.updateTime_ = updateTime_;
+        } else {
+          result.updateTime_ = updateTimeBuilder_.build();
+        }
+        if (deleteTimeBuilder_ == null) {
+          result.deleteTime_ = deleteTime_;
+        } else {
+          result.deleteTime_ = deleteTimeBuilder_.build();
+        }
+        result.etag_ = etag_;
+        result.location_ = location_;
         onBuilt();
         return result;
       }
@@ -11122,6 +12512,32 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           onChanged();
         }
         internalGetMutableLabels().mergeFrom(other.internalGetLabels());
+        if (!other.getUid().isEmpty()) {
+          uid_ = other.uid_;
+          onChanged();
+        }
+        internalGetMutableAnnotations().mergeFrom(other.internalGetAnnotations());
+        if (!other.getDisplayName().isEmpty()) {
+          displayName_ = other.displayName_;
+          onChanged();
+        }
+        if (other.hasCreateTime()) {
+          mergeCreateTime(other.getCreateTime());
+        }
+        if (other.hasUpdateTime()) {
+          mergeUpdateTime(other.getUpdateTime());
+        }
+        if (other.hasDeleteTime()) {
+          mergeDeleteTime(other.getDeleteTime());
+        }
+        if (!other.getEtag().isEmpty()) {
+          etag_ = other.etag_;
+          onChanged();
+        }
+        if (!other.getLocation().isEmpty()) {
+          location_ = other.location_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -11698,6 +13114,1262 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder putAllLabels(java.util.Map<java.lang.String, java.lang.String> values) {
         internalGetMutableLabels().getMutableMap().putAll(values);
+        return this;
+      }
+
+      private java.lang.Object uid_ = "";
+      /**
+       *
+       *
+       * <pre>
+       * The unique identifier of the resource. UID is unique in the time
+       * and space for this resource within the scope of the service. It is
+       * typically generated by the server on successful creation of a resource
+       * and must not be changed. UID is used to uniquely identify resources
+       * with resource name reuses. This should be a UUID4.
+       * </pre>
+       *
+       * <code>string uid = 5;</code>
+       *
+       * @return The uid.
+       */
+      public java.lang.String getUid() {
+        java.lang.Object ref = uid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          uid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The unique identifier of the resource. UID is unique in the time
+       * and space for this resource within the scope of the service. It is
+       * typically generated by the server on successful creation of a resource
+       * and must not be changed. UID is used to uniquely identify resources
+       * with resource name reuses. This should be a UUID4.
+       * </pre>
+       *
+       * <code>string uid = 5;</code>
+       *
+       * @return The bytes for uid.
+       */
+      public com.google.protobuf.ByteString getUidBytes() {
+        java.lang.Object ref = uid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          uid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The unique identifier of the resource. UID is unique in the time
+       * and space for this resource within the scope of the service. It is
+       * typically generated by the server on successful creation of a resource
+       * and must not be changed. UID is used to uniquely identify resources
+       * with resource name reuses. This should be a UUID4.
+       * </pre>
+       *
+       * <code>string uid = 5;</code>
+       *
+       * @param value The uid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUid(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        uid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The unique identifier of the resource. UID is unique in the time
+       * and space for this resource within the scope of the service. It is
+       * typically generated by the server on successful creation of a resource
+       * and must not be changed. UID is used to uniquely identify resources
+       * with resource name reuses. This should be a UUID4.
+       * </pre>
+       *
+       * <code>string uid = 5;</code>
+       *
+       * @return This builder for chaining.
+       */
+      public Builder clearUid() {
+
+        uid_ = getDefaultInstance().getUid();
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The unique identifier of the resource. UID is unique in the time
+       * and space for this resource within the scope of the service. It is
+       * typically generated by the server on successful creation of a resource
+       * and must not be changed. UID is used to uniquely identify resources
+       * with resource name reuses. This should be a UUID4.
+       * </pre>
+       *
+       * <code>string uid = 5;</code>
+       *
+       * @param value The bytes for uid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUidBytes(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
+        uid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String> annotations_;
+
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+          internalGetAnnotations() {
+        if (annotations_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+              AnnotationsDefaultEntryHolder.defaultEntry);
+        }
+        return annotations_;
+      }
+
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+          internalGetMutableAnnotations() {
+        onChanged();
+        ;
+        if (annotations_ == null) {
+          annotations_ =
+              com.google.protobuf.MapField.newMapField(AnnotationsDefaultEntryHolder.defaultEntry);
+        }
+        if (!annotations_.isMutable()) {
+          annotations_ = annotations_.copy();
+        }
+        return annotations_;
+      }
+
+      public int getAnnotationsCount() {
+        return internalGetAnnotations().getMap().size();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      @java.lang.Override
+      public boolean containsAnnotations(java.lang.String key) {
+        if (key == null) {
+          throw new java.lang.NullPointerException();
+        }
+        return internalGetAnnotations().getMap().containsKey(key);
+      }
+      /** Use {@link #getAnnotationsMap()} instead. */
+      @java.lang.Override
+      @java.lang.Deprecated
+      public java.util.Map<java.lang.String, java.lang.String> getAnnotations() {
+        return getAnnotationsMap();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      @java.lang.Override
+      public java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap() {
+        return internalGetAnnotations().getMap();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      @java.lang.Override
+      public java.lang.String getAnnotationsOrDefault(
+          java.lang.String key, java.lang.String defaultValue) {
+        if (key == null) {
+          throw new java.lang.NullPointerException();
+        }
+        java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+        return map.containsKey(key) ? map.get(key) : defaultValue;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      @java.lang.Override
+      public java.lang.String getAnnotationsOrThrow(java.lang.String key) {
+        if (key == null) {
+          throw new java.lang.NullPointerException();
+        }
+        java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+        if (!map.containsKey(key)) {
+          throw new java.lang.IllegalArgumentException();
+        }
+        return map.get(key);
+      }
+
+      public Builder clearAnnotations() {
+        internalGetMutableAnnotations().getMutableMap().clear();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      public Builder removeAnnotations(java.lang.String key) {
+        if (key == null) {
+          throw new java.lang.NullPointerException();
+        }
+        internalGetMutableAnnotations().getMutableMap().remove(key);
+        return this;
+      }
+      /** Use alternate mutation accessors instead. */
+      @java.lang.Deprecated
+      public java.util.Map<java.lang.String, java.lang.String> getMutableAnnotations() {
+        return internalGetMutableAnnotations().getMutableMap();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      public Builder putAnnotations(java.lang.String key, java.lang.String value) {
+        if (key == null) {
+          throw new java.lang.NullPointerException();
+        }
+        if (value == null) {
+          throw new java.lang.NullPointerException();
+        }
+        internalGetMutableAnnotations().getMutableMap().put(key, value);
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       * More info: https://kubernetes.io/docs/user-guide/annotations
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      public Builder putAllAnnotations(java.util.Map<java.lang.String, java.lang.String> values) {
+        internalGetMutableAnnotations().getMutableMap().putAll(values);
+        return this;
+      }
+
+      private java.lang.Object displayName_ = "";
+      /**
+       *
+       *
+       * <pre>
+       * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+       * </pre>
+       *
+       * <code>string display_name = 7;</code>
+       *
+       * @return The displayName.
+       */
+      public java.lang.String getDisplayName() {
+        java.lang.Object ref = displayName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          displayName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+       * </pre>
+       *
+       * <code>string display_name = 7;</code>
+       *
+       * @return The bytes for displayName.
+       */
+      public com.google.protobuf.ByteString getDisplayNameBytes() {
+        java.lang.Object ref = displayName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          displayName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+       * </pre>
+       *
+       * <code>string display_name = 7;</code>
+       *
+       * @param value The displayName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDisplayName(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        displayName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+       * </pre>
+       *
+       * <code>string display_name = 7;</code>
+       *
+       * @return This builder for chaining.
+       */
+      public Builder clearDisplayName() {
+
+        displayName_ = getDefaultInstance().getDisplayName();
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+       * </pre>
+       *
+       * <code>string display_name = 7;</code>
+       *
+       * @param value The bytes for displayName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDisplayNameBytes(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
+        displayName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.Timestamp createTime_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp,
+              com.google.protobuf.Timestamp.Builder,
+              com.google.protobuf.TimestampOrBuilder>
+          createTimeBuilder_;
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       *
+       * @return Whether the createTime field is set.
+       */
+      public boolean hasCreateTime() {
+        return createTimeBuilder_ != null || createTime_ != null;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       *
+       * @return The createTime.
+       */
+      public com.google.protobuf.Timestamp getCreateTime() {
+        if (createTimeBuilder_ == null) {
+          return createTime_ == null
+              ? com.google.protobuf.Timestamp.getDefaultInstance()
+              : createTime_;
+        } else {
+          return createTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      public Builder setCreateTime(com.google.protobuf.Timestamp value) {
+        if (createTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          createTime_ = value;
+          onChanged();
+        } else {
+          createTimeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      public Builder setCreateTime(com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (createTimeBuilder_ == null) {
+          createTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          createTimeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      public Builder mergeCreateTime(com.google.protobuf.Timestamp value) {
+        if (createTimeBuilder_ == null) {
+          if (createTime_ != null) {
+            createTime_ =
+                com.google.protobuf.Timestamp.newBuilder(createTime_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            createTime_ = value;
+          }
+          onChanged();
+        } else {
+          createTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      public Builder clearCreateTime() {
+        if (createTimeBuilder_ == null) {
+          createTime_ = null;
+          onChanged();
+        } else {
+          createTime_ = null;
+          createTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getCreateTimeBuilder() {
+
+        onChanged();
+        return getCreateTimeFieldBuilder().getBuilder();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder() {
+        if (createTimeBuilder_ != null) {
+          return createTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return createTime_ == null
+              ? com.google.protobuf.Timestamp.getDefaultInstance()
+              : createTime_;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was created. This may
+       * be either the time creation was initiated or when it was completed.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp create_time = 8;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp,
+              com.google.protobuf.Timestamp.Builder,
+              com.google.protobuf.TimestampOrBuilder>
+          getCreateTimeFieldBuilder() {
+        if (createTimeBuilder_ == null) {
+          createTimeBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.protobuf.Timestamp,
+                  com.google.protobuf.Timestamp.Builder,
+                  com.google.protobuf.TimestampOrBuilder>(
+                  getCreateTime(), getParentForChildren(), isClean());
+          createTime_ = null;
+        }
+        return createTimeBuilder_;
+      }
+
+      private com.google.protobuf.Timestamp updateTime_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp,
+              com.google.protobuf.Timestamp.Builder,
+              com.google.protobuf.TimestampOrBuilder>
+          updateTimeBuilder_;
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       *
+       * @return Whether the updateTime field is set.
+       */
+      public boolean hasUpdateTime() {
+        return updateTimeBuilder_ != null || updateTime_ != null;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       *
+       * @return The updateTime.
+       */
+      public com.google.protobuf.Timestamp getUpdateTime() {
+        if (updateTimeBuilder_ == null) {
+          return updateTime_ == null
+              ? com.google.protobuf.Timestamp.getDefaultInstance()
+              : updateTime_;
+        } else {
+          return updateTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      public Builder setUpdateTime(com.google.protobuf.Timestamp value) {
+        if (updateTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          updateTime_ = value;
+          onChanged();
+        } else {
+          updateTimeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      public Builder setUpdateTime(com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (updateTimeBuilder_ == null) {
+          updateTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          updateTimeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      public Builder mergeUpdateTime(com.google.protobuf.Timestamp value) {
+        if (updateTimeBuilder_ == null) {
+          if (updateTime_ != null) {
+            updateTime_ =
+                com.google.protobuf.Timestamp.newBuilder(updateTime_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            updateTime_ = value;
+          }
+          onChanged();
+        } else {
+          updateTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      public Builder clearUpdateTime() {
+        if (updateTimeBuilder_ == null) {
+          updateTime_ = null;
+          onChanged();
+        } else {
+          updateTime_ = null;
+          updateTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getUpdateTimeBuilder() {
+
+        onChanged();
+        return getUpdateTimeFieldBuilder().getBuilder();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder() {
+        if (updateTimeBuilder_ != null) {
+          return updateTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return updateTime_ == null
+              ? com.google.protobuf.Timestamp.getDefaultInstance()
+              : updateTime_;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was last updated. Any
+       * change to the resource made by users must refresh this value.
+       * Changes to a resource made by the service should refresh this value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp update_time = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp,
+              com.google.protobuf.Timestamp.Builder,
+              com.google.protobuf.TimestampOrBuilder>
+          getUpdateTimeFieldBuilder() {
+        if (updateTimeBuilder_ == null) {
+          updateTimeBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.protobuf.Timestamp,
+                  com.google.protobuf.Timestamp.Builder,
+                  com.google.protobuf.TimestampOrBuilder>(
+                  getUpdateTime(), getParentForChildren(), isClean());
+          updateTime_ = null;
+        }
+        return updateTimeBuilder_;
+      }
+
+      private com.google.protobuf.Timestamp deleteTime_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp,
+              com.google.protobuf.Timestamp.Builder,
+              com.google.protobuf.TimestampOrBuilder>
+          deleteTimeBuilder_;
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       *
+       * @return Whether the deleteTime field is set.
+       */
+      public boolean hasDeleteTime() {
+        return deleteTimeBuilder_ != null || deleteTime_ != null;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       *
+       * @return The deleteTime.
+       */
+      public com.google.protobuf.Timestamp getDeleteTime() {
+        if (deleteTimeBuilder_ == null) {
+          return deleteTime_ == null
+              ? com.google.protobuf.Timestamp.getDefaultInstance()
+              : deleteTime_;
+        } else {
+          return deleteTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      public Builder setDeleteTime(com.google.protobuf.Timestamp value) {
+        if (deleteTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          deleteTime_ = value;
+          onChanged();
+        } else {
+          deleteTimeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      public Builder setDeleteTime(com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (deleteTimeBuilder_ == null) {
+          deleteTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          deleteTimeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      public Builder mergeDeleteTime(com.google.protobuf.Timestamp value) {
+        if (deleteTimeBuilder_ == null) {
+          if (deleteTime_ != null) {
+            deleteTime_ =
+                com.google.protobuf.Timestamp.newBuilder(deleteTime_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            deleteTime_ = value;
+          }
+          onChanged();
+        } else {
+          deleteTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      public Builder clearDeleteTime() {
+        if (deleteTimeBuilder_ == null) {
+          deleteTime_ = null;
+          onChanged();
+        } else {
+          deleteTime_ = null;
+          deleteTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getDeleteTimeBuilder() {
+
+        onChanged();
+        return getDeleteTimeFieldBuilder().getBuilder();
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder() {
+        if (deleteTimeBuilder_ != null) {
+          return deleteTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return deleteTime_ == null
+              ? com.google.protobuf.Timestamp.getDefaultInstance()
+              : deleteTime_;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. The timestamp when the resource was deleted.
+       * If the resource is not deleted, this must be empty.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp,
+              com.google.protobuf.Timestamp.Builder,
+              com.google.protobuf.TimestampOrBuilder>
+          getDeleteTimeFieldBuilder() {
+        if (deleteTimeBuilder_ == null) {
+          deleteTimeBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.protobuf.Timestamp,
+                  com.google.protobuf.Timestamp.Builder,
+                  com.google.protobuf.TimestampOrBuilder>(
+                  getDeleteTime(), getParentForChildren(), isClean());
+          deleteTime_ = null;
+        }
+        return deleteTimeBuilder_;
+      }
+
+      private java.lang.Object etag_ = "";
+      /**
+       *
+       *
+       * <pre>
+       * Output only. An opaque value that uniquely identifies a version or
+       * generation of a resource. It can be used to confirm that the client
+       * and server agree on the ordering of a resource being written.
+       * </pre>
+       *
+       * <code>string etag = 11;</code>
+       *
+       * @return The etag.
+       */
+      public java.lang.String getEtag() {
+        java.lang.Object ref = etag_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          etag_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. An opaque value that uniquely identifies a version or
+       * generation of a resource. It can be used to confirm that the client
+       * and server agree on the ordering of a resource being written.
+       * </pre>
+       *
+       * <code>string etag = 11;</code>
+       *
+       * @return The bytes for etag.
+       */
+      public com.google.protobuf.ByteString getEtagBytes() {
+        java.lang.Object ref = etag_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          etag_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. An opaque value that uniquely identifies a version or
+       * generation of a resource. It can be used to confirm that the client
+       * and server agree on the ordering of a resource being written.
+       * </pre>
+       *
+       * <code>string etag = 11;</code>
+       *
+       * @param value The etag to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEtag(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        etag_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. An opaque value that uniquely identifies a version or
+       * generation of a resource. It can be used to confirm that the client
+       * and server agree on the ordering of a resource being written.
+       * </pre>
+       *
+       * <code>string etag = 11;</code>
+       *
+       * @return This builder for chaining.
+       */
+      public Builder clearEtag() {
+
+        etag_ = getDefaultInstance().getEtag();
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Output only. An opaque value that uniquely identifies a version or
+       * generation of a resource. It can be used to confirm that the client
+       * and server agree on the ordering of a resource being written.
+       * </pre>
+       *
+       * <code>string etag = 11;</code>
+       *
+       * @param value The bytes for etag to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEtagBytes(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
+        etag_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object location_ = "";
+      /**
+       *
+       *
+       * <pre>
+       * Immutable. The location of the resource. The location encoding is
+       * specific to the service provider, and new encoding may be introduced
+       * as the service evolves.
+       * For Google Cloud products, the encoding is what is used by Google Cloud
+       * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+       * semantics of `location` is identical to the
+       * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+       * </pre>
+       *
+       * <code>string location = 12;</code>
+       *
+       * @return The location.
+       */
+      public java.lang.String getLocation() {
+        java.lang.Object ref = location_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          location_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Immutable. The location of the resource. The location encoding is
+       * specific to the service provider, and new encoding may be introduced
+       * as the service evolves.
+       * For Google Cloud products, the encoding is what is used by Google Cloud
+       * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+       * semantics of `location` is identical to the
+       * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+       * </pre>
+       *
+       * <code>string location = 12;</code>
+       *
+       * @return The bytes for location.
+       */
+      public com.google.protobuf.ByteString getLocationBytes() {
+        java.lang.Object ref = location_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          location_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Immutable. The location of the resource. The location encoding is
+       * specific to the service provider, and new encoding may be introduced
+       * as the service evolves.
+       * For Google Cloud products, the encoding is what is used by Google Cloud
+       * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+       * semantics of `location` is identical to the
+       * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+       * </pre>
+       *
+       * <code>string location = 12;</code>
+       *
+       * @param value The location to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocation(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        location_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Immutable. The location of the resource. The location encoding is
+       * specific to the service provider, and new encoding may be introduced
+       * as the service evolves.
+       * For Google Cloud products, the encoding is what is used by Google Cloud
+       * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+       * semantics of `location` is identical to the
+       * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+       * </pre>
+       *
+       * <code>string location = 12;</code>
+       *
+       * @return This builder for chaining.
+       */
+      public Builder clearLocation() {
+
+        location_ = getDefaultInstance().getLocation();
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Immutable. The location of the resource. The location encoding is
+       * specific to the service provider, and new encoding may be introduced
+       * as the service evolves.
+       * For Google Cloud products, the encoding is what is used by Google Cloud
+       * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+       * semantics of `location` is identical to the
+       * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+       * </pre>
+       *
+       * <code>string location = 12;</code>
+       *
+       * @param value The bytes for location to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocationBytes(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
+        location_ = value;
+        onChanged();
         return this;
       }
 
