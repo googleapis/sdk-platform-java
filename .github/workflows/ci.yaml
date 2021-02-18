@@ -60,10 +60,14 @@ jobs:
           name: artifacts
           path: ~/artifacts
 
-      - name: Tests Coverage
+      - name: Generate Code Coverage Report
+        run: bazel coverage //src/test/... --combined_report=lcov
+
+      - name: Code Coverage
         uses: codecov/codecov-action@v1
         with:
           name: actions ${{ matrix.java }}
+          files: ./bazel-out/_coverage_report.dat
 
   license-header:
     runs-on: ubuntu-latest

@@ -8,9 +8,12 @@ codecov:
     range: 70...100
 
     status:
-      # Learn more at https://codecov.io/docs#yaml_default_commit_status
       project: true
+        default:
+          informational: true
       patch: true
+        default:
+          informatioanl: true
       changes: false
 
   comment:
