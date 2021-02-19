@@ -49,7 +49,8 @@ jobs:
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
 
       - name: Save Unit Test Artifacts
-        if: ${{ failure() }}
+        #post-if: ${{ failure() }}
+        post-if: ${{ success() }}
         uses: actions/upload-artifact@v2
         with:
           name: Unit Test Artifacts
@@ -60,7 +61,7 @@ jobs:
       - name: Integration Tests
         run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:kms //test/integration:logging //test/integration:redis //test/integration:library --noshow_progress
       - name: Save Integration Test Artifacts
-        #if: ${{ failure() }}
+        post-if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: Integration Test Artifacts
