@@ -48,20 +48,27 @@ jobs:
       - name: Unit Tests
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
 
-      - name: Integration Tests
-        run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:kms //test/integration:logging //test/integration:redis //test/integration:library --noshow_progress
-      - name: Save Test Artifacts
+      - name: Save Unit Test Artifacts
         #if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: Test artifacts
-          path: bazel-out/*/testlogs/{src/test/java/com/google/api/generator/gapic/composer/*,test/integration/*}/test.log
+          path: bazel-out/*/testlogs/src/test/java/com/google/api/generator/{engine/ast,gapic/composer/}*/test.log
+
+      - name: Integration Tests
+        run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:kms //test/integration:logging //test/integration:redis //test/integration:library --noshow_progress
+      - name: Save Integration Test Artifacts
+        #if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test artifacts
+          path: bazel-out/*/testlogs/test/integration/*/test.log
 
       - name: Java Linter
         run: bazel --batch  build //:google_java_format_verification
 
       - name: Save Linter Artifacts
-        if: ${{ failure() }}
+        #if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: Linter artifacts
