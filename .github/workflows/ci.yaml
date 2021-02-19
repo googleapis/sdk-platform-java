@@ -48,11 +48,10 @@ jobs:
       - name: Unit Tests
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
 
-      - name: Save Unit Test Artifacts
-        #if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
         with:
-          name: Unit Test Artifacts
+          name: unit-test-artifacts
           path: |
             bazel-out/*/testlogs/src/test/java/com/google/api/generator/engine/ast/*/test.log
             bazel-out/*/testlogs/src/test/java/com/google/api/generator/gapic/composer/*/test.log
