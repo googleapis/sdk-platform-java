@@ -41,7 +41,7 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
-import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -95,7 +94,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(GapicContext ignored, Service service) {
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getMockServiceImplClassName(service);
     GapicClass.Kind kind = Kind.TEST;

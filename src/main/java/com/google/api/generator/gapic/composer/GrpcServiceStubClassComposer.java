@@ -55,7 +55,7 @@ import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
-import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -116,7 +116,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(GapicContext ignored, Service service) {
     String pakkage = service.pakkage() + ".stub";
     TypeStore typeStore = createDynamicTypes(service, pakkage);
     String className = ClassNames.getGrpcServiceStubClassName(service);

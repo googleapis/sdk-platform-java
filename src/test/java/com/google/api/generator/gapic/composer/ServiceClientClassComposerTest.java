@@ -53,7 +53,7 @@ public class ServiceClientClassComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-    GapicContext gapicContext =
+    GapicContext context =
         GapicContext.builder()
             .setMessages(messageTypes)
             .setResourceNames(resourceNames)
@@ -62,9 +62,7 @@ public class ServiceClientClassComposerTest {
             .build();
 
     Service echoProtoService = services.get(0);
-    GapicClass clazz =
-        ServiceClientClassComposer.instance()
-            .generate(echoProtoService, gapicContext, resourceNames);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -86,7 +84,7 @@ public class ServiceClientClassComposerTest {
         Parser.parseService(
             fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-    GapicContext gapicContext =
+    GapicContext context =
         GapicContext.builder()
             .setMessages(messageTypes)
             .setResourceNames(resourceNames)
@@ -94,8 +92,7 @@ public class ServiceClientClassComposerTest {
             .setHelperResourceNames(outputResourceNames)
             .build();
     Service protoService = services.get(0);
-    GapicClass clazz =
-        ServiceClientClassComposer.instance().generate(protoService, gapicContext, resourceNames);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

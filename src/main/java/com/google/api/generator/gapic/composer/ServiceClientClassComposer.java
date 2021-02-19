@@ -96,7 +96,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
-public class ServiceClientClassComposer {
+public class ServiceClientClassComposer implements ClassComposer {
   private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String CALLABLE_NAME_PATTERN = "%sCallable";
@@ -121,8 +121,9 @@ public class ServiceClientClassComposer {
     return INSTANCE;
   }
 
-  public GapicClass generate(
-      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
+  @Override
+  public GapicClass generate(GapicContext context, Service service) {
+    Map<String, ResourceName> resourceNames = context.helperResourceNames();
     Map<String, Message> messageTypes = context.messages();
     TypeStore typeStore = createTypes(service, messageTypes);
     String className = ClassNames.getServiceClientClassName(service);
