@@ -49,11 +49,13 @@ jobs:
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
 
       - name: Save Unit Test Artifacts
-        #if: ${{ failure() }}
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Test artifacts
-          path: bazel-out/*/testlogs/src/test/java/com/google/api/generator/{engine/ast,gapic/composer/}*/test.log
+          name: Unit Test Artifacts
+          path: |
+            bazel-out/*/testlogs/src/test/java/com/google/api/generator/engine/ast/*/test.log
+            bazel-out/*/testlogs/src/test/java/com/google/api/generator/gapic/composer/*/test.log
 
       - name: Integration Tests
         run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:kms //test/integration:logging //test/integration:redis //test/integration:library --noshow_progress
@@ -61,7 +63,7 @@ jobs:
         #if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Test artifacts
+          name: Integration Test Artifacts
           path: bazel-out/*/testlogs/test/integration/*/test.log
 
       - name: Java Linter
@@ -71,7 +73,7 @@ jobs:
         #if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Linter artifacts
+          name: Linter Artifacts
           path: bazel-bin/google_java_format_verification.txt
 
   license-header:

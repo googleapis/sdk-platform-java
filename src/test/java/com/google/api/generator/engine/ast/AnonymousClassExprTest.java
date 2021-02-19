@@ -25,7 +25,6 @@ import org.junit.Test;
 public class AnonymousClassExprTest {
   @Test
   public void validAnonymousClass_basic() {
-    assertTrue(false);
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
