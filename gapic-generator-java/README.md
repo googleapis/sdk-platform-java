@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/googleapis/gapic-generator-java/branch/master/graph/badge.svg?token=3RUU37GX9U)](https://codecov.io/gh/googleapis/gapic-generator-java)
 # API Client Generator for Java
 
 A generator for protocol buffer described APIs for and in Java.
