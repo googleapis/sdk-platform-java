@@ -53,8 +53,8 @@ jobs:
         with:
           name: unit-test-artifacts
           path: |
-            bazel-out/*/testlogs/src/test/java/com/google/api/generator/engine/ast/*/test.log
-            bazel-out/*/testlogs/src/test/java/com/google/api/generator/gapic/composer/*/test.log
+            ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-out/*/testlogs/src/test/java/com/google/api/generator/engine/ast/*/test.log
+            ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-out/*/testlogs/src/test/java/com/google/api/generator/gapic/composer/*/test.log
 
       - name: Integration Tests
         run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:kms //test/integration:logging //test/integration:redis //test/integration:library --noshow_progress
