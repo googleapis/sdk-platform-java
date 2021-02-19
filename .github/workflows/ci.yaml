@@ -46,12 +46,8 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Unit Tests
-        run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
-
-      - name: Save Unit Test Artifacts
-        #post-if: ${{ failure() }}
-        post-if: ${{ success() }}
         uses: actions/upload-artifact@v2
+        run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
         with:
           name: Unit Test Artifacts
           path: |
