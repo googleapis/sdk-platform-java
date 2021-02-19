@@ -15,10 +15,9 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.gapic.model.GapicClass;
-import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import java.util.Map;
 
 public interface ClassComposer {
-  GapicClass generate(Service service, Map<String, Message> messageTypes);
+  GapicClass generate(GapicContext context, Service serivce);
 }

@@ -61,7 +61,7 @@ public class ServiceClientTestClassComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-    GapicContext gapicContext =
+    GapicContext context =
         GapicContext.builder()
             .setServices(services)
             .setMessages(messageTypes)
@@ -71,8 +71,7 @@ public class ServiceClientTestClassComposerTest {
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        ServiceClientTestClassComposer.instance()
-            .generate(echoProtoService, gapicContext, resourceNames);
+        ServiceClientTestClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -99,7 +98,7 @@ public class ServiceClientTestClassComposerTest {
             Optional.empty(),
             outputResourceNames);
 
-    GapicContext gapicContext =
+    GapicContext context =
         GapicContext.builder()
             .setServices(services)
             .setMessages(messageTypes)
@@ -109,8 +108,7 @@ public class ServiceClientTestClassComposerTest {
 
     Service testingProtoService = services.get(0);
     GapicClass clazz =
-        ServiceClientTestClassComposer.instance()
-            .generate(testingProtoService, gapicContext, resourceNames);
+        ServiceClientTestClassComposer.instance().generate(context, testingProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -142,7 +140,7 @@ public class ServiceClientTestClassComposerTest {
             Optional.empty(),
             outputResourceNames);
 
-    GapicContext gapicContext =
+    GapicContext context =
         GapicContext.builder()
             .setServices(services)
             .setMessages(messageTypes)
@@ -153,8 +151,7 @@ public class ServiceClientTestClassComposerTest {
     Service subscriptionService = services.get(1);
     assertEquals("Subscriber", subscriptionService.name());
     GapicClass clazz =
-        ServiceClientTestClassComposer.instance()
-            .generate(subscriptionService, gapicContext, resourceNames);
+        ServiceClientTestClassComposer.instance().generate(context, subscriptionService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -197,7 +194,7 @@ public class ServiceClientTestClassComposerTest {
             Optional.empty(),
             outputResourceNames);
 
-    GapicContext gapicContext =
+    GapicContext context =
         GapicContext.builder()
             .setServices(services)
             .setMessages(messageTypes)
@@ -206,9 +203,7 @@ public class ServiceClientTestClassComposerTest {
             .build();
 
     Service loggingService = services.get(0);
-    GapicClass clazz =
-        ServiceClientTestClassComposer.instance()
-            .generate(loggingService, gapicContext, resourceNames);
+    GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, loggingService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

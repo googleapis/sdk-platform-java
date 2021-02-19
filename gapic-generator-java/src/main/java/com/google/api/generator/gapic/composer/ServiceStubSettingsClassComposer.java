@@ -89,6 +89,7 @@ import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -117,8 +118,7 @@ import javax.annotation.Generated;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
-// TODO(miraleung): Refactor ClassComposer's interface.
-public class ServiceStubSettingsClassComposer {
+public class ServiceStubSettingsClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
   private static final String BATCHING_DESC_PATTERN = "%s_BATCHING_DESC";
@@ -159,11 +159,11 @@ public class ServiceStubSettingsClassComposer {
     return INSTANCE;
   }
 
-  public GapicClass generate(
-      Service service,
-      @Nullable GapicServiceConfig serviceConfig,
-      Map<String, Message> messageTypes) {
+  @Override
+  public GapicClass generate(GapicContext context, Service service) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
+    GapicServiceConfig serviceConfig = context.serviceConfig();
+    Map<String, Message> messageTypes = context.messages();
     String pakkage = String.format("%s.stub", service.pakkage());
     TypeStore typeStore = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> methodSettingsMemberVarExprs =

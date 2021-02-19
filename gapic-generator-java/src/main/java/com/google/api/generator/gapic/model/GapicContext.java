@@ -17,12 +17,12 @@ package com.google.api.generator.gapic.model;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.gapic.metadata.GapicMetadata;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -42,7 +42,7 @@ public abstract class GapicContext {
   // Ensures ordering for deterministic tests.
   public abstract ImmutableList<Service> mixinServices();
 
-  public abstract ImmutableSet<ResourceName> helperResourceNames();
+  public abstract ImmutableMap<String, ResourceName> helperResourceNames();
 
   public GapicMetadata gapicMetadata() {
     return gapicMetadata;
@@ -87,7 +87,14 @@ public abstract class GapicContext {
 
     public abstract Builder setMixinServices(List<Service> mixinServices);
 
-    public abstract Builder setHelperResourceNames(Set<ResourceName> helperResourceNames);
+    public Builder setHelperResourceNames(Set<ResourceName> helperResourceNames) {
+      return setHelperResourceNames(
+          helperResourceNames.stream()
+              .map(r -> r)
+              .collect(Collectors.toMap(r -> r.resourceTypeString(), r -> r)));
+    }
+
+    abstract Builder setHelperResourceNames(Map<String, ResourceName> helperResourceNames);
 
     public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
 

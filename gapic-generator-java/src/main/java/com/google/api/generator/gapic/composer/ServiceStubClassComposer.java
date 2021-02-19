@@ -36,6 +36,7 @@ import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
@@ -60,7 +61,8 @@ public class ServiceStubClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> messageTypes) {
+  public GapicClass generate(GapicContext context, Service service) {
+    Map<String, Message> messageTypes = context.messages();
     TypeStore typeStore = createTypes(service, messageTypes);
     String className = ClassNames.getServiceStubClassName(service);
     GapicClass.Kind kind = Kind.STUB;
