@@ -14,60 +14,22 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static junit.framework.Assert.assertEquals;
-
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.showcase.v1beta1.EchoOuterClass;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import org.junit.Before;
 import org.junit.Test;
 
 public class GrpcServiceCallableFactoryClassComposerTest {
-  private ServiceDescriptor echoService;
-  private FileDescriptor echoFileDescriptor;
-
-  @Before
-  public void setUp() {
-    echoFileDescriptor = EchoOuterClass.getDescriptor();
-    echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
-  }
-
   @Test
   public void generateServiceClasses() {
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service echoProtoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         GrpcServiceCallableFactoryClassComposer.instance().generate(context, echoProtoService);
 

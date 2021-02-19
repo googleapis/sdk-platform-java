@@ -21,55 +21,17 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Utils;
-import com.google.logging.v2.LogEntryProto;
-import com.google.logging.v2.LoggingConfigProto;
-import com.google.logging.v2.LoggingMetricsProto;
-import com.google.logging.v2.LoggingProto;
-import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.pubsub.v1.PubsubProto;
-import com.google.showcase.v1beta1.EchoOuterClass;
-import com.google.showcase.v1beta1.TestingOuterClass;
-import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import org.junit.Test;
 
 public class ServiceClientTestClassComposerTest {
   @Test
   public void generateClientTest_echoClient() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
-
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setServices(services)
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service echoProtoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, echoProtoService);
 
@@ -83,30 +45,8 @@ public class ServiceClientTestClassComposerTest {
 
   @Test
   public void generateClientTest_testingClientResnameWithOnePatternWithNonSlashSepNames() {
-    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
-    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "Testing");
-
-    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            testingFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setServices(services)
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service testingProtoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseShowcaseTesting();
+    Service testingProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, testingProtoService);
 
@@ -120,35 +60,8 @@ public class ServiceClientTestClassComposerTest {
 
   @Test
   public void generateClientTest_pubSubPublisherClient() {
-    FileDescriptor serviceFileDescriptor = PubsubProto.getDescriptor();
-    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
-    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals("Publisher", serviceDescriptor.getName());
-
-    Map<String, ResourceName> resourceNames = new HashMap<>();
-    resourceNames.putAll(Parser.parseResourceNames(serviceFileDescriptor));
-    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
-
-    Map<String, Message> messageTypes = Parser.parseMessages(serviceFileDescriptor);
-
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            serviceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setServices(services)
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service subscriptionService = services.get(1);
+    GapicContext context = TestProtoLoaderUtil.parsePubSubPublisher();
+    Service subscriptionService = context.services().get(1);
     assertEquals("Subscriber", subscriptionService.name());
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, subscriptionService);
@@ -163,46 +76,8 @@ public class ServiceClientTestClassComposerTest {
 
   @Test
   public void generateClientTest_logging() {
-    FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
-    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
-
-    List<FileDescriptor> protoFiles =
-        Arrays.asList(
-            serviceFileDescriptor,
-            LogEntryProto.getDescriptor(),
-            LoggingConfigProto.getDescriptor(),
-            LoggingMetricsProto.getDescriptor());
-
-    Map<String, ResourceName> resourceNames = new HashMap<>();
-    Map<String, Message> messageTypes = new HashMap<>();
-    for (FileDescriptor fileDescriptor : protoFiles) {
-      resourceNames.putAll(Parser.parseResourceNames(fileDescriptor));
-      messageTypes.putAll(Parser.parseMessages(fileDescriptor));
-    }
-
-    // Additional resource names.
-    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
-    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
-
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            serviceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setServices(services)
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service loggingService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseLogging();
+    Service loggingService = context.services().get(0);
     GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, loggingService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
