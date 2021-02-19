@@ -51,7 +51,7 @@ jobs:
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
 
       - name: Integration Tests
-        run: bazel --batch test //test/integration:asset //test/integration:logging //test/integration:redis //test/integration:credentials --noshow_progress
+        run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:kms //test/integration:logging //test/integration:redis //test/integration:library --noshow_progress
 
       - name: Java Linter
         run: bazel --batch  build //:google_java_format_verification
