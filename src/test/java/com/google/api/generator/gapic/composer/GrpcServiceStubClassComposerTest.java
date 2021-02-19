@@ -14,57 +14,22 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static junit.framework.Assert.assertEquals;
-
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.pubsub.v1.PubsubProto;
-import com.google.showcase.v1beta1.EchoOuterClass;
-import com.google.showcase.v1beta1.TestingOuterClass;
-import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import org.junit.Test;
 
 public class GrpcServiceStubClassComposerTest {
   @Test
   public void generateGrpcServiceStubClass_simple() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
-
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service echoProtoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    Service echoProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
@@ -76,30 +41,8 @@ public class GrpcServiceStubClassComposerTest {
 
   @Test
   public void generateGrpcServiceStubClass_httpBindings() {
-    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
-    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "Testing");
-
-    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            testingFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service testingProtoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseShowcaseTesting();
+    Service testingProtoService = context.services().get(0);
     GapicClass clazz =
         GrpcServiceStubClassComposer.instance().generate(context, testingProtoService);
 
@@ -113,35 +56,8 @@ public class GrpcServiceStubClassComposerTest {
 
   @Test
   public void generateGrpcServiceStubClass_httpBindingsWithSubMessageFields() {
-    FileDescriptor serviceFileDescriptor = PubsubProto.getDescriptor();
-    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
-    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals("Publisher", serviceDescriptor.getName());
-
-    Map<String, ResourceName> resourceNames = new HashMap<>();
-    resourceNames.putAll(Parser.parseResourceNames(serviceFileDescriptor));
-    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
-
-    Map<String, Message> messageTypes = Parser.parseMessages(serviceFileDescriptor);
-
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            serviceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .build();
-
-    Service service = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parsePubSubPublisher();
+    Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();

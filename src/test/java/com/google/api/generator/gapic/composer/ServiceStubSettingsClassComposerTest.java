@@ -15,93 +15,25 @@
 package com.google.api.generator.gapic.composer;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.constants.ComposerConstants;
-import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.GapicServiceConfig;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
-import com.google.api.generator.gapic.protoparser.Parser;
-import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import com.google.logging.v2.LogEntryProto;
-import com.google.logging.v2.LoggingConfigProto;
-import com.google.logging.v2.LoggingMetricsProto;
-import com.google.logging.v2.LoggingProto;
-import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.pubsub.v1.PubsubProto;
-import com.google.showcase.v1beta1.EchoOuterClass;
-import google.cloud.CommonResources;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
 
   @Test
   public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
-    FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
-    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
-
-    List<FileDescriptor> protoFiles =
-        Arrays.asList(
-            serviceFileDescriptor,
-            LogEntryProto.getDescriptor(),
-            LoggingConfigProto.getDescriptor(),
-            LoggingMetricsProto.getDescriptor());
-
-    Map<String, ResourceName> resourceNames = new HashMap<>();
-    Map<String, Message> messageTypes = new HashMap<>();
-    for (FileDescriptor fileDescriptor : protoFiles) {
-      resourceNames.putAll(Parser.parseResourceNames(fileDescriptor));
-      messageTypes.putAll(Parser.parseMessages(fileDescriptor));
-    }
-
-    List<Service> services =
-        parseServices(serviceFileDescriptor, serviceDescriptor, messageTypes, resourceNames);
-
-    String filename = "logging_gapic.yaml";
-    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
-    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
-        BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
-    assertTrue(batchingSettingsOpt.isPresent());
-
-    String jsonFilename = "logging_grpc_service_config.json";
-    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
-    GapicServiceConfig config = configOpt.get();
-    config.setBatchingSettings(batchingSettingsOpt);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setServiceConfig(config)
-            .setHelperResourceNames(
-                resourceNames.values().stream().map(r -> r).collect(Collectors.toSet()))
-            .build();
-
-    Service protoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseLogging();
+    Service protoService = context.services().get(0);
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
@@ -116,44 +48,8 @@ public class ServiceStubSettingsClassComposerTest {
   @Test
   public void generateServiceStubSettingsClasses_batchingWithNonemptyResponses()
       throws IOException {
-    FileDescriptor serviceFileDescriptor = PubsubProto.getDescriptor();
-    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
-    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals("Publisher", serviceDescriptor.getName());
-
-    Map<String, ResourceName> resourceNames = new HashMap<>();
-    resourceNames.putAll(Parser.parseResourceNames(serviceFileDescriptor));
-    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
-
-    Map<String, Message> messageTypes = Parser.parseMessages(serviceFileDescriptor);
-
-    List<Service> services =
-        parseServices(serviceFileDescriptor, serviceDescriptor, messageTypes, resourceNames);
-
-    String filename = "pubsub_gapic.yaml";
-    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
-    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
-        BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
-    assertTrue(batchingSettingsOpt.isPresent());
-
-    String jsonFilename = "pubsub_grpc_service_config.json";
-    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
-    GapicServiceConfig config = configOpt.get();
-    config.setBatchingSettings(batchingSettingsOpt);
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setServiceConfig(config)
-            .setHelperResourceNames(
-                resourceNames.values().stream().map(r -> r).collect(Collectors.toSet()))
-            .build();
-
-    Service protoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parsePubSubPublisher();
+    Service protoService = context.services().get(0);
     assertEquals("Publisher", protoService.name());
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
@@ -167,32 +63,8 @@ public class ServiceStubSettingsClassComposerTest {
 
   @Test
   public void generateServiceStubSettingsClasses_basic() throws IOException {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoServiceDescriptor.getName(), "Echo");
-
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    List<Service> services =
-        parseServices(echoFileDescriptor, echoServiceDescriptor, messageTypes, resourceNames);
-
-    String jsonFilename = "showcase_grpc_service_config.json";
-    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
-    GapicServiceConfig config = configOpt.get();
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setServiceConfig(config)
-            .setHelperResourceNames(
-                resourceNames.values().stream().map(r -> r).collect(Collectors.toSet()))
-            .build();
-
-    Service echoProtoService = services.get(0);
+    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
 
@@ -202,15 +74,5 @@ public class ServiceStubSettingsClassComposerTest {
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  private static List<Service> parseServices(
-      FileDescriptor protoFileDescriptor,
-      ServiceDescriptor serviceDescriptor,
-      Map<String, Message> messageTypes,
-      Map<String, ResourceName> resourceNames) {
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    return Parser.parseService(
-        protoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
   }
 }
