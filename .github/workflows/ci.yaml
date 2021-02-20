@@ -58,6 +58,18 @@ jobs:
           path: ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-out/*/testlogs/*
           retention-days: 5
 
+      - name: Java Linter
+        run: bazel --batch  build //:google_java_format_verification
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          java-version: 8
+      - run: java -version
+
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
         run: bazel coverage  $(bazel query "src/test/..." | grep "Test$")  --combined_report=lcov
@@ -67,9 +79,6 @@ jobs:
         with:
           name: actions ${{ matrix.java }}
           files: ./bazel-out/_coverage/_coverage_report.dat
-
-      - name: Java Linter
-        run: bazel --batch  build //:google_java_format_verification
 
   license-header:
     runs-on: ubuntu-latest
