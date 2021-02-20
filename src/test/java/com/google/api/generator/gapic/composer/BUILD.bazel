@@ -95,7 +95,7 @@ TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
     name = "{0}_update".format(test_name),
     srcs = [
         "{0}.java".format(test_name),
-    ],
+    ] + COMMON_SRCS,
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",

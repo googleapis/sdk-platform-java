@@ -63,7 +63,8 @@ jobs:
           path: ~/artifacts
 
       - name: Generate Code Coverage Report
-        run: bazel coverage //src/test/... --combined_report=lcov
+        # Run only test targets, and not golden_update targets.
+        run: bazel coverage  $(bazel query "src/test/..." | grep "Test$")  --combined_report=lcov
 
       - name: Upload Code Coverage Report
         uses: codecov/codecov-action@v1
