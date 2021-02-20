@@ -60,12 +60,6 @@ jobs:
 
       - name: Java Linter
         run: bazel --batch  build //:google_java_format_verification
-      - uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: linter-artifacts
-          path: ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-bin/google_java_format_verification.txt
-          retention-days: 5
 
   license-header:
     runs-on: ubuntu-latest
