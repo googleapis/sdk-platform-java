@@ -27,7 +27,7 @@ public class PluginArgumentParser {
   // Synced to rules_java_gapic/java_gapic.bzl.
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
   @VisibleForTesting static final String KEY_GAPIC_CONFIG = "gapic-config";
-  @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "gapic-service-config";
+  @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "api-service-config";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
   private static final String GAPIC_YAML_FILE_ENDING = "gapic.yaml";
