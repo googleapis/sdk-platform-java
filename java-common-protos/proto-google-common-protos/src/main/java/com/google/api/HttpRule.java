@@ -531,6 +531,21 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>string get = 2;</code>
    *
+   * @return Whether the get field is set.
+   */
+  public boolean hasGet() {
+    return patternCase_ == 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
+   * </pre>
+   *
+   * <code>string get = 2;</code>
+   *
    * @return The get.
    */
   public java.lang.String getGet() {
@@ -579,6 +594,20 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PUT_FIELD_NUMBER = 3;
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PUT. Used for replacing a resource.
+   * </pre>
+   *
+   * <code>string put = 3;</code>
+   *
+   * @return Whether the put field is set.
+   */
+  public boolean hasPut() {
+    return patternCase_ == 3;
+  }
   /**
    *
    *
@@ -644,6 +673,20 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>string post = 4;</code>
    *
+   * @return Whether the post field is set.
+   */
+  public boolean hasPost() {
+    return patternCase_ == 4;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
+   * </pre>
+   *
+   * <code>string post = 4;</code>
+   *
    * @return The post.
    */
   public java.lang.String getPost() {
@@ -700,6 +743,20 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>string delete = 5;</code>
    *
+   * @return Whether the delete field is set.
+   */
+  public boolean hasDelete() {
+    return patternCase_ == 5;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP DELETE. Used for deleting a resource.
+   * </pre>
+   *
+   * <code>string delete = 5;</code>
+   *
    * @return The delete.
    */
   public java.lang.String getDelete() {
@@ -747,6 +804,20 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PATCH_FIELD_NUMBER = 6;
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PATCH. Used for updating a resource.
+   * </pre>
+   *
+   * <code>string patch = 6;</code>
+   *
+   * @return Whether the patch field is set.
+   */
+  public boolean hasPatch() {
+    return patternCase_ == 6;
+  }
   /**
    *
    *
@@ -1971,6 +2042,22 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>string get = 2;</code>
      *
+     * @return Whether the get field is set.
+     */
+    @java.lang.Override
+    public boolean hasGet() {
+      return patternCase_ == 2;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
+     * </pre>
+     *
+     * <code>string get = 2;</code>
+     *
      * @return The get.
      */
     @java.lang.Override
@@ -2085,6 +2172,21 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    /**
+     *
+     *
+     * <pre>
+     * Maps to HTTP PUT. Used for replacing a resource.
+     * </pre>
+     *
+     * <code>string put = 3;</code>
+     *
+     * @return Whether the put field is set.
+     */
+    @java.lang.Override
+    public boolean hasPut() {
+      return patternCase_ == 3;
+    }
     /**
      *
      *
@@ -2213,6 +2315,21 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>string post = 4;</code>
      *
+     * @return Whether the post field is set.
+     */
+    @java.lang.Override
+    public boolean hasPost() {
+      return patternCase_ == 4;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
+     * </pre>
+     *
+     * <code>string post = 4;</code>
+     *
      * @return The post.
      */
     @java.lang.Override
@@ -2332,6 +2449,21 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>string delete = 5;</code>
      *
+     * @return Whether the delete field is set.
+     */
+    @java.lang.Override
+    public boolean hasDelete() {
+      return patternCase_ == 5;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Maps to HTTP DELETE. Used for deleting a resource.
+     * </pre>
+     *
+     * <code>string delete = 5;</code>
+     *
      * @return The delete.
      */
     @java.lang.Override
@@ -2442,6 +2574,21 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    /**
+     *
+     *
+     * <pre>
+     * Maps to HTTP PATCH. Used for updating a resource.
+     * </pre>
+     *
+     * <code>string patch = 6;</code>
+     *
+     * @return Whether the patch field is set.
+     */
+    @java.lang.Override
+    public boolean hasPatch() {
+      return patternCase_ == 6;
+    }
     /**
      *
      *

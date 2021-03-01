@@ -179,6 +179,20 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>string header = 1;</code>
    *
+   * @return Whether the header field is set.
+   */
+  public boolean hasHeader() {
+    return inCase_ == 1;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies HTTP header name to extract JWT token.
+   * </pre>
+   *
+   * <code>string header = 1;</code>
+   *
    * @return The header.
    */
   public java.lang.String getHeader() {
@@ -226,6 +240,20 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int QUERY_FIELD_NUMBER = 2;
+  /**
+   *
+   *
+   * <pre>
+   * Specifies URL query parameter name to extract JWT token.
+   * </pre>
+   *
+   * <code>string query = 2;</code>
+   *
+   * @return Whether the query field is set.
+   */
+  public boolean hasQuery() {
+    return inCase_ == 2;
+  }
   /**
    *
    *
@@ -738,6 +766,21 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>string header = 1;</code>
      *
+     * @return Whether the header field is set.
+     */
+    @java.lang.Override
+    public boolean hasHeader() {
+      return inCase_ == 1;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies HTTP header name to extract JWT token.
+     * </pre>
+     *
+     * <code>string header = 1;</code>
+     *
      * @return The header.
      */
     @java.lang.Override
@@ -848,6 +891,21 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    /**
+     *
+     *
+     * <pre>
+     * Specifies URL query parameter name to extract JWT token.
+     * </pre>
+     *
+     * <code>string query = 2;</code>
+     *
+     * @return Whether the query field is set.
+     */
+    @java.lang.Override
+    public boolean hasQuery() {
+      return inCase_ == 2;
+    }
     /**
      *
      *

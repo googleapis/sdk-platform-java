@@ -632,6 +632,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>string jwt_audience = 7;</code>
    *
+   * @return Whether the jwtAudience field is set.
+   */
+  public boolean hasJwtAudience() {
+    return authenticationCase_ == 7;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The JWT audience is used when generating a JWT ID token for the backend.
+   * This ID token will be added in the HTTP "authorization" header, and sent
+   * to the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   *
    * @return The jwtAudience.
    */
   public java.lang.String getJwtAudience() {
@@ -681,6 +697,24 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DISABLE_AUTH_FIELD_NUMBER = 8;
+  /**
+   *
+   *
+   * <pre>
+   * When disable_auth is true, a JWT ID token won't be generated and the
+   * original "Authorization" HTTP header will be preserved. If the header is
+   * used to carry the original token and is expected by the backend, this
+   * field must be set to true to preserve the header.
+   * </pre>
+   *
+   * <code>bool disable_auth = 8;</code>
+   *
+   * @return Whether the disableAuth field is set.
+   */
+  @java.lang.Override
+  public boolean hasDisableAuth() {
+    return authenticationCase_ == 8;
+  }
   /**
    *
    *
@@ -1799,6 +1833,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>string jwt_audience = 7;</code>
      *
+     * @return Whether the jwtAudience field is set.
+     */
+    @java.lang.Override
+    public boolean hasJwtAudience() {
+      return authenticationCase_ == 7;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The JWT audience is used when generating a JWT ID token for the backend.
+     * This ID token will be added in the HTTP "authorization" header, and sent
+     * to the backend.
+     * </pre>
+     *
+     * <code>string jwt_audience = 7;</code>
+     *
      * @return The jwtAudience.
      */
     @java.lang.Override
@@ -1917,6 +1968,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    /**
+     *
+     *
+     * <pre>
+     * When disable_auth is true, a JWT ID token won't be generated and the
+     * original "Authorization" HTTP header will be preserved. If the header is
+     * used to carry the original token and is expected by the backend, this
+     * field must be set to true to preserve the header.
+     * </pre>
+     *
+     * <code>bool disable_auth = 8;</code>
+     *
+     * @return Whether the disableAuth field is set.
+     */
+    public boolean hasDisableAuth() {
+      return authenticationCase_ == 8;
+    }
     /**
      *
      *

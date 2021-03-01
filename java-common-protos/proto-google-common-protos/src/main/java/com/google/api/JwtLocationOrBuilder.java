@@ -32,6 +32,18 @@ public interface JwtLocationOrBuilder
    *
    * <code>string header = 1;</code>
    *
+   * @return Whether the header field is set.
+   */
+  boolean hasHeader();
+  /**
+   *
+   *
+   * <pre>
+   * Specifies HTTP header name to extract JWT token.
+   * </pre>
+   *
+   * <code>string header = 1;</code>
+   *
    * @return The header.
    */
   java.lang.String getHeader();
@@ -48,6 +60,18 @@ public interface JwtLocationOrBuilder
    */
   com.google.protobuf.ByteString getHeaderBytes();
 
+  /**
+   *
+   *
+   * <pre>
+   * Specifies URL query parameter name to extract JWT token.
+   * </pre>
+   *
+   * <code>string query = 2;</code>
+   *
+   * @return Whether the query field is set.
+   */
+  boolean hasQuery();
   /**
    *
    *
