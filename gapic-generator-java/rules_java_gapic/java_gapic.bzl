@@ -150,7 +150,7 @@ def java_gapic_library(
                 service_yaml_in_allowlist = True
                 break
         if service_yaml_in_allowlist:
-            file_args_dict[service_yaml] = "gapic-service-config"
+            file_args_dict[service_yaml] = "api-service-config"
         else:
             fail("Service.yaml is no longer supported in the Java microgenerator")
 
