@@ -14,7 +14,7 @@
 
 load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
 
-SERVICE_YAML_ALLOWLIST = ["cloudkms"]
+SERVICE_YAML_ALLOWLIST = ["cloudkms", "datastream"]
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
 def _java_gapic_postprocess_srcjar_impl(ctx):
