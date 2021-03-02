@@ -99,7 +99,7 @@ public final class ApiFutures {
         Futures.catching(
             listenableFutureForApiFuture(input),
             exceptionType,
-            new GaxFunctionToGuavaFunction<X, V>(callback),
+            new ApiFunctionToGuavaFunction<X, V>(callback),
             executor);
     return new ListenableFutureToApiFuture<V>(catchingFuture);
   }
@@ -156,7 +156,7 @@ public final class ApiFutures {
     return new ListenableFutureToApiFuture<>(
         Futures.transform(
             listenableFutureForApiFuture(input),
-            new GaxFunctionToGuavaFunction<V, X>(function),
+            new ApiFunctionToGuavaFunction<V, X>(function),
             executor));
   }
 
@@ -226,11 +226,11 @@ public final class ApiFutures {
     return listenableFuture;
   }
 
-  private static class GaxFunctionToGuavaFunction<X, V>
+  private static class ApiFunctionToGuavaFunction<X, V>
       implements com.google.common.base.Function<X, V> {
     private ApiFunction<? super X, ? extends V> f;
 
-    public GaxFunctionToGuavaFunction(ApiFunction<? super X, ? extends V> f) {
+    public ApiFunctionToGuavaFunction(ApiFunction<? super X, ? extends V> f) {
       this.f = f;
     }
 

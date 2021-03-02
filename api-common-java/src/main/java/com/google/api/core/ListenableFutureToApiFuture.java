@@ -34,7 +34,7 @@ import com.google.common.util.concurrent.ForwardingListenableFuture.SimpleForwar
 import com.google.common.util.concurrent.ListenableFuture;
 
 /**
- * INTERNAL USE ONLY. Adapter from Guava ListenableFuture to GAX ApiFuture.
+ * INTERNAL USE ONLY. Adapter from Guava ListenableFuture to ApiFuture.
  */
 @InternalApi
 public class ListenableFutureToApiFuture<V> extends SimpleForwardingListenableFuture<V>

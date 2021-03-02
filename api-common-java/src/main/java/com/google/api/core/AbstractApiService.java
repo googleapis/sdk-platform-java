@@ -38,11 +38,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Base class for {@link ApiService}. Similar to Guava's {@code AbstractService} but redeclared to
+ * Base class for {@link ApiService}. Similar to Guava's {@code AbstractService} but redeclared so
  * that Guava can be shaded.
  */
 public abstract class AbstractApiService implements ApiService {
-  private static final ImmutableMap<Service.State, ApiService.State> guavaToGaxState =
+  private static final ImmutableMap<Service.State, ApiService.State> GUAVA_TO_API_SERVICE_STATE =
       ImmutableMap.<Service.State, ApiService.State>builder()
           .put(Service.State.FAILED, ApiService.State.FAILED)
           .put(Service.State.NEW, ApiService.State.NEW)
@@ -66,7 +66,7 @@ public abstract class AbstractApiService implements ApiService {
         new Service.Listener() {
           @Override
           public void failed(Service.State from, Throwable failure) {
-            listener.failed(guavaToGaxState.get(from), failure);
+            listener.failed(GUAVA_TO_API_SERVICE_STATE.get(from), failure);
           }
 
           @Override
@@ -81,12 +81,12 @@ public abstract class AbstractApiService implements ApiService {
 
           @Override
           public void stopping(Service.State from) {
-            listener.stopping(guavaToGaxState.get(from));
+            listener.stopping(GUAVA_TO_API_SERVICE_STATE.get(from));
           }
 
           @Override
           public void terminated(Service.State from) {
-            listener.terminated(guavaToGaxState.get(from));
+            listener.terminated(GUAVA_TO_API_SERVICE_STATE.get(from));
           }
         },
         executor);
@@ -122,7 +122,7 @@ public abstract class AbstractApiService implements ApiService {
   }
 
   public State state() {
-    return guavaToGaxState.get(impl.state());
+    return GUAVA_TO_API_SERVICE_STATE.get(impl.state());
   }
 
   public ApiService stopAsync() {
