@@ -215,13 +215,21 @@ public class Parser {
     // indicator that we are not generating a GAPIC client for the mixed-in service on its own.
     Function<Service, String> serviceFullNameFn =
         s -> String.format("%s.%s", s.protoPakkage(), s.name());
-    Set<Service> blockedCodegenMixinApis =
-        services.stream()
-            .filter(s -> MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s)))
-            .map(s -> s)
-            .collect(Collectors.toSet());
+    Set<Service> blockedCodegenMixinApis = new HashSet<>();
+    Set<Service> definedServices = new HashSet<>();
+    for (Service s : services) {
+      if (MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s))) {
+        blockedCodegenMixinApis.add(s);
+      } else {
+        definedServices.add(s);
+      }
+    }
+
     // It's very unlikely the blocklisted APIs will contain the other, or any other service.
-    boolean servicesContainBlocklistedApi = !blockedCodegenMixinApis.isEmpty();
+    boolean servicesContainBlocklistedApi =
+        !blockedCodegenMixinApis.isEmpty() && !definedServices.isEmpty();
+    // Service names that are stated in the YAML file (as mixins). Used to filter
+    // blockedCodegenMixinApis.
     Set<String> mixedInApis =
         !serviceYamlProtoOpt.isPresent()
             ? Collections.emptySet()
@@ -229,6 +237,14 @@ public class Parser {
                 .filter(a -> MIXIN_ALLOWLIST.contains(a.getName()))
                 .map(a -> a.getName())
                 .collect(Collectors.toSet());
+    Set<String> apiDefinedRpcs = new HashSet<>();
+    for (Service service : services) {
+      if (blockedCodegenMixinApis.contains(service)) {
+        continue;
+      }
+      apiDefinedRpcs.addAll(
+          service.methods().stream().map(m -> m.name()).collect(Collectors.toSet()));
+    }
     // Mix-in APIs only if the protos are present and they're defined in the service.yaml file.
     Set<Service> outputMixinServiceSet = new HashSet<>();
     if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
@@ -241,13 +257,18 @@ public class Parser {
               String.format("%s.%s", mixinService.protoPakkage(), mixinService.name()))) {
             continue;
           }
-          List<Method> mixinMethods = new ArrayList<>(mixinService.methods());
-          mixinMethods.forEach(
-              m ->
-                  updatedMethods.add(
-                      m.toBuilder()
-                          .setMixedInApiName(serviceFullNameFn.apply(mixinService))
-                          .build()));
+          mixinService
+              .methods()
+              .forEach(
+                  m -> {
+                    // Overridden RPCs defined in the protos take precedence.
+                    if (!apiDefinedRpcs.contains(m.name())) {
+                      updatedMethods.add(
+                          m.toBuilder()
+                              .setMixedInApiName(serviceFullNameFn.apply(mixinService))
+                              .build());
+                    }
+                  });
           outputMixinServiceSet.add(mixinService);
         }
         services.set(i, originalService.toBuilder().setMethods(updatedMethods).build());

@@ -18,6 +18,8 @@ package com.google.cloud.kms.v1;
 
 import com.google.api.core.BetaApi;
 import com.google.cloud.kms.v1.KeyManagementServiceGrpc.KeyManagementServiceImplBase;
+import com.google.iam.v1.GetIamPolicyRequest;
+import com.google.iam.v1.Policy;
 import com.google.protobuf.AbstractMessage;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
@@ -536,6 +538,26 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
                   "Unrecognized response type %s for method RestoreCryptoKeyVersion, expected %s or %s",
                   response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void getIamPolicy(GetIamPolicyRequest request, StreamObserver<Policy> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof Policy) {
+      requests.add(request);
+      responseObserver.onNext(((Policy) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetIamPolicy, expected %s or %s",
+                  response.getClass().getName(),
+                  Policy.class.getName(),
                   Exception.class.getName())));
     }
   }
