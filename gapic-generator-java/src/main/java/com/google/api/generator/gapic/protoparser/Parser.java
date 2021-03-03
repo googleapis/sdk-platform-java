@@ -218,13 +218,20 @@ public class Parser {
     // indicator that we are not generating a GAPIC client for the mixed-in service on its own.
     Function<Service, String> serviceFullNameFn =
         s -> String.format("%s.%s", s.protoPakkage(), s.name());
-    Set<Service> blockedCodegenMixinApis =
-        services.stream()
-            .filter(s -> MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s)))
-            .map(s -> s)
-            .collect(Collectors.toSet());
+    Set<Service> blockedCodegenMixinApis = new HashSet<>();
+    Set<Service> definedServices = new HashSet<>();
+    for (Service s : services) {
+      if (MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s))) {
+        blockedCodegenMixinApis.add(s);
+      } else {
+        definedServices.add(s);
+      }
+    }
     // It's very unlikely the blocklisted APIs will contain the other, or any other service.
-    boolean servicesContainBlocklistedApi = !blockedCodegenMixinApis.isEmpty();
+    boolean servicesContainBlocklistedApi =
+        !blockedCodegenMixinApis.isEmpty() && !definedServices.isEmpty();
+    // Service names that are stated in the YAML file (as mixins). Used to filter
+    // blockedCodegenMixinApis.
     Set<String> mixedInApis =
         !serviceYamlProtoOpt.isPresent()
             ? Collections.emptySet()
