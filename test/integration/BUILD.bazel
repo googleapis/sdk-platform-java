@@ -163,7 +163,7 @@ java_gapic_assembly_gradle_pkg(
     ],
 )
 
-# Operations (for a standalone mixed-in API).
+# IAM (for a standalone mixed-in API).
 java_gapic_library(
     name = "iam_java_gapic",
     srcs = ["@com_google_googleapis//google/iam/v1:iam_proto_with_info"],
