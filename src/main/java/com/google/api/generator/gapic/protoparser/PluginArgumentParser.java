@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.protoparser;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import java.util.Arrays;
 import java.util.Optional;
 
 // Parses the arguments from the protoc plugin.
@@ -27,6 +28,7 @@ public class PluginArgumentParser {
   // Synced to rules_java_gapic/java_gapic.bzl.
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
   @VisibleForTesting static final String KEY_GAPIC_CONFIG = "gapic-config";
+  @VisibleForTesting static final String KEY_METADATA = "metadata";
   @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "api-service-config";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
@@ -45,6 +47,10 @@ public class PluginArgumentParser {
     return parseServiceYamlConfigPath(request.getParameter());
   }
 
+  static boolean hasMetadataFlag(CodeGeneratorRequest request) {
+    return hasMetadataFlag(request.getParameter());
+  }
+
   /** Expects a comma-separated list of file paths. */
   @VisibleForTesting
   static Optional<String> parseJsonConfigPath(String pluginProtocArgument) {
@@ -59,6 +65,11 @@ public class PluginArgumentParser {
   @VisibleForTesting
   static Optional<String> parseServiceYamlConfigPath(String pluginProtocArgument) {
     return parseArgument(pluginProtocArgument, KEY_SERVICE_YAML_CONFIG, SERVICE_YAML_FILE_ENDING);
+  }
+
+  @VisibleForTesting
+  static boolean hasMetadataFlag(String pluginProtocArgument) {
+    return Arrays.stream(pluginProtocArgument.split(COMMA)).anyMatch(s -> s.equals(KEY_METADATA));
   }
 
   private static Optional<String> parseArgument(

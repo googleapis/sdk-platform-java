@@ -44,6 +44,8 @@ public abstract class GapicContext {
 
   public abstract ImmutableMap<String, ResourceName> helperResourceNames();
 
+  public abstract boolean gapicMetadataEnabled();
+
   public GapicMetadata gapicMetadata() {
     return gapicMetadata;
   }
@@ -74,7 +76,9 @@ public abstract class GapicContext {
   public abstract Builder toBuilder();
 
   public static Builder builder() {
-    return new AutoValue_GapicContext.Builder().setMixinServices(Collections.emptyList());
+    return new AutoValue_GapicContext.Builder()
+        .setMixinServices(Collections.emptyList())
+        .setGapicMetadataEnabled(false);
   }
 
   @AutoValue.Builder
@@ -99,6 +103,8 @@ public abstract class GapicContext {
     public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
 
     public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
+
+    public abstract Builder setGapicMetadataEnabled(boolean gapicMetadataEnabled);
 
     public abstract GapicContext build();
   }
