@@ -134,7 +134,7 @@ if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking Apache License Header ..."
   header_check_preparation
-  addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java')
+  addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java')
   CHECK_STATUS=$?
   if [ $CHECK_STATUS != 0 ]
   then
