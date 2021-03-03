@@ -5,12 +5,16 @@ load(
     "java_gapic_test",
     "java_grpc_library",
     "java_proto_library",
+    "proto_library_with_info",
 )
 load(
     "//:rules_bazel/java/integration_test.bzl",
     "golden_update",
     "integration_test",
 )
+
+# KMS (for mixins).
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -188,10 +192,6 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/iam/v1:iam_java_proto",
     ],
 )
-
-# KMS (for mixins).
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@com_google_googleapis_imports//:imports.bzl", "proto_library_with_info")
 
 proto_library(
     name = "kms_proto",
