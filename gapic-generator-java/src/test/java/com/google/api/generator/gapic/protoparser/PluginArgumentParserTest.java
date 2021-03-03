@@ -16,12 +16,12 @@ package com.google.api.generator.gapic.protoparser;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.Arrays;
 import org.junit.Test;
 
 public class PluginArgumentParserTest {
-
   @Test
   public void parseJsonPath_onlyOnePresent() {
     String jsonPath = "/tmp/grpc_service_config.json";
@@ -223,6 +223,29 @@ public class PluginArgumentParserTest {
     String rawArgument =
         String.join(",", Arrays.asList(createGrpcServiceConfig(jsonPath), gapicPath));
     assertFalse(PluginArgumentParser.parseServiceYamlConfigPath(rawArgument).isPresent());
+  }
+
+  @Test
+  public void parseMetadataFlag_noneFound() {
+    String jsonPath = "/tmp/foo_grpc_service_config.json";
+    String gapicPath = "";
+    String rawArgument =
+        String.join(",", Arrays.asList(createGrpcServiceConfig(jsonPath), gapicPath));
+    assertFalse(PluginArgumentParser.hasMetadataFlag(rawArgument));
+
+    // Wrong casing.
+    rawArgument =
+        String.join(",", Arrays.asList("Metadata", createGrpcServiceConfig(jsonPath), gapicPath));
+    assertFalse(PluginArgumentParser.hasMetadataFlag(rawArgument));
+  }
+
+  @Test
+  public void parseMetadataFlag_flagFound() {
+    String jsonPath = "/tmp/foo_grpc_service_config.json";
+    String gapicPath = "";
+    String rawArgument =
+        String.join(",", Arrays.asList("metadata", createGrpcServiceConfig(jsonPath), gapicPath));
+    assertTrue(PluginArgumentParser.hasMetadataFlag(rawArgument));
   }
 
   private static String createGrpcServiceConfig(String path) {
