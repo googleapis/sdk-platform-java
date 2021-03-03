@@ -227,6 +227,8 @@ public class Parser {
     // It's very unlikely the blocklisted APIs will contain the other, or any other service.
     boolean servicesContainBlocklistedApi =
         !blockedCodegenMixinApis.isEmpty() && !definedServices.isEmpty();
+    // Service names that are stated in the YAML file (as mixins). Used to filter
+    // blockedCodegenMixinApis.
     Set<String> mixedInApis =
         !serviceYamlProtoOpt.isPresent()
             ? Collections.emptySet()
