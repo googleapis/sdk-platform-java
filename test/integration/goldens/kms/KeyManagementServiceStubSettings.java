@@ -178,8 +178,8 @@ public class KeyManagementServiceStubSettings
       destroyCryptoKeyVersionSettings;
   private final UnaryCallSettings<RestoreCryptoKeyVersionRequest, CryptoKeyVersion>
       restoreCryptoKeyVersionSettings;
-  private final UnaryCallSettings<SetIamPolicyRequest, Policy> setIamPolicySettings;
   private final UnaryCallSettings<GetIamPolicyRequest, Policy> getIamPolicySettings;
+  private final UnaryCallSettings<SetIamPolicyRequest, Policy> setIamPolicySettings;
   private final UnaryCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
       testIamPermissionsSettings;
 
@@ -541,14 +541,14 @@ public class KeyManagementServiceStubSettings
     return restoreCryptoKeyVersionSettings;
   }
 
-  /** Returns the object with the settings used for calls to setIamPolicy. */
-  public UnaryCallSettings<SetIamPolicyRequest, Policy> setIamPolicySettings() {
-    return setIamPolicySettings;
-  }
-
   /** Returns the object with the settings used for calls to getIamPolicy. */
   public UnaryCallSettings<GetIamPolicyRequest, Policy> getIamPolicySettings() {
     return getIamPolicySettings;
+  }
+
+  /** Returns the object with the settings used for calls to setIamPolicy. */
+  public UnaryCallSettings<SetIamPolicyRequest, Policy> setIamPolicySettings() {
+    return setIamPolicySettings;
   }
 
   /** Returns the object with the settings used for calls to testIamPermissions. */
@@ -650,8 +650,8 @@ public class KeyManagementServiceStubSettings
         settingsBuilder.updateCryptoKeyPrimaryVersionSettings().build();
     destroyCryptoKeyVersionSettings = settingsBuilder.destroyCryptoKeyVersionSettings().build();
     restoreCryptoKeyVersionSettings = settingsBuilder.restoreCryptoKeyVersionSettings().build();
-    setIamPolicySettings = settingsBuilder.setIamPolicySettings().build();
     getIamPolicySettings = settingsBuilder.getIamPolicySettings().build();
+    setIamPolicySettings = settingsBuilder.setIamPolicySettings().build();
     testIamPermissionsSettings = settingsBuilder.testIamPermissionsSettings().build();
   }
 
@@ -704,8 +704,8 @@ public class KeyManagementServiceStubSettings
         destroyCryptoKeyVersionSettings;
     private final UnaryCallSettings.Builder<RestoreCryptoKeyVersionRequest, CryptoKeyVersion>
         restoreCryptoKeyVersionSettings;
-    private final UnaryCallSettings.Builder<SetIamPolicyRequest, Policy> setIamPolicySettings;
     private final UnaryCallSettings.Builder<GetIamPolicyRequest, Policy> getIamPolicySettings;
+    private final UnaryCallSettings.Builder<SetIamPolicyRequest, Policy> setIamPolicySettings;
     private final UnaryCallSettings.Builder<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
@@ -782,8 +782,8 @@ public class KeyManagementServiceStubSettings
       updateCryptoKeyPrimaryVersionSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       destroyCryptoKeyVersionSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       restoreCryptoKeyVersionSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
-      setIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       getIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      setIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       testIamPermissionsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
@@ -811,8 +811,8 @@ public class KeyManagementServiceStubSettings
               updateCryptoKeyPrimaryVersionSettings,
               destroyCryptoKeyVersionSettings,
               restoreCryptoKeyVersionSettings,
-              setIamPolicySettings,
               getIamPolicySettings,
+              setIamPolicySettings,
               testIamPermissionsSettings);
       initDefaults(this);
     }
@@ -844,8 +844,8 @@ public class KeyManagementServiceStubSettings
           settings.updateCryptoKeyPrimaryVersionSettings.toBuilder();
       destroyCryptoKeyVersionSettings = settings.destroyCryptoKeyVersionSettings.toBuilder();
       restoreCryptoKeyVersionSettings = settings.restoreCryptoKeyVersionSettings.toBuilder();
-      setIamPolicySettings = settings.setIamPolicySettings.toBuilder();
       getIamPolicySettings = settings.getIamPolicySettings.toBuilder();
+      setIamPolicySettings = settings.setIamPolicySettings.toBuilder();
       testIamPermissionsSettings = settings.testIamPermissionsSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
@@ -873,8 +873,8 @@ public class KeyManagementServiceStubSettings
               updateCryptoKeyPrimaryVersionSettings,
               destroyCryptoKeyVersionSettings,
               restoreCryptoKeyVersionSettings,
-              setIamPolicySettings,
               getIamPolicySettings,
+              setIamPolicySettings,
               testIamPermissionsSettings);
     }
 
@@ -1006,12 +1006,12 @@ public class KeyManagementServiceStubSettings
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
 
       builder
-          .setIamPolicySettings()
+          .getIamPolicySettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
 
       builder
-          .getIamPolicySettings()
+          .setIamPolicySettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
 
@@ -1173,14 +1173,14 @@ public class KeyManagementServiceStubSettings
       return restoreCryptoKeyVersionSettings;
     }
 
-    /** Returns the builder for the settings used for calls to setIamPolicy. */
-    public UnaryCallSettings.Builder<SetIamPolicyRequest, Policy> setIamPolicySettings() {
-      return setIamPolicySettings;
-    }
-
     /** Returns the builder for the settings used for calls to getIamPolicy. */
     public UnaryCallSettings.Builder<GetIamPolicyRequest, Policy> getIamPolicySettings() {
       return getIamPolicySettings;
+    }
+
+    /** Returns the builder for the settings used for calls to setIamPolicy. */
+    public UnaryCallSettings.Builder<SetIamPolicyRequest, Policy> setIamPolicySettings() {
+      return setIamPolicySettings;
     }
 
     /** Returns the builder for the settings used for calls to testIamPermissions. */

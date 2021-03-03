@@ -105,7 +105,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   // Legacy support for the original reroute_to_grpc_interface option in gapic.yaml. These two APIs
   // predate the modern way, which is to add the RPCs directly into the proto.
   private static final Set<String> REROUTE_TO_GRPC_INTERFACE_SERVICE_ALLOWLIST =
-      new HashSet<>(Arrays.asList("google.cloud.kms.v1", "google.pubsub.v1"));
+      new HashSet<>(Arrays.asList("google.pubsub.v1"));
   private static final Set<String> REROUTE_TO_GRPC_INTERFACE_IAM_METHOD_ALLOWLIST =
       new HashSet<>(Arrays.asList("SetIamPolicy", "GetIamPolicy", "TestIamPermissions"));
 
