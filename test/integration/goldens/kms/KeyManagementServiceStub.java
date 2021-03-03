@@ -196,12 +196,12 @@ public abstract class KeyManagementServiceStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: restoreCryptoKeyVersionCallable()");
   }
 
-  public UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
-    throw new UnsupportedOperationException("Not implemented: setIamPolicyCallable()");
-  }
-
   public UnaryCallable<GetIamPolicyRequest, Policy> getIamPolicyCallable() {
     throw new UnsupportedOperationException("Not implemented: getIamPolicyCallable()");
+  }
+
+  public UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
+    throw new UnsupportedOperationException("Not implemented: setIamPolicyCallable()");
   }
 
   public UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>

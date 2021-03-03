@@ -229,6 +229,14 @@ public class Parser {
                 .filter(a -> MIXIN_ALLOWLIST.contains(a.getName()))
                 .map(a -> a.getName())
                 .collect(Collectors.toSet());
+    Set<String> apiDefinedRpcs = new HashSet<>();
+    for (Service service : services) {
+      if (blockedCodegenMixinApis.contains(service)) {
+        continue;
+      }
+      apiDefinedRpcs.addAll(
+          service.methods().stream().map(m -> m.name()).collect(Collectors.toSet()));
+    }
     // Mix-in APIs only if the protos are present and they're defined in the service.yaml file.
     Set<Service> outputMixinServiceSet = new HashSet<>();
     if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
@@ -241,13 +249,18 @@ public class Parser {
               String.format("%s.%s", mixinService.protoPakkage(), mixinService.name()))) {
             continue;
           }
-          List<Method> mixinMethods = new ArrayList<>(mixinService.methods());
-          mixinMethods.forEach(
-              m ->
-                  updatedMethods.add(
-                      m.toBuilder()
-                          .setMixedInApiName(serviceFullNameFn.apply(mixinService))
-                          .build()));
+          mixinService
+              .methods()
+              .forEach(
+                  m -> {
+                    // Overridden RPCs defined in the protos take precedence.
+                    if (!apiDefinedRpcs.contains(m.name())) {
+                      updatedMethods.add(
+                          m.toBuilder()
+                              .setMixedInApiName(serviceFullNameFn.apply(mixinService))
+                              .build());
+                    }
+                  });
           outputMixinServiceSet.add(mixinService);
         }
         services.set(i, originalService.toBuilder().setMethods(updatedMethods).build());

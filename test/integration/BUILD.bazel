@@ -3,6 +3,8 @@ load(
     "java_gapic_assembly_gradle_pkg",
     "java_gapic_library",
     "java_gapic_test",
+    "java_grpc_library",
+    "java_proto_library",
 )
 load(
     "//:rules_bazel/java/integration_test.bzl",
@@ -19,7 +21,7 @@ package(default_visibility = ["//visibility:public"])
 INTEGRATION_TEST_LIBRARIES = [
     "asset",  # Basic case.
     "credentials",  # Check that the capital name edge case is handled.
-    "kms",  # Mixins.
+    "kms",  # Mixins, with an override in the proto file.
     "logging",  # Java package remapping in gapic.yaml.
     "redis",  # Has a gapic.yaml.
     "library",  # No gRPC service config.
@@ -156,18 +158,63 @@ java_gapic_assembly_gradle_pkg(
 )
 
 # KMS (for mixins).
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@com_google_googleapis_imports//:imports.bzl", "proto_library_with_info")
+
+proto_library(
+    name = "kms_proto",
+    srcs = [
+        "apis/kms/v1/resources.proto",
+        "apis/kms/v1/service.proto",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+        "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
+        "@com_google_googleapis//google/iam/v1:policy_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:field_mask_proto",
+        "@com_google_protobuf//:struct_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@com_google_protobuf//:wrappers_proto",
+    ],
+)
+
+proto_library_with_info(
+    name = "kms_proto_with_info",
+    deps = [
+        ":kms_proto",
+        "@com_google_googleapis//google/cloud:common_resources_proto",
+        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
+        "@com_google_googleapis//google/iam/v1:policy_proto",
+    ],
+)
+
+java_proto_library(
+    name = "kms_java_proto",
+    deps = [":kms_proto"],
+)
+
+java_grpc_library(
+    name = "kms_java_grpc",
+    srcs = [":kms_proto"],
+    deps = [":kms_java_proto"],
+)
+
 java_gapic_library(
     name = "kms_java_gapic",
-    srcs = ["@com_google_googleapis//google/cloud/kms/v1:kms_proto_with_info"],
+    srcs = [":kms_proto_with_info"],
     grpc_service_config = "@com_google_googleapis//google/cloud/kms/v1:cloudkms_grpc_service_config.json",
     # For the IAM mixin.
-    service_yaml = "cloudkms_test_mixins_v1.yaml",
+    service_yaml = "apis/kms/v1/cloudkms_test_mixins_v1.yaml",
     test_deps = [
-        "@com_google_googleapis//google/cloud/kms/v1:kms_java_grpc",
+        ":kms_java_grpc",
         "@com_google_googleapis//google/iam/v1:iam_java_grpc",
     ],
     deps = [
-        "@com_google_googleapis//google/cloud/kms/v1:kms_java_proto",
+        ":kms_java_proto",
         "@com_google_googleapis//google/iam/v1:iam_java_proto",
     ],
 )
