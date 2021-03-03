@@ -158,11 +158,16 @@ def java_gapic_library(
     raw_srcjar_name = srcjar_name + "_raw"
     output_suffix = ".srcjar"
 
+    # Produces the GAPIC metadata file if this flag is set. to any value.
+    # Protoc invocation: --java_gapic_opt=metadata
+    plugin_args = ["metadata"]
+
     _java_generator_name = "java_gapic"
     proto_custom_library(
         name = raw_srcjar_name,
         deps = srcs,
         plugin = Label("@gapic_generator_java//:protoc-gen-%s" % _java_generator_name),
+        plugin_args = plugin_args,
         plugin_file_args = {},
         opt_file_args = file_args_dict,
         output_type = _java_generator_name,

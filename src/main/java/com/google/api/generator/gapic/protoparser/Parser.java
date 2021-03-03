@@ -104,6 +104,8 @@ public class Parser {
     Optional<GapicLanguageSettings> languageSettingsOpt =
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
 
+    boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
+
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
     Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
@@ -179,6 +181,7 @@ public class Parser {
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
+        .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
         .build();
   }
