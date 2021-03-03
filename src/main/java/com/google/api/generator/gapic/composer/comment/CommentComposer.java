@@ -20,7 +20,7 @@ import com.google.api.generator.engine.ast.LineComment;
 
 public class CommentComposer {
   private static final String APACHE_LICENSE_STRING =
-      "Copyright 2020 Google LLC\n\n"
+      "Copyright 2021 Google LLC\n\n"
           + "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
           + "you may not use this file except in compliance with the License.\n"
           + "You may obtain a copy of the License at\n\n"
