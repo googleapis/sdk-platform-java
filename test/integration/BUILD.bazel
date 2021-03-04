@@ -13,7 +13,6 @@ load(
     "integration_test",
 )
 
-# KMS (for mixins).
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 package(default_visibility = ["//visibility:public"])
@@ -193,6 +192,7 @@ java_gapic_assembly_gradle_pkg(
     ],
 )
 
+# KMS (for mixins).
 proto_library(
     name = "kms_proto",
     srcs = [
