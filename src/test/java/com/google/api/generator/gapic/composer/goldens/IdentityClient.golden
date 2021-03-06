@@ -580,6 +580,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   ListUsersRequest request =
+   *       ListUsersRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
    *   while (true) {
    *     ListUsersResponse response = identityClient.listUsersCallable().call(request);
    *     for (User element : response.getResponsesList()) {

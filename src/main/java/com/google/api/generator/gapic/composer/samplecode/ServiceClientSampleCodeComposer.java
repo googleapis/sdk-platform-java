@@ -592,18 +592,15 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(requestBuilderExpr)
             .build();
 
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(requestAssignmentExpr);
-
     List<Statement> bodyStatements = new ArrayList<>();
+    bodyStatements.add(ExprStatement.withExpr(requestAssignmentExpr));
 
     if (method.isPaged()) {
       bodyStatements.addAll(
           composePagedCallableBodyStatements(method, clientVarExpr, requestVarExpr, messageTypes));
     } else {
       bodyStatements.addAll(
-          composeUnaryOrLroCallableBodyStatements(
-              method, clientVarExpr, requestVarExpr, bodyExprs));
+          composeUnaryOrLroCallableBodyStatements(method, clientVarExpr, requestVarExpr));
     }
 
     return SampleCodeWriter.write(
@@ -1061,10 +1058,7 @@ public class ServiceClientSampleCodeComposer {
   }
 
   private static List<Statement> composeUnaryOrLroCallableBodyStatements(
-      Method method,
-      VariableExpr clientVarExpr,
-      VariableExpr requestVarExpr,
-      List<Expr> bodyExprs) {
+      Method method, VariableExpr clientVarExpr, VariableExpr requestVarExpr) {
     List<Statement> bodyStatements = new ArrayList<>();
     // Create api future variable expression, and assign it with a value by invoking callable
     // method.
@@ -1098,10 +1092,7 @@ public class ServiceClientSampleCodeComposer {
             .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(callableMethodInvocationExpr)
             .build();
-    bodyExprs.add(futureAssignmentExpr);
-    bodyStatements.addAll(
-        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-    bodyExprs.clear();
+    bodyStatements.add(ExprStatement.withExpr(futureAssignmentExpr));
     bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
 
     MethodInvocationExpr getMethodInvocationExpr =
