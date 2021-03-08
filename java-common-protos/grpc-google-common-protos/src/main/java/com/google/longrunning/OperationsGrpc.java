@@ -16,11 +16,6 @@
 package com.google.longrunning;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.blockingUnaryCall;
-import static io.grpc.stub.ClientCalls.futureUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
  *
@@ -329,7 +324,8 @@ public final class OperationsGrpc {
         com.google.longrunning.ListOperationsRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.ListOperationsResponse>
             responseObserver) {
-      asyncUnimplementedUnaryCall(getListOperationsMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getListOperationsMethod(), responseObserver);
     }
 
     /**
@@ -344,7 +340,8 @@ public final class OperationsGrpc {
     public void getOperation(
         com.google.longrunning.GetOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
-      asyncUnimplementedUnaryCall(getGetOperationMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getGetOperationMethod(), responseObserver);
     }
 
     /**
@@ -360,7 +357,8 @@ public final class OperationsGrpc {
     public void deleteOperation(
         com.google.longrunning.DeleteOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
-      asyncUnimplementedUnaryCall(getDeleteOperationMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getDeleteOperationMethod(), responseObserver);
     }
 
     /**
@@ -382,7 +380,8 @@ public final class OperationsGrpc {
     public void cancelOperation(
         com.google.longrunning.CancelOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
-      asyncUnimplementedUnaryCall(getCancelOperationMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getCancelOperationMethod(), responseObserver);
     }
 
     /**
@@ -403,7 +402,8 @@ public final class OperationsGrpc {
     public void waitOperation(
         com.google.longrunning.WaitOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
-      asyncUnimplementedUnaryCall(getWaitOperationMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getWaitOperationMethod(), responseObserver);
     }
 
     @java.lang.Override
@@ -411,32 +411,32 @@ public final class OperationsGrpc {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
               getListOperationsMethod(),
-              asyncUnaryCall(
+              io.grpc.stub.ServerCalls.asyncUnaryCall(
                   new MethodHandlers<
                       com.google.longrunning.ListOperationsRequest,
                       com.google.longrunning.ListOperationsResponse>(
                       this, METHODID_LIST_OPERATIONS)))
           .addMethod(
               getGetOperationMethod(),
-              asyncUnaryCall(
+              io.grpc.stub.ServerCalls.asyncUnaryCall(
                   new MethodHandlers<
                       com.google.longrunning.GetOperationRequest, com.google.longrunning.Operation>(
                       this, METHODID_GET_OPERATION)))
           .addMethod(
               getDeleteOperationMethod(),
-              asyncUnaryCall(
+              io.grpc.stub.ServerCalls.asyncUnaryCall(
                   new MethodHandlers<
                       com.google.longrunning.DeleteOperationRequest, com.google.protobuf.Empty>(
                       this, METHODID_DELETE_OPERATION)))
           .addMethod(
               getCancelOperationMethod(),
-              asyncUnaryCall(
+              io.grpc.stub.ServerCalls.asyncUnaryCall(
                   new MethodHandlers<
                       com.google.longrunning.CancelOperationRequest, com.google.protobuf.Empty>(
                       this, METHODID_CANCEL_OPERATION)))
           .addMethod(
               getWaitOperationMethod(),
-              asyncUnaryCall(
+              io.grpc.stub.ServerCalls.asyncUnaryCall(
                   new MethodHandlers<
                       com.google.longrunning.WaitOperationRequest,
                       com.google.longrunning.Operation>(this, METHODID_WAIT_OPERATION)))
@@ -487,7 +487,7 @@ public final class OperationsGrpc {
         com.google.longrunning.ListOperationsRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.ListOperationsResponse>
             responseObserver) {
-      asyncUnaryCall(
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getListOperationsMethod(), getCallOptions()),
           request,
           responseObserver);
@@ -505,7 +505,7 @@ public final class OperationsGrpc {
     public void getOperation(
         com.google.longrunning.GetOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
-      asyncUnaryCall(
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetOperationMethod(), getCallOptions()),
           request,
           responseObserver);
@@ -524,7 +524,7 @@ public final class OperationsGrpc {
     public void deleteOperation(
         com.google.longrunning.DeleteOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
-      asyncUnaryCall(
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getDeleteOperationMethod(), getCallOptions()),
           request,
           responseObserver);
@@ -549,7 +549,7 @@ public final class OperationsGrpc {
     public void cancelOperation(
         com.google.longrunning.CancelOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
-      asyncUnaryCall(
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCancelOperationMethod(), getCallOptions()),
           request,
           responseObserver);
@@ -573,7 +573,7 @@ public final class OperationsGrpc {
     public void waitOperation(
         com.google.longrunning.WaitOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
-      asyncUnaryCall(
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getWaitOperationMethod(), getCallOptions()),
           request,
           responseObserver);
@@ -623,7 +623,8 @@ public final class OperationsGrpc {
      */
     public com.google.longrunning.ListOperationsResponse listOperations(
         com.google.longrunning.ListOperationsRequest request) {
-      return blockingUnaryCall(getChannel(), getListOperationsMethod(), getCallOptions(), request);
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListOperationsMethod(), getCallOptions(), request);
     }
 
     /**
@@ -637,7 +638,8 @@ public final class OperationsGrpc {
      */
     public com.google.longrunning.Operation getOperation(
         com.google.longrunning.GetOperationRequest request) {
-      return blockingUnaryCall(getChannel(), getGetOperationMethod(), getCallOptions(), request);
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetOperationMethod(), getCallOptions(), request);
     }
 
     /**
@@ -652,7 +654,8 @@ public final class OperationsGrpc {
      */
     public com.google.protobuf.Empty deleteOperation(
         com.google.longrunning.DeleteOperationRequest request) {
-      return blockingUnaryCall(getChannel(), getDeleteOperationMethod(), getCallOptions(), request);
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteOperationMethod(), getCallOptions(), request);
     }
 
     /**
@@ -673,7 +676,8 @@ public final class OperationsGrpc {
      */
     public com.google.protobuf.Empty cancelOperation(
         com.google.longrunning.CancelOperationRequest request) {
-      return blockingUnaryCall(getChannel(), getCancelOperationMethod(), getCallOptions(), request);
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCancelOperationMethod(), getCallOptions(), request);
     }
 
     /**
@@ -693,7 +697,8 @@ public final class OperationsGrpc {
      */
     public com.google.longrunning.Operation waitOperation(
         com.google.longrunning.WaitOperationRequest request) {
-      return blockingUnaryCall(getChannel(), getWaitOperationMethod(), getCallOptions(), request);
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getWaitOperationMethod(), getCallOptions(), request);
     }
   }
 
@@ -740,7 +745,7 @@ public final class OperationsGrpc {
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.longrunning.ListOperationsResponse>
         listOperations(com.google.longrunning.ListOperationsRequest request) {
-      return futureUnaryCall(
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getListOperationsMethod(), getCallOptions()), request);
     }
 
@@ -755,7 +760,7 @@ public final class OperationsGrpc {
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         getOperation(com.google.longrunning.GetOperationRequest request) {
-      return futureUnaryCall(
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetOperationMethod(), getCallOptions()), request);
     }
 
@@ -771,7 +776,7 @@ public final class OperationsGrpc {
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty>
         deleteOperation(com.google.longrunning.DeleteOperationRequest request) {
-      return futureUnaryCall(
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getDeleteOperationMethod(), getCallOptions()), request);
     }
 
@@ -793,7 +798,7 @@ public final class OperationsGrpc {
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty>
         cancelOperation(com.google.longrunning.CancelOperationRequest request) {
-      return futureUnaryCall(
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCancelOperationMethod(), getCallOptions()), request);
     }
 
@@ -814,7 +819,7 @@ public final class OperationsGrpc {
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         waitOperation(com.google.longrunning.WaitOperationRequest request) {
-      return futureUnaryCall(
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getWaitOperationMethod(), getCallOptions()), request);
     }
   }
