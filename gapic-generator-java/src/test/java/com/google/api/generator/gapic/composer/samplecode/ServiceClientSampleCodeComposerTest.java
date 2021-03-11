@@ -2452,6 +2452,12 @@ public class ServiceClientSampleCodeComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  PagedExpandRequest request =\n",
+            "      PagedExpandRequest.newBuilder()\n",
+            "          .setContent(\"content951530617\")\n",
+            "          .setPageSize(883849137)\n",
+            "          .setPageToken(\"pageToken873572522\")\n",
+            "          .build();\n",
             "  while (true) {\n",
             "    PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);\n",
             "    for (EchoResponse element : response.getResponsesList()) {\n",

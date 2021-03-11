@@ -516,6 +516,12 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request =
+   *       PagedExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
    *   while (true) {
    *     PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);
    *     for (EchoResponse element : response.getResponsesList()) {
@@ -612,6 +618,12 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request =
+   *       PagedExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
    *   while (true) {
    *     PagedExpandResponse response = echoClient.simplePagedExpandCallable().call(request);
    *     for (EchoResponse element : response.getResponsesList()) {
