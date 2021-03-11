@@ -12,7 +12,6 @@ load(
     "golden_update",
     "integration_test",
 )
-
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 package(default_visibility = ["//visibility:public"])
@@ -204,6 +203,7 @@ proto_library(
         "@com_google_googleapis//google/api:client_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/cloud/location:location_proto",
         "@com_google_googleapis//google/iam/v1:iam_policy_proto",
         "@com_google_googleapis//google/iam/v1:policy_proto",
         "@com_google_protobuf//:duration_proto",
@@ -219,6 +219,7 @@ proto_library_with_info(
     deps = [
         ":kms_proto",
         "@com_google_googleapis//google/cloud:common_resources_proto",
+        "@com_google_googleapis//google/cloud/location:location_proto",
         "@com_google_googleapis//google/iam/v1:iam_policy_proto",
         "@com_google_googleapis//google/iam/v1:policy_proto",
     ],
@@ -243,10 +244,12 @@ java_gapic_library(
     service_yaml = "apis/kms/v1/cloudkms_test_mixins_v1.yaml",
     test_deps = [
         ":kms_java_grpc",
+        "@com_google_googleapis//google/cloud/location:location_java_grpc",
         "@com_google_googleapis//google/iam/v1:iam_java_grpc",
     ],
     deps = [
         ":kms_java_proto",
+        "@com_google_googleapis//google/cloud/location:location_java_proto",
         "@com_google_googleapis//google/iam/v1:iam_java_proto",
     ],
 )
@@ -267,5 +270,7 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/cloud/kms/v1:kms_java_grpc",
         "@com_google_googleapis//google/cloud/kms/v1:kms_java_proto",
         "@com_google_googleapis//google/cloud/kms/v1:kms_proto",
+        "@com_google_googleapis//google/cloud/location:location_java_grpc",
+        "@com_google_googleapis//google/cloud/location:location_java_proto",
     ],
 )

@@ -52,6 +52,9 @@
             "GetKeyRing": {
               "methods": ["getKeyRing", "getKeyRing", "getKeyRing", "getKeyRingCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
             "GetPublicKey": {
               "methods": ["getPublicKey", "getPublicKey", "getPublicKey", "getPublicKeyCallable"]
             },
@@ -69,6 +72,9 @@
             },
             "ListKeyRings": {
               "methods": ["listKeyRings", "listKeyRings", "listKeyRings", "listKeyRingsPagedCallable", "listKeyRingsCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
             },
             "RestoreCryptoKeyVersion": {
               "methods": ["restoreCryptoKeyVersion", "restoreCryptoKeyVersion", "restoreCryptoKeyVersion", "restoreCryptoKeyVersionCallable"]
