@@ -140,11 +140,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     Map<String, Message> messageTypes = context.messages();
     String pakkage = service.pakkage();
     TypeStore typeStore = new TypeStore();
-    addDynamicTypes(service, typeStore);
-    for (Service mixinService : context.mixinServices()) {
-      addDynamicTypes(mixinService, typeStore);
-    }
-
+    addDynamicTypes(context, service, typeStore);
     String className = ClassNames.getServiceClientTestClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
@@ -466,6 +462,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         javaMethods.add(
             createRpcTestMethod(
                 method,
+                service,
                 matchingService,
                 Collections.emptyList(),
                 0,
@@ -487,6 +484,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
           javaMethods.add(
               createRpcTestMethod(
                   method,
+                  service,
                   matchingService,
                   method.methodSignatures().get(i),
                   i,
@@ -509,9 +507,27 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     return javaMethods;
   }
 
+  /**
+   * Creates a test method for a given RPC, e.g. createAssetTest.
+   *
+   * @param method the RPC for which this test method is created.
+   * @param apiService the host service under test.
+   * @param rpcService the service that {@code method} belongs to. This is not equal to {@code
+   *     apiService} only when {@code method} is a mixin, in which case {@code rpcService} is the
+   *     mixed-in service. If {@code apiService} and {@code rpcService} are different, they will be
+   *     used only for pagination. Otherwise, {@code rpcService} subsumes {@code apiService}.
+   * @param methodSignature the method signature of the RPC under test.
+   * @param variantIndex the nth variant of the RPC under test. This applies when we have
+   *     polymorphism due to the presence of several method signature annotations in the proto.
+   * @param isRequestArg whether the RPC variant under test take only the request proto message.
+   * @param classMemberVarExprs the class members in the generated test class.
+   * @param resourceNames the resource names available for use.
+   * @param messageTypes the proto message types available for use.
+   */
   private static MethodDefinition createRpcTestMethod(
       Method method,
-      Service service,
+      Service apiService,
+      Service rpcService,
       List<MethodArgument> methodSignature,
       int variantIndex,
       boolean isRequestArg,
@@ -520,7 +536,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
       Map<String, Message> messageTypes) {
     if (!method.stream().equals(Method.Stream.NONE)) {
       return createStreamingRpcTestMethod(
-          service, method, classMemberVarExprs, resourceNames, messageTypes);
+          rpcService, method, classMemberVarExprs, resourceNames, messageTypes);
     }
     // Construct the expected response.
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
@@ -528,6 +544,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     TypeNode repeatedResponseType = null;
     VariableExpr responsesElementVarExpr = null;
+    String mockServiceVarName = getMockServiceVarName(rpcService);
     if (method.isPaged()) {
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
@@ -596,6 +613,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .setVariableExpr(expectedResponseVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(expectedResponseValExpr)
             .build());
+
     if (method.hasLro()) {
       VariableExpr resultOperationVarExpr =
           VariableExpr.withVariable(
@@ -613,14 +631,14 @@ public class ServiceClientTestClassComposer implements ClassComposer {
               .build());
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
+              .setExprReferenceExpr(classMemberVarExprs.get(mockServiceVarName))
               .setMethodName("addResponse")
               .setArguments(resultOperationVarExpr)
               .build());
     } else {
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
+              .setExprReferenceExpr(classMemberVarExprs.get(mockServiceVarName))
               .setMethodName("addResponse")
               .setArguments(expectedResponseVarExpr)
               .build());
@@ -675,7 +693,12 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(
-                    method.isPaged() ? getPagedResponseType(method, service) : methodOutputType)
+                    !method.isPaged()
+                        ? methodOutputType
+                        // If this method is a paginated mixin, use the host service, since
+                        // ServiceClient defines the paged response class and the mixed-in service
+                        // does not have a client.
+                        : getPagedResponseType(method, method.isMixin() ? apiService : rpcService))
                 .setName(method.isPaged() ? "pagedListResponse" : "actualResponse")
                 .build());
     Expr rpcJavaMethodInvocationExpr =
@@ -828,7 +851,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .setVariableExpr(actualRequestsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
+                    .setExprReferenceExpr(classMemberVarExprs.get(mockServiceVarName))
                     .setMethodName("getRequests")
                     .setReturnType(actualRequestsVarExpr.type())
                     .build())
@@ -1021,6 +1044,8 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .setVariableExpr(expectedResponseVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(expectedResponseValExpr)
             .build());
+
+    String mockServiceVarName = getMockServiceVarName(service);
     if (method.hasLro()) {
       VariableExpr resultOperationVarExpr =
           VariableExpr.withVariable(
@@ -1038,14 +1063,14 @@ public class ServiceClientTestClassComposer implements ClassComposer {
               .build());
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
+              .setExprReferenceExpr(classMemberVarExprs.get(mockServiceVarName))
               .setMethodName("addResponse")
               .setArguments(resultOperationVarExpr)
               .build());
     } else {
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
+              .setExprReferenceExpr(classMemberVarExprs.get(mockServiceVarName))
               .setMethodName("addResponse")
               .setArguments(expectedResponseVarExpr)
               .build());
@@ -1251,7 +1276,19 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         .build();
   }
 
-  // TODO(imraleung): Reorder params.
+  /**
+   * Creates a test method to exercise exceptions for a given RPC, e.g. createAssetTest.
+   *
+   * @param method the RPC for which this test method is created.
+   * @param service the service that {@code method} belongs to.
+   * @param methodSignature the method signature of the RPC under test.
+   * @param variantIndex the nth variant of the RPC under test. This applies when we have
+   *     polymorphism due to the presence of several method signature annotations in the proto.
+   * @param classMemberVarExprs the class members in the generated test class.
+   * @param resourceNames the resource names available for use.
+   * @param messageTypes the proto message types available for use.
+   */
+  // TODO(miraleung): Reorder params.
   private static MethodDefinition createRpcExceptionTestMethod(
       Method method,
       Service service,
@@ -1759,7 +1796,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     return javaMethodNameToReturnType;
   }
 
-  private static void addDynamicTypes(Service service, TypeStore typeStore) {
+  private static void addDynamicTypes(GapicContext context, Service service, TypeStore typeStore) {
     typeStore.putAll(
         service.pakkage(),
         Arrays.asList(
@@ -1775,6 +1812,19 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
+    for (Service mixinService : context.mixinServices()) {
+      typeStore.put(mixinService.pakkage(), ClassNames.getMockServiceClassName(mixinService));
+      for (Method mixinMethod : mixinService.methods()) {
+        if (!mixinMethod.isPaged()) {
+          continue;
+        }
+        typeStore.put(
+            service.pakkage(),
+            String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, mixinMethod.name()),
+            true,
+            ClassNames.getServiceClientClassName(service));
+      }
+    }
   }
 
   private static TypeNode getOperationCallSettingsType(Method protoMethod) {
