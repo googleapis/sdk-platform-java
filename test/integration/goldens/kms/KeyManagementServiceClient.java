@@ -299,6 +299,14 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
+   *   ListKeyRingsRequest request =
+   *       ListKeyRingsRequest.newBuilder()
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
    *   while (true) {
    *     ListKeyRingsResponse response =
    *         keyManagementServiceClient.listKeyRingsCallable().call(request);
@@ -442,6 +450,14 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
+   *   ListCryptoKeysRequest request =
+   *       ListCryptoKeysRequest.newBuilder()
+   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
    *   while (true) {
    *     ListCryptoKeysResponse response =
    *         keyManagementServiceClient.listCryptoKeysCallable().call(request);
@@ -597,6 +613,16 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
+   *   ListCryptoKeyVersionsRequest request =
+   *       ListCryptoKeyVersionsRequest.newBuilder()
+   *           .setParent(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
    *   while (true) {
    *     ListCryptoKeyVersionsResponse response =
    *         keyManagementServiceClient.listCryptoKeyVersionsCallable().call(request);
@@ -741,6 +767,14 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
+   *   ListImportJobsRequest request =
+   *       ListImportJobsRequest.newBuilder()
+   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
    *   while (true) {
    *     ListImportJobsResponse response =
    *         keyManagementServiceClient.listImportJobsCallable().call(request);
