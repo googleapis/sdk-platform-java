@@ -28,9 +28,11 @@ import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -304,7 +306,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                         .setVariableExpr(localResponseVarExpr.toBuilder().setIsDecl(true).build())
                         .setValueExpr(
                             MethodInvocationExpr.builder()
-                                .setMethodName("remove")
+                                .setMethodName("poll")
                                 .setExprReferenceExpr(responsesVarExpr)
                                 .setReturnType(objectType)
                                 .build())
@@ -485,15 +487,23 @@ public class MockServiceImplClassComposer implements ClassComposer {
     }
 
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(Exception.class));
+    // Constructs `response == null ? "" : response.getClass().getName()`.
     Expr actualResponseTypeString =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(
+        TernaryExpr.builder()
+            .setConditionExpr(
+                RelationalOperationExpr.equalToWithExprs(
+                    localResponseVarExpr, ValueExpr.createNullExpr()))
+            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("null")))
+            .setElseExpr(
                 MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(localResponseVarExpr)
-                    .setMethodName("getClass")
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(localResponseVarExpr)
+                            .setMethodName("getClass")
+                            .build())
+                    .setMethodName("getName")
+                    .setReturnType(TypeNode.STRING)
                     .build())
-            .setMethodName("getName")
-            .setReturnType(TypeNode.STRING)
             .build();
     Function<TypeNode, Expr> typeToStrFn =
         t ->

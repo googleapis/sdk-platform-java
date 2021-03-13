@@ -76,7 +76,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void createShelf(CreateShelfRequest request, StreamObserver<Shelf> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Shelf) {
       requests.add(request);
       responseObserver.onNext(((Shelf) response));
@@ -88,7 +88,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method CreateShelf, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Shelf.class.getName(),
                   Exception.class.getName())));
     }
@@ -96,7 +96,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void getShelf(GetShelfRequest request, StreamObserver<Shelf> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Shelf) {
       requests.add(request);
       responseObserver.onNext(((Shelf) response));
@@ -108,7 +108,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetShelf, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Shelf.class.getName(),
                   Exception.class.getName())));
     }
@@ -117,7 +117,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
   @Override
   public void listShelves(
       ListShelvesRequest request, StreamObserver<ListShelvesResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListShelvesResponse) {
       requests.add(request);
       responseObserver.onNext(((ListShelvesResponse) response));
@@ -129,7 +129,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListShelves, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListShelvesResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -137,7 +137,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void deleteShelf(DeleteShelfRequest request, StreamObserver<Empty> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Empty) {
       requests.add(request);
       responseObserver.onNext(((Empty) response));
@@ -149,7 +149,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method DeleteShelf, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Empty.class.getName(),
                   Exception.class.getName())));
     }
@@ -157,7 +157,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void mergeShelves(MergeShelvesRequest request, StreamObserver<Shelf> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Shelf) {
       requests.add(request);
       responseObserver.onNext(((Shelf) response));
@@ -169,7 +169,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method MergeShelves, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Shelf.class.getName(),
                   Exception.class.getName())));
     }
@@ -177,7 +177,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void createBook(CreateBookRequest request, StreamObserver<Book> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Book) {
       requests.add(request);
       responseObserver.onNext(((Book) response));
@@ -189,13 +189,15 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method CreateBook, expected %s or %s",
-                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
+                  response == null ? "null" : response.getClass().getName(),
+                  Book.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
   @Override
   public void getBook(GetBookRequest request, StreamObserver<Book> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Book) {
       requests.add(request);
       responseObserver.onNext(((Book) response));
@@ -207,14 +209,16 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetBook, expected %s or %s",
-                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
+                  response == null ? "null" : response.getClass().getName(),
+                  Book.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
   @Override
   public void listBooks(
       ListBooksRequest request, StreamObserver<ListBooksResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListBooksResponse) {
       requests.add(request);
       responseObserver.onNext(((ListBooksResponse) response));
@@ -226,7 +230,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListBooks, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListBooksResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -234,7 +238,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void deleteBook(DeleteBookRequest request, StreamObserver<Empty> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Empty) {
       requests.add(request);
       responseObserver.onNext(((Empty) response));
@@ -246,7 +250,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method DeleteBook, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Empty.class.getName(),
                   Exception.class.getName())));
     }
@@ -254,7 +258,7 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
 
   @Override
   public void updateBook(UpdateBookRequest request, StreamObserver<Book> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Book) {
       requests.add(request);
       responseObserver.onNext(((Book) response));
@@ -266,13 +270,15 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method UpdateBook, expected %s or %s",
-                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
+                  response == null ? "null" : response.getClass().getName(),
+                  Book.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
   @Override
   public void moveBook(MoveBookRequest request, StreamObserver<Book> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Book) {
       requests.add(request);
       responseObserver.onNext(((Book) response));
@@ -284,7 +290,9 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method MoveBook, expected %s or %s",
-                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
+                  response == null ? "null" : response.getClass().getName(),
+                  Book.class.getName(),
+                  Exception.class.getName())));
     }
   }
 }
