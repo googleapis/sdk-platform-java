@@ -61,7 +61,7 @@ public class MockLocationsImpl extends LocationsImplBase {
   @Override
   public void listLocations(
       ListLocationsRequest request, StreamObserver<ListLocationsResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListLocationsResponse) {
       requests.add(request);
       responseObserver.onNext(((ListLocationsResponse) response));
@@ -73,7 +73,7 @@ public class MockLocationsImpl extends LocationsImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListLocations, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListLocationsResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -81,7 +81,7 @@ public class MockLocationsImpl extends LocationsImplBase {
 
   @Override
   public void getLocation(GetLocationRequest request, StreamObserver<Location> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Location) {
       requests.add(request);
       responseObserver.onNext(((Location) response));
@@ -93,7 +93,7 @@ public class MockLocationsImpl extends LocationsImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetLocation, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Location.class.getName(),
                   Exception.class.getName())));
     }

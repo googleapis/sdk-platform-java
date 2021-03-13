@@ -45,7 +45,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void echo(EchoRequest request, StreamObserver<EchoResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof EchoResponse) {
       requests.add(request);
       responseObserver.onNext(((EchoResponse) response));
@@ -57,7 +57,7 @@ public class MockEchoImpl extends EchoImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method Echo, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   EchoResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -65,7 +65,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void expand(ExpandRequest request, StreamObserver<EchoResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof EchoResponse) {
       requests.add(request);
       responseObserver.onNext(((EchoResponse) response));
@@ -77,7 +77,7 @@ public class MockEchoImpl extends EchoImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method Expand, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   EchoResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -100,7 +100,7 @@ public class MockEchoImpl extends EchoImplBase {
                   new IllegalArgumentException(
                       String.format(
                           "Unrecognized response type %s for method Collect, expected %s or %s",
-                          response.getClass().getName(),
+                          response == null ? "null" : response.getClass().getName(),
                           EchoResponse.class.getName(),
                           Exception.class.getName())));
             }
@@ -136,7 +136,7 @@ public class MockEchoImpl extends EchoImplBase {
                   new IllegalArgumentException(
                       String.format(
                           "Unrecognized response type %s for method Chat, expected %s or %s",
-                          response.getClass().getName(),
+                          response == null ? "null" : response.getClass().getName(),
                           EchoResponse.class.getName(),
                           Exception.class.getName())));
             }
@@ -173,7 +173,7 @@ public class MockEchoImpl extends EchoImplBase {
                   new IllegalArgumentException(
                       String.format(
                           "Unrecognized response type %s for method ChatAgain, expected %s or %s",
-                          response.getClass().getName(),
+                          response == null ? "null" : response.getClass().getName(),
                           EchoResponse.class.getName(),
                           Exception.class.getName())));
             }
@@ -195,7 +195,7 @@ public class MockEchoImpl extends EchoImplBase {
   @Override
   public void pagedExpand(
       PagedExpandRequest request, StreamObserver<PagedExpandResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof PagedExpandResponse) {
       requests.add(request);
       responseObserver.onNext(((PagedExpandResponse) response));
@@ -207,7 +207,7 @@ public class MockEchoImpl extends EchoImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method PagedExpand, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   PagedExpandResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -216,7 +216,7 @@ public class MockEchoImpl extends EchoImplBase {
   @Override
   public void simplePagedExpand(
       PagedExpandRequest request, StreamObserver<PagedExpandResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof PagedExpandResponse) {
       requests.add(request);
       responseObserver.onNext(((PagedExpandResponse) response));
@@ -228,7 +228,7 @@ public class MockEchoImpl extends EchoImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method SimplePagedExpand, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   PagedExpandResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -236,7 +236,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void wait(WaitRequest request, StreamObserver<Operation> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Operation) {
       requests.add(request);
       responseObserver.onNext(((Operation) response));
@@ -248,7 +248,7 @@ public class MockEchoImpl extends EchoImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method Wait, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Operation.class.getName(),
                   Exception.class.getName())));
     }
@@ -256,7 +256,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void block(BlockRequest request, StreamObserver<BlockResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof BlockResponse) {
       requests.add(request);
       responseObserver.onNext(((BlockResponse) response));
@@ -268,7 +268,7 @@ public class MockEchoImpl extends EchoImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method Block, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   BlockResponse.class.getName(),
                   Exception.class.getName())));
     }

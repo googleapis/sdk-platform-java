@@ -63,7 +63,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void listKeyRings(
       ListKeyRingsRequest request, StreamObserver<ListKeyRingsResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListKeyRingsResponse) {
       requests.add(request);
       responseObserver.onNext(((ListKeyRingsResponse) response));
@@ -75,7 +75,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListKeyRings, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListKeyRingsResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -84,7 +84,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void listCryptoKeys(
       ListCryptoKeysRequest request, StreamObserver<ListCryptoKeysResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListCryptoKeysResponse) {
       requests.add(request);
       responseObserver.onNext(((ListCryptoKeysResponse) response));
@@ -96,7 +96,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListCryptoKeys, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListCryptoKeysResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -106,7 +106,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   public void listCryptoKeyVersions(
       ListCryptoKeyVersionsRequest request,
       StreamObserver<ListCryptoKeyVersionsResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListCryptoKeyVersionsResponse) {
       requests.add(request);
       responseObserver.onNext(((ListCryptoKeyVersionsResponse) response));
@@ -118,7 +118,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListCryptoKeyVersions, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListCryptoKeyVersionsResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -127,7 +127,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void listImportJobs(
       ListImportJobsRequest request, StreamObserver<ListImportJobsResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ListImportJobsResponse) {
       requests.add(request);
       responseObserver.onNext(((ListImportJobsResponse) response));
@@ -139,7 +139,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ListImportJobs, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ListImportJobsResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -147,7 +147,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
 
   @Override
   public void getKeyRing(GetKeyRingRequest request, StreamObserver<KeyRing> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof KeyRing) {
       requests.add(request);
       responseObserver.onNext(((KeyRing) response));
@@ -159,7 +159,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetKeyRing, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   KeyRing.class.getName(),
                   Exception.class.getName())));
     }
@@ -168,7 +168,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void getCryptoKey(
       GetCryptoKeyRequest request, StreamObserver<CryptoKey> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKey) {
       requests.add(request);
       responseObserver.onNext(((CryptoKey) response));
@@ -180,7 +180,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetCryptoKey, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKey.class.getName(),
                   Exception.class.getName())));
     }
@@ -189,7 +189,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void getCryptoKeyVersion(
       GetCryptoKeyVersionRequest request, StreamObserver<CryptoKeyVersion> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKeyVersion) {
       requests.add(request);
       responseObserver.onNext(((CryptoKeyVersion) response));
@@ -201,7 +201,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetCryptoKeyVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
                   Exception.class.getName())));
     }
@@ -210,7 +210,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void getPublicKey(
       GetPublicKeyRequest request, StreamObserver<PublicKey> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof PublicKey) {
       requests.add(request);
       responseObserver.onNext(((PublicKey) response));
@@ -222,7 +222,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetPublicKey, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   PublicKey.class.getName(),
                   Exception.class.getName())));
     }
@@ -231,7 +231,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void getImportJob(
       GetImportJobRequest request, StreamObserver<ImportJob> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ImportJob) {
       requests.add(request);
       responseObserver.onNext(((ImportJob) response));
@@ -243,7 +243,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetImportJob, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ImportJob.class.getName(),
                   Exception.class.getName())));
     }
@@ -252,7 +252,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void createKeyRing(
       CreateKeyRingRequest request, StreamObserver<KeyRing> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof KeyRing) {
       requests.add(request);
       responseObserver.onNext(((KeyRing) response));
@@ -264,7 +264,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method CreateKeyRing, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   KeyRing.class.getName(),
                   Exception.class.getName())));
     }
@@ -273,7 +273,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void createCryptoKey(
       CreateCryptoKeyRequest request, StreamObserver<CryptoKey> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKey) {
       requests.add(request);
       responseObserver.onNext(((CryptoKey) response));
@@ -285,7 +285,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method CreateCryptoKey, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKey.class.getName(),
                   Exception.class.getName())));
     }
@@ -294,7 +294,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void createCryptoKeyVersion(
       CreateCryptoKeyVersionRequest request, StreamObserver<CryptoKeyVersion> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKeyVersion) {
       requests.add(request);
       responseObserver.onNext(((CryptoKeyVersion) response));
@@ -306,7 +306,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method CreateCryptoKeyVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
                   Exception.class.getName())));
     }
@@ -315,7 +315,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void importCryptoKeyVersion(
       ImportCryptoKeyVersionRequest request, StreamObserver<CryptoKeyVersion> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKeyVersion) {
       requests.add(request);
       responseObserver.onNext(((CryptoKeyVersion) response));
@@ -327,7 +327,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method ImportCryptoKeyVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
                   Exception.class.getName())));
     }
@@ -336,7 +336,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void createImportJob(
       CreateImportJobRequest request, StreamObserver<ImportJob> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof ImportJob) {
       requests.add(request);
       responseObserver.onNext(((ImportJob) response));
@@ -348,7 +348,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method CreateImportJob, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   ImportJob.class.getName(),
                   Exception.class.getName())));
     }
@@ -357,7 +357,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void updateCryptoKey(
       UpdateCryptoKeyRequest request, StreamObserver<CryptoKey> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKey) {
       requests.add(request);
       responseObserver.onNext(((CryptoKey) response));
@@ -369,7 +369,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method UpdateCryptoKey, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKey.class.getName(),
                   Exception.class.getName())));
     }
@@ -378,7 +378,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void updateCryptoKeyVersion(
       UpdateCryptoKeyVersionRequest request, StreamObserver<CryptoKeyVersion> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKeyVersion) {
       requests.add(request);
       responseObserver.onNext(((CryptoKeyVersion) response));
@@ -390,7 +390,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method UpdateCryptoKeyVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
                   Exception.class.getName())));
     }
@@ -398,7 +398,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
 
   @Override
   public void encrypt(EncryptRequest request, StreamObserver<EncryptResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof EncryptResponse) {
       requests.add(request);
       responseObserver.onNext(((EncryptResponse) response));
@@ -410,7 +410,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method Encrypt, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   EncryptResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -418,7 +418,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
 
   @Override
   public void decrypt(DecryptRequest request, StreamObserver<DecryptResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof DecryptResponse) {
       requests.add(request);
       responseObserver.onNext(((DecryptResponse) response));
@@ -430,7 +430,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method Decrypt, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   DecryptResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -439,7 +439,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void asymmetricSign(
       AsymmetricSignRequest request, StreamObserver<AsymmetricSignResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof AsymmetricSignResponse) {
       requests.add(request);
       responseObserver.onNext(((AsymmetricSignResponse) response));
@@ -451,7 +451,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method AsymmetricSign, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   AsymmetricSignResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -461,7 +461,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   public void asymmetricDecrypt(
       AsymmetricDecryptRequest request,
       StreamObserver<AsymmetricDecryptResponse> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof AsymmetricDecryptResponse) {
       requests.add(request);
       responseObserver.onNext(((AsymmetricDecryptResponse) response));
@@ -473,7 +473,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method AsymmetricDecrypt, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   AsymmetricDecryptResponse.class.getName(),
                   Exception.class.getName())));
     }
@@ -482,7 +482,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void updateCryptoKeyPrimaryVersion(
       UpdateCryptoKeyPrimaryVersionRequest request, StreamObserver<CryptoKey> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKey) {
       requests.add(request);
       responseObserver.onNext(((CryptoKey) response));
@@ -494,7 +494,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method UpdateCryptoKeyPrimaryVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKey.class.getName(),
                   Exception.class.getName())));
     }
@@ -503,7 +503,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void destroyCryptoKeyVersion(
       DestroyCryptoKeyVersionRequest request, StreamObserver<CryptoKeyVersion> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKeyVersion) {
       requests.add(request);
       responseObserver.onNext(((CryptoKeyVersion) response));
@@ -515,7 +515,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method DestroyCryptoKeyVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
                   Exception.class.getName())));
     }
@@ -524,7 +524,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
   @Override
   public void restoreCryptoKeyVersion(
       RestoreCryptoKeyVersionRequest request, StreamObserver<CryptoKeyVersion> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof CryptoKeyVersion) {
       requests.add(request);
       responseObserver.onNext(((CryptoKeyVersion) response));
@@ -536,7 +536,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method RestoreCryptoKeyVersion, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   CryptoKeyVersion.class.getName(),
                   Exception.class.getName())));
     }
@@ -544,7 +544,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
 
   @Override
   public void getIamPolicy(GetIamPolicyRequest request, StreamObserver<Policy> responseObserver) {
-    Object response = responses.remove();
+    Object response = responses.poll();
     if (response instanceof Policy) {
       requests.add(request);
       responseObserver.onNext(((Policy) response));
@@ -556,7 +556,7 @@ public class MockKeyManagementServiceImpl extends KeyManagementServiceImplBase {
           new IllegalArgumentException(
               String.format(
                   "Unrecognized response type %s for method GetIamPolicy, expected %s or %s",
-                  response.getClass().getName(),
+                  response == null ? "null" : response.getClass().getName(),
                   Policy.class.getName(),
                   Exception.class.getName())));
     }
