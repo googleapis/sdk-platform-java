@@ -3374,6 +3374,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
+   *   ListLocationsRequest request =
+   *       ListLocationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
    *   while (true) {
    *     ListLocationsResponse response =
    *         keyManagementServiceClient.listLocationsCallable().call(request);
