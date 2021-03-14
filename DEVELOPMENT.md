@@ -7,7 +7,8 @@ below are temporary and better ones will be coming.
 
 1.  Clone this repo.
 2.  Copy the Git pre-commit hooks. This will automatically check the build, run
-    tests, and perform linting before each commit.
+    tests, and perform linting before each commit. (Symlinks don't seem to work,
+    but if you find a way, please add it here!)
 
     ```sh
     cp .githooks/pre-commit .git/hooks/pre-commit
@@ -32,17 +33,16 @@ below are temporary and better ones will be coming.
     load(
         "@com_google_googleapis_imports//:imports.bzl",
         # Existing rules here.
-        "java_gapic_assembly_gradle_pkg2",
-        "java_gapic_library2",
+        "java_gapic_assembly_gradle_pkg",
+        "java_gapic_library",
     )
 
     # This should either replace the existing monolith target or have a unique name
     # that includes "java_gapic".
-    java_gapic_library2(
+    java_gapic_library(
         name = "showcase_java_gapic",
         srcs = [":showcase_proto_with_info"],
         grpc_service_config = "showcase_grpc_service_config.json",
-        package = "google.showcase.v1beta1",
         test_deps = [
             ":showcase_java_grpc",
         ],
@@ -51,7 +51,7 @@ below are temporary and better ones will be coming.
         ],
     )
 
-    java_gapic_assembly_gradle_pkg2(
+    java_gapic_assembly_gradle_pkg(
         # This name should be unique from the existing target name.
         name = "google-cloud-showcase-v1beta1-java",
         deps = [
