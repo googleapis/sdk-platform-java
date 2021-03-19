@@ -1,11 +1,9 @@
 # Development Workflow
 
-This is a temporal workflow that will evolve with codebase. The steps described
-below are temporary and better ones will be coming.
-
 ## Set Up
 
 1.  Clone this repo.
+
 2.  Copy the Git pre-commit hooks. This will automatically check the build, run
     tests, and perform linting before each commit. (Symlinks don't seem to work,
     but if you find a way, please add it here!)
