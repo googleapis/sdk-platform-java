@@ -31,7 +31,8 @@ package com.google.type;
  * * A year on its own, with zero month and day values
  * * A year and month value, with a zero day, such as a credit card expiration
  * date
- * Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and `google.protobuf.Timestamp`.
+ * Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and
+ * `google.protobuf.Timestamp`.
  * </pre>
  *
  * Protobuf type {@code google.type.Date}
@@ -369,7 +370,8 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
    * * A year on its own, with zero month and day values
    * * A year and month value, with a zero day, such as a credit card expiration
    * date
-   * Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and `google.protobuf.Timestamp`.
+   * Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and
+   * `google.protobuf.Timestamp`.
    * </pre>
    *
    * Protobuf type {@code google.type.Date}

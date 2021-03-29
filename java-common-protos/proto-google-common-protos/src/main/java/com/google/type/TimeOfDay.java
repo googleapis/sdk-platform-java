@@ -24,7 +24,8 @@ package com.google.type;
  * <pre>
  * Represents a time of day. The date and time zone are either not significant
  * or are specified elsewhere. An API may choose to allow leap seconds. Related
- * types are [google.type.Date][google.type.Date] and `google.protobuf.Timestamp`.
+ * types are [google.type.Date][google.type.Date] and
+ * `google.protobuf.Timestamp`.
  * </pre>
  *
  * Protobuf type {@code google.type.TimeOfDay}
@@ -385,7 +386,8 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Represents a time of day. The date and time zone are either not significant
    * or are specified elsewhere. An API may choose to allow leap seconds. Related
-   * types are [google.type.Date][google.type.Date] and `google.protobuf.Timestamp`.
+   * types are [google.type.Date][google.type.Date] and
+   * `google.protobuf.Timestamp`.
    * </pre>
    *
    * Protobuf type {@code google.type.TimeOfDay}

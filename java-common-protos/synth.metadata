@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "3fe8289816924b9d4fdcefa49f225fc456c44064"
+        "sha": "35eb687d4bcbc69cef18ddb9bfa41e0473ac4b40"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "8e71120af081ab9402669df1f290beeae9629e16",
-        "internalRef": "361581745"
+        "sha": "15c5e21948ff6fbe41f91bdf04f6252f91a12d59",
+        "internalRef": "364894175"
       }
     },
     {
@@ -295,6 +295,9 @@
     "proto-google-common-protos/src/main/java/com/google/type/DateTimeProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/DayOfWeek.java",
     "proto-google-common-protos/src/main/java/com/google/type/DayOfWeekProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/Decimal.java",
+    "proto-google-common-protos/src/main/java/com/google/type/DecimalOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/type/DecimalProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/Expr.java",
     "proto-google-common-protos/src/main/java/com/google/type/ExprOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/ExprProto.java",

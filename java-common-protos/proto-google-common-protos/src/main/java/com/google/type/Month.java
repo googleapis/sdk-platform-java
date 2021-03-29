@@ -32,7 +32,7 @@ public enum Month implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The unspecifed month.
+   * The unspecified month.
    * </pre>
    *
    * <code>MONTH_UNSPECIFIED = 0;</code>
@@ -165,7 +165,7 @@ public enum Month implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The unspecifed month.
+   * The unspecified month.
    * </pre>
    *
    * <code>MONTH_UNSPECIFIED = 0;</code>
