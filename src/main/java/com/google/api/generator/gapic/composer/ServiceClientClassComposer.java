@@ -138,7 +138,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setHeaderCommentStatements(
                 createClassHeaderComments(service, typeStore, resourceNames, messageTypes))
             .setPackageString(pakkage)
-            .setAnnotations(createClassAnnotations(pakkage, service.isDeprecated(), typeStore))
+            .setAnnotations(createClassAnnotations(service, typeStore))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setImplementsTypes(createClassImplements(typeStore))
@@ -158,13 +158,12 @@ public class ServiceClientClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(
-      String pakkage, boolean isDeprecated, TypeStore typeStore) {
+  private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
     List<AnnotationNode> annotations = new ArrayList<>();
-    if (!PackageChecker.isGaApi(pakkage)) {
+    if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
     }
-    if (isDeprecated) {
+    if (service.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
     annotations.add(
