@@ -191,9 +191,7 @@ public class ResourceNameHelperClassComposer {
     //         "projects/{project}/locations/{location}/autoscalingPolicies/{autoscaling_policy}");
     for (int i = 0; i < patterns.size(); i++) {
       VariableExpr varExpr =
-          templateFinalVarExprs
-              .get(i)
-              .toBuilder()
+          templateFinalVarExprs.get(i).toBuilder()
               .setIsDecl(true)
               .setScope(ScopeNode.PRIVATE)
               .setIsStatic(true)
@@ -215,9 +213,7 @@ public class ResourceNameHelperClassComposer {
     }
 
     memberVars.add(
-        FIXED_CLASS_VARS
-            .get("fieldValuesMap")
-            .toBuilder()
+        FIXED_CLASS_VARS.get("fieldValuesMap").toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsVolatile(true)
@@ -248,7 +244,6 @@ public class ResourceNameHelperClassComposer {
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
       TypeStore typeStore) {
-    // TODO(summerji): Add equals and hashCode overrides.
     List<MethodDefinition> javaMethods = new ArrayList<>();
 
     javaMethods.addAll(
@@ -1452,9 +1447,7 @@ public class ResourceNameHelperClassComposer {
                 .setStaticReferenceType(FIXED_TYPESTORE.get("Objects"))
                 .setMethodName("equals")
                 .setArguments(
-                    FIXED_CLASS_VARS
-                        .get("pathTemplate")
-                        .toBuilder()
+                    FIXED_CLASS_VARS.get("pathTemplate").toBuilder()
                         .setExprReferenceExpr(outerClassVarExpr)
                         .build(),
                     templateFinalVarExpr)
@@ -1482,8 +1475,7 @@ public class ResourceNameHelperClassComposer {
             AssignmentExpr.builder()
                 .setVariableExpr(currClassTokenVarExpr)
                 .setValueExpr(
-                    currClassTokenVarExpr
-                        .toBuilder()
+                    currClassTokenVarExpr.toBuilder()
                         .setExprReferenceExpr(outerClassVarExpr)
                         .build())
                 .build());

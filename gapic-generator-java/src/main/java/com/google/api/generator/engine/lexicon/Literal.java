@@ -16,7 +16,6 @@ package com.google.api.generator.engine.lexicon;
 
 import java.util.regex.Pattern;
 
-// TODO(miraleung): Refactor this out into int, bool, null, float, string literal classes.
 public class Literal {
   private static final String BOOLEAN_TRUE = "true";
   private static final String BOOLEAN_FALSE = "false";
