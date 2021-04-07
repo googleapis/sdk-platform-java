@@ -95,8 +95,19 @@ public class UnaryOperationExprTest {
 
   @Test
   public void invalidPostIncrement_finalVariable() {
-    Variable var = Variable.builder().setName("i").setType(TypeNode.INT).build();
-    VariableExpr variableExpr = VariableExpr.builder().setIsFinal(true).setVariable(var).build();
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setIsFinal(true).setVariable(variable).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> UnaryOperationExpr.postfixIncrementWithExpr(variableExpr));
+  }
+
+  @Test
+  public void invalidPostIncrement_declaredVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
     assertThrows(
         IllegalStateException.class,
         () -> UnaryOperationExpr.postfixIncrementWithExpr(variableExpr));
