@@ -90,21 +90,30 @@ public class SettingsCommentComposer {
           .map(c -> CommentStatement.withComment(c))
           .collect(Collectors.toList());
 
-  public static CommentStatement createCallSettingsGetterComment(String javaMethodName) {
-    return toSimpleComment(String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName));
+  public static CommentStatement createCallSettingsGetterComment(
+      String javaMethodName, boolean isMethodDeprecated) {
+    String methodComment = String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName);
+    return isMethodDeprecated
+        ? toDeprecatedSimpleComment(methodComment)
+        : toSimpleComment(methodComment);
   }
 
   public static CommentStatement createBuilderClassComment(String outerClassName) {
     return toSimpleComment(String.format(BUILDER_CLASS_DOC_PATTERN, outerClassName));
   }
 
-  public static CommentStatement createCallSettingsBuilderGetterComment(String javaMethodName) {
-    return toSimpleComment(String.format(CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN, javaMethodName));
+  public static CommentStatement createCallSettingsBuilderGetterComment(
+      String javaMethodName, boolean isMethodDeprecated) {
+    String methodComment = String.format(CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN, javaMethodName);
+    return isMethodDeprecated
+        ? toDeprecatedSimpleComment(methodComment)
+        : toSimpleComment(methodComment);
   }
 
   public static List<CommentStatement> createClassHeaderComments(
       String configuredClassName,
       String defaultHost,
+      boolean isDeprecated,
       Optional<String> methodNameOpt,
       Optional<String> sampleCodeOpt,
       TypeNode classType) {
@@ -141,6 +150,10 @@ public class SettingsCommentComposer {
               .addSampleCode(sampleCodeOpt.get());
     }
 
+    if (isDeprecated) {
+      javaDocCommentBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
+    }
+
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(javaDocCommentBuilder.build()));
@@ -148,5 +161,13 @@ public class SettingsCommentComposer {
 
   private static CommentStatement toSimpleComment(String comment) {
     return CommentStatement.withComment(JavaDocComment.withComment(comment));
+  }
+
+  private static CommentStatement toDeprecatedSimpleComment(String comment) {
+    return CommentStatement.withComment(
+        JavaDocComment.builder()
+            .addComment(comment)
+            .setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING)
+            .build());
   }
 }

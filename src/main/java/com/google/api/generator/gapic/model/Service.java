@@ -38,6 +38,8 @@ public abstract class Service {
   // New Java class name as defined in gapic.yaml's language settings.
   public abstract String overriddenName();
 
+  public abstract boolean isDeprecated();
+
   public abstract ImmutableList<Method> methods();
 
   @Nullable
@@ -50,7 +52,7 @@ public abstract class Service {
   public abstract Builder toBuilder();
 
   public static Builder builder() {
-    return new AutoValue_Service.Builder().setMethods(ImmutableList.of());
+    return new AutoValue_Service.Builder().setMethods(ImmutableList.of()).setIsDeprecated(false);
   }
 
   @AutoValue.Builder
@@ -68,6 +70,8 @@ public abstract class Service {
     public abstract Builder setProtoPakkage(String pakkage);
 
     public abstract Builder setOriginalJavaPackage(String originalJavaPackage);
+
+    public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Builder setMethods(List<Method> methods);
 

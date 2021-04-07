@@ -41,6 +41,8 @@ public abstract class Method {
 
   public abstract boolean isPaged();
 
+  public abstract boolean isDeprecated();
+
   @Nullable
   public abstract LongrunningOperation lro();
 
@@ -83,7 +85,8 @@ public abstract class Method {
         .setMethodSignatures(ImmutableList.of())
         .setHttpBindings(ImmutableList.of())
         .setIsBatching(false)
-        .setIsPaged(false);
+        .setIsPaged(false)
+        .setIsDeprecated(false);
   }
 
   public static Stream toStream(boolean isClientStreaming, boolean isServerStreaming) {
@@ -122,6 +125,8 @@ public abstract class Method {
     public abstract Builder setIsBatching(boolean isBatching);
 
     public abstract Builder setIsPaged(boolean isPaged);
+
+    public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Method build();
   }

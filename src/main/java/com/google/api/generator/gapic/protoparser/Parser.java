@@ -341,6 +341,11 @@ public class Parser {
                         serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
               }
 
+              boolean isDeprecated = false;
+              if (serviceOptions.hasDeprecated()) {
+                isDeprecated = serviceOptions.getDeprecated();
+              }
+
               Service.Builder serviceBuilder = Service.builder();
               if (fileDescriptor.toProto().hasSourceCodeInfo()) {
                 SourceCodeInfoLocation protoServiceLocation =
@@ -372,6 +377,7 @@ public class Parser {
                   .setPakkage(pakkage)
                   .setOriginalJavaPackage(originalJavaPackage)
                   .setProtoPakkage(fileDescriptor.getPackage())
+                  .setIsDeprecated(isDeprecated)
                   .setMethods(
                       parseMethods(
                           s,
@@ -542,6 +548,11 @@ public class Parser {
         }
       }
 
+      boolean isDeprecated = false;
+      if (protoMethod.getOptions().hasDeprecated()) {
+        isDeprecated = protoMethod.getOptions().getDeprecated();
+      }
+
       Message inputMessage = messageTypes.get(inputType.reference().simpleName());
       Preconditions.checkNotNull(
           inputMessage,
@@ -579,6 +590,7 @@ public class Parser {
               .setHttpBindings(httpBindings)
               .setIsBatching(isBatching)
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
+              .setIsDeprecated(isDeprecated)
               .build());
 
       // Any input type that has a resource reference will need a resource name helper class.

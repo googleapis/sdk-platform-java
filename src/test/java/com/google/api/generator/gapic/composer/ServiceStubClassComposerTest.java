@@ -38,4 +38,18 @@ public class ServiceStubClassComposerTest {
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
+
+  @Test
+  public void generateServiceClasses_deprecated() {
+    GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
+    Service protoService = context.services().get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "DeprecatedServiceStub.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
 }
