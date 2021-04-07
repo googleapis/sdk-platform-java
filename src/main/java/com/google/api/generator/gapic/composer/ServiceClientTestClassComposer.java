@@ -1288,7 +1288,6 @@ public class ServiceClientTestClassComposer implements ClassComposer {
    * @param resourceNames the resource names available for use.
    * @param messageTypes the proto message types available for use.
    */
-  // TODO(miraleung): Reorder params.
   private static MethodDefinition createRpcExceptionTestMethod(
       Method method,
       Service service,

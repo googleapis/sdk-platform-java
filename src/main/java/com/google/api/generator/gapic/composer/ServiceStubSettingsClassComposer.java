@@ -265,7 +265,6 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
-    // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
       boolean hasBatchingSettings =
           !Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method);
