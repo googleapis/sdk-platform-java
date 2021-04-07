@@ -150,6 +150,10 @@ public class ServiceClientCommentComposer {
 
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING);
 
+    if (service.isDeprecated()) {
+      classHeaderJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
+    }
+
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(classHeaderJavadocBuilder.build()));
@@ -190,11 +194,16 @@ public class ServiceClientCommentComposer {
 
     methodJavadocBuilder.setThrows(API_EXCEPTION_TYPE_NAME, EXCEPTION_CONDITION);
 
+    if (method.isDeprecated()) {
+      methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
+    }
+
     List<CommentStatement> comments = new ArrayList<>();
     comments.add(CommentComposer.AUTO_GENERATED_METHOD_COMMENT);
     if (!methodJavadocBuilder.emptyComments()) {
       comments.add(CommentStatement.withComment(methodJavadocBuilder.build()));
     }
+
     return comments;
   }
 
@@ -227,6 +236,10 @@ public class ServiceClientCommentComposer {
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
     if (sampleCodeOpt.isPresent()) {
       methodJavadocBuilder.addSampleCode(sampleCodeOpt.get());
+    }
+
+    if (method.isDeprecated()) {
+      methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
     return Arrays.asList(

@@ -138,7 +138,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setHeaderCommentStatements(
                 createClassHeaderComments(service, typeStore, resourceNames, messageTypes))
             .setPackageString(pakkage)
-            .setAnnotations(createClassAnnotations(pakkage, typeStore))
+            .setAnnotations(createClassAnnotations(pakkage, service.isDeprecated(), typeStore))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setImplementsTypes(createClassImplements(typeStore))
@@ -158,10 +158,14 @@ public class ServiceClientClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(String pakkage, TypeStore typeStore) {
+  private static List<AnnotationNode> createClassAnnotations(
+      String pakkage, boolean isDeprecated, TypeStore typeStore) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (!PackageChecker.isGaApi(pakkage)) {
       annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
+    }
+    if (isDeprecated) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
     annotations.add(
         AnnotationNode.builder()
@@ -544,6 +548,8 @@ public class ServiceClientClassComposer implements ClassComposer {
                 messageTypes,
                 typeStore,
                 resourceNames);
+
+        // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata
             .get(method.name())
             .addAll(
@@ -559,23 +565,31 @@ public class ServiceClientClassComposer implements ClassComposer {
                 messageTypes,
                 typeStore,
                 resourceNames);
+
+        // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
         javaMethods.add(generatedMethod);
       }
       if (method.hasLro()) {
         MethodDefinition generatedMethod =
             createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames);
+
+        // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
         javaMethods.add(generatedMethod);
       }
       if (method.isPaged()) {
         MethodDefinition generatedMethod =
             createPagedCallableMethod(service, method, typeStore, messageTypes, resourceNames);
+
+        // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
         javaMethods.add(generatedMethod);
       }
       MethodDefinition generatedMethod =
           createCallableMethod(service, method, typeStore, messageTypes, resourceNames);
+
+      // Collect data for the gapic_metadata.json file.
       grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
       javaMethods.add(generatedMethod);
     }
@@ -670,6 +684,12 @@ public class ServiceClientClassComposer implements ClassComposer {
         methodVariantBuilder =
             methodVariantBuilder.setReturnType(methodOutputType).setReturnExpr(rpcInvocationExpr);
       }
+
+      if (method.isDeprecated()) {
+        methodVariantBuilder =
+            methodVariantBuilder.setAnnotations(
+                Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+      }
       methodVariantBuilder = methodVariantBuilder.setBody(statements);
       javaMethods.add(methodVariantBuilder.build());
     }
@@ -738,6 +758,11 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setIsFinal(true)
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
             .setArguments(Arrays.asList(requestArgVarExpr));
+
+    if (method.isDeprecated()) {
+      methodBuilder =
+          methodBuilder.setAnnotations(Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+    }
 
     if (isProtoEmptyType(methodOutputType)) {
       methodBuilder =
@@ -866,7 +891,14 @@ public class ServiceClientClassComposer implements ClassComposer {
       }
     }
 
-    return MethodDefinition.builder()
+    MethodDefinition.Builder methodDefBuilder = MethodDefinition.builder();
+    if (method.isDeprecated()) {
+      methodDefBuilder =
+          methodDefBuilder.setAnnotations(
+              Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+    }
+
+    return methodDefBuilder
         .setHeaderCommentStatements(
             ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(
                 method, sampleCodeOpt))
