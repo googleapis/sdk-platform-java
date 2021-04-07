@@ -3197,117 +3197,6 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sets the access control policy on the specified resource. Replaces any existing policy.
-   *
-   * <p>Sample code:
-   *
-   * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   Policy response = keyManagementServiceClient.setIamPolicy(request);
-   * }
-   * }</pre>
-   *
-   * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Policy setIamPolicy(SetIamPolicyRequest request) {
-    return setIamPolicyCallable().call(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sets the access control policy on the specified resource. Replaces any existing policy.
-   *
-   * <p>Sample code:
-   *
-   * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future =
-   *       keyManagementServiceClient.setIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
-   * }
-   * }</pre>
-   */
-  public final UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
-    return stub.setIamPolicyCallable();
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Returns permissions that a caller has on the specified resource. If the resource does not
-   * exist, this will return an empty set of permissions, not a NOT_FOUND error.
-   *
-   * <p>Note: This operation is designed to be used for building permission-aware UIs and
-   * command-line tools, not for authorization checking. This operation may "fail open" without
-   * warning.
-   *
-   * <p>Sample code:
-   *
-   * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(request);
-   * }
-   * }</pre>
-   *
-   * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
-    return testIamPermissionsCallable().call(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Returns permissions that a caller has on the specified resource. If the resource does not
-   * exist, this will return an empty set of permissions, not a NOT_FOUND error.
-   *
-   * <p>Note: This operation is designed to be used for building permission-aware UIs and
-   * command-line tools, not for authorization checking. This operation may "fail open" without
-   * warning.
-   *
-   * <p>Sample code:
-   *
-   * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<TestIamPermissionsResponse> future =
-   *       keyManagementServiceClient.testIamPermissionsCallable().futureCall(request);
-   *   // Do something.
-   *   TestIamPermissionsResponse response = future.get();
-   * }
-   * }</pre>
-   */
-  public final UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>
-      testIamPermissionsCallable() {
-    return stub.testIamPermissionsCallable();
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
    * Lists information about the supported locations for this service.
    *
    * <p>Sample code:
@@ -3441,6 +3330,117 @@ public class KeyManagementServiceClient implements BackgroundResource {
    */
   public final UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
     return stub.getLocationCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sets the access control policy on the specified resource. Replaces any existing policy.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (KeyManagementServiceClient keyManagementServiceClient =
+   *     KeyManagementServiceClient.create()) {
+   *   SetIamPolicyRequest request =
+   *       SetIamPolicyRequest.newBuilder()
+   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setPolicy(Policy.newBuilder().build())
+   *           .build();
+   *   Policy response = keyManagementServiceClient.setIamPolicy(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Policy setIamPolicy(SetIamPolicyRequest request) {
+    return setIamPolicyCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sets the access control policy on the specified resource. Replaces any existing policy.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (KeyManagementServiceClient keyManagementServiceClient =
+   *     KeyManagementServiceClient.create()) {
+   *   SetIamPolicyRequest request =
+   *       SetIamPolicyRequest.newBuilder()
+   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setPolicy(Policy.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Policy> future =
+   *       keyManagementServiceClient.setIamPolicyCallable().futureCall(request);
+   *   // Do something.
+   *   Policy response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
+    return stub.setIamPolicyCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Returns permissions that a caller has on the specified resource. If the resource does not
+   * exist, this will return an empty set of permissions, not a NOT_FOUND error.
+   *
+   * <p>Note: This operation is designed to be used for building permission-aware UIs and
+   * command-line tools, not for authorization checking. This operation may "fail open" without
+   * warning.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (KeyManagementServiceClient keyManagementServiceClient =
+   *     KeyManagementServiceClient.create()) {
+   *   TestIamPermissionsRequest request =
+   *       TestIamPermissionsRequest.newBuilder()
+   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .addAllPermissions(new ArrayList<String>())
+   *           .build();
+   *   TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
+    return testIamPermissionsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Returns permissions that a caller has on the specified resource. If the resource does not
+   * exist, this will return an empty set of permissions, not a NOT_FOUND error.
+   *
+   * <p>Note: This operation is designed to be used for building permission-aware UIs and
+   * command-line tools, not for authorization checking. This operation may "fail open" without
+   * warning.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (KeyManagementServiceClient keyManagementServiceClient =
+   *     KeyManagementServiceClient.create()) {
+   *   TestIamPermissionsRequest request =
+   *       TestIamPermissionsRequest.newBuilder()
+   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .addAllPermissions(new ArrayList<String>())
+   *           .build();
+   *   ApiFuture<TestIamPermissionsResponse> future =
+   *       keyManagementServiceClient.testIamPermissionsCallable().futureCall(request);
+   *   // Do something.
+   *   TestIamPermissionsResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>
+      testIamPermissionsCallable() {
+    return stub.testIamPermissionsCallable();
   }
 
   @Override

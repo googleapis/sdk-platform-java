@@ -40,6 +40,20 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
+  public void generateGrpcServiceStubClass_deprecated() {
+    GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
+    Service protoService = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, protoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "GrpcDeprecatedServiceStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcDeprecatedServiceStub.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
   public void generateGrpcServiceStubClass_httpBindings() {
     GapicContext context = TestProtoLoaderUtil.parseShowcaseTesting();
     Service testingProtoService = context.services().get(0);

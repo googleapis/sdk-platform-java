@@ -32,33 +32,49 @@ public class StubCommentComposer {
       "This class is for advanced usage and reflects the underlying API directly.";
 
   public static List<CommentStatement> createGrpcServiceStubClassHeaderComments(
-      String serviceName) {
+      String serviceName, boolean isDeprecated) {
+    JavaDocComment.Builder javaDocBuilder = JavaDocComment.builder();
+    if (isDeprecated) {
+      javaDocBuilder = javaDocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
+    }
+
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(
-            JavaDocComment.builder()
+            javaDocBuilder
                 .addComment(String.format(GRPC_STUB_CLASS_HEADER_SUMMARY_PATTERN, serviceName))
                 .addParagraph(ADVANCED_USAGE_API_REFLECTION_DESCRIPTION)
                 .build()));
   }
 
   public static List<CommentStatement> createGrpcServiceCallableFactoryClassHeaderComments(
-      String serviceName) {
+      String serviceName, boolean isDeprecated) {
+    JavaDocComment.Builder javaDocBuilder = JavaDocComment.builder();
+    if (isDeprecated) {
+      javaDocBuilder = javaDocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
+    }
+
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(
-            JavaDocComment.builder()
+            javaDocBuilder
                 .addComment(
                     String.format(GRPC_CALLABLE_FACTORY_CLASS_HEADER_SUMMARY_PATTERN, serviceName))
                 .addParagraph(ADVANCED_USAGE_DESCRIPTION)
                 .build()));
   }
 
-  public static List<CommentStatement> createServiceStubClassHeaderComments(String serviceName) {
+  public static List<CommentStatement> createServiceStubClassHeaderComments(
+      String serviceName, boolean isDeprecated) {
+    JavaDocComment.Builder javaDocBuilder = JavaDocComment.builder();
+    if (isDeprecated) {
+      javaDocBuilder = javaDocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
+    }
+
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(
-            JavaDocComment.builder()
+            javaDocBuilder
                 .addComment(String.format(STUB_CLASS_HEADER_SUMMARY_PATTERN, serviceName))
                 .addParagraph(ADVANCED_USAGE_API_REFLECTION_DESCRIPTION)
                 .build()));

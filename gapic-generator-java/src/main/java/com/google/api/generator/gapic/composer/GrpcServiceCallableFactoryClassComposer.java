@@ -77,8 +77,8 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 StubCommentComposer.createGrpcServiceCallableFactoryClassHeaderComments(
-                    service.name()))
-            .setAnnotations(createClassAnnotations(service.pakkage(), typeStore))
+                    service.name(), service.isDeprecated()))
+            .setAnnotations(createClassAnnotations(service, typeStore))
             .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
             .setMethods(createClassMethods(typeStore))
@@ -87,11 +87,16 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(String pakkage, TypeStore typeStore) {
+  private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
     List<AnnotationNode> annotations = new ArrayList<>();
-    if (!PackageChecker.isGaApi(pakkage)) {
+    if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
     }
+
+    if (service.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
     annotations.add(
         AnnotationNode.builder()
             .setType(typeStore.get("Generated"))

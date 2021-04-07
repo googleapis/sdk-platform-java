@@ -37,6 +37,12 @@ public class CommentComposer {
   private static final String AUTO_GENERATED_METHOD_DISCLAIMER_STRING =
       "AUTO-GENERATED DOCUMENTATION AND METHOD.";
 
+  static final String DEPRECATED_CLASS_STRING =
+      "This class is deprecated and will be removed in the next major version update.";
+
+  static final String DEPRECATED_METHOD_STRING =
+      "This method is deprecated and will be removed in the next major version update.";
+
   public static final CommentStatement APACHE_LICENSE_COMMENT =
       CommentStatement.withComment(BlockComment.withComment(APACHE_LICENSE_STRING));
 

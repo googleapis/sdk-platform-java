@@ -67,6 +67,7 @@ import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -104,7 +105,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 createClassHeaderComments(service, typeStore.get(className)))
-            .setAnnotations(createClassAnnotations(service.pakkage()))
+            .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(
@@ -143,16 +144,22 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceClientClassName(service),
         service.defaultHost(),
+        service.isDeprecated(),
         methodNameOpt,
         sampleCodeOpt,
         classType);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(String pakkage) {
+  private static List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
-    if (!PackageChecker.isGaApi(pakkage)) {
+    if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
     }
+
+    if (service.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
     annotations.add(
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))
@@ -194,18 +201,16 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .build();
   }
 
+  // TODO(miraleung): Consider merging this with createNestedBuilderSettingsGetterMethods.
   private static List<MethodDefinition> createSettingsGetterMethods(
       Service service, TypeStore typeStore) {
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
-    BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
-        (retType, methodName) ->
+    BiFunction<TypeNode, String, MethodDefinition.Builder> methodMakerFn =
+        (retType, javaMethodName) ->
             MethodDefinition.builder()
-                .setHeaderCommentStatements(
-                    SettingsCommentComposer.createCallSettingsGetterComment(
-                        getMethodNameFromSettingsVarName(methodName)))
                 .setScope(ScopeNode.PUBLIC)
                 .setReturnType(retType)
-                .setName(methodName)
+                .setName(javaMethodName)
                 .setReturnExpr(
                     MethodInvocationExpr.builder()
                         .setExprReferenceExpr(
@@ -217,22 +222,41 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                                         .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
                                         .build())
                                 .build())
-                        .setMethodName(methodName)
+                        .setMethodName(javaMethodName)
                         .setReturnType(retType)
-                        .build())
-                .build();
+                        .build());
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
       String javaStyleName = JavaStyle.toLowerCamelCase(protoMethod.name());
+      String javaMethodName =
+          String.format("%sSettings", JavaStyle.toLowerCamelCase(protoMethod.name()));
+      MethodDefinition.Builder methodBuilder =
+          methodMakerFn.apply(getCallSettingsType(protoMethod, typeStore), javaMethodName);
       javaMethods.add(
-          methodMakerFn.apply(
-              getCallSettingsType(protoMethod, typeStore),
-              String.format("%sSettings", javaStyleName)));
+          methodBuilder
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.createCallSettingsGetterComment(
+                      getMethodNameFromSettingsVarName(javaMethodName), protoMethod.isDeprecated()))
+              .setAnnotations(
+                  protoMethod.isDeprecated()
+                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
+                      : Collections.emptyList())
+              .build());
       if (protoMethod.hasLro()) {
+        javaMethodName = String.format("%sOperationSettings", javaStyleName);
+        methodBuilder =
+            methodMakerFn.apply(getOperationCallSettingsType(protoMethod), javaMethodName);
         javaMethods.add(
-            methodMakerFn.apply(
-                getOperationCallSettingsType(protoMethod),
-                String.format("%sOperationSettings", javaStyleName)));
+            methodBuilder
+                .setHeaderCommentStatements(
+                    SettingsCommentComposer.createCallSettingsGetterComment(
+                        getMethodNameFromSettingsVarName(javaMethodName),
+                        protoMethod.isDeprecated()))
+                .setAnnotations(
+                    protoMethod.isDeprecated()
+                        ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
+                        : Collections.emptyList())
+                .build());
       }
     }
     return javaMethods;
@@ -635,12 +659,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static List<MethodDefinition> createNestedBuilderSettingsGetterMethods(
       Service service, TypeStore typeStore) {
-    BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
+    BiFunction<TypeNode, String, MethodDefinition.Builder> methodMakerFn =
         (retType, methodName) ->
             MethodDefinition.builder()
-                .setHeaderCommentStatements(
-                    SettingsCommentComposer.createCallSettingsBuilderGetterComment(
-                        getMethodNameFromSettingsVarName(methodName)))
                 .setScope(ScopeNode.PUBLIC)
                 .setReturnType(retType)
                 .setName(methodName)
@@ -652,20 +673,39 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                                 .build())
                         .setMethodName(methodName)
                         .setReturnType(retType)
-                        .build())
-                .build();
+                        .build());
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
       String javaStyleName = JavaStyle.toLowerCamelCase(protoMethod.name());
+      String javaMethodName = String.format("%sSettings", javaStyleName);
+      MethodDefinition.Builder methodBuilder =
+          methodMakerFn.apply(getCallSettingsBuilderType(protoMethod, typeStore), javaMethodName);
       javaMethods.add(
-          methodMakerFn.apply(
-              getCallSettingsBuilderType(protoMethod, typeStore),
-              String.format("%sSettings", javaStyleName)));
+          methodBuilder
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.createCallSettingsBuilderGetterComment(
+                      getMethodNameFromSettingsVarName(javaMethodName), protoMethod.isDeprecated()))
+              .setAnnotations(
+                  protoMethod.isDeprecated()
+                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
+                      : Collections.emptyList())
+              .build());
+
       if (protoMethod.hasLro()) {
+        javaMethodName = String.format("%sOperationSettings", javaStyleName);
+        methodBuilder =
+            methodMakerFn.apply(getOperationCallSettingsBuilderType(protoMethod), javaMethodName);
         javaMethods.add(
-            methodMakerFn.apply(
-                getOperationCallSettingsBuilderType(protoMethod),
-                String.format("%sOperationSettings", javaStyleName)));
+            methodBuilder
+                .setHeaderCommentStatements(
+                    SettingsCommentComposer.createCallSettingsBuilderGetterComment(
+                        getMethodNameFromSettingsVarName(javaMethodName),
+                        protoMethod.isDeprecated()))
+                .setAnnotations(
+                    protoMethod.isDeprecated()
+                        ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
+                        : Collections.emptyList())
+                .build());
       }
     }
     return javaMethods;
