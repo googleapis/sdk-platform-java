@@ -73,15 +73,18 @@ public abstract class UnaryOperationExpr implements OperationExpr {
       TypeNode exprType = unaryOperationExpr.expr().type();
       OperatorKind operator = unaryOperationExpr.operatorKind();
 
-      // TODO: (summerji) Add Decl Check for variable.
       // Add final keyword checking for post/prefix ++, -- when needed.
       if (operator.equals(OperatorKind.UNARY_POST_INCREMENT)
           && unaryOperationExpr.expr() instanceof VariableExpr) {
+        VariableExpr varExpr = (VariableExpr) unaryOperationExpr.expr();
         Preconditions.checkState(
-            !((VariableExpr) unaryOperationExpr.expr()).isFinal(),
+            !varExpr.isFinal(),
+            String.format("Cannot increment the final variable '%s'.", varExpr.variable().name()));
+
+        Preconditions.checkState(
+            !varExpr.isDecl(),
             String.format(
-                "Cannot assign a value to final variable '%s'.",
-                ((VariableExpr) unaryOperationExpr.expr()).variable().name()));
+                "Cannot increment the declaration of variable %s", varExpr.variable().name()));
       }
 
       final String errorMsg =

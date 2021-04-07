@@ -29,7 +29,6 @@ import java.nio.file.Paths;
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
-
   @Test
   public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
     GapicContext context = TestProtoLoaderUtil.parseLogging();
@@ -73,6 +72,21 @@ public class ServiceStubSettingsClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "EchoStubSettings.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStubSettings.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceStubSettingsClasses_deprecated() throws IOException {
+    GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
+    Service protoService = context.services().get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(
+        this.getClass(), "DeprecatedServiceStubSettings.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "DeprecatedServiceStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

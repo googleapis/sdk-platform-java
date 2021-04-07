@@ -162,8 +162,9 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         ClassDefinition.builder()
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
-                StubCommentComposer.createGrpcServiceStubClassHeaderComments(service.name()))
-            .setAnnotations(createClassAnnotations(service.pakkage()))
+                StubCommentComposer.createGrpcServiceStubClassHeaderComments(
+                    service.name(), service.isDeprecated()))
+            .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(typeStore.get(ClassNames.getServiceStubClassName(service)))
@@ -387,11 +388,16 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     return callableClassMembers;
   }
 
-  private static List<AnnotationNode> createClassAnnotations(String pakkage) {
+  private static List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
-    if (!PackageChecker.isGaApi(pakkage)) {
+    if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
     }
+
+    if (service.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
     annotations.add(
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))

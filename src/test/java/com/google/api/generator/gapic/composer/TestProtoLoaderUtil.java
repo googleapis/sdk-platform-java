@@ -37,6 +37,7 @@ import com.google.pubsub.v1.PubsubProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
+import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,6 +50,33 @@ import java.util.Optional;
 import java.util.Set;
 
 public class TestProtoLoaderUtil {
+  public static GapicContext parseDeprecatedService() {
+    FileDescriptor fileDescriptor = DeprecatedServiceOuterClass.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "DeprecatedService");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    String jsonFilename = "deprecated_service_grpc_service_config.json";
+    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .build();
+  }
+
   public static GapicContext parseShowcaseEcho() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);

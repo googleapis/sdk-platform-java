@@ -205,15 +205,6 @@ public abstract class KeyManagementServiceStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: getIamPolicyCallable()");
   }
 
-  public UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
-    throw new UnsupportedOperationException("Not implemented: setIamPolicyCallable()");
-  }
-
-  public UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>
-      testIamPermissionsCallable() {
-    throw new UnsupportedOperationException("Not implemented: testIamPermissionsCallable()");
-  }
-
   public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
       listLocationsPagedCallable() {
     throw new UnsupportedOperationException("Not implemented: listLocationsPagedCallable()");
@@ -225,6 +216,15 @@ public abstract class KeyManagementServiceStub implements BackgroundResource {
 
   public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
     throw new UnsupportedOperationException("Not implemented: getLocationCallable()");
+  }
+
+  public UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
+    throw new UnsupportedOperationException("Not implemented: setIamPolicyCallable()");
+  }
+
+  public UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>
+      testIamPermissionsCallable() {
+    throw new UnsupportedOperationException("Not implemented: testIamPermissionsCallable()");
   }
 
   @Override

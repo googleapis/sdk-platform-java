@@ -106,11 +106,14 @@ import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -166,9 +169,15 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
     Map<String, Message> messageTypes = context.messages();
     String pakkage = String.format("%s.stub", service.pakkage());
     TypeStore typeStore = createDynamicTypes(service, pakkage);
+
+    Set<String> deprecatedSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
-            service, serviceConfig, typeStore, /* isNestedClass= */ false);
+            service,
+            serviceConfig,
+            typeStore,
+            /* isNestedClass= */ false,
+            deprecatedSettingVarNames);
     String className = ClassNames.getServiceStubSettingsClassName(service);
 
     ClassDefinition classDef =
@@ -176,25 +185,32 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 createClassHeaderComments(service, typeStore.get(className)))
-            .setAnnotations(createClassAnnotations(service.pakkage()))
+            .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(createExtendsType(service, typeStore))
             .setStatements(
                 createClassStatements(
                     service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, typeStore))
-            .setMethods(createClassMethods(service, methodSettingsMemberVarExprs, typeStore))
+            .setMethods(
+                createClassMethods(
+                    service, methodSettingsMemberVarExprs, deprecatedSettingVarNames, typeStore))
             .setNestedClasses(
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
     return GapicClass.create(GapicClass.Kind.STUB, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(String pakkage) {
+  private static List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
-    if (!PackageChecker.isGaApi(pakkage)) {
+    if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
     }
+
+    if (service.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
     annotations.add(
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))
@@ -224,6 +240,7 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceStubClassName(service),
         service.defaultHost(),
+        service.isDeprecated(),
         methodNameOpt,
         sampleCodeOpt,
         classType);
@@ -242,18 +259,21 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
       Service service,
       GapicServiceConfig serviceConfig,
       TypeStore typeStore,
-      boolean isNestedClass) {
+      boolean isNestedClass,
+      Set<String> deprecatedSettingVarNames) {
     // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
-    // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
       boolean hasBatchingSettings =
           !Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method);
       TypeNode settingsType =
           getCallSettingsType(method, typeStore, hasBatchingSettings, isNestedClass);
       String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
+      if (method.isDeprecated()) {
+        deprecatedSettingVarNames.add(varName);
+      }
       varExprs.put(
           varName,
           VariableExpr.withVariable(
@@ -748,9 +768,11 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
   private static List<MethodDefinition> createClassMethods(
       Service service,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      Set<String> deprecatedSettingVarNames,
       TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(createMethodSettingsGetterMethods(methodSettingsMemberVarExprs));
+    javaMethods.addAll(
+        createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
@@ -759,18 +781,25 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createMethodSettingsGetterMethods(
-      Map<String, VariableExpr> methodSettingsMemberVarExprs) {
+      Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      final Set<String> deprecatedSettingVarNames) {
     Function<Map.Entry<String, VariableExpr>, MethodDefinition> varToMethodFn =
-        e ->
-            MethodDefinition.builder()
-                .setHeaderCommentStatements(
-                    SettingsCommentComposer.createCallSettingsGetterComment(
-                        getMethodNameFromSettingsVarName(e.getKey())))
-                .setScope(ScopeNode.PUBLIC)
-                .setReturnType(e.getValue().type())
-                .setName(e.getKey())
-                .setReturnExpr(e.getValue())
-                .build();
+        e -> {
+          boolean isDeprecated = deprecatedSettingVarNames.contains(e.getKey());
+          return MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.createCallSettingsGetterComment(
+                      getMethodNameFromSettingsVarName(e.getKey()), isDeprecated))
+              .setAnnotations(
+                  isDeprecated
+                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
+                      : Collections.emptyList())
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(e.getValue().type())
+              .setName(e.getKey())
+              .setReturnExpr(e.getValue())
+              .build();
+        };
     return methodSettingsMemberVarExprs.entrySet().stream()
         .map(e -> varToMethodFn.apply(e))
         .collect(Collectors.toList());
@@ -1173,9 +1202,14 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
                         .collect(Collectors.toList()))
                 .build());
 
+    Set<String> nestedDeprecatedSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
-            service, serviceConfig, typeStore, /* isNestedClass= */ true);
+            service,
+            serviceConfig,
+            typeStore,
+            /* isNestedClass= */ true,
+            nestedDeprecatedSettingVarNames);
 
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
@@ -1191,7 +1225,12 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
             createNestedClassStatements(service, serviceConfig, nestedMethodSettingsMemberVarExprs))
         .setMethods(
             createNestedClassMethods(
-                service, serviceConfig, extendsType, nestedMethodSettingsMemberVarExprs, typeStore))
+                service,
+                serviceConfig,
+                extendsType,
+                nestedMethodSettingsMemberVarExprs,
+                nestedDeprecatedSettingVarNames,
+                typeStore))
         .build();
   }
 
@@ -1250,6 +1289,7 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
       GapicServiceConfig serviceConfig,
       TypeNode superType,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
+      Set<String> nestedDeprecatedSettingVarNames,
       TypeStore typeStore) {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
     nestedClassMethods.addAll(
@@ -1260,7 +1300,8 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
     nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, typeStore));
     nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
     nestedClassMethods.addAll(
-        createNestedClassSettingsBuilderGetterMethods(nestedMethodSettingsMemberVarExprs));
+        createNestedClassSettingsBuilderGetterMethods(
+            nestedMethodSettingsMemberVarExprs, nestedDeprecatedSettingVarNames));
     nestedClassMethods.add(createNestedClassBuildMethod(service, typeStore));
     return nestedClassMethods;
   }
@@ -1732,7 +1773,8 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createNestedClassSettingsBuilderGetterMethods(
-      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
+      Set<String> nestedDeprecatedSettingVarNames) {
     Reference operationCallSettingsBuilderRef =
         ConcreteReference.withClazz(OperationCallSettings.Builder.class);
     Function<TypeNode, Boolean> isOperationCallSettingsBuilderFn =
@@ -1740,14 +1782,14 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
             t.reference()
                 .copyAndSetGenerics(ImmutableList.of())
                 .equals(operationCallSettingsBuilderRef);
-    List<AnnotationNode> lroBetaAnnotations =
-        Arrays.asList(
-            AnnotationNode.builder()
-                .setType(FIXED_TYPESTORE.get("BetaApi"))
-                .setDescription(
-                    "The surface for use by generated code is not stable yet and may change in the"
-                        + " future.")
-                .build());
+    AnnotationNode lroBetaAnnotation =
+        AnnotationNode.builder()
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
+            .setDescription(
+                "The surface for use by generated code is not stable yet and may change in the"
+                    + " future.")
+            .build();
+    AnnotationNode deprecatedAnnotation = AnnotationNode.withType(TypeNode.DEPRECATED);
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Map.Entry<String, VariableExpr> settingsVarEntry :
@@ -1756,12 +1798,23 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
       VariableExpr settingsVarExpr = settingsVarEntry.getValue();
       boolean isOperationCallSettings =
           isOperationCallSettingsBuilderFn.apply(settingsVarExpr.type());
+
+      List<AnnotationNode> annotations = new ArrayList<>();
+      if (isOperationCallSettings) {
+        annotations.add(lroBetaAnnotation);
+      }
+
+      boolean isDeprecated = nestedDeprecatedSettingVarNames.contains(varName);
+      if (isDeprecated) {
+        annotations.add(deprecatedAnnotation);
+      }
+
       javaMethods.add(
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
-                      getMethodNameFromSettingsVarName(varName)))
-              .setAnnotations(isOperationCallSettings ? lroBetaAnnotations : ImmutableList.of())
+                      getMethodNameFromSettingsVarName(varName), isDeprecated))
+              .setAnnotations(annotations)
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(settingsVarExpr.type())
               .setName(settingsVarExpr.variable().identifier().name())

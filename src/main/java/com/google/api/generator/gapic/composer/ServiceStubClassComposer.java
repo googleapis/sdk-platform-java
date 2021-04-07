@@ -44,6 +44,7 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,8 +73,9 @@ public class ServiceStubClassComposer implements ClassComposer {
         ClassDefinition.builder()
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
-                StubCommentComposer.createServiceStubClassHeaderComments(service.name()))
-            .setAnnotations(createClassAnnotations(service.pakkage(), typeStore))
+                StubCommentComposer.createServiceStubClassHeaderComments(
+                    service.name(), service.isDeprecated()))
+            .setAnnotations(createClassAnnotations(service, typeStore))
             .setIsAbstract(true)
             .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
@@ -83,11 +85,16 @@ public class ServiceStubClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(String pakkage, TypeStore typeStore) {
+  private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
     List<AnnotationNode> annotations = new ArrayList<>();
-    if (!PackageChecker.isGaApi(pakkage)) {
+    if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
     }
+
+    if (service.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
     annotations.add(
         AnnotationNode.builder()
             .setType(typeStore.get("Generated"))
@@ -179,9 +186,16 @@ public class ServiceStubClassComposer implements ClassComposer {
     } else {
       genericRefs.add(method.outputType().reference());
     }
+
+    List<AnnotationNode> annotations =
+        method.isDeprecated()
+            ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
+            : Collections.emptyList();
+
     returnType = TypeNode.withReference(returnType.reference().copyAndSetGenerics(genericRefs));
 
     return MethodDefinition.builder()
+        .setAnnotations(annotations)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName(methodName)
