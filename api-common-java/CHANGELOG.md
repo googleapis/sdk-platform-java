@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.10.2](https://www.github.com/googleapis/api-common-java/compare/v1.10.1...v1.10.2) (2021-04-19)
+
+
+### Dependencies
+
+* guava 30.1.1 ([#207](https://www.github.com/googleapis/api-common-java/issues/207)) ([20578a0](https://www.github.com/googleapis/api-common-java/commit/20578a00e5b4ba2f9c4482eccf55ffa37ab12335))
+
 ### [1.10.1](https://www.github.com/googleapis/api-common-java/compare/v1.10.0...v1.10.1) (2020-10-16)
 
 
