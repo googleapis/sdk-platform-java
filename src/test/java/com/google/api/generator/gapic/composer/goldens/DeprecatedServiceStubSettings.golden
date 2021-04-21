@@ -1,234 +1,282 @@
-package com.google.testdata.v1;
+package com.google.testdata.v1.stub;
 
+import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
-import com.google.api.gax.core.BackgroundResource;
-import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.core.GaxProperties;
+import com.google.api.gax.core.GoogleCredentialsProvider;
+import com.google.api.gax.core.InstantiatingExecutorProvider;
+import com.google.api.gax.grpc.GaxGrpcProperties;
+import com.google.api.gax.grpc.GrpcTransportChannel;
+import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
+import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.StubSettings;
+import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.protobuf.Empty;
-import com.google.testdata.v1.stub.DeprecatedServiceStub;
-import com.google.testdata.v1.stub.DeprecatedServiceStubSettings;
+import com.google.testdata.v1.FibonacciRequest;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 import javax.annotation.Generated;
+import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * This class provides the ability to make remote calls to the backing service through method calls
- * that map to API methods. Sample code to get started:
+ * Settings class to configure an instance of {@link DeprecatedServiceStub}.
+ *
+ * <p>The default instance has everything set to sensible defaults:
+ *
+ * <ul>
+ *   <li>The default service address (localhost) and default port (7469) are used.
+ *   <li>Credentials are acquired automatically through Application Default Credentials.
+ *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.
+ * </ul>
+ *
+ * <p>The builder of this class is recursive, so contained classes are themselves builders. When
+ * build() is called, the tree of builders is called to create the complete settings object.
+ *
+ * <p>For example, to set the total timeout of fastFibonacci to 30 seconds:
  *
  * <pre>{@code
- * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
- *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
- *   deprecatedServiceClient.fastFibonacci(request);
- * }
+ * DeprecatedServiceStubSettings.Builder deprecatedServiceSettingsBuilder =
+ *     DeprecatedServiceStubSettings.newBuilder();
+ * deprecatedServiceSettingsBuilder
+ *     .fastFibonacciSettings()
+ *     .setRetrySettings(
+ *         deprecatedServiceSettingsBuilder
+ *             .fastFibonacciSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * DeprecatedServiceStubSettings deprecatedServiceSettings =
+ *     deprecatedServiceSettingsBuilder.build();
  * }</pre>
- *
- * <p>Note: close() needs to be called on the DeprecatedServiceClient object to clean up resources
- * such as threads. In the example above, try-with-resources is used, which automatically calls
- * close().
- *
- * <p>The surface of this class includes several types of Java methods for each of the API's
- * methods:
- *
- * <ol>
- *   <li>A "flattened" method. With this type of method, the fields of the request type have been
- *       converted into function parameters. It may be the case that not all fields are available as
- *       parameters, and not every API method will have a flattened method entry point.
- *   <li>A "request object" method. This type of method only takes one parameter, a request object,
- *       which must be constructed before the call. Not every API method will have a request object
- *       method.
- *   <li>A "callable" method. This type of method takes no parameters and returns an immutable API
- *       callable object, which can be used to initiate calls to the service.
- * </ol>
- *
- * <p>See the individual methods for example code.
- *
- * <p>Many parameters require resource names to be formatted in a particular way. To assist with
- * these names, this class includes a format method for each type of name, and additionally a parse
- * method to extract the individual identifiers contained within names that are returned.
- *
- * <p>This class can be customized by passing in a custom instance of DeprecatedServiceSettings to
- * create(). For example:
- *
- * <p>To customize credentials:
- *
- * <pre>{@code
- * DeprecatedServiceSettings deprecatedServiceSettings =
- *     DeprecatedServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * DeprecatedServiceClient deprecatedServiceClient =
- *     DeprecatedServiceClient.create(deprecatedServiceSettings);
- * }</pre>
- *
- * <p>To customize the endpoint:
- *
- * <pre>{@code
- * DeprecatedServiceSettings deprecatedServiceSettings =
- *     DeprecatedServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
- * DeprecatedServiceClient deprecatedServiceClient =
- *     DeprecatedServiceClient.create(deprecatedServiceSettings);
- * }</pre>
- *
- * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  *
  * @deprecated This class is deprecated and will be removed in the next major version update.
  */
 @Deprecated
 @Generated("by gapic-generator-java")
-public class DeprecatedServiceClient implements BackgroundResource {
-  private final DeprecatedServiceSettings settings;
-  private final DeprecatedServiceStub stub;
+public class DeprecatedServiceStubSettings extends StubSettings<DeprecatedServiceStubSettings> {
+  /** The default scopes of the service. */
+  private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
+      ImmutableList.<String>builder().add("https://www.googleapis.com/auth/cloud-platform").build();
 
-  /** Constructs an instance of DeprecatedServiceClient with default settings. */
-  public static final DeprecatedServiceClient create() throws IOException {
-    return create(DeprecatedServiceSettings.newBuilder().build());
+  private final UnaryCallSettings<FibonacciRequest, Empty> fastFibonacciSettings;
+  private final UnaryCallSettings<FibonacciRequest, Empty> slowFibonacciSettings;
+
+  /** Returns the object with the settings used for calls to fastFibonacci. */
+  public UnaryCallSettings<FibonacciRequest, Empty> fastFibonacciSettings() {
+    return fastFibonacciSettings;
   }
 
   /**
-   * Constructs an instance of DeprecatedServiceClient, using the given settings. The channels are
-   * created based on the settings passed in, or defaults for any settings that are not set.
-   */
-  public static final DeprecatedServiceClient create(DeprecatedServiceSettings settings)
-      throws IOException {
-    return new DeprecatedServiceClient(settings);
-  }
-
-  /**
-   * Constructs an instance of DeprecatedServiceClient, using the given stub for making calls. This
-   * is for advanced usage - prefer using create(DeprecatedServiceSettings).
-   */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public static final DeprecatedServiceClient create(DeprecatedServiceStub stub) {
-    return new DeprecatedServiceClient(stub);
-  }
-
-  /**
-   * Constructs an instance of DeprecatedServiceClient, using the given settings. This is protected
-   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
-   * preferred.
-   */
-  protected DeprecatedServiceClient(DeprecatedServiceSettings settings) throws IOException {
-    this.settings = settings;
-    this.stub = ((DeprecatedServiceStubSettings) settings.getStubSettings()).createStub();
-  }
-
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  protected DeprecatedServiceClient(DeprecatedServiceStub stub) {
-    this.settings = null;
-    this.stub = stub;
-  }
-
-  public final DeprecatedServiceSettings getSettings() {
-    return settings;
-  }
-
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public DeprecatedServiceStub getStub() {
-    return stub;
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   deprecatedServiceClient.fastFibonacci(request);
-   * }
-   * }</pre>
-   *
-   * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final void fastFibonacci(FibonacciRequest request) {
-    fastFibonacciCallable().call(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   ApiFuture<Empty> future = deprecatedServiceClient.fastFibonacciCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
-   * }
-   * }</pre>
-   */
-  public final UnaryCallable<FibonacciRequest, Empty> fastFibonacciCallable() {
-    return stub.fastFibonacciCallable();
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   deprecatedServiceClient.slowFibonacci(request);
-   * }
-   * }</pre>
-   *
-   * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   * @deprecated This method is deprecated and will be removed in the next major version update.
-   */
-  @Deprecated
-  public final void slowFibonacci(FibonacciRequest request) {
-    slowFibonacciCallable().call(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   ApiFuture<Empty> future = deprecatedServiceClient.slowFibonacciCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
-   * }
-   * }</pre>
+   * Returns the object with the settings used for calls to slowFibonacci.
    *
    * @deprecated This method is deprecated and will be removed in the next major version update.
    */
   @Deprecated
-  public final UnaryCallable<FibonacciRequest, Empty> slowFibonacciCallable() {
-    return stub.slowFibonacciCallable();
+  public UnaryCallSettings<FibonacciRequest, Empty> slowFibonacciSettings() {
+    return slowFibonacciSettings;
   }
 
-  @Override
-  public final void close() {
-    stub.close();
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  public DeprecatedServiceStub createStub() throws IOException {
+    if (getTransportChannelProvider()
+        .getTransportName()
+        .equals(GrpcTransportChannel.getGrpcTransportName())) {
+      return GrpcDeprecatedServiceStub.create(this);
+    }
+    throw new UnsupportedOperationException(
+        String.format(
+            "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
-  @Override
-  public void shutdown() {
-    stub.shutdown();
+  /** Returns a builder for the default ExecutorProvider for this service. */
+  public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
+    return InstantiatingExecutorProvider.newBuilder();
   }
 
-  @Override
-  public boolean isShutdown() {
-    return stub.isShutdown();
+  /** Returns the default service endpoint. */
+  public static String getDefaultEndpoint() {
+    return "localhost:7469";
   }
 
-  @Override
-  public boolean isTerminated() {
-    return stub.isTerminated();
+  /** Returns the default service scopes. */
+  public static List<String> getDefaultServiceScopes() {
+    return DEFAULT_SERVICE_SCOPES;
   }
 
-  @Override
-  public void shutdownNow() {
-    stub.shutdownNow();
+  /** Returns a builder for the default credentials for this service. */
+  public static GoogleCredentialsProvider.Builder defaultCredentialsProviderBuilder() {
+    return GoogleCredentialsProvider.newBuilder().setScopesToApply(DEFAULT_SERVICE_SCOPES);
   }
 
-  @Override
-  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
-    return stub.awaitTermination(duration, unit);
+  /** Returns a builder for the default ChannelProvider for this service. */
+  public static InstantiatingGrpcChannelProvider.Builder defaultGrpcTransportProviderBuilder() {
+    return InstantiatingGrpcChannelProvider.newBuilder()
+        .setMaxInboundMessageSize(Integer.MAX_VALUE);
+  }
+
+  public static TransportChannelProvider defaultTransportChannelProvider() {
+    return defaultGrpcTransportProviderBuilder().build();
+  }
+
+  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
+  public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
+    return ApiClientHeaderProvider.newBuilder()
+        .setGeneratedLibToken(
+            "gapic", GaxProperties.getLibraryVersion(DeprecatedServiceStubSettings.class))
+        .setTransportToken(
+            GaxGrpcProperties.getGrpcTokenName(), GaxGrpcProperties.getGrpcVersion());
+  }
+
+  /** Returns a new builder for this class. */
+  public static Builder newBuilder() {
+    return Builder.createDefault();
+  }
+
+  /** Returns a new builder for this class. */
+  public static Builder newBuilder(ClientContext clientContext) {
+    return new Builder(clientContext);
+  }
+
+  /** Returns a builder containing all the values of this settings class. */
+  public Builder toBuilder() {
+    return new Builder(this);
+  }
+
+  protected DeprecatedServiceStubSettings(Builder settingsBuilder) throws IOException {
+    super(settingsBuilder);
+
+    fastFibonacciSettings = settingsBuilder.fastFibonacciSettings().build();
+    slowFibonacciSettings = settingsBuilder.slowFibonacciSettings().build();
+  }
+
+  /** Builder for DeprecatedServiceStubSettings. */
+  public static class Builder extends StubSettings.Builder<DeprecatedServiceStubSettings, Builder> {
+    private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
+    private final UnaryCallSettings.Builder<FibonacciRequest, Empty> fastFibonacciSettings;
+    private final UnaryCallSettings.Builder<FibonacciRequest, Empty> slowFibonacciSettings;
+    private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
+        RETRYABLE_CODE_DEFINITIONS;
+
+    static {
+      ImmutableMap.Builder<String, ImmutableSet<StatusCode.Code>> definitions =
+          ImmutableMap.builder();
+      definitions.put(
+          "no_retry_0_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
+      RETRYABLE_CODE_DEFINITIONS = definitions.build();
+    }
+
+    private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
+
+    static {
+      ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();
+      RetrySettings settings = null;
+      settings =
+          RetrySettings.newBuilder()
+              .setInitialRpcTimeout(Duration.ofMillis(60000L))
+              .setRpcTimeoutMultiplier(1.0)
+              .setMaxRpcTimeout(Duration.ofMillis(60000L))
+              .setTotalTimeout(Duration.ofMillis(60000L))
+              .build();
+      definitions.put("no_retry_0_params", settings);
+      RETRY_PARAM_DEFINITIONS = definitions.build();
+    }
+
+    protected Builder() {
+      this(((ClientContext) null));
+    }
+
+    protected Builder(ClientContext clientContext) {
+      super(clientContext);
+
+      fastFibonacciSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      slowFibonacciSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+
+      unaryMethodSettingsBuilders =
+          ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
+              fastFibonacciSettings, slowFibonacciSettings);
+      initDefaults(this);
+    }
+
+    protected Builder(DeprecatedServiceStubSettings settings) {
+      super(settings);
+
+      fastFibonacciSettings = settings.fastFibonacciSettings.toBuilder();
+      slowFibonacciSettings = settings.slowFibonacciSettings.toBuilder();
+
+      unaryMethodSettingsBuilders =
+          ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
+              fastFibonacciSettings, slowFibonacciSettings);
+    }
+
+    private static Builder createDefault() {
+      Builder builder = new Builder(((ClientContext) null));
+
+      builder.setTransportChannelProvider(defaultTransportChannelProvider());
+      builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
+      builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
+      builder.setEndpoint(getDefaultEndpoint());
+
+      return initDefaults(builder);
+    }
+
+    private static Builder initDefaults(Builder builder) {
+      builder
+          .fastFibonacciSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .slowFibonacciSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      return builder;
+    }
+
+    // NEXT_MAJOR_VER: remove 'throws Exception'.
+    /**
+     * Applies the given settings updater function to all of the unary API methods in this service.
+     *
+     * <p>Note: This method does not support applying settings to streaming methods.
+     */
+    public Builder applyToAllUnaryMethods(
+        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) throws Exception {
+      super.applyToAllUnaryMethods(unaryMethodSettingsBuilders, settingsUpdater);
+      return this;
+    }
+
+    public ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders() {
+      return unaryMethodSettingsBuilders;
+    }
+
+    /** Returns the builder for the settings used for calls to fastFibonacci. */
+    public UnaryCallSettings.Builder<FibonacciRequest, Empty> fastFibonacciSettings() {
+      return fastFibonacciSettings;
+    }
+
+    /**
+     * Returns the builder for the settings used for calls to slowFibonacci.
+     *
+     * @deprecated This method is deprecated and will be removed in the next major version update.
+     */
+    @Deprecated
+    public UnaryCallSettings.Builder<FibonacciRequest, Empty> slowFibonacciSettings() {
+      return slowFibonacciSettings;
+    }
+
+    @Override
+    public DeprecatedServiceStubSettings build() throws IOException {
+      return new DeprecatedServiceStubSettings(this);
+    }
   }
 }

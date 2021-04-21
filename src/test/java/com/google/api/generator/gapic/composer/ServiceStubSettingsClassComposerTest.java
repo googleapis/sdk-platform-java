@@ -79,7 +79,7 @@ public class ServiceStubSettingsClassComposerTest {
   public void generateServiceStubSettingsClasses_deprecated() throws IOException {
     GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
     Service protoService = context.services().get(0);
-    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
+    GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
