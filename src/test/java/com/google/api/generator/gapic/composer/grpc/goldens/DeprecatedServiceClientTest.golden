@@ -1,234 +1,130 @@
 package com.google.testdata.v1;
 
-import com.google.api.core.BetaApi;
-import com.google.api.gax.core.BackgroundResource;
-import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.grpc.GaxGrpcProperties;
+import com.google.api.gax.grpc.testing.LocalChannelProvider;
+import com.google.api.gax.grpc.testing.MockGrpcService;
+import com.google.api.gax.grpc.testing.MockServiceHelper;
+import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.InvalidArgumentException;
+import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
-import com.google.testdata.v1.stub.DeprecatedServiceStub;
-import com.google.testdata.v1.stub.DeprecatedServiceStubSettings;
+import io.grpc.StatusRuntimeException;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import javax.annotation.Generated;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-// AUTO-GENERATED DOCUMENTATION AND CLASS.
-/**
- * This class provides the ability to make remote calls to the backing service through method calls
- * that map to API methods. Sample code to get started:
- *
- * <pre>{@code
- * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
- *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
- *   deprecatedServiceClient.fastFibonacci(request);
- * }
- * }</pre>
- *
- * <p>Note: close() needs to be called on the DeprecatedServiceClient object to clean up resources
- * such as threads. In the example above, try-with-resources is used, which automatically calls
- * close().
- *
- * <p>The surface of this class includes several types of Java methods for each of the API's
- * methods:
- *
- * <ol>
- *   <li>A "flattened" method. With this type of method, the fields of the request type have been
- *       converted into function parameters. It may be the case that not all fields are available as
- *       parameters, and not every API method will have a flattened method entry point.
- *   <li>A "request object" method. This type of method only takes one parameter, a request object,
- *       which must be constructed before the call. Not every API method will have a request object
- *       method.
- *   <li>A "callable" method. This type of method takes no parameters and returns an immutable API
- *       callable object, which can be used to initiate calls to the service.
- * </ol>
- *
- * <p>See the individual methods for example code.
- *
- * <p>Many parameters require resource names to be formatted in a particular way. To assist with
- * these names, this class includes a format method for each type of name, and additionally a parse
- * method to extract the individual identifiers contained within names that are returned.
- *
- * <p>This class can be customized by passing in a custom instance of DeprecatedServiceSettings to
- * create(). For example:
- *
- * <p>To customize credentials:
- *
- * <pre>{@code
- * DeprecatedServiceSettings deprecatedServiceSettings =
- *     DeprecatedServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * DeprecatedServiceClient deprecatedServiceClient =
- *     DeprecatedServiceClient.create(deprecatedServiceSettings);
- * }</pre>
- *
- * <p>To customize the endpoint:
- *
- * <pre>{@code
- * DeprecatedServiceSettings deprecatedServiceSettings =
- *     DeprecatedServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
- * DeprecatedServiceClient deprecatedServiceClient =
- *     DeprecatedServiceClient.create(deprecatedServiceSettings);
- * }</pre>
- *
- * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
- *
- * @deprecated This class is deprecated and will be removed in the next major version update.
- */
-@Deprecated
 @Generated("by gapic-generator-java")
-public class DeprecatedServiceClient implements BackgroundResource {
-  private final DeprecatedServiceSettings settings;
-  private final DeprecatedServiceStub stub;
+public class DeprecatedServiceClientTest {
+  private static MockDeprecatedService mockDeprecatedService;
+  private static MockServiceHelper mockServiceHelper;
+  private DeprecatedServiceClient client;
+  private LocalChannelProvider channelProvider;
 
-  /** Constructs an instance of DeprecatedServiceClient with default settings. */
-  public static final DeprecatedServiceClient create() throws IOException {
-    return create(DeprecatedServiceSettings.newBuilder().build());
+  @BeforeClass
+  public static void startStaticServer() {
+    mockDeprecatedService = new MockDeprecatedService();
+    mockServiceHelper =
+        new MockServiceHelper(
+            UUID.randomUUID().toString(), Arrays.<MockGrpcService>asList(mockDeprecatedService));
+    mockServiceHelper.start();
   }
 
-  /**
-   * Constructs an instance of DeprecatedServiceClient, using the given settings. The channels are
-   * created based on the settings passed in, or defaults for any settings that are not set.
-   */
-  public static final DeprecatedServiceClient create(DeprecatedServiceSettings settings)
-      throws IOException {
-    return new DeprecatedServiceClient(settings);
+  @AfterClass
+  public static void stopServer() {
+    mockServiceHelper.stop();
   }
 
-  /**
-   * Constructs an instance of DeprecatedServiceClient, using the given stub for making calls. This
-   * is for advanced usage - prefer using create(DeprecatedServiceSettings).
-   */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public static final DeprecatedServiceClient create(DeprecatedServiceStub stub) {
-    return new DeprecatedServiceClient(stub);
+  @Before
+  public void setUp() throws IOException {
+    mockServiceHelper.reset();
+    channelProvider = mockServiceHelper.createChannelProvider();
+    DeprecatedServiceSettings settings =
+        DeprecatedServiceSettings.newBuilder()
+            .setTransportChannelProvider(channelProvider)
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .build();
+    client = DeprecatedServiceClient.create(settings);
   }
 
-  /**
-   * Constructs an instance of DeprecatedServiceClient, using the given settings. This is protected
-   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
-   * preferred.
-   */
-  protected DeprecatedServiceClient(DeprecatedServiceSettings settings) throws IOException {
-    this.settings = settings;
-    this.stub = ((DeprecatedServiceStubSettings) settings.getStubSettings()).createStub();
+  @After
+  public void tearDown() throws Exception {
+    client.close();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  protected DeprecatedServiceClient(DeprecatedServiceStub stub) {
-    this.settings = null;
-    this.stub = stub;
+  @Test
+  public void fastFibonacciTest() throws Exception {
+    Empty expectedResponse = Empty.newBuilder().build();
+    mockDeprecatedService.addResponse(expectedResponse);
+
+    FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
+
+    client.fastFibonacci(request);
+
+    List<AbstractMessage> actualRequests = mockDeprecatedService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    FibonacciRequest actualRequest = ((FibonacciRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getValue(), actualRequest.getValue());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
-  public final DeprecatedServiceSettings getSettings() {
-    return settings;
+  @Test
+  public void fastFibonacciExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockDeprecatedService.addException(exception);
+
+    try {
+      FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
+      client.fastFibonacci(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public DeprecatedServiceStub getStub() {
-    return stub;
+  @Test
+  public void slowFibonacciTest() throws Exception {
+    Empty expectedResponse = Empty.newBuilder().build();
+    mockDeprecatedService.addResponse(expectedResponse);
+
+    FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
+
+    client.slowFibonacci(request);
+
+    List<AbstractMessage> actualRequests = mockDeprecatedService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    FibonacciRequest actualRequest = ((FibonacciRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getValue(), actualRequest.getValue());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   deprecatedServiceClient.fastFibonacci(request);
-   * }
-   * }</pre>
-   *
-   * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final void fastFibonacci(FibonacciRequest request) {
-    fastFibonacciCallable().call(request);
-  }
+  @Test
+  public void slowFibonacciExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockDeprecatedService.addException(exception);
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   ApiFuture<Empty> future = deprecatedServiceClient.fastFibonacciCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
-   * }
-   * }</pre>
-   */
-  public final UnaryCallable<FibonacciRequest, Empty> fastFibonacciCallable() {
-    return stub.fastFibonacciCallable();
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   deprecatedServiceClient.slowFibonacci(request);
-   * }
-   * }</pre>
-   *
-   * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   * @deprecated This method is deprecated and will be removed in the next major version update.
-   */
-  @Deprecated
-  public final void slowFibonacci(FibonacciRequest request) {
-    slowFibonacciCallable().call(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
-   *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
-   *   ApiFuture<Empty> future = deprecatedServiceClient.slowFibonacciCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
-   * }
-   * }</pre>
-   *
-   * @deprecated This method is deprecated and will be removed in the next major version update.
-   */
-  @Deprecated
-  public final UnaryCallable<FibonacciRequest, Empty> slowFibonacciCallable() {
-    return stub.slowFibonacciCallable();
-  }
-
-  @Override
-  public final void close() {
-    stub.close();
-  }
-
-  @Override
-  public void shutdown() {
-    stub.shutdown();
-  }
-
-  @Override
-  public boolean isShutdown() {
-    return stub.isShutdown();
-  }
-
-  @Override
-  public boolean isTerminated() {
-    return stub.isTerminated();
-  }
-
-  @Override
-  public void shutdownNow() {
-    stub.shutdownNow();
-  }
-
-  @Override
-  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
-    return stub.awaitTermination(duration, unit);
+    try {
+      FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
+      client.slowFibonacci(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
   }
 }
