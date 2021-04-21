@@ -23,7 +23,6 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
@@ -51,12 +50,10 @@ import java.util.Set;
 
 public class TestProtoLoader {
   private static final TestProtoLoader INSTANCE =
-      new TestProtoLoader(null, "src/test/java/com/google/api/generator/gapic/testdata/");
-  private final Transport transport;
+      new TestProtoLoader("src/test/java/com/google/api/generator/gapic/testdata/");
   private final String testFilesDirectory;
 
-  protected TestProtoLoader(Transport transport, String testFilesDirectory) {
-    this.transport = transport;
+  protected TestProtoLoader(String testFilesDirectory) {
     this.testFilesDirectory = testFilesDirectory;
   }
 
@@ -115,7 +112,6 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
         .build();
   }
 
@@ -136,7 +132,6 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
         .build();
   }
 
@@ -161,7 +156,6 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
         .build();
   }
 
@@ -204,7 +198,6 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
         .build();
   }
 
@@ -259,7 +252,6 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
         .build();
   }
 

@@ -56,9 +56,6 @@ public abstract class GapicContext {
   @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
-  @Nullable
-  public abstract Transport transport();
-
   public boolean hasServiceYamlProto() {
     return serviceYamlProto() != null;
   }
@@ -106,8 +103,6 @@ public abstract class GapicContext {
     public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
 
     public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
-
-    public abstract Builder setTransport(Transport transport);
 
     public abstract Builder setGapicMetadataEnabled(boolean gapicMetadataEnabled);
 

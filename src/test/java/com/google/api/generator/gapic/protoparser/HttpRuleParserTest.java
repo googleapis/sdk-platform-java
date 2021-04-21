@@ -16,16 +16,18 @@ package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.model.HttpRuleBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.TestingOuterClass;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.junit.Test;
 
 public class HttpRuleParserTest {
@@ -40,14 +42,16 @@ public class HttpRuleParserTest {
     // CreateSession method.
     MethodDescriptor rpcMethod = testingService.getMethods().get(0);
     Message inputMessage = messages.get("CreateSessionRequest");
-    HttpRuleBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
-    assertTrue(httpBindings.pathParameters().isEmpty());
+    Optional<List<String>> httpBindingsOpt =
+        HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
+    assertFalse(httpBindingsOpt.isPresent());
 
     // GetSession method.
     rpcMethod = testingService.getMethods().get(1);
     inputMessage = messages.get("GetSessionRequest");
-    httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
-    assertThat(httpBindings.pathParameters()).containsExactly("name");
+    httpBindingsOpt = HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
+    assertTrue(httpBindingsOpt.isPresent());
+    assertThat(httpBindingsOpt.get()).containsExactly("name");
   }
 
   @Test
@@ -62,8 +66,10 @@ public class HttpRuleParserTest {
     MethodDescriptor rpcMethod =
         testingService.getMethods().get(testingService.getMethods().size() - 1);
     Message inputMessage = messages.get("VerifyTestRequest");
-    HttpRuleBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
-    assertThat(httpBindings.pathParameters())
+    Optional<List<String>> httpBindingsOpt =
+        HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
+    assertTrue(httpBindingsOpt.isPresent());
+    assertThat(httpBindingsOpt.get())
         .containsExactly("answer", "foo", "name", "test_to_verify.name");
   }
 
@@ -80,6 +86,7 @@ public class HttpRuleParserTest {
         testingService.getMethods().get(testingService.getMethods().size() - 1);
     Message inputMessage = messages.get("CreateSessionRequest");
     assertThrows(
-        IllegalStateException.class, () -> HttpRuleParser.parse(rpcMethod, inputMessage, messages));
+        IllegalStateException.class,
+        () -> HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages));
   }
 }

@@ -24,7 +24,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
-import com.google.api.generator.gapic.model.HttpRuleBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -32,7 +31,6 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -105,7 +103,6 @@ public class Parser {
         GapicLroRetrySettingsParser.parse(gapicYamlConfigPathOpt);
     Optional<GapicLanguageSettings> languageSettingsOpt =
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
-    Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
 
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
 
@@ -186,7 +183,6 @@ public class Parser {
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
         .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
-        .setTransport(Transport.parse(transportOpt.orElse(Transport.GRPC.toString())))
         .build();
   }
 
@@ -488,7 +484,7 @@ public class Parser {
    * Populates ResourceName objects in Message POJOs.
    *
    * @param messageTypes A map of the message type name (as in the protobuf) to Message POJOs.
-   * @param resources A list of ResourceName POJOs.
+   * @param resourceNames A list of ResourceName POJOs.
    * @return The updated messageTypes map.
    */
   public static Map<String, Message> updateResourceNamesInMessages(
@@ -561,7 +557,10 @@ public class Parser {
       Preconditions.checkNotNull(
           inputMessage,
           String.format("No message found for %s", inputType.reference().simpleName()));
-      HttpRuleBindings httpBindings = HttpRuleParser.parse(protoMethod, inputMessage, messageTypes);
+      Optional<List<String>> httpBindingsOpt =
+          HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
+      List<String> httpBindings =
+          httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
       boolean isBatching =
           !serviceConfigOpt.isPresent()
               ? false

@@ -18,29 +18,29 @@ import com.google.api.AnnotationsProto;
 import com.google.api.HttpRule;
 import com.google.api.HttpRule.PatternCase;
 import com.google.api.generator.gapic.model.Field;
-import com.google.api.generator.gapic.model.HttpRuleBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Sets;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
 
-  public static HttpRuleBindings parse(
+  public static Optional<List<String>> parseHttpBindings(
       MethodDescriptor protoMethod, Message inputMessage, Map<String, Message> messageTypes) {
     MethodOptions methodOptions = protoMethod.getOptions();
-    HttpRuleBindings.Builder httpBindings = HttpRuleBindings.builder();
     if (!methodOptions.hasExtension(AnnotationsProto.http)) {
-      return httpBindings.build();
+      return Optional.empty();
     }
 
     HttpRule httpRule = methodOptions.getExtension(AnnotationsProto.http);
@@ -51,16 +51,19 @@ public class HttpRuleParser {
     }
 
     // Get pattern.
-    String pattern = getPattern(httpRule);
-    ImmutableSet.Builder<String> bindingsBuilder = getPatternBindings(pattern);
+    Set<String> uniqueBindings = getPatternBindings(httpRule);
+    if (uniqueBindings.isEmpty()) {
+      return Optional.empty();
+    }
+
     if (httpRule.getAdditionalBindingsCount() > 0) {
       for (HttpRule additionalRule : httpRule.getAdditionalBindingsList()) {
-        // TODO: save additional bindings path in HttpRuleBindings
-        bindingsBuilder.addAll(getPatternBindings(getPattern(additionalRule)).build());
+        uniqueBindings.addAll(getPatternBindings(additionalRule));
       }
     }
 
-    Set<String> bindings = bindingsBuilder.build();
+    List<String> bindings = new ArrayList<>(uniqueBindings);
+    Collections.sort(bindings);
 
     // Binding validation.
     for (String binding : bindings) {
@@ -83,60 +86,40 @@ public class HttpRuleParser {
       }
     }
 
-    String body = httpRule.getBody();
-    Set<String> bodyParameters;
-    Set<String> queryParameters;
-    if (Strings.isNullOrEmpty(body)) {
-      bodyParameters = ImmutableSet.of();
-      queryParameters = Sets.difference(inputMessage.fieldMap().keySet(), bindings);
-    } else if (body.equals(ASTERISK)) {
-      bodyParameters = Sets.difference(inputMessage.fieldMap().keySet(), bindings);
-      queryParameters = ImmutableSet.of();
-    } else {
-      bodyParameters = ImmutableSet.of(body);
-      Set<String> bodyBinidngsUnion = Sets.union(bodyParameters, bindings);
-      queryParameters = Sets.difference(inputMessage.fieldMap().keySet(), bodyBinidngsUnion);
-    }
-
-    httpBindings.setHttpVerb(httpRule.getPatternCase().toString());
-    httpBindings.setPattern(pattern);
-    httpBindings.setPathParameters(ImmutableSortedSet.copyOf(bindings));
-    httpBindings.setQueryParameters(ImmutableSortedSet.copyOf(queryParameters));
-    httpBindings.setBodyParameters(ImmutableSortedSet.copyOf(bodyParameters));
-
-    return httpBindings.build();
+    return Optional.of(bindings);
   }
 
-  private static String getPattern(HttpRule httpRule) {
+  private static Set<String> getPatternBindings(HttpRule httpRule) {
+    String pattern = null;
+    // Assign a temp variable to prevent the formatter from removing the import.
     PatternCase patternCase = httpRule.getPatternCase();
     switch (patternCase) {
       case GET:
-        return httpRule.getGet();
+        pattern = httpRule.getGet();
+        break;
       case PUT:
-        return httpRule.getPut();
+        pattern = httpRule.getPut();
+        break;
       case POST:
-        return httpRule.getPost();
+        pattern = httpRule.getPost();
+        break;
       case DELETE:
-        return httpRule.getDelete();
+        pattern = httpRule.getDelete();
+        break;
       case PATCH:
-        return httpRule.getPatch();
+        pattern = httpRule.getPatch();
+        break;
       case CUSTOM: // Invalid pattern.
         // Fall through.
       default:
-        return "";
-    }
-  }
-
-  private static ImmutableSortedSet.Builder<String> getPatternBindings(String pattern) {
-    ImmutableSortedSet.Builder<String> bindings = ImmutableSortedSet.naturalOrder();
-    if (pattern.isEmpty()) {
-      return bindings;
+        return Collections.emptySet();
     }
 
     PathTemplate template = PathTemplate.create(pattern);
-    // Filter out any unbound variable like "$0, $1, etc.
-    bindings.addAll(
-        template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toSet()));
+    Set<String> bindings =
+        new HashSet<String>(
+            // Filter out any unbound variable like "$0, $1, etc.
+            template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toList()));
     return bindings;
   }
 
