@@ -127,12 +127,14 @@ def java_gapic_library(
         service_yaml = None,
         deps = [],
         test_deps = [],
+        transport = None,
+        java_generator_name = "java_gapic",
         **kwargs):
     file_args_dict = {}
 
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
-    else:
+    elif transport != "rest":
         for keyword in NO_GRPC_CONFIG_ALLOWLIST:
             if keyword not in name:
                 fail("Missing a gRPC service config file")
@@ -157,21 +159,25 @@ def java_gapic_library(
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
     output_suffix = ".srcjar"
+    opt_args = []
+
+    if transport:
+        opt_args.append("transport=%s" % transport)
 
     # Produces the GAPIC metadata file if this flag is set. to any value.
     # Protoc invocation: --java_gapic_opt=metadata
     plugin_args = ["metadata"]
 
-    _java_generator_name = "java_gapic"
     proto_custom_library(
         name = raw_srcjar_name,
         deps = srcs,
-        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % _java_generator_name),
+        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % java_generator_name),
         plugin_args = plugin_args,
         plugin_file_args = {},
         opt_file_args = file_args_dict,
-        output_type = _java_generator_name,
+        output_type = java_generator_name,
         output_suffix = output_suffix,
+        opt_args = opt_args,
         **kwargs
     )
 

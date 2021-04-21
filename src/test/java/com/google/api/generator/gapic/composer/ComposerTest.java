@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.test.framework.Assert;
@@ -43,7 +42,7 @@ public class ComposerTest {
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "ComposerPostProcOnFooBar.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "ComposerPostProcOnFooBar.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "ComposerPostProcOnFooBar.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

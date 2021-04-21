@@ -17,6 +17,17 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
+import com.google.api.generator.gapic.composer.common.ServiceClientClassComposer;
+import com.google.api.generator.gapic.composer.common.ServiceStubClassComposer;
+import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
+import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
+import com.google.api.generator.gapic.composer.grpc.MockServiceClassComposer;
+import com.google.api.generator.gapic.composer.grpc.MockServiceImplClassComposer;
+import com.google.api.generator.gapic.composer.grpc.ServiceClientTestClassComposer;
+import com.google.api.generator.gapic.composer.grpc.ServiceSettingsClassComposer;
+import com.google.api.generator.gapic.composer.grpc.ServiceStubSettingsClassComposer;
+import com.google.api.generator.gapic.composer.httpjson.HttpJsonServiceCallableFactoryClassComposer;
+import com.google.api.generator.gapic.composer.httpjson.HttpJsonServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -24,6 +35,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +83,20 @@ public class Composer {
         .forEach(
             s -> {
               clazzes.add(ServiceStubClassComposer.instance().generate(context, s));
-              clazzes.add(ServiceStubSettingsClassComposer.instance().generate(context, s));
-              clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
-              clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
+              if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.httpjson
+                        .ServiceStubSettingsClassComposer.instance()
+                        .generate(context, s));
+                clazzes.add(
+                    HttpJsonServiceCallableFactoryClassComposer.instance().generate(context, s));
+                clazzes.add(HttpJsonServiceStubClassComposer.instance().generate(context, s));
+              } else {
+                clazzes.add(ServiceStubSettingsClassComposer.instance().generate(context, s));
+                clazzes.add(
+                    GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
+                clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
+              }
             });
     return clazzes;
   }
@@ -85,7 +108,14 @@ public class Composer {
         .forEach(
             s -> {
               clazzes.add(ServiceClientClassComposer.instance().generate(context, s));
-              clazzes.add(ServiceSettingsClassComposer.instance().generate(context, s));
+              if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.httpjson.ServiceSettingsClassComposer
+                        .instance()
+                        .generate(context, s));
+              } else {
+                clazzes.add(ServiceSettingsClassComposer.instance().generate(context, s));
+              }
             });
     return clazzes;
   }
@@ -94,15 +124,28 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     services.forEach(
         s -> {
-          clazzes.add(MockServiceClassComposer.instance().generate(context, s));
-          clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
+          if (context.transport() == Transport.REST) {
+            // REST transport tests donot not use mock services.
+          } else {
+            clazzes.add(MockServiceClassComposer.instance().generate(context, s));
+            clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
+          }
         });
     return clazzes;
   }
 
   public static List<GapicClass> generateTestClasses(GapicContext context) {
     return context.services().stream()
-        .map(s -> ServiceClientTestClassComposer.instance().generate(context, s))
+        .map(
+            s -> {
+              if (context.transport() == Transport.REST) {
+                return com.google.api.generator.gapic.composer.httpjson
+                    .ServiceClientTestClassComposer.instance()
+                    .generate(context, s);
+              } else {
+                return ServiceClientTestClassComposer.instance().generate(context, s);
+              }
+            })
         .collect(Collectors.toList());
   }
 

@@ -45,6 +45,32 @@ java_binary(
     ],
 )
 
+java_binary(
+    name = "protoc-gen-java_dumper",
+    main_class = "com.google.api.generator.MainDumper",
+    runtime_deps = [
+        "//src/main/java/com/google/api/generator",
+        "//src/main/java/com/google/api/generator/gapic",
+        "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
+        "@com_google_guava_guava",
+        "@com_google_protobuf//:protobuf_java",
+    ],
+)
+
+java_binary(
+    name = "protoc-gen-java_gapicfromfile",
+    main_class = "com.google.api.generator.MainFromFile",
+    runtime_deps = [
+        "//src/main/java/com/google/api/generator",
+        "//src/main/java/com/google/api/generator/gapic",
+        "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
+        "@com_google_guava_guava",
+        "@com_google_protobuf//:protobuf_java",
+    ],
+)
+
 # google-java-format
 java_binary(
     name = "google_java_format_binary",
