@@ -14,12 +14,14 @@ def _diff_integration_goldens_impl(ctx):
 
     script = """
     mkdir codegen_tmp
-    unzip -j {input} -d codegen_tmp
-    unzip -j {input_resource_name} -d  codegen_tmp
-    unzip -j {input_test} -d codegen_tmp
+    unzip {input} -d codegen_tmp
+    unzip {input_resource_name} -d  codegen_tmp
+    unzip {input_test} -d codegen_tmp
     cd codegen_tmp
     # Remove unneeded non-Java files, like MANIFEST
     rm -rf $(find ./ -type f ! -name '*.java' -a ! -name '*gapic_metadata.json')
+    rm -rf $(find ./ -type f -name 'PlaceholderFile.java')
+    rm -r $(find ./ -type d -empty)
     cd ..
     diff codegen_tmp test/integration/goldens/{api_name}/ > {diff_output}
     # Bash `diff` command will return exit code 1 when there are differences between the two
@@ -114,12 +116,14 @@ def _overwrite_golden_impl(ctx):
 
     script = """
     mkdir codegen_tmp
-    unzip -j {input} -d codegen_tmp
-    unzip -j {input_resource_name} -d  codegen_tmp
-    unzip -j {input_test} -d codegen_tmp
+    unzip {input} -d codegen_tmp
+    unzip {input_resource_name} -d  codegen_tmp
+    unzip {input_test} -d codegen_tmp
     cd codegen_tmp
     # Remove unneeded non-Java files, like MANIFEST
     rm -rf $(find ./ -type f ! -name '*.java' -a ! -name '*gapic_metadata.json')
+    rm -rf $(find ./ -type f -name 'PlaceholderFile.java')
+    rm -r $(find ./ -type d -empty)
     zip -r ../{goldens_output_zip} .
     """.format(
         goldens_output_zip = goldens_output_zip.path,
@@ -141,8 +145,10 @@ def _overwrite_golden_impl(ctx):
     # Overwrite the goldens.
     golden_update_script_content = """
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
-    rm -r test/integration/goldens/{api_name}/*.java
-    rm -r test/integration/goldens/{api_name}/gapic_metadata.json
+    # Clear out existing Java and JSON files.
+    rm -r $(find test/integration/goldens/{api_name}/ -name '*.java')
+    rm -r $(find test/integration/goldens/{api_name}/ -name 'gapic_metadata.json')
+    rm -r $(find ./ -type d -empty)
     unzip -ao {goldens_output_zip} -d test/integration/goldens/{api_name}
     """.format(
         goldens_output_zip = goldens_output_zip.path,
