@@ -15,13 +15,15 @@
 
 set -eo pipefail
 
-cd github/api-common-java/
+source $(dirname "$0")/common.sh
+MAVEN_SETTINGS_FILE=$(realpath $(dirname "$0")/../../)/settings.xml
+pushd $(dirname "$0")/../../
 
-# Print out Java
-java -version
-echo $JOB_TYPE
+# ensure we're trying to push a snapshot (no-result returns non-zero exit code)
+grep SNAPSHOT versions.txt
 
-./gradlew assemble
-./gradlew build install
+setup_environment_secrets
+mkdir -p ${HOME}/.gradle
+create_gradle_properties_file "${HOME}/.gradle/gradle.properties"
 
-bash $KOKORO_GFILE_DIR/codecov.sh
+./gradlew assemble publish

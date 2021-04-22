@@ -5,18 +5,18 @@ branchProtectionRules:
 - pattern: master
   isAdminEnforced: true
   requiredStatusCheckContexts:
-    - 'codecov/patch'
-    - 'codecov/project'
-    - 'cla/google'
+  - 'codecov/patch'
+  - 'codecov/project'
+  - 'cla/google'
   requiredApprovingReviewCount: 1
   requiresCodeOwnerReviews: true
   requiresStrictStatusChecks: true
 permissionRules:
-  - team: Googlers
-    permission: pull
-  - team: yoshi-java
-    permission: push
-  - team: yoshi-java-admins
-    permission: admin
-  - team: yoshi-admins
-    permission: admin
+- team: Googlers
+  permission: pull
+- team: yoshi-java
+  permission: push
+- team: yoshi-java-admins
+  permission: admin
+- team: yoshi-admins
+  permission: admin

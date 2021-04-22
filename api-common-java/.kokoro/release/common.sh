@@ -34,7 +34,6 @@ signing.gnupg.executable=gpg
 signing.gnupg.homeDir=${GPG_HOMEDIR}
 signing.gnupg.keyName=${GPG_KEY_ID}
 signing.gnupg.passphrase=${GPG_PASSPHRASE}
-
 ossrhUsername=${SONATYPE_USERNAME}
 ossrhPassword=${SONATYPE_PASSWORD}" > $1
 }
