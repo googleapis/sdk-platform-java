@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.ClientContext;
@@ -75,7 +74,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
-public class ServiceSettingsClassComposer implements ClassComposer {
+public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
   private static final String CALL_SETTINGS_TYPE_NAME_PATTERN = "%sCallSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
@@ -83,14 +82,17 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
 
-  private static final ServiceSettingsClassComposer INSTANCE = new ServiceSettingsClassComposer();
+  private final TypeStore fixedTypeStore;
+  private final Class<?> instantiatingChannelProviderClass;
+  private final String defaultTransportProviderBuilderName;
 
-  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
-
-  private ServiceSettingsClassComposer() {}
-
-  public static ServiceSettingsClassComposer instance() {
-    return INSTANCE;
+  protected AbstractServiceSettingsClassComposer(
+      TypeStore fixedTypeStore,
+      Class<?> instantiatingChannelProviderClass,
+      String defaultTransportProviderBuilderName) {
+    this.fixedTypeStore = fixedTypeStore;
+    this.instantiatingChannelProviderClass = instantiatingChannelProviderClass;
+    this.defaultTransportProviderBuilderName = defaultTransportProviderBuilderName;
   }
 
   @Override
@@ -110,7 +112,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setName(className)
             .setExtendsType(
                 TypeNode.withReference(
-                    FIXED_TYPESTORE
+                    getFixedTypeStore()
                         .get("ClientSettings")
                         .reference()
                         .copyAndSetGenerics(
@@ -122,6 +124,18 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  protected Class<?> getInstantiatingChannelProviderClass() {
+    return instantiatingChannelProviderClass;
+  }
+
+  protected TypeStore getFixedTypeStore() {
+    return fixedTypeStore;
+  }
+
+  protected String getDefaultTransportProviderBuilderName() {
+    return defaultTransportProviderBuilderName;
   }
 
   private static List<CommentStatement> createClassHeaderComments(
@@ -150,10 +164,10 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         classType);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(Service service) {
+  private List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (!PackageChecker.isGaApi(service.pakkage())) {
-      annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
+      annotations.add(AnnotationNode.withType(getFixedTypeStore().get("BetaApi")));
     }
 
     if (service.isDeprecated()) {
@@ -162,13 +176,13 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
     annotations.add(
         AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("Generated"))
+            .setType(getFixedTypeStore().get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
     return annotations;
   }
 
-  private static List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
+  protected List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
     javaMethods.add(createCreatorMethod(service, typeStore));
@@ -178,7 +192,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createConstructorMethod(Service service, TypeStore typeStore) {
+  private MethodDefinition createConstructorMethod(Service service, TypeStore typeStore) {
     VariableExpr settingsBuilderVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -190,20 +204,19 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(thisClassType)
         .setArguments(Arrays.asList(settingsBuilderVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
         .setBody(
             Arrays.asList(
                 ExprStatement.withExpr(
                     ReferenceConstructorExpr.superBuilder()
-                        .setType(FIXED_TYPESTORE.get("ClientSettings"))
+                        .setType(getFixedTypeStore().get("ClientSettings"))
                         .setArguments(settingsBuilderVarExpr)
                         .build())))
         .build();
   }
 
   // TODO(miraleung): Consider merging this with createNestedBuilderSettingsGetterMethods.
-  private static List<MethodDefinition> createSettingsGetterMethods(
-      Service service, TypeStore typeStore) {
+  private List<MethodDefinition> createSettingsGetterMethods(Service service, TypeStore typeStore) {
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     BiFunction<TypeNode, String, MethodDefinition.Builder> methodMakerFn =
         (retType, javaMethodName) ->
@@ -219,7 +232,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                                 .setExpr(
                                     MethodInvocationExpr.builder()
                                         .setMethodName("getStubSettings")
-                                        .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
+                                        .setReturnType(getFixedTypeStore().get("StubSettings"))
                                         .build())
                                 .build())
                         .setMethodName(javaMethodName)
@@ -262,7 +275,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
+  private MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
     TypeNode stubClassType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
@@ -300,12 +313,12 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setReturnType(thisClassType)
         .setName("create")
         .setArguments(Arrays.asList(stubVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
         .setReturnExpr(returnMethodExpr)
         .build();
   }
 
-  private static List<MethodDefinition> createDefaultGetterMethods(
+  protected List<MethodDefinition> createDefaultGetterMethods(
       Service service, TypeStore typeStore) {
     BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
@@ -356,9 +369,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     javaMethods.add(
         methodMakerFn.apply(
             methodStarterFn.apply(
-                "defaultGrpcTransportProviderBuilder",
-                typeMakerFn.apply(InstantiatingGrpcChannelProvider.Builder.class)),
-            SettingsCommentComposer.DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+                getDefaultTransportProviderBuilderName(),
+                typeMakerFn.apply(getInstantiatingChannelProviderClass())),
+            SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
 
     javaMethods.add(
         methodStarterFn
@@ -376,7 +389,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.builder()
-                        .setType(FIXED_TYPESTORE.get("BetaApi"))
+                        .setType(getFixedTypeStore().get("BetaApi"))
                         .setDescription(
                             "The surface for customizing headers is not stable yet and may"
                                 + " change in the future.")
@@ -385,8 +398,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static List<MethodDefinition> createBuilderHelperMethods(
-      Service service, TypeStore typeStore) {
+  private List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition newBuilderMethodOne =
         MethodDefinition.builder()
@@ -407,7 +419,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientContext")
-                .setType(FIXED_TYPESTORE.get("ClientContext"))
+                .setType(getFixedTypeStore().get("ClientContext"))
                 .build());
 
     MethodDefinition newBuilderMethodTwo =
@@ -444,7 +456,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return Arrays.asList(newBuilderMethodOne, newBuilderMethodTwo, toBuilderMethod);
   }
 
-  private static ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
+  private ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.createBuilderClassComment(
@@ -468,7 +480,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .build();
   }
 
-  private static List<MethodDefinition> createNestedBuilderClassMethods(
+  private List<MethodDefinition> createNestedBuilderClassMethods(
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createNestedBuilderConstructorMethods(service, typeStore));
@@ -480,14 +492,14 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static List<MethodDefinition> createNestedBuilderConstructorMethods(
+  private List<MethodDefinition> createNestedBuilderConstructorMethods(
       Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition noArgCtor =
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(builderType)
-            .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
+            .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(
@@ -495,7 +507,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             .setType(builderType)
                             .setArguments(
                                 CastExpr.builder()
-                                    .setType(FIXED_TYPESTORE.get("ClientContext"))
+                                    .setType(getFixedTypeStore().get("ClientContext"))
                                     .setExpr(ValueExpr.createNullExpr())
                                     .build())
                             .build())))
@@ -511,7 +523,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     Arrays.asList(
                         ExprStatement.withExpr(
                             ReferenceConstructorExpr.superBuilder()
-                                .setType(FIXED_TYPESTORE.get("ClientSettings"))
+                                .setType(getFixedTypeStore().get("ClientSettings"))
                                 .setArguments(superArg)
                                 .build())))
                 .build();
@@ -520,7 +532,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientContext")
-                .setType(FIXED_TYPESTORE.get("ClientContext"))
+                .setType(getFixedTypeStore().get("ClientContext"))
                 .build());
     MethodDefinition clientContextCtor =
         ctorMakerFn.apply(
@@ -578,7 +590,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .build();
   }
 
-  private static MethodDefinition createNestedBuilderStubSettingsBuilderMethod(
+  private MethodDefinition createNestedBuilderStubSettingsBuilderMethod(
       Service service, TypeStore typeStore) {
     TypeNode retType = getStubSettingsBuilderType(service);
     return MethodDefinition.builder()
@@ -591,13 +603,13 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setExpr(
                     MethodInvocationExpr.builder()
                         .setMethodName("getStubSettings")
-                        .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
+                        .setReturnType(getFixedTypeStore().get("StubSettings"))
                         .build())
                 .build())
         .build();
   }
 
-  private static MethodDefinition createNestedBuilderApplyToAllUnaryMethod(
+  private MethodDefinition createNestedBuilderApplyToAllUnaryMethod(
       Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     String javaMethodName = "applyToAllUnaryMethods";
@@ -615,7 +627,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setName("settingsUpdater")
                 .setType(
                     TypeNode.withReference(
-                        FIXED_TYPESTORE
+                        getFixedTypeStore()
                             .get("ApiFunction")
                             .reference()
                             .copyAndSetGenerics(
@@ -711,7 +723,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createNestedBuilderClassBuildMethod(
+  private MethodDefinition createNestedBuilderClassBuildMethod(
       Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     TypeNode returnType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
@@ -720,7 +732,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName("build")
-        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
         .setReturnExpr(
             NewObjectExpr.builder()
                 .setType(returnType)
@@ -729,7 +741,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .build();
   }
 
-  private static TypeStore createStaticTypes() {
+  protected static TypeStore createCommonTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             ApiClientHeaderProvider.class,
@@ -740,7 +752,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             Generated.class,
             GoogleCredentialsProvider.class,
             InstantiatingExecutorProvider.class,
-            InstantiatingGrpcChannelProvider.class,
             IOException.class,
             Operation.class,
             OperationCallSettings.class,

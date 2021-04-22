@@ -12,7 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.common;
 
-public interface ClassComposer
-    extends com.google.api.generator.gapic.composer.common.ClassComposer {}
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Service;
+
+// TODO: remove after Pre-DIREGAPIC refactoring is fully merged
+public interface ClassComposer {
+  GapicClass generate(GapicContext context, Service serivce);
+}

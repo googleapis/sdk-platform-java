@@ -24,16 +24,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TypeStore {
-  private Map<String, TypeNode> store = new HashMap<>();
+  private final Map<String, TypeNode> store = new HashMap<>();
 
   public TypeStore() {}
 
   public TypeStore(List<Class> concreteClasses) {
+    putConcreteClassses(concreteClasses);
+  }
+
+  private void putConcreteClassses(List<Class> concreteClasses) {
     store.putAll(
         concreteClasses.stream()
             .collect(
                 Collectors.toMap(
-                    c -> c.getSimpleName(),
+                    Class::getSimpleName,
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c)))));
   }
 
@@ -65,6 +69,10 @@ public class TypeStore {
                 .setPakkage(pakkage)
                 .setIsStaticImport(isStaticImport)
                 .build()));
+  }
+
+  public void putAll(List<Class> concreteClasses) {
+    putConcreteClassses(concreteClasses);
   }
 
   public void putAll(
