@@ -32,13 +32,13 @@
     <name>Google LLC</name>
   </organization>
   <scm>
-    <connection>scm:git:git@github.com:googleapis/java-iam.git</connection>
-    <developerConnection>scm:git:git@github.com:googleapis/java-iam.git</developerConnection>
-    <url>https://github.com/googleapis/java-iam</url>
+    <connection>scm:git@github.com:googleapis/java-common-protos.git</connection>
+    <developerConnection>scm:git@github.com:googleapis/java-common-protos.git</developerConnection>
+    <url>https://github.com/googleapis/java-common-protos</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
-    <url>https://github.com/googleapis/java-iam/issues</url>
+    <url>https://github.com/googleapis/java-common-protos/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
   <distributionManagement>
