@@ -63,7 +63,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <github.global.server>github</github.global.server>
     <site.installationModule>google-iam-parent</site.installationModule>
-    <google.common-protos.version>1.17.0</google.common-protos.version>
     <protobuf.version>3.16.0</protobuf.version>
     <junit.version>4.13.2</junit.version>
     <grpc.version>1.37.0</grpc.version>
