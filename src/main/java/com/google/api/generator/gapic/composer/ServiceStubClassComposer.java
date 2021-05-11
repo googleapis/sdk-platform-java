@@ -248,7 +248,6 @@ public class ServiceStubClassComposer implements ClassComposer {
             UnaryCallable.class,
             UnsupportedOperationException.class);
     TypeStore typeStore = new TypeStore(concreteClazzes);
-    typeStore.putMessageTypes(service.pakkage(), messageTypes);
 
     typeStore.put("com.google.longrunning.stub", "OperationsStub");
 

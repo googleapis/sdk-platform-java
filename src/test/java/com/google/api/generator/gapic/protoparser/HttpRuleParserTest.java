@@ -41,14 +41,14 @@ public class HttpRuleParserTest {
 
     // CreateSession method.
     MethodDescriptor rpcMethod = testingService.getMethods().get(0);
-    Message inputMessage = messages.get("CreateSessionRequest");
+    Message inputMessage = messages.get("com.google.showcase.v1beta1.CreateSessionRequest");
     Optional<List<String>> httpBindingsOpt =
         HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
     assertFalse(httpBindingsOpt.isPresent());
 
     // GetSession method.
     rpcMethod = testingService.getMethods().get(1);
-    inputMessage = messages.get("GetSessionRequest");
+    inputMessage = messages.get("com.google.showcase.v1beta1.GetSessionRequest");
     httpBindingsOpt = HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
     assertTrue(httpBindingsOpt.isPresent());
     assertThat(httpBindingsOpt.get()).containsExactly("name");
@@ -65,7 +65,7 @@ public class HttpRuleParserTest {
     // VerityTest method.
     MethodDescriptor rpcMethod =
         testingService.getMethods().get(testingService.getMethods().size() - 1);
-    Message inputMessage = messages.get("VerifyTestRequest");
+    Message inputMessage = messages.get("com.google.showcase.v1beta1.VerifyTestRequest");
     Optional<List<String>> httpBindingsOpt =
         HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
     assertTrue(httpBindingsOpt.isPresent());
@@ -84,7 +84,7 @@ public class HttpRuleParserTest {
     // VerityTest method.
     MethodDescriptor rpcMethod =
         testingService.getMethods().get(testingService.getMethods().size() - 1);
-    Message inputMessage = messages.get("CreateSessionRequest");
+    Message inputMessage = messages.get("com.google.showcase.v1beta1.CreateSessionRequest");
     assertThrows(
         IllegalStateException.class,
         () -> HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages));

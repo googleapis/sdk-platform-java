@@ -30,6 +30,9 @@ import javax.annotation.Nullable;
 public abstract class Message {
   public abstract String name();
 
+  // The fully-qualified proto name, which differs from the Java fully-qualified name.
+  public abstract String fullProtoName();
+
   // TODO(unsupported): oneof fields are parsed as separate ones because field flattening refers to
   // a specific field.
   public abstract ImmutableList<Field> fields();
@@ -87,6 +90,8 @@ public abstract class Message {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setName(String name);
+
+    public abstract Builder setFullProtoName(String fullProtoName);
 
     public abstract Builder setFields(List<Field> fields);
 
