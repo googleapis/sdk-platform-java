@@ -1,6 +1,8 @@
 releaseType: java-yoshi
 bumpMinorPreMajor: true
+handleGHRelease: true
 branches:
   - releaseType: java-lts
     bumpMinorPreMajor: true
     branch: 1.10.1-sp
+    handleGHRelease: true
