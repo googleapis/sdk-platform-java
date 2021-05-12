@@ -56,7 +56,7 @@ public final class ServiceProto {
           + ".proto\032\026google/api/usage.proto\032\031google/p"
           + "rotobuf/any.proto\032\031google/protobuf/api.p"
           + "roto\032\032google/protobuf/type.proto\032\036google"
-          + "/protobuf/wrappers.proto\"\326\007\n\007Service\022\014\n\004"
+          + "/protobuf/wrappers.proto\"\332\007\n\007Service\022\014\n\004"
           + "name\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022\033\n\023producer_pr"
           + "oject_id\030\026 \001(\t\022\n\n\002id\030! \001(\t\022\"\n\004apis\030\003 \003(\013"
           + "2\024.google.protobuf.Api\022$\n\005types\030\004 \003(\0132\025."
@@ -79,12 +79,12 @@ public final class ServiceProto {
           + "i.Logging\022*\n\nmonitoring\030\034 \001(\0132\026.google.a"
           + "pi.Monitoring\0227\n\021system_parameters\030\035 \001(\013"
           + "2\034.google.api.SystemParameters\022+\n\013source"
-          + "_info\030% \001(\0132\026.google.api.SourceInfo\0224\n\016c"
+          + "_info\030% \001(\0132\026.google.api.SourceInfo\0228\n\016c"
           + "onfig_version\030\024 \001(\0132\034.google.protobuf.UI"
-          + "nt32ValueBn\n\016com.google.apiB\014ServiceProt"
-          + "oP\001ZEgoogle.golang.org/genproto/googleap"
-          + "is/api/serviceconfig;serviceconfig\242\002\004GAP"
-          + "Ib\006proto3"
+          + "nt32ValueB\002\030\001Bn\n\016com.google.apiB\014Service"
+          + "ProtoP\001ZEgoogle.golang.org/genproto/goog"
+          + "leapis/api/serviceconfig;serviceconfig\242\002"
+          + "\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

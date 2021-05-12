@@ -22,8 +22,9 @@ package com.google.api;
  *
  *
  * <pre>
- * `Authentication` defines the authentication configuration for an API.
- * Example for an API targeted for external use:
+ * `Authentication` defines the authentication configuration for API methods
+ * provided by an API service.
+ * Example:
  *     name: calendar.googleapis.com
  *     authentication:
  *       providers:
@@ -34,6 +35,9 @@ package com.google.api;
  *       - selector: "*"
  *         requirements:
  *           provider_id: google_calendar_auth
+ *       - selector: google.calendar.Delegate
+ *         oauth:
+ *           canonical_scopes: https://www.googleapis.com/auth/calendar.read
  * </pre>
  *
  * Protobuf type {@code google.api.Authentication}
@@ -457,8 +461,9 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * `Authentication` defines the authentication configuration for an API.
-   * Example for an API targeted for external use:
+   * `Authentication` defines the authentication configuration for API methods
+   * provided by an API service.
+   * Example:
    *     name: calendar.googleapis.com
    *     authentication:
    *       providers:
@@ -469,6 +474,9 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *       - selector: "*"
    *         requirements:
    *           provider_id: google_calendar_auth
+   *       - selector: google.calendar.Delegate
+   *         oauth:
+   *           canonical_scopes: https://www.googleapis.com/auth/calendar.read
    * </pre>
    *
    * Protobuf type {@code google.api.Authentication}

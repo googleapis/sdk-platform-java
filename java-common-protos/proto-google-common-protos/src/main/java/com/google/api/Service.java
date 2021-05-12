@@ -29,7 +29,6 @@ package com.google.api;
  * specific aspect, such as auth. See each proto message definition for details.
  * Example:
  *     type: google.api.Service
- *     config_version: 3
  *     name: calendar.googleapis.com
  *     title: Google Calendar API
  *     apis:
@@ -1839,14 +1838,17 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
+   * Obsolete. Do not use.
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
    *
    * @return Whether the configVersion field is set.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public boolean hasConfigVersion() {
     return configVersion_ != null;
   }
@@ -1854,14 +1856,17 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
+   * Obsolete. Do not use.
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
    *
    * @return The configVersion.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public com.google.protobuf.UInt32Value getConfigVersion() {
     return configVersion_ == null
         ? com.google.protobuf.UInt32Value.getDefaultInstance()
@@ -1871,12 +1876,15 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
+   * Obsolete. Do not use.
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder() {
     return getConfigVersion();
   }
@@ -2350,7 +2358,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * specific aspect, such as auth. See each proto message definition for details.
    * Example:
    *     type: google.api.Service
-   *     config_version: 3
    *     name: calendar.googleapis.com
    *     title: Google Calendar API
    *     apis:
@@ -8530,13 +8537,16 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      *
      * @return Whether the configVersion field is set.
      */
+    @java.lang.Deprecated
     public boolean hasConfigVersion() {
       return configVersionBuilder_ != null || configVersion_ != null;
     }
@@ -8544,13 +8554,16 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      *
      * @return The configVersion.
      */
+    @java.lang.Deprecated
     public com.google.protobuf.UInt32Value getConfigVersion() {
       if (configVersionBuilder_ == null) {
         return configVersion_ == null
@@ -8564,11 +8577,14 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder setConfigVersion(com.google.protobuf.UInt32Value value) {
       if (configVersionBuilder_ == null) {
         if (value == null) {
@@ -8586,11 +8602,14 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder setConfigVersion(com.google.protobuf.UInt32Value.Builder builderForValue) {
       if (configVersionBuilder_ == null) {
         configVersion_ = builderForValue.build();
@@ -8605,11 +8624,14 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder mergeConfigVersion(com.google.protobuf.UInt32Value value) {
       if (configVersionBuilder_ == null) {
         if (configVersion_ != null) {
@@ -8631,11 +8653,14 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder clearConfigVersion() {
       if (configVersionBuilder_ == null) {
         configVersion_ = null;
@@ -8651,11 +8676,14 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public com.google.protobuf.UInt32Value.Builder getConfigVersionBuilder() {
 
       onChanged();
@@ -8665,11 +8693,14 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder() {
       if (configVersionBuilder_ != null) {
         return configVersionBuilder_.getMessageOrBuilder();
@@ -8683,10 +8714,12 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated. The service config compiler always sets this field to `3`.
+     * Obsolete. Do not use.
+     * This field has no semantic meaning. The service config compiler always
+     * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.protobuf.UInt32Value,

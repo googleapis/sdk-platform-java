@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "eac28b018e4642539d9097e38a8b231aa4ce752c"
+        "sha": "347d858fef7f7182683a35e0c1f2a3cee75abfaf"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "15c5e21948ff6fbe41f91bdf04f6252f91a12d59",
-        "internalRef": "364894175"
+        "sha": "7cde5d0df08801e00fc45df1546942aa2692d5c3",
+        "internalRef": "370757345"
       }
     },
     {
@@ -216,6 +216,11 @@
     "proto-google-common-protos/src/main/java/com/google/api/UsageProto.java",
     "proto-google-common-protos/src/main/java/com/google/api/UsageRule.java",
     "proto-google-common-protos/src/main/java/com/google/api/UsageRuleOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/api/Visibility.java",
+    "proto-google-common-protos/src/main/java/com/google/api/VisibilityOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/api/VisibilityProto.java",
+    "proto-google-common-protos/src/main/java/com/google/api/VisibilityRule.java",
+    "proto-google-common-protos/src/main/java/com/google/api/VisibilityRuleOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuditLog.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuditLogOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuditLogProto.java",

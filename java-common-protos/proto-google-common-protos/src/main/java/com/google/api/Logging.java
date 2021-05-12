@@ -30,14 +30,14 @@ package com.google.api;
  *     monitored_resources:
  *     - type: library.googleapis.com/branch
  *       labels:
- *       - key: city
+ *       - key: /city
  *         description: The city where the library branch is located in.
- *       - key: name
+ *       - key: /name
  *         description: The name of the branch.
  *     logs:
  *     - name: activity_history
  *       labels:
- *       - key: customer_id
+ *       - key: /customer_id
  *     - name: purchase_history
  *     logging:
  *       producer_destinations:
@@ -1556,14 +1556,14 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *     monitored_resources:
    *     - type: library.googleapis.com/branch
    *       labels:
-   *       - key: city
+   *       - key: /city
    *         description: The city where the library branch is located in.
-   *       - key: name
+   *       - key: /name
    *         description: The name of the branch.
    *     logs:
    *     - name: activity_history
    *       labels:
-   *       - key: customer_id
+   *       - key: /customer_id
    *     - name: purchase_history
    *     logging:
    *       producer_destinations:

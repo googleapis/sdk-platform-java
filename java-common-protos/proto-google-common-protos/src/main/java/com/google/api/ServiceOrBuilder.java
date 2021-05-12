@@ -1042,34 +1042,43 @@ public interface ServiceOrBuilder
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
+   * Obsolete. Do not use.
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
    *
    * @return Whether the configVersion field is set.
    */
+  @java.lang.Deprecated
   boolean hasConfigVersion();
   /**
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
+   * Obsolete. Do not use.
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
    *
    * @return The configVersion.
    */
+  @java.lang.Deprecated
   com.google.protobuf.UInt32Value getConfigVersion();
   /**
    *
    *
    * <pre>
-   * Deprecated. The service config compiler always sets this field to `3`.
+   * Obsolete. Do not use.
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
    */
+  @java.lang.Deprecated
   com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder();
 }
