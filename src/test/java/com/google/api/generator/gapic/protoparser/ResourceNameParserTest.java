@@ -136,7 +136,7 @@ public class ResourceNameParserTest {
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
 
     assertTrue(resourceName.hasParentMessageName());
-    assertEquals("Document", resourceName.parentMessageName());
+    assertEquals("com.google.testgapic.v1beta1.Document", resourceName.parentMessageName());
   }
 
   @Test

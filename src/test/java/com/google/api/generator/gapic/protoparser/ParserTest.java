@@ -65,7 +65,7 @@ public class ParserTest {
     // TODO(miraleung): Add more tests for oneofs and other message-parsing edge cases.
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
 
-    Message echoRequestMessage = messageTypes.get("EchoRequest");
+    Message echoRequestMessage = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
     Field echoRequestNameField = echoRequestMessage.fieldMap().get("name");
     assertTrue(echoRequestNameField.hasResourceReference());
 
@@ -88,10 +88,12 @@ public class ParserTest {
         Message.builder()
             .setType(echoResponseType)
             .setName(echoResponseName)
+            .setFullProtoName("google.showcase.v1beta1." + echoResponseName)
             .setFields(Arrays.asList(echoResponseContentField, echoResponseSeverityField))
             .build();
 
-    assertEquals(echoResponseMessage, messageTypes.get(echoResponseName));
+    assertEquals(
+        echoResponseMessage, messageTypes.get("com.google.showcase.v1beta1." + echoResponseName));
   }
 
   @Test
@@ -171,8 +173,8 @@ public class ParserTest {
     Method waitMethod = methods.get(7);
     assertEquals("Wait", waitMethod.name());
     assertTrue(waitMethod.hasLro());
-    TypeNode waitResponseType = messageTypes.get("WaitResponse").type();
-    TypeNode waitMetadataType = messageTypes.get("WaitMetadata").type();
+    TypeNode waitResponseType = messageTypes.get("com.google.showcase.v1beta1.WaitResponse").type();
+    TypeNode waitMetadataType = messageTypes.get("com.google.showcase.v1beta1.WaitMetadata").type();
     assertThat(waitMethod.lro().responseType()).isEqualTo(waitResponseType);
     assertThat(waitMethod.lro().metadataType()).isEqualTo(waitMetadataType);
   }
@@ -182,7 +184,7 @@ public class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(7);
     assertEquals("Wait", waitMethodDescriptor.getName());
-    messageTypes.remove("WaitResponse");
+    messageTypes.remove("com.google.showcase.v1beta1.WaitResponse");
     assertThrows(
         NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
   }
@@ -192,7 +194,7 @@ public class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(7);
     assertEquals("Wait", waitMethodDescriptor.getName());
-    messageTypes.remove("WaitMetadata");
+    messageTypes.remove("com.google.showcase.v1beta1.WaitMetadata");
     assertThrows(
         NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
   }
@@ -341,18 +343,18 @@ public class ParserTest {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
 
-    Message documentMessage = messageTypes.get("Document");
+    Message documentMessage = messageTypes.get("com.google.testgapic.v1beta1.Document");
     assertFalse(documentMessage.hasResource());
-    Message folderMessage = messageTypes.get("Folder");
+    Message folderMessage = messageTypes.get("com.google.testgapic.v1beta1.Folder");
     assertFalse(folderMessage.hasResource());
 
     Map<String, ResourceName> resourceNames =
         ResourceNameParser.parseResourceNames(lockerServiceFileDescriptor);
     messageTypes = Parser.updateResourceNamesInMessages(messageTypes, resourceNames.values());
 
-    documentMessage = messageTypes.get("Document");
+    documentMessage = messageTypes.get("com.google.testgapic.v1beta1.Document");
     assertTrue(documentMessage.hasResource());
-    folderMessage = messageTypes.get("Folder");
+    folderMessage = messageTypes.get("com.google.testgapic.v1beta1.Folder");
     assertFalse(folderMessage.hasResource());
   }
 
@@ -362,7 +364,7 @@ public class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
 
     // Child type.
-    Message message = messageTypes.get("CreateFolderRequest");
+    Message message = messageTypes.get("com.google.testgapic.v1beta1.CreateFolderRequest");
     Field field = message.fieldMap().get("parent");
     assertTrue(field.hasResourceReference());
     ResourceReference resourceReference = field.resourceReference();
@@ -371,7 +373,7 @@ public class ParserTest {
     assertTrue(resourceReference.isChildType());
 
     // Type.
-    message = messageTypes.get("GetFolderRequest");
+    message = messageTypes.get("com.google.testgapic.v1beta1.GetFolderRequest");
     field = message.fieldMap().get("name");
     assertTrue(field.hasResourceReference());
     resourceReference = field.resourceReference();
@@ -380,7 +382,7 @@ public class ParserTest {
     assertFalse(resourceReference.isChildType());
 
     // Non-RPC-specific message.
-    message = messageTypes.get("Folder");
+    message = messageTypes.get("com.google.testgapic.v1beta1.Folder");
     field = message.fieldMap().get("name");
     assertTrue(field.hasResourceReference());
     resourceReference = field.resourceReference();
@@ -390,7 +392,7 @@ public class ParserTest {
 
     // No explicit resource_reference annotation on the field, and the resource annotation is in the
     // message.
-    message = messageTypes.get("Document");
+    message = messageTypes.get("com.google.testgapic.v1beta1.Document");
     field = message.fieldMap().get("name");
     assertTrue(field.hasResourceReference());
     resourceReference = field.resourceReference();
@@ -405,7 +407,7 @@ public class ParserTest {
     assertEquals(testingService.getName(), "Testing");
 
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
-    Message message = messageTypes.get("Session");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.Session");
     Field field = message.fieldMap().get("session_ids_to_descriptor");
     assertEquals(
         TypeNode.withReference(

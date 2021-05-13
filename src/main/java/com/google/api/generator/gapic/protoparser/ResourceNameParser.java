@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.pathtemplate.PathTemplate;
@@ -131,7 +132,8 @@ public class ResourceNameParser {
               messageTypeDescriptor.getName()));
     }
 
-    return createResourceName(protoResource, pakkage, messageTypeDescriptor.getName());
+    TypeNode javaMessageType = TypeParser.parseType(messageTypeDescriptor);
+    return createResourceName(protoResource, pakkage, javaMessageType.reference().fullName());
   }
 
   private static Optional<ResourceName> createResourceName(
