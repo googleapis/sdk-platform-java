@@ -14,29 +14,13 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.generator.gapic.composer.common.AbstractServiceSettingsClassComposer;
-import com.google.api.generator.gapic.composer.store.TypeStore;
-import java.util.Arrays;
 
 public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassComposer {
   private static final ServiceSettingsClassComposer INSTANCE =
       new ServiceSettingsClassComposer();
 
-  protected ServiceSettingsClassComposer() {
-    super(
-        createTypes(),
-        InstantiatingGrpcChannelProvider.Builder.class,
-        "defaultGrpcTransportProviderBuilder");
-  }
-
   public static ServiceSettingsClassComposer instance() {
     return INSTANCE;
-  }
-
-  private static TypeStore createTypes() {
-    TypeStore typeStore = createCommonTypes();
-    typeStore.putAll(Arrays.asList(InstantiatingGrpcChannelProvider.class));
-    return typeStore;
   }
 }

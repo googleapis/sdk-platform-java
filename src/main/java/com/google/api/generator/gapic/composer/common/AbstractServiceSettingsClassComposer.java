@@ -60,6 +60,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.TransportContext;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
@@ -76,27 +77,14 @@ import javax.annotation.Generated;
 
 public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
-  private static final String CALL_SETTINGS_TYPE_NAME_PATTERN = "%sCallSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
-
-  private final TypeStore fixedTypeStore;
-  private final Class<?> instantiatingChannelProviderClass;
-  private final String defaultTransportProviderBuilderName;
-
-  protected AbstractServiceSettingsClassComposer(
-      TypeStore fixedTypeStore,
-      Class<?> instantiatingChannelProviderClass,
-      String defaultTransportProviderBuilderName) {
-    this.fixedTypeStore = fixedTypeStore;
-    this.instantiatingChannelProviderClass = instantiatingChannelProviderClass;
-    this.defaultTransportProviderBuilderName = defaultTransportProviderBuilderName;
-  }
+  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   @Override
-  public GapicClass generate(GapicContext ignored, Service service) {
+  public GapicClass generate(GapicContext context, Service service) {
     String pakkage = service.pakkage();
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getServiceSettingsClassName(service);
@@ -112,7 +100,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .setName(className)
             .setExtendsType(
                 TypeNode.withReference(
-                    getFixedTypeStore()
+                    FIXED_TYPESTORE
                         .get("ClientSettings")
                         .reference()
                         .copyAndSetGenerics(
@@ -120,22 +108,10 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                                 typeStore
                                     .get(ClassNames.getServiceSettingsClassName(service))
                                     .reference()))))
-            .setMethods(createClassMethods(service, typeStore))
+            .setMethods(createClassMethods(context.transportContext(), service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
     return GapicClass.create(kind, classDef);
-  }
-
-  protected Class<?> getInstantiatingChannelProviderClass() {
-    return instantiatingChannelProviderClass;
-  }
-
-  protected TypeStore getFixedTypeStore() {
-    return fixedTypeStore;
-  }
-
-  protected String getDefaultTransportProviderBuilderName() {
-    return defaultTransportProviderBuilderName;
   }
 
   private static List<CommentStatement> createClassHeaderComments(
@@ -167,7 +143,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   private List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (!PackageChecker.isGaApi(service.pakkage())) {
-      annotations.add(AnnotationNode.withType(getFixedTypeStore().get("BetaApi")));
+      annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
     }
 
     if (service.isDeprecated()) {
@@ -176,17 +152,18 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
     annotations.add(
         AnnotationNode.builder()
-            .setType(getFixedTypeStore().get("Generated"))
+            .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
     return annotations;
   }
 
-  protected List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
+  protected List<MethodDefinition> createClassMethods(
+      TransportContext transportContext, Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
     javaMethods.add(createCreatorMethod(service, typeStore));
-    javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
+    javaMethods.addAll(createDefaultGetterMethods(transportContext, service, typeStore));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
@@ -204,12 +181,12 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(thisClassType)
         .setArguments(Arrays.asList(settingsBuilderVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
+        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setBody(
             Arrays.asList(
                 ExprStatement.withExpr(
                     ReferenceConstructorExpr.superBuilder()
-                        .setType(getFixedTypeStore().get("ClientSettings"))
+                        .setType(FIXED_TYPESTORE.get("ClientSettings"))
                         .setArguments(settingsBuilderVarExpr)
                         .build())))
         .build();
@@ -232,7 +209,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                                 .setExpr(
                                     MethodInvocationExpr.builder()
                                         .setMethodName("getStubSettings")
-                                        .setReturnType(getFixedTypeStore().get("StubSettings"))
+                                        .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
                                         .build())
                                 .build())
                         .setMethodName(javaMethodName)
@@ -313,13 +290,13 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .setReturnType(thisClassType)
         .setName("create")
         .setArguments(Arrays.asList(stubVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
+        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setReturnExpr(returnMethodExpr)
         .build();
   }
 
   protected List<MethodDefinition> createDefaultGetterMethods(
-      Service service, TypeStore typeStore) {
+      TransportContext transportContext, Service service, TypeStore typeStore) {
     BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
             MethodDefinition.builder()
@@ -369,8 +346,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     javaMethods.add(
         methodMakerFn.apply(
             methodStarterFn.apply(
-                getDefaultTransportProviderBuilderName(),
-                typeMakerFn.apply(getInstantiatingChannelProviderClass())),
+                transportContext.defaultTransportProviderBuilderName(),
+                typeMakerFn.apply(transportContext.instantiatingChannelProviderClass())),
             SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
 
     javaMethods.add(
@@ -389,7 +366,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.builder()
-                        .setType(getFixedTypeStore().get("BetaApi"))
+                        .setType(FIXED_TYPESTORE.get("BetaApi"))
                         .setDescription(
                             "The surface for customizing headers is not stable yet and may"
                                 + " change in the future.")
@@ -419,7 +396,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientContext")
-                .setType(getFixedTypeStore().get("ClientContext"))
+                .setType(FIXED_TYPESTORE.get("ClientContext"))
                 .build());
 
     MethodDefinition newBuilderMethodTwo =
@@ -499,7 +476,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(builderType)
-            .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
+            .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(
@@ -507,7 +484,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                             .setType(builderType)
                             .setArguments(
                                 CastExpr.builder()
-                                    .setType(getFixedTypeStore().get("ClientContext"))
+                                    .setType(FIXED_TYPESTORE.get("ClientContext"))
                                     .setExpr(ValueExpr.createNullExpr())
                                     .build())
                             .build())))
@@ -523,7 +500,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     Arrays.asList(
                         ExprStatement.withExpr(
                             ReferenceConstructorExpr.superBuilder()
-                                .setType(getFixedTypeStore().get("ClientSettings"))
+                                .setType(FIXED_TYPESTORE.get("ClientSettings"))
                                 .setArguments(superArg)
                                 .build())))
                 .build();
@@ -532,7 +509,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientContext")
-                .setType(getFixedTypeStore().get("ClientContext"))
+                .setType(FIXED_TYPESTORE.get("ClientContext"))
                 .build());
     MethodDefinition clientContextCtor =
         ctorMakerFn.apply(
@@ -603,7 +580,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                 .setExpr(
                     MethodInvocationExpr.builder()
                         .setMethodName("getStubSettings")
-                        .setReturnType(getFixedTypeStore().get("StubSettings"))
+                        .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
                         .build())
                 .build())
         .build();
@@ -627,7 +604,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                 .setName("settingsUpdater")
                 .setType(
                     TypeNode.withReference(
-                        getFixedTypeStore()
+                        FIXED_TYPESTORE
                             .get("ApiFunction")
                             .reference()
                             .copyAndSetGenerics(
@@ -732,7 +709,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName("build")
-        .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("IOException")))
+        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setReturnExpr(
             NewObjectExpr.builder()
                 .setType(returnType)
@@ -741,7 +718,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  protected static TypeStore createCommonTypes() {
+  private static TypeStore createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             ApiClientHeaderProvider.class,
