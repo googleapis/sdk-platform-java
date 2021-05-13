@@ -3,8 +3,6 @@ API Common for Java
 
 [![Build Status](https://travis-ci.org/googleapis/api-common-java.svg?branch=master)](https://travis-ci.org/googleapis/api-common-java)
 
-[![Code Coverage](https://img.shields.io/codecov/c/github/googleapis/api-common-java.svg)](https://codecov.io/github/googleapis/api-common-java)
-
 - [Documentation](https://googleapis.dev/java/api-common/latest/index.html)
 
 API Common for Java is a library for foundational types relating to Google

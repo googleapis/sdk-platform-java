@@ -23,5 +23,3 @@ echo $JOB_TYPE
 
 ./gradlew assemble
 ./gradlew build install
-
-bash $KOKORO_GFILE_DIR/codecov.sh

@@ -23,10 +23,6 @@ jobs:
       run: ./gradlew test
     - name: Gradle Build
       run: ./gradlew build install
-    - name: coverage
-      uses: codecov/codecov-action@v1
-      with:
-        name: actions ${{ matrix.java }}
   format:
     runs-on: ubuntu-latest
     steps:
