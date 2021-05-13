@@ -140,7 +140,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         classType);
   }
 
-  private List<AnnotationNode> createClassAnnotations(Service service) {
+  private static List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (!PackageChecker.isGaApi(service.pakkage())) {
       annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
@@ -158,7 +158,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return annotations;
   }
 
-  protected List<MethodDefinition> createClassMethods(
+  private static List<MethodDefinition> createClassMethods(
       TransportContext transportContext, Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
@@ -169,7 +169,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private MethodDefinition createConstructorMethod(Service service, TypeStore typeStore) {
+  private static MethodDefinition createConstructorMethod(Service service, TypeStore typeStore) {
     VariableExpr settingsBuilderVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -193,7 +193,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   }
 
   // TODO(miraleung): Consider merging this with createNestedBuilderSettingsGetterMethods.
-  private List<MethodDefinition> createSettingsGetterMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createSettingsGetterMethods(Service service, TypeStore typeStore) {
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     BiFunction<TypeNode, String, MethodDefinition.Builder> methodMakerFn =
         (retType, javaMethodName) ->
@@ -252,7 +252,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
+  private static MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
     TypeNode stubClassType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
@@ -295,7 +295,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  protected List<MethodDefinition> createDefaultGetterMethods(
+  private static List<MethodDefinition> createDefaultGetterMethods(
       TransportContext transportContext, Service service, TypeStore typeStore) {
     BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
@@ -375,7 +375,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition newBuilderMethodOne =
         MethodDefinition.builder()
@@ -433,7 +433,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return Arrays.asList(newBuilderMethodOne, newBuilderMethodTwo, toBuilderMethod);
   }
 
-  private ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
+  private static ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.createBuilderClassComment(
@@ -457,7 +457,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  private List<MethodDefinition> createNestedBuilderClassMethods(
+  private static List<MethodDefinition> createNestedBuilderClassMethods(
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createNestedBuilderConstructorMethods(service, typeStore));
@@ -469,7 +469,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private List<MethodDefinition> createNestedBuilderConstructorMethods(
+  private static List<MethodDefinition> createNestedBuilderConstructorMethods(
       Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition noArgCtor =
@@ -567,7 +567,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  private MethodDefinition createNestedBuilderStubSettingsBuilderMethod(
+  private static MethodDefinition createNestedBuilderStubSettingsBuilderMethod(
       Service service, TypeStore typeStore) {
     TypeNode retType = getStubSettingsBuilderType(service);
     return MethodDefinition.builder()
@@ -586,7 +586,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  private MethodDefinition createNestedBuilderApplyToAllUnaryMethod(
+  private static MethodDefinition createNestedBuilderApplyToAllUnaryMethod(
       Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     String javaMethodName = "applyToAllUnaryMethods";
@@ -700,7 +700,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private MethodDefinition createNestedBuilderClassBuildMethod(
+  private static MethodDefinition createNestedBuilderClassBuildMethod(
       Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     TypeNode returnType = typeStore.get(ClassNames.getServiceSettingsClassName(service));

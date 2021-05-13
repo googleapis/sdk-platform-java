@@ -32,23 +32,32 @@ public abstract class TransportContext {
 
   // For AbstractServiceStubClassComposer
   public abstract Transport transport();
+
   public abstract Class<?> callSettingsClass();
+
   public abstract TypeNode stubCallableFactoryType();
+
   public abstract Class<?> methodDescriptorClass();
+
   public abstract TypeNode transportOperationsStubType();
 
   // For AbstractServiceSettingsClassComposer
   public abstract Class<?> instantiatingChannelProviderClass();
+
   public abstract String defaultTransportProviderBuilderName();
 
   // For AbstractServiceStubSettingsClassComposer
   public abstract TypeNode transportChannelType();
+
   public abstract String transportGetterName();
 
   // For AbstractServiceCallableFactoryClassComposer
   public abstract TypeNode transportCallSettingsType();
+
   public abstract TypeNode transportCallableFactoryType();
+
   public abstract TypeNode operationsStubType();
+
   public abstract String transportCallSettingsName();
 
   protected static TypeNode classToType(Class<?> clazz) {

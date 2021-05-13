@@ -17,12 +17,14 @@ package com.google.api.generator.gapic.composer.common;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import com.google.api.generator.gapic.composer.grpc.GrpcContext;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.TransportContext;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
@@ -50,11 +52,14 @@ import java.util.Set;
 
 public class TestProtoLoader {
   private static final TestProtoLoader INSTANCE =
-      new TestProtoLoader("src/test/java/com/google/api/generator/gapic/testdata/");
+      new TestProtoLoader(
+          GrpcContext.instance(), "src/test/java/com/google/api/generator/gapic/testdata/");
   private final String testFilesDirectory;
+  private final TransportContext transportContext;
 
-  protected TestProtoLoader(String testFilesDirectory) {
+  protected TestProtoLoader(TransportContext transportContext, String testFilesDirectory) {
     this.testFilesDirectory = testFilesDirectory;
+    this.transportContext = transportContext;
   }
 
   public static TestProtoLoader instance() {
@@ -85,6 +90,7 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
+        .setTransportContext(transportContext)
         .build();
   }
 
@@ -112,6 +118,7 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
+        .setTransportContext(transportContext)
         .build();
   }
 
@@ -132,6 +139,7 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
+        .setTransportContext(transportContext)
         .build();
   }
 
@@ -156,6 +164,7 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
+        .setTransportContext(transportContext)
         .build();
   }
 
@@ -198,6 +207,7 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
+        .setTransportContext(transportContext)
         .build();
   }
 
@@ -252,6 +262,7 @@ public class TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
+        .setTransportContext(transportContext)
         .build();
   }
 
