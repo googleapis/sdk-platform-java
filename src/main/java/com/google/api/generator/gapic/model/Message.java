@@ -31,6 +31,8 @@ public abstract class Message {
   public abstract String name();
 
   // The fully-qualified proto name, which differs from the Java fully-qualified name.
+  // For example, this would be google.showcase.v1beta1.EchoRequest for echo.proto (see testdata),
+  // whereas that message's Java fully-qualified name is com.google.showcase.v1beta1.EchoRequest.
   public abstract String fullProtoName();
 
   // TODO(unsupported): oneof fields are parsed as separate ones because field flattening refers to

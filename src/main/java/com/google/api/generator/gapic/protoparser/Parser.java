@@ -643,24 +643,26 @@ public class Parser {
     // These can be short names (e.g. FooMessage) or fully-qualified names with the *proto* package.
     String responseTypeName = lroInfo.getResponseType();
     String metadataTypeName = lroInfo.getMetadataType();
-    String[] responseTypeNameComponents = responseTypeName.split("\\.");
-    String[] metadataTypeNameComponents = metadataTypeName.split("\\.");
-    String responseTypeShortName =
-        responseTypeNameComponents[responseTypeNameComponents.length - 1];
-    String metadataTypeShortName =
-        metadataTypeNameComponents[metadataTypeNameComponents.length - 1];
 
-    // True if the LRO-specified name is the short name.
-    boolean isResponseTypeNameShortOnly = responseTypeName.equals(responseTypeShortName);
-    boolean isMetadataTypeNameShortOnly = metadataTypeName.equals(metadataTypeShortName);
+    int lastDotIndex = responseTypeName.lastIndexOf('.');
+    boolean isResponseTypeNameShortOnly = lastDotIndex < 0;
+    String responseTypeShortName =
+        lastDotIndex >= 0 ? responseTypeName.substring(lastDotIndex + 1) : responseTypeName;
+
+    lastDotIndex = metadataTypeName.lastIndexOf('.');
+    boolean isMetadataTypeNameShortOnly = lastDotIndex < 0;
+    String metadataTypeShortName =
+        lastDotIndex >= 0 ? metadataTypeName.substring(lastDotIndex + 1) : metadataTypeName;
 
     Message responseMessage = null;
     Message metadataMessage = null;
 
     // The messageTypes map keys to the Java fully-qualified name.
     for (Map.Entry<String, Message> messageEntry : messageTypes.entrySet()) {
-      String[] packageComponents = messageEntry.getKey().split("\\.");
-      String messageShortName = packageComponents[packageComponents.length - 1];
+      String messageKey = messageEntry.getKey();
+      int messageLastDotIndex = messageEntry.getKey().lastIndexOf('.');
+      String messageShortName =
+          messageLastDotIndex >= 0 ? messageKey.substring(messageLastDotIndex + 1) : messageKey;
       if (responseMessage == null) {
         if (isResponseTypeNameShortOnly && responseTypeName.equals(messageShortName)) {
           responseMessage = messageEntry.getValue();
