@@ -546,7 +546,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     VariableExpr responsesElementVarExpr = null;
     String mockServiceVarName = getMockServiceVarName(rpcService);
     if (method.isPaged()) {
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -577,7 +577,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
       Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           firstRepeatedField,
@@ -589,10 +589,10 @@ public class ServiceClientTestClassComposer implements ClassComposer {
           DefaultValueComposer.createSimplePagedResponse(
               method.outputType(), firstRepeatedField.name(), responsesElementVarExpr);
     } else {
-      if (messageTypes.containsKey(methodOutputType.reference().name())) {
+      if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
         expectedResponseValExpr =
             DefaultValueComposer.createSimpleMessageBuilderExpr(
-                messageTypes.get(methodOutputType.reference().simpleName()),
+                messageTypes.get(methodOutputType.reference().fullName()),
                 resourceNames,
                 messageTypes);
       } else {
@@ -658,7 +658,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
           VariableExpr.withVariable(
               Variable.builder().setType(method.inputType()).setName("request").build());
       argExprs.add(requestVarExpr);
-      requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+      requestMessage = messageTypes.get(method.inputType().reference().fullName());
       Preconditions.checkNotNull(requestMessage);
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -784,7 +784,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
               .build());
 
       // Assert the responses are equivalent.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -1022,10 +1022,10 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
-    if (messageTypes.containsKey(methodOutputType.reference().name())) {
+    if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
       expectedResponseValExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
-              messageTypes.get(methodOutputType.reference().simpleName()),
+              messageTypes.get(methodOutputType.reference().fullName()),
               resourceNames,
               messageTypes);
     } else {
@@ -1080,7 +1080,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1363,7 +1363,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1552,7 +1552,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
           VariableExpr.withVariable(
               Variable.builder().setType(method.inputType()).setName("request").build());
       argVarExprs.add(varExpr);
-      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+      Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
       Preconditions.checkNotNull(requestMessage);
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
