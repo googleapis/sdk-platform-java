@@ -147,7 +147,8 @@ public class TypeParser {
     // Handles nesting.
     while (containingType != null) {
       // Outermost type in the nested type hierarchy lies at index 0.
-      outerNestedTypeNames.add(0, containingType.getName());
+      // If the Java outer proto class has already been set, apapend after it at index 1.
+      outerNestedTypeNames.add(hasJavaOuterClass ? 1 : 0, containingType.getName());
       containingType = containingType.getContainingType();
     }
 
@@ -158,15 +159,17 @@ public class TypeParser {
             .setPakkage(pakkage)
             .setEnclosingClassNames(outerNestedTypeNames)
             .build();
+
     String protoPackage = messageDescriptor.getFile().getPackage();
     String messageFullName = messageDescriptor.getFullName();
     if (hasJavaOuterClass) {
+      int packageIndex = protoPackage.length();
       messageFullName =
           String.format(
               "%s.%s.%s",
-              messageFullName.substring(0, messageFullName.lastIndexOf(DOT)),
+              messageFullName.substring(0, packageIndex),
               javaOuterClassname,
-              messageFullName.substring(messageFullName.lastIndexOf(DOT) + 1));
+              messageFullName.substring(packageIndex + 1));
     }
     Preconditions.checkState(
         messageReference.fullName().replace(pakkage, protoPackage).equals(messageFullName),
@@ -207,7 +210,8 @@ public class TypeParser {
     // Handles nesting.
     while (containingType != null) {
       // Outermost type in the nested type hierarchy lies at index 0.
-      outerNestedTypeNames.add(0, containingType.getName());
+      // If the Java outer proto class has already been set, apapend after it at index 1.
+      outerNestedTypeNames.add(hasJavaOuterClass ? 1 : 0, containingType.getName());
       containingType = containingType.getContainingType();
     }
 
@@ -221,12 +225,13 @@ public class TypeParser {
     String protoPackage = enumDescriptor.getFile().getPackage();
     String enumFullName = enumDescriptor.getFullName();
     if (hasJavaOuterClass) {
+      int packageIndex = protoPackage.length();
       enumFullName =
           String.format(
               "%s.%s.%s",
-              enumFullName.substring(0, enumFullName.lastIndexOf(DOT)),
+              enumFullName.substring(0, packageIndex),
               javaOuterClassname,
-              enumFullName.substring(enumFullName.lastIndexOf(DOT) + 1));
+              enumFullName.substring(packageIndex + 1));
     }
 
     Preconditions.checkState(

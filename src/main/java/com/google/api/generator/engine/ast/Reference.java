@@ -34,6 +34,9 @@ public interface Reference extends AstNode {
 
   boolean useFullName();
 
+  // The nested types in left-to-right order, if any.
+  // Example: com.google.Foo.Bar.Car.ThisType will have the outer types listed in the order
+  // [Foo, Bar, Car].
   @Nullable
   ImmutableList<String> enclosingClassNames();
 
