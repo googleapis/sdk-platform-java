@@ -983,7 +983,7 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
     javaMethods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                SettingsCommentComposer.DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
+                SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)

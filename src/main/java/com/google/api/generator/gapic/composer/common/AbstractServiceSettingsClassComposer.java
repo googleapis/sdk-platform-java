@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.ClientContext;
@@ -61,6 +60,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.TransportContext;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
@@ -75,26 +75,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
-public class ServiceSettingsClassComposer implements ClassComposer {
+public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
-  private static final String CALL_SETTINGS_TYPE_NAME_PATTERN = "%sCallSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
-
-  private static final ServiceSettingsClassComposer INSTANCE = new ServiceSettingsClassComposer();
-
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
-  private ServiceSettingsClassComposer() {}
-
-  public static ServiceSettingsClassComposer instance() {
-    return INSTANCE;
-  }
-
   @Override
-  public GapicClass generate(GapicContext ignored, Service service) {
+  public GapicClass generate(GapicContext context, Service service) {
     String pakkage = service.pakkage();
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getServiceSettingsClassName(service);
@@ -118,7 +108,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                                 typeStore
                                     .get(ClassNames.getServiceSettingsClassName(service))
                                     .reference()))))
-            .setMethods(createClassMethods(service, typeStore))
+            .setMethods(createClassMethods(context.transportContext(), service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
     return GapicClass.create(kind, classDef);
@@ -168,11 +158,12 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return annotations;
   }
 
-  private static List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createClassMethods(
+      TransportContext transportContext, Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
     javaMethods.add(createCreatorMethod(service, typeStore));
-    javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
+    javaMethods.addAll(createDefaultGetterMethods(transportContext, service, typeStore));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
@@ -202,8 +193,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   // TODO(miraleung): Consider merging this with createNestedBuilderSettingsGetterMethods.
-  private static List<MethodDefinition> createSettingsGetterMethods(
-      Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createSettingsGetterMethods(Service service, TypeStore typeStore) {
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     BiFunction<TypeNode, String, MethodDefinition.Builder> methodMakerFn =
         (retType, javaMethodName) ->
@@ -306,7 +296,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createDefaultGetterMethods(
-      Service service, TypeStore typeStore) {
+      TransportContext transportContext, Service service, TypeStore typeStore) {
     BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
             MethodDefinition.builder()
@@ -356,9 +346,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     javaMethods.add(
         methodMakerFn.apply(
             methodStarterFn.apply(
-                "defaultGrpcTransportProviderBuilder",
-                typeMakerFn.apply(InstantiatingGrpcChannelProvider.Builder.class)),
-            SettingsCommentComposer.DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+                transportContext.defaultTransportProviderBuilderName(),
+                typeMakerFn.apply(transportContext.instantiatingChannelProviderClass())),
+            SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
 
     javaMethods.add(
         methodStarterFn
@@ -385,8 +375,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static List<MethodDefinition> createBuilderHelperMethods(
-      Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition newBuilderMethodOne =
         MethodDefinition.builder()
@@ -740,7 +729,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             Generated.class,
             GoogleCredentialsProvider.class,
             InstantiatingExecutorProvider.class,
-            InstantiatingGrpcChannelProvider.class,
             IOException.class,
             Operation.class,
             OperationCallSettings.class,

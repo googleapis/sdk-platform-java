@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.grpc;
 
-public interface ClassComposer
-    extends com.google.api.generator.gapic.composer.common.ClassComposer {}
+import com.google.api.generator.gapic.composer.common.AbstractServiceSettingsClassComposer;
+
+public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassComposer {
+  private static final ServiceSettingsClassComposer INSTANCE =
+      new ServiceSettingsClassComposer();
+
+  public static ServiceSettingsClassComposer instance() {
+    return INSTANCE;
+  }
+}
