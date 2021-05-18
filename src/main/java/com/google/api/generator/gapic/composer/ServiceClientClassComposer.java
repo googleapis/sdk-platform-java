@@ -1041,7 +1041,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         continue;
       }
       // Find the repeated field.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -1657,7 +1657,6 @@ public class ServiceClientClassComposer implements ClassComposer {
             TimeUnit.class,
             UnaryCallable.class);
     TypeStore typeStore = new TypeStore(concreteClazzes);
-    typeStore.putMessageTypes(service.pakkage(), messageTypes);
     createVaporTypes(service, typeStore);
     return typeStore;
   }

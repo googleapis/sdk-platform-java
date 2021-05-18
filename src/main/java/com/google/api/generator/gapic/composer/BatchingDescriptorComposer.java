@@ -106,7 +106,7 @@ public class BatchingDescriptorComposer {
 
   private static MethodDefinition createGetBatchPartitionKeyMethod(
       Method method, GapicBatchingSettings batchingSettings, Map<String, Message> messageTypes) {
-    String methodInputTypeName = method.inputType().reference().name();
+    String methodInputTypeName = method.inputType().reference().fullName();
     Message inputMessage = messageTypes.get(methodInputTypeName);
     Preconditions.checkNotNull(
         inputMessage,
@@ -283,7 +283,7 @@ public class BatchingDescriptorComposer {
 
     List<Statement> outerForBody = new ArrayList<>();
     if (hasSubresponseField) {
-      Message outputMessage = messageTypes.get(method.outputType().reference().name());
+      Message outputMessage = messageTypes.get(method.outputType().reference().fullName());
       Preconditions.checkNotNull(
           outputMessage, String.format("Output message not found for RPC %s", method.name()));
 
