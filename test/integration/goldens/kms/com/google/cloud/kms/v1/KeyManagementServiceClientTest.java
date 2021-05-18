@@ -41,7 +41,6 @@ import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.GetPolicyOptions;
 import com.google.iam.v1.MockIAMPolicy;
 import com.google.iam.v1.Policy;
-import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.protobuf.AbstractMessage;
@@ -2368,55 +2367,6 @@ public class KeyManagementServiceClientTest {
     try {
       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
       client.getLocation(request);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception.
-    }
-  }
-
-  @Test
-  public void setIamPolicyTest() throws Exception {
-    Policy expectedResponse =
-        Policy.newBuilder()
-            .setVersion(351608024)
-            .addAllBindings(new ArrayList<Binding>())
-            .setEtag(ByteString.EMPTY)
-            .build();
-    mockIAMPolicy.addResponse(expectedResponse);
-
-    SetIamPolicyRequest request =
-        SetIamPolicyRequest.newBuilder()
-            .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-            .setPolicy(Policy.newBuilder().build())
-            .build();
-
-    Policy actualResponse = client.setIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
-
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
-    SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
-
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
-    Assert.assertTrue(
-        channelProvider.isHeaderSent(
-            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
-            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
-  }
-
-  @Test
-  public void setIamPolicyExceptionTest() throws Exception {
-    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
-    mockIAMPolicy.addException(exception);
-
-    try {
-      SetIamPolicyRequest request =
-          SetIamPolicyRequest.newBuilder()
-              .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-              .setPolicy(Policy.newBuilder().build())
-              .build();
-      client.setIamPolicy(request);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
