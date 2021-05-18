@@ -76,12 +76,12 @@ public class KeyManagementServiceClientTest {
   @BeforeClass
   public static void startStaticServer() {
     mockKeyManagementService = new MockKeyManagementService();
-    mockLocations = new MockLocations();
     mockIAMPolicy = new MockIAMPolicy();
+    mockLocations = new MockLocations();
     mockServiceHelper =
         new MockServiceHelper(
             UUID.randomUUID().toString(),
-            Arrays.<MockGrpcService>asList(mockKeyManagementService, mockLocations, mockIAMPolicy));
+            Arrays.<MockGrpcService>asList(mockKeyManagementService, mockIAMPolicy, mockLocations));
     mockServiceHelper.start();
   }
 

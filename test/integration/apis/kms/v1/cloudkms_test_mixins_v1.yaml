@@ -33,8 +33,7 @@ documentation:
   # Test the overriding of comments.
   - selector: google.iam.v1.IAMPolicy.TestIamPermissions
     description: |-
-      This is a different comment for TestIamPermissions in the yaml file
-      that should clobber the documentation in iam_policy.proto.
+      This is a different comment for TestIamPermissions in the yaml file that should clobber the documentation in iam_policy.proto.
 
 http:
   rules:

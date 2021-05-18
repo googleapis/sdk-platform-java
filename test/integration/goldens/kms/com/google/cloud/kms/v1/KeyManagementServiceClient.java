@@ -3333,7 +3333,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * This is a different comment for TestIamPermissions in the yaml filethat should clobber the
+   * This is a different comment for TestIamPermissions in the yaml file that should clobber the
    * documentation in iam_policy.proto.
    *
    * <p>Sample code:
@@ -3359,7 +3359,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * This is a different comment for TestIamPermissions in the yaml filethat should clobber the
+   * This is a different comment for TestIamPermissions in the yaml file that should clobber the
    * documentation in iam_policy.proto.
    *
    * <p>Sample code:

@@ -783,8 +783,8 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   @Override
                   public Map<String, String> extract(ListLocationsRequest request) {
                     ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("display_name", String.valueOf(request.getDisplayName()));
-                    params.put("location_id", String.valueOf(request.getLocationId()));
+                    params.put("filter", String.valueOf(request.getFilter()));
+                    params.put("page_size", String.valueOf(request.getPageSize()));
                     return params.build();
                   }
                 })
