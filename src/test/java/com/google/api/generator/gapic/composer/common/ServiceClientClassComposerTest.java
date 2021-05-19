@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.common;
 
 import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
@@ -29,20 +28,20 @@ import org.junit.Test;
 public class ServiceClientClassComposerTest {
   @Test
   public void generateServiceClasses() {
-    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "EchoClient.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoClient.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "EchoClient.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateServiceClasses_deprecated() {
-    GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
+    GapicContext context = TestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 
@@ -50,13 +49,13 @@ public class ServiceClientClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceClient.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "DeprecatedServiceClient.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "DeprecatedServiceClient.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateServiceClasses_methodSignatureHasNestedFields() {
-    GapicContext context = TestProtoLoaderUtil.parseShowcaseIdentity();
+    GapicContext context = TestProtoLoader.instance().parseShowcaseIdentity();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 
@@ -64,7 +63,7 @@ public class ServiceClientClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "IdentityClient.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "IdentityClient.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "IdentityClient.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

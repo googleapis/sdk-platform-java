@@ -26,12 +26,6 @@ public class ClassNames {
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String SERVICE_STUB_SETTINGS_CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String SERVICE_STUB_CLASS_NAME_PATTERN = "%sStub";
-
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  private static final String GRPC_SERVICE_STUB_CLASS_NAME_PATTERN = "Grpc%sStub";
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  private static final String GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
-      "Grpc%sCallableFactory";
   private static final String TRANSPORT_SERVICE_STUB_CLASS_NAME_PATTERN = "%s%sStub";
   private static final String TRANSPORT_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
       "%s%sCallableFactory";
@@ -64,24 +58,11 @@ public class ClassNames {
         SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
   }
 
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  public static String getGrpcServiceCallableFactoryClassName(Service service) {
-    return String.format(
-        GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN,
-        monolithBackwardsCompatibleName(service.name()));
-  }
-
   public String getTransportServiceCallableFactoryClassName(Service service) {
     return String.format(
         TRANSPORT_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN,
         transportPrefix,
         monolithBackwardsCompatibleName(service.name()));
-  }
-
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  public static String getGrpcServiceStubClassName(Service service) {
-    return String.format(
-        GRPC_SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
   }
 
   public String getTransportServiceStubClassName(Service service) {

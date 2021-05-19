@@ -729,6 +729,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             Generated.class,
             GoogleCredentialsProvider.class,
             InstantiatingExecutorProvider.class,
+            InstantiatingGrpcChannelProvider.class,
             IOException.class,
             Operation.class,
             OperationCallSettings.class,

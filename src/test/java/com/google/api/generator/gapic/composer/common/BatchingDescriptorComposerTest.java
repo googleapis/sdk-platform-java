@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.common;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
@@ -82,13 +81,13 @@ public class BatchingDescriptorComposerTest {
             outputResourceNames);
 
     String filename = "pubsub_gapic.yaml";
-    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
+    Path path = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
     assertTrue(batchingSettingsOpt.isPresent());
 
     String jsonFilename = "pubsub_grpc_service_config.json";
-    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
@@ -109,7 +108,7 @@ public class BatchingDescriptorComposerTest {
         this.getClass(), "BatchingDescriptorComposerTestSubresponse.golden", writerVisitor.write());
     Path goldenFilePath =
         Paths.get(
-            ComposerConstants.GOLDENFILES_DIRECTORY,
+            Utils.getGoldenDir(this.getClass()),
             "BatchingDescriptorComposerTestSubresponse.golden");
     Assert.assertCodeEquals(goldenFilePath, writerVisitor.write());
   }
@@ -144,13 +143,13 @@ public class BatchingDescriptorComposerTest {
             outputResourceNames);
 
     String filename = "logging_gapic.yaml";
-    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
+    Path path = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
     assertTrue(batchingSettingsOpt.isPresent());
 
     String jsonFilename = "logging_grpc_service_config.json";
-    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
@@ -173,7 +172,7 @@ public class BatchingDescriptorComposerTest {
         writerVisitor.write());
     Path goldenFilePath =
         Paths.get(
-            ComposerConstants.GOLDENFILES_DIRECTORY,
+            Utils.getGoldenDir(this.getClass()),
             "BatchingDescriptorComposerTestNoSubresponse.golden");
     Assert.assertCodeEquals(goldenFilePath, writerVisitor.write());
   }

@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
@@ -28,20 +27,20 @@ import org.junit.Test;
 public class GrpcServiceStubClassComposerTest {
   @Test
   public void generateGrpcServiceStubClass_simple() {
-    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "GrpcEchoStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcEchoStub.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcEchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateGrpcServiceStubClass_deprecated() {
-    GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
+    GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, protoService);
 
@@ -49,13 +48,13 @@ public class GrpcServiceStubClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "GrpcDeprecatedServiceStub.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcDeprecatedServiceStub.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcDeprecatedServiceStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateGrpcServiceStubClass_httpBindings() {
-    GapicContext context = TestProtoLoaderUtil.parseShowcaseTesting();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseTesting();
     Service testingProtoService = context.services().get(0);
     GapicClass clazz =
         GrpcServiceStubClassComposer.instance().generate(context, testingProtoService);
@@ -64,13 +63,13 @@ public class GrpcServiceStubClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "GrpcTestingStub.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcTestingStub.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcTestingStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateGrpcServiceStubClass_httpBindingsWithSubMessageFields() {
-    GapicContext context = TestProtoLoaderUtil.parsePubSubPublisher();
+    GapicContext context = GrpcTestProtoLoader.instance().parsePubSubPublisher();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
@@ -78,7 +77,7 @@ public class GrpcServiceStubClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "GrpcPublisherStub.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcPublisherStub.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcPublisherStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

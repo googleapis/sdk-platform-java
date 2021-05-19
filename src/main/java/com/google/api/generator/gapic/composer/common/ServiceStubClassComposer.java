@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;

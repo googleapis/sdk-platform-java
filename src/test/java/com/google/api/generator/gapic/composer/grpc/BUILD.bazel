@@ -4,7 +4,13 @@ load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "GrpcServiceCallableFactoryClassComposerTest",
+    "GrpcServiceStubClassComposerTest",
+    "MockServiceClassComposerTest",
+    "MockServiceImplClassComposerTest",
+    "ServiceClientTestClassComposerTest",
     "ServiceSettingsClassComposerTest",
+    "ServiceStubSettingsClassComposerTest",
 ]
 
 COMMON_SRCS = [

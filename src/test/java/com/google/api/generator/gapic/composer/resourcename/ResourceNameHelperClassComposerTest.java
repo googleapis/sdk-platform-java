@@ -18,7 +18,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -107,7 +106,7 @@ public class ResourceNameHelperClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "FoobarName.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "FoobarName.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "FoobarName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -156,7 +155,7 @@ public class ResourceNameHelperClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "BillingAccountLocationName.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "BillingAccountLocationName.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "BillingAccountLocationName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -185,7 +184,7 @@ public class ResourceNameHelperClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "SessionName.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SessionName.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "SessionName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -214,7 +213,7 @@ public class ResourceNameHelperClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "TestName.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "TestName.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "TestName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -236,7 +235,7 @@ public class ResourceNameHelperClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "AgentName.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "AgentName.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "AgentName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.grpc;
 
 import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.constants.ComposerConstants;
+import com.google.api.generator.gapic.composer.common.ServiceClientClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
@@ -30,7 +30,7 @@ import org.junit.Test;
 public class ServiceClientTestClassComposerTest {
   @Test
   public void generateClientTest_echoClient() {
-    GapicContext context = TestProtoLoaderUtil.parseShowcaseEcho();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, echoProtoService);
@@ -39,27 +39,27 @@ public class ServiceClientTestClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "EchoClientTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoClientTest.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "EchoClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateClientTest_deprecatedServiceClient() {
-    GapicContext context = TestProtoLoaderUtil.parseDeprecatedService();
+    GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
-    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
+    GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceClientTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "DeprecatedServiceClientTest.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "DeprecatedServiceClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateClientTest_testingClientResnameWithOnePatternWithNonSlashSepNames() {
-    GapicContext context = TestProtoLoaderUtil.parseShowcaseTesting();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseTesting();
     Service testingProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, testingProtoService);
@@ -68,13 +68,13 @@ public class ServiceClientTestClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "TestingClientTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "TestingClientTest.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "TestingClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateClientTest_pubSubPublisherClient() {
-    GapicContext context = TestProtoLoaderUtil.parsePubSubPublisher();
+    GapicContext context = GrpcTestProtoLoader.instance().parsePubSubPublisher();
     Service subscriptionService = context.services().get(1);
     assertEquals("Subscriber", subscriptionService.name());
     GapicClass clazz =
@@ -84,13 +84,13 @@ public class ServiceClientTestClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "SubscriberClientTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SubscriberClientTest.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "SubscriberClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
   public void generateClientTest_logging() {
-    GapicContext context = TestProtoLoaderUtil.parseLogging();
+    GapicContext context = GrpcTestProtoLoader.instance().parseLogging();
     Service loggingService = context.services().get(0);
     GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, loggingService);
 
@@ -98,7 +98,7 @@ public class ServiceClientTestClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "LoggingClientTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "LoggingClientTest.golden");
+        Paths.get(Utils.getGoldenDir(this.getClass()), "LoggingClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

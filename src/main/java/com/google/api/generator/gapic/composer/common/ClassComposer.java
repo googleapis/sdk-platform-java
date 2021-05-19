@@ -14,11 +14,5 @@
 
 package com.google.api.generator.gapic.composer.common;
 
-import com.google.api.generator.gapic.model.GapicClass;
-import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Service;
-
-// TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-public interface ClassComposer {
-  GapicClass generate(GapicContext context, Service serivce);
-}
+public interface ClassComposer
+    extends com.google.api.generator.gapic.composer.common.ClassComposer {}
