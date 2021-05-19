@@ -37,9 +37,12 @@ VERSION=$(grep ${NAME}: versions.txt | cut -d: -f3)
 ./gradlew javadocCombinedV3
 
 # copy README to tmp_docs dir and rename index.md
-cp README.md tmp_docs/index.md
+cp README.md tmp_docs/docfx-yml/index.md
 
-pushd tmp_docs
+# copy CHANGELOG to docfx-yml dir and rename history.md
+cp CHANGELOG.md tmp_docs/docfx-yml/history.md
+
+pushd tmp_docs/docfx-yml/
 
 # create metadata
 python3 -m docuploader create-metadata \
