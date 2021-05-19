@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.2](https://www.github.com/googleapis/java-common-protos/compare/v2.2.1...v2.2.2) (2021-05-19)
+
+
+### Dependencies
+
+* update dependency io.grpc:grpc-bom to v1.38.0 ([#164](https://www.github.com/googleapis/java-common-protos/issues/164)) ([7710d09](https://www.github.com/googleapis/java-common-protos/commit/7710d091a47499100525253ac575d4249a5818e5))
+
 ### [2.2.1](https://www.github.com/googleapis/java-common-protos/compare/v2.2.0...v2.2.1) (2021-05-14)
 
 
