@@ -14,5 +14,10 @@
 
 package com.google.api.generator.gapic.composer.common;
 
-public interface ClassComposer
-    extends com.google.api.generator.gapic.composer.common.ClassComposer {}
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Service;
+
+public interface ClassComposer {
+  GapicClass generate(GapicContext context, Service serivce);
+}
