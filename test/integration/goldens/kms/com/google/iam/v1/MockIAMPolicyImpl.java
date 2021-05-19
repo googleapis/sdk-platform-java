@@ -59,26 +59,6 @@ public class MockIAMPolicyImpl extends IAMPolicyImplBase {
   }
 
   @Override
-  public void setIamPolicy(SetIamPolicyRequest request, StreamObserver<Policy> responseObserver) {
-    Object response = responses.poll();
-    if (response instanceof Policy) {
-      requests.add(request);
-      responseObserver.onNext(((Policy) response));
-      responseObserver.onCompleted();
-    } else if (response instanceof Exception) {
-      responseObserver.onError(((Exception) response));
-    } else {
-      responseObserver.onError(
-          new IllegalArgumentException(
-              String.format(
-                  "Unrecognized response type %s for method SetIamPolicy, expected %s or %s",
-                  response == null ? "null" : response.getClass().getName(),
-                  Policy.class.getName(),
-                  Exception.class.getName())));
-    }
-  }
-
-  @Override
   public void getIamPolicy(GetIamPolicyRequest request, StreamObserver<Policy> responseObserver) {
     Object response = responses.poll();
     if (response instanceof Policy) {
