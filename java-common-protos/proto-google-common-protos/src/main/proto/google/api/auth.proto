@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2015 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,9 +22,10 @@ option java_outer_classname = "AuthProto";
 option java_package = "com.google.api";
 option objc_class_prefix = "GAPI";
 
-// `Authentication` defines the authentication configuration for an API.
+// `Authentication` defines the authentication configuration for API methods
+// provided by an API service.
 //
-// Example for an API targeted for external use:
+// Example:
 //
 //     name: calendar.googleapis.com
 //     authentication:
@@ -36,6 +37,9 @@ option objc_class_prefix = "GAPI";
 //       - selector: "*"
 //         requirements:
 //           provider_id: google_calendar_auth
+//       - selector: google.calendar.Delegate
+//         oauth:
+//           canonical_scopes: https://www.googleapis.com/auth/calendar.read
 message Authentication {
   // A list of authentication rules that apply to individual API methods.
   //
@@ -65,6 +69,7 @@ message AuthenticationRule {
   OAuthRequirements oauth = 2;
 
   // If true, the service accepts API keys without any other credential.
+  // This flag only applies to HTTP and gRPC requests.
   bool allow_without_credential = 5;
 
   // Requirements for additional authentication providers.
@@ -116,8 +121,8 @@ message AuthProvider {
   // Optional if the key set document:
   //  - can be retrieved from
   //    [OpenID
-  //    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
-  //    the issuer.
+  //    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+  //    of the issuer.
   //  - can be inferred from the email domain of the issuer (e.g. a Google
   //  service account).
   //
@@ -127,11 +132,15 @@ message AuthProvider {
   // The list of JWT
   // [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
   // that are allowed to access. A JWT containing any of these audiences will
-  // be accepted. When this setting is absent, only JWTs with audience
-  // "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-  // will be accepted. For example, if no audiences are in the setting,
-  // LibraryService API will only accept JWTs with the following audience
-  // "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+  // be accepted. When this setting is absent, JWTs with audiences:
+  //   - "https://[service.name]/[google.protobuf.Api.name]"
+  //   - "https://[service.name]/"
+  // will be accepted.
+  // For example, if no audiences are in the setting, LibraryService API will
+  // accept JWTs with the following audiences:
+  //   -
+  //   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+  //   - https://library-example.googleapis.com/
   //
   // Example:
   //

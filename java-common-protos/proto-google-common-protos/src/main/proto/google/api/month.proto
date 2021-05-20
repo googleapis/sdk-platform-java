@@ -16,35 +16,50 @@ syntax = "proto3";
 
 package google.type;
 
-option go_package = "google.golang.org/genproto/googleapis/type/dayofweek;dayofweek";
+option go_package = "google.golang.org/genproto/googleapis/type/month;month";
 option java_multiple_files = true;
-option java_outer_classname = "DayOfWeekProto";
+option java_outer_classname = "MonthProto";
 option java_package = "com.google.type";
 option objc_class_prefix = "GTP";
 
-// Represents a day of the week.
-enum DayOfWeek {
-  // The day of the week is unspecified.
-  DAY_OF_WEEK_UNSPECIFIED = 0;
+// Represents a month in the Gregorian calendar.
+enum Month {
+  // The unspecified month.
+  MONTH_UNSPECIFIED = 0;
 
-  // Monday
-  MONDAY = 1;
+  // The month of January.
+  JANUARY = 1;
 
-  // Tuesday
-  TUESDAY = 2;
+  // The month of February.
+  FEBRUARY = 2;
 
-  // Wednesday
-  WEDNESDAY = 3;
+  // The month of March.
+  MARCH = 3;
 
-  // Thursday
-  THURSDAY = 4;
+  // The month of April.
+  APRIL = 4;
 
-  // Friday
-  FRIDAY = 5;
+  // The month of May.
+  MAY = 5;
 
-  // Saturday
-  SATURDAY = 6;
+  // The month of June.
+  JUNE = 6;
 
-  // Sunday
-  SUNDAY = 7;
+  // The month of July.
+  JULY = 7;
+
+  // The month of August.
+  AUGUST = 8;
+
+  // The month of September.
+  SEPTEMBER = 9;
+
+  // The month of October.
+  OCTOBER = 10;
+
+  // The month of November.
+  NOVEMBER = 11;
+
+  // The month of December.
+  DECEMBER = 12;
 }
