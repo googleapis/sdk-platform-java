@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://www.github.com/googleapis/java-common-protos/compare/v2.2.2...v2.3.0) (2021-05-20)
+
+
+### Features
+
+* update protos in the repo from googleapis ([#169](https://www.github.com/googleapis/java-common-protos/issues/169)) ([abd8291](https://www.github.com/googleapis/java-common-protos/commit/abd8291f0983f3412b3a259444845530163f6643)), closes [#134](https://www.github.com/googleapis/java-common-protos/issues/134)
+
 ### [2.2.2](https://www.github.com/googleapis/java-common-protos/compare/v2.2.1...v2.2.2) (2021-05-19)
 
 
