@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class TransportContext {
@@ -36,6 +37,7 @@ public abstract class TransportContext {
 
   public abstract Class<?> methodDescriptorClass();
 
+  @Nullable
   public abstract TypeNode transportOperationsStubType();
 
   // For AbstractServiceSettingsClassComposer

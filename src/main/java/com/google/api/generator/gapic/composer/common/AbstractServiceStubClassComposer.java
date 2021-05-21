@@ -30,7 +30,6 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
-import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
@@ -47,7 +46,6 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -58,8 +56,6 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
-import io.grpc.MethodDescriptor;
-import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,32 +84,19 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
   private static final String PAGED_CALLABLE_NAME = "PagedCallable";
 
-  private final TypeStore fixedTypeStore;
-  private final StubCommentComposer commentComposer;
-  private final ClassNames classNames;
-  private final Class<?> callSettingsClass;
-  private final Class<?> stubCallableFactoryClass;
-  private final Class<?> methodDescriptorClass;
-  private final Class<?> operationsStubClass;
+  protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
-  protected AbstractServiceStubClassComposer(
-      TypeStore fixedTypeStore,
-      StubCommentComposer commentComposer,
-      ClassNames classNames,
-      Class<?> callSettingsClass,
-      Class<?> stubCallableFactoryClass,
-      Class<?> methodDescriptorClass,
-      Class<?> operationsStubClass) {
-    this.fixedTypeStore = fixedTypeStore;
-    this.commentComposer = commentComposer;
-    this.classNames = classNames;
-    this.callSettingsClass = callSettingsClass;
-    this.stubCallableFactoryClass = stubCallableFactoryClass;
-    this.methodDescriptorClass = methodDescriptorClass;
-    this.operationsStubClass = operationsStubClass;
+  private final TransportContext transportContext;
+
+  protected AbstractServiceStubClassComposer(TransportContext transportContext) {
+    this.transportContext = transportContext;
   }
 
-  protected static TypeStore createCommonStaticTypes() {
+  public TransportContext getTransportContext() {
+    return transportContext;
+  }
+
+  private static TypeStore createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             BackgroundResource.class,
@@ -126,10 +109,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             ImmutableMap.class,
             InterruptedException.class,
             IOException.class,
-            MethodDescriptor.class,
             Operation.class,
             OperationCallable.class,
-            ProtoUtils.class,
             RequestParamsExtractor.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
@@ -141,11 +122,12 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   public GapicClass generate(GapicContext context, Service service) {
     String pakkage = service.pakkage() + ".stub";
     TypeStore typeStore = createDynamicTypes(service, pakkage);
-    String className = getClassNames().getTransportServiceStubClassName(service);
+    String className = getTransportContext().classNames().getTransportServiceStubClassName(service);
     GapicClass.Kind kind = Kind.STUB;
 
     Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs =
-        createProtoMethodNameToDescriptorClassMembers(service, getMethodDescriptorClass());
+        createProtoMethodNameToDescriptorClassMembers(
+            service, getTransportContext().methodDescriptorClass());
 
     Map<String, VariableExpr> callableClassMemberVarExprs =
         createCallableClassMembers(service, typeStore);
@@ -156,15 +138,15 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(BACKGROUND_RESOURCES_MEMBER_NAME)
-                .setType(getFixedTypeStore().get("BackgroundResource"))
+                .setType(FIXED_TYPESTORE.get("BackgroundResource"))
                 .build()));
-    if (getOperationsStubClass() != null) {
+    if (getTransportContext().transportOperationsStubType() != null) {
       classMemberVarExprs.put(
           OPERATIONS_STUB_MEMBER_NAME,
           VariableExpr.withVariable(
               Variable.builder()
                   .setName(OPERATIONS_STUB_MEMBER_NAME)
-                  .setType(getFixedTypeStore().get(getOperationsStubClass().getSimpleName()))
+                  .setType(getTransportContext().transportOperationsStubType())
                   .build()));
     }
     classMemberVarExprs.put(
@@ -172,7 +154,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(CALLABLE_FACTORY_MEMBER_NAME)
-                .setType(getFixedTypeStore().get(getStubCallableFactoryClass().getSimpleName()))
+                .setType(getTransportContext().stubCallableFactoryType())
                 .build()));
 
     List<Statement> classStatements =
@@ -182,16 +164,20 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             callableClassMemberVarExprs,
             classMemberVarExprs);
 
+    StubCommentComposer commentComposer =
+        new StubCommentComposer(getTransportContext().transportName());
+
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
-                getCommentComposer().createTransportServiceStubClassHeaderComments(
+                commentComposer.createTransportServiceStubClassHeaderComments(
                     service.name(), service.isDeprecated()))
             .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setExtendsType(typeStore.get(getClassNames().getServiceStubClassName(service)))
+            .setExtendsType(
+                typeStore.get(getTransportContext().classNames().getServiceStubClassName(service)))
             .setStatements(classStatements)
             .setMethods(
                 createClassMethods(
@@ -218,34 +204,6 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
       TypeStore typeStore,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
     return Arrays.asList();
-  }
-
-  protected TypeStore getFixedTypeStore() {
-    return fixedTypeStore;
-  }
-
-  protected StubCommentComposer getCommentComposer() {
-    return commentComposer;
-  }
-
-  protected ClassNames getClassNames() {
-    return classNames;
-  }
-
-  protected Class<?> getCallSettingsClass() {
-    return callSettingsClass;
-  }
-
-  protected Class<?> getStubCallableFactoryClass() {
-    return stubCallableFactoryClass;
-  }
-
-  protected Class<?> getMethodDescriptorClass() {
-    return methodDescriptorClass;
-  }
-
-  protected Class<?> getOperationsStubClass() {
-    return operationsStubClass;
   }
 
   protected List<Statement> createClassStatements(
@@ -379,7 +337,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   protected List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (!PackageChecker.isGaApi(service.pakkage())) {
-      annotations.add(AnnotationNode.withType(getFixedTypeStore().get("BetaApi")));
+      annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
     }
 
     if (service.isDeprecated()) {
@@ -388,7 +346,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
     annotations.add(
         AnnotationNode.builder()
-            .setType(getFixedTypeStore().get("Generated"))
+            .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
     return annotations;
@@ -421,7 +379,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
   private List<MethodDefinition> createStaticCreatorMethods(Service service, TypeStore typeStore) {
     TypeNode creatorMethodReturnType =
-        typeStore.get(getClassNames().getTransportServiceStubClassName(service));
+        typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service));
     Function<List<VariableExpr>, MethodDefinition.Builder> creatorMethodStarterFn =
         argList ->
             MethodDefinition.builder()
@@ -443,12 +401,12 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             NewObjectExpr.builder().setType(creatorMethodReturnType).setArguments(argList).build();
 
     TypeNode stubSettingsType =
-        typeStore.get(getClassNames().getServiceStubSettingsClassName(service));
+        typeStore.get(getTransportContext().classNames().getServiceStubSettingsClassName(service));
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(stubSettingsType).build());
 
-    TypeNode clientContextType = getFixedTypeStore().get("ClientContext");
+    TypeNode clientContextType = FIXED_TYPESTORE.get("ClientContext");
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("clientContext").setType(clientContextType).build());
@@ -457,7 +415,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("callableFactory")
-                .setType(getFixedTypeStore().get(getStubCallableFactoryClass().getSimpleName()))
+                .setType(getTransportContext().stubCallableFactoryType())
                 .build());
 
     MethodInvocationExpr clientContextCreateMethodExpr =
@@ -506,12 +464,12 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
       Map<String, VariableExpr> callableClassMemberVarExprs,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
     TypeNode stubSettingsType =
-        typeStore.get(getClassNames().getServiceStubSettingsClassName(service));
+        typeStore.get(getTransportContext().classNames().getServiceStubSettingsClassName(service));
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(stubSettingsType).build());
 
-    TypeNode clientContextType = getFixedTypeStore().get("ClientContext");
+    TypeNode clientContextType = FIXED_TYPESTORE.get("ClientContext");
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("clientContext").setType(clientContextType).build());
@@ -520,11 +478,11 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("callableFactory")
-                .setType(getFixedTypeStore().get(getStubCallableFactoryClass().getSimpleName()))
+                .setType(getTransportContext().stubCallableFactoryType())
                 .build());
 
     TypeNode thisClassType =
-        typeStore.get(getClassNames().getTransportServiceStubClassName(service));
+        typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service));
     TypeNode ioExceptionType =
         TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
 
@@ -556,7 +514,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                             NewObjectExpr.builder()
                                 .setType(
                                     typeStore.get(
-                                        getClassNames()
+                                        getTransportContext()
+                                            .classNames()
                                             .getTransportServiceCallableFactoryClassName(service)))
                                 .build())
                         .build())));
@@ -564,22 +523,20 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     Expr thisExpr =
         ValueExpr.withValue(
             ThisObjectValue.withType(
-                typeStore.get(getClassNames().getTransportServiceStubClassName(service))));
+                typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service))));
     // Body of the second constructor method.
     List<Statement> secondCtorStatements = new ArrayList<>();
     List<Expr> secondCtorExprs = new ArrayList<>();
     secondCtorExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(
-                classMemberVarExprs
-                    .get("callableFactory")
-                    .toBuilder()
+                classMemberVarExprs.get("callableFactory").toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
             .setValueExpr(callableFactoryVarExpr)
             .build());
     VariableExpr operationsStubClassVarExpr = classMemberVarExprs.get(OPERATIONS_STUB_MEMBER_NAME);
-    if (getOperationsStubClass() != null) {
+    if (getTransportContext().transportOperationsStubType() != null) {
       secondCtorExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(
@@ -587,7 +544,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
               .setValueExpr(
                   MethodInvocationExpr.builder()
                       .setStaticReferenceType(
-                          getFixedTypeStore().get(getOperationsStubClass().getSimpleName()))
+                          getTransportContext().transportOperationsStubType())
                       .setMethodName("create")
                       .setArguments(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr))
                       .setReturnType(operationsStubClassVarExpr.type())
@@ -615,7 +572,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                                 .setType(
                                     TypeNode.withReference(
                                         ConcreteReference.builder()
-                                            .setClazz(getCallSettingsClass())
+                                            .setClazz(getTransportContext().callSettingsClass())
                                             .setGenerics(
                                                 Arrays.asList(
                                                     m.inputType().reference(),
@@ -671,7 +628,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                 backgroundResourcesVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 NewObjectExpr.builder()
-                    .setType(getFixedTypeStore().get("BackgroundResourceAggregation"))
+                    .setType(FIXED_TYPESTORE.get("BackgroundResourceAggregation"))
                     .setArguments(Arrays.asList(getBackgroundResourcesMethodExpr))
                     .build())
             .build());
@@ -853,7 +810,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             VariableExpr.withVariable(
                 Variable.builder()
                     .setName("unit")
-                    .setType(getFixedTypeStore().get("TimeUnit"))
+                    .setType(FIXED_TYPESTORE.get("TimeUnit"))
                     .build()));
     javaMethods.add(
         methodMakerStarterFn
@@ -863,7 +820,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                 awaitTerminationArgs.stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
-            .setThrowsExceptions(Arrays.asList(getFixedTypeStore().get("InterruptedException")))
+            .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("InterruptedException")))
             .setReturnExpr(
                 MethodInvocationExpr.builder()
                     .setExprReferenceExpr(backgroundResourcesVarExpr)
@@ -883,10 +840,10 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     typeStore.putAll(
         stubPakkage,
         Arrays.asList(
-            getClassNames().getTransportServiceStubClassName(service),
-            getClassNames().getServiceStubSettingsClassName(service),
-            getClassNames().getServiceStubClassName(service),
-            getClassNames().getTransportServiceCallableFactoryClassName(service)));
+            getTransportContext().classNames().getTransportServiceStubClassName(service),
+            getTransportContext().classNames().getServiceStubSettingsClassName(service),
+            getTransportContext().classNames().getServiceStubClassName(service),
+            getTransportContext().classNames().getTransportServiceCallableFactoryClassName(service)));
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
@@ -895,21 +852,21 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
-        getClassNames().getServiceClientClassName(service));
+        getTransportContext().classNames().getServiceClientClassName(service));
     return typeStore;
   }
 
-  private TypeNode getCallableType(Method protoMethod) {
-    TypeNode callableType = getFixedTypeStore().get("UnaryCallable");
+  private static TypeNode getCallableType(Method protoMethod) {
+    TypeNode callableType = FIXED_TYPESTORE.get("UnaryCallable");
     switch (protoMethod.stream()) {
       case CLIENT:
-        callableType = getFixedTypeStore().get("ClientStreamingCallable");
+        callableType = FIXED_TYPESTORE.get("ClientStreamingCallable");
         break;
       case SERVER:
-        callableType = getFixedTypeStore().get("ServerStreamingCallable");
+        callableType = FIXED_TYPESTORE.get("ServerStreamingCallable");
         break;
       case BIDI:
-        callableType = getFixedTypeStore().get("BidiStreamingCallable");
+        callableType = FIXED_TYPESTORE.get("BidiStreamingCallable");
         break;
       case NONE:
         // Fall through
@@ -925,31 +882,6 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                     protoMethod.inputType().reference(), protoMethod.outputType().reference())));
   }
 
-  protected EnumRefExpr getMethodDescriptorMethodTypeExpr(Method protoMethod) {
-    String enumName = "";
-    switch (protoMethod.stream()) {
-      case CLIENT:
-        enumName = "CLIENT_STREAMING";
-        break;
-      case SERVER:
-        enumName = "SERVER_STREAMING";
-        break;
-      case BIDI:
-        enumName = "BIDI_STREAMING";
-        break;
-      case NONE:
-        // Fall through.
-      default:
-        enumName = "UNARY";
-    }
-    return EnumRefExpr.builder()
-        .setName(enumName)
-        .setType(
-            TypeNode.withReference(
-                ConcreteReference.builder().setClazz(MethodDescriptor.MethodType.class).build()))
-        .build();
-  }
-
   private CommentStatement createProtectedCtorComment(Service service) {
     return CommentStatement.withComment(
         JavaDocComment.withComment(
@@ -957,7 +889,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                 "Constructs an instance of %s, using the given settings. This is protected so that"
                     + " it is easy to make a subclass, but otherwise, the static factory methods"
                     + " should be  preferred.",
-                getClassNames().getTransportServiceStubClassName(service))));
+                getTransportContext().classNames().getTransportServiceStubClassName(service))));
   }
 
   protected String getProtoRpcFullMethodName(Service protoService, Method protoMethod) {

@@ -20,6 +20,7 @@ import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -42,6 +43,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import io.grpc.MethodDescriptor;
+import io.grpc.protobuf.ProtoUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -62,15 +64,10 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
   private static final Set<String> REROUTE_TO_GRPC_INTERFACE_IAM_METHOD_ALLOWLIST =
       new HashSet<>(Arrays.asList("SetIamPolicy", "GetIamPolicy", "TestIamPermissions"));
 
+  private static final TypeStore FIXED_GRPC_TYPE_STORE = createStaticTypes();
+
   protected GrpcServiceStubClassComposer() {
-    super(
-        createStaticTypes(),
-        new StubCommentComposer("gRPC"),
-        new ClassNames("Grpc"),
-        GrpcCallSettings.class,
-        GrpcStubCallableFactory.class,
-        MethodDescriptor.class,
-        GrpcOperationsStub.class);
+    super(GrpcContext.instance());
   }
 
   public static GrpcServiceStubClassComposer instance() {
@@ -78,11 +75,14 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
   }
 
   private static TypeStore createStaticTypes() {
-    TypeStore typeStore = createCommonStaticTypes();
-    typeStore.putAll(
+    List<Class> concreteClazzes =
         Arrays.asList(
-            GrpcCallSettings.class, GrpcOperationsStub.class, GrpcStubCallableFactory.class));
-    return typeStore;
+            GrpcCallSettings.class,
+            GrpcOperationsStub.class,
+            GrpcStubCallableFactory.class,
+            MethodDescriptor.class,
+            ProtoUtils.class);
+    return new TypeStore(concreteClazzes);
   }
 
   @Override
@@ -91,7 +91,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     MethodInvocationExpr methodDescriptorMaker =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
-            .setStaticReferenceType(getFixedTypeStore().get("MethodDescriptor"))
+            .setStaticReferenceType(FIXED_GRPC_TYPE_STORE.get("MethodDescriptor"))
             .setGenerics(methodDescriptorVarExpr.variable().type().reference().generics())
             .build();
 
@@ -120,7 +120,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     Function<MethodInvocationExpr, MethodInvocationExpr> protoUtilsMarshallerFn =
         m ->
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(getFixedTypeStore().get("ProtoUtils"))
+                .setStaticReferenceType(FIXED_GRPC_TYPE_STORE.get("ProtoUtils"))
                 .setMethodName("marshaller")
                 .setArguments(Arrays.asList(m))
                 .build();
@@ -155,8 +155,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr
-                    .toBuilder()
+                methodDescriptorVarExpr.toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -164,6 +163,31 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
                     .build())
             .setValueExpr(methodDescriptorMaker)
             .build());
+  }
+
+  protected EnumRefExpr getMethodDescriptorMethodTypeExpr(Method protoMethod) {
+    String enumName = "";
+    switch (protoMethod.stream()) {
+      case CLIENT:
+        enumName = "CLIENT_STREAMING";
+        break;
+      case SERVER:
+        enumName = "SERVER_STREAMING";
+        break;
+      case BIDI:
+        enumName = "BIDI_STREAMING";
+        break;
+      case NONE:
+        // Fall through.
+      default:
+        enumName = "UNARY";
+    }
+    return EnumRefExpr.builder()
+        .setName(enumName)
+        .setType(
+            TypeNode.withReference(
+                ConcreteReference.builder().setClazz(MethodDescriptor.MethodType.class).build()))
+        .build();
   }
 
   @Override
@@ -183,7 +207,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
       Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
     MethodInvocationExpr callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(getFixedTypeStore().get(getCallSettingsClass().getSimpleName()))
+            .setStaticReferenceType(getTransportContext().transportCallSettingsType())
             .setGenerics(transportSettingsVarExpr.type().reference().generics())
             .setMethodName("newBuilder")
             .build();
@@ -253,7 +277,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
             .setVariableExpr(paramsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(getFixedTypeStore().get("ImmutableMap"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
                     .setMethodName("builder")
                     .setReturnType(paramsVarType)
                     .build())
