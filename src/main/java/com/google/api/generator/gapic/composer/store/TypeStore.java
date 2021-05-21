@@ -29,10 +29,6 @@ public class TypeStore {
   public TypeStore() {}
 
   public TypeStore(List<Class> concreteClasses) {
-    putConcreteClassses(concreteClasses);
-  }
-
-  private void putConcreteClassses(List<Class> concreteClasses) {
     store.putAll(
         concreteClasses.stream()
             .collect(
@@ -69,10 +65,6 @@ public class TypeStore {
                 .setPakkage(pakkage)
                 .setIsStaticImport(isStaticImport)
                 .build()));
-  }
-
-  public void putAll(List<Class> concreteClasses) {
-    putConcreteClassses(concreteClasses);
   }
 
   public void putAll(

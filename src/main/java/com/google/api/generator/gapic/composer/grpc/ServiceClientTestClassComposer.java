@@ -69,6 +69,9 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
 
+  private static final ServiceClientTestClassComposer INSTANCE =
+      new ServiceClientTestClassComposer();
+
   protected static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
 
   private static final TypeNode LIST_TYPE =
@@ -87,9 +90,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   protected ServiceClientTestClassComposer() {
     super(GrpcContext.instance());
   }
-
-  private static final ServiceClientTestClassComposer INSTANCE =
-      new ServiceClientTestClassComposer();
 
   public static AbstractServiceClientTestClassComposer instance() {
     return INSTANCE;

@@ -34,31 +34,29 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Arrays;
+import java.util.List;
 
 public class ServiceStubSettingsClassComposer extends AbstractServiceStubSettingsClassComposer {
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
+
+  protected static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
 
   public static ServiceStubSettingsClassComposer instance() {
     return INSTANCE;
   }
 
   protected ServiceStubSettingsClassComposer() {
-    super(
-        createStaticTypes(),
-        new ClassNames("Grpc"),
-        GrpcTransportChannel.class,
-        "getGrpcTransportName");
+    super(GrpcContext.instance());
   }
 
   private static TypeStore createStaticTypes() {
-    TypeStore typeStore = createCommonStaticTypes();
-    typeStore.putAll(
+    List<Class> concreteClazzes =
         Arrays.asList(
             GaxGrpcProperties.class,
             GrpcTransportChannel.class,
-            InstantiatingGrpcChannelProvider.class));
-    return typeStore;
+            InstantiatingGrpcChannelProvider.class);
+    return new TypeStore(concreteClazzes);
   }
 
   @Override
@@ -70,7 +68,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
     MethodInvocationExpr transportChannelProviderBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
-                getFixedTypeStore().get(InstantiatingGrpcChannelProvider.class.getSimpleName()))
+                FIXED_GRPC_TYPESTORE.get(InstantiatingGrpcChannelProvider.class.getSimpleName()))
             .setMethodName("newBuilder")
             .build();
     transportChannelProviderBuilderExpr =
@@ -104,13 +102,13 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
         TypeNode.withReference(ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class));
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(getFixedTypeStore().get("ApiClientHeaderProvider"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("ApiClientHeaderProvider"))
             .setMethodName("newBuilder")
             .build();
 
     MethodInvocationExpr versionArgExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(getFixedTypeStore().get("GaxProperties"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("GaxProperties"))
             .setMethodName("getLibraryVersion")
             .setArguments(
                 VariableExpr.builder()
@@ -134,12 +132,12 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
             .setArguments(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(
-                        getFixedTypeStore().get(GaxGrpcProperties.class.getSimpleName()))
+                        FIXED_GRPC_TYPESTORE.get(GaxGrpcProperties.class.getSimpleName()))
                     .setMethodName("getGrpcTokenName")
                     .build(),
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(
-                        getFixedTypeStore().get(GaxGrpcProperties.class.getSimpleName()))
+                        FIXED_GRPC_TYPESTORE.get(GaxGrpcProperties.class.getSimpleName()))
                     .setMethodName("getGrpcVersion")
                     .build())
             .setReturnType(returnType)
@@ -147,7 +145,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
 
     AnnotationNode annotation =
         AnnotationNode.builder()
-            .setType(getFixedTypeStore().get("BetaApi"))
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
             .setDescription(
                 "The surface for customizing headers is not stable yet and may change in the"
                     + " future.")
@@ -164,7 +162,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
 
   @Override
   public MethodDefinition createDefaultTransportChannelProviderMethod() {
-    TypeNode returnType = getFixedTypeStore().get("TransportChannelProvider");
+    TypeNode returnType = FIXED_TYPESTORE.get("TransportChannelProvider");
     MethodInvocationExpr transportProviderBuilderExpr =
         MethodInvocationExpr.builder().setMethodName("defaultGrpcTransportProviderBuilder").build();
     transportProviderBuilderExpr =

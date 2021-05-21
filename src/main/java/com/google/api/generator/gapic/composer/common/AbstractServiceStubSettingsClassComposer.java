@@ -136,30 +136,25 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private static final String DOT = ".";
 
+  protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+
   private static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
   private static final VariableExpr NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR =
       createNestedUnaryMethodSettingsBuildersVarExpr();
   private static final VariableExpr NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR =
       createNestedRetryableCodeDefinitionsVarExpr();
+  private static final VariableExpr NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR =
+      createNestedRetryParamDefinitionsVarExpr();
 
-  private final VariableExpr nestedRetryParamDefinitionsVarExpr;
+  private final TransportContext transportContext;
 
-  private final ClassNames classNames;
-  private final TypeStore fixedTypeStore;
-  private final Class<?> transportChannelClass;
-  private final String transportGetterName;
+  protected AbstractServiceStubSettingsClassComposer(TransportContext transportContext) {
+    this.transportContext = transportContext;
+  }
 
-  protected AbstractServiceStubSettingsClassComposer(
-      TypeStore fixedTypeStore,
-      ClassNames classNames,
-      Class<?> transportChannelClass,
-      String transportGetterName) {
-    this.fixedTypeStore = fixedTypeStore;
-    this.classNames = classNames;
-    this.transportChannelClass = transportChannelClass;
-    this.nestedRetryParamDefinitionsVarExpr = createNestedRetryParamDefinitionsVarExpr();
-    this.transportGetterName = transportGetterName;
+  public TransportContext getTransportContext() {
+    return transportContext;
   }
 
   @Override
@@ -207,27 +202,27 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service, TypeStore typeStore);
 
   public abstract MethodDefinition createDefaultTransportChannelProviderMethod();
-
-  protected TypeStore getFixedTypeStore() {
-    return fixedTypeStore;
-  }
-
-  protected ClassNames getClassNames() {
-    return classNames;
-  }
-
-  protected Class<?> getTransportChannelClass() {
-    return transportChannelClass;
-  }
-
-  protected String getTransportGetterName() {
-    return transportGetterName;
-  }
+  //
+  // protected TypeStore getFixedTypeStore() {
+  //   return fixedTypeStore;
+  // }
+  //
+  // protected ClassNames getClassNames() {
+  //   return classNames;
+  // }
+  //
+  // protected Class<?> getTransportChannelClass() {
+  //   return transportChannelClass;
+  // }
+  //
+  // protected String getTransportGetterName() {
+  //   return transportGetterName;
+  // }
 
   private List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (!PackageChecker.isGaApi(service.pakkage())) {
-      annotations.add(AnnotationNode.withType(getFixedTypeStore().get("BetaApi")));
+      annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
     }
 
     if (service.isDeprecated()) {
@@ -236,7 +231,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     annotations.add(
         AnnotationNode.builder()
-            .setType(getFixedTypeStore().get("Generated"))
+            .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
     return annotations;
@@ -272,7 +267,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private TypeNode createExtendsType(Service service, TypeStore typeStore) {
     TypeNode thisClassType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     return TypeNode.withReference(
-        getFixedTypeStore()
+        FIXED_TYPESTORE
             .get("StubSettings")
             .reference()
             .copyAndSetGenerics(Arrays.asList(thisClassType.reference())));
@@ -314,7 +309,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return varExprs;
   }
 
-  private List<Statement> createClassStatements(
+  private static List<Statement> createClassStatements(
       Service service,
       GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
@@ -335,7 +330,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build();
     MethodInvocationExpr listBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(getFixedTypeStore().get("ImmutableList"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableList"))
             .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
             .setMethodName("builder")
             .build();
@@ -399,7 +394,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return statements;
   }
 
-  private List<Expr> createPagingStaticAssignExprs(
+  private static List<Expr> createPagingStaticAssignExprs(
       Service service,
       GapicServiceConfig serviceConfig,
       Map<String, Message> messageTypes,
@@ -646,7 +641,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private Expr createPagedListResponseFactoryAssignExpr(
+  private static Expr createPagedListResponseFactoryAssignExpr(
       VariableExpr pageStrDescVarExpr,
       Method method,
       TypeNode repeatedResponseType,
@@ -683,7 +678,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     VariableExpr contextVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(getFixedTypeStore().get("ApiCallContext"))
+                .setType(FIXED_TYPESTORE.get("ApiCallContext"))
                 .setName("context")
                 .build());
     VariableExpr futureResponseVarExpr =
@@ -716,7 +711,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setVariableExpr(pageContextVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(getFixedTypeStore().get("PageContext"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("PageContext"))
                     .setMethodName("create")
                     .setArguments(
                         callableVarExpr, pageStrDescVarExpr, requestVarExpr, contextVarExpr)
@@ -831,8 +826,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     Expr tRansportNameExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
-                getFixedTypeStore().get(getTransportChannelClass().getSimpleName()))
-            .setMethodName(getTransportGetterName())
+                getTransportContext().transportChannelType())
+            .setMethodName(getTransportContext().transportGetterName())
             .build();
 
     Expr getTransportNameExpr =
@@ -854,7 +849,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     Expr createExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
-                typeStore.get(getClassNames().getTransportServiceStubClassName(service)))
+                typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service)))
             .setMethodName("create")
             .setArguments(
                 ValueExpr.withValue(
@@ -887,7 +882,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     TypeNode returnType = typeStore.get(ClassNames.getServiceStubClassName(service));
     AnnotationNode annotation =
         AnnotationNode.builder()
-            .setType(getFixedTypeStore().get("BetaApi"))
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
             .setDescription(
                 "A restructuring of stub classes is planned, so this may break in the future")
             .build();
@@ -920,8 +915,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setName("defaultExecutorProviderBuilder")
             .setReturnExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        getFixedTypeStore().get("InstantiatingExecutorProvider"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("InstantiatingExecutorProvider"))
                     .setMethodName("newBuilder")
                     .setReturnType(returnType)
                     .build())
@@ -964,7 +958,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
     MethodInvocationExpr credsProviderBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(getFixedTypeStore().get("GoogleCredentialsProvider"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("GoogleCredentialsProvider"))
             .setMethodName("newBuilder")
             .build();
     credsProviderBuilderExpr =
@@ -992,7 +986,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return javaMethods;
   }
 
-  private List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     // Create the newBuilder() method.
     final TypeNode builderReturnType = typeStore.get(NESTED_BUILDER_CLASS_NAME);
@@ -1017,7 +1011,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(getFixedTypeStore().get("ClientContext"))
+                .setType(FIXED_TYPESTORE.get("ClientContext"))
                 .setName("clientContext")
                 .build());
     javaMethods.add(
@@ -1048,7 +1042,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return javaMethods;
   }
 
-  private MethodDefinition createClassConstructor(
+  private static MethodDefinition createClassConstructor(
       Service service,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       TypeStore typeStore) {
@@ -1062,7 +1056,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     Expr superCtorExpr =
         ReferenceConstructorExpr.superBuilder()
-            .setType(getFixedTypeStore().get("StubSettings"))
+            .setType(FIXED_TYPESTORE.get("StubSettings"))
             .setArguments(settingsBuilderVarExpr)
             .build();
 
@@ -1099,7 +1093,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private ClassDefinition createNestedBuilderClass(
+  private static ClassDefinition createNestedBuilderClass(
       Service service, @Nullable GapicServiceConfig serviceConfig, TypeStore typeStore) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
     String thisClassName = ClassNames.getServiceStubSettingsClassName(service);
@@ -1149,7 +1143,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private List<Statement> createNestedClassStatements(
+  private static List<Statement> createNestedClassStatements(
       Service service,
       GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
@@ -1190,16 +1184,16 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     // Declare the RETRY_PARAM_DEFINITIONS field.
     statements.add(
-        exprStatementFn.apply(varStaticDeclFn.apply(nestedRetryParamDefinitionsVarExpr)));
+        exprStatementFn.apply(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
 
     statements.add(
         RetrySettingsComposer.createRetryParamDefinitionsBlock(
-            service, serviceConfig, nestedRetryParamDefinitionsVarExpr));
+            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
 
     return statements;
   }
 
-  private List<MethodDefinition> createNestedClassMethods(
+  private static List<MethodDefinition> createNestedClassMethods(
       Service service,
       GapicServiceConfig serviceConfig,
       TypeNode superType,
@@ -1221,7 +1215,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return nestedClassMethods;
   }
 
-  private MethodDefinition createNestedClassInitDefaultsMethod(
+  private static MethodDefinition createNestedClassInitDefaultsMethod(
       Service service, @Nullable GapicServiceConfig serviceConfig, TypeStore typeStore) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
     TypeNode builderType = typeStore.get(NESTED_BUILDER_CLASS_NAME);
@@ -1261,7 +1255,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                   method,
                   builderVarExpr,
                   NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
-                  nestedRetryParamDefinitionsVarExpr)));
+                  NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
       bodyStatements.add(EMPTY_LINE_STATEMENT);
     }
     for (Method method : service.methods()) {
@@ -1276,7 +1270,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                   method,
                   builderVarExpr,
                   NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
-                  nestedRetryParamDefinitionsVarExpr)));
+                  NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
       bodyStatements.add(EMPTY_LINE_STATEMENT);
     }
 
@@ -1291,7 +1285,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private List<MethodDefinition> createNestedClassConstructorMethods(
+  private static List<MethodDefinition> createNestedClassConstructorMethods(
       Service service,
       GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
@@ -1312,7 +1306,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                             .setType(builderType)
                             .setArguments(
                                 CastExpr.builder()
-                                    .setType(getFixedTypeStore().get("ClientContext"))
+                                    .setType(FIXED_TYPESTORE.get("ClientContext"))
                                     .setExpr(ValueExpr.createNullExpr())
                                     .build())
                             .build())))
@@ -1322,7 +1316,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(getFixedTypeStore().get("ClientContext"))
+                .setType(FIXED_TYPESTORE.get("ClientContext"))
                 .setName("clientContext")
                 .build());
     Reference pagedSettingsBuilderRef =
@@ -1391,7 +1385,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     }
                     Expr newBatchingSettingsExpr =
                         MethodInvocationExpr.builder()
-                            .setStaticReferenceType(getFixedTypeStore().get("BatchingSettings"))
+                            .setStaticReferenceType(FIXED_TYPESTORE.get("BatchingSettings"))
                             .setMethodName("newBuilder")
                             .build();
                     newBatchingSettingsExpr =
@@ -1410,7 +1404,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                             .setArguments(
                                 VariableExpr.withVariable(
                                     Variable.builder()
-                                        .setType(getFixedTypeStore().get("BatchingDescriptor"))
+                                        .setType(FIXED_TYPESTORE.get("BatchingDescriptor"))
                                         .setName(batchingDescVarName)
                                         .build()))
                             .build();
@@ -1435,7 +1429,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                   VariableExpr argVar =
                       VariableExpr.withVariable(
                           Variable.builder()
-                              .setType(getFixedTypeStore().get("PagedListResponseFactory"))
+                              .setType(FIXED_TYPESTORE.get("PagedListResponseFactory"))
                               .setName(memberVarName)
                               .build());
                   Expr builderExpr =
@@ -1459,7 +1453,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setVariableExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(getFixedTypeStore().get("ImmutableList"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableList"))
                     .setGenerics(
                         NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR
                             .type()
@@ -1546,7 +1540,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return ctorMethods;
   }
 
-  private MethodDefinition createNestedClassCreateDefaultMethod(TypeStore typeStore) {
+  private static MethodDefinition createNestedClassCreateDefaultMethod(TypeStore typeStore) {
     List<Statement> bodyStatements = new ArrayList<>();
 
     // Initialize the builder: Builder builder = new Builder((ClientContext) null);
@@ -1563,7 +1557,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                         .setType(builderType)
                         .setArguments(
                             CastExpr.builder()
-                                .setType(getFixedTypeStore().get("ClientContext"))
+                                .setType(FIXED_TYPESTORE.get("ClientContext"))
                                 .setExpr(ValueExpr.createNullExpr())
                                 .build())
                         .build())
@@ -1687,7 +1681,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private List<MethodDefinition> createNestedClassSettingsBuilderGetterMethods(
+  private static List<MethodDefinition> createNestedClassSettingsBuilderGetterMethods(
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
       Set<String> nestedDeprecatedSettingVarNames) {
     Reference operationCallSettingsBuilderRef =
@@ -1699,7 +1693,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 .equals(operationCallSettingsBuilderRef);
     AnnotationNode lroBetaAnnotation =
         AnnotationNode.builder()
-            .setType(getFixedTypeStore().get("BetaApi"))
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
             .setDescription(
                 "The surface for use by generated code is not stable yet and may change in the"
                     + " future.")
@@ -1758,7 +1752,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  protected static TypeStore createCommonStaticTypes() {
+  private static TypeStore createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             ApiCallContext.class,
@@ -1816,7 +1810,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         pakkage,
         Arrays.asList(
             thisClassName,
-            getClassNames().getTransportServiceStubClassName(service),
+            getTransportContext().classNames().getTransportServiceStubClassName(service),
             ClassNames.getServiceStubSettingsClassName(service),
             ClassNames.getServiceStubClassName(service)));
 
@@ -1889,14 +1883,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build());
   }
 
-  private VariableExpr createNestedRetryParamDefinitionsVarExpr() {
+  private static VariableExpr createNestedRetryParamDefinitionsVarExpr() {
     TypeNode varType =
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(ImmutableMap.class)
                 .setGenerics(
-                    Arrays.asList(TypeNode.STRING, getFixedTypeStore().get("RetrySettings"))
-                        .stream()
+                    Arrays.asList(TypeNode.STRING, FIXED_TYPESTORE.get("RetrySettings")).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());
