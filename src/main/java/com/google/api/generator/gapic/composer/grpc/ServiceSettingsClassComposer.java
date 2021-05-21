@@ -20,6 +20,10 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
   private static final ServiceSettingsClassComposer INSTANCE =
       new ServiceSettingsClassComposer();
 
+  protected ServiceSettingsClassComposer() {
+    super(GrpcContext.instance());
+  }
+
   public static ServiceSettingsClassComposer instance() {
     return INSTANCE;
   }

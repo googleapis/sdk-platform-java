@@ -60,7 +60,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.TransportContext;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
@@ -82,6 +81,16 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+
+  private final TransportContext transportContext;
+
+  protected AbstractServiceSettingsClassComposer(TransportContext transportContext) {
+    this.transportContext = transportContext;
+  }
+
+  protected TransportContext getTransportContext() {
+    return transportContext;
+  }
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
@@ -108,7 +117,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                                 typeStore
                                     .get(ClassNames.getServiceSettingsClassName(service))
                                     .reference()))))
-            .setMethods(createClassMethods(context.transportContext(), service, typeStore))
+            .setMethods(createClassMethods(service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
     return GapicClass.create(kind, classDef);
@@ -158,12 +167,11 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return annotations;
   }
 
-  private static List<MethodDefinition> createClassMethods(
-      TransportContext transportContext, Service service, TypeStore typeStore) {
+  private List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
     javaMethods.add(createCreatorMethod(service, typeStore));
-    javaMethods.addAll(createDefaultGetterMethods(transportContext, service, typeStore));
+    javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
@@ -193,7 +201,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   }
 
   // TODO(miraleung): Consider merging this with createNestedBuilderSettingsGetterMethods.
-  private static List<MethodDefinition> createSettingsGetterMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createSettingsGetterMethods(
+      Service service, TypeStore typeStore) {
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     BiFunction<TypeNode, String, MethodDefinition.Builder> methodMakerFn =
         (retType, javaMethodName) ->
@@ -295,8 +304,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  private static List<MethodDefinition> createDefaultGetterMethods(
-      TransportContext transportContext, Service service, TypeStore typeStore) {
+  private List<MethodDefinition> createDefaultGetterMethods(Service service, TypeStore typeStore) {
     BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
             MethodDefinition.builder()
@@ -346,8 +354,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     javaMethods.add(
         methodMakerFn.apply(
             methodStarterFn.apply(
-                transportContext.defaultTransportProviderBuilderName(),
-                typeMakerFn.apply(transportContext.instantiatingChannelProviderClass())),
+                getTransportContext().defaultTransportProviderBuilderName(),
+                typeMakerFn.apply(getTransportContext().instantiatingChannelProviderClass())),
             SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
 
     javaMethods.add(
@@ -375,7 +383,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private static List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createBuilderHelperMethods(
+      Service service, TypeStore typeStore) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition newBuilderMethodOne =
         MethodDefinition.builder()

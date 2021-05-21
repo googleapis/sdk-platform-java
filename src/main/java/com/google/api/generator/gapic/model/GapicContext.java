@@ -75,7 +75,7 @@ public abstract class GapicContext {
 
   public abstract Builder toBuilder();
 
-  public abstract TransportContext transportContext();
+  public abstract Transport transport();
 
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder()
@@ -108,7 +108,7 @@ public abstract class GapicContext {
 
     public abstract Builder setGapicMetadataEnabled(boolean gapicMetadataEnabled);
 
-    public abstract Builder setTransportContext(TransportContext transportContext);
+    public abstract Builder setTransport(Transport transport);
 
     public abstract GapicContext build();
   }

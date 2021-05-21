@@ -19,7 +19,9 @@ import com.google.api.gax.grpc.GrpcCallableFactory;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
-import com.google.api.generator.gapic.model.TransportContext;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.longrunning.stub.OperationsStub;
 import io.grpc.MethodDescriptor;
@@ -27,7 +29,9 @@ import io.grpc.MethodDescriptor;
 public abstract class GrpcContext extends TransportContext {
   private static final TransportContext INSTANCE =
       GrpcContext.builder()
+          .setClassNames(new ClassNames("Grpc"))
           .setTransport(Transport.GRPC)
+          .setTransportName("gRPC")
           // For grpc.GrpcServiceStubClassComposer
           .setCallSettingsClass(GrpcCallSettings.class)
           .setStubCallableFactoryType(classToType(GrpcStubCallableFactory.class))

@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.model;
+package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class TransportContext {
-  public enum Transport {
-    REST,
-    GRPC,
-    GRPC_REST;
 
-    public static Transport parse(String name) {
-      return valueOf(name.replace('+', '_').toUpperCase());
-    }
-  }
+  public abstract ClassNames classNames();
 
   // For AbstractServiceStubClassComposer
   public abstract Transport transport();
+
+  public abstract String transportName();
 
   public abstract Class<?> callSettingsClass();
 
@@ -70,7 +67,12 @@ public abstract class TransportContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+
+    public abstract Builder setClassNames(ClassNames value);
+
     public abstract Builder setTransport(Transport transport);
+
+    public abstract Builder setTransportName(String value);
 
     public abstract Builder setCallSettingsClass(Class<?> callSettingsClass);
 

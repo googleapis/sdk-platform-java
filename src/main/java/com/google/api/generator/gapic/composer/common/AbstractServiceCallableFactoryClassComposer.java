@@ -37,13 +37,11 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,79 +49,39 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceCallableFactoryClassComposer implements ClassComposer {
+  private final TransportContext transportContext;
 
-  private final TypeStore fixedTypeStore;
-  private final StubCommentComposer commentComposer;
-  private final ClassNames classNames;
-  private final Class<?> transportCallSettingsClass;
-  private final Class<?> transportCallableFactoryClass;
-  private final Class<?> operationStubClass;
-  private final String transportCallSettingsName;
+  protected AbstractServiceCallableFactoryClassComposer(TransportContext transportContext) {
+    this.transportContext = transportContext;
+  }
 
-  protected AbstractServiceCallableFactoryClassComposer(
-      TypeStore fixedTypeStore,
-      StubCommentComposer commentComposer,
-      ClassNames classNames,
-      Class<?> transportCallSettingsClass,
-      Class<?> transportCallableFactoryClass,
-      Class<?> operationStubClass,
-      String transportCallSettingsName) {
-    this.fixedTypeStore = fixedTypeStore;
-    this.commentComposer = commentComposer;
-    this.classNames = classNames;
-    this.transportCallSettingsClass = transportCallSettingsClass;
-    this.transportCallableFactoryClass = transportCallableFactoryClass;
-    this.operationStubClass = operationStubClass;
-    this.transportCallSettingsName = transportCallSettingsName;
+  protected TransportContext getTransportContext() {
+    return transportContext;
   }
 
   @Override
-  public GapicClass generate(GapicContext ignored, Service service) {
-    String className = getClassNames().getTransportServiceCallableFactoryClassName(service);
+  public GapicClass generate(GapicContext context, Service service) {
+    TypeStore typeStore = createTypes();
+    String className =
+        getTransportContext().classNames().getTransportServiceCallableFactoryClassName(service);
     GapicClass.Kind kind = Kind.STUB;
     String pakkage = String.format("%s.stub", service.pakkage());
 
+    StubCommentComposer commentComposer =
+        new StubCommentComposer(getTransportContext().transportName());
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
-                getCommentComposer().createTransportServiceCallableFactoryClassHeaderComments(
+                commentComposer.createTransportServiceCallableFactoryClassHeaderComments(
                     service.name(), service.isDeprecated()))
-            .setAnnotations(createClassAnnotations(service, fixedTypeStore))
-            .setImplementsTypes(createClassImplements(fixedTypeStore))
+            .setAnnotations(createClassAnnotations(service, typeStore))
+            .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
-            .setMethods(createClassMethods(fixedTypeStore))
+            .setMethods(createClassMethods(typeStore))
             .setScope(ScopeNode.PUBLIC)
             .build();
     return GapicClass.create(kind, classDef);
-  }
-
-  protected TypeStore getFixedTypeStore() {
-    return fixedTypeStore;
-  }
-
-  protected StubCommentComposer getCommentComposer() {
-    return commentComposer;
-  }
-
-  protected ClassNames getClassNames() {
-    return classNames;
-  }
-
-  protected Class<?> getTransportCallSettingsClass() {
-    return transportCallSettingsClass;
-  }
-
-  protected Class<?> getTransportCallableFactoryClass() {
-    return transportCallableFactoryClass;
-  }
-
-  protected Class<?> getOperationStubClass() {
-    return operationStubClass;
-  }
-
-  protected String getTransportCallSettingsName() {
-    return transportCallSettingsName;
   }
 
   protected List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
@@ -231,7 +189,6 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     String methodName = String.format("create%sCallable", methodVariantName);
     String callSettingsTypeName = String.format("%sCallSettings", callSettingsVariantName);
     String returnTypeName = String.format("%sCallable", returnCallableKindName);
-    String transportCallSettingsTypeName = getTransportCallSettingsClass().getSimpleName();
     boolean isOperationCallable = methodVariantName.equals("Operation");
 
     List<VariableExpr> arguments = new ArrayList<>();
@@ -239,8 +196,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         VariableExpr.builder()
             .setVariable(
                 Variable.builder()
-                    .setName(getTransportCallSettingsName())
-                    .setType(typeStore.get(transportCallSettingsTypeName))
+                    .setName(getTransportContext().transportCallSettingsName())
+                    .setType(getTransportContext().transportCallSettingsType())
                     .build())
             .setIsDecl(true)
             .setTemplateObjects(transportCallSettingsTemplateObjects)
@@ -270,23 +227,17 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
               .setVariable(
                   Variable.builder()
                       .setName("operationsStub")
-                      .setType(typeStore.get(getOperationStubClass().getSimpleName()))
+                      .setType(getTransportContext().operationsStubType())
                       .build())
               .setIsDecl(true)
               .build());
     }
 
-    String transportCallableFactoryTypeName = getTransportCallableFactoryClass().getSimpleName();
-    TypeNode transportCallableFactoryType = typeStore.get(transportCallableFactoryTypeName);
-    Preconditions.checkNotNull(
-        transportCallableFactoryType,
-        String.format("Type %s not found", transportCallableFactoryTypeName));
-
     TypeNode returnType = typeStore.get(returnTypeName);
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             .setMethodName(methodName)
-            .setStaticReferenceType(transportCallableFactoryType)
+            .setStaticReferenceType(getTransportContext().transportCallableFactoryType())
             .setArguments(
                 arguments.stream()
                     .map(v -> v.toBuilder().setIsDecl(false).build())
@@ -306,7 +257,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         .build();
   }
 
-  protected static TypeStore createCommonTypes() {
+  private static TypeStore createTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             // Gax-java classes.

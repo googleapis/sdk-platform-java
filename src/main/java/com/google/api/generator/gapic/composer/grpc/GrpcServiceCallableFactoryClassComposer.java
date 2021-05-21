@@ -14,17 +14,12 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.gax.grpc.GrpcCallSettings;
-import com.google.api.gax.grpc.GrpcCallableFactory;
-import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
-import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.longrunning.Operation;
-import com.google.longrunning.stub.OperationsStub;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,16 +29,11 @@ public class GrpcServiceCallableFactoryClassComposer
     extends AbstractServiceCallableFactoryClassComposer {
   private static final GrpcServiceCallableFactoryClassComposer INSTANCE =
       new GrpcServiceCallableFactoryClassComposer();
+  private static final TypeNode OPERATION_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
 
   protected GrpcServiceCallableFactoryClassComposer() {
-    super(
-        createTypes(),
-        new StubCommentComposer("gRPC"),
-        new ClassNames("Grpc"),
-        GrpcCallSettings.class,
-        GrpcCallableFactory.class,
-        OperationsStub.class,
-        "grpcCallSettings");
+    super(GrpcContext.instance());
   }
 
   public static GrpcServiceCallableFactoryClassComposer instance() {
@@ -52,7 +42,7 @@ public class GrpcServiceCallableFactoryClassComposer
 
   @Override
   protected List<TypeNode> createClassImplements(TypeStore typeStore) {
-    return Arrays.asList(typeStore.get("GrpcStubCallableFactory"));
+    return Arrays.asList(getTransportContext().stubCallableFactoryType());
   }
 
   protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
@@ -120,8 +110,7 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(
-            requestTemplateName, typeStore.get("Operation")),
+        /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(requestTemplateName, OPERATION_TYPE),
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
@@ -186,19 +175,5 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
-  }
-
-  protected static TypeStore createTypes() {
-    TypeStore typeStore = createCommonTypes();
-    typeStore.putAll(
-        Arrays.asList(
-            // gax-java gRPC classes.
-            GrpcCallSettings.class,
-            GrpcCallableFactory.class,
-            GrpcStubCallableFactory.class,
-            Operation.class));
-
-    typeStore.put("com.google.longrunning.stub", "OperationsStub");
-    return typeStore;
   }
 }
