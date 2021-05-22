@@ -53,6 +53,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.AbstractMessage;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
@@ -125,8 +126,14 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     fields.put(SERVICE_HELPER_VAR_NAME, FIXED_GRPC_TYPESTORE.get("MockServiceHelper"));
     fields.put(CLIENT_VAR_NAME, typeStore.get(ClassNames.getServiceClientClassName(service)));
     fields.put(CHANNEL_PROVIDER_VAR_NAME, FIXED_GRPC_TYPESTORE.get("LocalChannelProvider"));
+
     return fields.entrySet().stream()
-        .collect(Collectors.toMap(e -> e.getKey(), e -> varExprFn.apply(e.getKey(), e.getValue())));
+        .collect(
+            Collectors.toMap(
+                Map.Entry::getKey,
+                e -> varExprFn.apply(e.getKey(), e.getValue()),
+                (u, v) -> {throw new IllegalStateException();},
+                LinkedHashMap::new));
   }
 
   @Override
@@ -193,8 +200,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     varInitExprs.add(startServiceHelperExpr);
 
     return MethodDefinition.builder()
-        .setAnnotations(
-            Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
@@ -208,8 +214,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   protected MethodDefinition createStopServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
     return MethodDefinition.builder()
-        .setAnnotations(
-            Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("AfterClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("AfterClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)

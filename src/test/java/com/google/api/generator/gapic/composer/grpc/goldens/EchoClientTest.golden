@@ -40,8 +40,8 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class EchoClientTest {
-  private static MockServiceHelper mockServiceHelper;
   private static MockEcho mockEcho;
+  private static MockServiceHelper mockServiceHelper;
   private EchoClient client;
   private LocalChannelProvider channelProvider;
 
