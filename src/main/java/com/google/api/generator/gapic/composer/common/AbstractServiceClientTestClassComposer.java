@@ -842,14 +842,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     }
   }
 
-  private static TypeNode getOperationCallSettingsType(Method protoMethod) {
-    return getOperationCallSettingsTypeHelper(protoMethod, false);
-  }
-
-  private static TypeNode getOperationCallSettingsBuilderType(Method protoMethod) {
-    return getOperationCallSettingsTypeHelper(protoMethod, true);
-  }
-
   private static TypeNode getOperationCallSettingsTypeHelper(
       Method protoMethod, boolean isBuilder) {
     Preconditions.checkState(
@@ -866,14 +858,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                     protoMethod.lro().responseType().reference(),
                     protoMethod.lro().metadataType().reference()))
             .build());
-  }
-
-  private static TypeNode getCallSettingsType(Method protoMethod, TypeStore typeStore) {
-    return getCallSettingsTypeHelper(protoMethod, typeStore, false);
-  }
-
-  private static TypeNode getCallSettingsBuilderType(Method protoMethod, TypeStore typeStore) {
-    return getCallSettingsTypeHelper(protoMethod, typeStore, true);
   }
 
   private static TypeNode getCallSettingsTypeHelper(

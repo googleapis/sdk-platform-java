@@ -202,22 +202,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service, TypeStore typeStore);
 
   public abstract MethodDefinition createDefaultTransportChannelProviderMethod();
-  //
-  // protected TypeStore getFixedTypeStore() {
-  //   return fixedTypeStore;
-  // }
-  //
-  // protected ClassNames getClassNames() {
-  //   return classNames;
-  // }
-  //
-  // protected Class<?> getTransportChannelClass() {
-  //   return transportChannelClass;
-  // }
-  //
-  // protected String getTransportGetterName() {
-  //   return transportGetterName;
-  // }
 
   private List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = new ArrayList<>();

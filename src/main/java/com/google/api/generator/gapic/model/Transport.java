@@ -22,6 +22,11 @@ public enum Transport {
   // instead.
   GRPC_REST;
 
+  /**
+   * Parse command line transport argument in the format `grpc+rest`.
+   * @param name name of the transport. Valid inputs are "grpc", "rest", "grpc+rest"
+   * @return the {@code Transport} enum matching the command line argument
+   */
   public static Transport parse(String name) {
     return valueOf(name.replace('+', '_').toUpperCase());
   }
