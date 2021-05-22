@@ -69,6 +69,7 @@ java_proto_library(
 
 [java_test(
     name = test_name,
+    size = "medium",
     srcs = [
         "{0}.java".format(test_name),
     ] + COMMON_SRCS,
