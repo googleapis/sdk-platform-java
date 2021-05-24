@@ -66,7 +66,6 @@ import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
-import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import javax.annotation.Generated;
@@ -216,10 +215,6 @@ public abstract class KeyManagementServiceStub implements BackgroundResource {
 
   public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
     throw new UnsupportedOperationException("Not implemented: getLocationCallable()");
-  }
-
-  public UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
-    throw new UnsupportedOperationException("Not implemented: setIamPolicyCallable()");
   }
 
   public UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>

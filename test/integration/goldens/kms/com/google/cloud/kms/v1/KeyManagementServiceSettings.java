@@ -41,7 +41,6 @@ import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
-import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import java.io.IOException;
@@ -231,11 +230,6 @@ public class KeyManagementServiceSettings extends ClientSettings<KeyManagementSe
   /** Returns the object with the settings used for calls to getLocation. */
   public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
     return ((KeyManagementServiceStubSettings) getStubSettings()).getLocationSettings();
-  }
-
-  /** Returns the object with the settings used for calls to setIamPolicy. */
-  public UnaryCallSettings<SetIamPolicyRequest, Policy> setIamPolicySettings() {
-    return ((KeyManagementServiceStubSettings) getStubSettings()).setIamPolicySettings();
   }
 
   /** Returns the object with the settings used for calls to testIamPermissions. */
@@ -492,11 +486,6 @@ public class KeyManagementServiceSettings extends ClientSettings<KeyManagementSe
     /** Returns the builder for the settings used for calls to getLocation. */
     public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
       return getStubSettingsBuilder().getLocationSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to setIamPolicy. */
-    public UnaryCallSettings.Builder<SetIamPolicyRequest, Policy> setIamPolicySettings() {
-      return getStubSettingsBuilder().setIamPolicySettings();
     }
 
     /** Returns the builder for the settings used for calls to testIamPermissions. */

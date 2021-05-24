@@ -31,19 +31,10 @@ public class StubCommentComposer {
   private static final String ADVANCED_USAGE_API_REFLECTION_DESCRIPTION =
       "This class is for advanced usage and reflects the underlying API directly.";
 
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  private static final StubCommentComposer GRPC_INSTANCE = new StubCommentComposer("gRPC");
-
   private final String transportPrefix;
 
   public StubCommentComposer(String transportPrefix) {
     this.transportPrefix = transportPrefix;
-  }
-
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  public static List<CommentStatement> createGrpcServiceStubClassHeaderComments(
-      String serviceName, boolean isDeprecated) {
-    return GRPC_INSTANCE.createTransportServiceStubClassHeaderComments(serviceName, isDeprecated);
   }
 
   public List<CommentStatement> createTransportServiceStubClassHeaderComments(
@@ -61,13 +52,6 @@ public class StubCommentComposer {
                         TRANSPORT_STUB_CLASS_HEADER_SUMMARY_PATTERN, transportPrefix, serviceName))
                 .addParagraph(ADVANCED_USAGE_API_REFLECTION_DESCRIPTION)
                 .build()));
-  }
-
-  // TODO: remove after Pre-DIREGAPIC refactoring is fully merged
-  public static List<CommentStatement> createGrpcServiceCallableFactoryClassHeaderComments(
-      String serviceName, boolean isDeprecated) {
-    return GRPC_INSTANCE.createTransportServiceCallableFactoryClassHeaderComments(
-        serviceName, isDeprecated);
   }
 
   public List<CommentStatement> createTransportServiceCallableFactoryClassHeaderComments(

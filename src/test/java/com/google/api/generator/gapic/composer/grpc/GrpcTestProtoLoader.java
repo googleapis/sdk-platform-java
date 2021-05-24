@@ -15,12 +15,13 @@
 package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
+import com.google.api.generator.gapic.model.Transport;
 
 public class GrpcTestProtoLoader extends TestProtoLoader {
-  private static GrpcTestProtoLoader INSTANCE = new GrpcTestProtoLoader();
+  private static final GrpcTestProtoLoader INSTANCE = new GrpcTestProtoLoader();
 
   protected GrpcTestProtoLoader() {
-    super(GrpcContext.instance(), "src/test/java/com/google/api/generator/gapic/testdata/");
+    super(Transport.GRPC, "src/test/java/com/google/api/generator/gapic/testdata/");
   }
 
   public static GrpcTestProtoLoader instance() {

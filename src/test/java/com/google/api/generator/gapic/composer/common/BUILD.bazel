@@ -4,9 +4,13 @@ load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 package(default_visibility = ["//visibility:public"])
 
 UPDATE_GOLDENS_TESTS = [
+    "BatchingDescriptorComposerTest",
+    "ServiceClientClassComposerTest",
+    "ServiceStubClassComposerTest",
 ]
 
 TESTS = UPDATE_GOLDENS_TESTS + [
+    "RetrySettingsComposerTest",
 ]
 
 TEST_DEPS = [
@@ -70,6 +74,7 @@ java_proto_library(
         "{0}.java".format(test_name),
     ],
     data = [
+        "//src/test/java/com/google/api/generator/gapic/composer/common/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
@@ -87,6 +92,7 @@ java_proto_library(
         "{0}.java".format(test_name),
     ],
     data = [
+        "//src/test/java/com/google/api/generator/gapic/composer/common/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
