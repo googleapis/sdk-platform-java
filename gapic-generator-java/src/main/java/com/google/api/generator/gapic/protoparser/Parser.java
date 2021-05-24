@@ -15,6 +15,8 @@
 package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.ClientProto;
+import com.google.api.DocumentationRule;
+import com.google.api.HttpRule;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -239,6 +241,33 @@ public class Parser {
                 .filter(a -> MIXIN_ALLOWLIST.contains(a.getName()))
                 .map(a -> a.getName())
                 .collect(Collectors.toSet());
+    // Holds the methods to be mixed in.
+    // Key: proto_package.ServiceName.RpcName.
+    // Value: HTTP rules, which clobber those in the proto.
+    // Assumes that http.rules.selector always specifies RPC names in the above format.
+    Map<String, List<String>> mixedInMethodsToHttpRules = new HashMap<>();
+    Map<String, String> mixedInMethodsToDocs = new HashMap<>();
+    // Parse HTTP rules and documentation, which will override the proto.
+    if (serviceYamlProtoOpt.isPresent()) {
+      for (HttpRule httpRule : serviceYamlProtoOpt.get().getHttp().getRulesList()) {
+        Optional<List<String>> httpBindingsOpt = HttpRuleParser.parseHttpRule(httpRule);
+        if (!httpBindingsOpt.isPresent()) {
+          continue;
+        }
+        for (String rpcFullNameRaw : httpRule.getSelector().split(",")) {
+          String rpcFullName = rpcFullNameRaw.trim();
+          mixedInMethodsToHttpRules.put(rpcFullName, httpBindingsOpt.get());
+        }
+      }
+      for (DocumentationRule docRule :
+          serviceYamlProtoOpt.get().getDocumentation().getRulesList()) {
+        for (String rpcFullNameRaw : docRule.getSelector().split(",")) {
+          String rpcFullName = rpcFullNameRaw.trim();
+          mixedInMethodsToDocs.put(rpcFullName, docRule.getDescription());
+        }
+      }
+    }
+
     Set<String> apiDefinedRpcs = new HashSet<>();
     for (Service service : services) {
       if (blockedCodegenMixinApis.contains(service)) {
@@ -252,28 +281,55 @@ public class Parser {
     if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
-        List<Method> updatedMethods = new ArrayList<>(originalService.methods());
+        List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
         // If mixin APIs are present, add the methods to all other services.
         for (Service mixinService : blockedCodegenMixinApis) {
-          if (!mixedInApis.contains(
-              String.format("%s.%s", mixinService.protoPakkage(), mixinService.name()))) {
+          final String mixinServiceFullName = serviceFullNameFn.apply(mixinService);
+          if (!mixedInApis.contains(mixinServiceFullName)) {
             continue;
           }
-          mixinService
-              .methods()
+          Function<Method, String> methodToFullProtoNameFn =
+              m -> String.format("%s.%s", mixinServiceFullName, m.name());
+          // Filter mixed-in methods based on those listed in the HTTP rules section of
+          // service.yaml.
+          List<Method> updatedMixinMethods =
+              mixinService.methods().stream()
+                  // Mixin method inclusion is based on the HTTP rules list in service.yaml.
+                  .filter(
+                      m -> mixedInMethodsToHttpRules.containsKey(methodToFullProtoNameFn.apply(m)))
+                  .map(
+                      m -> {
+                        // HTTP rules and RPC documentation in the service.yaml file take
+                        // precedence.
+                        String fullMethodName = methodToFullProtoNameFn.apply(m);
+                        List<String> httpBindings =
+                            mixedInMethodsToHttpRules.containsKey(fullMethodName)
+                                ? mixedInMethodsToHttpRules.get(fullMethodName)
+                                : m.httpBindings();
+                        String docs =
+                            mixedInMethodsToDocs.containsKey(fullMethodName)
+                                ? mixedInMethodsToDocs.get(fullMethodName)
+                                : m.description();
+                        return m.toBuilder()
+                            .setHttpBindings(httpBindings)
+                            .setDescription(docs)
+                            .build();
+                      })
+                  .collect(Collectors.toList());
+          // Overridden RPCs defined in the protos take precedence.
+          updatedMixinMethods.stream()
+              .filter(m -> !apiDefinedRpcs.contains(m.name()))
               .forEach(
-                  m -> {
-                    // Overridden RPCs defined in the protos take precedence.
-                    if (!apiDefinedRpcs.contains(m.name())) {
-                      updatedMethods.add(
+                  m ->
+                      updatedOriginalServiceMethods.add(
                           m.toBuilder()
                               .setMixedInApiName(serviceFullNameFn.apply(mixinService))
-                              .build());
-                    }
-                  });
-          outputMixinServiceSet.add(mixinService);
+                              .build()));
+          outputMixinServiceSet.add(
+              mixinService.toBuilder().setMethods(updatedMixinMethods).build());
         }
-        services.set(i, originalService.toBuilder().setMethods(updatedMethods).build());
+        services.set(
+            i, originalService.toBuilder().setMethods(updatedOriginalServiceMethods).build());
       }
     }
 
