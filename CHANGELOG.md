@@ -5,7 +5,7 @@
 
 ### Miscellaneous Chores
 
-* release 1.0.8 ([d5986ec](https://www.github.com/googleapis/gapic-generator-java/commit/d5986ec6b16a7bfc8974f97cc926ad7565612b48))
+* DIREGAPIC refactoring ([ae17e7e](https://github.com/googleapis/gapic-generator-java/commit/ae17e7e9a272b422176962d896e387496b1806e8))
 
 ### [1.0.7](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.6...v1.0.7) (2021-05-21)
 
