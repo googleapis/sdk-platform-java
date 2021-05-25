@@ -277,6 +277,7 @@ public class GrpcTestingStub extends TestingStub {
                     params.put("name", String.valueOf(request.getName()));
                     params.put(
                         "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
+                    params.put("type", String.valueOf(request.getType()));
                     return params.build();
                   }
                 })

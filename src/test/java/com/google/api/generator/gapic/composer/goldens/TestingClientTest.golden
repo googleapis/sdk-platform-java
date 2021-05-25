@@ -481,6 +481,7 @@ public class TestingClientTest {
     Assert.assertEquals(request.getAnswersList(), actualRequest.getAnswersList());
     Assert.assertEquals(request.getFoo(), actualRequest.getFoo());
     Assert.assertEquals(request.getTestToVerify(), actualRequest.getTestToVerify());
+    Assert.assertEquals(request.getType(), actualRequest.getType());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
