@@ -148,7 +148,7 @@ public class HttpRuleParser {
     Field field = inputMessage.fieldMap().get(binding);
     boolean fieldCondition = !field.isRepeated();
     if (!isBody) {
-      fieldCondition &= field.type().isProtoPrimitiveType();
+      fieldCondition &= field.type().isProtoPrimitiveType() || field.isEnum();
     }
     String messageFormat =
         "Expected a non-repeated "
