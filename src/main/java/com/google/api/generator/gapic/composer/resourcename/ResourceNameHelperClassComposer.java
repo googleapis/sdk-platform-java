@@ -51,6 +51,7 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.common.annotations.VisibleForTesting;
@@ -68,7 +69,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import javax.annotation.Generated;
 
 public class ResourceNameHelperClassComposer {
@@ -158,14 +158,23 @@ public class ResourceNameHelperClassComposer {
                 VariableExpr.withVariable(
                     Variable.builder()
                         .setName(concatToUpperSnakeCaseName(ts))
-                        .setType(FIXED_TYPESTORE.get("PathTemplate"))
+                        .setType(
+                            // PubSub special-case handling for the _deleted-topic_ pattern.
+                            ts.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL)
+                                ? TypeNode.STRING
+                                : FIXED_TYPESTORE.get("PathTemplate"))
                         .build()))
         .collect(Collectors.toList());
   }
 
   private static Map<String, VariableExpr> createPatternTokenClassMembers(
       List<List<String>> tokenHierarchies) {
-    Set<String> tokenSet = getTokenSet(tokenHierarchies);
+    // PubSub special-case handling - exclude _deleted-topic_.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(ts -> !ts.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+    Set<String> tokenSet = getTokenSet(processedTokenHierarchies);
     return tokenSet.stream()
         .collect(
             Collectors.toMap(
@@ -197,19 +206,21 @@ public class ResourceNameHelperClassComposer {
               .setIsStatic(true)
               .setIsFinal(true)
               .build();
-      Expr createWithoutUrlEncodingExpr =
+      String pattern = patterns.get(i);
+      Expr valueExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(FIXED_TYPESTORE.get("PathTemplate"))
               .setMethodName("createWithoutUrlEncoding")
               .setArguments(
-                  Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(patterns.get(i)))))
+                  Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(pattern))))
               .setReturnType(FIXED_TYPESTORE.get("PathTemplate"))
               .build();
+      // PubSub special-case handling for _deleted-topic_.
+      if (pattern.equals(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
+        valueExpr = ValueExpr.withValue(StringObjectValue.withValue(pattern));
+      }
       memberVars.add(
-          AssignmentExpr.builder()
-              .setVariableExpr(varExpr)
-              .setValueExpr(createWithoutUrlEncodingExpr)
-              .build());
+          AssignmentExpr.builder().setVariableExpr(varExpr).setValueExpr(valueExpr).build());
     }
 
     memberVars.add(
@@ -231,8 +242,13 @@ public class ResourceNameHelperClassComposer {
     // Use the token set as a key to maintain ordering (for consistency).
     Function<VariableExpr, VariableExpr> toFinalDeclFn =
         v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).setIsFinal(true).build();
+    // Special-cased PubSub handling.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(tokens -> !tokens.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
     memberVars.addAll(
-        getTokenSet(tokenHierarchies).stream()
+        getTokenSet(processedTokenHierarchies).stream()
             .map(t -> toFinalDeclFn.apply(patternTokenVarExprs.get(t)))
             .collect(Collectors.toList()));
     return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
@@ -297,6 +313,13 @@ public class ResourceNameHelperClassComposer {
                 .setValueExpr(nullExpr)
                 .build();
 
+    // Special-cased PubSub handling.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(tokens -> !tokens.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+    boolean hasDeletedTopicPattern = tokenHierarchies.size() > processedTokenHierarchies.size();
+
     // First deprecated constructor.
     javaMethods.add(
         MethodDefinition.constructorBuilder()
@@ -307,15 +330,16 @@ public class ResourceNameHelperClassComposer {
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(thisClassType)
             .setBody(
-                getTokenSet(tokenHierarchies).stream()
+                getTokenSet(processedTokenHierarchies).stream()
                     .map(t -> ExprStatement.withExpr(assignTokenToNullExpr.apply(t)))
                     .collect(Collectors.toList()))
             .build());
 
-    for (int i = 0; i < tokenHierarchies.size(); i++) {
-      List<String> tokens = tokenHierarchies.get(i);
+    for (int i = 0; i < processedTokenHierarchies.size(); i++) {
+      List<String> tokens = processedTokenHierarchies.get(i);
+
       List<Expr> bodyExprs = new ArrayList<>();
-      TypeNode argType = getBuilderType(typeStore, tokenHierarchies, i);
+      TypeNode argType = getBuilderType(typeStore, processedTokenHierarchies, i);
       VariableExpr builderArgExpr =
           VariableExpr.withVariable(Variable.builder().setName("builder").setType(argType).build());
       for (String token : tokens) {
@@ -339,7 +363,7 @@ public class ResourceNameHelperClassComposer {
                 .build());
       }
       // Initialize the rest to null.
-      for (String token : getTokenSet(tokenHierarchies)) {
+      for (String token : getTokenSet(processedTokenHierarchies)) {
         if (tokens.contains(token)) {
           continue;
         }
@@ -368,12 +392,66 @@ public class ResourceNameHelperClassComposer {
               .build());
     }
 
+    if (hasDeletedTopicPattern) {
+      Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+      // PubSub special-case handling for the _deleted-topic_ pattern - add an extra constructor.
+      //  private TopicName(String fixedValue) {
+      //    this.fixedValue = fixedValue;
+      //    fieldValuesMap = ImmutableMap.of("", fixedValue);
+      //  }
+      VariableExpr fixedValueVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName("fixedValue").setType(TypeNode.STRING).build());
+      List<Expr> specialCtorBodyExprs = new ArrayList<>();
+      specialCtorBodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(
+                  VariableExpr.builder()
+                      .setExprReferenceExpr(thisExpr)
+                      .setVariable(fixedValueVarExpr.variable())
+                      .build())
+              .setValueExpr(fixedValueVarExpr)
+              .build());
+      specialCtorBodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(FIXED_CLASS_VARS.get("fieldValuesMap"))
+              .setValueExpr(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
+                      .setMethodName("of")
+                      .setArguments(
+                          ValueExpr.withValue(StringObjectValue.withValue("")), fixedValueVarExpr)
+                      .setReturnType(FIXED_TYPESTORE.get("ImmutableMap"))
+                      .build())
+              .build());
+      specialCtorBodyExprs.addAll(
+          getTokenSet(processedTokenHierarchies).stream()
+              .map(t -> assignTokenToNullExpr.apply(t))
+              .collect(Collectors.toList()));
+
+      javaMethods.add(
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PRIVATE)
+              .setReturnType(thisClassType)
+              .setArguments(Arrays.asList(fixedValueVarExpr.toBuilder().setIsDecl(true).build()))
+              .setBody(
+                  specialCtorBodyExprs.stream()
+                      .map(e -> ExprStatement.withExpr(e))
+                      .collect(Collectors.toList()))
+              .build());
+    }
+
     return javaMethods;
   }
 
   private static List<MethodDefinition> createTokenGetterMethods(
       Map<String, VariableExpr> patternTokenVarExprs, List<List<String>> tokenHierarchies) {
-    return getTokenSet(tokenHierarchies).stream()
+    // PubSub special-case handling.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(ts -> !ts.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+    return getTokenSet(processedTokenHierarchies).stream()
         .map(
             t ->
                 MethodDefinition.builder()
@@ -400,6 +478,11 @@ public class ResourceNameHelperClassComposer {
     // Create the newBuilder and variation methods here.
     // Variation example: newProjectLocationAutoscalingPolicyBuilder().
     for (int i = 0; i < tokenHierarchies.size(); i++) {
+      // PubSub special-case handling.
+      if (tokenHierarchies.get(i).contains(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
+        continue;
+      }
+
       final TypeNode returnType = getBuilderType(typeStore, tokenHierarchies, i);
       final Expr returnExpr = NewObjectExpr.withType(returnType);
 
@@ -495,6 +578,31 @@ public class ResourceNameHelperClassComposer {
     boolean hasVariants = tokenHierarchies.size() > 1;
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
+      // PubSub special-case handling.
+      if (tokens.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
+        Expr deletedTopicStringValExpr =
+            ValueExpr.withValue(
+                StringObjectValue.withValue(ResourceNameConstants.DELETED_TOPIC_LITERAL));
+        // Simply return `new TopicName("_deleted-topic_")` or the string value itself.
+        javaMethods.add(
+            MethodDefinition.builder()
+                .setScope(ScopeNode.PUBLIC)
+                .setIsStatic(true)
+                .setAnnotations(annotations)
+                .setReturnType(returnType)
+                .setName(
+                    String.format(methodNameFormat, concatToUpperCamelCaseName(tokens) + "Name"))
+                .setReturnExpr(
+                    returnType.equals(TypeNode.STRING)
+                        ? deletedTopicStringValExpr
+                        : NewObjectExpr.builder()
+                            .setType(returnType)
+                            .setArguments(deletedTopicStringValExpr)
+                            .build())
+                .build());
+        continue;
+      }
+
       String builderMethodName =
           String.format(newBuilderMethodNameFormat, getBuilderTypeName(tokenHierarchies, i));
 
@@ -542,8 +650,7 @@ public class ResourceNameHelperClassComposer {
               .setReturnType(returnType)
               .setName(
                   String.format(
-                      methodNameFormat,
-                      i == 0 ? "" : concatToUpperCamelCaseName(tokenHierarchies.get(i)) + "Name"))
+                      methodNameFormat, i == 0 ? "" : concatToUpperCamelCaseName(tokens) + "Name"))
               .setArguments(methodArgs)
               .setReturnExpr(returnExpr)
               .build());
@@ -679,11 +786,15 @@ public class ResourceNameHelperClassComposer {
     IfStatement.Builder ifStatementBuilder = IfStatement.builder();
     String ofMethodNamePattern = "of%sName";
     for (int i = 0; i < tokenHierarchies.size(); i++) {
+      // PubSub special-case handling for the "_deleted-topic_" pattern.
+      boolean isDeletedTopicPattern =
+          tokenHierarchies.get(i).contains(ResourceNameConstants.DELETED_TOPIC_LITERAL);
+
       VariableExpr templateVarExpr = templateFinalVarExprs.get(i);
       MethodInvocationExpr conditionExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(templateVarExpr)
-              .setMethodName("matches")
+              .setMethodName(isDeletedTopicPattern ? "equals" : "matches")
               .setArguments(formattedStringArgList)
               .setReturnType(TypeNode.BOOLEAN)
               .build();
@@ -730,6 +841,21 @@ public class ResourceNameHelperClassComposer {
         ifStatementBuilder =
             ifStatementBuilder.setConditionExpr(conditionExpr).setBody(ifStatements);
       } else {
+        // PubSub special-case handling - clobber ifStatements if the current pattern is
+        // _deleted-topic_.
+        if (isDeletedTopicPattern) {
+          ifStatements.clear();
+          ifStatements.add(
+              ExprStatement.withExpr(
+                  ReturnExpr.withExpr(
+                      NewObjectExpr.builder()
+                          .setType(thisClassType)
+                          .setArguments(
+                              ValueExpr.withValue(
+                                  StringObjectValue.withValue(
+                                      ResourceNameConstants.DELETED_TOPIC_LITERAL)))
+                          .build())));
+        }
         ifStatementBuilder = ifStatementBuilder.addElseIf(conditionExpr, ifStatements);
       }
     }
@@ -923,12 +1049,17 @@ public class ResourceNameHelperClassComposer {
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     for (int i = 1; i < templateFinalVarExprs.size(); i++) {
+      VariableExpr templateVarExpr = templateFinalVarExprs.get(i);
       returnOrExpr =
           LogicalOperationExpr.logicalOrWithExprs(
               returnOrExpr,
               MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(templateFinalVarExprs.get(i))
-                  .setMethodName("matches")
+                  .setExprReferenceExpr(templateVarExpr)
+                  .setMethodName(
+                      // PubSub special-case handling for the _deleted-topic_ pattern.
+                      templateVarExpr.variable().identifier().name().equals("DELETED_TOPIC")
+                          ? "equals"
+                          : "matches")
                   .setArguments(Arrays.asList(formattedStringVarExpr))
                   .setReturnType(TypeNode.BOOLEAN)
                   .build());
@@ -986,9 +1117,15 @@ public class ResourceNameHelperClassComposer {
                     .build())
             .build();
 
+    // Special-cased PubSub handling.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(tokens -> !tokens.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+
     // Innermost if-blocks.
     List<Statement> tokenIfStatements = new ArrayList<>();
-    for (String token : getTokenSet(tokenHierarchies)) {
+    for (String token : getTokenSet(processedTokenHierarchies)) {
       VariableExpr tokenVarExpr = patternTokenVarExprs.get(token);
       Preconditions.checkNotNull(
           tokenVarExpr,
@@ -1188,8 +1325,14 @@ public class ResourceNameHelperClassComposer {
             .setValueExpr(oCastExpr)
             .build();
 
+    // PubSub special-case handling - exclude _deleted-topic_.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(ts -> !ts.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+
     // Create return expression in the second if statement's body.
-    Set<String> tokenSet = getTokenSet(tokenHierarchies);
+    Set<String> tokenSet = getTokenSet(processedTokenHierarchies);
     Iterator<String> itToken = tokenSet.iterator();
     Expr curTokenExpr =
         createObjectsEqualsForTokenMethodExpr(
@@ -1279,8 +1422,15 @@ public class ResourceNameHelperClassComposer {
             PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
     AssignmentOperationExpr multiplyAssignmentOpExpr =
         AssignmentOperationExpr.multiplyAssignmentWithExprs(hVarExpr, numValueExpr);
+
+    // PubSub special-case handling - exclude _deleted-topic_.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(ts -> !ts.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+
     // If it has variants, add the multiply and xor assignment operation exprs for fixedValue.
-    boolean hasVariants = tokenHierarchies.size() > 1;
+    boolean hasVariants = processedTokenHierarchies.size() > 1;
     if (hasVariants) {
       VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
       assignmentBody.add(ExprStatement.withExpr(multiplyAssignmentOpExpr));
@@ -1290,7 +1440,7 @@ public class ResourceNameHelperClassComposer {
                   hVarExpr, createObjectsHashCodeForVarMethod(fixedValueVarExpr))));
     }
     // Add the multiply and xor assignment operation exprs for tokens.
-    Set<String> tokenSet = getTokenSet(tokenHierarchies);
+    Set<String> tokenSet = getTokenSet(processedTokenHierarchies);
     tokenSet.stream()
         .forEach(
             token -> {
@@ -1335,18 +1485,24 @@ public class ResourceNameHelperClassComposer {
     String thisClassName = getThisClassName(resourceName);
     TypeNode outerThisClassType = typeStore.get(thisClassName);
     boolean hasVariants = tokenHierarchies.size() > 1;
-    return IntStream.range(0, tokenHierarchies.size())
-        .mapToObj(
-            i ->
-                createNestedBuilderClass(
-                    outerThisClassType,
-                    tokenHierarchies.get(i),
-                    templateFinalVarExprs.get(i),
-                    resourceName.patterns().get(i),
-                    typeStore,
-                    hasVariants,
-                    i == 0))
-        .collect(Collectors.toList());
+    List<ClassDefinition> nestedClasses = new ArrayList<>();
+    for (int i = 0; i < tokenHierarchies.size(); i++) {
+      List<String> tokens = tokenHierarchies.get(i);
+      // PubSub special-case handling.
+      if (tokens.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
+        continue;
+      }
+      nestedClasses.add(
+          createNestedBuilderClass(
+              outerThisClassType,
+              tokens,
+              templateFinalVarExprs.get(i),
+              resourceName.patterns().get(i),
+              typeStore,
+              hasVariants,
+              i == 0));
+    }
+    return nestedClasses;
   }
 
   private static ClassDefinition createNestedBuilderClass(
@@ -1554,7 +1710,13 @@ public class ResourceNameHelperClassComposer {
     typeStore.put(resourceName.pakkage(), thisClassName);
     typeStore.put(resourceName.pakkage(), "Builder", true, thisClassName);
 
-    if (tokenHierarchies.size() > 1) {
+    // Special-cased PubSub handling.
+    List<List<String>> processedTokenHierarchies =
+        tokenHierarchies.stream()
+            .filter(tokens -> !tokens.contains(ResourceNameConstants.DELETED_TOPIC_LITERAL))
+            .collect(Collectors.toList());
+
+    if (processedTokenHierarchies.size() > 1) {
       typeStore.putAll(
           resourceName.pakkage(),
           tokenHierarchies.subList(1, tokenHierarchies.size()).stream()
