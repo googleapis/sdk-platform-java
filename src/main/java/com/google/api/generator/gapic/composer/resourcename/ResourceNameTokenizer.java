@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.resourcename;
 
+import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
@@ -42,6 +43,12 @@ public class ResourceNameTokenizer {
 
       // Process variables.
       for (String rawPatternToken : rawPatternTokens) {
+        // PubSub exception case.
+        if (rawPatternToken.equals(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
+          hierarchy.add(rawPatternToken);
+          continue;
+        }
+
         if (!rawPatternToken.startsWith(LEFT_BRACE) || !rawPatternToken.endsWith(RIGHT_BRACE)) {
           continue;
         }

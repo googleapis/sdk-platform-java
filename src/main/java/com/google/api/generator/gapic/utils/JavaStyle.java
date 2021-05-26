@@ -26,6 +26,8 @@ public class JavaStyle {
       return s;
     }
 
+    s = s.replace('-', '_');
+
     if (s.indexOf(UNDERSCORE) >= 0) {
       s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
     }
@@ -38,6 +40,8 @@ public class JavaStyle {
     if (Strings.isNullOrEmpty(s)) {
       return s;
     }
+
+    s = s.replace('-', '_');
 
     if (s.indexOf(UNDERSCORE) >= 0) {
       s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);

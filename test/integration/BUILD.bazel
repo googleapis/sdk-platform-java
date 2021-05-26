@@ -25,6 +25,7 @@ INTEGRATION_TEST_LIBRARIES = [
     "credentials",  # Check that the capital name edge case is handled.
     "iam",  # Mixin-only special-case API can build on its own.
     "kms",  # Mixins, with an override in the proto file.
+    "pubsub",  # Special=case handling for "_deleted-topic_" resource name patterns.
     "logging",  # Java package remapping in gapic.yaml.
     "redis",  # Has a gapic.yaml.
     "library",  # No gRPC service config.
@@ -36,6 +37,7 @@ API_GAPIC_TARGETS = {
     "credentials": "@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic",
     "iam": ":iam_java_gapic",  # Googleapis' LRO does not have a Java Gapic.
     "kms": ":kms_java_gapic",  # Local target because mixins are not rolled out yet.
+    "pubsub": ":pubsub_java_gapic",
     "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
     "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
@@ -272,5 +274,43 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/cloud/kms/v1:kms_proto",
         "@com_google_googleapis//google/cloud/location:location_java_grpc",
         "@com_google_googleapis//google/cloud/location:location_java_proto",
+    ],
+)
+
+# PubSub
+# TODO: Remove some of these targets when PubSub has been migrated in googleapis.
+java_gapic_library(
+    name = "pubsub_java_gapic",
+    srcs = ["@com_google_googleapis//google/pubsub/v1:pubsub_proto_with_info"],
+    gapic_yaml = "@com_google_googleapis//google/pubsub/v1:pubsub_gapic.yaml",
+    grpc_service_config = "@com_google_googleapis//google/pubsub/v1:pubsub_grpc_service_config.json",
+    # For the IAM mixin.
+    service_yaml = "pubsub_v1.yaml",
+    test_deps = [
+        "@com_google_googleapis//google/pubsub/v1:pubsub_java_grpc",
+        "@com_google_googleapis//google/iam/v1:iam_java_grpc",
+    ],
+    deps = [
+        "@com_google_googleapis//google/iam/v1:iam_java_proto",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
+    ],
+)
+
+java_gapic_test(
+    name = "pubsub_java_gapic_test_suite",
+    test_classes = [
+        "com.google.cloud.pubsub.v1.SubscriptionAdminClientTest",
+        "com.google.cloud.pubsub.v1.TopicAdminClientTest",
+    ],
+    runtime_deps = [":pubsub_java_gapic_test"],
+)
+
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-pubsub-v1-java",
+    deps = [
+        ":pubsub_java_gapic",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_java_grpc",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_proto",
     ],
 )
