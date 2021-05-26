@@ -31,6 +31,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -41,6 +42,7 @@ import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -786,6 +788,52 @@ public class ImportWriterVisitorTest {
 
     packageInfo.accept(writerVisitor);
     assertEquals("import javax.annotation.Generated;\n\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeLambdaExprImports() {
+    // Similar to method defnitions.
+    Reference mapRef = ConcreteReference.withClazz(Map.class);
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(
+                    Arrays.asList(
+                        "K",
+                        TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class))))
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(Arrays.asList("T", "V"))
+                .build());
+    Statement bodyStatement =
+        ExprStatement.withExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("doStuff")
+                .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
+                .build());
+    TypeNode returnType = TypeNode.withReference(ConcreteReference.withClazz(Expr.class));
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setArguments(arguments)
+            .setBody(Arrays.asList(bodyStatement))
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foobar")
+                    .setReturnType(returnType)
+                    .build())
+            .build();
+    lambdaExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import java.util.Arrays;\n",
+            "import java.util.Map;\n\n"),
+        writerVisitor.write());
   }
 
   /** =============================== HELPERS =============================== */
