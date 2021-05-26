@@ -14,10 +14,6 @@
 * Support PubSub's _deleted-topic_ pattern ([#739](https://www.github.com/googleapis/gapic-generator-java/issues/739)) ([7d8c62d](https://www.github.com/googleapis/gapic-generator-java/commit/7d8c62d8e8922a3589e631299ecb0287bc41ba2d))
 
 
-### Miscellaneous Chores
-
-* release 1.0.9 ([79b5504](https://www.github.com/googleapis/gapic-generator-java/commit/79b550456c6dd7343b5110e7bf75b211423f0978))
-
 ### [1.0.8](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.7...v1.0.8) (2021-05-24)
 
 
