@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.10](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.9...v1.0.10) (2021-05-26)
+
+
+### Miscellaneous Chores
+
+* release 1.0.10 ([0de5212](https://www.github.com/googleapis/gapic-generator-java/commit/0de5212570fef33380344882fceea3746c0bdaea))
+
 ### [1.0.9](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.8...v1.0.9) (2021-05-26)
 
 
