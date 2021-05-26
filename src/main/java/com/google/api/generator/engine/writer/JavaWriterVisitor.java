@@ -37,6 +37,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -507,6 +508,45 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     operator(assignmentOperationExpr.operatorKind());
     space();
     assignmentOperationExpr.valueExpr().accept(this);
+  }
+
+  @Override
+  public void visit(LambdaExpr lambdaExpr) {
+    if (lambdaExpr.arguments().isEmpty()) {
+      leftParen();
+      rightParen();
+    } else if (lambdaExpr.arguments().size() == 1) {
+      // Print just the variable.
+      lambdaExpr.arguments().get(0).variable().identifier().accept(this);
+    } else {
+      // Stylistic choice - print the types and variable names for clarity.
+      leftParen();
+      int numArguments = lambdaExpr.arguments().size();
+      for (int i = 0; i < numArguments; i++) {
+        lambdaExpr.arguments().get(i).accept(this);
+        if (i < numArguments - 1) {
+          buffer.append(COMMA);
+          space();
+        }
+      }
+      rightParen();
+    }
+
+    space();
+    buffer.append("->");
+    space();
+
+    if (lambdaExpr.body().isEmpty()) {
+      // Just the return expression - don't render "return".
+      lambdaExpr.returnExpr().expr().accept(this);
+      return;
+    }
+
+    leftBrace();
+    newline();
+    statements(lambdaExpr.body());
+    ExprStatement.withExpr(lambdaExpr.returnExpr()).accept(this);
+    rightBrace();
   }
 
   /** =============================== STATEMENTS =============================== */
