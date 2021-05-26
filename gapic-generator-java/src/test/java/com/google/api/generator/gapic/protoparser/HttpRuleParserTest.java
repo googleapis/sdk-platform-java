@@ -70,7 +70,7 @@ public class HttpRuleParserTest {
         HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
     assertTrue(httpBindingsOpt.isPresent());
     assertThat(httpBindingsOpt.get())
-        .containsExactly("answer", "foo", "name", "test_to_verify.name");
+        .containsExactly("answer", "foo", "name", "test_to_verify.name", "type");
   }
 
   @Test
