@@ -67,7 +67,7 @@ public class SettingsCommentComposer {
   public static final CommentStatement DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder for the default credentials for this service.");
 
-  public static final CommentStatement DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT =
+  public static final CommentStatement DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder for the default ChannelProvider for this service.");
 
   public static final CommentStatement NEW_BUILDER_METHOD_COMMENT =

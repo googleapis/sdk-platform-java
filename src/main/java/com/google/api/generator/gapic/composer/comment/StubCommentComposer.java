@@ -22,44 +22,53 @@ import java.util.List;
 public class StubCommentComposer {
   private static final String STUB_CLASS_HEADER_SUMMARY_PATTERN =
       "Base stub class for the %s service API.";
-  private static final String GRPC_CALLABLE_FACTORY_CLASS_HEADER_SUMMARY_PATTERN =
-      "gRPC callable factory implementation for the %s service API.";
-  private static final String GRPC_STUB_CLASS_HEADER_SUMMARY_PATTERN =
-      "gRPC stub implementation for the %s service API.";
+  private static final String TRANSPORT_CALLABLE_FACTORY_CLASS_HEADER_SUMMARY_PATTERN =
+      "%s callable factory implementation for the %s service API.";
+  private static final String TRANSPORT_STUB_CLASS_HEADER_SUMMARY_PATTERN =
+      "%s stub implementation for the %s service API.";
 
   private static final String ADVANCED_USAGE_DESCRIPTION = "This class is for advanced usage.";
   private static final String ADVANCED_USAGE_API_REFLECTION_DESCRIPTION =
       "This class is for advanced usage and reflects the underlying API directly.";
 
-  public static List<CommentStatement> createGrpcServiceStubClassHeaderComments(
-      String serviceName, boolean isDeprecated) {
-    JavaDocComment.Builder javaDocBuilder = JavaDocComment.builder();
-    if (isDeprecated) {
-      javaDocBuilder = javaDocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
-    }
+  private final String transportPrefix;
 
-    return Arrays.asList(
-        CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
-        CommentStatement.withComment(
-            javaDocBuilder
-                .addComment(String.format(GRPC_STUB_CLASS_HEADER_SUMMARY_PATTERN, serviceName))
-                .addParagraph(ADVANCED_USAGE_API_REFLECTION_DESCRIPTION)
-                .build()));
+  public StubCommentComposer(String transportPrefix) {
+    this.transportPrefix = transportPrefix;
   }
 
-  public static List<CommentStatement> createGrpcServiceCallableFactoryClassHeaderComments(
+  public List<CommentStatement> createTransportServiceStubClassHeaderComments(
       String serviceName, boolean isDeprecated) {
     JavaDocComment.Builder javaDocBuilder = JavaDocComment.builder();
     if (isDeprecated) {
       javaDocBuilder = javaDocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
     }
-
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(
             javaDocBuilder
                 .addComment(
-                    String.format(GRPC_CALLABLE_FACTORY_CLASS_HEADER_SUMMARY_PATTERN, serviceName))
+                    String.format(
+                        TRANSPORT_STUB_CLASS_HEADER_SUMMARY_PATTERN, transportPrefix, serviceName))
+                .addParagraph(ADVANCED_USAGE_API_REFLECTION_DESCRIPTION)
+                .build()));
+  }
+
+  public List<CommentStatement> createTransportServiceCallableFactoryClassHeaderComments(
+      String serviceName, boolean isDeprecated) {
+    JavaDocComment.Builder javaDocBuilder = JavaDocComment.builder();
+    if (isDeprecated) {
+      javaDocBuilder = javaDocBuilder.setDeprecated(CommentComposer.DEPRECATED_CLASS_STRING);
+    }
+    return Arrays.asList(
+        CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
+        CommentStatement.withComment(
+            javaDocBuilder
+                .addComment(
+                    String.format(
+                        TRANSPORT_CALLABLE_FACTORY_CLASS_HEADER_SUMMARY_PATTERN,
+                        transportPrefix,
+                        serviceName))
                 .addParagraph(ADVANCED_USAGE_DESCRIPTION)
                 .build()));
   }

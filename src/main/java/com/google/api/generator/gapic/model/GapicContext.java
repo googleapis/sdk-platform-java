@@ -75,6 +75,8 @@ public abstract class GapicContext {
 
   public abstract Builder toBuilder();
 
+  public abstract Transport transport();
+
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder()
         .setMixinServices(Collections.emptyList())
@@ -105,6 +107,8 @@ public abstract class GapicContext {
     public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
 
     public abstract Builder setGapicMetadataEnabled(boolean gapicMetadataEnabled);
+
+    public abstract Builder setTransport(Transport transport);
 
     public abstract GapicContext build();
   }
