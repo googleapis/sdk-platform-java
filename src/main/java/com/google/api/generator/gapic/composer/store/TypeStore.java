@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TypeStore {
-  private Map<String, TypeNode> store = new HashMap<>();
+  private final Map<String, TypeNode> store = new HashMap<>();
 
   public TypeStore() {}
 
@@ -33,7 +33,7 @@ public class TypeStore {
         concreteClasses.stream()
             .collect(
                 Collectors.toMap(
-                    c -> c.getSimpleName(),
+                    Class::getSimpleName,
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c)))));
   }
 

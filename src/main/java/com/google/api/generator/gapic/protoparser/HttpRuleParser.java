@@ -50,15 +50,24 @@ public class HttpRuleParser {
       checkHttpFieldIsValid(httpRule.getBody(), inputMessage, true);
     }
 
+    return parseHttpRuleHelper(httpRule, Optional.of(inputMessage), messageTypes);
+  }
+
+  public static Optional<List<String>> parseHttpRule(HttpRule httpRule) {
+    return parseHttpRuleHelper(httpRule, Optional.empty(), Collections.emptyMap());
+  }
+
+  private static Optional<List<String>> parseHttpRuleHelper(
+      HttpRule httpRule, Optional<Message> inputMessageOpt, Map<String, Message> messageTypes) {
     // Get pattern.
-    Set<String> uniqueBindings = getPatternBindings(httpRule);
+    Set<String> uniqueBindings = getHttpVerbPattern(httpRule);
     if (uniqueBindings.isEmpty()) {
       return Optional.empty();
     }
 
     if (httpRule.getAdditionalBindingsCount() > 0) {
       for (HttpRule additionalRule : httpRule.getAdditionalBindingsList()) {
-        uniqueBindings.addAll(getPatternBindings(additionalRule));
+        uniqueBindings.addAll(getHttpVerbPattern(additionalRule));
       }
     }
 
@@ -69,19 +78,23 @@ public class HttpRuleParser {
     for (String binding : bindings) {
       // Handle foo.bar cases by descending into the subfields.
       String[] descendantBindings = binding.split("\\.");
-      Message containingMessage = inputMessage;
+      Optional<Message> containingMessageOpt = inputMessageOpt;
       for (int i = 0; i < descendantBindings.length; i++) {
         String subField = descendantBindings[i];
+        if (!containingMessageOpt.isPresent()) {
+          continue;
+        }
+
         if (i < descendantBindings.length - 1) {
-          Field field = containingMessage.fieldMap().get(subField);
-          containingMessage = messageTypes.get(field.type().reference().fullName());
+          Field field = containingMessageOpt.get().fieldMap().get(subField);
+          containingMessageOpt = Optional.of(messageTypes.get(field.type().reference().fullName()));
           Preconditions.checkNotNull(
-              containingMessage,
+              containingMessageOpt.get(),
               String.format(
                   "No containing message found for field %s with type %s",
                   field.name(), field.type().reference().simpleName()));
         } else {
-          checkHttpFieldIsValid(subField, containingMessage, false);
+          checkHttpFieldIsValid(subField, containingMessageOpt.get(), false);
         }
       }
     }
@@ -89,7 +102,7 @@ public class HttpRuleParser {
     return Optional.of(bindings);
   }
 
-  private static Set<String> getPatternBindings(HttpRule httpRule) {
+  private static Set<String> getHttpVerbPattern(HttpRule httpRule) {
     String pattern = null;
     // Assign a temp variable to prevent the formatter from removing the import.
     PatternCase patternCase = httpRule.getPatternCase();
@@ -135,7 +148,7 @@ public class HttpRuleParser {
     Field field = inputMessage.fieldMap().get(binding);
     boolean fieldCondition = !field.isRepeated();
     if (!isBody) {
-      fieldCondition &= field.type().isProtoPrimitiveType();
+      fieldCondition &= field.type().isProtoPrimitiveType() || field.isEnum();
     }
     String messageFormat =
         "Expected a non-repeated "

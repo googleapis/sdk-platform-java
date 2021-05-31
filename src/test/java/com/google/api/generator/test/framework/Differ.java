@@ -34,7 +34,7 @@ public class Differ {
       original = Files.readAllLines(goldenFilePath);
     } catch (IOException e) {
       throw new GoldenFileReadException(
-          String.format("Error occurs when reading golden file %s", goldenFilePath));
+          String.format("Error occurs when reading golden file %s", goldenFilePath), e);
     }
     return diffTwoStringLists(original, revised);
   }
@@ -50,7 +50,7 @@ public class Differ {
     try {
       diff = DiffUtils.diff(original, revised);
     } catch (DiffException e) {
-      throw new ComputeDiffException("Could not compute the differences.");
+      throw new ComputeDiffException("Could not compute the differences.", e);
     }
     List<String> unifiedDiff =
         UnifiedDiffUtils.generateUnifiedDiff("golden", "codegen", original, diff, 2);
@@ -58,14 +58,20 @@ public class Differ {
   }
 
   private static class GoldenFileReadException extends RuntimeException {
-    public GoldenFileReadException(String errorMessage) {
-      super(errorMessage);
+
+    private static final long serialVersionUID = 7423787084310530945L;
+
+    public GoldenFileReadException(String errorMessage, Throwable cause) {
+      super(errorMessage, cause);
     }
   }
 
   private static class ComputeDiffException extends RuntimeException {
-    public ComputeDiffException(String errorMessage) {
-      super(errorMessage);
+
+    private static final long serialVersionUID = -7480557222244987342L;
+
+    public ComputeDiffException(String errorMessage, Throwable cause) {
+      super(errorMessage, cause);
     }
   }
 }
