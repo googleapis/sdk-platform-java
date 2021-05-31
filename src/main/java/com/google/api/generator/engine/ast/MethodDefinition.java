@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
@@ -169,6 +170,8 @@ public abstract class MethodDefinition implements AstNode {
     // Private accessors.
     abstract String name();
 
+    abstract ImmutableList<VariableExpr> arguments();
+
     abstract ImmutableList<CommentStatement> headerCommentStatements();
 
     abstract ImmutableList<AnnotationNode> annotations();
@@ -314,28 +317,66 @@ public abstract class MethodDefinition implements AstNode {
         }
       }
 
-      for (VariableExpr varExpr : method.arguments()) {
-        Preconditions.checkState(
-            varExpr.isDecl(),
-            String.format(
-                "Argument %s must be a variable declaration", varExpr.variable().identifier()));
-      }
-
-      for (TypeNode exceptionType : method.throwsExceptions()) {
-        Preconditions.checkState(
-            TypeNode.isExceptionType(exceptionType),
-            String.format("Type %s is not an exception type", exceptionType.reference()));
-        Preconditions.checkState(
-            !RUNTIME_EXCEPTION_REFERENCE.isAssignableFrom(exceptionType.reference()),
-            String.format(
-                "RuntimeException type %s does not need to be thrown",
-                exceptionType.reference().name()));
-      }
+      performArgumentChecks();
+      performThrownExceptionChecks();
 
       return method;
     }
 
-    void performNullChecks() {
+    private void performArgumentChecks() {
+      // Must be a declaration.
+      arguments().stream()
+          .forEach(
+              varExpr ->
+                  Preconditions.checkState(
+                      varExpr.isDecl(),
+                      String.format(
+                          "Argument %s must be a variable declaration",
+                          varExpr.variable().identifier())));
+      // No modifiers allowed.
+      arguments().stream()
+          .forEach(
+              varExpr ->
+                  Preconditions.checkState(
+                      varExpr.scope().equals(ScopeNode.LOCAL)
+                          && !varExpr.isStatic()
+                          && !varExpr.isVolatile(),
+                      String.format(
+                          "Argument %s must have local scope, and cannot have \"static\" or"
+                              + " \"volatile\" modifiers",
+                          varExpr.variable().identifier())));
+
+      // Check that there aren't any arguments with duplicate names.
+      List<String> allArgNames =
+          arguments().stream()
+              .map(v -> v.variable().identifier().name())
+              .collect(Collectors.toList());
+      Set<String> duplicateArgNames =
+          allArgNames.stream()
+              .filter(n -> Collections.frequency(allArgNames, n) > 1)
+              .collect(Collectors.toSet());
+      Preconditions.checkState(
+          duplicateArgNames.isEmpty(),
+          String.format(
+              "Lambda arguments cannot have duplicate names: %s", duplicateArgNames.toString()));
+    }
+
+    private void performThrownExceptionChecks() {
+      throwsExceptions().stream()
+          .forEach(
+              exceptionType -> {
+                Preconditions.checkState(
+                    TypeNode.isExceptionType(exceptionType),
+                    String.format("Type %s is not an exception type", exceptionType.reference()));
+                Preconditions.checkState(
+                    !RUNTIME_EXCEPTION_REFERENCE.isAssignableFrom(exceptionType.reference()),
+                    String.format(
+                        "RuntimeException type %s does not need to be thrown",
+                        exceptionType.reference().name()));
+              });
+    }
+
+    private void performNullChecks() {
       String contextInfo = String.format("method definition of %s", name());
       NodeValidator.checkNoNullElements(headerCommentStatements(), "header comments", contextInfo);
       NodeValidator.checkNoNullElements(annotations(), "annotations", contextInfo);

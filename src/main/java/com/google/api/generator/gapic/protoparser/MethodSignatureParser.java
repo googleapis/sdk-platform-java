@@ -57,7 +57,7 @@ public class MethodSignatureParser {
 
     Map<String, ResourceName> patternsToResourceNames =
         ResourceParserHelpers.createPatternResourceNameMap(resourceNames);
-    Message inputMessage = messageTypes.get(methodInputType.reference().simpleName());
+    Message inputMessage = messageTypes.get(methodInputType.reference().fullName());
 
     // Example from Expand in echo.proto:
     // stringSigs: ["content,error", "content,error,info"].
@@ -266,7 +266,7 @@ public class MethodSignatureParser {
         TypeNode.isReferenceType(firstFieldType) && !firstFieldType.equals(TypeNode.STRING),
         String.format("Field reference on %s cannot be a primitive type", firstFieldName));
 
-    String firstFieldTypeName = firstFieldType.reference().name();
+    String firstFieldTypeName = firstFieldType.reference().fullName();
     Message firstFieldMessage = messageTypes.get(firstFieldTypeName);
     Preconditions.checkNotNull(
         firstFieldMessage,

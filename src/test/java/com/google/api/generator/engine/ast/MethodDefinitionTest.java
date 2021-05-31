@@ -37,6 +37,16 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void validMethodDefinition_emptyBody() {
+    MethodDefinition.builder()
+        .setHeaderCommentStatements(createCommentStatements())
+        .setName("close")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .build();
+  }
+
+  @Test
   public void validMethodDefinition_repeatedAnnotations() {
     MethodDefinition method =
         MethodDefinition.builder()
@@ -86,7 +96,6 @@ public class MethodDefinitionTest {
                                 ConcreteReference.withClazz(NullPointerException.class)))
                         .build())))
         .build();
-    // No exception thrown, we're good.
   }
 
   @Test
@@ -105,7 +114,6 @@ public class MethodDefinitionTest {
                                 ConcreteReference.withClazz(NullPointerException.class)))
                         .build())))
         .build();
-    // No exception thrown, we're good.
   }
 
   @Test
@@ -646,6 +654,30 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void invalidMethodDefinition_repeatedArgumentName() {
+    ValueExpr returnValueExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
+            .build();
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder().setVariable(createVariable("x", TypeNode.INT)).build(),
+            VariableExpr.builder().setVariable(createVariable("x", TypeNode.STRING)).build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.INT)
+              .setArguments(arguments)
+              .setReturnExpr(returnValueExpr)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .build();
+        });
+  }
+
+  @Test
   public void invalidMethodDefinition_nonDeclArguments() {
     ValueExpr returnValueExpr =
         ValueExpr.builder()
@@ -665,6 +697,59 @@ public class MethodDefinitionTest {
               .setArguments(arguments)
               .setReturnExpr(returnValueExpr)
               .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_argumentsWithModifiers() {
+    ValueExpr returnValueExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
+            .build();
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.INT))
+                .setIsDecl(true)
+                .setIsStatic(true)
+                .build(),
+            VariableExpr.builder().setVariable(createVariable("y", TypeNode.INT)).build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.INT)
+              .setArguments(arguments)
+              .setReturnExpr(returnValueExpr)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_argumentsWithScope() {
+    ValueExpr returnValueExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
+            .build();
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder().setVariable(createVariable("x", TypeNode.INT)).build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.INT))
+                .setScope(ScopeNode.PRIVATE)
+                .build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.INT)
+              .setArguments(arguments)
+              .setReturnExpr(returnValueExpr)
               .build();
         });
   }

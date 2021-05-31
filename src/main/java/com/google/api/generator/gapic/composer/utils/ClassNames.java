@@ -26,9 +26,15 @@ public class ClassNames {
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String SERVICE_STUB_SETTINGS_CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String SERVICE_STUB_CLASS_NAME_PATTERN = "%sStub";
-  private static final String GRPC_SERVICE_STUB_CLASS_NAME_PATTERN = "Grpc%sStub";
-  private static final String GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
-      "Grpc%sCallableFactory";
+  private static final String TRANSPORT_SERVICE_STUB_CLASS_NAME_PATTERN = "%s%sStub";
+  private static final String TRANSPORT_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
+      "%s%sCallableFactory";
+
+  private final String transportPrefix;
+
+  public ClassNames(String transportPrefix) {
+    this.transportPrefix = transportPrefix;
+  }
 
   public static String getServiceClientClassName(Service service) {
     return String.format(
@@ -52,15 +58,18 @@ public class ClassNames {
         SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
   }
 
-  public static String getGrpcServiceCallableFactoryClassName(Service service) {
+  public String getTransportServiceCallableFactoryClassName(Service service) {
     return String.format(
-        GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN,
+        TRANSPORT_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN,
+        transportPrefix,
         monolithBackwardsCompatibleName(service.name()));
   }
 
-  public static String getGrpcServiceStubClassName(Service service) {
+  public String getTransportServiceStubClassName(Service service) {
     return String.format(
-        GRPC_SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
+        TRANSPORT_SERVICE_STUB_CLASS_NAME_PATTERN,
+        transportPrefix,
+        monolithBackwardsCompatibleName(service.name()));
   }
 
   public static String getServiceClientTestClassName(Service service) {

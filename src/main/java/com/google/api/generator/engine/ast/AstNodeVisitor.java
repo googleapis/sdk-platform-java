@@ -65,6 +65,8 @@ public interface AstNodeVisitor {
 
   public void visit(AssignmentOperationExpr assignmentOperationExpr);
 
+  public void visit(LambdaExpr lambdaExpr);
+
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment);
 

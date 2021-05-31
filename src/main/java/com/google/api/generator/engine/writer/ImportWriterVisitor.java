@@ -37,6 +37,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -290,6 +291,13 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(AssignmentOperationExpr assignmentOperationExpr) {
     assignmentOperationExpr.variableExpr().accept(this);
     assignmentOperationExpr.valueExpr().accept(this);
+  }
+
+  @Override
+  public void visit(LambdaExpr lambdaExpr) {
+    variableExpressions(lambdaExpr.arguments());
+    statements(lambdaExpr.body());
+    lambdaExpr.returnExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
