@@ -43,10 +43,10 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class IAMCredentialsClientTest {
-  private static MockServiceHelper mockServiceHelper;
   private static MockIAMCredentials mockIAMCredentials;
-  private IamCredentialsClient client;
+  private static MockServiceHelper mockServiceHelper;
   private LocalChannelProvider channelProvider;
+  private IamCredentialsClient client;
 
   @BeforeClass
   public static void startStaticServer() {

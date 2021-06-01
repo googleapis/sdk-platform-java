@@ -93,11 +93,11 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class SubscriptionAdminClientTest {
+  private static MockIAMPolicy mockIAMPolicy;
   private static MockServiceHelper mockServiceHelper;
   private static MockSubscriber mockSubscriber;
-  private SubscriptionAdminClient client;
-  private static MockIAMPolicy mockIAMPolicy;
   private LocalChannelProvider channelProvider;
+  private SubscriptionAdminClient client;
 
   @BeforeClass
   public static void startStaticServer() {
