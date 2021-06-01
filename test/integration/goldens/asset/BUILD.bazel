@@ -2,8 +2,11 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(
     name = "goldens_files",
-    srcs = glob([
-        "*.java",
-        "gapic_metadata.json",
-    ]),
+    srcs = glob(
+        ["**/*"],
+        exclude = [
+            "BUILD.bazel",
+            ".*.sw*",
+        ],
+    ),
 )
