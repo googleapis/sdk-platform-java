@@ -66,12 +66,6 @@ def gapic_generator_java_repositories():
     )
 
     _maybe(
-        native.local_repository,
-        name = "com_google_googleapis_discovery",
-        path = "/usr/local/google/home/vam/_/projects/_/googleapis-discovery"
-    )
-
-    _maybe(
         native.bind,
         name = "guava",
         actual = "@com_google_guava_guava//jar",
