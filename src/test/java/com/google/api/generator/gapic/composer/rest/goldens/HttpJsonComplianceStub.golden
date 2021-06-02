@@ -439,12 +439,12 @@ public class HttpJsonComplianceStub extends ComplianceStub {
   @InternalApi
   public static List<ApiMethodDescriptor> getMethodDescriptors() {
     List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
-    methodDescriptors.add(repeatDataPathTrailingResourceMethodDescriptor);
-    methodDescriptors.add(repeatDataSimplePathMethodDescriptor);
-    methodDescriptors.add(repeatDataQueryMethodDescriptor);
-    methodDescriptors.add(repeatDataPathResourceMethodDescriptor);
     methodDescriptors.add(repeatDataBodyMethodDescriptor);
     methodDescriptors.add(repeatDataBodyInfoMethodDescriptor);
+    methodDescriptors.add(repeatDataQueryMethodDescriptor);
+    methodDescriptors.add(repeatDataSimplePathMethodDescriptor);
+    methodDescriptors.add(repeatDataPathResourceMethodDescriptor);
+    methodDescriptors.add(repeatDataPathTrailingResourceMethodDescriptor);
     return methodDescriptors;
   }
 
