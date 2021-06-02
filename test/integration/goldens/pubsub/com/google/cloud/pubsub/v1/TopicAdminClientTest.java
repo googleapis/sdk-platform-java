@@ -76,11 +76,11 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class TopicAdminClientTest {
-  private static MockServiceHelper mockServiceHelper;
-  private static MockPublisher mockPublisher;
-  private TopicAdminClient client;
   private static MockIAMPolicy mockIAMPolicy;
+  private static MockPublisher mockPublisher;
+  private static MockServiceHelper mockServiceHelper;
   private LocalChannelProvider channelProvider;
+  private TopicAdminClient client;
 
   @BeforeClass
   public static void startStaticServer() {
