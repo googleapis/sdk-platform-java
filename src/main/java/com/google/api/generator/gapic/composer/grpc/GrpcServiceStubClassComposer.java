@@ -289,7 +289,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
 
-    for (String httpBindingFieldName : method.httpBindings()) {
+    for (String httpBindingFieldName : method.httpBindings().pathParameters()) {
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
           MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);

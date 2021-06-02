@@ -59,10 +59,16 @@ def gapic_generator_java_repositories():
     _maybe(
         http_archive,
         name = "com_google_googleapis",
-        strip_prefix = "googleapis-2bea43cdc7a4443876380732980d83cd8d560582",
+        strip_prefix = "googleapis-0b26f05c9f469dc710e13a94f10d46dae4fa0b3c",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/2bea43cdc7a4443876380732980d83cd8d560582.zip",
+            "https://github.com/googleapis/googleapis/archive/0b26f05c9f469dc710e13a94f10d46dae4fa0b3c.zip",
         ],
+    )
+
+    _maybe(
+        native.local_repository,
+        name = "com_google_googleapis_discovery",
+        path = "/usr/local/google/home/vam/_/projects/_/googleapis-discovery"
     )
 
     _maybe(

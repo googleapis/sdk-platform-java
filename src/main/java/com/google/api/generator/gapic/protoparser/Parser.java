@@ -26,6 +26,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.HttpRuleBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -106,6 +107,7 @@ public class Parser {
         GapicLroRetrySettingsParser.parse(gapicYamlConfigPathOpt);
     Optional<GapicLanguageSettings> languageSettingsOpt =
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
+    Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
 
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
 
@@ -186,7 +188,7 @@ public class Parser {
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
         .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
-        .setTransport(Transport.GRPC)
+        .setTransport(Transport.parse(transportOpt.orElse(Transport.GRPC.toString())))
         .build();
   }
 
@@ -247,18 +249,18 @@ public class Parser {
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
     // Assumes that http.rules.selector always specifies RPC names in the above format.
-    Map<String, List<String>> mixedInMethodsToHttpRules = new HashMap<>();
+    Map<String, HttpRuleBindings> mixedInMethodsToHttpRules = new HashMap<>();
     Map<String, String> mixedInMethodsToDocs = new HashMap<>();
     // Parse HTTP rules and documentation, which will override the proto.
     if (serviceYamlProtoOpt.isPresent()) {
       for (HttpRule httpRule : serviceYamlProtoOpt.get().getHttp().getRulesList()) {
-        Optional<List<String>> httpBindingsOpt = HttpRuleParser.parseHttpRule(httpRule);
-        if (!httpBindingsOpt.isPresent()) {
+        HttpRuleBindings httpBindings = HttpRuleParser.parseHttpRule(httpRule);
+        if (httpBindings.isEmpty()) {
           continue;
         }
         for (String rpcFullNameRaw : httpRule.getSelector().split(",")) {
           String rpcFullName = rpcFullNameRaw.trim();
-          mixedInMethodsToHttpRules.put(rpcFullName, httpBindingsOpt.get());
+          mixedInMethodsToHttpRules.put(rpcFullName, httpBindings);
         }
       }
       for (DocumentationRule docRule :
@@ -304,7 +306,7 @@ public class Parser {
                         // HTTP rules and RPC documentation in the service.yaml file take
                         // precedence.
                         String fullMethodName = methodToFullProtoNameFn.apply(m);
-                        List<String> httpBindings =
+                        HttpRuleBindings httpBindings =
                             mixedInMethodsToHttpRules.containsKey(fullMethodName)
                                 ? mixedInMethodsToHttpRules.get(fullMethodName)
                                 : m.httpBindings();
@@ -542,7 +544,7 @@ public class Parser {
    * Populates ResourceName objects in Message POJOs.
    *
    * @param messageTypes A map of the message type name (as in the protobuf) to Message POJOs.
-   * @param resourceNames A list of ResourceName POJOs.
+   * @param resources A list of ResourceName POJOs.
    * @return The updated messageTypes map.
    */
   public static Map<String, Message> updateResourceNamesInMessages(
@@ -614,10 +616,7 @@ public class Parser {
       Message inputMessage = messageTypes.get(inputType.reference().fullName());
       Preconditions.checkNotNull(
           inputMessage, String.format("No message found for %s", inputType.reference().fullName()));
-      Optional<List<String>> httpBindingsOpt =
-          HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
-      List<String> httpBindings =
-          httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
+      HttpRuleBindings httpBindings = HttpRuleParser.parse(protoMethod, inputMessage, messageTypes);
       boolean isBatching =
           !serviceConfigOpt.isPresent()
               ? false
@@ -848,7 +847,9 @@ public class Parser {
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
-        .setIsContainedInOneof(fieldDescriptor.getContainingOneof() != null)
+        .setIsContainedInOneof(
+            fieldDescriptor.getContainingOneof() != null
+                && !fieldDescriptor.getContainingOneof().isSynthetic())
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)

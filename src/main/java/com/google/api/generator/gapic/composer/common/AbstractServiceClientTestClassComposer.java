@@ -98,7 +98,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
   protected static final AnnotationNode TEST_ANNOTATION =
-        AnnotationNode.withType(FIXED_TYPESTORE.get("Test"));
+      AnnotationNode.withType(FIXED_TYPESTORE.get("Test"));
 
   private final TransportContext transportContext;
 
@@ -816,8 +816,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         Arrays.asList(
             ClassNames.getMockServiceClassName(service),
             ClassNames.getServiceClientClassName(service),
-            ClassNames.getServiceSettingsClassName(service),
-            getTransportContext().classNames().getTransportServiceStubClassName(service)));
+            ClassNames.getServiceSettingsClassName(service)));
+    String stubPakkage = String.format("%s.stub", service.pakkage());
+    typeStore.put(
+        stubPakkage, getTransportContext().classNames().getTransportServiceStubClassName(service));
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
