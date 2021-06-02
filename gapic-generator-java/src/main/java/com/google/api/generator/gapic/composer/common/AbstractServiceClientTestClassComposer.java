@@ -29,19 +29,15 @@ import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
-import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -80,6 +76,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import org.junit.After;
@@ -98,7 +95,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
   protected static final AnnotationNode TEST_ANNOTATION =
-        AnnotationNode.withType(FIXED_TYPESTORE.get("Test"));
+      AnnotationNode.withType(FIXED_TYPESTORE.get("Test"));
 
   private final TransportContext transportContext;
 
@@ -149,16 +146,35 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected List<Statement> createClassMemberFieldDecls(
       Map<String, VariableExpr> classMemberVarExprs) {
-    return classMemberVarExprs.values().stream()
-        .map(
-            v ->
-                ExprStatement.withExpr(
-                    v.toBuilder()
-                        .setIsDecl(true)
-                        .setScope(ScopeNode.PRIVATE)
-                        .setIsStatic(v.type().reference().name().startsWith("Mock"))
-                        .build()))
-        .collect(Collectors.toList());
+    Function<VariableExpr, Boolean> isMockVarExprFn =
+        v -> v.type().reference().name().startsWith("Mock");
+
+    // Ordering matters for pretty-printing and ensuring that test output is deterministic.
+    List<Statement> fieldDeclStatements = new ArrayList<>();
+
+    // Static fields go first.
+    fieldDeclStatements.addAll(
+        classMemberVarExprs.values().stream()
+            .filter(v -> isMockVarExprFn.apply(v))
+            .map(
+                v ->
+                    ExprStatement.withExpr(
+                        v.toBuilder()
+                            .setIsDecl(true)
+                            .setScope(ScopeNode.PRIVATE)
+                            .setIsStatic(true)
+                            .build()))
+            .collect(Collectors.toList()));
+
+    fieldDeclStatements.addAll(
+        classMemberVarExprs.values().stream()
+            .filter(v -> !isMockVarExprFn.apply(v))
+            .map(
+                v ->
+                    ExprStatement.withExpr(
+                        v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).build()))
+            .collect(Collectors.toList()));
+    return fieldDeclStatements;
   }
 
   private List<MethodDefinition> createClassMethods(
