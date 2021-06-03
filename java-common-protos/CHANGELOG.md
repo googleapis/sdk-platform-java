@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.3.2](https://www.github.com/googleapis/java-common-protos/compare/v2.3.1...v2.3.2) (2021-06-03)
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.17.2 ([#180](https://www.github.com/googleapis/java-common-protos/issues/180)) ([9740ade](https://www.github.com/googleapis/java-common-protos/commit/9740ade8b3d7cd9947f7afeb5bf4261363e959a2))
+
 ### [2.3.1](https://www.github.com/googleapis/java-common-protos/compare/v2.3.0...v2.3.1) (2021-05-26)
 
 
