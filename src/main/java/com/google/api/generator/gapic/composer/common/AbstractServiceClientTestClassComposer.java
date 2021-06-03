@@ -126,7 +126,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setStatements(createClassMemberFieldDecls(classMemberVarExprs))
+            .setStatements(createClassMemberFieldDecls(service, classMemberVarExprs))
             .setMethods(
                 createClassMethods(service, context, classMemberVarExprs, typeStore, resourceNames))
             .build();
@@ -145,7 +145,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Service service, GapicContext context, TypeStore typeStore);
 
   protected List<Statement> createClassMemberFieldDecls(
-      Map<String, VariableExpr> classMemberVarExprs) {
+      Service service, Map<String, VariableExpr> classMemberVarExprs) {
     Function<VariableExpr, Boolean> isMockVarExprFn =
         v -> v.type().reference().name().startsWith("Mock");
 
@@ -165,18 +165,18 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                             .setIsStatic(true)
                             .build()))
             .collect(Collectors.toList()));
-
-    /*
-    fieldDeclStatements.add(
-        CommentStatement.withComment(
-            LineComment.withComment(
-                "DEL: Num mocks: "
-                    + classMemberVarExprs.size()
-                    + ", "
-                    + classMemberVarExprs.values().stream()
-                        .map(v -> v.variable().identifier())
-                        .collect(Collectors.toList()))));
-                        */
+    if (ClassNames.getServiceClientTestClassName(service)
+        .equals("KeyManagementServiceClientTest")) {
+      fieldDeclStatements.add(
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "DEL: Num mocks: "
+                      + classMemberVarExprs.size()
+                      + ", "
+                      + classMemberVarExprs.values().stream()
+                          .map(v -> v.variable().identifier())
+                          .collect(Collectors.toList()))));
+    }
 
     fieldDeclStatements.addAll(
         classMemberVarExprs.values().stream()

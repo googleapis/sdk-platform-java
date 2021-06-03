@@ -70,6 +70,8 @@ public class KeyManagementServiceClientTest {
   private static MockKeyManagementService mockKeyManagementService;
   private static MockLocations mockLocations;
   private static MockServiceHelper mockServiceHelper;
+  // DEL: Num mocks: 6, [channelProvider, client, mockIAMPolicy, mockKeyManagementService,
+  // mockLocations, mockServiceHelper]
   private LocalChannelProvider channelProvider;
   private KeyManagementServiceClient client;
 
