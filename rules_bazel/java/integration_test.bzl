@@ -23,7 +23,7 @@ def _diff_integration_goldens_impl(ctx):
     rm -rf $(find ./ -type f -name 'PlaceholderFile.java')
     rm -r $(find ./ -type d -empty)
     cd ..
-    diff -r codegen_tmp test/integration/goldens/{api_name} > {diff_output}
+    diff -r --context=20 codegen_tmp test/integration/goldens/{api_name} > {diff_output}
     # Bash `diff` command will return exit code 1 when there are differences between the two
     # folders. So we explicitly `exit 0` after the diff command to avoid build failure.
     exit 0
