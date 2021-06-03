@@ -231,6 +231,11 @@ public class Parser {
         definedServices.add(s);
       }
     }
+    // Sort potential mixin services alphabetically.
+    blockedCodegenMixinApis =
+        blockedCodegenMixinApis.stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toSet());
     // It's very unlikely the blocklisted APIs will contain the other, or any other service.
     boolean servicesContainBlocklistedApi =
         !blockedCodegenMixinApis.isEmpty() && !definedServices.isEmpty();
@@ -327,6 +332,11 @@ public class Parser {
                           m.toBuilder()
                               .setMixedInApiName(serviceFullNameFn.apply(mixinService))
                               .build()));
+          // Sort by method name, to ensure a deterministic method ordering (for tests).
+          updatedMixinMethods =
+              updatedMixinMethods.stream()
+                  .sorted((m1, m2) -> m2.name().compareTo(m1.name()))
+                  .collect(Collectors.toList());
           outputMixinServiceSet.add(
               mixinService.toBuilder().setMethods(updatedMixinMethods).build());
         }
