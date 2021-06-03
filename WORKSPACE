@@ -22,6 +22,10 @@ jvm_maven_import_external(
     licenses = ["notice", "reciprocal"]
 )
 
+# gax-java and its transitive dependencies must be imported before
+# gapic-generator-java dependencies to match the order in googleapis repository,
+# which in its turn, prioritizes actual generated clients runtime dependencies
+# over the generator dependencies.
 _gax_java_version = "1.64.0"
 
 http_archive(
