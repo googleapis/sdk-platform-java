@@ -99,21 +99,21 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setGenerics(methodDescriptorVarExpr.variable().type().reference().generics())
             .build();
 
-    BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>> maker =
-        getMethodMaker();
+    BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>>
+        methodMaker = getMethodMaker();
 
-    String codeMethodNameArg = getProtoRpcFullMethodName(service, protoMethod);
+    String codeMethodArgName = getProtoRpcFullMethodName(service, protoMethod);
     expr =
-        maker
+        methodMaker
             .apply(
                 "setFullMethodName",
-                Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(codeMethodNameArg))))
+                Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(codeMethodArgName))))
             .apply(expr);
 
-    expr = maker.apply("setHttpMethod", getHttpMethodTypeExpr(protoMethod)).apply(expr);
-    expr = maker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
-
-    expr = maker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
+    expr = methodMaker.apply("setHttpMethod", getHttpMethodTypeExpr(protoMethod)).apply(expr);
+    expr =
+        methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
+    expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
 
     expr =
         MethodInvocationExpr.builder()
@@ -274,7 +274,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                 "setPath",
                 Arrays.asList(
                     ValueExpr.withValue(
-                        StringObjectValue.withValue(protoMethod.httpBindings().patternLowerCamel())),
+                        StringObjectValue.withValue(
+                            protoMethod.httpBindings().patternLowerCamel())),
                     createFieldsExtractorAnonClass(
                         protoMethod,
                         extractorVarType,

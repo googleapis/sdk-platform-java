@@ -88,8 +88,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
             FakeStatusCode.class,
             GaxHttpJsonProperties.class,
             ImmutableList.class,
-            MockHttpService.class,
-            String.class));
+            MockHttpService.class));
   }
 
   @Override
@@ -307,9 +306,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Message requestMessage,
       List<VariableExpr> argExprs) {
 
-    List<Expr> methodExprs = new ArrayList<>();
-    List<Statement> methodStatements = new ArrayList<>();
-
     VariableExpr actualRequestsVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -318,10 +314,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                         ConcreteReference.builder()
                             .setClazz(List.class)
                             .setGenerics(
-                                Arrays.asList(FIXED_REST_TYPESTORE.get("String").reference()))
+                                Arrays.asList(TypeNode.STRING.reference()))
                             .build()))
                 .setName("actualRequests")
                 .build());
+
+    List<Expr> methodExprs = new ArrayList<>();
     methodExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(actualRequestsVarExpr.toBuilder().setIsDecl(true).build())
@@ -346,6 +344,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                     .build())
             .build());
 
+    List<Statement> methodStatements = new ArrayList<>();
     methodStatements.addAll(
         methodExprs.stream().map(ExprStatement::withExpr).collect(Collectors.toList()));
 
@@ -355,7 +354,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     VariableExpr apiClientHeaderKeyVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(FIXED_REST_TYPESTORE.get("String"))
+                .setType(TypeNode.STRING)
                 .setName("apiClientHeaderKey")
                 .build());
 
@@ -448,7 +447,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                 .build());
 
     // First two assignment lines.
-
     Expr exceptionAssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(exceptionVarExpr.toBuilder().setIsDecl(true).build())

@@ -21,7 +21,6 @@ import java.util.Set;
 
 @AutoValue
 public abstract class HttpRuleBindings {
-  // private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("[]")
   public abstract String httpVerb();
 
   public abstract String pattern();
@@ -32,7 +31,6 @@ public abstract class HttpRuleBindings {
 
   public abstract Set<String> bodyParameters();
 
-  // Private.
   public static HttpRuleBindings.Builder builder() {
     return new AutoValue_HttpRuleBindings.Builder()
         .setHttpVerb("")
@@ -46,6 +44,11 @@ public abstract class HttpRuleBindings {
     return pathParameters().isEmpty();
   }
 
+  // Protobuf fields and template patterns follow snake_case style. When translated into actual Java
+  // class fields and URL respectively, those must be converted to lowerCamelCase.
+  // For example:
+  //   in .proto file: "/global/instanceTemplates/{instance_template=*}"
+  //   in .java file:  "/global/instanceTemplates/{instanceTemplate=*}"
   public String patternLowerCamel() {
     String lowerCamelPattern = pattern();
     for (String pathParam : pathParameters()) {
@@ -56,7 +59,6 @@ public abstract class HttpRuleBindings {
     return lowerCamelPattern;
   }
 
-  // Private.
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract HttpRuleBindings.Builder setHttpVerb(String httpVerb);

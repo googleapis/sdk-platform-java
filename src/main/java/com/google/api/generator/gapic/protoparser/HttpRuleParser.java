@@ -61,12 +61,12 @@ public class HttpRuleParser {
   private static HttpRuleBindings parseHttpRuleHelper(
       HttpRule httpRule, Optional<Message> inputMessageOpt, Map<String, Message> messageTypes) {
     // Get pattern.
-    String pattern = getPattern(httpRule);
+    String pattern = getHttpVerbPattern(httpRule);
     ImmutableSet.Builder<String> bindingsBuilder = getPatternBindings(pattern);
     if (httpRule.getAdditionalBindingsCount() > 0) {
       for (HttpRule additionalRule : httpRule.getAdditionalBindingsList()) {
         // TODO: save additional bindings path in HttpRuleBindings
-        bindingsBuilder.addAll(getPatternBindings(getPattern(additionalRule)).build());
+        bindingsBuilder.addAll(getPatternBindings(getHttpVerbPattern(additionalRule)).build());
       }
     }
 
@@ -118,17 +118,16 @@ public class HttpRuleParser {
           Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bodyBinidngsUnion);
     }
 
-    HttpRuleBindings.Builder httpBindings = HttpRuleBindings.builder();
-    httpBindings.setHttpVerb(httpRule.getPatternCase().toString());
-    httpBindings.setPattern(pattern);
-    httpBindings.setPathParameters(ImmutableSortedSet.copyOf(bindings));
-    httpBindings.setQueryParameters(ImmutableSortedSet.copyOf(queryParameters));
-    httpBindings.setBodyParameters(ImmutableSortedSet.copyOf(bodyParameters));
-
-    return httpBindings.build();
+    return HttpRuleBindings.builder()
+        .setHttpVerb(httpRule.getPatternCase().toString())
+        .setPattern(pattern)
+        .setPathParameters(ImmutableSortedSet.copyOf(bindings))
+        .setQueryParameters(ImmutableSortedSet.copyOf(queryParameters))
+        .setBodyParameters(ImmutableSortedSet.copyOf(bodyParameters))
+        .build();
   }
 
-  private static String getPattern(HttpRule httpRule) {
+  private static String getHttpVerbPattern(HttpRule httpRule) {
     PatternCase patternCase = httpRule.getPatternCase();
     switch (patternCase) {
       case GET:
