@@ -15,6 +15,8 @@
 package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.ClientProto;
+import com.google.api.DocumentationRule;
+import com.google.api.HttpRule;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -31,6 +33,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -183,6 +186,7 @@ public class Parser {
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
         .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
+        .setTransport(Transport.GRPC)
         .build();
   }
 
@@ -239,6 +243,33 @@ public class Parser {
                 .filter(a -> MIXIN_ALLOWLIST.contains(a.getName()))
                 .map(a -> a.getName())
                 .collect(Collectors.toSet());
+    // Holds the methods to be mixed in.
+    // Key: proto_package.ServiceName.RpcName.
+    // Value: HTTP rules, which clobber those in the proto.
+    // Assumes that http.rules.selector always specifies RPC names in the above format.
+    Map<String, List<String>> mixedInMethodsToHttpRules = new HashMap<>();
+    Map<String, String> mixedInMethodsToDocs = new HashMap<>();
+    // Parse HTTP rules and documentation, which will override the proto.
+    if (serviceYamlProtoOpt.isPresent()) {
+      for (HttpRule httpRule : serviceYamlProtoOpt.get().getHttp().getRulesList()) {
+        Optional<List<String>> httpBindingsOpt = HttpRuleParser.parseHttpRule(httpRule);
+        if (!httpBindingsOpt.isPresent()) {
+          continue;
+        }
+        for (String rpcFullNameRaw : httpRule.getSelector().split(",")) {
+          String rpcFullName = rpcFullNameRaw.trim();
+          mixedInMethodsToHttpRules.put(rpcFullName, httpBindingsOpt.get());
+        }
+      }
+      for (DocumentationRule docRule :
+          serviceYamlProtoOpt.get().getDocumentation().getRulesList()) {
+        for (String rpcFullNameRaw : docRule.getSelector().split(",")) {
+          String rpcFullName = rpcFullNameRaw.trim();
+          mixedInMethodsToDocs.put(rpcFullName, docRule.getDescription());
+        }
+      }
+    }
+
     Set<String> apiDefinedRpcs = new HashSet<>();
     for (Service service : services) {
       if (blockedCodegenMixinApis.contains(service)) {
@@ -252,28 +283,55 @@ public class Parser {
     if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
-        List<Method> updatedMethods = new ArrayList<>(originalService.methods());
+        List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
         // If mixin APIs are present, add the methods to all other services.
         for (Service mixinService : blockedCodegenMixinApis) {
-          if (!mixedInApis.contains(
-              String.format("%s.%s", mixinService.protoPakkage(), mixinService.name()))) {
+          final String mixinServiceFullName = serviceFullNameFn.apply(mixinService);
+          if (!mixedInApis.contains(mixinServiceFullName)) {
             continue;
           }
-          mixinService
-              .methods()
+          Function<Method, String> methodToFullProtoNameFn =
+              m -> String.format("%s.%s", mixinServiceFullName, m.name());
+          // Filter mixed-in methods based on those listed in the HTTP rules section of
+          // service.yaml.
+          List<Method> updatedMixinMethods =
+              mixinService.methods().stream()
+                  // Mixin method inclusion is based on the HTTP rules list in service.yaml.
+                  .filter(
+                      m -> mixedInMethodsToHttpRules.containsKey(methodToFullProtoNameFn.apply(m)))
+                  .map(
+                      m -> {
+                        // HTTP rules and RPC documentation in the service.yaml file take
+                        // precedence.
+                        String fullMethodName = methodToFullProtoNameFn.apply(m);
+                        List<String> httpBindings =
+                            mixedInMethodsToHttpRules.containsKey(fullMethodName)
+                                ? mixedInMethodsToHttpRules.get(fullMethodName)
+                                : m.httpBindings();
+                        String docs =
+                            mixedInMethodsToDocs.containsKey(fullMethodName)
+                                ? mixedInMethodsToDocs.get(fullMethodName)
+                                : m.description();
+                        return m.toBuilder()
+                            .setHttpBindings(httpBindings)
+                            .setDescription(docs)
+                            .build();
+                      })
+                  .collect(Collectors.toList());
+          // Overridden RPCs defined in the protos take precedence.
+          updatedMixinMethods.stream()
+              .filter(m -> !apiDefinedRpcs.contains(m.name()))
               .forEach(
-                  m -> {
-                    // Overridden RPCs defined in the protos take precedence.
-                    if (!apiDefinedRpcs.contains(m.name())) {
-                      updatedMethods.add(
+                  m ->
+                      updatedOriginalServiceMethods.add(
                           m.toBuilder()
                               .setMixedInApiName(serviceFullNameFn.apply(mixinService))
-                              .build());
-                    }
-                  });
-          outputMixinServiceSet.add(mixinService);
+                              .build()));
+          outputMixinServiceSet.add(
+              mixinService.toBuilder().setMethods(updatedMixinMethods).build());
         }
-        services.set(i, originalService.toBuilder().setMethods(updatedMethods).build());
+        services.set(
+            i, originalService.toBuilder().setMethods(updatedOriginalServiceMethods).build());
       }
     }
 
@@ -420,11 +478,13 @@ public class Parser {
     for (EnumDescriptor enumDescriptor : fileDescriptor.getEnumTypes()) {
       String name = enumDescriptor.getName();
       List<EnumValueDescriptor> valueDescriptors = enumDescriptor.getValues();
+      TypeNode enumType = TypeParser.parseType(enumDescriptor);
       messages.put(
-          name,
+          enumType.reference().fullName(),
           Message.builder()
-              .setType(TypeParser.parseType(enumDescriptor))
+              .setType(enumType)
               .setName(name)
+              .setFullProtoName(enumDescriptor.getFullName())
               .setEnumValues(
                   valueDescriptors.stream().map(v -> v.getName()).collect(Collectors.toList()),
                   valueDescriptors.stream().map(v -> v.getNumber()).collect(Collectors.toList()))
@@ -455,15 +515,13 @@ public class Parser {
             parseMessages(nestedMessage, outputResourceReferencesSeen, currentNestedTypes));
       }
     }
-    String messageKey =
-        outerNestedTypes.isEmpty() || outerNestedTypes.get(0).equals(messageName)
-            ? messageName
-            : String.format("%s.%s", String.join(".", outerNestedTypes), messageName);
+    TypeNode messageType = TypeParser.parseType(messageDescriptor);
     messages.put(
-        messageKey,
+        messageType.reference().fullName(),
         Message.builder()
-            .setType(TypeParser.parseType(messageDescriptor))
+            .setType(messageType)
             .setName(messageName)
+            .setFullProtoName(messageDescriptor.getFullName())
             .setFields(parseFields(messageDescriptor, outputResourceReferencesSeen))
             .setOuterNestedTypes(outerNestedTypes)
             .build());
@@ -553,10 +611,9 @@ public class Parser {
         isDeprecated = protoMethod.getOptions().getDeprecated();
       }
 
-      Message inputMessage = messageTypes.get(inputType.reference().simpleName());
+      Message inputMessage = messageTypes.get(inputType.reference().fullName());
       Preconditions.checkNotNull(
-          inputMessage,
-          String.format("No message found for %s", inputType.reference().simpleName()));
+          inputMessage, String.format("No message found for %s", inputType.reference().fullName()));
       Optional<List<String>> httpBindingsOpt =
           HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
       List<String> httpBindings =
@@ -641,10 +698,53 @@ public class Parser {
     OperationInfo lroInfo =
         methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
 
-    String responseTypeName = parseNestedProtoTypeName(lroInfo.getResponseType());
-    String metadataTypeName = parseNestedProtoTypeName(lroInfo.getMetadataType());
-    Message responseMessage = messageTypes.get(responseTypeName);
-    Message metadataMessage = messageTypes.get(metadataTypeName);
+    // These can be short names (e.g. FooMessage) or fully-qualified names with the *proto* package.
+    String responseTypeName = lroInfo.getResponseType();
+    String metadataTypeName = lroInfo.getMetadataType();
+
+    int lastDotIndex = responseTypeName.lastIndexOf('.');
+    boolean isResponseTypeNameShortOnly = lastDotIndex < 0;
+    String responseTypeShortName =
+        lastDotIndex >= 0 ? responseTypeName.substring(lastDotIndex + 1) : responseTypeName;
+
+    lastDotIndex = metadataTypeName.lastIndexOf('.');
+    boolean isMetadataTypeNameShortOnly = lastDotIndex < 0;
+    String metadataTypeShortName =
+        lastDotIndex >= 0 ? metadataTypeName.substring(lastDotIndex + 1) : metadataTypeName;
+
+    Message responseMessage = null;
+    Message metadataMessage = null;
+
+    // The messageTypes map keys to the Java fully-qualified name.
+    for (Map.Entry<String, Message> messageEntry : messageTypes.entrySet()) {
+      String messageKey = messageEntry.getKey();
+      int messageLastDotIndex = messageEntry.getKey().lastIndexOf('.');
+      String messageShortName =
+          messageLastDotIndex >= 0 ? messageKey.substring(messageLastDotIndex + 1) : messageKey;
+      if (responseMessage == null) {
+        if (isResponseTypeNameShortOnly && responseTypeName.equals(messageShortName)) {
+          responseMessage = messageEntry.getValue();
+        } else if (!isResponseTypeNameShortOnly && responseTypeShortName.equals(messageShortName)) {
+          // Ensure that the full proto name matches.
+          Message candidateMessage = messageEntry.getValue();
+          if (candidateMessage.fullProtoName().equals(responseTypeName)) {
+            responseMessage = candidateMessage;
+          }
+        }
+      }
+      if (metadataMessage == null) {
+        if (isMetadataTypeNameShortOnly && metadataTypeName.equals(messageShortName)) {
+          metadataMessage = messageEntry.getValue();
+        } else if (!isMetadataTypeNameShortOnly && metadataTypeShortName.equals(messageShortName)) {
+          // Ensure that the full proto name matches.
+          Message candidateMessage = messageEntry.getValue();
+          if (candidateMessage.fullProtoName().equals(metadataTypeName)) {
+            metadataMessage = candidateMessage;
+          }
+        }
+      }
+    }
+
     Preconditions.checkNotNull(
         responseMessage,
         String.format(
@@ -663,8 +763,10 @@ public class Parser {
   @VisibleForTesting
   static boolean parseIsPaged(
       MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
-    Message inputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
-    Message outputMessage = messageTypes.get(methodDescriptor.getOutputType().getName());
+    TypeNode inputMessageType = TypeParser.parseType(methodDescriptor.getInputType());
+    TypeNode outputMessageType = TypeParser.parseType(methodDescriptor.getOutputType());
+    Message inputMessage = messageTypes.get(inputMessageType.reference().fullName());
+    Message outputMessage = messageTypes.get(outputMessageType.reference().fullName());
 
     // This should technically handle the absence of either of these fields (aip.dev/158), but we
     // gate on their collective presence to ensure the generated surface is backawrds-compatible

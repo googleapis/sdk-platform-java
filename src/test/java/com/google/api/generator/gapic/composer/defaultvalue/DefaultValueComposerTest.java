@@ -246,7 +246,7 @@ public class DefaultValueComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(echoFileDescriptor);
-    Message message = messageTypes.get("Foobar");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.Foobar");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             message, typeStringsToResourceNames, messageTypes);
@@ -263,7 +263,7 @@ public class DefaultValueComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(echoFileDescriptor);
-    Message message = messageTypes.get("EchoRequest");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             message, typeStringsToResourceNames, messageTypes);
@@ -283,7 +283,7 @@ public class DefaultValueComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(echoFileDescriptor);
-    Message message = messageTypes.get("PagedExpandResponse");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.PagedExpandResponse");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             message, typeStringsToResourceNames, messageTypes);
@@ -300,7 +300,7 @@ public class DefaultValueComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(echoFileDescriptor);
-    Message message = messageTypes.get("WaitRequest");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.WaitRequest");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             message, typeStringsToResourceNames, messageTypes);

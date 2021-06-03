@@ -290,11 +290,11 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     List<VariableExpr> rpcMethodArgVarExprs = Arrays.asList(requestVarExpr);
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -346,11 +346,11 @@ public class ServiceClientSampleCodeComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -458,11 +458,11 @@ public class ServiceClientSampleCodeComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -476,7 +476,7 @@ public class ServiceClientSampleCodeComposer {
     bodyExprs.add(requestAssignmentExpr);
 
     // Find the repeated field.
-    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
@@ -578,11 +578,11 @@ public class ServiceClientSampleCodeComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -626,11 +626,11 @@ public class ServiceClientSampleCodeComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -702,7 +702,12 @@ public class ServiceClientSampleCodeComposer {
       Map<String, Message> messageTypes) {
 
     // Find the repeated field.
-    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
+    Preconditions.checkNotNull(
+        methodOutputMessage,
+        "Output message %s not found, keys: ",
+        method.outputType().reference().fullName(),
+        messageTypes.keySet().toString());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
@@ -1128,7 +1133,7 @@ public class ServiceClientSampleCodeComposer {
       VariableExpr requestVarExpr,
       Map<String, Message> messageTypes) {
     // Find the repeated field.
-    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,

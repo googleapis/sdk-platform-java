@@ -120,6 +120,8 @@ service Testing {
         post: "/v1beta1/{test_to_verify.name=sessions/*/tests/*}:check"
         body: "*"
       }
+      // Test enums in HTTP fields.
+      additional_bindings { post: "/v1beta1/{type}:check" body: "*" }
     };
   }
 }
@@ -410,6 +412,9 @@ message VerifyTestRequest {
   string foo = 4;
 
   Test test_to_verify = 5;
+
+  // For testing enums in HTTP fields.
+  Issue.Type type = 6;
 }
 
 message VerifyTestResponse {

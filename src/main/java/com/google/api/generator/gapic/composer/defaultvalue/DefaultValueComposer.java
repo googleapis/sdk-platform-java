@@ -236,7 +236,7 @@ public class DefaultValueComposer {
       if (field.isContainedInOneof() // Avoid colliding fields.
           || ((field.isMessage() || field.isEnum()) // Avoid importing unparsed messages.
               && !field.isRepeated()
-              && !messageTypes.containsKey(field.type().reference().name()))) {
+              && !messageTypes.containsKey(field.type().reference().fullName()))) {
         continue;
       }
       String setterMethodNamePattern = "set%s";

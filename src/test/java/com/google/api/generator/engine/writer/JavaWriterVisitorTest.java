@@ -39,6 +39,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -2222,6 +2223,92 @@ public class JavaWriterVisitorTest {
         AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr);
     assignmentOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("h ^= Objects.hashCode(fixedValue)");
+  }
+
+  @Test
+  public void writeLambdaExpr_noParameters() {
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
+            .build();
+    lambdaExpr.accept(writerVisitor);
+    assertEquals("() -> \"foo\"", writerVisitor.write());
+  }
+
+  @Test
+  public void writeLambdaExpr_oneParameter() {
+    VariableExpr argVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
+            .setIsDecl(true)
+            .build();
+
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setArguments(argVarExpr)
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
+            .build();
+    lambdaExpr.accept(writerVisitor);
+    assertEquals("arg -> \"foo\"", writerVisitor.write());
+  }
+
+  @Test
+  public void writeLambdaExpr_severalParameters() {
+    VariableExpr argOneVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
+            .setIsDecl(true)
+            .build();
+    VariableExpr argTwoVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("arg2").setType(TypeNode.STRING).build())
+            .setIsDecl(true)
+            .build();
+    VariableExpr argThreeVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("arg3").setType(TypeNode.BOOLEAN).build())
+            .setIsDecl(true)
+            .build();
+
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setArguments(argOneVarExpr, argTwoVarExpr, argThreeVarExpr)
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
+            .build();
+    lambdaExpr.accept(writerVisitor);
+    assertEquals("(int arg, String arg2, boolean arg3) -> \"foo\"", writerVisitor.write());
+  }
+
+  @Test
+  public void writeLambdaExpr_body() {
+    VariableExpr argVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
+            .build();
+    VariableExpr fooVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("foo").setType(TypeNode.INT).build())
+            .build();
+
+    ExprStatement statement =
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(fooVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(
+                    ValueExpr.builder()
+                        .setValue(
+                            PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build())
+                        .build())
+                .build());
+
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setArguments(argVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
+            .setBody(Arrays.asList(statement))
+            .build();
+    lambdaExpr.accept(writerVisitor);
+    assertEquals("arg -> {\nint foo = 1;\nreturn \"foo\";\n}", writerVisitor.write());
   }
 
   @Test

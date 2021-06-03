@@ -21,6 +21,7 @@ documentation:
       Gets the access control policy for a resource. Returns an empty policy
       if the resource exists and does not have a policy set.
 
+  # This RPC shouldn't appear in the proto even though the documentation field is set.
   - selector: google.iam.v1.IAMPolicy.SetIamPolicy
     description: |-
       Sets the access control policy on the specified resource. Replaces
@@ -29,31 +30,37 @@ documentation:
       Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
       errors.
 
+  # Test the overriding of comments.
   - selector: google.iam.v1.IAMPolicy.TestIamPermissions
     description: |-
-      Returns permissions that a caller has on the specified resource. If the
-      resource does not exist, this will return an empty set of
-      permissions, not a `NOT_FOUND` error.
-
-      Note: This operation is designed to be used for building
-      permission-aware UIs and command-line tools, not for authorization
-      checking. This operation may "fail open" without warning.
+      This is a different comment for TestIamPermissions in the yaml file that should clobber the documentation in iam_policy.proto.
 
 http:
   rules:
+  - selector: google.cloud.location.Locations.GetLocation
+    get: "/v1/{name=locations/*}"
+    body: '*'
+  # Test different HTTP verbs.
+  - selector: google.cloud.location.Locations.ListLocations
+    get: "/v1/{filter=*/*}/locations"
+    body: '*'
+    additional_bindings:
+      - post: '/v1/{page_size=*}'
+        body: '*'
   - selector: google.iam.v1.IAMPolicy.GetIamPolicy
     get: '/v1/{resource=projects/*/locations/*/keyRings/*}:getIamPolicy'
     additional_bindings:
     - get: '/v1/{resource=projects/*/locations/*/keyRings/*/cryptoKeys/*}:getIamPolicy'
     - get: '/v1/{resource=projects/*/locations/*/keyRings/*/importJobs/*}:getIamPolicy'
-  - selector: google.iam.v1.IAMPolicy.SetIamPolicy
-    post: '/v1/{resource=projects/*/locations/*/keyRings/*}:setIamPolicy'
-    body: '*'
-    additional_bindings:
-    - post: '/v1/{resource=projects/*/locations/*/keyRings/*/cryptoKeys/*}:setIamPolicy'
-      body: '*'
-    - post: '/v1/{resource=projects/*/locations/*/keyRings/*/importJobs/*}:setIamPolicy'
-      body: '*'
+  # Test the omission of SetIamPolicy - this should no longer appear in the generated client.
+#  - selector: google.iam.v1.IAMPolicy.SetIamPolicy
+#    post: '/v1/{resource=projects/*/locations/*/keyRings/*}:setIamPolicy'
+#    body: '*'
+#    additional_bindings:
+#    - post: '/v1/{resource=projects/*/locations/*/keyRings/*/cryptoKeys/*}:setIamPolicy'
+#      body: '*'
+#    - post: '/v1/{resource=projects/*/locations/*/keyRings/*/importJobs/*}:setIamPolicy'
+#      body: '*'
   - selector: google.iam.v1.IAMPolicy.TestIamPermissions
     post: '/v1/{resource=projects/*/locations/*/keyRings/*}:testIamPermissions'
     body: '*'

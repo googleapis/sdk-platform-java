@@ -79,9 +79,6 @@
             "RestoreCryptoKeyVersion": {
               "methods": ["restoreCryptoKeyVersion", "restoreCryptoKeyVersion", "restoreCryptoKeyVersion", "restoreCryptoKeyVersionCallable"]
             },
-            "SetIamPolicy": {
-              "methods": ["setIamPolicy", "setIamPolicyCallable"]
-            },
             "TestIamPermissions": {
               "methods": ["testIamPermissions", "testIamPermissionsCallable"]
             },
