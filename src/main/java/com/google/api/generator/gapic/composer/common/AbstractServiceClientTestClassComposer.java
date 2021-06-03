@@ -166,6 +166,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                             .build()))
             .collect(Collectors.toList()));
 
+    /*
     fieldDeclStatements.add(
         CommentStatement.withComment(
             LineComment.withComment(
@@ -175,6 +176,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                     + classMemberVarExprs.values().stream()
                         .map(v -> v.variable().identifier())
                         .collect(Collectors.toList()))));
+                        */
 
     fieldDeclStatements.addAll(
         classMemberVarExprs.values().stream()
