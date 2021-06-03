@@ -166,6 +166,16 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                             .build()))
             .collect(Collectors.toList()));
 
+    fieldDeclStatements.add(
+        CommentStatement.withComment(
+            LineComment.withComment(
+                "DEL: Num mocks: "
+                    + classMemberVarExprs.size()
+                    + ", "
+                    + classMemberVarExprs.values().stream()
+                        .map(v -> v.variable().identifier())
+                        .collect(Collectors.toList()))));
+
     fieldDeclStatements.addAll(
         classMemberVarExprs.values().stream()
             .filter(v -> !isMockVarExprFn.apply(v))
