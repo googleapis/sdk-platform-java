@@ -231,11 +231,6 @@ public class Parser {
         definedServices.add(s);
       }
     }
-    // Sort potential mixin services alphabetically.
-    blockedCodegenMixinApis =
-        blockedCodegenMixinApis.stream()
-            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
-            .collect(Collectors.toSet());
     // It's very unlikely the blocklisted APIs will contain the other, or any other service.
     boolean servicesContainBlocklistedApi =
         !blockedCodegenMixinApis.isEmpty() && !definedServices.isEmpty();
@@ -275,9 +270,15 @@ public class Parser {
       }
     }
 
+    // Sort potential mixin services alphabetically.
+    List<Service> orderedBlockedCodegenMixinApis =
+        blockedCodegenMixinApis.stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toList());
+
     Set<String> apiDefinedRpcs = new HashSet<>();
     for (Service service : services) {
-      if (blockedCodegenMixinApis.contains(service)) {
+      if (orderedBlockedCodegenMixinApis.contains(service)) {
         continue;
       }
       apiDefinedRpcs.addAll(
@@ -290,7 +291,7 @@ public class Parser {
         Service originalService = services.get(i);
         List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
         // If mixin APIs are present, add the methods to all other services.
-        for (Service mixinService : blockedCodegenMixinApis) {
+        for (Service mixinService : orderedBlockedCodegenMixinApis) {
           final String mixinServiceFullName = serviceFullNameFn.apply(mixinService);
           if (!mixedInApis.contains(mixinServiceFullName)) {
             continue;
@@ -353,7 +354,10 @@ public class Parser {
     }
 
     // Use a list to ensure ordering for deterministic tests.
-    outputMixinServices.addAll(outputMixinServiceSet);
+    outputMixinServices.addAll(
+        outputMixinServiceSet.stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toSet()));
     return services;
   }
 
