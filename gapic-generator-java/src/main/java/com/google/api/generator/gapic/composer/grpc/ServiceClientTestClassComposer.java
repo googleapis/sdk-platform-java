@@ -159,7 +159,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     List<Expr> mockServiceVarExprs = new ArrayList<>();
     varInitExprs.add(serviceToVarInitExprFn.apply(service));
     mockServiceVarExprs.add(serviceToVarExprFn.apply(service));
-    for (Service mixinService : context.mixinServices()) {
+    // Careful: Java 8 and 11 make different ordering choices if this set is not explicitly sorted.
+    // Context: https://github.com/googleapis/gapic-generator-java/pull/750
+    for (Service mixinService :
+        context.mixinServices().stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toList())) {
       varInitExprs.add(serviceToVarInitExprFn.apply(mixinService));
       mockServiceVarExprs.add(serviceToVarExprFn.apply(mixinService));
     }
@@ -201,12 +206,15 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     varInitExprs.add(initServiceHelperExpr);
     varInitExprs.add(startServiceHelperExpr);
 
+    List<Statement> body = new ArrayList<>();
+
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
         .setName("startStaticServer")
+        .setBody(body)
         .setBody(
             varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
