@@ -87,6 +87,9 @@ public class Parser {
           "google.iam.v1.IAMPolicy",
           "google.longrunning.Operations",
           "google.cloud.location.Locations");
+  // These must be kept in sync with the above protos' java_package options.
+  private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
+      ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -574,7 +577,7 @@ public class Parser {
   }
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
-    @VisibleForTesting String javaPackage = parseServiceJavaPackage(request);
+    String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -917,8 +920,23 @@ public class Parser {
       }
     }
 
+    // Filter out mixin packages.
+    Map<String, Integer> processedJavaPackageCount =
+        javaPackageCount.entrySet().stream()
+            .filter(e -> !MIXIN_JAVA_PACKAGE_ALLOWLIST.contains(e.getKey()))
+            .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+    // An empty map indicates that only mixin packages were present, which means that we're
+    // generating a standalone client for a mixin.
+    if (processedJavaPackageCount.isEmpty()) {
+      processedJavaPackageCount = javaPackageCount;
+    }
+
     String finalJavaPackage =
-        javaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+        processedJavaPackageCount.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .get()
+            .getKey();
     Preconditions.checkState(
         !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
     return finalJavaPackage;
