@@ -160,7 +160,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     varInitExprs.add(serviceToVarInitExprFn.apply(service));
     mockServiceVarExprs.add(serviceToVarExprFn.apply(service));
     // Careful: Java 8 and 11 make different ordering choices if this set is not explicitly sorted.
-    // In Java 11, lexicographic or insertion order is not preserved.
+    // Context: https://github.com/googleapis/gapic-generator-java/pull/750
     for (Service mixinService :
         context.mixinServices().stream()
             .sorted((s1, s2) -> s2.name().compareTo(s1.name()))

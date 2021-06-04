@@ -165,6 +165,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                             .setIsStatic(true)
                             .build()))
             .collect(Collectors.toList()));
+
     fieldDeclStatements.addAll(
         classMemberVarExprs.values().stream()
             .filter(v -> !isMockVarExprFn.apply(v))
