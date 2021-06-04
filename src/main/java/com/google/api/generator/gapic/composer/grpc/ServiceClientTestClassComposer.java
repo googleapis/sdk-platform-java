@@ -215,6 +215,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                       + classMemberVarExprs.size()
                       + ", "
                       + classMemberVarExprs.values().stream()
+                          .filter(v -> v.variable().identifier().name().startsWith("mock"))
                           .map(v -> v.variable().identifier())
                           .collect(Collectors.toList())
                       + " ::: "

@@ -70,8 +70,6 @@ public class KeyManagementServiceClientTest {
   private static MockKeyManagementService mockKeyManagementService;
   private static MockLocations mockLocations;
   private static MockServiceHelper mockServiceHelper;
-  // DEL: Num mocks: 6, [channelProvider, client, mockIAMPolicy, mockKeyManagementService,
-  // mockLocations, mockServiceHelper]
   private LocalChannelProvider channelProvider;
   private KeyManagementServiceClient client;
 
@@ -85,8 +83,9 @@ public class KeyManagementServiceClientTest {
             UUID.randomUUID().toString(),
             Arrays.<MockGrpcService>asList(mockKeyManagementService, mockIAMPolicy, mockLocations));
     mockServiceHelper.start();
-    // DEL: Num mocks: 6, [channelProvider, client, mockIAMPolicy, mockKeyManagementService,
-    // mockLocations, mockServiceHelper] ::: [IAMPolicy, Locations]
+    // DEL: Num mocks: 6, [mockIAMPolicy, mockKeyManagementService, mockLocations,
+    // mockServiceHelper]
+    // ::: [IAMPolicy, Locations]
   }
 
   @AfterClass
