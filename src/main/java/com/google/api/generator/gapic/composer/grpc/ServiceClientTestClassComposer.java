@@ -23,13 +23,11 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
-import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
-import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -161,7 +159,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     List<Expr> mockServiceVarExprs = new ArrayList<>();
     varInitExprs.add(serviceToVarInitExprFn.apply(service));
     mockServiceVarExprs.add(serviceToVarExprFn.apply(service));
-    for (Service mixinService : context.mixinServices()) {
+    // Careful: Java 8 and 11 make different ordering choices if this set is not explicitly sorted.
+    // In Java 11, lexicographic or insertion order is not preserved.
+    for (Service mixinService :
+        context.mixinServices().stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toList())) {
       varInitExprs.add(serviceToVarInitExprFn.apply(mixinService));
       mockServiceVarExprs.add(serviceToVarExprFn.apply(mixinService));
     }
@@ -204,25 +207,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     varInitExprs.add(startServiceHelperExpr);
 
     List<Statement> body = new ArrayList<>();
-    body.addAll(
-        varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-    if (ClassNames.getServiceClientTestClassName(service)
-        .equals("KeyManagementServiceClientTest")) {
-      body.add(
-          CommentStatement.withComment(
-              LineComment.withComment(
-                  "DEL: Num mocks: "
-                      + classMemberVarExprs.size()
-                      + ", "
-                      + classMemberVarExprs.values().stream()
-                          .filter(v -> v.variable().identifier().name().startsWith("mock"))
-                          .map(v -> v.variable().identifier())
-                          .collect(Collectors.toList())
-                      + " ::: "
-                      + context.mixinServices().stream()
-                          .map(s -> s.name())
-                          .collect(Collectors.toList()))));
-    }
 
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
@@ -231,8 +215,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
         .setReturnType(TypeNode.VOID)
         .setName("startStaticServer")
         .setBody(body)
-        // .setBody(
-        //   varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(
+            varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
 
