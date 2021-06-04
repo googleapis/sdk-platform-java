@@ -37,7 +37,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     super(builder);
   }
 
-  private ServiceAccountDelegationInfo() {}
+  private ServiceAccountDelegationInfo() {
+    principalSubject_ = "";
+  }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
@@ -114,6 +116,13 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
                 authority_ = subBuilder.buildPartial();
               }
               authorityCase_ = 2;
+              break;
+            }
+          case 26:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              principalSubject_ = s;
               break;
             }
           default:
@@ -1958,6 +1967,65 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     return AuthorityCase.forNumber(authorityCase_);
   }
 
+  public static final int PRINCIPAL_SUBJECT_FIELD_NUMBER = 3;
+  private volatile java.lang.Object principalSubject_;
+  /**
+   *
+   *
+   * <pre>
+   * A string representing the principal_subject associated with the identity.
+   * For most identities, the format will be
+   * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+   * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+   * that are still in the legacy format `serviceAccount:{identity pool
+   * name}[{subject}]`
+   * </pre>
+   *
+   * <code>string principal_subject = 3;</code>
+   *
+   * @return The principalSubject.
+   */
+  @java.lang.Override
+  public java.lang.String getPrincipalSubject() {
+    java.lang.Object ref = principalSubject_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      principalSubject_ = s;
+      return s;
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A string representing the principal_subject associated with the identity.
+   * For most identities, the format will be
+   * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+   * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+   * that are still in the legacy format `serviceAccount:{identity pool
+   * name}[{subject}]`
+   * </pre>
+   *
+   * <code>string principal_subject = 3;</code>
+   *
+   * @return The bytes for principalSubject.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getPrincipalSubjectBytes() {
+    java.lang.Object ref = principalSubject_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      principalSubject_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   public static final int FIRST_PARTY_PRINCIPAL_FIELD_NUMBER = 1;
   /**
    *
@@ -2102,6 +2170,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       output.writeMessage(
           2, (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_);
     }
+    if (!getPrincipalSubjectBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, principalSubject_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -2123,6 +2194,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
               2,
               (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_);
     }
+    if (!getPrincipalSubjectBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, principalSubject_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -2139,6 +2213,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     com.google.cloud.audit.ServiceAccountDelegationInfo other =
         (com.google.cloud.audit.ServiceAccountDelegationInfo) obj;
 
+    if (!getPrincipalSubject().equals(other.getPrincipalSubject())) return false;
     if (!getAuthorityCase().equals(other.getAuthorityCase())) return false;
     switch (authorityCase_) {
       case 1:
@@ -2161,6 +2236,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + PRINCIPAL_SUBJECT_FIELD_NUMBER;
+    hash = (53 * hash) + getPrincipalSubject().hashCode();
     switch (authorityCase_) {
       case 1:
         hash = (37 * hash) + FIRST_PARTY_PRINCIPAL_FIELD_NUMBER;
@@ -2318,6 +2395,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      principalSubject_ = "";
+
       authorityCase_ = 0;
       authority_ = null;
       return this;
@@ -2347,6 +2426,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public com.google.cloud.audit.ServiceAccountDelegationInfo buildPartial() {
       com.google.cloud.audit.ServiceAccountDelegationInfo result =
           new com.google.cloud.audit.ServiceAccountDelegationInfo(this);
+      result.principalSubject_ = principalSubject_;
       if (authorityCase_ == 1) {
         if (firstPartyPrincipalBuilder_ == null) {
           result.authority_ = authority_;
@@ -2412,6 +2492,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public Builder mergeFrom(com.google.cloud.audit.ServiceAccountDelegationInfo other) {
       if (other == com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance())
         return this;
+      if (!other.getPrincipalSubject().isEmpty()) {
+        principalSubject_ = other.principalSubject_;
+        onChanged();
+      }
       switch (other.getAuthorityCase()) {
         case FIRST_PARTY_PRINCIPAL:
           {
@@ -2468,6 +2552,137 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public Builder clearAuthority() {
       authorityCase_ = 0;
       authority_ = null;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object principalSubject_ = "";
+    /**
+     *
+     *
+     * <pre>
+     * A string representing the principal_subject associated with the identity.
+     * For most identities, the format will be
+     * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+     * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+     * that are still in the legacy format `serviceAccount:{identity pool
+     * name}[{subject}]`
+     * </pre>
+     *
+     * <code>string principal_subject = 3;</code>
+     *
+     * @return The principalSubject.
+     */
+    public java.lang.String getPrincipalSubject() {
+      java.lang.Object ref = principalSubject_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        principalSubject_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A string representing the principal_subject associated with the identity.
+     * For most identities, the format will be
+     * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+     * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+     * that are still in the legacy format `serviceAccount:{identity pool
+     * name}[{subject}]`
+     * </pre>
+     *
+     * <code>string principal_subject = 3;</code>
+     *
+     * @return The bytes for principalSubject.
+     */
+    public com.google.protobuf.ByteString getPrincipalSubjectBytes() {
+      java.lang.Object ref = principalSubject_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        principalSubject_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A string representing the principal_subject associated with the identity.
+     * For most identities, the format will be
+     * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+     * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+     * that are still in the legacy format `serviceAccount:{identity pool
+     * name}[{subject}]`
+     * </pre>
+     *
+     * <code>string principal_subject = 3;</code>
+     *
+     * @param value The principalSubject to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPrincipalSubject(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+
+      principalSubject_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A string representing the principal_subject associated with the identity.
+     * For most identities, the format will be
+     * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+     * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+     * that are still in the legacy format `serviceAccount:{identity pool
+     * name}[{subject}]`
+     * </pre>
+     *
+     * <code>string principal_subject = 3;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearPrincipalSubject() {
+
+      principalSubject_ = getDefaultInstance().getPrincipalSubject();
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A string representing the principal_subject associated with the identity.
+     * For most identities, the format will be
+     * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+     * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+     * that are still in the legacy format `serviceAccount:{identity pool
+     * name}[{subject}]`
+     * </pre>
+     *
+     * <code>string principal_subject = 3;</code>
+     *
+     * @param value The bytes for principalSubject to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPrincipalSubjectBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
+      principalSubject_ = value;
       onChanged();
       return this;
     }

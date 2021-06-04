@@ -288,7 +288,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The name of the API service performing the operation. For example,
-   * `"datastore.googleapis.com"`.
+   * `"compute.googleapis.com"`.
    * </pre>
    *
    * <code>string service_name = 7;</code>
@@ -312,7 +312,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The name of the API service performing the operation. For example,
-   * `"datastore.googleapis.com"`.
+   * `"compute.googleapis.com"`.
    * </pre>
    *
    * <code>string service_name = 7;</code>
@@ -341,8 +341,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
-   *     "google.datastore.v1.Datastore.RunQuery"
-   *     "google.logging.v1.LoggingService.DeleteLog"
+   *     "google.cloud.bigquery.v2.TableService.InsertTable"
+   *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
    *
    * <code>string method_name = 8;</code>
@@ -368,8 +368,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
-   *     "google.datastore.v1.Datastore.RunQuery"
-   *     "google.logging.v1.LoggingService.DeleteLog"
+   *     "google.cloud.bigquery.v2.TableService.InsertTable"
+   *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
    *
    * <code>string method_name = 8;</code>
@@ -398,8 +398,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
-   *     "shelves/SHELF_ID/books"
-   *     "shelves/SHELF_ID/books/BOOK_ID"
+   *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+   *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
    *
    * <code>string resource_name = 11;</code>
@@ -425,8 +425,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
-   *     "shelves/SHELF_ID/books"
-   *     "shelves/SHELF_ID/books/BOOK_ID"
+   *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+   *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
    *
    * <code>string resource_name = 11;</code>
@@ -978,16 +978,17 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Deprecated, use `metadata` field instead.
+   * Deprecated. Use the `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
-   * <code>.google.protobuf.Any service_data = 15;</code>
+   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @return Whether the serviceData field is set.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public boolean hasServiceData() {
     return serviceData_ != null;
   }
@@ -995,16 +996,17 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Deprecated, use `metadata` field instead.
+   * Deprecated. Use the `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
-   * <code>.google.protobuf.Any service_data = 15;</code>
+   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @return The serviceData.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public com.google.protobuf.Any getServiceData() {
     return serviceData_ == null ? com.google.protobuf.Any.getDefaultInstance() : serviceData_;
   }
@@ -1012,14 +1014,15 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Deprecated, use `metadata` field instead.
+   * Deprecated. Use the `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
-   * <code>.google.protobuf.Any service_data = 15;</code>
+   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public com.google.protobuf.AnyOrBuilder getServiceDataOrBuilder() {
     return getServiceData();
   }
@@ -1701,7 +1704,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The name of the API service performing the operation. For example,
-     * `"datastore.googleapis.com"`.
+     * `"compute.googleapis.com"`.
      * </pre>
      *
      * <code>string service_name = 7;</code>
@@ -1724,7 +1727,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The name of the API service performing the operation. For example,
-     * `"datastore.googleapis.com"`.
+     * `"compute.googleapis.com"`.
      * </pre>
      *
      * <code>string service_name = 7;</code>
@@ -1747,7 +1750,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The name of the API service performing the operation. For example,
-     * `"datastore.googleapis.com"`.
+     * `"compute.googleapis.com"`.
      * </pre>
      *
      * <code>string service_name = 7;</code>
@@ -1769,7 +1772,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The name of the API service performing the operation. For example,
-     * `"datastore.googleapis.com"`.
+     * `"compute.googleapis.com"`.
      * </pre>
      *
      * <code>string service_name = 7;</code>
@@ -1787,7 +1790,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The name of the API service performing the operation. For example,
-     * `"datastore.googleapis.com"`.
+     * `"compute.googleapis.com"`.
      * </pre>
      *
      * <code>string service_name = 7;</code>
@@ -1814,8 +1817,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
-     *     "google.datastore.v1.Datastore.RunQuery"
-     *     "google.logging.v1.LoggingService.DeleteLog"
+     *     "google.cloud.bigquery.v2.TableService.InsertTable"
+     *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
      *
      * <code>string method_name = 8;</code>
@@ -1840,8 +1843,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
-     *     "google.datastore.v1.Datastore.RunQuery"
-     *     "google.logging.v1.LoggingService.DeleteLog"
+     *     "google.cloud.bigquery.v2.TableService.InsertTable"
+     *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
      *
      * <code>string method_name = 8;</code>
@@ -1866,8 +1869,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
-     *     "google.datastore.v1.Datastore.RunQuery"
-     *     "google.logging.v1.LoggingService.DeleteLog"
+     *     "google.cloud.bigquery.v2.TableService.InsertTable"
+     *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
      *
      * <code>string method_name = 8;</code>
@@ -1891,8 +1894,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
-     *     "google.datastore.v1.Datastore.RunQuery"
-     *     "google.logging.v1.LoggingService.DeleteLog"
+     *     "google.cloud.bigquery.v2.TableService.InsertTable"
+     *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
      *
      * <code>string method_name = 8;</code>
@@ -1912,8 +1915,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
-     *     "google.datastore.v1.Datastore.RunQuery"
-     *     "google.logging.v1.LoggingService.DeleteLog"
+     *     "google.cloud.bigquery.v2.TableService.InsertTable"
+     *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
      *
      * <code>string method_name = 8;</code>
@@ -1940,8 +1943,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
-     *     "shelves/SHELF_ID/books"
-     *     "shelves/SHELF_ID/books/BOOK_ID"
+     *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+     *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
      *
      * <code>string resource_name = 11;</code>
@@ -1966,8 +1969,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
-     *     "shelves/SHELF_ID/books"
-     *     "shelves/SHELF_ID/books/BOOK_ID"
+     *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+     *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
      *
      * <code>string resource_name = 11;</code>
@@ -1992,8 +1995,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
-     *     "shelves/SHELF_ID/books"
-     *     "shelves/SHELF_ID/books/BOOK_ID"
+     *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+     *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
      *
      * <code>string resource_name = 11;</code>
@@ -2017,8 +2020,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
-     *     "shelves/SHELF_ID/books"
-     *     "shelves/SHELF_ID/books/BOOK_ID"
+     *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+     *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
      *
      * <code>string resource_name = 11;</code>
@@ -2038,8 +2041,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
-     *     "shelves/SHELF_ID/books"
-     *     "shelves/SHELF_ID/books/BOOK_ID"
+     *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+     *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
      *
      * <code>string resource_name = 11;</code>
@@ -4120,15 +4123,16 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      *
      * @return Whether the serviceData field is set.
      */
+    @java.lang.Deprecated
     public boolean hasServiceData() {
       return serviceDataBuilder_ != null || serviceData_ != null;
     }
@@ -4136,15 +4140,16 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      *
      * @return The serviceData.
      */
+    @java.lang.Deprecated
     public com.google.protobuf.Any getServiceData() {
       if (serviceDataBuilder_ == null) {
         return serviceData_ == null ? com.google.protobuf.Any.getDefaultInstance() : serviceData_;
@@ -4156,13 +4161,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder setServiceData(com.google.protobuf.Any value) {
       if (serviceDataBuilder_ == null) {
         if (value == null) {
@@ -4180,13 +4186,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder setServiceData(com.google.protobuf.Any.Builder builderForValue) {
       if (serviceDataBuilder_ == null) {
         serviceData_ = builderForValue.build();
@@ -4201,13 +4208,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder mergeServiceData(com.google.protobuf.Any value) {
       if (serviceDataBuilder_ == null) {
         if (serviceData_ != null) {
@@ -4227,13 +4235,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public Builder clearServiceData() {
       if (serviceDataBuilder_ == null) {
         serviceData_ = null;
@@ -4249,13 +4258,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public com.google.protobuf.Any.Builder getServiceDataBuilder() {
 
       onChanged();
@@ -4265,13 +4275,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
+    @java.lang.Deprecated
     public com.google.protobuf.AnyOrBuilder getServiceDataOrBuilder() {
       if (serviceDataBuilder_ != null) {
         return serviceDataBuilder_.getMessageOrBuilder();
@@ -4283,12 +4294,12 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Deprecated, use `metadata` field instead.
+     * Deprecated. Use the `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.protobuf.Any,

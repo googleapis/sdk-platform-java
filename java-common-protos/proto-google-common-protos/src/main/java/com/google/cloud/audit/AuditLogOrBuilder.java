@@ -28,7 +28,7 @@ public interface AuditLogOrBuilder
    *
    * <pre>
    * The name of the API service performing the operation. For example,
-   * `"datastore.googleapis.com"`.
+   * `"compute.googleapis.com"`.
    * </pre>
    *
    * <code>string service_name = 7;</code>
@@ -41,7 +41,7 @@ public interface AuditLogOrBuilder
    *
    * <pre>
    * The name of the API service performing the operation. For example,
-   * `"datastore.googleapis.com"`.
+   * `"compute.googleapis.com"`.
    * </pre>
    *
    * <code>string service_name = 7;</code>
@@ -57,8 +57,8 @@ public interface AuditLogOrBuilder
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
-   *     "google.datastore.v1.Datastore.RunQuery"
-   *     "google.logging.v1.LoggingService.DeleteLog"
+   *     "google.cloud.bigquery.v2.TableService.InsertTable"
+   *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
    *
    * <code>string method_name = 8;</code>
@@ -73,8 +73,8 @@ public interface AuditLogOrBuilder
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
-   *     "google.datastore.v1.Datastore.RunQuery"
-   *     "google.logging.v1.LoggingService.DeleteLog"
+   *     "google.cloud.bigquery.v2.TableService.InsertTable"
+   *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
    *
    * <code>string method_name = 8;</code>
@@ -90,8 +90,8 @@ public interface AuditLogOrBuilder
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
-   *     "shelves/SHELF_ID/books"
-   *     "shelves/SHELF_ID/books/BOOK_ID"
+   *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+   *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
    *
    * <code>string resource_name = 11;</code>
@@ -106,8 +106,8 @@ public interface AuditLogOrBuilder
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
-   *     "shelves/SHELF_ID/books"
-   *     "shelves/SHELF_ID/books/BOOK_ID"
+   *     "projects/PROJECT_ID/zones/us-central1-a/instances"
+   *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
    *
    * <code>string resource_name = 11;</code>
@@ -527,40 +527,43 @@ public interface AuditLogOrBuilder
    *
    *
    * <pre>
-   * Deprecated, use `metadata` field instead.
+   * Deprecated. Use the `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
-   * <code>.google.protobuf.Any service_data = 15;</code>
+   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @return Whether the serviceData field is set.
    */
+  @java.lang.Deprecated
   boolean hasServiceData();
   /**
    *
    *
    * <pre>
-   * Deprecated, use `metadata` field instead.
+   * Deprecated. Use the `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
-   * <code>.google.protobuf.Any service_data = 15;</code>
+   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @return The serviceData.
    */
+  @java.lang.Deprecated
   com.google.protobuf.Any getServiceData();
   /**
    *
    *
    * <pre>
-   * Deprecated, use `metadata` field instead.
+   * Deprecated. Use the `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
-   * <code>.google.protobuf.Any service_data = 15;</code>
+   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    */
+  @java.lang.Deprecated
   com.google.protobuf.AnyOrBuilder getServiceDataOrBuilder();
 }

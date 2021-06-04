@@ -28,9 +28,11 @@ public interface AuthenticationInfoOrBuilder
    *
    * <pre>
    * The email address of the authenticated user (or service account on behalf
-   * of third party principal) making the request. For privacy reasons, the
-   * principal email address is redacted for all read-only operations that fail
-   * with a "permission denied" error.
+   * of third party principal) making the request. For third party identity
+   * callers, the `principal_subject` field is populated instead of this field.
+   * For privacy reasons, the principal email address is sometimes redacted.
+   * For more information, see
+   * https://cloud.google.com/logging/docs/audit#user-id.
    * </pre>
    *
    * <code>string principal_email = 1;</code>
@@ -43,9 +45,11 @@ public interface AuthenticationInfoOrBuilder
    *
    * <pre>
    * The email address of the authenticated user (or service account on behalf
-   * of third party principal) making the request. For privacy reasons, the
-   * principal email address is redacted for all read-only operations that fail
-   * with a "permission denied" error.
+   * of third party principal) making the request. For third party identity
+   * callers, the `principal_subject` field is populated instead of this field.
+   * For privacy reasons, the principal email address is sometimes redacted.
+   * For more information, see
+   * https://cloud.google.com/logging/docs/audit#user-id.
    * </pre>
    *
    * <code>string principal_email = 1;</code>

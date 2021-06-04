@@ -27,8 +27,11 @@ public interface AuthorizationInfoOrBuilder
    *
    *
    * <pre>
-   * The resource being accessed, as a REST-style string. For example:
+   * The resource being accessed, as a REST-style or cloud resource string.
+   * For example:
    *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+   * or
+   *     projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
    * <code>string resource = 1;</code>
@@ -40,8 +43,11 @@ public interface AuthorizationInfoOrBuilder
    *
    *
    * <pre>
-   * The resource being accessed, as a REST-style string. For example:
+   * The resource being accessed, as a REST-style or cloud resource string.
+   * For example:
    *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+   * or
+   *     projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
    * <code>string resource = 1;</code>
