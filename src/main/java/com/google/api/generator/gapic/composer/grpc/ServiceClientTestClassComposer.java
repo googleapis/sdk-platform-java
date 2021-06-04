@@ -23,11 +23,13 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -201,14 +203,35 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     varInitExprs.add(initServiceHelperExpr);
     varInitExprs.add(startServiceHelperExpr);
 
+    List<Statement> body = new ArrayList<>();
+    body.addAll(
+        varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    if (ClassNames.getServiceClientTestClassName(service)
+        .equals("KeyManagementServiceClientTest")) {
+      body.add(
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "DEL: Num mocks: "
+                      + classMemberVarExprs.size()
+                      + ", "
+                      + classMemberVarExprs.values().stream()
+                          .map(v -> v.variable().identifier())
+                          .collect(Collectors.toList())
+                      + " ::: "
+                      + context.mixinServices().stream()
+                          .map(s -> s.name())
+                          .collect(Collectors.toList()))));
+    }
+
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
         .setName("startStaticServer")
-        .setBody(
-            varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(body)
+        // .setBody(
+        //   varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
 

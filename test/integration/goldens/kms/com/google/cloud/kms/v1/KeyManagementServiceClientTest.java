@@ -85,6 +85,8 @@ public class KeyManagementServiceClientTest {
             UUID.randomUUID().toString(),
             Arrays.<MockGrpcService>asList(mockKeyManagementService, mockIAMPolicy, mockLocations));
     mockServiceHelper.start();
+    // DEL: Num mocks: 6, [channelProvider, client, mockIAMPolicy, mockKeyManagementService,
+    // mockLocations, mockServiceHelper] ::: [IAMPolicy, Locations]
   }
 
   @AfterClass
