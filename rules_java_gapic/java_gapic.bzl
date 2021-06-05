@@ -128,7 +128,7 @@ def java_gapic_library(
         deps = [],
         test_deps = [],
         transport = None, # possible values are: "grpc", "rest", "grpc+rest"
-        java_generator_name = "java_gapic",
+        _java_generator_name = "java_gapic",
         **kwargs):
     file_args_dict = {}
 
@@ -171,11 +171,11 @@ def java_gapic_library(
     proto_custom_library(
         name = raw_srcjar_name,
         deps = srcs,
-        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % java_generator_name),
+        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % _java_generator_name),
         plugin_args = plugin_args,
         plugin_file_args = {},
         opt_file_args = file_args_dict,
-        output_type = java_generator_name,
+        output_type = _java_generator_name,
         output_suffix = output_suffix,
         opt_args = opt_args,
         **kwargs

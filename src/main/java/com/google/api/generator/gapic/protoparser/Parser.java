@@ -26,7 +26,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
-import com.google.api.generator.gapic.model.HttpRuleBindings;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -249,13 +249,13 @@ public class Parser {
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
     // Assumes that http.rules.selector always specifies RPC names in the above format.
-    Map<String, HttpRuleBindings> mixedInMethodsToHttpRules = new HashMap<>();
+    Map<String, HttpBindings> mixedInMethodsToHttpRules = new HashMap<>();
     Map<String, String> mixedInMethodsToDocs = new HashMap<>();
     // Parse HTTP rules and documentation, which will override the proto.
     if (serviceYamlProtoOpt.isPresent()) {
       for (HttpRule httpRule : serviceYamlProtoOpt.get().getHttp().getRulesList()) {
-        HttpRuleBindings httpBindings = HttpRuleParser.parseHttpRule(httpRule);
-        if (httpBindings.isEmpty()) {
+        HttpBindings httpBindings = HttpRuleParser.parseHttpRule(httpRule);
+        if (httpBindings == null) {
           continue;
         }
         for (String rpcFullNameRaw : httpRule.getSelector().split(",")) {
@@ -312,7 +312,7 @@ public class Parser {
                         // HTTP rules and RPC documentation in the service.yaml file take
                         // precedence.
                         String fullMethodName = methodToFullProtoNameFn.apply(m);
-                        HttpRuleBindings httpBindings =
+                        HttpBindings httpBindings =
                             mixedInMethodsToHttpRules.containsKey(fullMethodName)
                                 ? mixedInMethodsToHttpRules.get(fullMethodName)
                                 : m.httpBindings();
@@ -630,7 +630,7 @@ public class Parser {
       Message inputMessage = messageTypes.get(inputType.reference().fullName());
       Preconditions.checkNotNull(
           inputMessage, String.format("No message found for %s", inputType.reference().fullName()));
-      HttpRuleBindings httpBindings = HttpRuleParser.parse(protoMethod, inputMessage, messageTypes);
+      HttpBindings httpBindings = HttpRuleParser.parse(protoMethod, inputMessage, messageTypes);
       boolean isBatching =
           !serviceConfigOpt.isPresent()
               ? false

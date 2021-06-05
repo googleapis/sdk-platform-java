@@ -498,7 +498,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
   private List<Expr> getHttpMethodTypeExpr(Method protoMethod) {
     EnumRefExpr expr =
         EnumRefExpr.builder()
-            .setName(protoMethod.httpBindings().httpVerb())
+            .setName(protoMethod.httpBindings().httpVerb().toString())
             .setType(
                 TypeNode.withReference(
                     ConcreteReference.builder().setClazz(HttpMethods.class).build()))

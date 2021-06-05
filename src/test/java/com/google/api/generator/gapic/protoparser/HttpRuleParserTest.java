@@ -19,7 +19,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.model.HttpRuleBindings;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -40,7 +40,7 @@ public class HttpRuleParserTest {
     // CreateSession method.
     MethodDescriptor rpcMethod = testingService.getMethods().get(0);
     Message inputMessage = messages.get("com.google.showcase.v1beta1.CreateSessionRequest");
-    HttpRuleBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
+    HttpBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
     assertTrue(httpBindings.pathParameters().isEmpty());
 
     // GetSession method.
@@ -62,7 +62,7 @@ public class HttpRuleParserTest {
     MethodDescriptor rpcMethod =
         testingService.getMethods().get(testingService.getMethods().size() - 1);
     Message inputMessage = messages.get("com.google.showcase.v1beta1.VerifyTestRequest");
-    HttpRuleBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
+    HttpBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
     assertThat(httpBindings.pathParameters())
         .containsExactly("answer", "foo", "name", "test_to_verify.name", "type");
   }

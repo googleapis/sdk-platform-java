@@ -18,7 +18,7 @@ import com.google.api.AnnotationsProto;
 import com.google.api.HttpRule;
 import com.google.api.HttpRule.PatternCase;
 import com.google.api.generator.gapic.model.Field;
-import com.google.api.generator.gapic.model.HttpRuleBindings;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
@@ -37,11 +37,11 @@ import java.util.stream.Collectors;
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
 
-  public static HttpRuleBindings parse(
+  public static HttpBindings parse(
       MethodDescriptor protoMethod, Message inputMessage, Map<String, Message> messageTypes) {
     MethodOptions methodOptions = protoMethod.getOptions();
     if (!methodOptions.hasExtension(AnnotationsProto.http)) {
-      return HttpRuleBindings.builder().build();
+      return null;
     }
 
     HttpRule httpRule = methodOptions.getExtension(AnnotationsProto.http);
@@ -54,11 +54,11 @@ public class HttpRuleParser {
     return parseHttpRuleHelper(httpRule, Optional.of(inputMessage), messageTypes);
   }
 
-  public static HttpRuleBindings parseHttpRule(HttpRule httpRule) {
+  public static HttpBindings parseHttpRule(HttpRule httpRule) {
     return parseHttpRuleHelper(httpRule, Optional.empty(), Collections.emptyMap());
   }
 
-  private static HttpRuleBindings parseHttpRuleHelper(
+  private static HttpBindings parseHttpRuleHelper(
       HttpRule httpRule, Optional<Message> inputMessageOpt, Map<String, Message> messageTypes) {
     // Get pattern.
     String pattern = getHttpVerbPattern(httpRule);
@@ -118,8 +118,8 @@ public class HttpRuleParser {
           Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bodyBinidngsUnion);
     }
 
-    return HttpRuleBindings.builder()
-        .setHttpVerb(httpRule.getPatternCase().toString())
+    return HttpBindings.builder()
+        .setHttpVerb(HttpBindings.HttpVerb.valueOf(httpRule.getPatternCase().toString()))
         .setPattern(pattern)
         .setPathParameters(ImmutableSortedSet.copyOf(bindings))
         .setQueryParameters(ImmutableSortedSet.copyOf(queryParameters))

@@ -20,8 +20,16 @@ import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 
 @AutoValue
-public abstract class HttpRuleBindings {
-  public abstract String httpVerb();
+public abstract class HttpBindings {
+  public enum HttpVerb {
+    GET,
+    PUT,
+    POST,
+    DELETE,
+    PATCH,
+  }
+
+  public abstract HttpVerb httpVerb();
 
   public abstract String pattern();
 
@@ -31,17 +39,11 @@ public abstract class HttpRuleBindings {
 
   public abstract Set<String> bodyParameters();
 
-  public static HttpRuleBindings.Builder builder() {
-    return new AutoValue_HttpRuleBindings.Builder()
-        .setHttpVerb("")
-        .setPattern("")
+  public static HttpBindings.Builder builder() {
+    return new AutoValue_HttpBindings.Builder()
         .setPathParameters(ImmutableSet.of())
         .setQueryParameters(ImmutableSet.of())
         .setBodyParameters(ImmutableSet.of());
-  }
-
-  public boolean isEmpty() {
-    return pathParameters().isEmpty();
   }
 
   // Protobuf fields and template patterns follow snake_case style. When translated into actual Java
@@ -61,16 +63,25 @@ public abstract class HttpRuleBindings {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract HttpRuleBindings.Builder setHttpVerb(String httpVerb);
+    public abstract HttpBindings.Builder setHttpVerb(HttpVerb httpVerb);
 
-    public abstract HttpRuleBindings.Builder setPattern(String pattern);
+    public abstract HttpBindings.Builder setPattern(String pattern);
 
-    public abstract HttpRuleBindings.Builder setPathParameters(Set<String> pathParameters);
+    abstract String pattern();
 
-    public abstract HttpRuleBindings.Builder setQueryParameters(Set<String> queryParameters);
+    public abstract HttpBindings.Builder setPathParameters(Set<String> pathParameters);
 
-    public abstract HttpRuleBindings.Builder setBodyParameters(Set<String> bodyParameters);
+    public abstract HttpBindings.Builder setQueryParameters(Set<String> queryParameters);
 
-    public abstract HttpRuleBindings build();
+    public abstract HttpBindings.Builder setBodyParameters(Set<String> bodyParameters);
+
+    public abstract HttpBindings autoBuild();
+
+    public HttpBindings build() {
+      if ("".equals(pattern())) {
+        throw new IllegalArgumentException("pattern cannot be empty");
+      }
+      return autoBuild();
+    }
   }
 }
