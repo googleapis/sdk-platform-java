@@ -66,7 +66,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
 
-  protected static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
 
   protected ServiceClientTestClassComposer() {
     super(RestContext.instance());

@@ -127,7 +127,10 @@ def java_gapic_library(
         service_yaml = None,
         deps = [],
         test_deps = [],
-        transport = None, # possible values are: "grpc", "rest", "grpc+rest"
+        # possible values are: "grpc", "rest", "grpc+rest"
+        transport = None,
+        # Can be used to provide a java_library with a customized generator,
+        # like the one which dumps descriptor to a file for future debugging.
         _java_generator_name = "java_gapic",
         **kwargs):
     file_args_dict = {}

@@ -62,7 +62,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
   private static final HttpJsonServiceStubClassComposer INSTANCE =
       new HttpJsonServiceStubClassComposer();
 
-  protected static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
 
   protected HttpJsonServiceStubClassComposer() {
     super(RestContext.instance());
