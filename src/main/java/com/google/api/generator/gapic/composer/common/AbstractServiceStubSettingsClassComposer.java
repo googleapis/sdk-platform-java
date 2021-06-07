@@ -579,29 +579,12 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
             .setReturnType(returnType)
             .build();
-    Expr conditionExpr =
-        RelationalOperationExpr.equalToWithExprs(getResponsesListExpr, ValueExpr.createNullExpr());
-    Expr thenExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(
-                TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
-            .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-            .setMethodName("of")
-            .setReturnType(returnType)
-            .build();
-
-    returnExpr =
-        TernaryExpr.builder()
-            .setConditionExpr(conditionExpr)
-            .setThenExpr(thenExpr)
-            .setElseExpr(getResponsesListExpr)
-            .build();
     anonClassMethods.add(
         methodStarterBuilder
             .setReturnType(returnType)
             .setName("extractResources")
             .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
-            .setReturnExpr(returnExpr)
+            .setReturnExpr(getResponsesListExpr)
             .build());
 
     // Create the anonymous class.
