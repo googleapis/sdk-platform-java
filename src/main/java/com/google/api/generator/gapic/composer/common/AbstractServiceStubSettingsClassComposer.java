@@ -579,6 +579,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
             .setReturnType(returnType)
             .build();
+
+    // While protobufs should not be null, this null-check is needed to protect against NPEs
+    // in paged iteration, as some clients actually return null instead of an empty list.
+    // Context:
+    //   Original issue: https://github.com/googleapis/google-cloud-java/issues/3736
+    //   Relevant discussion where this check was first added:
+    //        https://github.com/googleapis/google-cloud-java/pull/4499#discussion_r257057409
     Expr conditionExpr =
         RelationalOperationExpr.equalToWithExprs(getResponsesListExpr, ValueExpr.createNullExpr());
     Expr thenExpr =
