@@ -271,7 +271,11 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                                                 m.inputType().reference(),
                                                 m.outputType().reference()))
                                         .build()))
-                            .build())));
+                            .build()),
+                (u, v) -> {
+                  throw new IllegalStateException();
+                },
+                LinkedHashMap::new));
   }
 
   private Map<String, VariableExpr> createCallableClassMembers(
@@ -523,7 +527,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     Expr thisExpr =
         ValueExpr.withValue(
             ThisObjectValue.withType(
-                typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service))));
+                typeStore.get(
+                    getTransportContext().classNames().getTransportServiceStubClassName(service))));
     // Body of the second constructor method.
     List<Statement> secondCtorStatements = new ArrayList<>();
     List<Expr> secondCtorExprs = new ArrayList<>();
@@ -543,8 +548,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                   operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
               .setValueExpr(
                   MethodInvocationExpr.builder()
-                      .setStaticReferenceType(
-                          getTransportContext().transportOperationsStubType())
+                      .setStaticReferenceType(getTransportContext().transportOperationsStubType())
                       .setMethodName("create")
                       .setArguments(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr))
                       .setReturnType(operationsStubClassVarExpr.type())
@@ -843,7 +847,9 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             getTransportContext().classNames().getTransportServiceStubClassName(service),
             getTransportContext().classNames().getServiceStubSettingsClassName(service),
             getTransportContext().classNames().getServiceStubClassName(service),
-            getTransportContext().classNames().getTransportServiceCallableFactoryClassName(service)));
+            getTransportContext()
+                .classNames()
+                .getTransportServiceCallableFactoryClassName(service)));
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),

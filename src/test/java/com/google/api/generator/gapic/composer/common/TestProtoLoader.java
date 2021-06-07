@@ -268,4 +268,8 @@ public class TestProtoLoader {
   public String getTestFilesDirectory() {
     return testFilesDirectory;
   }
+
+  public Transport getTransport() {
+    return transport;
+  }
 }

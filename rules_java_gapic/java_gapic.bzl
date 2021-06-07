@@ -127,12 +127,17 @@ def java_gapic_library(
         service_yaml = None,
         deps = [],
         test_deps = [],
+        # possible values are: "grpc", "rest", "grpc+rest"
+        transport = None,
+        # Can be used to provide a java_library with a customized generator,
+        # like the one which dumps descriptor to a file for future debugging.
+        _java_generator_name = "java_gapic",
         **kwargs):
     file_args_dict = {}
 
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
-    else:
+    elif transport != "rest":
         for keyword in NO_GRPC_CONFIG_ALLOWLIST:
             if keyword not in name:
                 fail("Missing a gRPC service config file")
@@ -157,12 +162,15 @@ def java_gapic_library(
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
     output_suffix = ".srcjar"
+    opt_args = []
+
+    if transport:
+        opt_args.append("transport=%s" % transport)
 
     # Produces the GAPIC metadata file if this flag is set. to any value.
     # Protoc invocation: --java_gapic_opt=metadata
     plugin_args = ["metadata"]
 
-    _java_generator_name = "java_gapic"
     proto_custom_library(
         name = raw_srcjar_name,
         deps = srcs,
@@ -172,6 +180,7 @@ def java_gapic_library(
         opt_file_args = file_args_dict,
         output_type = _java_generator_name,
         output_suffix = output_suffix,
+        opt_args = opt_args,
         **kwargs
     )
 
@@ -201,10 +210,7 @@ def java_gapic_library(
         "@com_google_protobuf//:protobuf_java",
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//gax:gax",
-        "@com_google_api_gax_java//gax-grpc:gax_grpc",
         "@com_google_guava_guava//jar",
-        "@io_grpc_grpc_java//core:core",
-        "@io_grpc_grpc_java//protobuf:protobuf",
         "@com_google_code_findbugs_jsr305//jar",
         "@org_threeten_threetenbp//jar",
         "@io_opencensus_opencensus_api//jar",
@@ -213,6 +219,17 @@ def java_gapic_library(
         "@com_google_http_client_google_http_client//jar",
         "@javax_annotation_javax_annotation_api//jar",
     ]
+
+    if transport == "rest":
+        actual_deps += [
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        ]
+    else:
+        actual_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc",
+            "@io_grpc_grpc_java//core:core",
+            "@io_grpc_grpc_java//protobuf:protobuf",
+        ]
 
     native.java_library(
         name = name,
@@ -224,15 +241,24 @@ def java_gapic_library(
     # Test deps.
     actual_test_deps = [
         "@com_google_googleapis//google/type:type_java_proto",  # Commonly used.
-        "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
         "@com_google_api_gax_java//gax:gax_testlib",
         "@com_google_code_gson_gson//jar",
-        "@io_grpc_grpc_java//auth:auth",
-        "@io_grpc_grpc_netty_shaded//jar",
-        "@io_grpc_grpc_java//stub:stub",
-        "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
         "@junit_junit//jar",
     ]
+
+    if transport == "rest":
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        ]
+    else:
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+            "@io_grpc_grpc_java//auth:auth",
+            "@io_grpc_grpc_netty_shaded//jar",
+            "@io_grpc_grpc_java//stub:stub",
+            "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+        ]
+
     _append_dep_without_duplicates(actual_test_deps, test_deps)
     _append_dep_without_duplicates(actual_test_deps, actual_deps)
 
