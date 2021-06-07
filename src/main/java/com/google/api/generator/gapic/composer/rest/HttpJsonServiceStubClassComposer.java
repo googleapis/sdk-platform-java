@@ -365,7 +365,18 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     Expr returnExpr = null;
     VariableExpr fieldsVarExpr = null;
     Expr serializerExpr = null;
-    if (!extractorReturnType.isProtoPrimitiveType()) {
+    if (extractorReturnType.isProtoPrimitiveType()) {
+      serializerExpr =
+          MethodInvocationExpr.builder()
+              .setMethodName("create")
+              .setStaticReferenceType(
+                  FIXED_REST_TYPESTORE.get(ProtoRestSerializer.class.getSimpleName()))
+              .build();
+      if (httpBindingFieldNames.isEmpty()) {
+        returnExpr = ValueExpr.createNullExpr();
+      }
+
+    } else {
       fieldsVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setName("fields").setType(extractorReturnType).build());
@@ -408,16 +419,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       serializerExpr = serializerVarExpr;
 
       bodyExprs.add(serializerAssignExpr);
-    } else {
-      serializerExpr =
-          MethodInvocationExpr.builder()
-              .setMethodName("create")
-              .setStaticReferenceType(
-                  FIXED_REST_TYPESTORE.get(ProtoRestSerializer.class.getSimpleName()))
-              .build();
-      if (httpBindingFieldNames.isEmpty()) {
-        returnExpr = ValueExpr.createNullExpr();
-      }
     }
 
     VariableExpr requestVarExpr =
@@ -453,23 +454,17 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
               StringObjectValue.withValue(JavaStyle.toLowerCamelCase(httpBindingFieldName))));
       paramsPutArgs.add(requestBuilderExpr);
 
-      if (fieldsVarExpr == null) {
-        Expr paramsPutExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(serializerExpr)
-                .setMethodName(serializerMethodName)
-                .setArguments(paramsPutArgs.build())
-                .setReturnType(extractorReturnType)
-                .build();
+      Expr paramsPutExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(serializerExpr)
+              .setMethodName(serializerMethodName)
+              .setArguments(paramsPutArgs.build())
+              .setReturnType(extractorReturnType)
+              .build();
 
+      if (fieldsVarExpr == null) {
         returnExpr = paramsPutExpr;
       } else {
-        Expr paramsPutExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(serializerExpr)
-                .setMethodName(serializerMethodName)
-                .setArguments(paramsPutArgs.build())
-                .build();
         bodyExprs.add(paramsPutExpr);
       }
     }

@@ -40,7 +40,7 @@ public class ServiceStubSettingsClassComposer extends
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
 
-  protected static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
 
   public static ServiceStubSettingsClassComposer instance() {
     return INSTANCE;
