@@ -258,7 +258,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                 FIXED_REST_TYPESTORE.get(ProtoMessageRequestFormatter.class.getSimpleName()))
             .setMethodName("newBuilder")
             .setGenerics(Collections.singletonList(protoMethod.inputType().reference()))
-            // .setArguments(Arrays.asList(m))
             .build();
 
     TypeNode extractorVarType =
