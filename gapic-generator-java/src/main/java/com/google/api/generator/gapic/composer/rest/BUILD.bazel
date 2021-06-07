@@ -3,25 +3,23 @@ load("@rules_java//java:defs.bzl", "java_library")
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "composer_files",
+    name = "rest_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "composer",
+    name = "rest",
     srcs = [
-        ":composer_files",
+        ":rest_files",
     ],
     deps = [
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic:status_java_proto",
-        "//src/main/java/com/google/api/generator/gapic/composer/comment",
         "//src/main/java/com/google/api/generator/gapic/composer/common",
+        "//src/main/java/com/google/api/generator/gapic/composer/comment",
         "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
-        "//src/main/java/com/google/api/generator/gapic/composer/grpc",
-        "//src/main/java/com/google/api/generator/gapic/composer/rest",
         "//src/main/java/com/google/api/generator/gapic/composer/resourcename",
         "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
         "//src/main/java/com/google/api/generator/gapic/composer/store",
@@ -30,14 +28,17 @@ java_library(
         "//src/main/java/com/google/api/generator/gapic/utils",
         "//src/main/java/com/google/api/generator/util",
         "@com_google_api_api_common//jar",
-        "@com_google_api_gax_java//gax",
-        "@com_google_api_gax_java//gax-grpc:gax_grpc",
+        "@com_google_api_gax_java//gax:gax",
+        "@com_google_api_gax_java//gax:gax_testlib",
+        "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_googleapis//gapic/metadata:metadata_java_proto",
         "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_guava_guava//jar",
+        "@com_google_http_client_google_http_client//jar",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_protobuf//:protobuf_java_util",
         "@com_google_protobuf//java/core",

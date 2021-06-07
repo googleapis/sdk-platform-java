@@ -72,7 +72,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
 
-  protected static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
 
   private static final TypeNode LIST_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(List.class));

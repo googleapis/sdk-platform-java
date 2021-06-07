@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.grpc;
+package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.gax.grpc.GaxGrpcProperties;
-import com.google.api.gax.grpc.GrpcTransportChannel;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
+import com.google.api.gax.httpjson.GaxHttpJsonProperties;
+import com.google.api.gax.httpjson.HttpJsonTransportChannel;
+import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -34,53 +34,41 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Arrays;
-import java.util.List;
 
-public class ServiceStubSettingsClassComposer extends AbstractServiceStubSettingsClassComposer {
+public class ServiceStubSettingsClassComposer extends
+    AbstractServiceStubSettingsClassComposer {
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
 
-  private static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_REST_TYPESTORE = createStaticTypes();
 
   public static ServiceStubSettingsClassComposer instance() {
     return INSTANCE;
   }
 
   protected ServiceStubSettingsClassComposer() {
-    super(GrpcContext.instance());
+    super(RestContext.instance());
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    return new TypeStore(
         Arrays.asList(
-            GaxGrpcProperties.class,
-            GrpcTransportChannel.class,
-            InstantiatingGrpcChannelProvider.class);
-    return new TypeStore(concreteClazzes);
+            GaxHttpJsonProperties.class,
+            HttpJsonTransportChannel.class,
+            InstantiatingHttpJsonChannelProvider.class));
   }
 
   @Override
   protected MethodDefinition createDefaultTransportTransportProviderBuilderMethod() {
-    // Create the defaultGrpcTransportProviderBuilder method.
+    // Create the defaultHttpJsonTransportProviderBuilder method.
     TypeNode returnType =
         TypeNode.withReference(
-            ConcreteReference.withClazz(InstantiatingGrpcChannelProvider.Builder.class));
+            ConcreteReference.withClazz(InstantiatingHttpJsonChannelProvider.Builder.class));
     MethodInvocationExpr transportChannelProviderBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
-                FIXED_GRPC_TYPESTORE.get(InstantiatingGrpcChannelProvider.class.getSimpleName()))
+                FIXED_REST_TYPESTORE.get(InstantiatingHttpJsonChannelProvider.class.getSimpleName()))
             .setMethodName("newBuilder")
-            .build();
-    transportChannelProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(transportChannelProviderBuilderExpr)
-            .setMethodName("setMaxInboundMessageSize")
-            .setArguments(
-                VariableExpr.builder()
-                    .setVariable(
-                        Variable.builder().setType(TypeNode.INT).setName("MAX_VALUE").build())
-                    .setStaticReferenceType(TypeNode.INT_OBJECT)
-                    .build())
             .setReturnType(returnType)
             .build();
     return MethodDefinition.builder()
@@ -89,7 +77,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(returnType)
-        .setName("defaultGrpcTransportProviderBuilder")
+        .setName("defaultHttpJsonTransportProviderBuilder")
         .setReturnExpr(transportChannelProviderBuilderExpr)
         .build();
   }
@@ -132,13 +120,13 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
             .setArguments(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(
-                        FIXED_GRPC_TYPESTORE.get(GaxGrpcProperties.class.getSimpleName()))
-                    .setMethodName("getGrpcTokenName")
+                        FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()))
+                    .setMethodName("getHttpJsonTokenName")
                     .build(),
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(
-                        FIXED_GRPC_TYPESTORE.get(GaxGrpcProperties.class.getSimpleName()))
-                    .setMethodName("getGrpcVersion")
+                        FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()))
+                    .setMethodName("getHttpJsonVersion")
                     .build())
             .setReturnType(returnType)
             .build();
@@ -164,7 +152,9 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   public MethodDefinition createDefaultTransportChannelProviderMethod() {
     TypeNode returnType = FIXED_TYPESTORE.get("TransportChannelProvider");
     MethodInvocationExpr transportProviderBuilderExpr =
-        MethodInvocationExpr.builder().setMethodName("defaultGrpcTransportProviderBuilder").build();
+        MethodInvocationExpr.builder()
+            .setMethodName("defaultHttpJsonTransportProviderBuilder")
+            .build();
     transportProviderBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(transportProviderBuilderExpr)
