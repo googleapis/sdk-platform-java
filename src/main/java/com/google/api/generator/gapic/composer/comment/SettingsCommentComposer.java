@@ -61,6 +61,8 @@ public class SettingsCommentComposer {
       toSimpleComment("Returns a builder for the default ExecutorProvider for this service.");
   public static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
       toSimpleComment("Returns the default service endpoint.");
+  public static final CommentStatement DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT =
+      toSimpleComment("Returns the default mTLS service endpoint.");
   public static final CommentStatement DEFAULT_SERVICE_SCOPES_METHOD_COMMENT =
       toSimpleComment("Returns the default service scopes.");
 

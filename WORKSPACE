@@ -32,7 +32,7 @@ jvm_maven_import_external(
 # gapic-generator-java dependencies to match the order in googleapis repository,
 # which in its turn, prioritizes actual generated clients runtime dependencies
 # over the generator dependencies.
-_gax_java_version = "1.64.0"
+_gax_java_version = "1.65.1"
 
 http_archive(
     name = "com_google_api_gax_java",
