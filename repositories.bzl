@@ -65,7 +65,8 @@ def gapic_generator_java_repositories():
         ],
     )
 
-    #TODO: replace with the googleapis-discovery upstream repo before mergin
+    #TODO: replace with the googleapis-discovery upstream after
+    #      https://github.com/googleapis/googleapis-discovery/pull/46 is merged
     _maybe(
         http_archive,
         name = "com_google_googleapis_discovery",
