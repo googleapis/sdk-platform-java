@@ -61,6 +61,7 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -918,6 +919,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
             .build());
 
+    // Create the getDefaultMtlsEndpoint method.
+    returnType = TypeNode.STRING;
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                SettingsCommentComposer.DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("getDefaultMtlsEndpoint")
+            .setReturnExpr(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(
+                        service.defaultHost().replace(".googleapis.com", ".mtls.googleapis.com"))))
+            .build());
+
     // Create the getDefaultServiceScopes method.
     returnType =
         TypeNode.withReference(
@@ -1593,6 +1610,21 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setMethodName("setEndpoint")
             .setArguments(
                 MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
+            .build());
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setMtlsEndpoint")
+            .setArguments(
+                MethodInvocationExpr.builder().setMethodName("getDefaultMtlsEndpoint").build())
+            .build());
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setSwitchToMtlsEndpointAllowed")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
             .build());
     bodyStatements.addAll(
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
