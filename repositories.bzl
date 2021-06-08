@@ -65,14 +65,12 @@ def gapic_generator_java_repositories():
         ],
     )
 
-    #TODO: replace with the googleapis-discovery upstream after
-    #      https://github.com/googleapis/googleapis-discovery/pull/46 is merged
     _maybe(
         http_archive,
         name = "com_google_googleapis_discovery",
-        strip_prefix = "googleapis-discovery-e38f9bcb93237eed01f40d4fe1337d820f9f6b80",
+        strip_prefix = "googleapis-discovery-4f5d0604132e93e63330e65e2e6648c75012780c",
         urls = [
-            "https://github.com/vam-google/googleapis-discovery/archive/e38f9bcb93237eed01f40d4fe1337d820f9f6b80.zip",
+            "https://github.com/googleapis/googleapis-discovery/archive/4f5d0604132e93e63330e65e2e6648c75012780c.zip",
         ],
     )
 
