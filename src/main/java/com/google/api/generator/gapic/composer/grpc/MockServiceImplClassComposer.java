@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -78,17 +79,9 @@ public class MockServiceImplClassComposer implements ClassComposer {
                               Arrays.asList(FIXED_TYPESTORE.get("AbstractMessage").reference()))
                           .build()))
               .build());
-  private static final VariableExpr responsesVarExpr =
-      VariableExpr.withVariable(
-          Variable.builder()
-              .setName("responses")
-              .setType(
-                  TypeNode.withReference(
-                      ConcreteReference.builder()
-                          .setClazz(Queue.class)
-                          .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
-                          .build()))
-              .build());
+
+  private static Reference javaObjectReference = ConcreteReference.withClazz(Object.class);
+  private static VariableExpr responsesVarExpr;
 
   private MockServiceImplClassComposer() {}
 
@@ -97,11 +90,33 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(GapicContext ignored, Service service) {
+  public GapicClass generate(GapicContext context, Service service) {
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getMockServiceImplClassName(service);
     GapicClass.Kind kind = Kind.TEST;
     String pakkage = service.pakkage();
+
+    // Use the full name java.lang.Object if there is a proto message that is also named "Object".
+    // Affects GCS.
+    if (context.messages().keySet().stream()
+        .map(s -> s.substring(Math.max(0, s.lastIndexOf(".") + 1), s.length()))
+        .collect(Collectors.toSet())
+        .contains("Object")) {
+      javaObjectReference =
+          ConcreteReference.builder().setClazz(Object.class).setUseFullName(true).build();
+    }
+
+    responsesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("responses")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(Queue.class)
+                            .setGenerics(Arrays.asList(javaObjectReference))
+                            .build()))
+                .build());
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -201,8 +216,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
     Expr responseAssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
-                responsesVarExpr
-                    .toBuilder()
+                responsesVarExpr.toBuilder()
                     .setExprReferenceExpr(
                         ValueExpr.withValue(ThisObjectValue.withType(getThisClassType(service))))
                     .build())
@@ -212,8 +226,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                         TypeNode.withReference(
                             ConcreteReference.builder()
                                 .setClazz(LinkedList.class)
-                                .setGenerics(
-                                    Arrays.asList(ConcreteReference.withClazz(Object.class)))
+                                .setGenerics(Arrays.asList(javaObjectReference))
                                 .build()))
                     .setArguments(Arrays.asList(responsesArgVarExpr))
                     .build())
@@ -267,7 +280,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
   private static MethodDefinition createGenericProtoMethodOverride(Method protoMethod) {
     ConcreteReference streamObserverRef = ConcreteReference.withClazz(StreamObserver.class);
-    TypeNode objectType = TypeNode.withReference(ConcreteReference.withClazz(Object.class));
+    TypeNode objectType = TypeNode.withReference(javaObjectReference);
     VariableExpr localResponseVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("response").setType(objectType).build());
@@ -372,7 +385,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
     VariableExpr valueVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("value").setType(protoMethod.inputType()).build());
-    TypeNode objectType = TypeNode.withReference(ConcreteReference.withClazz(Object.class));
+    TypeNode objectType = TypeNode.withReference(javaObjectReference);
 
     Statement addValueToRequestsStatement =
         ExprStatement.withExpr(
