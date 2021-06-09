@@ -582,7 +582,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build();
 
     // While protobufs should not be null, this null-check is needed to protect against NPEs
-    // in paged iteration, as some clients actually return null instead of an empty list.
+    // in paged iteration on clients that use legacy HTTP/JSON types, as these clients can
+    // actually return null instead of an empty list.
     // Context:
     //   Original issue: https://github.com/googleapis/google-cloud-java/issues/3736
     //   Relevant discussion where this check was first added:
