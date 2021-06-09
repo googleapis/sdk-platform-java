@@ -98,10 +98,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
     // Use the full name java.lang.Object if there is a proto message that is also named "Object".
     // Affects GCS.
-    if (context.messages().keySet().stream()
-        .map(s -> s.substring(s.lastIndexOf('.') + 1, s.length()))
-        .collect(Collectors.toSet())
-        .contains("Object")) {
+    if (context.messages().keySet().stream().anyMatch(s -> s.equals("Object") || s.endsWith(".Object")) {
       javaObjectReference =
           ConcreteReference.builder().setClazz(Object.class).setUseFullName(true).build();
     }
