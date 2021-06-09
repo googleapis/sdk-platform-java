@@ -111,6 +111,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return ((EchoStubSettings) getStubSettings()).blockSettings();
   }
 
+  /** Returns the object with the settings used for calls to collideName. */
+  public UnaryCallSettings<EchoRequest, Object> collideNameSettings() {
+    return ((EchoStubSettings) getStubSettings()).collideNameSettings();
+  }
+
   public static final EchoSettings create(EchoStubSettings stub) throws IOException {
     return new EchoSettings.Builder(stub.toBuilder()).build();
   }
@@ -261,6 +266,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     /** Returns the builder for the settings used for calls to block. */
     public UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings() {
       return getStubSettingsBuilder().blockSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to collideName. */
+    public UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings() {
+      return getStubSettingsBuilder().collideNameSettings();
     }
 
     @Override

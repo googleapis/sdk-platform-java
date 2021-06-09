@@ -17,6 +17,7 @@ import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.Object;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -85,6 +86,10 @@ public abstract class EchoStub implements BackgroundResource {
 
   public UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     throw new UnsupportedOperationException("Not implemented: blockCallable()");
+  }
+
+  public UnaryCallable<EchoRequest, Object> collideNameCallable() {
+    throw new UnsupportedOperationException("Not implemented: collideNameCallable()");
   }
 
   @Override
