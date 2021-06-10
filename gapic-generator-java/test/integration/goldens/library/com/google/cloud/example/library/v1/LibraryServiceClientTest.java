@@ -46,6 +46,7 @@ import com.google.example.library.v1.ShelfName;
 import com.google.example.library.v1.UpdateBookRequest;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.FieldMask;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -345,9 +346,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     ShelfName name = ShelfName.of("[SHELF_ID]");
-    ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
+    ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
 
-    Shelf actualResponse = client.mergeShelves(name, otherShelfName);
+    Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
@@ -355,7 +356,7 @@ public class LibraryServiceClientTest {
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
     Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertEquals(otherShelfName.toString(), actualRequest.getOtherShelfName());
+    Assert.assertEquals(otherShelf.toString(), actualRequest.getOtherShelf());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -369,8 +370,8 @@ public class LibraryServiceClientTest {
 
     try {
       ShelfName name = ShelfName.of("[SHELF_ID]");
-      ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
-      client.mergeShelves(name, otherShelfName);
+      ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
+      client.mergeShelves(name, otherShelf);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -387,9 +388,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     ShelfName name = ShelfName.of("[SHELF_ID]");
-    String otherShelfName = "otherShelfName-1942963547";
+    String otherShelf = "otherShelf-193668870";
 
-    Shelf actualResponse = client.mergeShelves(name, otherShelfName);
+    Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
@@ -397,7 +398,7 @@ public class LibraryServiceClientTest {
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
     Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertEquals(otherShelfName, actualRequest.getOtherShelfName());
+    Assert.assertEquals(otherShelf, actualRequest.getOtherShelf());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -411,8 +412,8 @@ public class LibraryServiceClientTest {
 
     try {
       ShelfName name = ShelfName.of("[SHELF_ID]");
-      String otherShelfName = "otherShelfName-1942963547";
-      client.mergeShelves(name, otherShelfName);
+      String otherShelf = "otherShelf-193668870";
+      client.mergeShelves(name, otherShelf);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -429,9 +430,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     String name = "name3373707";
-    ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
+    ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
 
-    Shelf actualResponse = client.mergeShelves(name, otherShelfName);
+    Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
@@ -439,7 +440,7 @@ public class LibraryServiceClientTest {
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
     Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertEquals(otherShelfName.toString(), actualRequest.getOtherShelfName());
+    Assert.assertEquals(otherShelf.toString(), actualRequest.getOtherShelf());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -453,8 +454,8 @@ public class LibraryServiceClientTest {
 
     try {
       String name = "name3373707";
-      ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
-      client.mergeShelves(name, otherShelfName);
+      ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
+      client.mergeShelves(name, otherShelf);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -471,9 +472,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     String name = "name3373707";
-    String otherShelfName = "otherShelfName-1942963547";
+    String otherShelf = "otherShelf-193668870";
 
-    Shelf actualResponse = client.mergeShelves(name, otherShelfName);
+    Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
@@ -481,7 +482,7 @@ public class LibraryServiceClientTest {
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
     Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertEquals(otherShelfName, actualRequest.getOtherShelfName());
+    Assert.assertEquals(otherShelf, actualRequest.getOtherShelf());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -495,8 +496,8 @@ public class LibraryServiceClientTest {
 
     try {
       String name = "name3373707";
-      String otherShelfName = "otherShelfName-1942963547";
-      client.mergeShelves(name, otherShelfName);
+      String otherShelf = "otherShelf-193668870";
+      client.mergeShelves(name, otherShelf);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -507,24 +508,24 @@ public class LibraryServiceClientTest {
   public void createBookTest() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    ShelfName name = ShelfName.of("[SHELF_ID]");
+    ShelfName parent = ShelfName.of("[SHELF_ID]");
     Book book = Book.newBuilder().build();
 
-    Book actualResponse = client.createBook(name, book);
+    Book actualResponse = client.createBook(parent, book);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBookRequest actualRequest = ((CreateBookRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertEquals(parent.toString(), actualRequest.getParent());
     Assert.assertEquals(book, actualRequest.getBook());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -538,9 +539,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      ShelfName name = ShelfName.of("[SHELF_ID]");
+      ShelfName parent = ShelfName.of("[SHELF_ID]");
       Book book = Book.newBuilder().build();
-      client.createBook(name, book);
+      client.createBook(parent, book);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -551,24 +552,24 @@ public class LibraryServiceClientTest {
   public void createBookTest2() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    String name = "name3373707";
+    String parent = "parent-995424086";
     Book book = Book.newBuilder().build();
 
-    Book actualResponse = client.createBook(name, book);
+    Book actualResponse = client.createBook(parent, book);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBookRequest actualRequest = ((CreateBookRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertEquals(parent, actualRequest.getParent());
     Assert.assertEquals(book, actualRequest.getBook());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -582,9 +583,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      String name = "name3373707";
+      String parent = "parent-995424086";
       Book book = Book.newBuilder().build();
-      client.createBook(name, book);
+      client.createBook(parent, book);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -595,14 +596,14 @@ public class LibraryServiceClientTest {
   public void getBookTest() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+    BookName name = BookName.of("[SHELF]", "[BOOK]");
 
     Book actualResponse = client.getBook(name);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -624,7 +625,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+      BookName name = BookName.of("[SHELF]", "[BOOK]");
       client.getBook(name);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -636,7 +637,7 @@ public class LibraryServiceClientTest {
   public void getBookTest2() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
@@ -683,9 +684,9 @@ public class LibraryServiceClientTest {
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    ShelfName name = ShelfName.of("[SHELF_ID]");
+    ShelfName parent = ShelfName.of("[SHELF_ID]");
 
-    ListBooksPagedResponse pagedListResponse = client.listBooks(name);
+    ListBooksPagedResponse pagedListResponse = client.listBooks(parent);
 
     List<Book> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
@@ -696,7 +697,7 @@ public class LibraryServiceClientTest {
     Assert.assertEquals(1, actualRequests.size());
     ListBooksRequest actualRequest = ((ListBooksRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertEquals(parent.toString(), actualRequest.getParent());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -709,8 +710,8 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      ShelfName name = ShelfName.of("[SHELF_ID]");
-      client.listBooks(name);
+      ShelfName parent = ShelfName.of("[SHELF_ID]");
+      client.listBooks(parent);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -727,9 +728,9 @@ public class LibraryServiceClientTest {
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    String name = "name3373707";
+    String parent = "parent-995424086";
 
-    ListBooksPagedResponse pagedListResponse = client.listBooks(name);
+    ListBooksPagedResponse pagedListResponse = client.listBooks(parent);
 
     List<Book> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
@@ -740,7 +741,7 @@ public class LibraryServiceClientTest {
     Assert.assertEquals(1, actualRequests.size());
     ListBooksRequest actualRequest = ((ListBooksRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertEquals(parent, actualRequest.getParent());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -753,8 +754,8 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      String name = "name3373707";
-      client.listBooks(name);
+      String parent = "parent-995424086";
+      client.listBooks(parent);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -766,15 +767,15 @@ public class LibraryServiceClientTest {
     Empty expectedResponse = Empty.newBuilder().build();
     mockLibraryService.addResponse(expectedResponse);
 
-    DeleteBookRequest request = DeleteBookRequest.newBuilder().setName("name3373707").build();
+    BookName name = BookName.of("[SHELF]", "[BOOK]");
 
-    client.deleteBook(request);
+    client.deleteBook(name);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBookRequest actualRequest = ((DeleteBookRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(name.toString(), actualRequest.getName());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -787,8 +788,42 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      DeleteBookRequest request = DeleteBookRequest.newBuilder().setName("name3373707").build();
-      client.deleteBook(request);
+      BookName name = BookName.of("[SHELF]", "[BOOK]");
+      client.deleteBook(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void deleteBookTest2() throws Exception {
+    Empty expectedResponse = Empty.newBuilder().build();
+    mockLibraryService.addResponse(expectedResponse);
+
+    String name = "name3373707";
+
+    client.deleteBook(name);
+
+    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    DeleteBookRequest actualRequest = ((DeleteBookRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void deleteBookExceptionTest2() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockLibraryService.addException(exception);
+
+    try {
+      String name = "name3373707";
+      client.deleteBook(name);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -799,7 +834,7 @@ public class LibraryServiceClientTest {
   public void updateBookTest() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
@@ -807,8 +842,9 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     Book book = Book.newBuilder().build();
+    FieldMask updateMask = FieldMask.newBuilder().build();
 
-    Book actualResponse = client.updateBook(book);
+    Book actualResponse = client.updateBook(book, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
@@ -816,6 +852,7 @@ public class LibraryServiceClientTest {
     UpdateBookRequest actualRequest = ((UpdateBookRequest) actualRequests.get(0));
 
     Assert.assertEquals(book, actualRequest.getBook());
+    Assert.assertEquals(updateMask, actualRequest.getUpdateMask());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -829,7 +866,8 @@ public class LibraryServiceClientTest {
 
     try {
       Book book = Book.newBuilder().build();
-      client.updateBook(book);
+      FieldMask updateMask = FieldMask.newBuilder().build();
+      client.updateBook(book, updateMask);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -840,14 +878,14 @@ public class LibraryServiceClientTest {
   public void moveBookTest() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+    BookName name = BookName.of("[SHELF]", "[BOOK]");
     ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
 
     Book actualResponse = client.moveBook(name, otherShelfName);
@@ -871,7 +909,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+      BookName name = BookName.of("[SHELF]", "[BOOK]");
       ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
       client.moveBook(name, otherShelfName);
       Assert.fail("No exception raised");
@@ -884,14 +922,14 @@ public class LibraryServiceClientTest {
   public void moveBookTest2() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
             .build();
     mockLibraryService.addResponse(expectedResponse);
 
-    BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+    BookName name = BookName.of("[SHELF]", "[BOOK]");
     String otherShelfName = "otherShelfName-1942963547";
 
     Book actualResponse = client.moveBook(name, otherShelfName);
@@ -915,7 +953,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addException(exception);
 
     try {
-      BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+      BookName name = BookName.of("[SHELF]", "[BOOK]");
       String otherShelfName = "otherShelfName-1942963547";
       client.moveBook(name, otherShelfName);
       Assert.fail("No exception raised");
@@ -928,7 +966,7 @@ public class LibraryServiceClientTest {
   public void moveBookTest3() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
@@ -972,7 +1010,7 @@ public class LibraryServiceClientTest {
   public void moveBookTest4() throws Exception {
     Book expectedResponse =
         Book.newBuilder()
-            .setName(BookName.of("[SHELF_ID]", "[BOOK_ID]").toString())
+            .setName(BookName.of("[SHELF]", "[BOOK]").toString())
             .setAuthor("author-1406328437")
             .setTitle("title110371416")
             .setRead(true)
