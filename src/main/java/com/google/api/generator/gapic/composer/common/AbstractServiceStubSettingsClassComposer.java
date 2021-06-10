@@ -61,6 +61,7 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -579,6 +580,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
             .setReturnType(returnType)
             .build();
+
+    // While protobufs should not be null, this null-check is needed to protect against NPEs
+    // in paged iteration on clients that use legacy HTTP/JSON types, as these clients can
+    // actually return null instead of an empty list.
+    // Context:
+    //   Original issue: https://github.com/googleapis/google-cloud-java/issues/3736
+    //   Relevant discussion where this check was first added:
+    //        https://github.com/googleapis/google-cloud-java/pull/4499#discussion_r257057409
     Expr conditionExpr =
         RelationalOperationExpr.equalToWithExprs(getResponsesListExpr, ValueExpr.createNullExpr());
     Expr thenExpr =
@@ -916,6 +925,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .setName("getDefaultEndpoint")
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
+            .build());
+
+    // Create the getDefaultMtlsEndpoint method.
+    returnType = TypeNode.STRING;
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                SettingsCommentComposer.DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("getDefaultMtlsEndpoint")
+            .setReturnExpr(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(
+                        service.defaultHost().replace(".googleapis.com", ".mtls.googleapis.com"))))
             .build());
 
     // Create the getDefaultServiceScopes method.
@@ -1593,6 +1618,21 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setMethodName("setEndpoint")
             .setArguments(
                 MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
+            .build());
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setMtlsEndpoint")
+            .setArguments(
+                MethodInvocationExpr.builder().setMethodName("getDefaultMtlsEndpoint").build())
+            .build());
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setSwitchToMtlsEndpointAllowed")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
             .build());
     bodyStatements.addAll(
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
