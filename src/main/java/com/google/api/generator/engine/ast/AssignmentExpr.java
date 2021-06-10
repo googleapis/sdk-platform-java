@@ -64,8 +64,10 @@ public abstract class AssignmentExpr implements Expr {
         if (rhsType != TypeNode.NULL && !lhsType.isSupertypeOrEquals(rhsType)) {
           throw new TypeMismatchException(
               String.format(
-                  "LHS type %s must be a supertype of the RHS type %s",
-                  lhsType.reference().name(), rhsType.reference().name()));
+                  "LHS type %s of variable %s must be a supertype of the RHS type %s",
+                  lhsType.reference().name(),
+                  assignmentExpr.variableExpr().variable().identifier(),
+                  rhsType.reference().name()));
         }
       }
 

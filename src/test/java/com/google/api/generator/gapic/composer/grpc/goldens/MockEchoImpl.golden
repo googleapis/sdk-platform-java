@@ -15,7 +15,7 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 public class MockEchoImpl extends EchoImplBase {
   private List<AbstractMessage> requests;
-  private Queue<Object> responses;
+  private Queue<java.lang.Object> responses;
 
   public MockEchoImpl() {
     requests = new ArrayList<>();
@@ -31,7 +31,7 @@ public class MockEchoImpl extends EchoImplBase {
   }
 
   public void setResponses(List<AbstractMessage> responses) {
-    this.responses = new LinkedList<Object>(responses);
+    this.responses = new LinkedList<java.lang.Object>(responses);
   }
 
   public void addException(Exception exception) {
@@ -45,7 +45,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void echo(EchoRequest request, StreamObserver<EchoResponse> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof EchoResponse) {
       requests.add(request);
       responseObserver.onNext(((EchoResponse) response));
@@ -65,7 +65,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void expand(ExpandRequest request, StreamObserver<EchoResponse> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof EchoResponse) {
       requests.add(request);
       responseObserver.onNext(((EchoResponse) response));
@@ -90,7 +90,7 @@ public class MockEchoImpl extends EchoImplBase {
           @Override
           public void onNext(EchoRequest value) {
             requests.add(value);
-            final Object response = responses.remove();
+            final java.lang.Object response = responses.remove();
             if (response instanceof EchoResponse) {
               responseObserver.onNext(((EchoResponse) response));
             } else if (response instanceof Exception) {
@@ -126,7 +126,7 @@ public class MockEchoImpl extends EchoImplBase {
           @Override
           public void onNext(EchoRequest value) {
             requests.add(value);
-            final Object response = responses.remove();
+            final java.lang.Object response = responses.remove();
             if (response instanceof EchoResponse) {
               responseObserver.onNext(((EchoResponse) response));
             } else if (response instanceof Exception) {
@@ -163,7 +163,7 @@ public class MockEchoImpl extends EchoImplBase {
           @Override
           public void onNext(EchoRequest value) {
             requests.add(value);
-            final Object response = responses.remove();
+            final java.lang.Object response = responses.remove();
             if (response instanceof EchoResponse) {
               responseObserver.onNext(((EchoResponse) response));
             } else if (response instanceof Exception) {
@@ -195,7 +195,7 @@ public class MockEchoImpl extends EchoImplBase {
   @Override
   public void pagedExpand(
       PagedExpandRequest request, StreamObserver<PagedExpandResponse> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof PagedExpandResponse) {
       requests.add(request);
       responseObserver.onNext(((PagedExpandResponse) response));
@@ -216,7 +216,7 @@ public class MockEchoImpl extends EchoImplBase {
   @Override
   public void simplePagedExpand(
       PagedExpandRequest request, StreamObserver<PagedExpandResponse> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof PagedExpandResponse) {
       requests.add(request);
       responseObserver.onNext(((PagedExpandResponse) response));
@@ -236,7 +236,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void wait(WaitRequest request, StreamObserver<Operation> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof Operation) {
       requests.add(request);
       responseObserver.onNext(((Operation) response));
@@ -256,7 +256,7 @@ public class MockEchoImpl extends EchoImplBase {
 
   @Override
   public void block(BlockRequest request, StreamObserver<BlockResponse> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof BlockResponse) {
       requests.add(request);
       responseObserver.onNext(((BlockResponse) response));
@@ -270,6 +270,26 @@ public class MockEchoImpl extends EchoImplBase {
                   "Unrecognized response type %s for method Block, expected %s or %s",
                   response == null ? "null" : response.getClass().getName(),
                   BlockResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void collideName(EchoRequest request, StreamObserver<Object> responseObserver) {
+    java.lang.Object response = responses.poll();
+    if (response instanceof Object) {
+      requests.add(request);
+      responseObserver.onNext(((Object) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CollideName, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  Object.class.getName(),
                   Exception.class.getName())));
     }
   }

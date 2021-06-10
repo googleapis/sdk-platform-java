@@ -110,7 +110,7 @@ public class ParserTest {
             Optional.empty(),
             outputResourceNames);
 
-    assertEquals(9, methods.size());
+    assertEquals(10, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method echoMethod = methods.get(0);
@@ -167,7 +167,7 @@ public class ParserTest {
             Optional.empty(),
             outputResourceNames);
 
-    assertEquals(9, methods.size());
+    assertEquals(10, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method waitMethod = methods.get(7);
