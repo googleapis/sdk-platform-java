@@ -29,29 +29,29 @@ import javax.annotation.Generated;
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
 public class BookName implements ResourceName {
-  private static final PathTemplate SHELF_ID_BOOK_ID =
-      PathTemplate.createWithoutUrlEncoding("shelves/{shelf_id}/books/{book_id}");
+  private static final PathTemplate SHELF_BOOK =
+      PathTemplate.createWithoutUrlEncoding("shelves/{shelf}/books/{book}");
   private volatile Map<String, String> fieldValuesMap;
-  private final String shelfId;
-  private final String bookId;
+  private final String shelf;
+  private final String book;
 
   @Deprecated
   protected BookName() {
-    shelfId = null;
-    bookId = null;
+    shelf = null;
+    book = null;
   }
 
   private BookName(Builder builder) {
-    shelfId = Preconditions.checkNotNull(builder.getShelfId());
-    bookId = Preconditions.checkNotNull(builder.getBookId());
+    shelf = Preconditions.checkNotNull(builder.getShelf());
+    book = Preconditions.checkNotNull(builder.getBook());
   }
 
-  public String getShelfId() {
-    return shelfId;
+  public String getShelf() {
+    return shelf;
   }
 
-  public String getBookId() {
-    return bookId;
+  public String getBook() {
+    return book;
   }
 
   public static Builder newBuilder() {
@@ -62,12 +62,12 @@ public class BookName implements ResourceName {
     return new Builder(this);
   }
 
-  public static BookName of(String shelfId, String bookId) {
-    return newBuilder().setShelfId(shelfId).setBookId(bookId).build();
+  public static BookName of(String shelf, String book) {
+    return newBuilder().setShelf(shelf).setBook(book).build();
   }
 
-  public static String format(String shelfId, String bookId) {
-    return newBuilder().setShelfId(shelfId).setBookId(bookId).build().toString();
+  public static String format(String shelf, String book) {
+    return newBuilder().setShelf(shelf).setBook(book).build().toString();
   }
 
   public static BookName parse(String formattedString) {
@@ -75,9 +75,9 @@ public class BookName implements ResourceName {
       return null;
     }
     Map<String, String> matchMap =
-        SHELF_ID_BOOK_ID.validatedMatch(
+        SHELF_BOOK.validatedMatch(
             formattedString, "BookName.parse: formattedString not in valid format");
-    return of(matchMap.get("shelf_id"), matchMap.get("book_id"));
+    return of(matchMap.get("shelf"), matchMap.get("book"));
   }
 
   public static List<BookName> parseList(List<String> formattedStrings) {
@@ -101,7 +101,7 @@ public class BookName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return SHELF_ID_BOOK_ID.matches(formattedString);
+    return SHELF_BOOK.matches(formattedString);
   }
 
   @Override
@@ -110,11 +110,11 @@ public class BookName implements ResourceName {
       synchronized (this) {
         if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (shelfId != null) {
-            fieldMapBuilder.put("shelf_id", shelfId);
+          if (shelf != null) {
+            fieldMapBuilder.put("shelf", shelf);
           }
-          if (bookId != null) {
-            fieldMapBuilder.put("book_id", bookId);
+          if (book != null) {
+            fieldMapBuilder.put("book", book);
           }
           fieldValuesMap = fieldMapBuilder.build();
         }
@@ -129,7 +129,7 @@ public class BookName implements ResourceName {
 
   @Override
   public String toString() {
-    return SHELF_ID_BOOK_ID.instantiate("shelf_id", shelfId, "book_id", bookId);
+    return SHELF_BOOK.instantiate("shelf", shelf, "book", book);
   }
 
   @Override
@@ -139,7 +139,7 @@ public class BookName implements ResourceName {
     }
     if (o != null || getClass() == o.getClass()) {
       BookName that = ((BookName) o);
-      return Objects.equals(this.shelfId, that.shelfId) && Objects.equals(this.bookId, that.bookId);
+      return Objects.equals(this.shelf, that.shelf) && Objects.equals(this.book, that.book);
     }
     return false;
   }
@@ -148,40 +148,40 @@ public class BookName implements ResourceName {
   public int hashCode() {
     int h = 1;
     h *= 1000003;
-    h ^= Objects.hashCode(shelfId);
+    h ^= Objects.hashCode(shelf);
     h *= 1000003;
-    h ^= Objects.hashCode(bookId);
+    h ^= Objects.hashCode(book);
     return h;
   }
 
-  /** Builder for shelves/{shelf_id}/books/{book_id}. */
+  /** Builder for shelves/{shelf}/books/{book}. */
   public static class Builder {
-    private String shelfId;
-    private String bookId;
+    private String shelf;
+    private String book;
 
     protected Builder() {}
 
-    public String getShelfId() {
-      return shelfId;
+    public String getShelf() {
+      return shelf;
     }
 
-    public String getBookId() {
-      return bookId;
+    public String getBook() {
+      return book;
     }
 
-    public Builder setShelfId(String shelfId) {
-      this.shelfId = shelfId;
+    public Builder setShelf(String shelf) {
+      this.shelf = shelf;
       return this;
     }
 
-    public Builder setBookId(String bookId) {
-      this.bookId = bookId;
+    public Builder setBook(String book) {
+      this.book = book;
       return this;
     }
 
     private Builder(BookName bookName) {
-      shelfId = bookName.shelfId;
-      bookId = bookName.bookId;
+      shelf = bookName.shelf;
+      book = bookName.book;
     }
 
     public BookName build() {

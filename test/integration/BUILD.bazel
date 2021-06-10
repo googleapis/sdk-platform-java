@@ -29,6 +29,7 @@ INTEGRATION_TEST_LIBRARIES = [
     "logging",  # Java package remapping in gapic.yaml.
     "redis",  # Has a gapic.yaml.
     "library",  # No gRPC service config.
+    "compute", # REGAPIC test.
 ]
 
 # Keys must match the values in INTEGRATION_TEST_LIBRARIES above.
@@ -41,6 +42,7 @@ API_GAPIC_TARGETS = {
     "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
     "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
+    "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
 }
 
 [integration_test(
