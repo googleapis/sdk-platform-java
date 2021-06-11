@@ -14,13 +14,8 @@
 
 package com.google.api.generator.debug;
 
-import com.google.api.AnnotationsProto;
-import com.google.api.ClientProto;
-import com.google.api.FieldBehaviorProto;
-import com.google.api.ResourceProto;
 import com.google.api.generator.Main;
 import com.google.api.generator.gapic.Generator;
-import com.google.longrunning.OperationsProto;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
@@ -44,14 +39,5 @@ public class MainFromFile {
       CodeGeneratorResponse response = Generator.generateGapic(request);
       response.writeTo(outputStream);
     }
-  }
-
-  /** Register all extensions needed to process API protofiles. */
-  private static void registerAllExtensions(ExtensionRegistry extensionRegistry) {
-    OperationsProto.registerAllExtensions(extensionRegistry);
-    AnnotationsProto.registerAllExtensions(extensionRegistry);
-    ClientProto.registerAllExtensions(extensionRegistry);
-    ResourceProto.registerAllExtensions(extensionRegistry);
-    FieldBehaviorProto.registerAllExtensions(extensionRegistry);
   }
 }

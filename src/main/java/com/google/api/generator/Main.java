@@ -20,7 +20,6 @@ import com.google.api.FieldBehaviorProto;
 import com.google.api.ResourceProto;
 import com.google.api.generator.gapic.Generator;
 import com.google.longrunning.OperationsProto;
-import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
