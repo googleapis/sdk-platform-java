@@ -27,8 +27,7 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
 
 public class Main {
-  public static void main(String[] args)
-      throws IOException, InterruptedException, DescriptorValidationException {
+  public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
@@ -37,7 +36,7 @@ public class Main {
   }
 
   /** Register all extensions needed to process API protofiles. */
-  private static void registerAllExtensions(ExtensionRegistry extensionRegistry) {
+  public static void registerAllExtensions(ExtensionRegistry extensionRegistry) {
     OperationsProto.registerAllExtensions(extensionRegistry);
     AnnotationsProto.registerAllExtensions(extensionRegistry);
     ClientProto.registerAllExtensions(extensionRegistry);

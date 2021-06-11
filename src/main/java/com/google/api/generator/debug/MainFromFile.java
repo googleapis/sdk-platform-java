@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator;
+package com.google.api.generator.debug;
 
 import com.google.api.AnnotationsProto;
 import com.google.api.ClientProto;
 import com.google.api.FieldBehaviorProto;
 import com.google.api.ResourceProto;
+import com.google.api.generator.Main;
 import com.google.api.generator.gapic.Generator;
 import com.google.longrunning.OperationsProto;
-import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
@@ -31,21 +31,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class MainFromFile {
-  public static void main(String[] args)
-      throws IOException, InterruptedException, DescriptorValidationException {
+  public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    registerAllExtensions(registry);
+    Main.registerAllExtensions(registry);
 
     String inputFile = args[0];
     String outputFile = args[1];
 
     try (InputStream inputStream = new FileInputStream(inputFile);
-        OutputStream outputStream = new FileOutputStream(outputFile); ) {
+        OutputStream outputStream = new FileOutputStream(outputFile)) {
       CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(inputStream, registry);
       CodeGeneratorResponse response = Generator.generateGapic(request);
       response.writeTo(outputStream);
-    } catch (IOException ex) {
-      ex.printStackTrace();
     }
   }
 

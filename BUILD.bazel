@@ -46,10 +46,11 @@ java_binary(
 )
 
 java_binary(
-    name = "protoc-gen-java_dumper",
-    main_class = "com.google.api.generator.MainDumper",
+    name = "protoc-gen-code_generator_request_dumper",
+    main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
     runtime_deps = [
         "//src/main/java/com/google/api/generator",
+        "//src/main/java/com/google/api/generator/debug",
         "//src/main/java/com/google/api/generator/gapic",
         "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
@@ -59,10 +60,11 @@ java_binary(
 )
 
 java_binary(
-    name = "protoc-gen-java_gapicfromfile",
-    main_class = "com.google.api.generator.MainFromFile",
+    name = "protoc-gen-java_gapic_from_file",
+    main_class = "com.google.api.generator.debug.MainFromFile",
     runtime_deps = [
         "//src/main/java/com/google/api/generator",
+        "//src/main/java/com/google/api/generator/debug",
         "//src/main/java/com/google/api/generator/gapic",
         "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",

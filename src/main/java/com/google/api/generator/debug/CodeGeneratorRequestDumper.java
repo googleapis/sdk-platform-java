@@ -12,22 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator;
+package com.google.api.generator.debug;
 
-import com.google.api.AnnotationsProto;
-import com.google.api.ClientProto;
-import com.google.api.FieldBehaviorProto;
-import com.google.api.ResourceProto;
-import com.google.longrunning.OperationsProto;
+import com.google.api.generator.Main;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
 
-public class MainDumper {
+public class CodeGeneratorRequestDumper {
   public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    registerAllExtensions(registry);
+    Main.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
@@ -37,14 +33,5 @@ public class MainDumper {
         .setName("desc-dump.bin")
         .setContentBytes(request.toByteString());
     response.build().writeTo(System.out);
-  }
-
-  /** Register all extensions needed to process API protofiles. */
-  private static void registerAllExtensions(ExtensionRegistry extensionRegistry) {
-    OperationsProto.registerAllExtensions(extensionRegistry);
-    AnnotationsProto.registerAllExtensions(extensionRegistry);
-    ClientProto.registerAllExtensions(extensionRegistry);
-    ResourceProto.registerAllExtensions(extensionRegistry);
-    FieldBehaviorProto.registerAllExtensions(extensionRegistry);
   }
 }
