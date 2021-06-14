@@ -119,18 +119,19 @@ def _append_dep_without_duplicates(dest_deps, new_deps):
             dest_deps.append(new_deps[i])
     return dest_deps
 
-def _java_gapic_srcjar(
+def java_gapic_library(
         name,
         srcs,
-        grpc_service_config,
-        gapic_yaml,
-        service_yaml,
+        grpc_service_config = None,
+        gapic_yaml = None,
+        service_yaml = None,
+        deps = [],
+        test_deps = [],
         # possible values are: "grpc", "rest", "grpc+rest"
-        transport,
+        transport = None,
         # Can be used to provide a java_library with a customized generator,
         # like the one which dumps descriptor to a file for future debugging.
-        java_generator_name = "java_gapic",
-        output_suffix = ".srcjar",
+        _java_generator_name = "java_gapic",
         **kwargs):
     file_args_dict = {}
 
@@ -158,6 +159,8 @@ def _java_gapic_srcjar(
         else:
             fail("Service.yaml is no longer supported in the Java microgenerator")
 
+    srcjar_name = name + "_srcjar"
+    raw_srcjar_name = srcjar_name + "_raw"
     output_suffix = ".srcjar"
     opt_args = []
 
@@ -169,40 +172,15 @@ def _java_gapic_srcjar(
     plugin_args = ["metadata"]
 
     proto_custom_library(
-        name = name,
+        name = raw_srcjar_name,
         deps = srcs,
-        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % java_generator_name),
+        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % _java_generator_name),
         plugin_args = plugin_args,
         plugin_file_args = {},
         opt_file_args = file_args_dict,
-        output_type = java_generator_name,
+        output_type = _java_generator_name,
         output_suffix = output_suffix,
         opt_args = opt_args,
-        **kwargs
-    )
-
-def java_gapic_library(
-        name,
-        srcs,
-        grpc_service_config = None,
-        gapic_yaml = None,
-        service_yaml = None,
-        deps = [],
-        test_deps = [],
-        # possible values are: "grpc", "rest", "grpc+rest"
-        transport = None,
-        **kwargs):
-    srcjar_name = name + "_srcjar"
-    raw_srcjar_name = srcjar_name + "_raw"
-
-    _java_gapic_srcjar(
-        name = raw_srcjar_name,
-        srcs = srcs,
-        grpc_service_config = grpc_service_config,
-        gapic_yaml = gapic_yaml,
-        service_yaml = service_yaml,
-        transport = transport,
-        java_generator_name = "java_gapic",
         **kwargs
     )
 
@@ -302,24 +280,5 @@ def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
     native.test_suite(
         name = name,
         tests = test_classes,
-        **kwargs
-    )
-
-def java_generator_request_dump(
-        name,
-        srcs,
-        grpc_service_config = None,
-        gapic_yaml = None,
-        service_yaml = None,
-        transport = None,
-        **kwargs):
-    _java_gapic_srcjar(
-        name = name,
-        srcs = srcs,
-        grpc_service_config = grpc_service_config,
-        gapic_yaml = gapic_yaml,
-        service_yaml = service_yaml,
-        transport = transport,
-        java_generator_name = "code_generator_request_dumper",
         **kwargs
     )
