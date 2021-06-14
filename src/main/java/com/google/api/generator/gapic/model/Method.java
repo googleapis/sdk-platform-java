@@ -41,6 +41,9 @@ public abstract class Method {
 
   public abstract boolean isPaged();
 
+  @Nullable
+  public abstract String pageSizeFieldName();
+
   public abstract boolean isDeprecated();
 
   @Nullable
@@ -124,6 +127,8 @@ public abstract class Method {
     public abstract Builder setIsBatching(boolean isBatching);
 
     public abstract Builder setIsPaged(boolean isPaged);
+
+    public abstract Builder setPageSizeFieldName(String pagedFieldName);
 
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 

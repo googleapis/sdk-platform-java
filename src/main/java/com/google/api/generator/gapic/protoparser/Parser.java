@@ -144,6 +144,7 @@ public class Parser {
 
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> mixinServices = new ArrayList<>();
+    Transport transport = Transport.parse(transportOpt.orElse(Transport.GRPC.toString()));
     List<Service> services =
         parseServices(
             request,
@@ -152,7 +153,8 @@ public class Parser {
             outputArgResourceNames,
             serviceYamlProtoOpt,
             serviceConfigOpt,
-            mixinServices);
+            mixinServices,
+            transport);
 
     Preconditions.checkState(!services.isEmpty(), "No services found to generate");
     Function<ResourceName, String> typeNameFn =
@@ -191,7 +193,7 @@ public class Parser {
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
         .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
-        .setTransport(Transport.parse(transportOpt.orElse(Transport.GRPC.toString())))
+        .setTransport(transport)
         .build();
   }
 
@@ -202,7 +204,8 @@ public class Parser {
       Set<ResourceName> outputArgResourceNames,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       Optional<GapicServiceConfig> serviceConfigOpt,
-      List<Service> outputMixinServices) {
+      List<Service> outputMixinServices,
+      Transport transport) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
 
     List<Service> services = new ArrayList<>();
@@ -220,7 +223,8 @@ public class Parser {
               resourceNames,
               serviceYamlProtoOpt,
               serviceConfigOpt,
-              outputArgResourceNames));
+              outputArgResourceNames,
+              transport));
     }
 
     // Prevent codegen for mixed-in services if there are other services present, since that is an
@@ -379,7 +383,8 @@ public class Parser {
         resourceNames,
         serviceYamlProtoOpt,
         Optional.empty(),
-        outputArgResourceNames);
+        outputArgResourceNames,
+        Transport.GRPC);
   }
 
   public static List<Service> parseService(
@@ -388,7 +393,8 @@ public class Parser {
       Map<String, ResourceName> resourceNames,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       Optional<GapicServiceConfig> serviceConfigOpt,
-      Set<ResourceName> outputArgResourceNames) {
+      Set<ResourceName> outputArgResourceNames,
+      Transport transport) {
 
     return fileDescriptor.getServices().stream()
         .map(
@@ -462,7 +468,8 @@ public class Parser {
                           messageTypes,
                           resourceNames,
                           serviceConfigOpt,
-                          outputArgResourceNames))
+                          outputArgResourceNames,
+                          transport))
                   .build();
             })
         .collect(Collectors.toList());
@@ -610,7 +617,8 @@ public class Parser {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Optional<GapicServiceConfig> serviceConfigOpt,
-      Set<ResourceName> outputArgResourceNames) {
+      Set<ResourceName> outputArgResourceNames,
+      Transport transport) {
     List<Method> methods = new ArrayList<>();
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
@@ -662,7 +670,8 @@ public class Parser {
                       outputArgResourceNames))
               .setHttpBindings(httpBindings)
               .setIsBatching(isBatching)
-              .setIsPaged(parseIsPaged(protoMethod, messageTypes))
+              .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
+              .setIsPaged(parseIsPaged(protoMethod, messageTypes, transport))
               .setIsDeprecated(isDeprecated)
               .build());
 
@@ -778,7 +787,13 @@ public class Parser {
 
   @VisibleForTesting
   static boolean parseIsPaged(
-      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
+      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes, Transport transport) {
+    return parsePageSizeFieldName(methodDescriptor, messageTypes, transport) != null;
+  }
+
+  @VisibleForTesting
+  static String parsePageSizeFieldName(
+      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes, Transport transport) {
     TypeNode inputMessageType = TypeParser.parseType(methodDescriptor.getInputType());
     TypeNode outputMessageType = TypeParser.parseType(methodDescriptor.getOutputType());
     Message inputMessage = messageTypes.get(inputMessageType.reference().fullName());
@@ -787,9 +802,22 @@ public class Parser {
     // This should technically handle the absence of either of these fields (aip.dev/158), but we
     // gate on their collective presence to ensure the generated surface is backawrds-compatible
     // with monolith-gnerated libraries.
-    return inputMessage.fieldMap().containsKey("page_size")
-        && inputMessage.fieldMap().containsKey("page_token")
-        && outputMessage.fieldMap().containsKey("next_page_token");
+    String pagedFieldName = null;
+
+    if (inputMessage.fieldMap().containsKey("page_token")
+        && outputMessage.fieldMap().containsKey("next_page_token")) {
+      List<String> fieldNames = new ArrayList<>();
+      fieldNames.add("page_size");
+      if (transport == Transport.REST) {
+        fieldNames.add("max_results");
+      }
+      for (String fieldName : fieldNames) {
+        if (pagedFieldName == null && inputMessage.fieldMap().containsKey(fieldName)) {
+          pagedFieldName = fieldName;
+        }
+      }
+    }
+    return pagedFieldName;
   }
 
   @VisibleForTesting

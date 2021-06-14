@@ -43,6 +43,7 @@ import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -334,7 +335,7 @@ public class DefaultValueComposer {
   }
 
   public static Expr createSimplePagedResponse(
-      TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr) {
+      TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr, boolean isMap) {
     Expr pagedResponseExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(responseType)
@@ -346,18 +347,39 @@ public class DefaultValueComposer {
             .setMethodName("setNextPageToken")
             .setArguments(ValueExpr.withValue(StringObjectValue.withValue("")))
             .build();
-    pagedResponseExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(pagedResponseExpr)
-            .setMethodName(String.format("addAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
-            .setArguments(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
-                    .setMethodName("asList")
-                    .setArguments(responseElementVarExpr)
-                    .build())
-            .build();
+    if (isMap) {
+      pagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(pagedResponseExpr)
+              .setMethodName(
+                  String.format("putAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+              .setArguments(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(
+                          TypeNode.withReference(ConcreteReference.withClazz(Collections.class)))
+                      .setMethodName("singletonMap")
+                      .setArguments(
+                          ValueExpr.withValue(
+                              StringObjectValue.withValue(
+                                  JavaStyle.toLowerCamelCase(repeatedFieldName))),
+                          responseElementVarExpr)
+                      .build())
+              .build();
+    } else {
+      pagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(pagedResponseExpr)
+              .setMethodName(
+                  String.format("addAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+              .setArguments(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(
+                          TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
+                      .setMethodName("asList")
+                      .setArguments(responseElementVarExpr)
+                      .build())
+              .build();
+    }
     return MethodInvocationExpr.builder()
         .setExprReferenceExpr(pagedResponseExpr)
         .setMethodName("build")

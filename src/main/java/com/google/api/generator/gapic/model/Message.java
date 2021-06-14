@@ -14,11 +14,13 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +73,22 @@ public abstract class Message {
 
   /** Returns the first list repeated field in a message, unwrapped from its list type. */
   @Nullable
-  public Field findAndUnwrapFirstRepeatedField() {
+  public Field findAndUnwrapPaginatedRepeatedField() {
+    for (Field field : fields()) {
+      if (field.isMap()) {
+        List<Reference> repeatedGenericMapRefs = field.type().reference().generics();
+
+        TypeNode paginateType =
+            TypeNode.withReference(
+                ConcreteReference.builder()
+                    .setClazz(Map.Entry.class)
+                    .setGenerics(
+                        Arrays.asList(repeatedGenericMapRefs.get(0), repeatedGenericMapRefs.get(1)))
+                    .build());
+
+        return field.toBuilder().setType(paginateType).build();
+      }
+    }
     for (Field field : fields()) {
       if (field.isRepeated() && !field.isMap()) {
         Reference repeatedGenericRef = field.type().reference().generics().get(0);
