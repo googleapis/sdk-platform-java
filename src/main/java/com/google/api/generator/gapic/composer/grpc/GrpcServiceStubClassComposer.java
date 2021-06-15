@@ -153,7 +153,8 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr.toBuilder()
+                methodDescriptorVarExpr
+                    .toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
