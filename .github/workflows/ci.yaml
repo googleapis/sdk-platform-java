@@ -49,7 +49,9 @@ jobs:
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress --test_output=errors
 
       - name: Integration Tests
-        run: bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:iam //test/integration:kms //test/integration:logging //test/integration:pubsub //test/integration:redis //test/integration:library --noshow_progress
+        run: |
+          bazel clean --expunge --async
+          bazel --batch test //test/integration:asset //test/integration:credentials //test/integration:iam //test/integration:kms //test/integration:logging //test/integration:pubsub //test/integration:redis //test/integration:library --noshow_progress
 
       - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
