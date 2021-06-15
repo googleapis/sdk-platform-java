@@ -78,7 +78,7 @@ public abstract class Message {
       if (field.isMap()) {
         List<Reference> repeatedGenericMapRefs = field.type().reference().generics();
 
-        TypeNode paginateType =
+        TypeNode paginatedType =
             TypeNode.withReference(
                 ConcreteReference.builder()
                     .setClazz(Map.Entry.class)
@@ -86,7 +86,7 @@ public abstract class Message {
                         Arrays.asList(repeatedGenericMapRefs.get(0), repeatedGenericMapRefs.get(1)))
                     .build());
 
-        return field.toBuilder().setType(paginateType).build();
+        return field.toBuilder().setType(paginatedType).build();
       }
     }
     for (Field field : fields()) {

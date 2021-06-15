@@ -336,6 +336,18 @@ public class DefaultValueComposer {
 
   public static Expr createSimplePagedResponse(
       TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr, boolean isMap) {
+    // Code for paginated maps:
+    // AggregatedMessageList.newBuilder()
+    //     .setNextPageToken("")
+    //     .putAllItems(Collections.singletonMap("items", responsesElement))
+    //     .build();
+    //
+    // Code for paginated arrays:
+    // MessageList expectedResponse =
+    //     AddressList.newBuilder()
+    //         .setNextPageToken("")
+    //         .addAllItems(Arrays.asList(responsesElement))
+    //         .build();
     Expr pagedResponseExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(responseType)

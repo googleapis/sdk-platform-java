@@ -591,6 +591,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Expr zeroExpr =
           ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
 
+      // Generated code:
+      // Assert.assertEquals(
+      //   expectedResponse.getItemsMap().entrySet().iterator().next(), resources.get(0));
+      // )
       Expr expectedPagedResponseExpr;
       if (repeatedPagedResultsField.isMap()) {
         expectedPagedResponseExpr =
@@ -616,6 +620,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                 .build();
 
       } else {
+        // Generated code:
+        // Assert.assertEquals(expectedResponse.getItemsList().get(0), resources.get(0));
         expectedPagedResponseExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(expectedResponseVarExpr)
