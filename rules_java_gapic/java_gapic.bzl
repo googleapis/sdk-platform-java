@@ -305,6 +305,10 @@ def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
         **kwargs
     )
 
+# A debugging rule, to dump CodeGenereatorRequest from protoc as is to a file,
+# which then can be used to run gapic-generator directly instead of relying on
+# protoc to launch it. This would simplify attaching the debugger and/or
+# working with stdin/stderr.
 def java_generator_request_dump(
         name,
         srcs,

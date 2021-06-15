@@ -14,7 +14,7 @@
 
 package com.google.api.generator.debug;
 
-import com.google.api.generator.Main;
+import com.google.api.generator.ProtoRegistry;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
@@ -23,7 +23,7 @@ import java.io.IOException;
 public class CodeGeneratorRequestDumper {
   public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    Main.registerAllExtensions(registry);
+    ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();

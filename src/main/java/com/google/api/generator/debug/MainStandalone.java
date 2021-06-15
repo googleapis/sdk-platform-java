@@ -14,7 +14,7 @@
 
 package com.google.api.generator.debug;
 
-import com.google.api.generator.Main;
+import com.google.api.generator.ProtoRegistry;
 import com.google.api.generator.gapic.Generator;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
@@ -25,10 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class MainFromFile {
+public class MainStandalone {
   public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    Main.registerAllExtensions(registry);
+    ProtoRegistry.registerAllExtensions(registry);
 
     String inputFile = args[0];
     String outputFile = args[1];
