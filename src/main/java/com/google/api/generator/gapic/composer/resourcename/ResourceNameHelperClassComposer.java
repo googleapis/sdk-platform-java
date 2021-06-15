@@ -1626,7 +1626,8 @@ public class ResourceNameHelperClassComposer {
       for (int i = 0; i < tokens.size(); i++) {
         String token = tokens.get(i);
         String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
-        VariableExpr currClassTokenVarExpr = classMemberVarExprs.get(i);
+        VariableExpr currClassTokenVarExpr =
+            classMemberVarExprs.get(i).toBuilder().setExprReferenceExpr(thisExpr).build();
         builderCtorBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(currClassTokenVarExpr)
