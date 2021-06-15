@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "2807c8c5459e59d148d1501e39930be7992b06ca"
+        "sha": "6f1b209f32d8ee3ae38e9051f29d464fca507c84"
       }
     },
     {
@@ -19,7 +19,7 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "5f330a45e76ad2b3551c5276aaa818de324632b5"
+        "sha": "8f76a885deaaf2fe234daeba4a8cc4d1b3de8086"
       }
     }
   ],
@@ -89,6 +89,7 @@
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "LICENSE",
+    "SECURITY.md",
     "codecov.yaml",
     "grpc-google-common-protos/src/main/java/com/google/longrunning/OperationsGrpc.java",
     "java.header",
