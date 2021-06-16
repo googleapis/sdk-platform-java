@@ -39,7 +39,9 @@ public abstract class Method {
 
   public abstract boolean isBatching();
 
-  public abstract boolean isPaged();
+  public boolean isPaged() {
+    return pageSizeFieldName() != null;
+  }
 
   @Nullable
   public abstract String pageSizeFieldName();
@@ -87,7 +89,6 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setMethodSignatures(ImmutableList.of())
         .setIsBatching(false)
-        .setIsPaged(false)
         .setIsDeprecated(false);
   }
 
@@ -125,8 +126,6 @@ public abstract class Method {
     public abstract Builder setMethodSignatures(List<List<MethodArgument>> methodSignature);
 
     public abstract Builder setIsBatching(boolean isBatching);
-
-    public abstract Builder setIsPaged(boolean isPaged);
 
     public abstract Builder setPageSizeFieldName(String pagedFieldName);
 

@@ -47,6 +47,7 @@ public class ServiceClientSampleCodeComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
+  private static final String PAGINATED_FIELD_NAME = "page_size";
 
   // =============================== Class Header Sample Code ===============================//
   @Test
@@ -1005,7 +1006,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Arrays.asList(arguments))
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     Reference repeatedResponseReference =
         VaporReference.builder().setName("Content").setPakkage(SHOWCASE_PACKAGE_NAME).build();
@@ -1078,7 +1079,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Arrays.asList(arguments))
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     Reference repeatedResponseReference =
         VaporReference.builder().setName("Content").setPakkage(SHOWCASE_PACKAGE_NAME).build();
@@ -1148,7 +1149,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Arrays.asList(methodArguments))
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     assertThrows(
         NullPointerException.class,
@@ -1187,7 +1188,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Arrays.asList(methodArguments))
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     Field responseField =
         Field.builder()
@@ -1439,7 +1440,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setInputType(inputType)
             .setOutputType(outputType)
             .setMethodSignatures(Collections.emptyList())
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
         ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
@@ -1489,7 +1490,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setInputType(inputType)
             .setOutputType(outputType)
             .setMethodSignatures(Collections.emptyList())
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     assertThrows(
         NullPointerException.class,
@@ -1835,7 +1836,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setName("PagedExpand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
         ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
@@ -1887,7 +1888,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setName("PagedExpand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     assertThrows(
         NullPointerException.class,
@@ -1924,7 +1925,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setName("PagedExpand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     assertThrows(
         NullPointerException.class,
@@ -1961,7 +1962,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setName("PagedExpand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     Field responseField = Field.builder().setName("response").setType(TypeNode.STRING).build();
     Message noRepeatedResponseMessage =
@@ -2449,7 +2450,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setInputType(inputType)
             .setOutputType(outputType)
             .setMethodSignatures(Collections.emptyList())
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
         ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
@@ -2539,7 +2540,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setName("PagedExpand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     assertThrows(
         NullPointerException.class,
@@ -2576,7 +2577,7 @@ public class ServiceClientSampleCodeComposerTest {
             .setName("PagedExpand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     Field responseField = Field.builder().setName("response").setType(TypeNode.STRING).build();
     Message noRepeatedResponseMessage =

@@ -671,7 +671,6 @@ public class Parser {
               .setHttpBindings(httpBindings)
               .setIsBatching(isBatching)
               .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
-              .setIsPaged(parseIsPaged(protoMethod, messageTypes, transport))
               .setIsDeprecated(isDeprecated)
               .build());
 
@@ -786,12 +785,6 @@ public class Parser {
   }
 
   @VisibleForTesting
-  static boolean parseIsPaged(
-      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes, Transport transport) {
-    return parsePageSizeFieldName(methodDescriptor, messageTypes, transport) != null;
-  }
-
-  @VisibleForTesting
   static String parsePageSizeFieldName(
       MethodDescriptor methodDescriptor, Map<String, Message> messageTypes, Transport transport) {
     TypeNode inputMessageType = TypeParser.parseType(methodDescriptor.getInputType());
@@ -806,6 +799,8 @@ public class Parser {
 
     if (inputMessage.fieldMap().containsKey("page_token")
         && outputMessage.fieldMap().containsKey("next_page_token")) {
+      // List of potential field names representing page size.
+      // page_size gets priority over max_results if both are present
       List<String> fieldNames = new ArrayList<>();
       fieldNames.add("page_size");
       if (transport == Transport.REST) {
