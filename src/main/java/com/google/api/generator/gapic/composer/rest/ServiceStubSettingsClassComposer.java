@@ -28,15 +28,14 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
+import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Arrays;
 
-public class ServiceStubSettingsClassComposer extends
-    AbstractServiceStubSettingsClassComposer {
+public class ServiceStubSettingsClassComposer extends AbstractServiceStubSettingsClassComposer {
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
 
@@ -67,7 +66,8 @@ public class ServiceStubSettingsClassComposer extends
     MethodInvocationExpr transportChannelProviderBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
-                FIXED_REST_TYPESTORE.get(InstantiatingHttpJsonChannelProvider.class.getSimpleName()))
+                FIXED_REST_TYPESTORE.get(
+                    InstantiatingHttpJsonChannelProvider.class.getSimpleName()))
             .setMethodName("newBuilder")
             .setReturnType(returnType)
             .build();
