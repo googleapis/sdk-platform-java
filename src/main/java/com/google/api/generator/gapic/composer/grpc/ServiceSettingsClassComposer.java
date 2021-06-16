@@ -17,8 +17,7 @@ package com.google.api.generator.gapic.composer.grpc;
 import com.google.api.generator.gapic.composer.common.AbstractServiceSettingsClassComposer;
 
 public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassComposer {
-  private static final ServiceSettingsClassComposer INSTANCE =
-      new ServiceSettingsClassComposer();
+  private static final ServiceSettingsClassComposer INSTANCE = new ServiceSettingsClassComposer();
 
   protected ServiceSettingsClassComposer() {
     super(GrpcContext.instance());
