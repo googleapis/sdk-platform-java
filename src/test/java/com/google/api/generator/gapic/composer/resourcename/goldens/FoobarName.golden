@@ -317,8 +317,8 @@ public class FoobarName implements ResourceName {
       Preconditions.checkArgument(
           Objects.equals(foobarName.pathTemplate, PROJECT_FOOBAR),
           "toBuilder is only supported when FoobarName has the pattern of projects/{project}/foobars/{foobar}");
-      project = foobarName.project;
-      foobar = foobarName.foobar;
+      this.project = foobarName.project;
+      this.foobar = foobarName.foobar;
     }
 
     public FoobarName build() {
