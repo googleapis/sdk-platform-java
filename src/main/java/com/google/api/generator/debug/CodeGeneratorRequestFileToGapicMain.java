@@ -25,7 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class MainStandalone {
+// A generator entry point class, similar to Main but reads the CodeGeneratorRequest directly from a
+// file instead of relying on protoc to pipe it in.
+public class CodeGeneratorRequestFileToGapicMain {
   public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     ProtoRegistry.registerAllExtensions(registry);
