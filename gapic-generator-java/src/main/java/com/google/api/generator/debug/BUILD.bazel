@@ -1,0 +1,27 @@
+load("@rules_java//java:defs.bzl", "java_library", "java_plugin")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "debug_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "debug",
+    srcs = [
+        ":debug_files",
+    ],
+    deps = [
+        "//src/main/java/com/google/api/generator",
+        "//src/main/java/com/google/api/generator/engine",
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic",
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/util",
+        "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
+        "@com_google_guava_guava//jar",
+        "@com_google_protobuf//:protobuf_java",
+    ],
+)
