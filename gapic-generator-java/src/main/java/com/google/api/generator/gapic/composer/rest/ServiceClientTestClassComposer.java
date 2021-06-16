@@ -229,8 +229,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
             .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(
-            Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("startStaticServer")
@@ -247,8 +246,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   protected MethodDefinition createStopServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
     return MethodDefinition.builder()
-        .setAnnotations(
-            Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("AfterClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("AfterClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
@@ -313,8 +311,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                     TypeNode.withReference(
                         ConcreteReference.builder()
                             .setClazz(List.class)
-                            .setGenerics(
-                                Arrays.asList(TypeNode.STRING.reference()))
+                            .setGenerics(Arrays.asList(TypeNode.STRING.reference()))
                             .build()))
                 .setName("actualRequests")
                 .build());
@@ -353,10 +350,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
 
     VariableExpr apiClientHeaderKeyVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setType(TypeNode.STRING)
-                .setName("apiClientHeaderKey")
-                .build());
+            Variable.builder().setType(TypeNode.STRING).setName("apiClientHeaderKey").build());
 
     AssignmentExpr apiClientHeaderKeyAssignExpr =
         AssignmentExpr.builder()
@@ -428,7 +422,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Map<String, Message> messageTypes) {
     return null;
   }
-
 
   @Override
   protected MethodDefinition createRpcExceptionTestMethod(
@@ -513,10 +506,10 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
 
   @Override
   protected List<Statement> createStreamingRpcExceptionTestStatements(
-        Method method,
-        Map<String, VariableExpr> classMemberVarExprs,
-        Map<String, ResourceName> resourceNames,
-        Map<String, Message> messageTypes) {
+      Method method,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     return Collections.emptyList();
   }
 

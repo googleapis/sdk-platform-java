@@ -11,11 +11,13 @@ JAVA_SRCS = [
     "//src/main/java/com/google/api/generator:generator_files",
     "//src/main/java/com/google/api/generator/engine:engine_files",
     "//src/main/java/com/google/api/generator/gapic:gapic_files",
+    "//src/main/java/com/google/api/generator/util:util_files",
 ]
 
 TEST_SRCS = [
     "//src/test/java/com/google/api/generator/engine:engine_files",
     "//src/test/java/com/google/api/generator/gapic:gapic_files",
+    "//src/test/java/com/google/api/generator/testutils:testutils_files",
     "//src/test/java/com/google/api/generator/util:util_files",
     "//src/test/java/com/google/api/generator/test/framework:framework_files",
 ]

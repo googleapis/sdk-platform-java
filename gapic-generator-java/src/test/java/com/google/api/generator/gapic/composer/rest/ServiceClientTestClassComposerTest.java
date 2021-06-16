@@ -36,7 +36,8 @@ public class ServiceClientTestClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "ComplianceClientTest.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "ComplianceClientTest.golden");
+    Path goldenFilePath =
+        Paths.get(Utils.getGoldenDir(this.getClass()), "ComplianceClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
