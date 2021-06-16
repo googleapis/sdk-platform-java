@@ -49,30 +49,30 @@ public class RestTestProtoLoader extends TestProtoLoader {
   }
 
   public GapicContext parseCompliance() {
-      FileDescriptor echoFileDescriptor = ComplianceOuterClass.getDescriptor();
-      ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-      assertEquals(echoServiceDescriptor.getName(), "Compliance");
+    FileDescriptor echoFileDescriptor = ComplianceOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    assertEquals(echoServiceDescriptor.getName(), "Compliance");
 
-      Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-      Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-      Set<ResourceName> outputResourceNames = new HashSet<>();
-      List<Service> services =
-          Parser.parseService(
-              echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-      String jsonFilename = "showcase_grpc_service_config.json";
-      Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
-      Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-      assertTrue(configOpt.isPresent());
-      GapicServiceConfig config = configOpt.get();
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
 
-      return GapicContext.builder()
-          .setMessages(messageTypes)
-          .setResourceNames(resourceNames)
-          .setServices(services)
-          .setServiceConfig(config)
-          .setHelperResourceNames(outputResourceNames)
-          .setTransport(getTransport())
-          .build();
-    }
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(getTransport())
+        .build();
+  }
 }
