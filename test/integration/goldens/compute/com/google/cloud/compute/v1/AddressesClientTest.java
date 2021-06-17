@@ -16,6 +16,9 @@
 
 package com.google.cloud.compute.v1;
 
+import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.testing.MockHttpService;
@@ -26,10 +29,13 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.cloud.compute.v1.stub.HttpJsonAddressesStub;
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -74,21 +80,24 @@ public class AddressesClientTest {
 
   @Test
   public void aggregatedListTest() throws Exception {
+    AddressesScopedList responsesElement = AddressesScopedList.newBuilder().build();
     AddressAggregatedList expectedResponse =
         AddressAggregatedList.newBuilder()
-            .setId("id3355")
-            .putAllItems(new HashMap<String, AddressesScopedList>())
-            .setKind("kind3292052")
-            .setNextPageToken("nextPageToken-1386094857")
-            .setSelfLink("selfLink1191800166")
-            .setWarning(Warning.newBuilder().build())
+            .setNextPageToken("")
+            .putAllItems(Collections.singletonMap("items", responsesElement))
             .build();
     mockService.addResponse(expectedResponse);
 
     String project = "project-309310695";
 
-    AddressAggregatedList actualResponse = client.aggregatedList(project);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    AggregatedListPagedResponse pagedListResponse = client.aggregatedList(project);
+
+    List<Map.Entry<String, AddressesScopedList>> resources =
+        Lists.newArrayList(pagedListResponse.iterateAll());
+
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(
+        expectedResponse.getItemsMap().entrySet().iterator().next(), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
     Assert.assertEquals(1, actualRequests.size());
@@ -261,14 +270,11 @@ public class AddressesClientTest {
 
   @Test
   public void listTest() throws Exception {
+    Address responsesElement = Address.newBuilder().build();
     AddressList expectedResponse =
         AddressList.newBuilder()
-            .setId("id3355")
-            .addAllItems(new ArrayList<Address>())
-            .setKind("kind3292052")
-            .setNextPageToken("nextPageToken-1386094857")
-            .setSelfLink("selfLink1191800166")
-            .setWarning(Warning.newBuilder().build())
+            .setNextPageToken("")
+            .addAllItems(Arrays.asList(responsesElement))
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -276,8 +282,12 @@ public class AddressesClientTest {
     String region = "region-934795532";
     String orderBy = "orderBy-1207110587";
 
-    AddressList actualResponse = client.list(project, region, orderBy);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    ListPagedResponse pagedListResponse = client.list(project, region, orderBy);
+
+    List<Address> resources = Lists.newArrayList(pagedListResponse.iterateAll());
+
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getItemsList().get(0), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
     Assert.assertEquals(1, actualRequests.size());
