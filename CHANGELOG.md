@@ -10,12 +10,9 @@
 
 ### Bug Fixes
 
-* **bazel:** Remove monolith rule deps from the Java µgen Bazel rules [ggj] ([#764](https://www.github.com/googleapis/gapic-generator-java/issues/764)) ([bff3efc](https://www.github.com/googleapis/gapic-generator-java/commit/bff3efc25e43692ea5b6e769c20d25d5b9a1e3d2))
+* **bazel:** Remove monolith rule deps from the Java µgen Bazel rules ([#764](https://www.github.com/googleapis/gapic-generator-java/issues/764)) ([bff3efc](https://www.github.com/googleapis/gapic-generator-java/commit/bff3efc25e43692ea5b6e769c20d25d5b9a1e3d2))
 
 
-### Miscellaneous Chores
-
-* release 1.0.14 ([acf7765](https://www.github.com/googleapis/gapic-generator-java/commit/acf7765209380fbbd531af80ea3ade01366df1f3))
 
 ### [1.0.13](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.12...v1.0.13) (2021-06-16)
 
