@@ -200,6 +200,7 @@ java_gapic_library(
     name = "library_java_gapic",
     srcs = [":library_proto_with_info"],
     gapic_yaml = "@com_google_googleapis//google/example/library/v1:library_example_gapic.yaml",
+    grpc_service_config = "@com_google_googleapis//google/example/library/v1:library_grpc_service_config.json",
     test_deps = [
         "@com_google_googleapis//google/example/library/v1:library_java_grpc",
     ],
