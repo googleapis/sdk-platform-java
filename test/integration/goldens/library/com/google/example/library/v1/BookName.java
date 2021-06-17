@@ -180,8 +180,8 @@ public class BookName implements ResourceName {
     }
 
     private Builder(BookName bookName) {
-      shelf = bookName.shelf;
-      book = bookName.book;
+      this.shelf = bookName.shelf;
+      this.book = bookName.book;
     }
 
     public BookName build() {

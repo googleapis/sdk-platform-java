@@ -142,7 +142,7 @@ public class SessionName implements ResourceName {
     }
 
     private Builder(SessionName sessionName) {
-      session = sessionName.session;
+      this.session = sessionName.session;
     }
 
     public SessionName build() {
