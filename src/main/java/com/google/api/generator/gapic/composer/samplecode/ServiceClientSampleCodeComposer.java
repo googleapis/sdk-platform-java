@@ -477,7 +477,7 @@ public class ServiceClientSampleCodeComposer {
 
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
         String.format(
@@ -708,7 +708,7 @@ public class ServiceClientSampleCodeComposer {
         "Output message %s not found, keys: ",
         method.outputType().reference().fullName(),
         messageTypes.keySet().toString());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
         String.format(
@@ -1134,7 +1134,7 @@ public class ServiceClientSampleCodeComposer {
       Map<String, Message> messageTypes) {
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
         String.format(

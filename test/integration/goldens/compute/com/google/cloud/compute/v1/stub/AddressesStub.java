@@ -16,6 +16,9 @@
 
 package com.google.cloud.compute.v1.stub;
 
+import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.AddressAggregatedList;
@@ -36,6 +39,11 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 public abstract class AddressesStub implements BackgroundResource {
 
+  public UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
+      aggregatedListPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: aggregatedListPagedCallable()");
+  }
+
   public UnaryCallable<AggregatedListAddressesRequest, AddressAggregatedList>
       aggregatedListCallable() {
     throw new UnsupportedOperationException("Not implemented: aggregatedListCallable()");
@@ -47,6 +55,10 @@ public abstract class AddressesStub implements BackgroundResource {
 
   public UnaryCallable<InsertAddressRequest, Operation> insertCallable() {
     throw new UnsupportedOperationException("Not implemented: insertCallable()");
+  }
+
+  public UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listPagedCallable()");
   }
 
   public UnaryCallable<ListAddressesRequest, AddressList> listCallable() {
