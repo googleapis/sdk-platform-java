@@ -54,11 +54,6 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
-
-        run: bazel --batch test //test/integration/...
-
-      - uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
         with:
           name: test-artifacts
           path: ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-out/*/testlogs/*
