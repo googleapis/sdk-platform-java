@@ -18,8 +18,14 @@ http_archive(
 jvm_maven_import_external(
     name = "google_java_format_all_deps",
     artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
-    server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-    licenses = ["notice", "reciprocal"]
+    licenses = [
+        "notice",
+        "reciprocal",
+    ],
+    server_urls = [
+        "https://repo.maven.apache.org/maven2/",
+        "http://repo1.maven.org/maven2/",
+    ],
 )
 
 # gax-java and its transitive dependencies must be imported before
@@ -62,8 +68,18 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
+# Bazel rules.
+_rules_gapic_version = "0.5.4"
+
+http_archive(
+    name = "rules_gapic",
+    strip_prefix = "rules_gapic-%s" % _rules_gapic_version,
+    urls = ["https://github.com/googleapis/rules_gapic/archive/v%s.tar.gz" % _rules_gapic_version],
+)
+
 # Java dependencies.
 # Import the monolith so we can transitively use its gapic rules for googleapis.
+# TODO: Remove this after this dep has been removed from googleapis' switched_rules_by_language.
 http_archive(
     name = "com_google_api_codegen",
     strip_prefix = "gapic-generator-2.11.1",
