@@ -333,15 +333,21 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     String mockServiceVarName = getMockServiceVarName(rpcService);
     if (method.isPaged()) {
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
           String.format(
               "No repeated field found for paged method %s with output message type %s",
               method.name(), methodOutputMessage.name()));
 
-      // Must be a non-repeated type.
-      repeatedResponseType = repeatedPagedResultsField.type();
+      if (repeatedPagedResultsField.isMap()) {
+        repeatedResponseType =
+            TypeNode.withReference(repeatedPagedResultsField.type().reference().generics().get(1));
+      } else {
+        // Must be a non-repeated type.
+        repeatedResponseType = repeatedPagedResultsField.type();
+      }
+
       responsesElementVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setType(repeatedResponseType).setName("responsesElement").build());
@@ -364,7 +370,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-      Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Field firstRepeatedField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
       Preconditions.checkNotNull(
           firstRepeatedField,
           String.format(
@@ -373,7 +379,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
       expectedResponseValExpr =
           DefaultValueComposer.createSimplePagedResponse(
-              method.outputType(), firstRepeatedField.name(), responsesElementVarExpr);
+              method.outputType(),
+              firstRepeatedField.name(),
+              responsesElementVarExpr,
+              firstRepeatedField.isMap());
     } else {
       if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
         expectedResponseValExpr =
@@ -516,6 +525,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     }
 
     if (method.isPaged()) {
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
+
       // Assign the resources variable.
       VariableExpr resourcesVarExpr =
           VariableExpr.withVariable(
@@ -524,7 +536,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                       TypeNode.withReference(
                           ConcreteReference.builder()
                               .setClazz(List.class)
-                              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                              .setGenerics(Arrays.asList(repeatedPagedResultsField.type().reference()))
                               .build()))
                   .setName("resources")
                   .build());
@@ -570,8 +582,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               .build());
 
       // Assert the responses are equivalent.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
           String.format(
@@ -580,19 +590,52 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
       Expr zeroExpr =
           ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
-      Expr expectedPagedResponseExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(expectedResponseVarExpr)
-              .setMethodName(
-                  String.format(
-                      "get%sList", JavaStyle.toUpperCamelCase(repeatedPagedResultsField.name())))
-              .build();
-      expectedPagedResponseExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(expectedPagedResponseExpr)
-              .setMethodName("get")
-              .setArguments(zeroExpr)
-              .build();
+
+      // Generated code:
+      // Assert.assertEquals(
+      //   expectedResponse.getItemsMap().entrySet().iterator().next(), resources.get(0));
+      // )
+      Expr expectedPagedResponseExpr;
+      if (repeatedPagedResultsField.isMap()) {
+        expectedPagedResponseExpr =
+            MethodInvocationExpr.builder()
+                .setMethodName("next")
+                .setExprReferenceExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("iterator")
+                        .setExprReferenceExpr(
+                            MethodInvocationExpr.builder()
+                                .setMethodName("entrySet")
+                                .setExprReferenceExpr(
+                                    MethodInvocationExpr.builder()
+                                        .setExprReferenceExpr(expectedResponseVarExpr)
+                                        .setMethodName(
+                                            String.format(
+                                                "get%sMap",
+                                                JavaStyle.toUpperCamelCase(
+                                                    repeatedPagedResultsField.name())))
+                                        .build())
+                                .build())
+                        .build())
+                .build();
+
+      } else {
+        // Generated code:
+        // Assert.assertEquals(expectedResponse.getItemsList().get(0), resources.get(0));
+        expectedPagedResponseExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(expectedResponseVarExpr)
+                .setMethodName(
+                    String.format(
+                        "get%sList", JavaStyle.toUpperCamelCase(repeatedPagedResultsField.name())))
+                .build();
+        expectedPagedResponseExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(expectedPagedResponseExpr)
+                .setMethodName("get")
+                .setArguments(zeroExpr)
+                .build();
+      }
       Expr actualPagedResponseExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(resourcesVarExpr)

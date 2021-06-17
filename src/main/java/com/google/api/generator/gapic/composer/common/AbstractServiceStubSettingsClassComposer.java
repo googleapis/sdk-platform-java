@@ -306,8 +306,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR
-            .toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -403,7 +402,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               "No method found for message type %s for method %s among %s",
               pagedResponseMessageKey, method.name(), messageTypes.keySet()));
 
-      Field repeatedPagedResultsField = pagedResponseMessage.findAndUnwrapFirstRepeatedField();
+      Field repeatedPagedResultsField = pagedResponseMessage.findAndUnwrapPaginatedRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
           String.format(
@@ -512,7 +511,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     returnExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(newBuilderExpr)
-            .setMethodName("setPageSize")
+            .setMethodName("set" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
             .setArguments(pageSizeVarExpr)
             .build();
     returnExpr =
@@ -543,7 +542,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnExpr(
                 MethodInvocationExpr.builder()
                     .setExprReferenceExpr(payloadVarExpr)
-                    .setMethodName("getPageSize")
+                    .setMethodName("get" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
                     .setReturnType(returnType)
                     .build())
             .build());
@@ -573,14 +572,56 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 .setClazz(Iterable.class)
                 .setGenerics(Arrays.asList(repeatedResponseType.reference()))
                 .build());
-    Expr getResponsesListExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(payloadVarExpr)
-            .setMethodName(
-                String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
-            .setReturnType(returnType)
-            .build();
 
+    Expr getResponsesExpr;
+    Expr elseExpr;
+    Expr thenExpr;
+    if (repeatedResponseType.reference() != null
+        && "java.util.Map.Entry".equals(repeatedResponseType.reference().fullName())) {
+      getResponsesExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(payloadVarExpr)
+              .setMethodName(
+                  String.format("get%sMap", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+              .setReturnType(returnType)
+              .build();
+      thenExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(
+                  TypeNode.withReference(ConcreteReference.withClazz(Collections.class)))
+              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+              .setMethodName("emptySet")
+              .setReturnType(returnType)
+              .build();
+      elseExpr =
+          MethodInvocationExpr.builder()
+              .setMethodName("entrySet")
+              .setExprReferenceExpr(
+                  MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(payloadVarExpr)
+                      .setMethodName(
+                          String.format("get%sMap", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+                      .build())
+              .setReturnType(returnType)
+              .build();
+    } else {
+      getResponsesExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(payloadVarExpr)
+              .setMethodName(
+                  String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+              .setReturnType(returnType)
+              .build();
+      thenExpr =
+              MethodInvocationExpr.builder()
+                  .setStaticReferenceType(
+                      TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
+                  .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                  .setMethodName("of")
+                  .setReturnType(returnType)
+                  .build();
+      elseExpr = getResponsesExpr;
+    }
     // While protobufs should not be null, this null-check is needed to protect against NPEs
     // in paged iteration on clients that use legacy HTTP/JSON types, as these clients can
     // actually return null instead of an empty list.
@@ -589,21 +630,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     //   Relevant discussion where this check was first added:
     //        https://github.com/googleapis/google-cloud-java/pull/4499#discussion_r257057409
     Expr conditionExpr =
-        RelationalOperationExpr.equalToWithExprs(getResponsesListExpr, ValueExpr.createNullExpr());
-    Expr thenExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(
-                TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
-            .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-            .setMethodName("of")
-            .setReturnType(returnType)
-            .build();
+        RelationalOperationExpr.equalToWithExprs(getResponsesExpr, ValueExpr.createNullExpr());
 
     returnExpr =
         TernaryExpr.builder()
             .setConditionExpr(conditionExpr)
             .setThenExpr(thenExpr)
-            .setElseExpr(getResponsesListExpr)
+            .setElseExpr(elseExpr)
             .build();
     anonClassMethods.add(
         methodStarterBuilder
@@ -623,8 +656,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr
-                .toBuilder()
+            pagedListDescVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -763,8 +795,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr
-                .toBuilder()
+            pagedListResponseFactoryVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -818,8 +849,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Set up the if-statement.
     Expr tRansportNameExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(
-                getTransportContext().transportChannelType())
+            .setStaticReferenceType(getTransportContext().transportChannelType())
             .setMethodName(getTransportContext().transportGetterName())
             .build();
 
@@ -842,7 +872,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     Expr createExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
-                typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service)))
+                typeStore.get(
+                    getTransportContext().classNames().getTransportServiceStubClassName(service)))
             .setMethodName("create")
             .setArguments(
                 ValueExpr.withValue(
@@ -995,7 +1026,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return javaMethods;
   }
 
-  private static List<MethodDefinition> createBuilderHelperMethods(Service service, TypeStore typeStore) {
+  private static List<MethodDefinition> createBuilderHelperMethods(
+      Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     // Create the newBuilder() method.
     final TypeNode builderReturnType = typeStore.get(NESTED_BUILDER_CLASS_NAME);

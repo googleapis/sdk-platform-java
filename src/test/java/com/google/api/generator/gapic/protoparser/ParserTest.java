@@ -30,6 +30,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -108,7 +109,8 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
-            outputResourceNames);
+            outputResourceNames,
+            Transport.GRPC);
 
     assertEquals(10, methods.size());
 
@@ -165,7 +167,8 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
-            outputResourceNames);
+            outputResourceNames,
+            Transport.GRPC);
 
     assertEquals(10, methods.size());
 
@@ -216,7 +219,8 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
-            outputResourceNames);
+            outputResourceNames,
+            Transport.GRPC);
     assertThat(
             MethodSignatureParser.parseMethodSignatures(
                 methodDescriptor,
@@ -245,7 +249,8 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
-            outputResourceNames);
+            outputResourceNames,
+            Transport.GRPC);
     List<List<MethodArgument>> methodArgs =
         MethodSignatureParser.parseMethodSignatures(
             methodDescriptor,

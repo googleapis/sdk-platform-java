@@ -16,6 +16,9 @@
 
 package com.google.cloud.compute.v1;
 
+import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
@@ -24,6 +27,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientSettings;
+import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
@@ -47,15 +51,15 @@ import javax.annotation.Generated;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of aggregatedList to 30 seconds:
+ * <p>For example, to set the total timeout of delete to 30 seconds:
  *
  * <pre>{@code
  * AddressesSettings.Builder addressesSettingsBuilder = AddressesSettings.newBuilder();
  * addressesSettingsBuilder
- *     .aggregatedListSettings()
+ *     .deleteSettings()
  *     .setRetrySettings(
  *         addressesSettingsBuilder
- *             .aggregatedListSettings()
+ *             .deleteSettings()
  *             .getRetrySettings()
  *             .toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
@@ -67,7 +71,8 @@ import javax.annotation.Generated;
 public class AddressesSettings extends ClientSettings<AddressesSettings> {
 
   /** Returns the object with the settings used for calls to aggregatedList. */
-  public UnaryCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
+  public PagedCallSettings<
+          AggregatedListAddressesRequest, AddressAggregatedList, AggregatedListPagedResponse>
       aggregatedListSettings() {
     return ((AddressesStubSettings) getStubSettings()).aggregatedListSettings();
   }
@@ -83,7 +88,7 @@ public class AddressesSettings extends ClientSettings<AddressesSettings> {
   }
 
   /** Returns the object with the settings used for calls to list. */
-  public UnaryCallSettings<ListAddressesRequest, AddressList> listSettings() {
+  public PagedCallSettings<ListAddressesRequest, AddressList, ListPagedResponse> listSettings() {
     return ((AddressesStubSettings) getStubSettings()).listSettings();
   }
 
@@ -186,7 +191,8 @@ public class AddressesSettings extends ClientSettings<AddressesSettings> {
     }
 
     /** Returns the builder for the settings used for calls to aggregatedList. */
-    public UnaryCallSettings.Builder<AggregatedListAddressesRequest, AddressAggregatedList>
+    public PagedCallSettings.Builder<
+            AggregatedListAddressesRequest, AddressAggregatedList, AggregatedListPagedResponse>
         aggregatedListSettings() {
       return getStubSettingsBuilder().aggregatedListSettings();
     }
@@ -202,7 +208,8 @@ public class AddressesSettings extends ClientSettings<AddressesSettings> {
     }
 
     /** Returns the builder for the settings used for calls to list. */
-    public UnaryCallSettings.Builder<ListAddressesRequest, AddressList> listSettings() {
+    public PagedCallSettings.Builder<ListAddressesRequest, AddressList, ListPagedResponse>
+        listSettings() {
       return getStubSettingsBuilder().listSettings();
     }
 
