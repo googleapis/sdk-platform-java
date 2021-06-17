@@ -1,5 +1,22 @@
 # Changelog
 
+### [1.0.14](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.13...v1.0.14) (2021-06-17)
+
+
+### Features
+
+* Add DIREGAPIC-specific pagination ([#767](https://www.github.com/googleapis/gapic-generator-java/issues/767)) ([1294c29](https://www.github.com/googleapis/gapic-generator-java/commit/1294c298f50cc4474ae562e6a07f37a5f94fe5b8))
+
+
+### Bug Fixes
+
+* **bazel:** Remove monolith rule deps from the Java µgen Bazel rules [ggj] ([#764](https://www.github.com/googleapis/gapic-generator-java/issues/764)) ([bff3efc](https://www.github.com/googleapis/gapic-generator-java/commit/bff3efc25e43692ea5b6e769c20d25d5b9a1e3d2))
+
+
+### Miscellaneous Chores
+
+* release 1.0.14 ([acf7765](https://www.github.com/googleapis/gapic-generator-java/commit/acf7765209380fbbd531af80ea3ade01366df1f3))
+
 ### [1.0.13](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.12...v1.0.13) (2021-06-16)
 
 
