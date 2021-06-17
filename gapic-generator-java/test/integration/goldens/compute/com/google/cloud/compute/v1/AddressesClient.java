@@ -16,12 +16,22 @@
 
 package com.google.cloud.compute.v1;
 
+import com.google.api.core.ApiFunction;
+import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.paging.AbstractFixedSizeCollection;
+import com.google.api.gax.paging.AbstractPage;
+import com.google.api.gax.paging.AbstractPagedListResponse;
+import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.stub.AddressesStub;
 import com.google.cloud.compute.v1.stub.AddressesStubSettings;
+import com.google.common.util.concurrent.MoreExecutors;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -37,7 +47,9 @@ import javax.annotation.Generated;
  * <pre>{@code
  * try (AddressesClient addressesClient = AddressesClient.create()) {
  *   String project = "project-309310695";
- *   AddressAggregatedList response = addressesClient.aggregatedList(project);
+ *   String region = "region-934795532";
+ *   String address = "address-1147692044";
+ *   Operation response = addressesClient.delete(project, region, address);
  * }
  * }</pre>
  *
@@ -147,14 +159,17 @@ public class AddressesClient implements BackgroundResource {
    * <pre>{@code
    * try (AddressesClient addressesClient = AddressesClient.create()) {
    *   String project = "project-309310695";
-   *   AddressAggregatedList response = addressesClient.aggregatedList(project);
+   *   for (Map.Entry<String, AddressesScopedList> element :
+   *       addressesClient.aggregatedList(project).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
    * @param project Project ID for this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final AddressAggregatedList aggregatedList(String project) {
+  public final AggregatedListPagedResponse aggregatedList(String project) {
     AggregatedListAddressesRequest request =
         AggregatedListAddressesRequest.newBuilder().setProject(project).build();
     return aggregatedList(request);
@@ -177,15 +192,18 @@ public class AddressesClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setProject("project-309310695")
    *           .build();
-   *   AddressAggregatedList response = addressesClient.aggregatedList(request);
+   *   for (Map.Entry<String, AddressesScopedList> element :
+   *       addressesClient.aggregatedList(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final AddressAggregatedList aggregatedList(AggregatedListAddressesRequest request) {
-    return aggregatedListCallable().call(request);
+  public final AggregatedListPagedResponse aggregatedList(AggregatedListAddressesRequest request) {
+    return aggregatedListPagedCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -205,10 +223,49 @@ public class AddressesClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setProject("project-309310695")
    *           .build();
-   *   ApiFuture<AddressAggregatedList> future =
-   *       addressesClient.aggregatedListCallable().futureCall(request);
+   *   ApiFuture<Map.Entry<String, AddressesScopedList>> future =
+   *       addressesClient.aggregatedListPagedCallable().futureCall(request);
    *   // Do something.
-   *   AddressAggregatedList response = future.get();
+   *   for (Map.Entry<String, AddressesScopedList> element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
+      aggregatedListPagedCallable() {
+    return stub.aggregatedListPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Retrieves an aggregated list of addresses.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AddressesClient addressesClient = AddressesClient.create()) {
+   *   AggregatedListAddressesRequest request =
+   *       AggregatedListAddressesRequest.newBuilder()
+   *           .setFilter("filter-1274492040")
+   *           .setIncludeAllScopes(true)
+   *           .setMaxResults(1128457243)
+   *           .setOrderBy("orderBy-1207110587")
+   *           .setPageToken("pageToken873572522")
+   *           .setProject("project-309310695")
+   *           .build();
+   *   while (true) {
+   *     AddressAggregatedList response = addressesClient.aggregatedListCallable().call(request);
+   *     for (Map.Entry<String, AddressesScopedList> element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -390,7 +447,9 @@ public class AddressesClient implements BackgroundResource {
    *   String project = "project-309310695";
    *   String region = "region-934795532";
    *   String orderBy = "orderBy-1207110587";
-   *   AddressList response = addressesClient.list(project, region, orderBy);
+   *   for (Address element : addressesClient.list(project, region, orderBy).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -405,7 +464,7 @@ public class AddressesClient implements BackgroundResource {
    *     <p>Currently, only sorting by name or creationTimestamp desc is supported.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final AddressList list(String project, String region, String orderBy) {
+  public final ListPagedResponse list(String project, String region, String orderBy) {
     ListAddressesRequest request =
         ListAddressesRequest.newBuilder()
             .setProject(project)
@@ -432,15 +491,17 @@ public class AddressesClient implements BackgroundResource {
    *           .setProject("project-309310695")
    *           .setRegion("region-934795532")
    *           .build();
-   *   AddressList response = addressesClient.list(request);
+   *   for (Address element : addressesClient.list(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final AddressList list(ListAddressesRequest request) {
-    return listCallable().call(request);
+  public final ListPagedResponse list(ListAddressesRequest request) {
+    return listPagedCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -460,9 +521,47 @@ public class AddressesClient implements BackgroundResource {
    *           .setProject("project-309310695")
    *           .setRegion("region-934795532")
    *           .build();
-   *   ApiFuture<AddressList> future = addressesClient.listCallable().futureCall(request);
+   *   ApiFuture<Address> future = addressesClient.listPagedCallable().futureCall(request);
    *   // Do something.
-   *   AddressList response = future.get();
+   *   for (Address element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable() {
+    return stub.listPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Retrieves a list of addresses contained within the specified region.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AddressesClient addressesClient = AddressesClient.create()) {
+   *   ListAddressesRequest request =
+   *       ListAddressesRequest.newBuilder()
+   *           .setFilter("filter-1274492040")
+   *           .setMaxResults(1128457243)
+   *           .setOrderBy("orderBy-1207110587")
+   *           .setPageToken("pageToken873572522")
+   *           .setProject("project-309310695")
+   *           .setRegion("region-934795532")
+   *           .build();
+   *   while (true) {
+   *     AddressList response = addressesClient.listCallable().call(request);
+   *     for (Address element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -498,5 +597,174 @@ public class AddressesClient implements BackgroundResource {
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
     return stub.awaitTermination(duration, unit);
+  }
+
+  public static class AggregatedListPagedResponse
+      extends AbstractPagedListResponse<
+          AggregatedListAddressesRequest,
+          AddressAggregatedList,
+          Map.Entry<String, AddressesScopedList>,
+          AggregatedListPage,
+          AggregatedListFixedSizeCollection> {
+
+    public static ApiFuture<AggregatedListPagedResponse> createAsync(
+        PageContext<
+                AggregatedListAddressesRequest,
+                AddressAggregatedList,
+                Map.Entry<String, AddressesScopedList>>
+            context,
+        ApiFuture<AddressAggregatedList> futureResponse) {
+      ApiFuture<AggregatedListPage> futurePage =
+          AggregatedListPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage,
+          new ApiFunction<AggregatedListPage, AggregatedListPagedResponse>() {
+            @Override
+            public AggregatedListPagedResponse apply(AggregatedListPage input) {
+              return new AggregatedListPagedResponse(input);
+            }
+          },
+          MoreExecutors.directExecutor());
+    }
+
+    private AggregatedListPagedResponse(AggregatedListPage page) {
+      super(page, AggregatedListFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class AggregatedListPage
+      extends AbstractPage<
+          AggregatedListAddressesRequest,
+          AddressAggregatedList,
+          Map.Entry<String, AddressesScopedList>,
+          AggregatedListPage> {
+
+    private AggregatedListPage(
+        PageContext<
+                AggregatedListAddressesRequest,
+                AddressAggregatedList,
+                Map.Entry<String, AddressesScopedList>>
+            context,
+        AddressAggregatedList response) {
+      super(context, response);
+    }
+
+    private static AggregatedListPage createEmptyPage() {
+      return new AggregatedListPage(null, null);
+    }
+
+    @Override
+    protected AggregatedListPage createPage(
+        PageContext<
+                AggregatedListAddressesRequest,
+                AddressAggregatedList,
+                Map.Entry<String, AddressesScopedList>>
+            context,
+        AddressAggregatedList response) {
+      return new AggregatedListPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<AggregatedListPage> createPageAsync(
+        PageContext<
+                AggregatedListAddressesRequest,
+                AddressAggregatedList,
+                Map.Entry<String, AddressesScopedList>>
+            context,
+        ApiFuture<AddressAggregatedList> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class AggregatedListFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          AggregatedListAddressesRequest,
+          AddressAggregatedList,
+          Map.Entry<String, AddressesScopedList>,
+          AggregatedListPage,
+          AggregatedListFixedSizeCollection> {
+
+    private AggregatedListFixedSizeCollection(List<AggregatedListPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static AggregatedListFixedSizeCollection createEmptyCollection() {
+      return new AggregatedListFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected AggregatedListFixedSizeCollection createCollection(
+        List<AggregatedListPage> pages, int collectionSize) {
+      return new AggregatedListFixedSizeCollection(pages, collectionSize);
+    }
+  }
+
+  public static class ListPagedResponse
+      extends AbstractPagedListResponse<
+          ListAddressesRequest, AddressList, Address, ListPage, ListFixedSizeCollection> {
+
+    public static ApiFuture<ListPagedResponse> createAsync(
+        PageContext<ListAddressesRequest, AddressList, Address> context,
+        ApiFuture<AddressList> futureResponse) {
+      ApiFuture<ListPage> futurePage =
+          ListPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage,
+          new ApiFunction<ListPage, ListPagedResponse>() {
+            @Override
+            public ListPagedResponse apply(ListPage input) {
+              return new ListPagedResponse(input);
+            }
+          },
+          MoreExecutors.directExecutor());
+    }
+
+    private ListPagedResponse(ListPage page) {
+      super(page, ListFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class ListPage
+      extends AbstractPage<ListAddressesRequest, AddressList, Address, ListPage> {
+
+    private ListPage(
+        PageContext<ListAddressesRequest, AddressList, Address> context, AddressList response) {
+      super(context, response);
+    }
+
+    private static ListPage createEmptyPage() {
+      return new ListPage(null, null);
+    }
+
+    @Override
+    protected ListPage createPage(
+        PageContext<ListAddressesRequest, AddressList, Address> context, AddressList response) {
+      return new ListPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<ListPage> createPageAsync(
+        PageContext<ListAddressesRequest, AddressList, Address> context,
+        ApiFuture<AddressList> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class ListFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          ListAddressesRequest, AddressList, Address, ListPage, ListFixedSizeCollection> {
+
+    private ListFixedSizeCollection(List<ListPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static ListFixedSizeCollection createEmptyCollection() {
+      return new ListFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected ListFixedSizeCollection createCollection(List<ListPage> pages, int collectionSize) {
+      return new ListFixedSizeCollection(pages, collectionSize);
+    }
   }
 }

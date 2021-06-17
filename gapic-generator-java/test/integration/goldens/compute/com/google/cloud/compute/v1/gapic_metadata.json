@@ -11,7 +11,7 @@
           "libraryClient": "AddressesClient",
           "rpcs": {
             "AggregatedList": {
-              "methods": ["aggregatedList", "aggregatedList", "aggregatedListCallable"]
+              "methods": ["aggregatedList", "aggregatedList", "aggregatedListPagedCallable", "aggregatedListCallable"]
             },
             "Delete": {
               "methods": ["delete", "delete", "deleteCallable"]
@@ -20,7 +20,7 @@
               "methods": ["insert", "insert", "insertCallable"]
             },
             "List": {
-              "methods": ["list", "list", "listCallable"]
+              "methods": ["list", "list", "listPagedCallable", "listCallable"]
             }
           }
         }

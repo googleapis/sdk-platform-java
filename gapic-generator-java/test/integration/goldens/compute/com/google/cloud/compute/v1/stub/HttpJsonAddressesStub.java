@@ -16,6 +16,9 @@
 
 package com.google.cloud.compute.v1.stub;
 
+import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+
 import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
@@ -247,9 +250,12 @@ public class HttpJsonAddressesStub extends AddressesStub {
 
   private final UnaryCallable<AggregatedListAddressesRequest, AddressAggregatedList>
       aggregatedListCallable;
+  private final UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
+      aggregatedListPagedCallable;
   private final UnaryCallable<DeleteAddressRequest, Operation> deleteCallable;
   private final UnaryCallable<InsertAddressRequest, Operation> insertCallable;
   private final UnaryCallable<ListAddressesRequest, AddressList> listCallable;
+  private final UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
@@ -312,6 +318,9 @@ public class HttpJsonAddressesStub extends AddressesStub {
     this.aggregatedListCallable =
         callableFactory.createUnaryCallable(
             aggregatedListTransportSettings, settings.aggregatedListSettings(), clientContext);
+    this.aggregatedListPagedCallable =
+        callableFactory.createPagedCallable(
+            aggregatedListTransportSettings, settings.aggregatedListSettings(), clientContext);
     this.deleteCallable =
         callableFactory.createUnaryCallable(
             deleteTransportSettings, settings.deleteSettings(), clientContext);
@@ -320,6 +329,9 @@ public class HttpJsonAddressesStub extends AddressesStub {
             insertTransportSettings, settings.insertSettings(), clientContext);
     this.listCallable =
         callableFactory.createUnaryCallable(
+            listTransportSettings, settings.listSettings(), clientContext);
+    this.listPagedCallable =
+        callableFactory.createPagedCallable(
             listTransportSettings, settings.listSettings(), clientContext);
 
     this.backgroundResources =
@@ -343,6 +355,12 @@ public class HttpJsonAddressesStub extends AddressesStub {
   }
 
   @Override
+  public UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
+      aggregatedListPagedCallable() {
+    return aggregatedListPagedCallable;
+  }
+
+  @Override
   public UnaryCallable<DeleteAddressRequest, Operation> deleteCallable() {
     return deleteCallable;
   }
@@ -355,6 +373,11 @@ public class HttpJsonAddressesStub extends AddressesStub {
   @Override
   public UnaryCallable<ListAddressesRequest, AddressList> listCallable() {
     return listCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable() {
+    return listPagedCallable;
   }
 
   @Override
