@@ -29,15 +29,31 @@ public abstract class HttpBindings {
     PATCH,
   }
 
+  @AutoValue
+  public abstract static class HttpBinding implements Comparable<HttpBinding> {
+    public abstract String name();
+
+    public abstract boolean isOptional();
+
+    public static HttpBinding create(String name, boolean isOptional) {
+      return new AutoValue_HttpBindings_HttpBinding(name, isOptional);
+    }
+
+    @Override
+    public int compareTo(HttpBinding o) {
+      return name().compareTo(o.name());
+    }
+  }
+
   public abstract HttpVerb httpVerb();
 
   public abstract String pattern();
 
-  public abstract Set<String> pathParameters();
+  public abstract Set<HttpBinding> pathParameters();
 
-  public abstract Set<String> queryParameters();
+  public abstract Set<HttpBinding> queryParameters();
 
-  public abstract Set<String> bodyParameters();
+  public abstract Set<HttpBinding> bodyParameters();
 
   public static HttpBindings.Builder builder() {
     return new AutoValue_HttpBindings.Builder()
@@ -53,10 +69,10 @@ public abstract class HttpBindings {
   //   in .java file:  "/global/instanceTemplates/{instanceTemplate=*}"
   public String patternLowerCamel() {
     String lowerCamelPattern = pattern();
-    for (String pathParam : pathParameters()) {
+    for (HttpBinding pathParam : pathParameters()) {
       lowerCamelPattern =
           lowerCamelPattern.replaceAll(
-              "\\{" + pathParam, "{" + JavaStyle.toLowerCamelCase(pathParam));
+              "\\{" + pathParam.name(), "{" + JavaStyle.toLowerCamelCase(pathParam.name()));
     }
     return lowerCamelPattern;
   }
@@ -69,11 +85,11 @@ public abstract class HttpBindings {
 
     abstract String pattern();
 
-    public abstract HttpBindings.Builder setPathParameters(Set<String> pathParameters);
+    public abstract HttpBindings.Builder setPathParameters(Set<HttpBinding> pathParameters);
 
-    public abstract HttpBindings.Builder setQueryParameters(Set<String> queryParameters);
+    public abstract HttpBindings.Builder setQueryParameters(Set<HttpBinding> queryParameters);
 
-    public abstract HttpBindings.Builder setBodyParameters(Set<String> bodyParameters);
+    public abstract HttpBindings.Builder setBodyParameters(Set<HttpBinding> bodyParameters);
 
     public abstract HttpBindings autoBuild();
 

@@ -890,6 +890,9 @@ public class Parser {
         .setIsContainedInOneof(
             fieldDescriptor.getContainingOneof() != null
                 && !fieldDescriptor.getContainingOneof().isSynthetic())
+        .setIsProto3Optional(
+            fieldDescriptor.getContainingOneof() != null
+                && fieldDescriptor.getContainingOneof().isSynthetic())
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
