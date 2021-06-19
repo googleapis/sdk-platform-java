@@ -19,6 +19,7 @@ import com.google.api.HttpRule;
 import com.google.api.HttpRule.PatternCase;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.HttpBindings;
+import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
@@ -70,61 +71,77 @@ public class HttpRuleParser {
       }
     }
 
-    Set<String> bindings = bindingsBuilder.build();
-
-    // Binding validation.
-    for (String binding : bindings) {
-      // Handle foo.bar cases by descending into the subfields.
-      String[] descendantBindings = binding.split("\\.");
-      Optional<Message> containingMessageOpt = inputMessageOpt;
-      for (int i = 0; i < descendantBindings.length; i++) {
-        String subField = descendantBindings[i];
-        if (!containingMessageOpt.isPresent()) {
-          continue;
-        }
-
-        if (i < descendantBindings.length - 1) {
-          Field field = containingMessageOpt.get().fieldMap().get(subField);
-          containingMessageOpt = Optional.of(messageTypes.get(field.type().reference().fullName()));
-          Preconditions.checkNotNull(
-              containingMessageOpt.get(),
-              String.format(
-                  "No containing message found for field %s with type %s",
-                  field.name(), field.type().reference().simpleName()));
-        } else {
-          checkHttpFieldIsValid(subField, containingMessageOpt.get(), false);
-        }
-      }
-    }
+    Set<String> pathParamNames = bindingsBuilder.build();
 
     // TODO: support nested message fields bindings
     String body = httpRule.getBody();
-    Set<String> bodyParameters;
-    Set<String> queryParameters;
+    Set<String> bodyParamNames;
+    Set<String> queryParamNames;
     if (!inputMessageOpt.isPresent()) {
       // Must be a mixin, do not support full HttpRuleBindings for now
-      bodyParameters = ImmutableSet.of();
-      queryParameters = ImmutableSet.of();
+      bodyParamNames = ImmutableSet.of();
+      queryParamNames = ImmutableSet.of();
     } else if (Strings.isNullOrEmpty(body)) {
-      bodyParameters = ImmutableSet.of();
-      queryParameters = Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bindings);
+      bodyParamNames = ImmutableSet.of();
+      queryParamNames = Sets.difference(inputMessageOpt.get().fieldMap().keySet(), pathParamNames);
     } else if (body.equals(ASTERISK)) {
-      bodyParameters = Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bindings);
-      queryParameters = ImmutableSet.of();
+      bodyParamNames = Sets.difference(inputMessageOpt.get().fieldMap().keySet(), pathParamNames);
+      queryParamNames = ImmutableSet.of();
     } else {
-      bodyParameters = ImmutableSet.of(body);
-      Set<String> bodyBinidngsUnion = Sets.union(bodyParameters, bindings);
-      queryParameters =
+      bodyParamNames = ImmutableSet.of(body);
+      Set<String> bodyBinidngsUnion = Sets.union(bodyParamNames, pathParamNames);
+      queryParamNames =
           Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bodyBinidngsUnion);
     }
 
+    Message message = inputMessageOpt.orElse(null);
     return HttpBindings.builder()
         .setHttpVerb(HttpBindings.HttpVerb.valueOf(httpRule.getPatternCase().toString()))
         .setPattern(pattern)
-        .setPathParameters(ImmutableSortedSet.copyOf(bindings))
-        .setQueryParameters(ImmutableSortedSet.copyOf(queryParameters))
-        .setBodyParameters(ImmutableSortedSet.copyOf(bodyParameters))
+        .setPathParameters(
+            validateAndConstructHttpBindings(pathParamNames, message, messageTypes, true))
+        .setQueryParameters(
+            validateAndConstructHttpBindings(queryParamNames, message, messageTypes, false))
+        .setBodyParameters(
+            validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, false))
         .build();
+  }
+
+  private static Set<HttpBinding> validateAndConstructHttpBindings(
+      Set<String> paramNames,
+      Message inputMessage,
+      Map<String, Message> messageTypes,
+      boolean isPath) {
+    ImmutableSortedSet.Builder<HttpBinding> httpBindings = ImmutableSortedSet.naturalOrder();
+    for (String paramName : paramNames) {
+      // Handle foo.bar cases by descending into the subfields.
+      String[] subFields = paramName.split("\\.");
+      if (inputMessage == null) {
+        httpBindings.add(HttpBinding.create(paramName, false));
+        continue;
+      }
+      Message nestedMessage = inputMessage;
+      for (int i = 0; i < subFields.length; i++) {
+        String subFieldName = subFields[i];
+        if (i < subFields.length - 1) {
+          Field field = nestedMessage.fieldMap().get(subFieldName);
+          nestedMessage = messageTypes.get(field.type().reference().fullName());
+          Preconditions.checkNotNull(
+              nestedMessage,
+              String.format(
+                  "No containing message found for field %s with type %s",
+                  field.name(), field.type().reference().simpleName()));
+
+        } else {
+          if (isPath) {
+            checkHttpFieldIsValid(subFieldName, nestedMessage, !isPath);
+          }
+          Field field = nestedMessage.fieldMap().get(subFieldName);
+          httpBindings.add(HttpBinding.create(paramName, field.isProto3Optional()));
+        }
+      }
+    }
+    return httpBindings.build();
   }
 
   private static String getHttpVerbPattern(HttpRule httpRule) {

@@ -35,6 +35,8 @@ public abstract class Field {
 
   public abstract boolean isContainedInOneof();
 
+  public abstract boolean isProto3Optional();
+
   @Nullable
   public abstract ResourceReference resourceReference();
 
@@ -63,6 +65,7 @@ public abstract class Field {
         && isRepeated() == other.isRepeated()
         && isMap() == other.isMap()
         && isContainedInOneof() == other.isContainedInOneof()
+        && isProto3Optional() == other.isProto3Optional()
         && Objects.equals(resourceReference(), other.resourceReference())
         && Objects.equals(description(), other.description());
   }
@@ -76,6 +79,7 @@ public abstract class Field {
         + (isRepeated() ? 1 : 0) * 31
         + (isMap() ? 1 : 0) * 37
         + (isContainedInOneof() ? 1 : 0) * 41
+        + (isProto3Optional() ? 1 : 0) * 43
         + (resourceReference() == null ? 0 : resourceReference().hashCode())
         + (description() == null ? 0 : description().hashCode());
   }
@@ -88,7 +92,8 @@ public abstract class Field {
         .setIsEnum(false)
         .setIsRepeated(false)
         .setIsMap(false)
-        .setIsContainedInOneof(false);
+        .setIsContainedInOneof(false)
+        .setIsProto3Optional(false);
   }
 
   @AutoValue.Builder
@@ -106,6 +111,8 @@ public abstract class Field {
     public abstract Builder setIsMap(boolean isMap);
 
     public abstract Builder setIsContainedInOneof(boolean isContainedInOneof);
+
+    public abstract Builder setIsProto3Optional(boolean isProto3Optional);
 
     public abstract Builder setResourceReference(ResourceReference resourceReference);
 
