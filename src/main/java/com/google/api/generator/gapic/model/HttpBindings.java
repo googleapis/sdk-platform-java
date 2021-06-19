@@ -39,9 +39,11 @@ public abstract class HttpBindings {
       return new AutoValue_HttpBindings_HttpBinding(name, isOptional);
     }
 
+    // Do not forget to keep it in sync with equals() implementation.
     @Override
     public int compareTo(HttpBinding o) {
-      return name().compareTo(o.name());
+      int res = name().compareTo(o.name());
+      return res == 0 ? Boolean.compare(isOptional(), o.isOptional()) : res;
     }
   }
 
