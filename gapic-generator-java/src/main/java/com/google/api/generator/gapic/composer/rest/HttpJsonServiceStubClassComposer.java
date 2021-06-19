@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -42,6 +43,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -357,9 +359,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
   private Expr createFieldsExtractorAnonClass(
       Method method,
       TypeNode extractorReturnType,
-      Set<String> httpBindingFieldNames,
+      Set<HttpBinding> httpBindingFieldNames,
       String serializerMethodName) {
-    List<Expr> bodyExprs = new ArrayList<>();
+    List<Statement> bodyStatements = new ArrayList<>();
 
     Expr returnExpr = null;
     VariableExpr fieldsVarExpr = null;
@@ -389,7 +391,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                       .build())
               .build();
 
-      bodyExprs.add(fieldsAssignExpr);
+      bodyStatements.add(ExprStatement.withExpr(fieldsAssignExpr));
       returnExpr = fieldsVarExpr;
 
       TypeNode serializerVarType =
@@ -417,32 +419,48 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
 
       serializerExpr = serializerVarExpr;
 
-      bodyExprs.add(serializerAssignExpr);
+      bodyStatements.add(ExprStatement.withExpr(serializerAssignExpr));
     }
 
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
 
-    for (String httpBindingFieldName : httpBindingFieldNames) {
+    for (HttpBinding httpBindingFieldName : httpBindingFieldNames) {
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
           MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
-      String[] descendantFields = httpBindingFieldName.split("\\.");
+      MethodInvocationExpr.Builder requestFieldHasExprBuilder =
+          MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+      String[] descendantFields = httpBindingFieldName.name().split("\\.");
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =
             String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
         requestFieldGetterExprBuilder =
             requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
+
+        String bindingFieldHasMethodName =
+            (i < descendantFields.length - 1)
+                ? bindingFieldMethodName
+                : String.format("has%s", JavaStyle.toUpperCamelCase(currFieldName));
+        requestFieldHasExprBuilder =
+            requestFieldHasExprBuilder
+                .setMethodName(bindingFieldHasMethodName)
+                .setReturnType(TypeNode.BOOLEAN);
+
         if (i < descendantFields.length - 1) {
           requestFieldGetterExprBuilder =
               MethodInvocationExpr.builder()
                   .setExprReferenceExpr(requestFieldGetterExprBuilder.build());
+          requestFieldHasExprBuilder =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(requestFieldHasExprBuilder.build());
         }
       }
 
       MethodInvocationExpr requestBuilderExpr = requestFieldGetterExprBuilder.build();
+      MethodInvocationExpr requestHasExpr = requestFieldHasExprBuilder.build();
 
       ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
       if (fieldsVarExpr != null) {
@@ -450,7 +468,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       }
       paramsPutArgs.add(
           ValueExpr.withValue(
-              StringObjectValue.withValue(JavaStyle.toLowerCamelCase(httpBindingFieldName))));
+              StringObjectValue.withValue(
+                  JavaStyle.toLowerCamelCase(httpBindingFieldName.name()))));
       paramsPutArgs.add(requestBuilderExpr);
 
       Expr paramsPutExpr =
@@ -464,7 +483,15 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       if (fieldsVarExpr == null) {
         returnExpr = paramsPutExpr;
       } else {
-        bodyExprs.add(paramsPutExpr);
+        if (httpBindingFieldName.isOptional()) {
+          bodyStatements.add(
+              IfStatement.builder()
+                  .setConditionExpr(requestHasExpr)
+                  .setBody(Arrays.asList(ExprStatement.withExpr(paramsPutExpr)))
+                  .build());
+        } else {
+          bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
+        }
       }
     }
 
@@ -475,7 +502,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setReturnType(extractorReturnType)
             .setName("extract")
             .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(bodyExprs.stream().map(ExprStatement::withExpr).collect(Collectors.toList()))
+            .setBody(bodyStatements)
             .setReturnExpr(returnExpr)
             .build();
 
