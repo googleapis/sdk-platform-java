@@ -14,7 +14,6 @@
 
 load("@rules_gapic//:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
 
-SERVICE_YAML_ALLOWLIST = ["clouddms", "cloudkms", "datastream", "pubsub"]
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
 def _java_gapic_postprocess_srcjar_impl(ctx):
@@ -144,19 +143,8 @@ def _java_gapic_srcjar(
     if gapic_yaml:
         file_args_dict[gapic_yaml] = "gapic-config"
 
-    # Check the allow-list.
-    # TODO: Open this up after mixins are published, and gate on
-    # the allowlisted "mixed-in" APIs present in Java.
     if service_yaml:
-        service_yaml_in_allowlist = False
-        for keyword in SERVICE_YAML_ALLOWLIST:
-            if keyword in service_yaml:
-                service_yaml_in_allowlist = True
-                break
-        if service_yaml_in_allowlist:
-            file_args_dict[service_yaml] = "api-service-config"
-        else:
-            fail("Service.yaml is no longer supported in the Java microgenerator")
+        file_args_dict[service_yaml] = "api-service-config"
 
     output_suffix = ".srcjar"
     opt_args = []
