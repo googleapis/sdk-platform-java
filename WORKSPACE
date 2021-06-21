@@ -78,14 +78,6 @@ http_archive(
 )
 
 # Java dependencies.
-# Import the monolith so we can transitively use its gapic rules for googleapis.
-# TODO: Remove this after this dep has been removed from googleapis' switched_rules_by_language.
-http_archive(
-    name = "com_google_api_codegen",
-    strip_prefix = "gapic-generator-2.11.1",
-    urls = ["https://github.com/googleapis/gapic-generator/archive/v2.11.1.zip"],
-)
-
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
 switched_rules_by_language(
