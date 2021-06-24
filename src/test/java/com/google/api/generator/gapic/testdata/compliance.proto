@@ -143,7 +143,7 @@ message ComplianceData {
   double f_double = 12;
   float f_float = 13;
 
-  bool f_bool = 14;
+  optional bool f_bool = 14;
 
   bytes f_bytes = 15;
 
