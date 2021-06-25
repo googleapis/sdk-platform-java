@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import java.util.Objects;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -132,6 +133,18 @@ public abstract class Field {
 
     public abstract Builder setDescription(String description);
 
-    public abstract Field build();
+    // Private accessors.
+    abstract String name();
+
+    abstract Optional<String> originalName();
+
+    abstract Field autoBuild();
+
+    public Field build() {
+      if (!originalName().isPresent()) {
+        setOriginalName(name());
+      }
+      return autoBuild();
+    }
   }
 }
