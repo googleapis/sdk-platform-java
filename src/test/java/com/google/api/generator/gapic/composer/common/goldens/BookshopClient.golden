@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * try (BookshopClient bookshopClient = BookshopClient.create()) {
- *   int booksCount = 190754618;
+ *   int booksCount = 1618425911;
  *   List<Book> books = new ArrayList<>();
  *   Book response = bookshopClient.getBook(booksCount, books);
  * }
@@ -127,7 +127,7 @@ public class BookshopClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (BookshopClient bookshopClient = BookshopClient.create()) {
-   *   int booksCount = 190754618;
+   *   int booksCount = 1618425911;
    *   List<Book> books = new ArrayList<>();
    *   Book response = bookshopClient.getBook(booksCount, books);
    * }
@@ -149,7 +149,7 @@ public class BookshopClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (BookshopClient bookshopClient = BookshopClient.create()) {
-   *   String booksList = "booksList2042094184";
+   *   String booksList = "booksList2-1119589686";
    *   List<Book> books = new ArrayList<>();
    *   Book response = bookshopClient.getBook(booksList, books);
    * }
@@ -173,9 +173,9 @@ public class BookshopClient implements BackgroundResource {
    * try (BookshopClient bookshopClient = BookshopClient.create()) {
    *   GetBookRequest request =
    *       GetBookRequest.newBuilder()
-   *           .setBooksCount(190754618)
-   *           .setBooksList("booksList2042094184")
-   *           .addAllBooks(new ArrayList<Book>())
+   *           .setBooksCount1(1618425911)
+   *           .setBooksList2("booksList2-1119589686")
+   *           .addAllBooks3(new ArrayList<Book>())
    *           .build();
    *   Book response = bookshopClient.getBook(request);
    * }
@@ -196,9 +196,9 @@ public class BookshopClient implements BackgroundResource {
    * try (BookshopClient bookshopClient = BookshopClient.create()) {
    *   GetBookRequest request =
    *       GetBookRequest.newBuilder()
-   *           .setBooksCount(190754618)
-   *           .setBooksList("booksList2042094184")
-   *           .addAllBooks(new ArrayList<Book>())
+   *           .setBooksCount1(1618425911)
+   *           .setBooksList2("booksList2-1119589686")
+   *           .addAllBooks3(new ArrayList<Book>())
    *           .build();
    *   ApiFuture<Book> future = bookshopClient.getBookCallable().futureCall(request);
    *   // Do something.
