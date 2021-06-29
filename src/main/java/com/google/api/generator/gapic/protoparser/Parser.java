@@ -835,7 +835,7 @@ public class Parser {
     // If a singular field's name equals that of a repeated field with "Count" or "List" suffixed,
     // append the protobuf's field number to both fields' names.
     // See:
-    // https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/compiler/java/java_context.cc#L60
+    // https://github.com/protocolbuffers/protobuf/blob/9df42757f97da9f748a464deeda96427a8f7ade0/src/google/protobuf/compiler/java/java_context.cc#L60
     Map<String, Integer> repeatedFieldNamesToNumber =
         fields.stream()
             .filter(f -> f.isRepeated())
