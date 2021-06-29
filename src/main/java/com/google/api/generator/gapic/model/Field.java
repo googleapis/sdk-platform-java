@@ -85,7 +85,7 @@ public abstract class Field {
   @Override
   public int hashCode() {
     return 17 * name().hashCode()
-        + 57 * originalName().hashCode()
+        + 31 * originalName().hashCode()
         + 19 * type().hashCode()
         + (isMessage() ? 1 : 0) * 23
         + (isEnum() ? 1 : 0) * 29
