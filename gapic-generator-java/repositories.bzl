@@ -68,9 +68,9 @@ def gapic_generator_java_repositories():
     _maybe(
         http_archive,
         name = "com_google_googleapis_discovery",
-        strip_prefix = "googleapis-discovery-4f5d0604132e93e63330e65e2e6648c75012780c",
+        strip_prefix = "googleapis-discovery-6a189a8bada35e2657a67b903cad7fee649f2dbc",
         urls = [
-            "https://github.com/googleapis/googleapis-discovery/archive/4f5d0604132e93e63330e65e2e6648c75012780c.zip",
+            "https://github.com/googleapis/googleapis-discovery/archive/6a189a8bada35e2657a67b903cad7fee649f2dbc.zip",
         ],
     )
 
