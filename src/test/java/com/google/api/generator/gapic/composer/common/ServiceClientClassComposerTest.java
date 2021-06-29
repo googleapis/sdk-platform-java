@@ -62,8 +62,20 @@ public class ServiceClientClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "IdentityClient.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "IdentityClient.golden");
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "IdentityClient.golden");
+    assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceClasses_bookshopNameConflicts() {
+    GapicContext context = TestProtoLoader.instance().parseBookshopService();
+    Service protoService = context.services().get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "BookshopClient.golden", visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "BookshopClient.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
