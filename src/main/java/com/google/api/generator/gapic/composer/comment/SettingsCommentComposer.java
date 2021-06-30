@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer.comment;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -80,7 +79,6 @@ public class SettingsCommentComposer {
 
   public static final List<CommentStatement> APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS =
       Arrays.asList(
-              LineComment.withComment("NEXT_MAJOR_VER: remove 'throws Exception'."),
               JavaDocComment.builder()
                   .addComment(
                       "Applies the given settings updater function to all of the unary API methods"
