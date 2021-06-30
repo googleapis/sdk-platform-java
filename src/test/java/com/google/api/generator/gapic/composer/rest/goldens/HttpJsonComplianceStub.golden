@@ -183,8 +183,10 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                               Map<String, String> fields = new HashMap<>();
                               ProtoRestSerializer<RepeatRequest> serializer =
                                   ProtoRestSerializer.create();
-                              serializer.putPathParam(
-                                  fields, "info.fBool", request.getInfo().getFBool());
+                              if (request.getInfo().hasFBool()) {
+                                serializer.putPathParam(
+                                    fields, "info.fBool", request.getInfo().getFBool());
+                              }
                               serializer.putPathParam(
                                   fields, "info.fDouble", request.getInfo().getFDouble());
                               serializer.putPathParam(
@@ -239,8 +241,10 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                               Map<String, String> fields = new HashMap<>();
                               ProtoRestSerializer<RepeatRequest> serializer =
                                   ProtoRestSerializer.create();
-                              serializer.putPathParam(
-                                  fields, "info.fBool", request.getInfo().getFBool());
+                              if (request.getInfo().hasFBool()) {
+                                serializer.putPathParam(
+                                    fields, "info.fBool", request.getInfo().getFBool());
+                              }
                               serializer.putPathParam(
                                   fields,
                                   "info.fChild.fString",

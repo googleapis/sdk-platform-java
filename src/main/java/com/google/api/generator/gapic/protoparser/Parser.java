@@ -830,14 +830,47 @@ public class Parser {
     // Sort by ascending field index order. This is important for paged responses, where the first
     // repeated type is taken.
     fields.sort((f1, f2) -> f1.getIndex() - f2.getIndex());
+
+    // Mirror protoc's name conflict resolution behavior for fields.
+    // If a singular field's name equals that of a repeated field with "Count" or "List" suffixed,
+    // append the protobuf's field number to both fields' names.
+    // See:
+    // https://github.com/protocolbuffers/protobuf/blob/9df42757f97da9f748a464deeda96427a8f7ade0/src/google/protobuf/compiler/java/java_context.cc#L60
+    Map<String, Integer> repeatedFieldNamesToNumber =
+        fields.stream()
+            .filter(f -> f.isRepeated())
+            .collect(Collectors.toMap(f -> f.getName(), f -> f.getNumber()));
+    Set<Integer> fieldNumbersWithConflicts = new HashSet<>();
+    for (FieldDescriptor field : fields) {
+      Set<String> conflictingRepeatedFieldNames =
+          repeatedFieldNamesToNumber.keySet().stream()
+              .filter(
+                  n -> field.getName().equals(n + "_count") || field.getName().equals(n + "_list"))
+              .collect(Collectors.toSet());
+      if (!conflictingRepeatedFieldNames.isEmpty()) {
+        fieldNumbersWithConflicts.addAll(
+            conflictingRepeatedFieldNames.stream()
+                .map(n -> repeatedFieldNamesToNumber.get(n))
+                .collect(Collectors.toSet()));
+        fieldNumbersWithConflicts.add(field.getNumber());
+      }
+    }
+
     return fields.stream()
-        .map(f -> parseField(f, messageDescriptor, outputResourceReferencesSeen))
+        .map(
+            f ->
+                parseField(
+                    f,
+                    messageDescriptor,
+                    fieldNumbersWithConflicts.contains(f.getNumber()),
+                    outputResourceReferencesSeen))
         .collect(Collectors.toList());
   }
 
   private static Field parseField(
       FieldDescriptor fieldDescriptor,
       Descriptor messageDescriptor,
+      boolean hasFieldNameConflict,
       Set<ResourceReference> outputResourceReferencesSeen) {
     FieldOptions fieldOptions = fieldDescriptor.getOptions();
     MessageOptions messageOptions = messageDescriptor.getOptions();
@@ -882,14 +915,25 @@ public class Parser {
       }
     }
 
+    // Mirror protoc's name conflict resolution behavior for fields.
+    // For more context, trace hasFieldNameConflict back to where it gets passed in above.
+    String actualFieldName =
+        hasFieldNameConflict
+            ? fieldDescriptor.getName() + fieldDescriptor.getNumber()
+            : fieldDescriptor.getName();
+
     return fieldBuilder
-        .setName(fieldDescriptor.getName())
+        .setName(actualFieldName)
+        .setOriginalName(fieldDescriptor.getName())
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
         .setIsContainedInOneof(
             fieldDescriptor.getContainingOneof() != null
                 && !fieldDescriptor.getContainingOneof().isSynthetic())
+        .setIsProto3Optional(
+            fieldDescriptor.getContainingOneof() != null
+                && fieldDescriptor.getContainingOneof().isSynthetic())
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
