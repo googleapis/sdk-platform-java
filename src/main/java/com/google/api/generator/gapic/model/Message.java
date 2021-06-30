@@ -140,11 +140,14 @@ public abstract class Message {
     public Message build() {
       Message message = autoBuild();
       if (!message.fields().isEmpty()) {
-        message =
-            message
-                .toBuilder()
-                .setFieldMap(fields().stream().collect(Collectors.toMap(f -> f.name(), f -> f)))
-                .autoBuild();
+        Map<String, Field> fieldMap =
+            fields().stream().collect(Collectors.toMap(f -> f.name(), f -> f));
+        // Handles string occurrences of a field's original name in a protobuf, such as
+        // in the method signature annotaiton.
+        fields().stream()
+            .filter(f -> f.hasFieldNameConflict())
+            .forEach(f -> fieldMap.put(f.originalName(), f));
+        message = message.toBuilder().setFieldMap(fieldMap).autoBuild();
       }
       return message;
     }

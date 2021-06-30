@@ -31,6 +31,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -95,6 +96,17 @@ public class ParserTest {
 
     assertEquals(
         echoResponseMessage, messageTypes.get("com.google.showcase.v1beta1." + echoResponseName));
+  }
+
+  @Test
+  public void parseMessages_fieldNameConflicts() {
+    FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
+    Message requestMessage = messageTypes.get("com.google.bookshop.v1beta1.GetBookRequest");
+    // Check that field names have been changed.
+    assertThat(requestMessage.fieldMap()).containsKey("books_count1");
+    assertThat(requestMessage.fieldMap()).containsKey("books_list2");
+    assertThat(requestMessage.fieldMap()).containsKey("books3");
   }
 
   @Test
