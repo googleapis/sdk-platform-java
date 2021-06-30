@@ -69,7 +69,7 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
 # Bazel rules.
-_rules_gapic_version = "0.5.4"
+_rules_gapic_version = "0.5.5"
 
 http_archive(
     name = "rules_gapic",
@@ -78,14 +78,6 @@ http_archive(
 )
 
 # Java dependencies.
-# Import the monolith so we can transitively use its gapic rules for googleapis.
-# TODO: Remove this after this dep has been removed from googleapis' switched_rules_by_language.
-http_archive(
-    name = "com_google_api_codegen",
-    strip_prefix = "gapic-generator-2.11.1",
-    urls = ["https://github.com/googleapis/gapic-generator/archive/v2.11.1.zip"],
-)
-
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
 switched_rules_by_language(
@@ -101,6 +93,6 @@ grpc_java_repositories()
 
 http_archive(
     name = "com_google_disco_to_proto3_converter",
-    strip_prefix = "disco-to-proto3-converter-1839f6aca5e968e59b7acc03e7018b0fda8c480b",
-    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/1839f6aca5e968e59b7acc03e7018b0fda8c480b.zip"],
+    strip_prefix = "disco-to-proto3-converter-4b0956884b1aa9b367cf41488b622dc12eb16652",
+    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/4b0956884b1aa9b367cf41488b622dc12eb16652.zip"],
 )
