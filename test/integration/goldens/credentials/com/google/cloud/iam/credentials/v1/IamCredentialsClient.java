@@ -99,7 +99,7 @@ import javax.annotation.Generated;
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
-@Generated("by gapic-generator-java")
+@Generated("by gapic-generator-java microgenerator")
 public class IamCredentialsClient implements BackgroundResource {
   private final IamCredentialsSettings settings;
   private final IamCredentialsStub stub;

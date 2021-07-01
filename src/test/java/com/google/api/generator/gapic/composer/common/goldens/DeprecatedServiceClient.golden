@@ -74,7 +74,7 @@ import javax.annotation.Generated;
  * @deprecated This class is deprecated and will be removed in the next major version update.
  */
 @Deprecated
-@Generated("by gapic-generator-java")
+@Generated("by gapic-generator-java microgenerator")
 public class DeprecatedServiceClient implements BackgroundResource {
   private final DeprecatedServiceSettings settings;
   private final DeprecatedServiceStub stub;

@@ -154,7 +154,6 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setNestedClasses(createNestedPagingClasses(service, messageTypes, typeStore))
             .build();
 
-
     updateGapicMetadata(context, service, className, grpcRpcsToJavaMethodNames);
     return GapicClass.create(kind, classDef);
   }
@@ -170,7 +169,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     annotations.add(
         AnnotationNode.builder()
             .setType(typeStore.get("Generated"))
-            .setDescription("by gapic-generator-java")
+            .setDescription("by gapic-generator-java microgenerator")
             .build());
     return annotations;
   }
