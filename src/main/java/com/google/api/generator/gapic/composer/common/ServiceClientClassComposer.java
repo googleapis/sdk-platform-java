@@ -154,6 +154,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setNestedClasses(createNestedPagingClasses(service, messageTypes, typeStore))
             .build();
 
+
     updateGapicMetadata(context, service, className, grpcRpcsToJavaMethodNames);
     return GapicClass.create(kind, classDef);
   }
@@ -1739,9 +1740,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static void updateGapicMetadata(
       GapicContext context, String protoPackage, String javaPackage) {
     context.updateGapicMetadata(
-        context
-            .gapicMetadata()
-            .toBuilder()
+        context.gapicMetadata().toBuilder()
             .setProtoPackage(protoPackage)
             .setLibraryPackage(javaPackage)
             .build());
