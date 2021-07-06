@@ -65,15 +65,16 @@ public final class FieldBehaviorProto {
     java.lang.String[] descriptorData = {
       "\n\037google/api/field_behavior.proto\022\ngoogl"
           + "e.api\032 google/protobuf/descriptor.proto*"
-          + "\217\001\n\rFieldBehavior\022\036\n\032FIELD_BEHAVIOR_UNSP"
+          + "\246\001\n\rFieldBehavior\022\036\n\032FIELD_BEHAVIOR_UNSP"
           + "ECIFIED\020\000\022\014\n\010OPTIONAL\020\001\022\014\n\010REQUIRED\020\002\022\017\n"
           + "\013OUTPUT_ONLY\020\003\022\016\n\nINPUT_ONLY\020\004\022\r\n\tIMMUTA"
-          + "BLE\020\005\022\022\n\016UNORDERED_LIST\020\006:Q\n\016field_behav"
-          + "ior\022\035.google.protobuf.FieldOptions\030\234\010 \003("
-          + "\0162\031.google.api.FieldBehaviorBp\n\016com.goog"
-          + "le.apiB\022FieldBehaviorProtoP\001ZAgoogle.gol"
-          + "ang.org/genproto/googleapis/api/annotati"
-          + "ons;annotations\242\002\004GAPIb\006proto3"
+          + "BLE\020\005\022\022\n\016UNORDERED_LIST\020\006\022\025\n\021NON_EMPTY_D"
+          + "EFAULT\020\007:Q\n\016field_behavior\022\035.google.prot"
+          + "obuf.FieldOptions\030\234\010 \003(\0162\031.google.api.Fi"
+          + "eldBehaviorBp\n\016com.google.apiB\022FieldBeha"
+          + "viorProtoP\001ZAgoogle.golang.org/genproto/"
+          + "googleapis/api/annotations;annotations\242\002"
+          + "\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

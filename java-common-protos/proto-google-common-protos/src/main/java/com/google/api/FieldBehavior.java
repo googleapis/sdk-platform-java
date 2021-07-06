@@ -116,6 +116,19 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNORDERED_LIST = 6;</code>
    */
   UNORDERED_LIST(6),
+  /**
+   *
+   *
+   * <pre>
+   * Denotes that this field returns a non-empty default value if not set.
+   * This indicates that if the user provides the empty value in a request,
+   * a non-empty value will be returned. The user will not be aware of what
+   * non-empty value to expect.
+   * </pre>
+   *
+   * <code>NON_EMPTY_DEFAULT = 7;</code>
+   */
+  NON_EMPTY_DEFAULT(7),
   UNRECOGNIZED(-1),
   ;
 
@@ -203,6 +216,19 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNORDERED_LIST = 6;</code>
    */
   public static final int UNORDERED_LIST_VALUE = 6;
+  /**
+   *
+   *
+   * <pre>
+   * Denotes that this field returns a non-empty default value if not set.
+   * This indicates that if the user provides the empty value in a request,
+   * a non-empty value will be returned. The user will not be aware of what
+   * non-empty value to expect.
+   * </pre>
+   *
+   * <code>NON_EMPTY_DEFAULT = 7;</code>
+   */
+  public static final int NON_EMPTY_DEFAULT_VALUE = 7;
 
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
@@ -242,6 +268,8 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
         return IMMUTABLE;
       case 6:
         return UNORDERED_LIST;
+      case 7:
+        return NON_EMPTY_DEFAULT;
       default:
         return null;
     }
