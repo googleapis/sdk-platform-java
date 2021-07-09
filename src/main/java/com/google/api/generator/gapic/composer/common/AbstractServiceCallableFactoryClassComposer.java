@@ -44,6 +44,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -136,7 +137,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
@@ -158,7 +160,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   protected MethodDefinition createBatchingCallableMethod(TypeStore typeStore) {
@@ -178,7 +181,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   protected abstract MethodDefinition createOperationCallableMethod(TypeStore typeStore);
@@ -191,7 +195,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
       String methodVariantName,
       List<Object> transportCallSettingsTemplateObjects,
       String callSettingsVariantName,
-      List<Object> callSettingsTemplateObjects) {
+      List<Object> callSettingsTemplateObjects,
+      List<AnnotationNode> annotations) {
 
     String methodName = String.format("create%sCallable", methodVariantName);
     String callSettingsTypeName = String.format("%sCallSettings", callSettingsVariantName);
@@ -261,6 +266,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         .setName(methodName)
         .setArguments(arguments)
         .setReturnExpr(returnExpr)
+        .setAnnotations(annotations)
         .build();
   }
 

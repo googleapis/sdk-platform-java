@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +73,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
@@ -94,7 +96,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   @Override
@@ -114,7 +117,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   private MethodDefinition createBidiStreamingCallableMethod(TypeStore typeStore) {
@@ -134,7 +138,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsVariantName=*/ "Streaming",
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   private MethodDefinition createServerStreamingCallableMethod(TypeStore typeStore) {
@@ -154,7 +159,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 
   private MethodDefinition createClientStreamingCallableMethod(TypeStore typeStore) {
@@ -174,6 +180,7 @@ public class GrpcServiceCallableFactoryClassComposer
         /*callSettingsVariantName=*/ "Streaming",
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList()),
+        Collections.emptyList());
   }
 }
