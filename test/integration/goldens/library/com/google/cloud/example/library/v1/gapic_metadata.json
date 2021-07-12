@@ -17,7 +17,7 @@
               "methods": ["createShelf", "createShelf", "createShelfCallable"]
             },
             "DeleteBook": {
-              "methods": ["deleteBook", "deleteBookCallable"]
+              "methods": ["deleteBook", "deleteBook", "deleteBook", "deleteBookCallable"]
             },
             "DeleteShelf": {
               "methods": ["deleteShelf", "deleteShelf", "deleteShelf", "deleteShelfCallable"]

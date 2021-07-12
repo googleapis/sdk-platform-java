@@ -33,9 +33,7 @@ TEST_DEPS = [
     "//src/main/java/com/google/api/generator/gapic/model",
     "//src/main/java/com/google/api/generator/gapic/protoparser",
     "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
-    "//src/test/java/com/google/api/generator/gapic/testdata:deprecated_service_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
-    "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
     "@com_google_api_api_common//jar",
     "@com_google_api_gax_java//gax",
     "@com_google_api_api_common",
@@ -49,15 +47,8 @@ TEST_DEPS = [
 ]
 
 filegroup(
-    name = "composer_files",
+    name = "grpc_files",
     srcs = glob(["*.java"]),
-)
-
-java_proto_library(
-    name = "pubsub_java_proto",
-    deps = [
-        "@com_google_googleapis//google/pubsub/v1:pubsub_proto",
-    ],
 )
 
 java_proto_library(

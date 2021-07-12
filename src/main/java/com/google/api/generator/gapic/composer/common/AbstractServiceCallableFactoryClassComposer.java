@@ -102,6 +102,13 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return annotations;
   }
 
+  /**
+   * Construct the type to be implemented by the generated callable factory.
+   *
+   * @param typeStore type store with common types
+   * @return {@code TypeNode} containing the interface to be implemented by the generated callable
+   *     factory class.
+   */
   protected abstract List<TypeNode> createClassImplements(TypeStore typeStore);
 
   protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {

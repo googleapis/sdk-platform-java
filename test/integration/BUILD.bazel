@@ -1,12 +1,14 @@
 load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    "java_gapic_assembly_gradle_pkg",
+    "@gapic_generator_java//rules_java_gapic:java_gapic.bzl",
     "java_gapic_library",
     "java_gapic_test",
-    "java_grpc_library",
-    "java_proto_library",
-    "proto_library_with_info",
 )
+load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
+load(
+    "@gapic_generator_java//rules_java_gapic:java_gapic_pkg.bzl",
+    "java_gapic_assembly_gradle_pkg",
+)
+load("@rules_gapic//:gapic.bzl", "proto_library_with_info")
 load(
     "//:rules_bazel/java/integration_test.bzl",
     "golden_update",
@@ -29,6 +31,7 @@ INTEGRATION_TEST_LIBRARIES = [
     "logging",  # Java package remapping in gapic.yaml.
     "redis",  # Has a gapic.yaml.
     "library",  # No gRPC service config.
+    "compute",  # REGAPIC test.
 ]
 
 # Keys must match the values in INTEGRATION_TEST_LIBRARIES above.
@@ -41,6 +44,7 @@ API_GAPIC_TARGETS = {
     "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
     "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
+    "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
 }
 
 [integration_test(
@@ -58,9 +62,6 @@ API_GAPIC_TARGETS = {
 ####################################################
 # API Library Rules
 ####################################################
-# These will eventually go away once more APIs in googleapis have been migrated to the
-# microgenerator.
-
 # Asset API.
 java_gapic_test(
     name = "asset_java_gapic_test_suite",
@@ -278,7 +279,6 @@ java_gapic_assembly_gradle_pkg(
 )
 
 # PubSub
-# TODO: Remove some of these targets when PubSub has been migrated in googleapis.
 java_gapic_library(
     name = "pubsub_java_gapic",
     srcs = ["@com_google_googleapis//google/pubsub/v1:pubsub_proto_with_info"],

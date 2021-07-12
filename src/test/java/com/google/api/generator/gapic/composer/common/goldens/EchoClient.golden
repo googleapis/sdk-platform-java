@@ -769,6 +769,53 @@ public class EchoClient implements BackgroundResource {
     return stub.blockCallable();
   }
 
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   Object response = echoClient.collideName(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Object collideName(EchoRequest request) {
+    return collideNameCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Object> future = echoClient.collideNameCallable().futureCall(request);
+   *   // Do something.
+   *   Object response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<EchoRequest, Object> collideNameCallable() {
+    return stub.collideNameCallable();
+  }
+
   @Override
   public final void close() {
     stub.close();

@@ -1,0 +1,514 @@
+package com.google.showcase.v1beta1.stub;
+
+import com.google.api.client.http.HttpMethods;
+import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.core.BackgroundResourceAggregation;
+import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.FieldsExtractor;
+import com.google.api.gax.httpjson.HttpJsonCallSettings;
+import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
+import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
+import com.google.api.gax.httpjson.ProtoMessageResponseParser;
+import com.google.api.gax.httpjson.ProtoRestSerializer;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.showcase.v1beta1.RepeatRequest;
+import com.google.showcase.v1beta1.RepeatResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * REST stub implementation for the Compliance service API.
+ *
+ * <p>This class is for advanced usage and reflects the underlying API directly.
+ */
+@BetaApi
+@Generated("by gapic-generator-java")
+@BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+public class HttpJsonComplianceStub extends ComplianceStub {
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataBodyMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBody")
+              .setHttpMethod(HttpMethods.POST)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat:body",
+                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> extract(RepeatRequest request) {
+                              Map<String, String> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              return fields;
+                            }
+                          })
+                      .setQueryParamsExtractor(
+                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
+                            @Override
+                            public Map<String, List<String>> extract(RepeatRequest request) {
+                              Map<String, List<String>> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              return fields;
+                            }
+                          })
+                      .setRequestBodyExtractor(
+                          new FieldsExtractor<RepeatRequest, String>() {
+                            @Override
+                            public String extract(RepeatRequest request) {
+                              return ProtoRestSerializer.create()
+                                  .toBody("serverVerify", request.getServerVerify());
+                            }
+                          })
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataBodyInfoMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBodyInfo")
+              .setHttpMethod(HttpMethods.POST)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat:bodyinfo",
+                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> extract(RepeatRequest request) {
+                              Map<String, String> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              return fields;
+                            }
+                          })
+                      .setQueryParamsExtractor(
+                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
+                            @Override
+                            public Map<String, List<String>> extract(RepeatRequest request) {
+                              Map<String, List<String>> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              serializer.putQueryParam(fields, "name", request.getName());
+                              serializer.putQueryParam(
+                                  fields, "serverVerify", request.getServerVerify());
+                              return fields;
+                            }
+                          })
+                      .setRequestBodyExtractor(
+                          new FieldsExtractor<RepeatRequest, String>() {
+                            @Override
+                            public String extract(RepeatRequest request) {
+                              return ProtoRestSerializer.create().toBody("info", request.getInfo());
+                            }
+                          })
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataQueryMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataQuery")
+              .setHttpMethod(HttpMethods.GET)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat:query",
+                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> extract(RepeatRequest request) {
+                              Map<String, String> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              return fields;
+                            }
+                          })
+                      .setQueryParamsExtractor(
+                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
+                            @Override
+                            public Map<String, List<String>> extract(RepeatRequest request) {
+                              Map<String, List<String>> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              serializer.putQueryParam(fields, "info", request.getInfo());
+                              serializer.putQueryParam(fields, "name", request.getName());
+                              serializer.putQueryParam(
+                                  fields, "serverVerify", request.getServerVerify());
+                              return fields;
+                            }
+                          })
+                      .setRequestBodyExtractor(
+                          new FieldsExtractor<RepeatRequest, String>() {
+                            @Override
+                            public String extract(RepeatRequest request) {
+                              return null;
+                            }
+                          })
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataSimplePathMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataSimplePath")
+              .setHttpMethod(HttpMethods.GET)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/{info.fString}/{info.fInt32}/{info.fDouble}/{info.fBool}/{info.fKingdom}:simplepath",
+                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> extract(RepeatRequest request) {
+                              Map<String, String> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              if (request.getInfo().hasFBool()) {
+                                serializer.putPathParam(
+                                    fields, "info.fBool", request.getInfo().getFBool());
+                              }
+                              serializer.putPathParam(
+                                  fields, "info.fDouble", request.getInfo().getFDouble());
+                              serializer.putPathParam(
+                                  fields, "info.fInt32", request.getInfo().getFInt32());
+                              serializer.putPathParam(
+                                  fields, "info.fKingdom", request.getInfo().getFKingdom());
+                              serializer.putPathParam(
+                                  fields, "info.fString", request.getInfo().getFString());
+                              return fields;
+                            }
+                          })
+                      .setQueryParamsExtractor(
+                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
+                            @Override
+                            public Map<String, List<String>> extract(RepeatRequest request) {
+                              Map<String, List<String>> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              serializer.putQueryParam(fields, "info", request.getInfo());
+                              serializer.putQueryParam(fields, "name", request.getName());
+                              serializer.putQueryParam(
+                                  fields, "serverVerify", request.getServerVerify());
+                              return fields;
+                            }
+                          })
+                      .setRequestBodyExtractor(
+                          new FieldsExtractor<RepeatRequest, String>() {
+                            @Override
+                            public String extract(RepeatRequest request) {
+                              return null;
+                            }
+                          })
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathResourceMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathResource")
+              .setHttpMethod(HttpMethods.GET)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/{info.fString=first/*}/{info.fChild.fString=second/*}/bool/{info.fBool}:pathresource",
+                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> extract(RepeatRequest request) {
+                              Map<String, String> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              if (request.getInfo().hasFBool()) {
+                                serializer.putPathParam(
+                                    fields, "info.fBool", request.getInfo().getFBool());
+                              }
+                              serializer.putPathParam(
+                                  fields,
+                                  "info.fChild.fString",
+                                  request.getInfo().getFChild().getFString());
+                              serializer.putPathParam(
+                                  fields, "info.fString", request.getInfo().getFString());
+                              return fields;
+                            }
+                          })
+                      .setQueryParamsExtractor(
+                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
+                            @Override
+                            public Map<String, List<String>> extract(RepeatRequest request) {
+                              Map<String, List<String>> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              serializer.putQueryParam(fields, "info", request.getInfo());
+                              serializer.putQueryParam(fields, "name", request.getName());
+                              serializer.putQueryParam(
+                                  fields, "serverVerify", request.getServerVerify());
+                              return fields;
+                            }
+                          })
+                      .setRequestBodyExtractor(
+                          new FieldsExtractor<RepeatRequest, String>() {
+                            @Override
+                            public String extract(RepeatRequest request) {
+                              return null;
+                            }
+                          })
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathTrailingResourceMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName(
+                  "google.showcase.v1beta1.Compliance/RepeatDataPathTrailingResource")
+              .setHttpMethod(HttpMethods.GET)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/{info.fString=first/*}/{info.fChild.fString=second/**}:pathtrailingresource",
+                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> extract(RepeatRequest request) {
+                              Map<String, String> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              serializer.putPathParam(
+                                  fields,
+                                  "info.fChild.fString",
+                                  request.getInfo().getFChild().getFString());
+                              serializer.putPathParam(
+                                  fields, "info.fString", request.getInfo().getFString());
+                              return fields;
+                            }
+                          })
+                      .setQueryParamsExtractor(
+                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
+                            @Override
+                            public Map<String, List<String>> extract(RepeatRequest request) {
+                              Map<String, List<String>> fields = new HashMap<>();
+                              ProtoRestSerializer<RepeatRequest> serializer =
+                                  ProtoRestSerializer.create();
+                              serializer.putQueryParam(fields, "info", request.getInfo());
+                              serializer.putQueryParam(fields, "name", request.getName());
+                              serializer.putQueryParam(
+                                  fields, "serverVerify", request.getServerVerify());
+                              return fields;
+                            }
+                          })
+                      .setRequestBodyExtractor(
+                          new FieldsExtractor<RepeatRequest, String>() {
+                            @Override
+                            public String extract(RepeatRequest request) {
+                              return null;
+                            }
+                          })
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .build())
+              .build();
+
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyInfoCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataQueryCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataSimplePathCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathResourceCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathTrailingResourceCallable;
+
+  private final BackgroundResource backgroundResources;
+  private final HttpJsonStubCallableFactory callableFactory;
+
+  public static final HttpJsonComplianceStub create(ComplianceStubSettings settings)
+      throws IOException {
+    return new HttpJsonComplianceStub(settings, ClientContext.create(settings));
+  }
+
+  public static final HttpJsonComplianceStub create(ClientContext clientContext)
+      throws IOException {
+    return new HttpJsonComplianceStub(ComplianceStubSettings.newBuilder().build(), clientContext);
+  }
+
+  public static final HttpJsonComplianceStub create(
+      ClientContext clientContext, HttpJsonStubCallableFactory callableFactory) throws IOException {
+    return new HttpJsonComplianceStub(
+        ComplianceStubSettings.newBuilder().build(), clientContext, callableFactory);
+  }
+
+  /**
+   * Constructs an instance of HttpJsonComplianceStub, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
+  protected HttpJsonComplianceStub(ComplianceStubSettings settings, ClientContext clientContext)
+      throws IOException {
+    this(settings, clientContext, new HttpJsonComplianceCallableFactory());
+  }
+
+  /**
+   * Constructs an instance of HttpJsonComplianceStub, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
+  protected HttpJsonComplianceStub(
+      ComplianceStubSettings settings,
+      ClientContext clientContext,
+      HttpJsonStubCallableFactory callableFactory)
+      throws IOException {
+    this.callableFactory = callableFactory;
+
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataBodyMethodDescriptor)
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyInfoTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataBodyInfoMethodDescriptor)
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataQueryTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataQueryMethodDescriptor)
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataSimplePathTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataSimplePathMethodDescriptor)
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataPathResourceTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataPathResourceMethodDescriptor)
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse>
+        repeatDataPathTrailingResourceTransportSettings =
+            HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+                .setMethodDescriptor(repeatDataPathTrailingResourceMethodDescriptor)
+                .build();
+
+    this.repeatDataBodyCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataBodyTransportSettings, settings.repeatDataBodySettings(), clientContext);
+    this.repeatDataBodyInfoCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataBodyInfoTransportSettings,
+            settings.repeatDataBodyInfoSettings(),
+            clientContext);
+    this.repeatDataQueryCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataQueryTransportSettings, settings.repeatDataQuerySettings(), clientContext);
+    this.repeatDataSimplePathCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataSimplePathTransportSettings,
+            settings.repeatDataSimplePathSettings(),
+            clientContext);
+    this.repeatDataPathResourceCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathResourceTransportSettings,
+            settings.repeatDataPathResourceSettings(),
+            clientContext);
+    this.repeatDataPathTrailingResourceCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathTrailingResourceTransportSettings,
+            settings.repeatDataPathTrailingResourceSettings(),
+            clientContext);
+
+    this.backgroundResources =
+        new BackgroundResourceAggregation(clientContext.getBackgroundResources());
+  }
+
+  @InternalApi
+  public static List<ApiMethodDescriptor> getMethodDescriptors() {
+    List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
+    methodDescriptors.add(repeatDataBodyMethodDescriptor);
+    methodDescriptors.add(repeatDataBodyInfoMethodDescriptor);
+    methodDescriptors.add(repeatDataQueryMethodDescriptor);
+    methodDescriptors.add(repeatDataSimplePathMethodDescriptor);
+    methodDescriptors.add(repeatDataPathResourceMethodDescriptor);
+    methodDescriptors.add(repeatDataPathTrailingResourceMethodDescriptor);
+    return methodDescriptors;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyCallable() {
+    return repeatDataBodyCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyInfoCallable() {
+    return repeatDataBodyInfoCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataQueryCallable() {
+    return repeatDataQueryCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataSimplePathCallable() {
+    return repeatDataSimplePathCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathResourceCallable() {
+    return repeatDataPathResourceCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathTrailingResourceCallable() {
+    return repeatDataPathTrailingResourceCallable;
+  }
+
+  @Override
+  public final void close() {
+    shutdown();
+  }
+
+  @Override
+  public void shutdown() {
+    backgroundResources.shutdown();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return backgroundResources.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return backgroundResources.isTerminated();
+  }
+
+  @Override
+  public void shutdownNow() {
+    backgroundResources.shutdownNow();
+  }
+
+  @Override
+  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
+    return backgroundResources.awaitTermination(duration, unit);
+  }
+}

@@ -39,7 +39,12 @@ public abstract class Method {
 
   public abstract boolean isBatching();
 
-  public abstract boolean isPaged();
+  public boolean isPaged() {
+    return pageSizeFieldName() != null;
+  }
+
+  @Nullable
+  public abstract String pageSizeFieldName();
 
   public abstract boolean isDeprecated();
 
@@ -53,9 +58,9 @@ public abstract class Method {
   @Nullable
   public abstract String mixedInApiName();
 
-  // TODO(miraleung): May need to change this to MethodArgument, Field, or some new struct
   // HttpBinding pending dotted reference support.
-  public abstract List<String> httpBindings();
+  @Nullable
+  public abstract HttpBindings httpBindings();
 
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
@@ -70,7 +75,7 @@ public abstract class Method {
   }
 
   public boolean hasHttpBindings() {
-    return !httpBindings().isEmpty();
+    return httpBindings() != null && !httpBindings().pathParameters().isEmpty();
   }
 
   public boolean isMixin() {
@@ -83,9 +88,7 @@ public abstract class Method {
     return new AutoValue_Method.Builder()
         .setStream(Stream.NONE)
         .setMethodSignatures(ImmutableList.of())
-        .setHttpBindings(ImmutableList.of())
         .setIsBatching(false)
-        .setIsPaged(false)
         .setIsDeprecated(false);
   }
 
@@ -118,13 +121,13 @@ public abstract class Method {
 
     public abstract Builder setMixedInApiName(String mixedInApiName);
 
-    public abstract Builder setHttpBindings(List<String> httpBindings);
+    public abstract Builder setHttpBindings(HttpBindings httpBindings);
 
     public abstract Builder setMethodSignatures(List<List<MethodArgument>> methodSignature);
 
     public abstract Builder setIsBatching(boolean isBatching);
 
-    public abstract Builder setIsPaged(boolean isPaged);
+    public abstract Builder setPageSizeFieldName(String pagedFieldName);
 
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 

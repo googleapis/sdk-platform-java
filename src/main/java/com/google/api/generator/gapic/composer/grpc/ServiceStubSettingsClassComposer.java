@@ -28,8 +28,8 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
+import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
@@ -40,7 +40,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
 
-  protected static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
 
   public static ServiceStubSettingsClassComposer instance() {
     return INSTANCE;

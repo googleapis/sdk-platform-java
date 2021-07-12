@@ -158,7 +158,7 @@ public class ShelfName implements ResourceName {
     }
 
     private Builder(ShelfName shelfName) {
-      shelfId = shelfName.shelfId;
+      this.shelfId = shelfName.shelfId;
     }
 
     public ShelfName build() {

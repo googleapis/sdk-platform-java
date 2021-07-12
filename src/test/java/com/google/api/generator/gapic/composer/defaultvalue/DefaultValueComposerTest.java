@@ -24,6 +24,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.testutils.LineFormatter;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -222,8 +223,30 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithOnlyWildcards() {
-    // Edge case that should never happen in practice.
+  public void defaultValue_resourceNameWithOnlyWildcards_valueOnly() {
+    // Edge case that occurs in GCS.
+    // Wildcard, but the resource names map has only other names that contain only the deleted-topic
+    // constant.
+    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(lockerServiceFileDescriptor);
+    ResourceName resourceName =
+        typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
+    String fallbackField = "foobar";
+    Expr expr =
+        DefaultValueComposer.createDefaultValueResourceHelper(
+            resourceName,
+            Collections.emptyList(),
+            fallbackField,
+            /* allowAnonResourceNameClass = */ false);
+    expr.accept(writerVisitor);
+    assertEquals(
+        String.format("\"%s%s\"", fallbackField, fallbackField.hashCode()), writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameWithOnlyWildcards_allowAnonResourceNameClass() {
+    // Edge case that occurs in GCS.
     // Wildcard, but the resource names map has only other names that contain only the deleted-topic
     // constant.
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
@@ -236,8 +259,23 @@ public class DefaultValueComposerTest {
         DefaultValueComposer.createDefaultValue(
             resourceName, Collections.emptyList(), fallbackField);
     expr.accept(writerVisitor);
-    assertEquals(
-        String.format("\"%s%s\"", fallbackField, fallbackField.hashCode()), writerVisitor.write());
+    String expected =
+        LineFormatter.lines(
+            "new ResourceName() {\n",
+            "@Override\n",
+            "public Map<String, String> getFieldValuesMap() {\n",
+            "Map<String, String> fieldValuesMap = new HashMap<>();\n",
+            "fieldValuesMap.put(\"foobar\", \"foobar-1268878963\");\n",
+            "return fieldValuesMap;\n",
+            "}\n",
+            "\n",
+            "@Override\n",
+            "public String getFieldValue(String fieldName) {\n",
+            "return getFieldValuesMap().get(fieldName);\n",
+            "}\n",
+            "\n",
+            "}");
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -306,5 +344,29 @@ public class DefaultValueComposerTest {
             message, typeStringsToResourceNames, messageTypes);
     expr.accept(writerVisitor);
     assertEquals("WaitRequest.newBuilder().build()", writerVisitor.write());
+  }
+
+  @Test
+  public void createAnonymousResourceNameClass() {
+    Expr expr = DefaultValueComposer.createAnonymousResourceNameClass("resource");
+    expr.accept(writerVisitor);
+    String expected =
+        LineFormatter.lines(
+            "new ResourceName() {\n",
+            "@Override\n",
+            "public Map<String, String> getFieldValuesMap() {\n",
+            "Map<String, String> fieldValuesMap = new HashMap<>();\n",
+            "fieldValuesMap.put(\"resource\", \"resource-341064690\");\n",
+            "return fieldValuesMap;\n",
+            "}\n",
+            "\n",
+            "@Override\n",
+            "public String getFieldValue(String fieldName) {\n",
+            "return getFieldValuesMap().get(fieldName);\n",
+            "}\n",
+            "\n",
+            "}");
+
+    assertEquals(expected, writerVisitor.write());
   }
 }

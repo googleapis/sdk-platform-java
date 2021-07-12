@@ -33,9 +33,8 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
-import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -155,7 +154,8 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr.toBuilder()
+                methodDescriptorVarExpr
+                    .toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -289,11 +289,11 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
 
-    for (String httpBindingFieldName : method.httpBindings()) {
+    for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
           MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
-      String[] descendantFields = httpBindingFieldName.split("\\.");
+      String[] descendantFields = httpBindingFieldBinding.name().split("\\.");
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =
@@ -320,7 +320,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
               .setExprReferenceExpr(paramsVarExpr)
               .setMethodName("put")
               .setArguments(
-                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldName)),
+                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
                   valueOfExpr)
               .build();
       bodyExprs.add(paramsPutExpr);

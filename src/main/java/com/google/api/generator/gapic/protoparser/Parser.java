@@ -26,6 +26,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -87,6 +88,9 @@ public class Parser {
           "google.iam.v1.IAMPolicy",
           "google.longrunning.Operations",
           "google.cloud.location.Locations");
+  // These must be kept in sync with the above protos' java_package options.
+  private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
+      ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -106,6 +110,7 @@ public class Parser {
         GapicLroRetrySettingsParser.parse(gapicYamlConfigPathOpt);
     Optional<GapicLanguageSettings> languageSettingsOpt =
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
+    Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
 
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
 
@@ -139,6 +144,7 @@ public class Parser {
 
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> mixinServices = new ArrayList<>();
+    Transport transport = Transport.parse(transportOpt.orElse(Transport.GRPC.toString()));
     List<Service> services =
         parseServices(
             request,
@@ -147,7 +153,8 @@ public class Parser {
             outputArgResourceNames,
             serviceYamlProtoOpt,
             serviceConfigOpt,
-            mixinServices);
+            mixinServices,
+            transport);
 
     Preconditions.checkState(!services.isEmpty(), "No services found to generate");
     Function<ResourceName, String> typeNameFn =
@@ -186,7 +193,7 @@ public class Parser {
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
         .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
-        .setTransport(Transport.GRPC)
+        .setTransport(transport)
         .build();
   }
 
@@ -197,7 +204,8 @@ public class Parser {
       Set<ResourceName> outputArgResourceNames,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       Optional<GapicServiceConfig> serviceConfigOpt,
-      List<Service> outputMixinServices) {
+      List<Service> outputMixinServices,
+      Transport transport) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
 
     List<Service> services = new ArrayList<>();
@@ -215,7 +223,8 @@ public class Parser {
               resourceNames,
               serviceYamlProtoOpt,
               serviceConfigOpt,
-              outputArgResourceNames));
+              outputArgResourceNames,
+              transport));
     }
 
     // Prevent codegen for mixed-in services if there are other services present, since that is an
@@ -247,18 +256,18 @@ public class Parser {
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
     // Assumes that http.rules.selector always specifies RPC names in the above format.
-    Map<String, List<String>> mixedInMethodsToHttpRules = new HashMap<>();
+    Map<String, HttpBindings> mixedInMethodsToHttpRules = new HashMap<>();
     Map<String, String> mixedInMethodsToDocs = new HashMap<>();
     // Parse HTTP rules and documentation, which will override the proto.
     if (serviceYamlProtoOpt.isPresent()) {
       for (HttpRule httpRule : serviceYamlProtoOpt.get().getHttp().getRulesList()) {
-        Optional<List<String>> httpBindingsOpt = HttpRuleParser.parseHttpRule(httpRule);
-        if (!httpBindingsOpt.isPresent()) {
+        HttpBindings httpBindings = HttpRuleParser.parseHttpRule(httpRule);
+        if (httpBindings == null) {
           continue;
         }
         for (String rpcFullNameRaw : httpRule.getSelector().split(",")) {
           String rpcFullName = rpcFullNameRaw.trim();
-          mixedInMethodsToHttpRules.put(rpcFullName, httpBindingsOpt.get());
+          mixedInMethodsToHttpRules.put(rpcFullName, httpBindings);
         }
       }
       for (DocumentationRule docRule :
@@ -270,9 +279,15 @@ public class Parser {
       }
     }
 
+    // Sort potential mixin services alphabetically.
+    List<Service> orderedBlockedCodegenMixinApis =
+        blockedCodegenMixinApis.stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toList());
+
     Set<String> apiDefinedRpcs = new HashSet<>();
     for (Service service : services) {
-      if (blockedCodegenMixinApis.contains(service)) {
+      if (orderedBlockedCodegenMixinApis.contains(service)) {
         continue;
       }
       apiDefinedRpcs.addAll(
@@ -285,7 +300,7 @@ public class Parser {
         Service originalService = services.get(i);
         List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
         // If mixin APIs are present, add the methods to all other services.
-        for (Service mixinService : blockedCodegenMixinApis) {
+        for (Service mixinService : orderedBlockedCodegenMixinApis) {
           final String mixinServiceFullName = serviceFullNameFn.apply(mixinService);
           if (!mixedInApis.contains(mixinServiceFullName)) {
             continue;
@@ -304,7 +319,7 @@ public class Parser {
                         // HTTP rules and RPC documentation in the service.yaml file take
                         // precedence.
                         String fullMethodName = methodToFullProtoNameFn.apply(m);
-                        List<String> httpBindings =
+                        HttpBindings httpBindings =
                             mixedInMethodsToHttpRules.containsKey(fullMethodName)
                                 ? mixedInMethodsToHttpRules.get(fullMethodName)
                                 : m.httpBindings();
@@ -327,6 +342,11 @@ public class Parser {
                           m.toBuilder()
                               .setMixedInApiName(serviceFullNameFn.apply(mixinService))
                               .build()));
+          // Sort by method name, to ensure a deterministic method ordering (for tests).
+          updatedMixinMethods =
+              updatedMixinMethods.stream()
+                  .sorted((m1, m2) -> m2.name().compareTo(m1.name()))
+                  .collect(Collectors.toList());
           outputMixinServiceSet.add(
               mixinService.toBuilder().setMethods(updatedMixinMethods).build());
         }
@@ -343,7 +363,10 @@ public class Parser {
     }
 
     // Use a list to ensure ordering for deterministic tests.
-    outputMixinServices.addAll(outputMixinServiceSet);
+    outputMixinServices.addAll(
+        outputMixinServiceSet.stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toSet()));
     return services;
   }
 
@@ -360,7 +383,8 @@ public class Parser {
         resourceNames,
         serviceYamlProtoOpt,
         Optional.empty(),
-        outputArgResourceNames);
+        outputArgResourceNames,
+        Transport.GRPC);
   }
 
   public static List<Service> parseService(
@@ -369,7 +393,8 @@ public class Parser {
       Map<String, ResourceName> resourceNames,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       Optional<GapicServiceConfig> serviceConfigOpt,
-      Set<ResourceName> outputArgResourceNames) {
+      Set<ResourceName> outputArgResourceNames,
+      Transport transport) {
 
     return fileDescriptor.getServices().stream()
         .map(
@@ -443,7 +468,8 @@ public class Parser {
                           messageTypes,
                           resourceNames,
                           serviceConfigOpt,
-                          outputArgResourceNames))
+                          outputArgResourceNames,
+                          transport))
                   .build();
             })
         .collect(Collectors.toList());
@@ -542,7 +568,7 @@ public class Parser {
    * Populates ResourceName objects in Message POJOs.
    *
    * @param messageTypes A map of the message type name (as in the protobuf) to Message POJOs.
-   * @param resourceNames A list of ResourceName POJOs.
+   * @param resources A list of ResourceName POJOs.
    * @return The updated messageTypes map.
    */
   public static Map<String, Message> updateResourceNamesInMessages(
@@ -560,7 +586,7 @@ public class Parser {
   }
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
-    @VisibleForTesting String javaPackage = parseServiceJavaPackage(request);
+    String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -591,7 +617,8 @@ public class Parser {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Optional<GapicServiceConfig> serviceConfigOpt,
-      Set<ResourceName> outputArgResourceNames) {
+      Set<ResourceName> outputArgResourceNames,
+      Transport transport) {
     List<Method> methods = new ArrayList<>();
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
@@ -614,10 +641,7 @@ public class Parser {
       Message inputMessage = messageTypes.get(inputType.reference().fullName());
       Preconditions.checkNotNull(
           inputMessage, String.format("No message found for %s", inputType.reference().fullName()));
-      Optional<List<String>> httpBindingsOpt =
-          HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
-      List<String> httpBindings =
-          httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
+      HttpBindings httpBindings = HttpRuleParser.parse(protoMethod, inputMessage, messageTypes);
       boolean isBatching =
           !serviceConfigOpt.isPresent()
               ? false
@@ -646,7 +670,7 @@ public class Parser {
                       outputArgResourceNames))
               .setHttpBindings(httpBindings)
               .setIsBatching(isBatching)
-              .setIsPaged(parseIsPaged(protoMethod, messageTypes))
+              .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
               .setIsDeprecated(isDeprecated)
               .build());
 
@@ -761,8 +785,8 @@ public class Parser {
   }
 
   @VisibleForTesting
-  static boolean parseIsPaged(
-      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
+  static String parsePageSizeFieldName(
+      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes, Transport transport) {
     TypeNode inputMessageType = TypeParser.parseType(methodDescriptor.getInputType());
     TypeNode outputMessageType = TypeParser.parseType(methodDescriptor.getOutputType());
     Message inputMessage = messageTypes.get(inputMessageType.reference().fullName());
@@ -771,9 +795,24 @@ public class Parser {
     // This should technically handle the absence of either of these fields (aip.dev/158), but we
     // gate on their collective presence to ensure the generated surface is backawrds-compatible
     // with monolith-gnerated libraries.
-    return inputMessage.fieldMap().containsKey("page_size")
-        && inputMessage.fieldMap().containsKey("page_token")
-        && outputMessage.fieldMap().containsKey("next_page_token");
+    String pagedFieldName = null;
+
+    if (inputMessage.fieldMap().containsKey("page_token")
+        && outputMessage.fieldMap().containsKey("next_page_token")) {
+      // List of potential field names representing page size.
+      // page_size gets priority over max_results if both are present
+      List<String> fieldNames = new ArrayList<>();
+      fieldNames.add("page_size");
+      if (transport == Transport.REST) {
+        fieldNames.add("max_results");
+      }
+      for (String fieldName : fieldNames) {
+        if (pagedFieldName == null && inputMessage.fieldMap().containsKey(fieldName)) {
+          pagedFieldName = fieldName;
+        }
+      }
+    }
+    return pagedFieldName;
   }
 
   @VisibleForTesting
@@ -791,14 +830,47 @@ public class Parser {
     // Sort by ascending field index order. This is important for paged responses, where the first
     // repeated type is taken.
     fields.sort((f1, f2) -> f1.getIndex() - f2.getIndex());
+
+    // Mirror protoc's name conflict resolution behavior for fields.
+    // If a singular field's name equals that of a repeated field with "Count" or "List" suffixed,
+    // append the protobuf's field number to both fields' names.
+    // See:
+    // https://github.com/protocolbuffers/protobuf/blob/9df42757f97da9f748a464deeda96427a8f7ade0/src/google/protobuf/compiler/java/java_context.cc#L60
+    Map<String, Integer> repeatedFieldNamesToNumber =
+        fields.stream()
+            .filter(f -> f.isRepeated())
+            .collect(Collectors.toMap(f -> f.getName(), f -> f.getNumber()));
+    Set<Integer> fieldNumbersWithConflicts = new HashSet<>();
+    for (FieldDescriptor field : fields) {
+      Set<String> conflictingRepeatedFieldNames =
+          repeatedFieldNamesToNumber.keySet().stream()
+              .filter(
+                  n -> field.getName().equals(n + "_count") || field.getName().equals(n + "_list"))
+              .collect(Collectors.toSet());
+      if (!conflictingRepeatedFieldNames.isEmpty()) {
+        fieldNumbersWithConflicts.addAll(
+            conflictingRepeatedFieldNames.stream()
+                .map(n -> repeatedFieldNamesToNumber.get(n))
+                .collect(Collectors.toSet()));
+        fieldNumbersWithConflicts.add(field.getNumber());
+      }
+    }
+
     return fields.stream()
-        .map(f -> parseField(f, messageDescriptor, outputResourceReferencesSeen))
+        .map(
+            f ->
+                parseField(
+                    f,
+                    messageDescriptor,
+                    fieldNumbersWithConflicts.contains(f.getNumber()),
+                    outputResourceReferencesSeen))
         .collect(Collectors.toList());
   }
 
   private static Field parseField(
       FieldDescriptor fieldDescriptor,
       Descriptor messageDescriptor,
+      boolean hasFieldNameConflict,
       Set<ResourceReference> outputResourceReferencesSeen) {
     FieldOptions fieldOptions = fieldDescriptor.getOptions();
     MessageOptions messageOptions = messageDescriptor.getOptions();
@@ -843,12 +915,25 @@ public class Parser {
       }
     }
 
+    // Mirror protoc's name conflict resolution behavior for fields.
+    // For more context, trace hasFieldNameConflict back to where it gets passed in above.
+    String actualFieldName =
+        hasFieldNameConflict
+            ? fieldDescriptor.getName() + fieldDescriptor.getNumber()
+            : fieldDescriptor.getName();
+
     return fieldBuilder
-        .setName(fieldDescriptor.getName())
+        .setName(actualFieldName)
+        .setOriginalName(fieldDescriptor.getName())
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
-        .setIsContainedInOneof(fieldDescriptor.getContainingOneof() != null)
+        .setIsContainedInOneof(
+            fieldDescriptor.getContainingOneof() != null
+                && !fieldDescriptor.getContainingOneof().isSynthetic())
+        .setIsProto3Optional(
+            fieldDescriptor.getContainingOneof() != null
+                && fieldDescriptor.getContainingOneof().isSynthetic())
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
@@ -903,8 +988,23 @@ public class Parser {
       }
     }
 
+    // Filter out mixin packages.
+    Map<String, Integer> processedJavaPackageCount =
+        javaPackageCount.entrySet().stream()
+            .filter(e -> !MIXIN_JAVA_PACKAGE_ALLOWLIST.contains(e.getKey()))
+            .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+    // An empty map indicates that only mixin packages were present, which means that we're
+    // generating a standalone client for a mixin.
+    if (processedJavaPackageCount.isEmpty()) {
+      processedJavaPackageCount = javaPackageCount;
+    }
+
     String finalJavaPackage =
-        javaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+        processedJavaPackageCount.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .get()
+            .getKey();
     Preconditions.checkState(
         !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
     return finalJavaPackage;

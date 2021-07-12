@@ -17,11 +17,18 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import java.util.Objects;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Field {
+  // The field's canonical name, potentially post-processed by conflict resolution logic.
   public abstract String name();
+
+  // The field's name as it appeared in the protobuf.
+  // Not equal to name() only when there is a field name conflict, as per protoc's conflict
+  // resolution behavior. For more context, please see the invocation site of the setter method.
+  public abstract String originalName();
 
   public abstract TypeNode type();
 
@@ -35,11 +42,17 @@ public abstract class Field {
 
   public abstract boolean isContainedInOneof();
 
+  public abstract boolean isProto3Optional();
+
   @Nullable
   public abstract ResourceReference resourceReference();
 
   @Nullable
   public abstract String description();
+
+  public boolean hasFieldNameConflict() {
+    return !name().equals(originalName());
+  }
 
   public boolean hasDescription() {
     return description() != null;
@@ -57,12 +70,14 @@ public abstract class Field {
 
     Field other = (Field) o;
     return name().equals(other.name())
+        && originalName().equals(other.originalName())
         && type().equals(other.type())
         && isMessage() == other.isMessage()
         && isEnum() == other.isEnum()
         && isRepeated() == other.isRepeated()
         && isMap() == other.isMap()
         && isContainedInOneof() == other.isContainedInOneof()
+        && isProto3Optional() == other.isProto3Optional()
         && Objects.equals(resourceReference(), other.resourceReference())
         && Objects.equals(description(), other.description());
   }
@@ -70,12 +85,14 @@ public abstract class Field {
   @Override
   public int hashCode() {
     return 17 * name().hashCode()
+        + 31 * originalName().hashCode()
         + 19 * type().hashCode()
         + (isMessage() ? 1 : 0) * 23
         + (isEnum() ? 1 : 0) * 29
         + (isRepeated() ? 1 : 0) * 31
         + (isMap() ? 1 : 0) * 37
         + (isContainedInOneof() ? 1 : 0) * 41
+        + (isProto3Optional() ? 1 : 0) * 43
         + (resourceReference() == null ? 0 : resourceReference().hashCode())
         + (description() == null ? 0 : description().hashCode());
   }
@@ -88,12 +105,15 @@ public abstract class Field {
         .setIsEnum(false)
         .setIsRepeated(false)
         .setIsMap(false)
-        .setIsContainedInOneof(false);
+        .setIsContainedInOneof(false)
+        .setIsProto3Optional(false);
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setName(String name);
+
+    public abstract Builder setOriginalName(String originalName);
 
     public abstract Builder setType(TypeNode type);
 
@@ -107,10 +127,24 @@ public abstract class Field {
 
     public abstract Builder setIsContainedInOneof(boolean isContainedInOneof);
 
+    public abstract Builder setIsProto3Optional(boolean isProto3Optional);
+
     public abstract Builder setResourceReference(ResourceReference resourceReference);
 
     public abstract Builder setDescription(String description);
 
-    public abstract Field build();
+    // Private accessors.
+    abstract String name();
+
+    abstract Optional<String> originalName();
+
+    abstract Field autoBuild();
+
+    public Field build() {
+      if (!originalName().isPresent()) {
+        setOriginalName(name());
+      }
+      return autoBuild();
+    }
   }
 }

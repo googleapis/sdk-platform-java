@@ -264,7 +264,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   @Override
                   public Map<String, String> extract(CreateBookRequest request) {
                     ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
+                    params.put("parent", String.valueOf(request.getParent()));
                     return params.build();
                   }
                 })
@@ -290,7 +290,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   @Override
                   public Map<String, String> extract(ListBooksRequest request) {
                     ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
+                    params.put("parent", String.valueOf(request.getParent()));
                     return params.build();
                   }
                 })

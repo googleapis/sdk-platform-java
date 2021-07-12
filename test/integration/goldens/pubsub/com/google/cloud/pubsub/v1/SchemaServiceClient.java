@@ -31,7 +31,6 @@ import com.google.cloud.pubsub.v1.stub.SchemaServiceStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
-import com.google.iam.v1.ProjectName;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -41,6 +40,7 @@ import com.google.pubsub.v1.DeleteSchemaRequest;
 import com.google.pubsub.v1.GetSchemaRequest;
 import com.google.pubsub.v1.ListSchemasRequest;
 import com.google.pubsub.v1.ListSchemasResponse;
+import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.Schema;
 import com.google.pubsub.v1.SchemaName;
 import com.google.pubsub.v1.ValidateMessageRequest;
@@ -54,8 +54,10 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * This class provides the ability to make remote calls to the backing service through method calls
- * that map to API methods. Sample code to get started:
+ * Service Description: Service for doing schema-related operations.
+ *
+ * <p>This class provides the ability to make remote calls to the backing service through method
+ * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
  * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
