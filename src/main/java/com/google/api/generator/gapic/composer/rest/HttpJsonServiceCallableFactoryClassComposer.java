@@ -52,6 +52,8 @@ public class HttpJsonServiceCallableFactoryClassComposer
     // Always add @BetaApi annotation to the generated CallableFactory for now. It is a public class
     // for technical reasons, end users are not expected to interact with it, but it may change
     // when we add LRO support, that is why making it @BetaApi for now.
+    //
+    // Remove the @BetaApi annotation once the LRO feature is fully implemented and stabilized.
     if (annotations.stream().noneMatch(a -> a.type().equals(typeStore.get("BetaApi")))) {
       annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
     }
@@ -78,8 +80,10 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, "MetadataT");
 
-    // Always add @BetaApi annotation to the generated createOperationCallable()method for now,
+    // Always add @BetaApi annotation to the generated createOperationCallable() method for now,
     // until LRO is fully implemented.
+    //
+    // Remove the @BetaApi annotation once the LRO feature is fully implemented and stabilized.
     AnnotationNode betaAnnotation =
         AnnotationNode.withTypeAndDescription(
             typeStore.get("BetaApi"),

@@ -137,8 +137,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()),
-        Collections.emptyList());
+            .collect(Collectors.toList()));
   }
 
   protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
@@ -160,8 +159,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()),
-        Collections.emptyList());
+            .collect(Collectors.toList()));
   }
 
   protected MethodDefinition createBatchingCallableMethod(TypeStore typeStore) {
@@ -181,11 +179,31 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
-            .collect(Collectors.toList()),
-        Collections.emptyList());
+            .collect(Collectors.toList()));
   }
 
   protected abstract MethodDefinition createOperationCallableMethod(TypeStore typeStore);
+
+  protected MethodDefinition createGenericCallableMethod(
+      TypeStore typeStore,
+      List<String> methodTemplateNames,
+      String returnCallableKindName,
+      List<String> returnCallableTemplateNames,
+      String methodVariantName,
+      List<Object> transportCallSettingsTemplateObjects,
+      String callSettingsVariantName,
+      List<Object> callSettingsTemplateObjects) {
+    return createGenericCallableMethod(
+        typeStore,
+        methodTemplateNames,
+        returnCallableKindName,
+        returnCallableTemplateNames,
+        methodVariantName,
+        transportCallSettingsTemplateObjects,
+        callSettingsVariantName,
+        callSettingsTemplateObjects,
+        Collections.emptyList());
+  }
 
   protected MethodDefinition createGenericCallableMethod(
       TypeStore typeStore,
