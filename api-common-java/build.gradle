@@ -32,6 +32,10 @@ project.version = "1.10.5-SNAPSHOT" // {x-version-update:api-common:current}
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
 // Dependencies
 // ------------
 

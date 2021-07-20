@@ -664,7 +664,8 @@ public class PathTemplate {
             switch (segments.get(i).kind()) {
               case BINDING:
               case END_BINDING:
-                // skip
+              case CUSTOM_VERB:
+                // These segments do not actually consume any input.
                 continue;
               default:
                 segsToMatch++;
@@ -746,7 +747,8 @@ public class PathTemplate {
     while (iterator.hasNext()) {
       Segment seg = iterator.next();
       if (!skip && !continueLast) {
-        String separator = prevSeparator.isEmpty() ? seg.separator() : prevSeparator;
+        String separator =
+            prevSeparator.isEmpty() || !iterator.hasNext() ? seg.separator() : prevSeparator;
         result.append(separator);
         prevSeparator = seg.complexSeparator().isEmpty() ? seg.separator() : seg.complexSeparator();
       }

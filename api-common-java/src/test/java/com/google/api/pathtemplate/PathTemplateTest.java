@@ -114,6 +114,7 @@ public class PathTemplateTest {
     PathTemplate start = PathTemplate.create("{glob=**}/b");
     PathTemplate middle = PathTemplate.create("a/{glob=**}/b");
     PathTemplate end = PathTemplate.create("a/{glob=**}");
+    PathTemplate endWithCustomVerb = PathTemplate.create("a/{glob=**}:foo");
 
     Truth.assertThat(start.match("b").get("glob")).isEmpty();
     Truth.assertThat(start.match("/b").get("glob")).isEmpty();
@@ -129,6 +130,10 @@ public class PathTemplateTest {
     Truth.assertThat(end.match("a/").get("glob")).isEmpty();
     Truth.assertThat(end.match("a/b").get("glob")).isEqualTo("b");
     Truth.assertThat(end.match("a/b/b/b").get("glob")).isEqualTo("b/b/b");
+
+    Truth.assertThat(endWithCustomVerb.match("a/:foo").get("glob")).isEmpty();
+    Truth.assertThat(endWithCustomVerb.match("a/b:foo").get("glob")).isEqualTo("b");
+    Truth.assertThat(endWithCustomVerb.match("a/b/b:foo").get("glob")).isEqualTo("b/b");
   }
 
   @Test
@@ -173,6 +178,12 @@ public class PathTemplateTest {
     assertPositionalMatch(template.match("bar/foo/foo/foo/bar"), "foo/foo", "bar");
   }
 
+  @Test
+  public void matchWithCustomVerbs() {
+    PathTemplate template = PathTemplate.create("**:foo");
+    assertPositionalMatch(template.match("a/b/c:foo"), "a/b/c");
+  }
+
   // Complex Resource ID Segments.
   // ========
 
@@ -209,6 +220,45 @@ public class PathTemplateTest {
     // Separate by "_".
     template = PathTemplate.create("projects/{project}/zones/{zone_a}_{zone_b}");
     match = template.match("projects/project-123/zones/europe-west3-c_us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+  }
+
+  @Test
+  public void complexResourceIdCustomVerb() {
+    // Separate by "~".
+    PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}:hello");
+    Map<String, String> match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c~us-east3-a:hello");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a}~{zone_b")).isNull();
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+
+    // Separate by "-".
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}-{zone_b}:hello");
+    match = template.match("projects/project-123/zones/europe-west3-c~us-east3-a:hello");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("west3-c~us-east3-a");
+
+    // Separate by ".".
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}.{zone_b}:hello");
+    match = template.match("projects/project-123/zones/europe-west3-c.us-east3-a:hello");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+
+    // Separate by "_".
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}_{zone_b}:hello");
+    match = template.match("projects/project-123/zones/europe-west3-c_us-east3-a:hello");
     Truth.assertThat(match).isNotNull();
     Truth.assertThat(match.get("project")).isEqualTo("project-123");
     Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
@@ -605,6 +655,18 @@ public class PathTemplateTest {
   }
 
   @Test
+  public void instantiateWithComplexResourceId_customVerb() {
+    PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}:hello");
+    String instance =
+        template.instantiate("project", "a/b/c", "zone_a", "apple", "zone_b", "baseball");
+    Truth.assertThat(instance).isEqualTo("projects/a%2Fb%2Fc/zones/apple~baseball:hello");
+
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}/stuff:hello");
+    instance = template.instantiate("project", "a/b/c", "zone_a", "apple", "zone_b", "baseball");
+    Truth.assertThat(instance).isEqualTo("projects/a%2Fb%2Fc/zones/apple~baseball/stuff:hello");
+  }
+
+  @Test
   public void instantiateWithComplexResourceId_mixedSeparators() {
     PathTemplate template =
         PathTemplate.create(
@@ -645,6 +707,14 @@ public class PathTemplateTest {
             "zone_b",
             "baseball");
     Truth.assertThat(instance).isEqualTo("projects/a%2Fb%2Fc~foo.bar/zones/apple~baseball");
+  }
+
+  @Test
+  public void instantiateWithCustomVerbs() {
+    PathTemplate template = PathTemplate.create("/v1/{name=operations/**}:cancel");
+    String templateInstance = template.instantiate("name", "operations/3373707");
+    Truth.assertThat(templateInstance).isEqualTo("v1/operations/3373707:cancel");
+    Truth.assertThat(template.matches(templateInstance));
   }
 
   // Other
