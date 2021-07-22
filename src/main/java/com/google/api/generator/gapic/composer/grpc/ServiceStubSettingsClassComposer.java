@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
+import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -22,6 +23,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -91,6 +93,43 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
         .setReturnType(returnType)
         .setName("defaultGrpcTransportProviderBuilder")
         .setReturnExpr(transportChannelProviderBuilderExpr)
+        .build();
+  }
+
+  @Override
+  protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
+    MethodInvocationExpr credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_TYPESTORE.get("GoogleCredentialsProvider"))
+            .setMethodName("newBuilder")
+            .build();
+    credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credsProviderBuilderExpr)
+            .setMethodName("setScopesToApply")
+            .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
+            .setReturnType(returnType)
+            .build();
+    credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credsProviderBuilderExpr)
+            .setMethodName("setUseJwtAccessWithScope")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
+            .setReturnType(returnType)
+            .build();
+    return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(returnType)
+        .setName("defaultCredentialsProviderBuilder")
+        .setReturnExpr(credsProviderBuilderExpr)
         .build();
   }
 
