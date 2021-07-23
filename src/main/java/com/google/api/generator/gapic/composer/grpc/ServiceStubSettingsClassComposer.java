@@ -113,6 +113,9 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
             .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
             .setReturnType(returnType)
             .build();
+
+    // This section is specific to GAPIC clients. It sets UseJwtAccessWithScope value to true to
+    // enable self signed JWT feature.
     credsProviderBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(credsProviderBuilderExpr)
@@ -122,6 +125,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
                     PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
             .setReturnType(returnType)
             .build();
+
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
