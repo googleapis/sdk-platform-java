@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.10.5](https://www.github.com/googleapis/api-common-java/compare/v1.10.4...v1.10.5) (2021-07-20)
+
+
+### Bug Fixes
+
+* Fix PathTemplate custom verb logic matching and instantiating ([#244](https://www.github.com/googleapis/api-common-java/issues/244)) ([d4913d3](https://www.github.com/googleapis/api-common-java/commit/d4913d33ff2153cb3a8f6382ab8d918980f542ea))
+
+
+### Dependencies
+
+* update dependency io.codearte.gradle.nexus:gradle-nexus-staging-plugin to v0.30.0 ([#239](https://www.github.com/googleapis/api-common-java/issues/239)) ([2ca4359](https://www.github.com/googleapis/api-common-java/commit/2ca4359127cc2f8eddb81e8091362a75e1e6e38e))
+
 ### [1.10.4](https://www.github.com/googleapis/api-common-java/compare/v1.10.3...v1.10.4) (2021-05-19)
 
 
