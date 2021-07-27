@@ -1,5 +1,19 @@
 # Changelog
 
+### [1.10.5](https://www.github.com/googleapis/api-common-java/compare/v1.10.5...v1.10.5) (2021-07-27)
+
+
+### Build System
+
+* migrate to google sonatype endpoint ([#248](https://www.github.com/googleapis/api-common-java/issues/248)) ([c3ab73e](https://www.github.com/googleapis/api-common-java/commit/c3ab73eca99f3036a26fe10a880c1ff068efc0da))
+
+
+### Dependencies
+
+* update dependency com.google.auto.value:auto-value to v1.8.2 ([#242](https://www.github.com/googleapis/api-common-java/issues/242)) ([5de2f3e](https://www.github.com/googleapis/api-common-java/commit/5de2f3edfcaed42061ad7dbc4efc886587c0e769))
+* update dependency com.google.auto.value:auto-value-annotations to v1.8.2 ([#243](https://www.github.com/googleapis/api-common-java/issues/243)) ([53d6d38](https://www.github.com/googleapis/api-common-java/commit/53d6d38ac0a7d6dc5738823d69ac96d1eadd23a3))
+* update dependency com.google.errorprone:error_prone_annotations to v2.8.0 ([#245](https://www.github.com/googleapis/api-common-java/issues/245)) ([8889689](https://www.github.com/googleapis/api-common-java/commit/88896894b821771293cda2d4b7a2f6027ee20ef4))
+
 ### [1.10.5](https://www.github.com/googleapis/api-common-java/compare/v1.10.4...v1.10.5) (2021-07-20)
 
 
