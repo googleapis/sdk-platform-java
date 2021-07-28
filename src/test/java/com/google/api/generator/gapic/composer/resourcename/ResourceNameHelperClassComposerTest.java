@@ -18,7 +18,9 @@ import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
@@ -101,7 +103,9 @@ public class ResourceNameHelperClassComposerTest {
     ResourceName foobarResname = resourceNames.get("showcase.googleapis.com/Foobar");
     assertThat(outputResourceNames).contains(foobarResname);
 
-    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(foobarResname);
+    GapicClass clazz =
+        ResourceNameHelperClassComposer.instance()
+            .generate(foobarResname, TestProtoLoader.instance().parseShowcaseEcho());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -149,7 +153,8 @@ public class ResourceNameHelperClassComposerTest {
     assertThat(outputResourceNames).contains(billingAccountLocationResname);
 
     GapicClass clazz =
-        ResourceNameHelperClassComposer.instance().generate(billingAccountLocationResname);
+        ResourceNameHelperClassComposer.instance()
+            .generate(billingAccountLocationResname, TestProtoLoader.instance().parseLogging());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -179,7 +184,9 @@ public class ResourceNameHelperClassComposerTest {
     ResourceName sessionResname = resourceNames.get("showcase.googleapis.com/Session");
     assertThat(outputResourceNames).contains(sessionResname);
 
-    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(sessionResname);
+    GapicClass clazz =
+        ResourceNameHelperClassComposer.instance()
+            .generate(sessionResname, TestProtoLoader.instance().parseShowcaseTesting());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -208,7 +215,9 @@ public class ResourceNameHelperClassComposerTest {
     ResourceName testResname = resourceNames.get("showcase.googleapis.com/Test");
     assertThat(outputResourceNames).contains(testResname);
 
-    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(testResname);
+    GapicClass clazz =
+        ResourceNameHelperClassComposer.instance()
+            .generate(testResname, TestProtoLoader.instance().parseShowcaseTesting());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -231,7 +240,9 @@ public class ResourceNameHelperClassComposerTest {
             .setDescription("This is a description")
             .build();
 
-    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(agentResname);
+    GapicContext irrelevantContext = TestProtoLoader.instance().parseShowcaseEcho();
+    GapicClass clazz =
+        ResourceNameHelperClassComposer.instance().generate(agentResname, irrelevantContext);
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "AgentName.golden", visitor.write());
