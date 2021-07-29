@@ -34,10 +34,20 @@ jvm_maven_import_external(
 # over the generator dependencies.
 _gax_java_version = "1.65.1"
 
+"""
+local_repository(
+    name = "com_google_api_gax_java",
+    path = "/usr/local/google/home/miraleung/dev/gax-java",
+)
+"""
+
+__temp_gax_java_hash = "4a4d7127305d26245acb94d6e3db974403ad1d47"
+
 http_archive(
     name = "com_google_api_gax_java",
-    strip_prefix = "gax-java-%s" % _gax_java_version,
-    urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
+    strip_prefix = "gax-java-%s" % __temp_gax_java_hash,  #_gax_java_version,
+    urls = ["https://github.com/googleapis/gax-java/archive/%s.zip" % __temp_gax_java_hash],
+    #urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")

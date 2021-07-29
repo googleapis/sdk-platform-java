@@ -20,6 +20,8 @@ import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
+import com.google.api.gax.httpjson.OperationSnapshot;
+import com.google.api.gax.httpjson.OperationSnapshotFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
@@ -115,6 +117,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     expr =
         methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
+    expr =
+        methodMaker
+            .apply("setOperationSnapshotFactory", setOperationSnapshotFactoryExpr(protoMethod))
+            .apply(expr);
 
     expr =
         MethodInvocationExpr.builder()
@@ -126,8 +132,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr
-                    .toBuilder()
+                methodDescriptorVarExpr.toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -325,6 +330,38 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     expr = methodMaker.apply("build", Collections.emptyList()).apply(expr);
 
     return Collections.singletonList(expr);
+  }
+
+  private List<Expr> setOperationSnapshotFactoryExpr(Method protoMethod) {
+    TypeNode anonClassType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(OperationSnapshotFactory.class)
+                .setGenerics(
+                    protoMethod.inputType().reference(), protoMethod.outputType().reference())
+                .build());
+
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(protoMethod.inputType()).setName("request").build());
+    VariableExpr responseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(protoMethod.outputType()).setName("response").build());
+
+    MethodDefinition createMethod =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(
+                TypeNode.withReference(
+                    ConcreteReference.builder().setClazz(OperationSnapshot.class)))
+            .setName("create")
+            .setArguments(
+                requestVarExpr.toBuilder().setIsDecl(true).build(),
+                responseVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(ValueExpr.createNullExpr())
+            .build();
+    return Arrays.asList(
+        AnonymousClassExpr.builder().setType(anonClassType).setMethods(createMethod).build());
   }
 
   private List<Expr> setResponseParserExpr(Method protoMethod) {
