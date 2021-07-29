@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://www.github.com/googleapis/api-common-java/compare/v1.10.6...v2.0.0) (2021-07-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* update api-common-java min java version to java8 (#251)
+
+### Features
+
+* update api-common-java min java version to java8 ([#251](https://www.github.com/googleapis/api-common-java/issues/251)) ([7fe322c](https://www.github.com/googleapis/api-common-java/commit/7fe322cef65bdcc9549ddc9efa1ff95df36cc531))
+
+
+### Dependencies
+
+* update guava version to 30.1.1-jre ([7fe322c](https://www.github.com/googleapis/api-common-java/commit/7fe322cef65bdcc9549ddc9efa1ff95df36cc531))
+
 ### [1.10.5](https://www.github.com/googleapis/api-common-java/compare/v1.10.5...v1.10.5) (2021-07-27)
 
 
