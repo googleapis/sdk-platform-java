@@ -58,6 +58,7 @@ import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -472,6 +473,42 @@ public class ImportWriterVisitorTest {
         LineFormatter.lines(
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import com.google.api.generator.engine.ast.IfStatement;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeThrowExprImports_messageAndCauseExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(IfStatement.class)))
+            .setMethodName("conditionExpr")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+
+    messageExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(messageExpr)
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr throwExpr =
+        ThrowExpr.builder()
+            .setType(npeType)
+            .setMessageExpr(messageExpr)
+            .setCauseExpr(
+                NewObjectExpr.builder()
+                    .setType(TypeNode.withExceptionClazz(FileNotFoundException.class))
+                    .build())
+            .build();
+
+    throwExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import com.google.api.generator.engine.ast.IfStatement;\n",
+            "import java.io.FileNotFoundException;\n\n"),
         writerVisitor.write());
   }
 

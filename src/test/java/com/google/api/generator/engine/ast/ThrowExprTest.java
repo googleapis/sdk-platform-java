@@ -62,4 +62,65 @@ public class ThrowExprTest {
         IllegalStateException.class,
         () -> ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build());
   }
+
+  @Test
+  public void createThrowExpr_causeExpr() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr.builder()
+        .setType(npeType)
+        .setCauseExpr(
+            NewObjectExpr.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                .build())
+        .build();
+    // Successfully created a ThrowExpr.
+  }
+
+  @Test
+  public void createThrowExpr_causeExpr_throwableSubtype() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr.builder()
+        .setType(npeType)
+        .setCauseExpr(
+            NewObjectExpr.builder()
+                .setType(TypeNode.withExceptionClazz(IllegalStateException.class))
+                .build())
+        .build();
+    // Successfully created a ThrowExpr.
+  }
+
+  @Test
+  public void createThrowExpr_causeExpr_onThrowableSubtype() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            ThrowExpr.builder()
+                .setType(npeType)
+                .setCauseExpr(NewObjectExpr.builder().setType(TypeNode.STRING).build())
+                .build());
+  }
+
+  @Test
+  public void createThrowExpr_messageAndCauseExpr() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr.builder()
+        .setType(npeType)
+        .setMessageExpr(messageExpr)
+        .setCauseExpr(
+            NewObjectExpr.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                .build())
+        .build();
+    // Successfully created a ThrowExpr.
+  }
 }
