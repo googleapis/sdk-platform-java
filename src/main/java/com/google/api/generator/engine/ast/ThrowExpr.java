@@ -74,8 +74,7 @@ public abstract class ThrowExpr implements Expr {
 
       if (causeExpr() != null) {
         Preconditions.checkState(
-            ConcreteReference.withClazz(Throwable.class)
-                .isSupertypeOrEquals(causeExpr().type().reference()),
+            TypeNode.THROWABLE.reference().isSupertypeOrEquals(causeExpr().type().reference()),
             String.format(
                 "Cause expression type must be a subclass of Throwable, but found %s",
                 causeExpr().type()));
