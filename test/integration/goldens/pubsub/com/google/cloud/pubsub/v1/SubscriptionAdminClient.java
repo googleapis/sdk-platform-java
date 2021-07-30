@@ -1200,6 +1200,63 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <pre>{@code
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *   int maxMessages = 496131527;
+   *   PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   * }
+   * }</pre>
+   *
+   * @param subscription Required. The subscription from which messages should be pulled. Format is
+   *     `projects/{project}/subscriptions/{sub}`.
+   * @param maxMessages Required. The maximum number of messages to return for this request. Must be
+   *     a positive integer. The Pub/Sub system may return fewer than the number specified.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PullResponse pull(SubscriptionName subscription, int maxMessages) {
+    PullRequest request =
+        PullRequest.newBuilder()
+            .setSubscription(subscription == null ? null : subscription.toString())
+            .setMaxMessages(maxMessages)
+            .build();
+    return pull(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many
+   * concurrent pull requests pending for the given subscription.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *   int maxMessages = 496131527;
+   *   PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   * }
+   * }</pre>
+   *
+   * @param subscription Required. The subscription from which messages should be pulled. Format is
+   *     `projects/{project}/subscriptions/{sub}`.
+   * @param maxMessages Required. The maximum number of messages to return for this request. Must be
+   *     a positive integer. The Pub/Sub system may return fewer than the number specified.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PullResponse pull(String subscription, int maxMessages) {
+    PullRequest request =
+        PullRequest.newBuilder().setSubscription(subscription).setMaxMessages(maxMessages).build();
+    return pull(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many
+   * concurrent pull requests pending for the given subscription.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
    *   boolean returnImmediately = true;
    *   int maxMessages = 496131527;
    *   PullResponse response =
