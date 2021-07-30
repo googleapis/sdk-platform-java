@@ -399,6 +399,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (throwExpr.messageExpr() != null) {
       throwExpr.messageExpr().accept(this);
     }
+    if (throwExpr.causeExpr() != null) {
+      if (throwExpr.messageExpr() != null) {
+        buffer.append(COMMA);
+        space();
+      }
+      throwExpr.causeExpr().accept(this);
+    }
     rightParen();
   }
 
