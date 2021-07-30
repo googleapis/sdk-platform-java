@@ -30,6 +30,7 @@ INTEGRATION_TEST_LIBRARIES = [
     "pubsub",  # Special=case handling for "_deleted-topic_" resource name patterns.
     "logging",  # Java package remapping in gapic.yaml.
     "redis",  # Has a gapic.yaml.
+    "storage",  # Exercises storage-specific edge cases.
     "library",  # No gRPC service config.
     "compute",  # REGAPIC test.
 ]
@@ -43,6 +44,7 @@ API_GAPIC_TARGETS = {
     "pubsub": ":pubsub_java_gapic",
     "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
     "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
+    "storage": "@com_google_googleapis//google/storage/v2:storage_java_gapic",
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
     "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
 }
@@ -97,6 +99,25 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_grpc",
         "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_proto",
         "@com_google_googleapis//google/cloud/redis/v1beta1:redis_proto",
+    ],
+)
+
+# Storage API.
+java_gapic_test(
+    name = "storage_java_gapic_test_suite",
+    test_classes = [
+        "com.google.storage.v2.StorageClientTest",
+    ],
+    runtime_deps = ["@com_google_googleapis//google/storage/v2:storage_java_gapic_test"],
+)
+
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-storage-v2-java",
+    deps = [
+        "@com_google_googleapis//google/storage/v2:storage_java_gapic",
+        "@com_google_googleapis//google/storage/v2:storage_java_grpc",
+        "@com_google_googleapis//google/storage/v2:storage_java_proto",
+        "@com_google_googleapis//google/storage/v2:storage_proto",
     ],
 )
 
