@@ -1042,6 +1042,22 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeThrowExpr_basicWithCause() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr throwExpr =
+        ThrowExpr.builder()
+            .setType(npeType)
+            .setCauseExpr(
+                NewObjectExpr.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                    .build())
+            .build();
+    throwExpr.accept(writerVisitor);
+    assertEquals("throw new NullPointerException(new Throwable())", writerVisitor.write());
+  }
+
+  @Test
   public void writeThrowExpr_messageExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
@@ -1053,6 +1069,29 @@ public class JavaWriterVisitorTest {
 
     throwExpr.accept(writerVisitor);
     assertEquals("throw new NullPointerException(foobar())", writerVisitor.write());
+  }
+
+  @Test
+  public void writeThrowExpr_messageAndCauseExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr throwExpr =
+        ThrowExpr.builder()
+            .setType(npeType)
+            .setMessageExpr(messageExpr)
+            .setCauseExpr(
+                NewObjectExpr.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                    .build())
+            .build();
+
+    throwExpr.accept(writerVisitor);
+    assertEquals(
+        "throw new NullPointerException(foobar(), new Throwable())", writerVisitor.write());
   }
 
   @Test

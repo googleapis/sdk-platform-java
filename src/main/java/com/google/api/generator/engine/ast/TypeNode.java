@@ -81,6 +81,9 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
   public static final TypeNode VOID_OBJECT = withReference(ConcreteReference.withClazz(Void.class));
 
+  public static final TypeNode THROWABLE =
+      withReference(ConcreteReference.withClazz(Throwable.class));
+
   public static final TypeNode DEPRECATED =
       withReference(ConcreteReference.withClazz(Deprecated.class));
 
