@@ -22,6 +22,9 @@ import javax.annotation.Nullable;
 public abstract class ThrowExpr implements Expr {
   // TODO(miraleung): Refactor with StringObjectValue and possibly with NewObjectExpr.
 
+  @Nullable
+  public abstract Expr throwExpr();
+
   @Override
   public abstract TypeNode type();
 
@@ -42,6 +45,9 @@ public abstract class ThrowExpr implements Expr {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setThrowExpr(Expr throwExpr);
+
+    // No-op if setThrowExpr is called.
     public abstract Builder setType(TypeNode type);
 
     public Builder setMessageExpr(String message) {
@@ -53,6 +59,8 @@ public abstract class ThrowExpr implements Expr {
     public abstract Builder setCauseExpr(Expr expr);
 
     // Private.
+    abstract Expr throwExpr();
+
     abstract TypeNode type();
 
     abstract Expr messageExpr();
@@ -62,6 +70,24 @@ public abstract class ThrowExpr implements Expr {
     abstract ThrowExpr autoBuild();
 
     public ThrowExpr build() {
+      if (throwExpr() != null) {
+        setType(throwExpr().type());
+        Preconditions.checkState(
+            messageExpr() == null && causeExpr() == null,
+            "Only one of throwExpr or [messageExpr or causeExpr, inclusive] can be present.");
+
+        if (throwExpr() instanceof VariableExpr) {
+          Preconditions.checkState(
+              !((VariableExpr) throwExpr()).isDecl(), "Cannot throw a variable declaration");
+        }
+
+        Preconditions.checkState(
+            TypeNode.isExceptionType(throwExpr().type()),
+            String.format("Only exception types can be thrown, found %s", throwExpr().type()));
+
+        return autoBuild();
+      }
+
       Preconditions.checkState(
           TypeNode.isExceptionType(type()),
           String.format("Type %s must be an exception type", type()));

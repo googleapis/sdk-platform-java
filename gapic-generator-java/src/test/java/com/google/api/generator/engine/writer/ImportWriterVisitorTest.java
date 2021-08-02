@@ -450,6 +450,26 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeThrowExprImports_throwExpr() {
+    Expr exprToThrow =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Statement.class)))
+            .setMethodName("createException")
+            .setReturnType(TypeNode.withExceptionClazz(Exception.class))
+            .build();
+
+    TypeNode ignoredExceptionType =
+        TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
+    ThrowExpr throwExpr =
+        ThrowExpr.builder().setType(ignoredExceptionType).setThrowExpr(exprToThrow).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines("import com.google.api.generator.engine.ast.Statement;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
   public void writeThrowExprImports_messageExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
