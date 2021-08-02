@@ -73,6 +73,7 @@ import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1469,7 +1470,7 @@ public class JavaWriterVisitorTest {
         TryCatchStatement.builder()
             .setTryBody(
                 Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
-            .setCatchVariableExpr(variableExpr)
+            .addCatch(variableExpr, Collections.emptyList())
             .build();
 
     tryCatch.accept(writerVisitor);
@@ -1477,6 +1478,72 @@ public class JavaWriterVisitorTest {
         String.format(
             "%s%s%s%s",
             "try {\n", "int x = 3;\n", "} catch (IllegalArgumentException e) {\n", "}\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeTryCatchStatement_simpleMultiCatch() {
+    VariableExpr firstCatchVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                createVariable("e", TypeNode.withExceptionClazz(IllegalArgumentException.class)))
+            .build();
+    VariableExpr secondCatchVarExpr =
+        VariableExpr.builder()
+            .setVariable(createVariable("e", TypeNode.withExceptionClazz(RuntimeException.class)))
+            .build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .addCatch(
+                firstCatchVarExpr.toBuilder().setIsDecl(true).build(), Collections.emptyList())
+            .addCatch(
+                secondCatchVarExpr.toBuilder().setIsDecl(true).build(), Collections.emptyList())
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "try {\n",
+            "int x = 3;\n",
+            "} catch (IllegalArgumentException e) {\n",
+            "} catch (RuntimeException e) {\n",
+            "}\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeTryCatchStatement_simpleMultiCatchOrderMatters() {
+    VariableExpr firstCatchVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                createVariable("e", TypeNode.withExceptionClazz(IllegalArgumentException.class)))
+            .build();
+    VariableExpr secondCatchVarExpr =
+        VariableExpr.builder()
+            .setVariable(createVariable("e", TypeNode.withExceptionClazz(RuntimeException.class)))
+            .build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .addCatch(
+                secondCatchVarExpr.toBuilder().setIsDecl(true).build(), Collections.emptyList())
+            .addCatch(
+                firstCatchVarExpr.toBuilder().setIsDecl(true).build(), Collections.emptyList())
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "try {\n",
+            "int x = 3;\n",
+            "} catch (RuntimeException e) {\n",
+            "} catch (IllegalArgumentException e) {\n",
+            "}\n"),
         writerVisitor.write());
   }
 
@@ -1492,8 +1559,8 @@ public class JavaWriterVisitorTest {
             .setTryResourceExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN))
             .setTryBody(
                 Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("y", "4", TypeNode.INT))))
-            .setCatchVariableExpr(variableExpr)
-            .setCatchBody(
+            .addCatch(
+                variableExpr,
                 Arrays.asList(
                     ExprStatement.withExpr(createAssignmentExpr("foobar", "123", TypeNode.INT))))
             .build();
@@ -1541,8 +1608,8 @@ public class JavaWriterVisitorTest {
             .setTryResourceExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN))
             .setTryBody(
                 Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("y", "4", TypeNode.INT))))
-            .setCatchVariableExpr(variableExpr)
-            .setCatchBody(
+            .addCatch(
+                variableExpr,
                 Arrays.asList(
                     ExprStatement.withExpr(createAssignmentExpr("foobar", "123", TypeNode.INT))))
             .build();
