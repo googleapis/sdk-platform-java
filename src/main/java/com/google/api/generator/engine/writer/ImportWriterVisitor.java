@@ -234,6 +234,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     if (throwExpr.messageExpr() != null) {
       throwExpr.messageExpr().accept(this);
     }
+    if (throwExpr.causeExpr() != null) {
+      throwExpr.causeExpr().accept(this);
+    }
   }
 
   @Override

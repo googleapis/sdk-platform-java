@@ -28,6 +28,9 @@ public abstract class ThrowExpr implements Expr {
   @Nullable
   public abstract Expr messageExpr();
 
+  @Nullable
+  public abstract Expr causeExpr();
+
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
@@ -47,10 +50,14 @@ public abstract class ThrowExpr implements Expr {
 
     public abstract Builder setMessageExpr(Expr expr);
 
+    public abstract Builder setCauseExpr(Expr expr);
+
     // Private.
     abstract TypeNode type();
 
     abstract Expr messageExpr();
+
+    abstract Expr causeExpr();
 
     abstract ThrowExpr autoBuild();
 
@@ -58,11 +65,22 @@ public abstract class ThrowExpr implements Expr {
       Preconditions.checkState(
           TypeNode.isExceptionType(type()),
           String.format("Type %s must be an exception type", type()));
+
       if (messageExpr() != null) {
         Preconditions.checkState(
             messageExpr().type().equals(TypeNode.STRING),
             String.format("Message expression type must be a string for exception %s", type()));
       }
+
+      if (causeExpr() != null) {
+        Preconditions.checkState(
+            ConcreteReference.withClazz(Throwable.class)
+                .isSupertypeOrEquals(causeExpr().type().reference()),
+            String.format(
+                "Cause expression type must be a subclass of Throwable, but found %s",
+                causeExpr().type()));
+      }
+
       return autoBuild();
     }
   }
