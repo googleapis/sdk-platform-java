@@ -826,9 +826,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                                         .setExprReferenceExpr(backgroundResourcesVarExpr)
                                         .setMethodName("close")
                                         .build())))
-                        .setCatchVariableExpr(
-                            catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
-                        .setCatchBody(
+                        .addCatch(
+                            catchExceptionVarExpr.toBuilder().setIsDecl(true).build(),
                             Arrays.asList(
                                 ExprStatement.withExpr(
                                     ThrowExpr.builder()

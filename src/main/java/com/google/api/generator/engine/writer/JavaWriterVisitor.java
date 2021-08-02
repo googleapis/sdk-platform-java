@@ -703,17 +703,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     statements(tryCatchStatement.tryBody());
     rightBrace();
 
-    if (tryCatchStatement.catchVariableExpr() != null) {
+    for (int i = 0; i < tryCatchStatement.catchVariableExprs().size(); i++) {
       space();
       buffer.append(CATCH);
       space();
       leftParen();
-      tryCatchStatement.catchVariableExpr().accept(this);
+      tryCatchStatement.catchVariableExprs().get(i).accept(this);
       rightParen();
       space();
       leftBrace();
       newline();
-      statements(tryCatchStatement.catchBody());
+      statements(tryCatchStatement.catchBlocks().get(i));
       rightBrace();
     }
     newline();
