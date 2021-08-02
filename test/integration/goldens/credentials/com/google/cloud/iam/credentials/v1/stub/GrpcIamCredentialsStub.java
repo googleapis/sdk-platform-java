@@ -239,11 +239,7 @@ public class GrpcIamCredentialsStub extends IamCredentialsStub {
 
   @Override
   public final void close() {
-    try {
-      backgroundResources.close();
-    } catch (Exception e) {
-      throw new IllegalStateException("Failed to close resource", e);
-    }
+    shutdown();
   }
 
   @Override

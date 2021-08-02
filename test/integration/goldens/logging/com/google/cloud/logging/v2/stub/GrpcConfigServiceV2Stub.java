@@ -889,11 +889,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
 
   @Override
   public final void close() {
-    try {
-      backgroundResources.close();
-    } catch (Exception e) {
-      throw new IllegalStateException("Failed to close resource", e);
-    }
+    shutdown();
   }
 
   @Override
