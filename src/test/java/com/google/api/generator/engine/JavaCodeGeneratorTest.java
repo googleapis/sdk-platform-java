@@ -606,8 +606,8 @@ public class JavaCodeGeneratorTest {
                     loopShelfList,
                     ExprStatement.withExpr(writeToFileWriter),
                     ExprStatement.withExpr(closeFileWriter)))
-            .setCatchVariableExpr(createVarDeclExpr(ioException))
-            .setCatchBody(Arrays.asList(ExprStatement.withExpr(printError)))
+            .addCatch(
+                createVarDeclExpr(ioException), Arrays.asList(ExprStatement.withExpr(printError)))
             .build();
 
     return MethodDefinition.builder()

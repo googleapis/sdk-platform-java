@@ -1046,8 +1046,9 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                 tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
-            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
-            .setCatchBody(createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, true))
+            .addCatch(
+                catchExceptionVarExpr.toBuilder().setIsDecl(true).build(),
+                createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, true))
             .build();
 
     statements.add(tryCatchBlock);

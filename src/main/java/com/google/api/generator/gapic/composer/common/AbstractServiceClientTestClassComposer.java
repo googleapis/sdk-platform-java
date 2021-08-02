@@ -536,7 +536,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                       TypeNode.withReference(
                           ConcreteReference.builder()
                               .setClazz(List.class)
-                              .setGenerics(Arrays.asList(repeatedPagedResultsField.type().reference()))
+                              .setGenerics(
+                                  Arrays.asList(repeatedPagedResultsField.type().reference()))
                               .build()))
                   .setName("resources")
                   .build());
@@ -824,8 +825,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                 tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
-            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
-            .setCatchBody(catchBody)
+            .addCatch(catchExceptionVarExpr.toBuilder().setIsDecl(true).build(), catchBody)
             .build();
 
     return Arrays.asList(EMPTY_LINE_STATEMENT, tryCatchBlock);
