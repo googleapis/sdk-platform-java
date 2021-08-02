@@ -764,6 +764,8 @@ public class GrpcSubscriberStub extends SubscriberStub {
   public final void close() {
     try {
       backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
     } catch (Exception e) {
       throw new IllegalStateException("Failed to close resource", e);
     }

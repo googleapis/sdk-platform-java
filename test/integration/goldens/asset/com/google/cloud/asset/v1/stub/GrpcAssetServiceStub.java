@@ -600,6 +600,8 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
   public final void close() {
     try {
       backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
     } catch (Exception e) {
       throw new IllegalStateException("Failed to close resource", e);
     }

@@ -798,10 +798,21 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     //   public final void close() {
     //     try {
     //       backgroundResources.close();
+    //     } catch (RuntimeException e) {
+    //       throw e;
     //     } catch (Exception e) {
     //       throw new IllegalStateException("Failed to close resource", e);
     //     }
     //  }
+
+    VariableExpr catchRuntimeExceptionVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(TypeNode.withExceptionClazz(RuntimeException.class))
+                    .setName("e")
+                    .build())
+            .build();
     VariableExpr catchExceptionVarExpr =
         VariableExpr.builder()
             .setVariable(
@@ -825,6 +836,13 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                                     MethodInvocationExpr.builder()
                                         .setExprReferenceExpr(backgroundResourcesVarExpr)
                                         .setMethodName("close")
+                                        .build())))
+                        .addCatch(
+                            catchRuntimeExceptionVarExpr.toBuilder().setIsDecl(true).build(),
+                            Arrays.asList(
+                                ExprStatement.withExpr(
+                                    ThrowExpr.builder()
+                                        .setThrowExpr(catchRuntimeExceptionVarExpr)
                                         .build())))
                         .addCatch(
                             catchExceptionVarExpr.toBuilder().setIsDecl(true).build(),
