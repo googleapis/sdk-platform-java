@@ -231,6 +231,13 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ThrowExpr throwExpr) {
     throwExpr.type().accept(this);
+    // If throwExpr is present, then messageExpr and causeExpr will not be present. Relies on AST
+    // build-time checks.
+    if (throwExpr.throwExpr() != null) {
+      throwExpr.throwExpr().accept(this);
+      return;
+    }
+
     if (throwExpr.messageExpr() != null) {
       throwExpr.messageExpr().accept(this);
     }

@@ -392,6 +392,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(ThrowExpr throwExpr) {
     buffer.append(THROW);
     space();
+    // If throwExpr is present, then messageExpr and causeExpr will not be present. Relies on AST
+    // build-time checks.
+    if (throwExpr.throwExpr() != null) {
+      throwExpr.throwExpr().accept(this);
+      return;
+    }
+
     buffer.append(NEW);
     space();
     throwExpr.type().accept(this);
