@@ -1032,6 +1032,21 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeThrowExpr_basicThrowExpr() {
+    Expr exprToThrow =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Statement.class)))
+            .setMethodName("createException")
+            .setReturnType(TypeNode.withExceptionClazz(Exception.class))
+            .build();
+
+    ThrowExpr throwExpr = ThrowExpr.builder().setThrowExpr(exprToThrow).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals("throw Statement.createException()", writerVisitor.write());
+  }
+
+  @Test
   public void writeThrowExpr_basicWithMessage() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
