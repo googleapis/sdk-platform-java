@@ -40,6 +40,8 @@ import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThisObjectValue;
+import com.google.api.generator.engine.ast.ThrowExpr;
+import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
@@ -791,6 +793,23 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                         .build())
                 .build();
 
+    // Generate the close() method:
+    //   @Override
+    //   public final void close() {
+    //     try {
+    //       backgroundResources.close();
+    //     } catch (Exception e) {
+    //       throw new IllegalStateException("Failed to close resource", e);
+    //     }
+    //  }
+    VariableExpr catchExceptionVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(TypeNode.withExceptionClazz(Exception.class))
+                    .setName("e")
+                    .build())
+            .build();
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.add(
         methodMakerStarterFn
@@ -799,8 +818,27 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             .setReturnType(TypeNode.VOID)
             .setBody(
                 Arrays.asList(
-                    ExprStatement.withExpr(
-                        MethodInvocationExpr.builder().setMethodName("shutdown").build())))
+                    TryCatchStatement.builder()
+                        .setTryBody(
+                            Arrays.asList(
+                                ExprStatement.withExpr(
+                                    MethodInvocationExpr.builder()
+                                        .setExprReferenceExpr(backgroundResourcesVarExpr)
+                                        .setMethodName("close")
+                                        .build())))
+                        .setCatchVariableExpr(
+                            catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
+                        .setCatchBody(
+                            Arrays.asList(
+                                ExprStatement.withExpr(
+                                    ThrowExpr.builder()
+                                        .setType(
+                                            TypeNode.withExceptionClazz(
+                                                IllegalStateException.class))
+                                        .setMessageExpr(String.format("Failed to close resource"))
+                                        .setCauseExpr(catchExceptionVarExpr)
+                                        .build())))
+                        .build()))
             .build());
     javaMethods.add(voidMethodMakerFn.apply("shutdown"));
     javaMethods.add(booleanMethodMakerFn.apply("isShutdown"));
