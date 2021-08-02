@@ -30,7 +30,6 @@ import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
-import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -38,6 +37,7 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -1165,23 +1165,14 @@ public class ServiceClientClassComposer implements ClassComposer {
                 .setClazz(ApiFunction.class)
                 .setGenerics(Arrays.asList(methodPageType.reference(), thisClassType.reference()))
                 .build());
+
+    // Overrides ApiFunction.apply.
+    // (https://github.com/googleapis/api-common-java/blob/debf25960dea0367b0d3b5e16d57d76c1d01947e/src/main/java/com/google/api/core/ApiFunction.java).
     Expr pageToTransformExpr =
-        AnonymousClassExpr.builder()
-            .setType(anonClassType)
-            .setMethods(
-                Arrays.asList(
-                    MethodDefinition.builder()
-                        .setIsOverride(true)
-                        .setScope(ScopeNode.PUBLIC)
-                        .setReturnType(thisClassType)
-                        .setName("apply")
-                        .setArguments(inputVarExpr.toBuilder().setIsDecl(true).build())
-                        .setReturnExpr(
-                            NewObjectExpr.builder()
-                                .setType(thisClassType)
-                                .setArguments(inputVarExpr)
-                                .build())
-                        .build()))
+        LambdaExpr.builder()
+            .setArguments(inputVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                NewObjectExpr.builder().setType(thisClassType).setArguments(inputVarExpr).build())
             .build();
 
     // createAsync method - return expression.
@@ -1739,9 +1730,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static void updateGapicMetadata(
       GapicContext context, String protoPackage, String javaPackage) {
     context.updateGapicMetadata(
-        context
-            .gapicMetadata()
-            .toBuilder()
+        context.gapicMetadata().toBuilder()
             .setProtoPackage(protoPackage)
             .setLibraryPackage(javaPackage)
             .build());

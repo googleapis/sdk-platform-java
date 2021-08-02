@@ -9,7 +9,6 @@ import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
@@ -186,13 +185,10 @@ public class GrpcTestingStub extends TestingStub {
         GrpcCallSettings.<GetSessionRequest, Session>newBuilder()
             .setMethodDescriptor(getSessionMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<GetSessionRequest>() {
-                  @Override
-                  public Map<String, String> extract(GetSessionRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<ListSessionsRequest, ListSessionsResponse> listSessionsTransportSettings =
@@ -203,83 +199,65 @@ public class GrpcTestingStub extends TestingStub {
         GrpcCallSettings.<DeleteSessionRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteSessionMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<DeleteSessionRequest>() {
-                  @Override
-                  public Map<String, String> extract(DeleteSessionRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<ReportSessionRequest, ReportSessionResponse> reportSessionTransportSettings =
         GrpcCallSettings.<ReportSessionRequest, ReportSessionResponse>newBuilder()
             .setMethodDescriptor(reportSessionMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<ReportSessionRequest>() {
-                  @Override
-                  public Map<String, String> extract(ReportSessionRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<GetTestRequest, Test> getTestTransportSettings =
         GrpcCallSettings.<GetTestRequest, Test>newBuilder()
             .setMethodDescriptor(getTestMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<GetTestRequest>() {
-                  @Override
-                  public Map<String, String> extract(GetTestRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<ListTestsRequest, ListTestsResponse> listTestsTransportSettings =
         GrpcCallSettings.<ListTestsRequest, ListTestsResponse>newBuilder()
             .setMethodDescriptor(listTestsMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<ListTestsRequest>() {
-                  @Override
-                  public Map<String, String> extract(ListTestsRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("parent", String.valueOf(request.getParent()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<DeleteTestRequest, Empty> deleteTestTransportSettings =
         GrpcCallSettings.<DeleteTestRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteTestMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<DeleteTestRequest>() {
-                  @Override
-                  public Map<String, String> extract(DeleteTestRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestTransportSettings =
         GrpcCallSettings.<VerifyTestRequest, VerifyTestResponse>newBuilder()
             .setMethodDescriptor(verifyTestMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<VerifyTestRequest>() {
-                  @Override
-                  public Map<String, String> extract(VerifyTestRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("answer", String.valueOf(request.getAnswer()));
-                    params.put("foo", String.valueOf(request.getFoo()));
-                    params.put("name", String.valueOf(request.getName()));
-                    params.put(
-                        "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
-                    params.put("type", String.valueOf(request.getType()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("answer", String.valueOf(request.getAnswer()));
+                  params.put("foo", String.valueOf(request.getFoo()));
+                  params.put("name", String.valueOf(request.getName()));
+                  params.put(
+                      "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
+                  params.put("type", String.valueOf(request.getType()));
+                  return params.build();
                 })
             .build();
 
