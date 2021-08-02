@@ -17,9 +17,6 @@
 * **resnames:** fallback to fully-qualified Object name upon proto typing conflicts [ggj] ([#803](https://www.github.com/googleapis/gapic-generator-java/issues/803)) ([e654bfb](https://www.github.com/googleapis/gapic-generator-java/commit/e654bfb936b571af2546f550c9a1589f8ad63d67))
 
 
-### Miscellaneous Chores
-
-* release 1.0.17 ([111806f](https://www.github.com/googleapis/gapic-generator-java/commit/111806f0d99f14f4c2df1d3500120c277bc930c4))
 
 ### [1.0.16](https://www.github.com/googleapis/gapic-generator-java/compare/v1.0.15...v1.0.16) (2021-06-30)
 
