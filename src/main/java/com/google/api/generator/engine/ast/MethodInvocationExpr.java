@@ -126,6 +126,9 @@ public abstract class MethodInvocationExpr implements Expr {
           "generics",
           String.format("method invocation of %s", methodInvocationExpr.methodIdentifier().name()));
 
+      // TODO(v2): If type-checking is ever added for arguments, beware of lambdas and their type
+      // workarounds.
+
       return methodInvocationExpr;
     }
   }

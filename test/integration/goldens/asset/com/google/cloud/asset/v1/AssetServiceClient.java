@@ -16,7 +16,6 @@
 
 package com.google.cloud.asset.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -1453,14 +1452,7 @@ public class AssetServiceClient implements BackgroundResource {
       ApiFuture<ListAssetsPage> futurePage =
           ListAssetsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListAssetsPage, ListAssetsPagedResponse>() {
-            @Override
-            public ListAssetsPagedResponse apply(ListAssetsPage input) {
-              return new ListAssetsPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListAssetsPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListAssetsPagedResponse(ListAssetsPage page) {
@@ -1535,12 +1527,7 @@ public class AssetServiceClient implements BackgroundResource {
           SearchAllResourcesPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<SearchAllResourcesPage, SearchAllResourcesPagedResponse>() {
-            @Override
-            public SearchAllResourcesPagedResponse apply(SearchAllResourcesPage input) {
-              return new SearchAllResourcesPagedResponse(input);
-            }
-          },
+          input -> new SearchAllResourcesPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -1625,12 +1612,7 @@ public class AssetServiceClient implements BackgroundResource {
           SearchAllIamPoliciesPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<SearchAllIamPoliciesPage, SearchAllIamPoliciesPagedResponse>() {
-            @Override
-            public SearchAllIamPoliciesPagedResponse apply(SearchAllIamPoliciesPage input) {
-              return new SearchAllIamPoliciesPagedResponse(input);
-            }
-          },
+          input -> new SearchAllIamPoliciesPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 

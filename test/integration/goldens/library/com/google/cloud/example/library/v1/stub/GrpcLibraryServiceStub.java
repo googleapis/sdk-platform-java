@@ -24,7 +24,6 @@ import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.collect.ImmutableMap;
 import com.google.example.library.v1.Book;
@@ -217,13 +216,10 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
         GrpcCallSettings.<GetShelfRequest, Shelf>newBuilder()
             .setMethodDescriptor(getShelfMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<GetShelfRequest>() {
-                  @Override
-                  public Map<String, String> extract(GetShelfRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<ListShelvesRequest, ListShelvesResponse> listShelvesTransportSettings =
@@ -234,104 +230,80 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
         GrpcCallSettings.<DeleteShelfRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteShelfMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<DeleteShelfRequest>() {
-                  @Override
-                  public Map<String, String> extract(DeleteShelfRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<MergeShelvesRequest, Shelf> mergeShelvesTransportSettings =
         GrpcCallSettings.<MergeShelvesRequest, Shelf>newBuilder()
             .setMethodDescriptor(mergeShelvesMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<MergeShelvesRequest>() {
-                  @Override
-                  public Map<String, String> extract(MergeShelvesRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<CreateBookRequest, Book> createBookTransportSettings =
         GrpcCallSettings.<CreateBookRequest, Book>newBuilder()
             .setMethodDescriptor(createBookMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<CreateBookRequest>() {
-                  @Override
-                  public Map<String, String> extract(CreateBookRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("parent", String.valueOf(request.getParent()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<GetBookRequest, Book> getBookTransportSettings =
         GrpcCallSettings.<GetBookRequest, Book>newBuilder()
             .setMethodDescriptor(getBookMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<GetBookRequest>() {
-                  @Override
-                  public Map<String, String> extract(GetBookRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<ListBooksRequest, ListBooksResponse> listBooksTransportSettings =
         GrpcCallSettings.<ListBooksRequest, ListBooksResponse>newBuilder()
             .setMethodDescriptor(listBooksMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<ListBooksRequest>() {
-                  @Override
-                  public Map<String, String> extract(ListBooksRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("parent", String.valueOf(request.getParent()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<DeleteBookRequest, Empty> deleteBookTransportSettings =
         GrpcCallSettings.<DeleteBookRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteBookMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<DeleteBookRequest>() {
-                  @Override
-                  public Map<String, String> extract(DeleteBookRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<UpdateBookRequest, Book> updateBookTransportSettings =
         GrpcCallSettings.<UpdateBookRequest, Book>newBuilder()
             .setMethodDescriptor(updateBookMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<UpdateBookRequest>() {
-                  @Override
-                  public Map<String, String> extract(UpdateBookRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("book.name", String.valueOf(request.getBook().getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("book.name", String.valueOf(request.getBook().getName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<MoveBookRequest, Book> moveBookTransportSettings =
         GrpcCallSettings.<MoveBookRequest, Book>newBuilder()
             .setMethodDescriptor(moveBookMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<MoveBookRequest>() {
-                  @Override
-                  public Map<String, String> extract(MoveBookRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("name", String.valueOf(request.getName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
                 })
             .build();
 
