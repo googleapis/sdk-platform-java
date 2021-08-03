@@ -752,14 +752,7 @@ public class KeyManagementServiceClientTest {
         PublicKey.newBuilder()
             .setPem("pem110872")
             .setPemCrc32C(Int64Value.newBuilder().build())
-            .setName(
-                PublicKeyName.of(
-                        "[PROJECT]",
-                        "[LOCATION]",
-                        "[KEY_RING]",
-                        "[CRYPTO_KEY]",
-                        "[CRYPTO_KEY_VERSION]")
-                    .toString())
+            .setName("name3373707")
             .build();
     mockKeyManagementService.addResponse(expectedResponse);
 
@@ -803,14 +796,7 @@ public class KeyManagementServiceClientTest {
         PublicKey.newBuilder()
             .setPem("pem110872")
             .setPemCrc32C(Int64Value.newBuilder().build())
-            .setName(
-                PublicKeyName.of(
-                        "[PROJECT]",
-                        "[LOCATION]",
-                        "[KEY_RING]",
-                        "[CRYPTO_KEY]",
-                        "[CRYPTO_KEY_VERSION]")
-                    .toString())
+            .setName("name3373707")
             .build();
     mockKeyManagementService.addResponse(expectedResponse);
 
