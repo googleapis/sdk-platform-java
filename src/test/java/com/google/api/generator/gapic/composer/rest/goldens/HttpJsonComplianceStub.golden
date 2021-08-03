@@ -147,8 +147,10 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             Map<String, String> fields = new HashMap<>();
                             ProtoRestSerializer<RepeatRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putPathParam(
-                                fields, "info.fBool", request.getInfo().getFBool());
+                            if (request.getInfo().hasFBool()) {
+                              serializer.putPathParam(
+                                  fields, "info.fBool", request.getInfo().getFBool());
+                            }
                             serializer.putPathParam(
                                 fields, "info.fDouble", request.getInfo().getFDouble());
                             serializer.putPathParam(
@@ -191,8 +193,10 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             Map<String, String> fields = new HashMap<>();
                             ProtoRestSerializer<RepeatRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putPathParam(
-                                fields, "info.fBool", request.getInfo().getFBool());
+                            if (request.getInfo().hasFBool()) {
+                              serializer.putPathParam(
+                                  fields, "info.fBool", request.getInfo().getFBool());
+                            }
                             serializer.putPathParam(
                                 fields,
                                 "info.fChild.fString",
@@ -410,7 +414,13 @@ public class HttpJsonComplianceStub extends ComplianceStub {
 
   @Override
   public final void close() {
-    shutdown();
+    try {
+      backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to close resource", e);
+    }
   }
 
   @Override

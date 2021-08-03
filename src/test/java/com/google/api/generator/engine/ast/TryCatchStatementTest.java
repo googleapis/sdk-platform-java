@@ -15,9 +15,11 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
+import java.util.Collections;
 import org.junit.Test;
 
 public class TryCatchStatementTest {
@@ -32,9 +34,36 @@ public class TryCatchStatementTest {
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
             .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-            .setCatchVariableExpr(variableExpr)
+            .addCatch(variableExpr, Collections.emptyList())
             .build();
-    assertThat(tryCatch.catchVariableExpr()).isEqualTo(variableExpr);
+    assertEquals(1, tryCatch.catchVariableExprs().size());
+    assertThat(tryCatch.catchVariableExprs().get(0)).isEqualTo(variableExpr);
+  }
+
+  @Test
+  public void validTryCatchStatement_simpleMultiBlock() {
+    VariableExpr firstCatchVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                createVariable("e", TypeNode.withExceptionClazz(IllegalArgumentException.class)))
+            .setIsDecl(true)
+            .build();
+    VariableExpr secondCatchVarExpr =
+        VariableExpr.builder()
+            .setVariable(createVariable("e", TypeNode.withExceptionClazz(RuntimeException.class)))
+            .setIsDecl(true)
+            .build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+            .addCatch(firstCatchVarExpr, Collections.emptyList())
+            .addCatch(secondCatchVarExpr, Collections.emptyList())
+            .build();
+
+    assertEquals(2, tryCatch.catchVariableExprs().size());
+    assertThat(tryCatch.catchVariableExprs().get(0)).isEqualTo(firstCatchVarExpr);
+    assertThat(tryCatch.catchVariableExprs().get(1)).isEqualTo(secondCatchVarExpr);
   }
 
   @Test
@@ -49,9 +78,9 @@ public class TryCatchStatementTest {
         TryCatchStatement.builder()
             .setTryResourceExpr(assignmentExpr)
             .setTryBody(Arrays.asList(ExprStatement.withExpr(assignmentExpr)))
-            .setCatchVariableExpr(variableExpr)
+            .addCatch(variableExpr, Collections.emptyList())
             .build();
-    assertThat(tryCatch.catchVariableExpr()).isEqualTo(variableExpr);
+    assertThat(tryCatch.catchVariableExprs().get(0)).isEqualTo(variableExpr);
     assertThat(tryCatch.tryResourceExpr()).isEqualTo(assignmentExpr);
   }
 
@@ -67,7 +96,7 @@ public class TryCatchStatementTest {
             .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
             .setIsSampleCode(true)
             .build();
-    assertThat(tryCatch.catchVariableExpr()).isNull();
+    assertThat(tryCatch.catchVariableExprs()).isEmpty();
   }
 
   @Test
@@ -78,7 +107,7 @@ public class TryCatchStatementTest {
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
 
     assertThrows(
-        NullPointerException.class,
+        IllegalStateException.class,
         () -> {
           TryCatchStatement.builder()
               .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
@@ -99,7 +128,7 @@ public class TryCatchStatementTest {
           TryCatchStatement tryCatch =
               TryCatchStatement.builder()
                   .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-                  .setCatchVariableExpr(variableExpr)
+                  .addCatch(variableExpr, Collections.emptyList())
                   .build();
         });
   }
@@ -117,7 +146,7 @@ public class TryCatchStatementTest {
           TryCatchStatement tryCatch =
               TryCatchStatement.builder()
                   .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-                  .setCatchVariableExpr(variableExpr)
+                  .addCatch(variableExpr, Collections.emptyList())
                   .build();
         });
   }

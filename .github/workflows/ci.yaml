@@ -49,12 +49,6 @@ jobs:
         run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress --test_output=errors
 
       - name: Integration Tests
-        # TODO(miraleung): Change this to //test/integration/... after the monolith rule removal.
-        run: bazel --batch test //test/integration:asset //test/integration:compute //test/integration:credentials //test/integration:iam //test/integration:kms //test/integration:logging //test/integration:pubsub //test/integration:redis //test/integration:library --noshow_progress
-
-      - uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-
         run: bazel --batch test //test/integration/...
 
       - uses: actions/upload-artifact@v2

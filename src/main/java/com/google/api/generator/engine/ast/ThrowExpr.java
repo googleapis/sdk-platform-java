@@ -22,11 +22,17 @@ import javax.annotation.Nullable;
 public abstract class ThrowExpr implements Expr {
   // TODO(miraleung): Refactor with StringObjectValue and possibly with NewObjectExpr.
 
+  @Nullable
+  public abstract Expr throwExpr();
+
   @Override
   public abstract TypeNode type();
 
   @Nullable
   public abstract Expr messageExpr();
+
+  @Nullable
+  public abstract Expr causeExpr();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -39,6 +45,9 @@ public abstract class ThrowExpr implements Expr {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setThrowExpr(Expr throwExpr);
+
+    // No-op if setThrowExpr is called.
     public abstract Builder setType(TypeNode type);
 
     public Builder setMessageExpr(String message) {
@@ -47,22 +56,56 @@ public abstract class ThrowExpr implements Expr {
 
     public abstract Builder setMessageExpr(Expr expr);
 
+    public abstract Builder setCauseExpr(Expr expr);
+
     // Private.
+    abstract Expr throwExpr();
+
     abstract TypeNode type();
 
     abstract Expr messageExpr();
 
+    abstract Expr causeExpr();
+
     abstract ThrowExpr autoBuild();
 
     public ThrowExpr build() {
+      if (throwExpr() != null) {
+        setType(throwExpr().type());
+        Preconditions.checkState(
+            messageExpr() == null && causeExpr() == null,
+            "Only one of throwExpr or [messageExpr or causeExpr, inclusive] can be present.");
+
+        if (throwExpr() instanceof VariableExpr) {
+          Preconditions.checkState(
+              !((VariableExpr) throwExpr()).isDecl(), "Cannot throw a variable declaration");
+        }
+
+        Preconditions.checkState(
+            TypeNode.isExceptionType(throwExpr().type()),
+            String.format("Only exception types can be thrown, found %s", throwExpr().type()));
+
+        return autoBuild();
+      }
+
       Preconditions.checkState(
           TypeNode.isExceptionType(type()),
           String.format("Type %s must be an exception type", type()));
+
       if (messageExpr() != null) {
         Preconditions.checkState(
             messageExpr().type().equals(TypeNode.STRING),
             String.format("Message expression type must be a string for exception %s", type()));
       }
+
+      if (causeExpr() != null) {
+        Preconditions.checkState(
+            TypeNode.THROWABLE.reference().isSupertypeOrEquals(causeExpr().type().reference()),
+            String.format(
+                "Cause expression type must be a subclass of Throwable, but found %s",
+                causeExpr().type()));
+      }
+
       return autoBuild();
     }
   }
