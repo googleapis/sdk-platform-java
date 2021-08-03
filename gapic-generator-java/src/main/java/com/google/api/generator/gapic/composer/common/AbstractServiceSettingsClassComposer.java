@@ -648,8 +648,6 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .setReturnType(builderType)
         .setName(javaMethodName)
         .setArguments(Arrays.asList(settingsUpdaterVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(
-            Arrays.asList(TypeNode.withReference(ConcreteReference.withClazz(Exception.class))))
         .setBody(Arrays.asList(ExprStatement.withExpr(applyMethodExpr)))
         .setReturnExpr(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
         .build();

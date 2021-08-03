@@ -1722,7 +1722,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .setReturnType(returnType)
         .setName(methodName)
         .setArguments(settingsUpdaterVarExpr.toBuilder().setIsDecl(true).build())
-        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
         .setBody(Arrays.asList(ExprStatement.withExpr(superApplyExpr)))
         .setReturnExpr(returnExpr)
         .build();
