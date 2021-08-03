@@ -613,13 +613,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setReturnType(returnType)
               .build();
       thenExpr =
-              MethodInvocationExpr.builder()
-                  .setStaticReferenceType(
-                      TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
-                  .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-                  .setMethodName("of")
-                  .setReturnType(returnType)
-                  .build();
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(
+                  TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
+              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+              .setMethodName("of")
+              .setReturnType(returnType)
+              .build();
       elseExpr = getResponsesExpr;
     }
     // While protobufs should not be null, this null-check is needed to protect against NPEs

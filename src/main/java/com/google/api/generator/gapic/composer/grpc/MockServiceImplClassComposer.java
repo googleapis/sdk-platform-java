@@ -354,7 +354,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                     AssignmentExpr.builder()
                         .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
                         .setValueExpr(
-                            createStreamObserverAnonymousClassExpr(
+                            createStreamObserverClassInstance(
                                 protoMethod,
                                 returnType,
                                 responseObserverVarExpr,
@@ -364,7 +364,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
         .build();
   }
 
-  private static AnonymousClassExpr createStreamObserverAnonymousClassExpr(
+  private static AnonymousClassExpr createStreamObserverClassInstance(
       Method protoMethod,
       TypeNode classType,
       VariableExpr responseObserverVarExpr,

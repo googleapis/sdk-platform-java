@@ -16,7 +16,6 @@
 
 package com.google.cloud.example.library.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -1361,14 +1360,7 @@ public class LibraryServiceClient implements BackgroundResource {
       ApiFuture<ListShelvesPage> futurePage =
           ListShelvesPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListShelvesPage, ListShelvesPagedResponse>() {
-            @Override
-            public ListShelvesPagedResponse apply(ListShelvesPage input) {
-              return new ListShelvesPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListShelvesPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListShelvesPagedResponse(ListShelvesPage page) {
@@ -1437,14 +1429,7 @@ public class LibraryServiceClient implements BackgroundResource {
       ApiFuture<ListBooksPage> futurePage =
           ListBooksPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListBooksPage, ListBooksPagedResponse>() {
-            @Override
-            public ListBooksPagedResponse apply(ListBooksPage input) {
-              return new ListBooksPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListBooksPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListBooksPagedResponse(ListBooksPage page) {

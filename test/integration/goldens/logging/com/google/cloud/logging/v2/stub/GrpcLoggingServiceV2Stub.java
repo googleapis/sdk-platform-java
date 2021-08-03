@@ -26,7 +26,6 @@ import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.collect.ImmutableMap;
 import com.google.logging.v2.DeleteLogRequest;
@@ -189,13 +188,10 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
         GrpcCallSettings.<DeleteLogRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteLogMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<DeleteLogRequest>() {
-                  @Override
-                  public Map<String, String> extract(DeleteLogRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("log_name", String.valueOf(request.getLogName()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("log_name", String.valueOf(request.getLogName()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<WriteLogEntriesRequest, WriteLogEntriesResponse>
@@ -220,13 +216,10 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
         GrpcCallSettings.<ListLogsRequest, ListLogsResponse>newBuilder()
             .setMethodDescriptor(listLogsMethodDescriptor)
             .setParamsExtractor(
-                new RequestParamsExtractor<ListLogsRequest>() {
-                  @Override
-                  public Map<String, String> extract(ListLogsRequest request) {
-                    ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                    params.put("parent", String.valueOf(request.getParent()));
-                    return params.build();
-                  }
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
                 })
             .build();
     GrpcCallSettings<TailLogEntriesRequest, TailLogEntriesResponse>
