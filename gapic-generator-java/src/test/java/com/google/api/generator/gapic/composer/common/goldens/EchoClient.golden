@@ -1,6 +1,5 @@
 package com.google.showcase.v1beta1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -860,14 +859,7 @@ public class EchoClient implements BackgroundResource {
       ApiFuture<PagedExpandPage> futurePage =
           PagedExpandPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<PagedExpandPage, PagedExpandPagedResponse>() {
-            @Override
-            public PagedExpandPagedResponse apply(PagedExpandPage input) {
-              return new PagedExpandPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new PagedExpandPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private PagedExpandPagedResponse(PagedExpandPage page) {
@@ -941,12 +933,7 @@ public class EchoClient implements BackgroundResource {
           SimplePagedExpandPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<SimplePagedExpandPage, SimplePagedExpandPagedResponse>() {
-            @Override
-            public SimplePagedExpandPagedResponse apply(SimplePagedExpandPage input) {
-              return new SimplePagedExpandPagedResponse(input);
-            }
-          },
+          input -> new SimplePagedExpandPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 

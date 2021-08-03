@@ -1,6 +1,5 @@
 package com.google.showcase.v1beta1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -644,14 +643,7 @@ public class IdentityClient implements BackgroundResource {
       ApiFuture<ListUsersPage> futurePage =
           ListUsersPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListUsersPage, ListUsersPagedResponse>() {
-            @Override
-            public ListUsersPagedResponse apply(ListUsersPage input) {
-              return new ListUsersPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListUsersPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListUsersPagedResponse(ListUsersPage page) {
