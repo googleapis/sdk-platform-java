@@ -30,21 +30,23 @@ INTEGRATION_TEST_LIBRARIES = [
     "pubsub",  # Special=case handling for "_deleted-topic_" resource name patterns.
     "logging",  # Java package remapping in gapic.yaml.
     "redis",  # Has a gapic.yaml.
+    "storage",  # Exercises storage-specific edge cases.
     "library",  # No gRPC service config.
     "compute",  # REGAPIC test.
 ]
 
 # Keys must match the values in INTEGRATION_TEST_LIBRARIES above.
 API_GAPIC_TARGETS = {
-    "asset": ":asset_java_gapic",
-    "credentials": ":credentials_java_gapic",
+    "asset": "@com_google_googleapis//google/cloud/asset/v1:asset_java_gapic",
+    "credentials": "@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic",
     "iam": ":iam_java_gapic",  # Googleapis' LRO does not have a Java Gapic.
     "kms": ":kms_java_gapic",  # Local target because mixins are not rolled out yet.
     "pubsub": ":pubsub_java_gapic",
-    "logging": ":logging_java_gapic",
-    "redis": ":redis_java_gapic",
-    "library": ":library_java_gapic",
-    "compute": ":compute_small_java_gapic",
+    "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
+    "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
+    "storage": "@com_google_googleapis//google/storage/v2:storage_java_gapic",
+    "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
+    "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
 }
 
 [integration_test(
@@ -59,161 +61,9 @@ API_GAPIC_TARGETS = {
     target = API_GAPIC_TARGETS[lib_name],
 ) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
-###################################################
-# Temporary proto_with_info definitions for
-# monolith depdency removal.
-# Remove this section when the monolith rule deps are
-# out of googleapis.
-###################################################
-proto_library_with_info(
-    name = "asset_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/cloud/asset/v1:asset_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "credentials_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/iam/credentials/v1:credentials_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "logging_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/logging/v2:logging_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "pubsub_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
-        "@com_google_googleapis//google/iam/v1:policy_proto",
-        "@com_google_googleapis//google/pubsub/v1:pubsub_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "redis_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/cloud/redis/v1beta1:redis_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "iam_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
-        "@com_google_googleapis//google/iam/v1:options_proto",
-        "@com_google_googleapis//google/iam/v1:policy_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "library_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/example/library/v1:library_proto",
-    ],
-)
-
-proto_library_with_info(
-    name = "compute_small_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_proto",
-    ],
-)
-
-java_gapic_library(
-    name = "compute_small_java_gapic",
-    srcs = [":compute_small_proto_with_info"],
-    test_deps = [],
-    transport = "rest",
-    deps = [
-        "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_proto",
-    ],
-)
-
-java_gapic_library(
-    name = "asset_java_gapic",
-    srcs = [":asset_proto_with_info"],
-    grpc_service_config = "@com_google_googleapis//google/cloud/asset/v1:cloudasset_grpc_service_config.json",
-    test_deps = [
-        "@com_google_googleapis//google/cloud/asset/v1:asset_java_grpc",
-        "@com_google_googleapis//google/iam/v1:iam_java_grpc",
-    ],
-    deps = [
-        "@com_google_googleapis//google/cloud/asset/v1:asset_java_proto",
-        "@com_google_googleapis//google/iam/v1:iam_java_proto",
-        "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_proto",
-    ],
-)
-
-java_gapic_library(
-    name = "credentials_java_gapic",
-    srcs = [":credentials_proto_with_info"],
-    grpc_service_config = "@com_google_googleapis//google/iam/credentials/v1:iamcredentials_grpc_service_config.json",
-    test_deps = [
-        "@com_google_googleapis//google/iam/credentials/v1:credentials_java_grpc",
-    ],
-    deps = [
-        "@com_google_googleapis//google/iam/credentials/v1:credentials_java_proto",
-    ],
-)
-
-java_gapic_library(
-    name = "logging_java_gapic",
-    srcs = [":logging_proto_with_info"],
-    gapic_yaml = "@com_google_googleapis//google/logging/v2:logging_gapic.yaml",
-    grpc_service_config = "@com_google_googleapis//google/logging/v2:logging_grpc_service_config.json",
-    test_deps = [
-        "@com_google_googleapis//google/logging/v2:logging_java_grpc",
-    ],
-    deps = [
-        "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_googleapis//google/logging/v2:logging_java_proto",
-    ],
-)
-
-java_gapic_library(
-    name = "redis_java_gapic",
-    srcs = [":redis_proto_with_info"],
-    gapic_yaml = "@com_google_googleapis//google/cloud/redis/v1beta1:redis_gapic.yaml",
-    grpc_service_config = "@com_google_googleapis//google/cloud/redis/v1beta1:redis_grpc_service_config.json",
-    test_deps = [
-        "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_grpc",
-    ],
-    deps = [
-        "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_proto",
-    ],
-)
-
-java_gapic_library(
-    name = "library_java_gapic",
-    srcs = [":library_proto_with_info"],
-    gapic_yaml = "@com_google_googleapis//google/example/library/v1:library_example_gapic.yaml",
-    grpc_service_config = "@com_google_googleapis//google/example/library/v1:library_grpc_service_config.json",
-    test_deps = [
-        "@com_google_googleapis//google/example/library/v1:library_java_grpc",
-    ],
-    deps = [
-        "@com_google_googleapis//google/example/library/v1:library_java_proto",
-    ],
-)
 ####################################################
 # API Library Rules
 ####################################################
-# These will eventually go away once more APIs in googleapis have been migrated to the
-# microgenerator.
-
 # Asset API.
 java_gapic_test(
     name = "asset_java_gapic_test_suite",
@@ -249,6 +99,25 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_grpc",
         "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_proto",
         "@com_google_googleapis//google/cloud/redis/v1beta1:redis_proto",
+    ],
+)
+
+# Storage API.
+java_gapic_test(
+    name = "storage_java_gapic_test_suite",
+    test_classes = [
+        "com.google.storage.v2.StorageClientTest",
+    ],
+    runtime_deps = ["@com_google_googleapis//google/storage/v2:storage_java_gapic_test"],
+)
+
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-storage-v2-java",
+    deps = [
+        "@com_google_googleapis//google/storage/v2:storage_java_gapic",
+        "@com_google_googleapis//google/storage/v2:storage_java_grpc",
+        "@com_google_googleapis//google/storage/v2:storage_java_proto",
+        "@com_google_googleapis//google/storage/v2:storage_proto",
     ],
 )
 
@@ -319,7 +188,7 @@ java_gapic_assembly_gradle_pkg(
 # IAM (for a standalone mixed-in API).
 java_gapic_library(
     name = "iam_java_gapic",
-    srcs = [":iam_proto_with_info"],
+    srcs = ["@com_google_googleapis//google/iam/v1:iam_proto_with_info"],
     grpc_service_config = "iam_grpc_service_config.json",
     test_deps = [
         "@com_google_googleapis//google/iam/v1:iam_java_grpc",
@@ -431,10 +300,9 @@ java_gapic_assembly_gradle_pkg(
 )
 
 # PubSub
-# TODO: Remove some of these targets when PubSub has been migrated in googleapis.
 java_gapic_library(
     name = "pubsub_java_gapic",
-    srcs = [":pubsub_proto_with_info"],
+    srcs = ["@com_google_googleapis//google/pubsub/v1:pubsub_proto_with_info"],
     gapic_yaml = "@com_google_googleapis//google/pubsub/v1:pubsub_gapic.yaml",
     grpc_service_config = "@com_google_googleapis//google/pubsub/v1:pubsub_grpc_service_config.json",
     # For the IAM mixin.

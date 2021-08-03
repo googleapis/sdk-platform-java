@@ -41,11 +41,12 @@ public abstract class AnnotationNode implements AstNode {
     visitor.visit(this);
   }
 
+  public static AnnotationNode withTypeAndDescription(TypeNode type, String description) {
+    return AnnotationNode.builder().setType(type).setDescription(description).build();
+  }
+
   public static AnnotationNode withSuppressWarnings(String description) {
-    return AnnotationNode.builder()
-        .setType(annotationType(SuppressWarnings.class))
-        .setDescription(description)
-        .build();
+    return withTypeAndDescription(annotationType(SuppressWarnings.class), description);
   }
 
   public static AnnotationNode withType(TypeNode type) {
