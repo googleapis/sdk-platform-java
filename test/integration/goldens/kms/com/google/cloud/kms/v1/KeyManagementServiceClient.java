@@ -16,7 +16,6 @@
 
 package com.google.cloud.kms.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -3442,12 +3441,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListKeyRingsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListKeyRingsPage, ListKeyRingsPagedResponse>() {
-            @Override
-            public ListKeyRingsPagedResponse apply(ListKeyRingsPage input) {
-              return new ListKeyRingsPagedResponse(input);
-            }
-          },
+          input -> new ListKeyRingsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3522,12 +3516,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListCryptoKeysPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListCryptoKeysPage, ListCryptoKeysPagedResponse>() {
-            @Override
-            public ListCryptoKeysPagedResponse apply(ListCryptoKeysPage input) {
-              return new ListCryptoKeysPagedResponse(input);
-            }
-          },
+          input -> new ListCryptoKeysPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3604,12 +3593,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListCryptoKeyVersionsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListCryptoKeyVersionsPage, ListCryptoKeyVersionsPagedResponse>() {
-            @Override
-            public ListCryptoKeyVersionsPagedResponse apply(ListCryptoKeyVersionsPage input) {
-              return new ListCryptoKeyVersionsPagedResponse(input);
-            }
-          },
+          input -> new ListCryptoKeyVersionsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3692,12 +3676,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListImportJobsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListImportJobsPage, ListImportJobsPagedResponse>() {
-            @Override
-            public ListImportJobsPagedResponse apply(ListImportJobsPage input) {
-              return new ListImportJobsPagedResponse(input);
-            }
-          },
+          input -> new ListImportJobsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3773,12 +3752,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListLocationsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListLocationsPage, ListLocationsPagedResponse>() {
-            @Override
-            public ListLocationsPagedResponse apply(ListLocationsPage input) {
-              return new ListLocationsPagedResponse(input);
-            }
-          },
+          input -> new ListLocationsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
