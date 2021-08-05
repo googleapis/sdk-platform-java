@@ -2147,7 +2147,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
-   *   ResourceName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *   ResourceName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
    *   ByteString plaintext = ByteString.EMPTY;
    *   EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
    * }
@@ -2187,7 +2187,8 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
-   *   String name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *   String name =
+   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
    *   ByteString plaintext = ByteString.EMPTY;
    *   EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
    * }
@@ -2226,7 +2227,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   EncryptRequest request =
    *       EncryptRequest.newBuilder()
-   *           .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setName(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setPlaintext(ByteString.EMPTY)
    *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
    *           .setPlaintextCrc32C(Int64Value.newBuilder().build())
@@ -2257,7 +2260,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   EncryptRequest request =
    *       EncryptRequest.newBuilder()
-   *           .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setName(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setPlaintext(ByteString.EMPTY)
    *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
    *           .setPlaintextCrc32C(Int64Value.newBuilder().build())
@@ -3153,7 +3158,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = keyManagementServiceClient.getIamPolicy(request);
@@ -3179,7 +3186,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future =
@@ -3342,7 +3351,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(request);
@@ -3368,7 +3379,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =
