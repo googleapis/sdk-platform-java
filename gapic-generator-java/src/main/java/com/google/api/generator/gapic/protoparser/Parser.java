@@ -142,8 +142,11 @@ public class Parser {
     Map<String, ResourceName> resourceNames = parseResourceNames(request);
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
 
-    // Contains only resource names that are actually used. That is, resource name definitions
-    // or references that are simply defined, but not used, will not have corresponding Java helper
+    // Contains only resource names that are actually used. Usage refers to the presence of a
+    // request message's field in an RPC's method_signature annotation. That is,  resource name
+    // definitions
+    // or references that are simply defined, but not used in such a manner, will not have
+    // corresponding Java helper
     // classes generated.
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> mixinServices = new ArrayList<>();
@@ -160,6 +163,37 @@ public class Parser {
             transport);
 
     Preconditions.checkState(!services.isEmpty(), "No services found to generate");
+
+    // Temporary workaround for Ads, who still need these resource names.
+    if (services.get(0).protoPakkage().startsWith("google.ads.googleads.v")) {
+      Function<ResourceName, String> typeNameFn =
+          r -> r.resourceTypeString().substring(r.resourceTypeString().indexOf("/") + 1);
+      Function<Set<ResourceName>, Set<String>> typeStringSetFn =
+          sr -> sr.stream().map(r -> typeNameFn.apply(r)).collect(Collectors.toSet());
+
+      // Include all resource names present in message types for backwards-compatibility with the
+      // monolith. In the future, this should be removed on a client library major semver update.
+      // Resolve type name collisions with the ones present in the method arguments.
+      final Set<String> typeStringSet = typeStringSetFn.apply(outputArgResourceNames);
+      outputArgResourceNames.addAll(
+          resourceNames.values().stream()
+              .filter(r -> r.hasParentMessageName() && !typeStringSet.contains(typeNameFn.apply(r)))
+              .collect(Collectors.toSet()));
+
+      String servicePackage = services.get(0).pakkage();
+      Map<String, ResourceName> patternsToResourceNames =
+          ResourceParserHelpers.createPatternResourceNameMap(resourceNames);
+      for (ResourceReference resourceReference : outputResourceReferencesSeen) {
+        final Set<String> interimTypeStringSet = typeStringSetFn.apply(outputArgResourceNames);
+        outputArgResourceNames.addAll(
+            ResourceReferenceParser.parseResourceNames(
+                    resourceReference, servicePackage, null, resourceNames, patternsToResourceNames)
+                .stream()
+                .filter(r -> !interimTypeStringSet.contains(typeNameFn.apply(r)))
+                .collect(Collectors.toSet()));
+      }
+    }
+
     return GapicContext.builder()
         .setServices(services)
         .setMixinServices(mixinServices)
