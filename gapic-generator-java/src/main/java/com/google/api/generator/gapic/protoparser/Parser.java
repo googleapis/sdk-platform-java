@@ -164,6 +164,8 @@ public class Parser {
 
     Preconditions.checkState(!services.isEmpty(), "No services found to generate");
 
+    // TODO(vam-google): Figure out whether we should keep this allowlist or bring
+    // back the unused resource names for all APIs.
     // Temporary workaround for Ads, who still need these resource names.
     if (services.get(0).protoPakkage().startsWith("google.ads.googleads.v")) {
       Function<ResourceName, String> typeNameFn =
