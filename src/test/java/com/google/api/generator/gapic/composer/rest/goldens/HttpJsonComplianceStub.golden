@@ -58,8 +58,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                           })
                       .setRequestBodyExtractor(
                           request ->
-                              ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().build()))
+                              ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()

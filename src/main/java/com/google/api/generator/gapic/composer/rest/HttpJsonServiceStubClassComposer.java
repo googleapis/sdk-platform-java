@@ -355,7 +355,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return Collections.singletonList(expr);
   }
 
-  private Expr createBodyFieldsExtractorAnonClass(
+  private Expr createBodyFieldsExtractorClassInstance(
       Method method,
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
@@ -442,25 +442,13 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
               .build();
     }
 
-    MethodDefinition extractMethod =
-        MethodDefinition.builder()
-            .setIsOverride(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setReturnType(extractorReturnType)
-            .setName("extract")
-            .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(bodyStatements)
-            .setReturnExpr(returnExpr)
-            .build();
-
-    TypeNode anonClassType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(FieldsExtractor.class)
-                .setGenerics(method.inputType().reference(), extractorReturnType.reference())
-                .build());
-
-    return AnonymousClassExpr.builder().setType(anonClassType).setMethods(extractMethod).build();
+    // Overrides FieldsExtractor
+    // (https://github.com/googleapis/gax-java/blob/12b18ee255d3fabe13bb3969df40753b29f830d5/gax-httpjson/src/main/java/com/google/api/gax/httpjson/FieldsExtractor.java).
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(returnExpr)
+        .build();
   }
 
   private Expr createFieldsExtractorClassInstance(
