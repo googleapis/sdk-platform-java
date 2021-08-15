@@ -16,13 +16,12 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
-import com.google.api.gax.rpc.RequestParamsExtractor;
-import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -211,7 +210,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
               .setMethodName("setParamsExtractor")
-              .setArguments(createRequestParamsExtractorAnonClass(method))
+              .setArguments(createRequestParamsExtractorClassInstance(method))
               .build();
     }
 
@@ -243,7 +242,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     return String.format("google.iam.v1.IAMPolicy/%s", protoMethod.name());
   }
 
-  private AnonymousClassExpr createRequestParamsExtractorAnonClass(Method method) {
+  private LambdaExpr createRequestParamsExtractorClassInstance(Method method) {
     Preconditions.checkState(
         method.hasHttpBindings(), String.format("Method %s has no HTTP binding", method.name()));
 
@@ -327,24 +326,13 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .setReturnType(returnType)
             .build();
 
-    MethodDefinition extractMethod =
-        MethodDefinition.builder()
-            .setIsOverride(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setReturnType(returnType)
-            .setName("extract")
-            .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(
-                bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
-            .setReturnExpr(returnExpr)
-            .build();
-
-    TypeNode anonClassType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(RequestParamsExtractor.class)
-                .setGenerics(method.inputType().reference())
-                .build());
-    return AnonymousClassExpr.builder().setType(anonClassType).setMethods(extractMethod).build();
+    // Overrides extract().
+    // https://github.com/googleapis/gax-java/blob/8d45d186e36ae97b789a6f89d80ae5213a773b65/gax/src/main/java/com/google/api/gax/rpc/RequestParamsExtractor.java#L55
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setReturnExpr(returnExpr)
+        .build();
   }
 }

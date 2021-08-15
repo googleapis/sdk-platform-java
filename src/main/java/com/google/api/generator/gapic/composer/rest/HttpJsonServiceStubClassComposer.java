@@ -24,13 +24,13 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.generator.engine.ast.AnnotationNode;
-import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -272,7 +272,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                     ValueExpr.withValue(
                         StringObjectValue.withValue(
                             protoMethod.httpBindings().patternLowerCamel())),
-                    createFieldsExtractorAnonClass(
+                    createFieldsExtractorClassInstance(
                         protoMethod,
                         extractorVarType,
                         protoMethod.httpBindings().pathParameters(),
@@ -298,7 +298,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .apply(
                 "setQueryParamsExtractor",
                 Arrays.asList(
-                    createFieldsExtractorAnonClass(
+                    createFieldsExtractorClassInstance(
                         protoMethod,
                         extractorVarType,
                         protoMethod.httpBindings().queryParameters(),
@@ -312,7 +312,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .apply(
                 "setRequestBodyExtractor",
                 Arrays.asList(
-                    createFieldsBodyExtractorAnonClass(
+                    createBodyFieldsExtractorClassInstance(
                         protoMethod,
                         extractorVarType,
                         asteriskBody
@@ -355,7 +355,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return Collections.singletonList(expr);
   }
 
-  private Expr createFieldsBodyExtractorAnonClass(
+  private Expr createBodyFieldsExtractorAnonClass(
       Method method,
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
@@ -463,7 +463,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return AnonymousClassExpr.builder().setType(anonClassType).setMethods(extractMethod).build();
   }
 
-  private Expr createFieldsExtractorAnonClass(
+  private Expr createFieldsExtractorClassInstance(
       Method method,
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
@@ -579,25 +579,13 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       }
     }
 
-    MethodDefinition extractMethod =
-        MethodDefinition.builder()
-            .setIsOverride(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setReturnType(extractorReturnType)
-            .setName("extract")
-            .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(bodyStatements)
-            .setReturnExpr(fieldsVarExpr)
-            .build();
-
-    TypeNode anonClassType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(FieldsExtractor.class)
-                .setGenerics(method.inputType().reference(), extractorReturnType.reference())
-                .build());
-
-    return AnonymousClassExpr.builder().setType(anonClassType).setMethods(extractMethod).build();
+    // Overrides FieldsExtractor
+    // (https://github.com/googleapis/gax-java/blob/12b18ee255d3fabe13bb3969df40753b29f830d5/gax-httpjson/src/main/java/com/google/api/gax/httpjson/FieldsExtractor.java).
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(fieldsVarExpr)
+        .build();
   }
 
   private List<Expr> getHttpMethodTypeExpr(Method protoMethod) {

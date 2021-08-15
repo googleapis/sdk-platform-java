@@ -33,13 +33,11 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Composer {
@@ -47,11 +45,7 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
-    clazzes.addAll(
-        generateResourceNameHelperClasses(
-            context.helperResourceNames().values().stream()
-                .map(r -> r)
-                .collect(Collectors.toSet())));
+    clazzes.addAll(generateResourceNameHelperClasses(context));
     return addApacheLicense(clazzes);
   }
 
@@ -68,11 +62,11 @@ public class Composer {
     return clazzes;
   }
 
-  public static List<GapicClass> generateResourceNameHelperClasses(
-      Set<ResourceName> resourceNames) {
-    return resourceNames.stream()
+  public static List<GapicClass> generateResourceNameHelperClasses(GapicContext context) {
+    return context.helperResourceNames().values().stream()
+        .distinct()
         .filter(r -> !r.isOnlyWildcard())
-        .map(r -> ResourceNameHelperClassComposer.instance().generate(r))
+        .map(r -> ResourceNameHelperClassComposer.instance().generate(r, context))
         .collect(Collectors.toList());
   }
 

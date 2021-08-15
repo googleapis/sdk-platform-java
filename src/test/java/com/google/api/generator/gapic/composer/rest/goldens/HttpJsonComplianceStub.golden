@@ -6,7 +6,6 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
-import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
@@ -44,33 +43,23 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
                           "/v1beta1/repeat:body",
-                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
-                            @Override
-                            public Map<String, String> extract(RepeatRequest request) {
-                              Map<String, String> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
                           })
                       .setQueryParamsExtractor(
-                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
-                            @Override
-                            public Map<String, List<String>> extract(RepeatRequest request) {
-                              Map<String, List<String>> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
                           })
                       .setRequestBodyExtractor(
-                          new FieldsExtractor<RepeatRequest, String>() {
-                            @Override
-                            public String extract(RepeatRequest request) {
-                              return ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().build());
-                            }
-                          })
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build()))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
@@ -87,35 +76,24 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
                           "/v1beta1/repeat:bodyinfo",
-                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
-                            @Override
-                            public Map<String, String> extract(RepeatRequest request) {
-                              Map<String, String> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
                           })
                       .setQueryParamsExtractor(
-                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
-                            @Override
-                            public Map<String, List<String>> extract(RepeatRequest request) {
-                              Map<String, List<String>> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              serializer.putQueryParam(fields, "name", request.getName());
-                              serializer.putQueryParam(
-                                  fields, "serverVerify", request.getServerVerify());
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "name", request.getName());
+                            serializer.putQueryParam(
+                                fields, "serverVerify", request.getServerVerify());
+                            return fields;
                           })
                       .setRequestBodyExtractor(
-                          new FieldsExtractor<RepeatRequest, String>() {
-                            @Override
-                            public String extract(RepeatRequest request) {
-                              return ProtoRestSerializer.create().toBody("info", request.getInfo());
-                            }
-                          })
+                          request -> ProtoRestSerializer.create().toBody("info", request.getInfo()))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
@@ -132,36 +110,24 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
                           "/v1beta1/repeat:query",
-                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
-                            @Override
-                            public Map<String, String> extract(RepeatRequest request) {
-                              Map<String, String> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
                           })
                       .setQueryParamsExtractor(
-                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
-                            @Override
-                            public Map<String, List<String>> extract(RepeatRequest request) {
-                              Map<String, List<String>> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              serializer.putQueryParam(fields, "info", request.getInfo());
-                              serializer.putQueryParam(fields, "name", request.getName());
-                              serializer.putQueryParam(
-                                  fields, "serverVerify", request.getServerVerify());
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "info", request.getInfo());
+                            serializer.putQueryParam(fields, "name", request.getName());
+                            serializer.putQueryParam(
+                                fields, "serverVerify", request.getServerVerify());
+                            return fields;
                           })
-                      .setRequestBodyExtractor(
-                          new FieldsExtractor<RepeatRequest, String>() {
-                            @Override
-                            public String extract(RepeatRequest request) {
-                              return null;
-                            }
-                          })
+                      .setRequestBodyExtractor(request -> null)
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
@@ -178,48 +144,36 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
                           "/v1beta1/repeat/{info.fString}/{info.fInt32}/{info.fDouble}/{info.fBool}/{info.fKingdom}:simplepath",
-                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
-                            @Override
-                            public Map<String, String> extract(RepeatRequest request) {
-                              Map<String, String> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              if (request.getInfo().hasFBool()) {
-                                serializer.putPathParam(
-                                    fields, "info.fBool", request.getInfo().getFBool());
-                              }
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            if (request.getInfo().hasFBool()) {
                               serializer.putPathParam(
-                                  fields, "info.fDouble", request.getInfo().getFDouble());
-                              serializer.putPathParam(
-                                  fields, "info.fInt32", request.getInfo().getFInt32());
-                              serializer.putPathParam(
-                                  fields, "info.fKingdom", request.getInfo().getFKingdom());
-                              serializer.putPathParam(
-                                  fields, "info.fString", request.getInfo().getFString());
-                              return fields;
+                                  fields, "info.fBool", request.getInfo().getFBool());
                             }
+                            serializer.putPathParam(
+                                fields, "info.fDouble", request.getInfo().getFDouble());
+                            serializer.putPathParam(
+                                fields, "info.fInt32", request.getInfo().getFInt32());
+                            serializer.putPathParam(
+                                fields, "info.fKingdom", request.getInfo().getFKingdom());
+                            serializer.putPathParam(
+                                fields, "info.fString", request.getInfo().getFString());
+                            return fields;
                           })
                       .setQueryParamsExtractor(
-                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
-                            @Override
-                            public Map<String, List<String>> extract(RepeatRequest request) {
-                              Map<String, List<String>> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              serializer.putQueryParam(fields, "info", request.getInfo());
-                              serializer.putQueryParam(fields, "name", request.getName());
-                              serializer.putQueryParam(
-                                  fields, "serverVerify", request.getServerVerify());
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "info", request.getInfo());
+                            serializer.putQueryParam(fields, "name", request.getName());
+                            serializer.putQueryParam(
+                                fields, "serverVerify", request.getServerVerify());
+                            return fields;
                           })
-                      .setRequestBodyExtractor(
-                          new FieldsExtractor<RepeatRequest, String>() {
-                            @Override
-                            public String extract(RepeatRequest request) {
-                              return null;
-                            }
-                          })
+                      .setRequestBodyExtractor(request -> null)
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
@@ -236,46 +190,34 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
                           "/v1beta1/repeat/{info.fString=first/*}/{info.fChild.fString=second/*}/bool/{info.fBool}:pathresource",
-                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
-                            @Override
-                            public Map<String, String> extract(RepeatRequest request) {
-                              Map<String, String> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              if (request.getInfo().hasFBool()) {
-                                serializer.putPathParam(
-                                    fields, "info.fBool", request.getInfo().getFBool());
-                              }
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            if (request.getInfo().hasFBool()) {
                               serializer.putPathParam(
-                                  fields,
-                                  "info.fChild.fString",
-                                  request.getInfo().getFChild().getFString());
-                              serializer.putPathParam(
-                                  fields, "info.fString", request.getInfo().getFString());
-                              return fields;
+                                  fields, "info.fBool", request.getInfo().getFBool());
                             }
+                            serializer.putPathParam(
+                                fields,
+                                "info.fChild.fString",
+                                request.getInfo().getFChild().getFString());
+                            serializer.putPathParam(
+                                fields, "info.fString", request.getInfo().getFString());
+                            return fields;
                           })
                       .setQueryParamsExtractor(
-                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
-                            @Override
-                            public Map<String, List<String>> extract(RepeatRequest request) {
-                              Map<String, List<String>> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              serializer.putQueryParam(fields, "info", request.getInfo());
-                              serializer.putQueryParam(fields, "name", request.getName());
-                              serializer.putQueryParam(
-                                  fields, "serverVerify", request.getServerVerify());
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "info", request.getInfo());
+                            serializer.putQueryParam(fields, "name", request.getName());
+                            serializer.putQueryParam(
+                                fields, "serverVerify", request.getServerVerify());
+                            return fields;
                           })
-                      .setRequestBodyExtractor(
-                          new FieldsExtractor<RepeatRequest, String>() {
-                            @Override
-                            public String extract(RepeatRequest request) {
-                              return null;
-                            }
-                          })
+                      .setRequestBodyExtractor(request -> null)
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
@@ -293,42 +235,30 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
                           "/v1beta1/repeat/{info.fString=first/*}/{info.fChild.fString=second/**}:pathtrailingresource",
-                          new FieldsExtractor<RepeatRequest, Map<String, String>>() {
-                            @Override
-                            public Map<String, String> extract(RepeatRequest request) {
-                              Map<String, String> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              serializer.putPathParam(
-                                  fields,
-                                  "info.fChild.fString",
-                                  request.getInfo().getFChild().getFString());
-                              serializer.putPathParam(
-                                  fields, "info.fString", request.getInfo().getFString());
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(
+                                fields,
+                                "info.fChild.fString",
+                                request.getInfo().getFChild().getFString());
+                            serializer.putPathParam(
+                                fields, "info.fString", request.getInfo().getFString());
+                            return fields;
                           })
                       .setQueryParamsExtractor(
-                          new FieldsExtractor<RepeatRequest, Map<String, List<String>>>() {
-                            @Override
-                            public Map<String, List<String>> extract(RepeatRequest request) {
-                              Map<String, List<String>> fields = new HashMap<>();
-                              ProtoRestSerializer<RepeatRequest> serializer =
-                                  ProtoRestSerializer.create();
-                              serializer.putQueryParam(fields, "info", request.getInfo());
-                              serializer.putQueryParam(fields, "name", request.getName());
-                              serializer.putQueryParam(
-                                  fields, "serverVerify", request.getServerVerify());
-                              return fields;
-                            }
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "info", request.getInfo());
+                            serializer.putQueryParam(fields, "name", request.getName());
+                            serializer.putQueryParam(
+                                fields, "serverVerify", request.getServerVerify());
+                            return fields;
                           })
-                      .setRequestBodyExtractor(
-                          new FieldsExtractor<RepeatRequest, String>() {
-                            @Override
-                            public String extract(RepeatRequest request) {
-                              return null;
-                            }
-                          })
+                      .setRequestBodyExtractor(request -> null)
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
@@ -491,7 +421,13 @@ public class HttpJsonComplianceStub extends ComplianceStub {
 
   @Override
   public final void close() {
-    shutdown();
+    try {
+      backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to close resource", e);
+    }
   }
 
   @Override
