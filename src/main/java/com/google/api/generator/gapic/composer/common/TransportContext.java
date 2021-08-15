@@ -59,6 +59,13 @@ public abstract class TransportContext {
 
   public abstract String transportCallSettingsName();
 
+  // For RetrySettingsComposer
+  public abstract TypeNode operationResponseTransformerType();
+
+  public abstract TypeNode operationMetadataTransformerType();
+
+  public abstract TypeNode operationsClientType();
+
   protected static TypeNode classToType(Class<?> clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }
@@ -101,6 +108,12 @@ public abstract class TransportContext {
     public abstract Builder setTransportOperationsStubType(TypeNode transportOperationsStubType);
 
     public abstract Builder setOperationsStubType(TypeNode operationsStubType);
+
+    public abstract Builder setOperationResponseTransformerType(TypeNode operationResponseTransformerType);
+
+    public abstract Builder setOperationMetadataTransformerType(TypeNode operationMetadataTransformerType);
+
+    public abstract Builder setOperationsClientType(TypeNode operationsClientType);
 
     public abstract TransportContext build();
   }

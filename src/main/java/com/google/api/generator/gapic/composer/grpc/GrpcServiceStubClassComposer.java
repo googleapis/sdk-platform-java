@@ -32,7 +32,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
+import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Method;
@@ -53,7 +53,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class GrpcServiceStubClassComposer extends AbstractServiceStubClassComposer {
+public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
   private static final GrpcServiceStubClassComposer INSTANCE = new GrpcServiceStubClassComposer();
 
   // Legacy support for the original reroute_to_grpc_interface option in gapic.yaml. These two APIs
@@ -188,18 +188,6 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
             TypeNode.withReference(
                 ConcreteReference.builder().setClazz(MethodDescriptor.MethodType.class).build()))
         .build();
-  }
-
-  @Override
-  protected List<MethodDefinition> createOperationsStubGetterMethod(
-      VariableExpr operationsStubVarExpr) {
-    return Arrays.asList(
-        MethodDefinition.builder()
-            .setScope(ScopeNode.PUBLIC)
-            .setReturnType(operationsStubVarExpr.type())
-            .setName("getOperationsStub")
-            .setReturnExpr(operationsStubVarExpr)
-            .build());
   }
 
   @Override

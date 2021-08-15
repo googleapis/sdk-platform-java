@@ -31,6 +31,7 @@ import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
+import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.AddressAggregatedList;
@@ -279,6 +280,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private final UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable;
 
   private final BackgroundResource backgroundResources;
+  private final HttpJsonOperationsStub operationsStub;
   private final HttpJsonStubCallableFactory callableFactory;
 
   public static final HttpJsonAddressesStub create(AddressesStubSettings settings)
@@ -317,6 +319,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
       HttpJsonStubCallableFactory callableFactory)
       throws IOException {
     this.callableFactory = callableFactory;
+    this.operationsStub = HttpJsonOperationsStub.create(clientContext, callableFactory);
 
     HttpJsonCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
         aggregatedListTransportSettings =
@@ -367,6 +370,10 @@ public class HttpJsonAddressesStub extends AddressesStub {
     methodDescriptors.add(insertMethodDescriptor);
     methodDescriptors.add(listMethodDescriptor);
     return methodDescriptors;
+  }
+
+  public HttpJsonOperationsStub getOperationsStub() {
+    return operationsStub;
   }
 
   @Override
