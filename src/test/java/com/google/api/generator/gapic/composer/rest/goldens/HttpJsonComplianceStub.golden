@@ -1,15 +1,11 @@
 package com.google.showcase.v1beta1.stub;
 
-import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
-import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
-
 import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
-import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
@@ -19,54 +15,17 @@ import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.generator.engine.ast.AnnotationNode;
-import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.ConcreteReference;
-import com.google.api.generator.engine.ast.EnumRefExpr;
-import com.google.api.generator.engine.ast.Expr;
-import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.LambdaExpr;
-import com.google.api.generator.engine.ast.IfStatement;
-import com.google.api.generator.engine.ast.MethodDefinition;
-import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.PrimitiveValue;
-import com.google.api.generator.engine.ast.ScopeNode;
-import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.engine.ast.StringObjectValue;
-import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
-import com.google.api.generator.engine.ast.VaporReference;
-import com.google.api.generator.engine.ast.Variable;
-import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
-import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
-import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.cloud.compute.v1.AddressAggregatedList;
-import com.google.cloud.compute.v1.AddressList;
-import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
-import com.google.cloud.compute.v1.DeleteAddressRequest;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
-import com.google.cloud.compute.v1.InsertAddressRequest;
-import com.google.cloud.compute.v1.ListAddressesRequest;
-import com.google.cloud.compute.v1.Operation;
 import com.google.cloud.compute.v1.Status;
-import com.google.common.collect.ImmutableList;
+import com.google.showcase.v1beta1.RepeatRequest;
+import com.google.showcase.v1beta1.RepeatResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -222,6 +181,28 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
                       .build())
+              .setOperationSnapshotFactory(
+                  (RepeatRequest request, RepeatResponse response) -> {
+                    StringBuilder opName = new StringBuilder(response.getId());
+                    opName.append(":").append(request.getProject());
+                    opName.append(":").append(request.getRegion());
+                    return HttpJsonOperationSnapshot.newBuilder()
+                        .setName(opName.toString())
+                        .setMetadata(response)
+                        .setDone(response.getStatus().equals(Status.DONE))
+                        .setResponse(response)
+                        .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
+                        .build();
+                  })
+              .setPollingRequestFactory(
+                  compoundOperationId -> {
+                    List<String> idComponents = Arrays.asList(compoundOperationId.split(":"));
+                    return GetRegionOperationRequest.newBuilder()
+                        .setOperation(idComponents.get(0))
+                        .setProject(idComponents.get(1))
+                        .setRegion(idComponents.get(2))
+                        .build();
+                  })
               .build();
 
   private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
