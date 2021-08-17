@@ -137,6 +137,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private static final String DOT = ".";
 
+  protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+
   private static final VariableExpr NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR =
       createNestedUnaryMethodSettingsBuildersVarExpr();
   private static final VariableExpr NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR =
@@ -145,8 +147,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       createNestedRetryParamDefinitionsVarExpr();
 
   private final TransportContext transportContext;
-
-  protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   protected static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
