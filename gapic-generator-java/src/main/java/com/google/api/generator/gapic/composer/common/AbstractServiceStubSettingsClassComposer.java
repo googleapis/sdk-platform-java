@@ -139,8 +139,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
-  private static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
-      createDefaultServiceScopesVarExpr();
   private static final VariableExpr NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR =
       createNestedUnaryMethodSettingsBuildersVarExpr();
   private static final VariableExpr NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR =
@@ -149,6 +147,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       createNestedRetryParamDefinitionsVarExpr();
 
   private final TransportContext transportContext;
+
+  protected static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
+      createDefaultServiceScopesVarExpr();
 
   protected AbstractServiceStubSettingsClassComposer(TransportContext transportContext) {
     this.transportContext = transportContext;
@@ -195,6 +196,33 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
     return GapicClass.create(GapicClass.Kind.STUB, classDef);
+  }
+
+  protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
+    MethodInvocationExpr credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_TYPESTORE.get("GoogleCredentialsProvider"))
+            .setMethodName("newBuilder")
+            .build();
+    credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credsProviderBuilderExpr)
+            .setMethodName("setScopesToApply")
+            .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
+            .setReturnType(returnType)
+            .build();
+    return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(returnType)
+        .setName("defaultCredentialsProviderBuilder")
+        .setReturnExpr(credsProviderBuilderExpr)
+        .build();
   }
 
   protected abstract MethodDefinition createDefaultTransportTransportProviderBuilderMethod();
@@ -992,33 +1020,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnExpr(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
             .build());
 
-    // Create the defaultCredentialsProviderBuilder method.
-    returnType =
-        TypeNode.withReference(
-            ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
-    MethodInvocationExpr credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_TYPESTORE.get("GoogleCredentialsProvider"))
-            .setMethodName("newBuilder")
-            .build();
-    credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credsProviderBuilderExpr)
-            .setMethodName("setScopesToApply")
-            .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
-            .setReturnType(returnType)
-            .build();
-    javaMethods.add(
-        MethodDefinition.builder()
-            .setHeaderCommentStatements(
-                SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
-            .setScope(ScopeNode.PUBLIC)
-            .setIsStatic(true)
-            .setReturnType(returnType)
-            .setName("defaultCredentialsProviderBuilder")
-            .setReturnExpr(credsProviderBuilderExpr)
-            .build());
-
+    javaMethods.add(createDefaultCredentialsProviderBuilderMethod());
     javaMethods.add(createDefaultTransportTransportProviderBuilderMethod());
     javaMethods.add(createDefaultTransportChannelProviderMethod());
     javaMethods.add(createDefaultApiClientHeaderProviderBuilderMethod(service, typeStore));
