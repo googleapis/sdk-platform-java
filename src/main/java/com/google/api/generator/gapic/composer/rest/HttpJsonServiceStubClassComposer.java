@@ -385,6 +385,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     List<Statement> createBody = new ArrayList<Statement>(4);
 
     // Generate opName
+    // This will be replaced and edited based on annotations
     TypeNode stringBuilderType =
         TypeNode.withReference(ConcreteReference.withClazz(StringBuilder.class));
     VariableExpr opNameVarExpr =
@@ -405,6 +406,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     createBody.add(ExprStatement.withExpr(opNameAssignExpr));
 
     // Generate changes opName
+    // This will be replaced and edited based on annotations
     MethodInvocationExpr requestGetProjectExpr =
         MethodInvocationExpr.builder()
             .setMethodName("getProject")
@@ -443,6 +445,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     createBody.add(ExprStatement.withExpr(opNameAppendColonRegionExpr));
 
     // Generate check status expression
+    // This will be replaced and edited based on annotations
     MethodInvocationExpr getStatusExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
@@ -476,11 +479,13 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setMethodName("toString")
             .setExprReferenceExpr(opNameVarExpr)
             .build();
+    // This will be replaced and edited based on annotations
     MethodInvocationExpr getHttpErrorStatusCodeExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
             .setMethodName("getHttpErrorStatusCode")
             .build();
+    // This will be replaced and edited based on annotations
     MethodInvocationExpr getHttpErrorMessageExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
@@ -580,6 +585,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     createBody.add(ExprStatement.withExpr(idComponentsAssignExpr));
 
     // Generate return statement
+    // This will be replaced and edited based on annotations
     TypeNode getRegionOperationRequestType =
         TypeNode.withReference(
             VaporReference.builder()
