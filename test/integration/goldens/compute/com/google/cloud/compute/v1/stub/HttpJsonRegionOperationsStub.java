@@ -23,16 +23,20 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
+import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
+import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
+import com.google.cloud.compute.v1.Status;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +83,28 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
                   ProtoMessageResponseParser.<Operation>newBuilder()
                       .setDefaultInstance(Operation.getDefaultInstance())
                       .build())
+              .setOperationSnapshotFactory(
+                  (GetRegionOperationRequest request, Operation response) -> {
+                    StringBuilder opName = new StringBuilder(response.getId());
+                    opName.append(":").append(request.getProject());
+                    opName.append(":").append(request.getRegion());
+                    return HttpJsonOperationSnapshot.newBuilder()
+                        .setName(opName.toString())
+                        .setMetadata(response)
+                        .setDone(response.getStatus().equals(Status.DONE))
+                        .setResponse(response)
+                        .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
+                        .build();
+                  })
+              .setPollingRequestFactory(
+                  compoundOperationId -> {
+                    List<String> idComponents = Arrays.asList(compoundOperationId.split(":"));
+                    return GetRegionOperationRequest.newBuilder()
+                        .setOperation(idComponents.get(0))
+                        .setProject(idComponents.get(1))
+                        .setRegion(idComponents.get(2))
+                        .build();
+                  })
               .build();
 
   private final UnaryCallable<GetRegionOperationRequest, Operation> getCallable;
