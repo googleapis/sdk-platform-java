@@ -53,7 +53,6 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.collect.ImmutableList;
-import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -97,7 +96,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
 
   @Override
   protected Statement createMethodDescriptorVariableDecl(
-      Service service, Method protoMethod, VariableExpr methodDescriptorVarExpr, Map<String, Message> messageTypes) {
+      Service service,
+      Method protoMethod,
+      VariableExpr methodDescriptorVarExpr,
+      Map<String, Message> messageTypes) {
     MethodInvocationExpr expr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
@@ -122,16 +124,18 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
         methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
 
-    //System.out.println(protoMethod.outputType().reference().simpleName());
-    if(protoMethod.outputType().reference().simpleName().equals("Operation")) {
+    // System.out.println(protoMethod.outputType().reference().simpleName());
+    if (protoMethod.outputType().reference().simpleName().equals("Operation")) {
       expr =
           methodMaker
-              .apply("setOperationSnapshotFactory",
+              .apply(
+                  "setOperationSnapshotFactory",
                   setOperationSnapshotFactoryExpr(protoMethod, messageTypes))
               .apply(expr);
       expr =
           methodMaker
-              .apply("setPollingRequestFactory",
+              .apply(
+                  "setPollingRequestFactory",
                   setPollingRequestFactoryExpr(protoMethod, messageTypes))
               .apply(expr);
     }
@@ -376,7 +380,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     return Collections.singletonList(expr);
   }
 
-  private List<Expr> setOperationSnapshotFactoryExpr(Method protoMethod, Map<String, Message> messageTypes) {
+  private List<Expr> setOperationSnapshotFactoryExpr(
+      Method protoMethod, Map<String, Message> messageTypes) {
 
     BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>>
         methodMaker = getMethodMaker();
@@ -539,7 +544,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .build());
   }
 
-  private List<Expr> setPollingRequestFactoryExpr(Method protoMethod, Map<String, Message> messageTypes) {
+  private List<Expr> setPollingRequestFactoryExpr(
+      Method protoMethod, Map<String, Message> messageTypes) {
 
     BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>>
         methodMaker = getMethodMaker();

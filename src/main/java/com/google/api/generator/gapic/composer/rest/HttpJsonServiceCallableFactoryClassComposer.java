@@ -124,7 +124,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<VariableExpr> arguments = method.arguments();
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();
     Variable callSettingsVar = arguments.get(1).variable();
-    Variable clientContextVar  = arguments.get(2).variable();
+    Variable clientContextVar = arguments.get(2).variable();
     Variable operationsStub = arguments.get(3).variable();
     // Generate innerCallable
     VariableExpr innerCallableVarExpr =

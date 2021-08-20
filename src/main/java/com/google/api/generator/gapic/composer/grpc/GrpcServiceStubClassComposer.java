@@ -86,7 +86,10 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
 
   @Override
   protected Statement createMethodDescriptorVariableDecl(
-      Service service, Method protoMethod, VariableExpr methodDescriptorVarExpr, Map<String, Message> messageTypes) {
+      Service service,
+      Method protoMethod,
+      VariableExpr methodDescriptorVarExpr,
+      Map<String, Message> messageTypes) {
     MethodInvocationExpr methodDescriptorMaker =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
