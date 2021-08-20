@@ -122,7 +122,10 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
 
     List<VariableExpr> arguments = method.arguments();
-
+    Variable httpJsonCallSettingsVar = arguments.get(0).variable();
+    Variable callSettingsVar = arguments.get(1).variable();
+    Variable clientContextVar  = arguments.get(2).variable();
+    Variable operationsStub = arguments.get(3).variable();
     // Generate innerCallable
     VariableExpr innerCallableVarExpr =
         VariableExpr.builder()
@@ -136,7 +139,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
             .build();
     MethodInvocationExpr getInitialCallSettingsExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(arguments.get(1).variable()))
+            .setExprReferenceExpr(VariableExpr.withVariable(callSettingsVar))
             .setMethodName("getInitialCallSettings")
             .build();
     MethodInvocationExpr createBaseUnaryCallableExpr =
@@ -145,9 +148,9 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 TypeNode.withReference(ConcreteReference.withClazz(HttpJsonCallableFactory.class)))
             .setMethodName("createBaseUnaryCallable")
             .setArguments(
-                VariableExpr.withVariable(arguments.get(0).variable()),
+                VariableExpr.withVariable(httpJsonCallSettingsVar),
                 getInitialCallSettingsExpr,
-                VariableExpr.withVariable(arguments.get(2).variable()))
+                VariableExpr.withVariable(clientContextVar))
             .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
             .build();
     AssignmentExpr innerCallableAssignExpr =
@@ -170,7 +173,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
             .build();
     MethodInvocationExpr getMethodDescriptorExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(arguments.get(0).variable()))
+            .setExprReferenceExpr(VariableExpr.withVariable(httpJsonCallSettingsVar))
             .setMethodName("getMethodDescriptor")
             .build();
     MethodInvocationExpr getOperationSnapshotFactoryExpr =
@@ -206,7 +209,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
     // Generate return statement
     MethodInvocationExpr longRunningClient =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(arguments.get(3).variable()))
+            .setExprReferenceExpr(VariableExpr.withVariable(operationsStub))
             .setMethodName("longRunningClient")
             .build();
     MethodInvocationExpr createOperationCallable =
@@ -215,8 +218,8 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 TypeNode.withReference(ConcreteReference.withClazz(HttpJsonCallableFactory.class)))
             .setMethodName("createOperationCallable")
             .setArguments(
-                VariableExpr.withVariable(arguments.get(1).variable()),
-                VariableExpr.withVariable(arguments.get(2).variable()),
+                VariableExpr.withVariable(callSettingsVar),
+                VariableExpr.withVariable(clientContextVar),
                 longRunningClient,
                 initialCallableVarExpr)
             .setReturnType(

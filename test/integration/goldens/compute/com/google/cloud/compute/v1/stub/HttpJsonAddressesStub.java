@@ -107,28 +107,6 @@ public class HttpJsonAddressesStub extends AddressesStub {
                   ProtoMessageResponseParser.<AddressAggregatedList>newBuilder()
                       .setDefaultInstance(AddressAggregatedList.getDefaultInstance())
                       .build())
-              .setOperationSnapshotFactory(
-                  (AggregatedListAddressesRequest request, AddressAggregatedList response) -> {
-                    StringBuilder opName = new StringBuilder(response.getId());
-                    opName.append(":").append(request.getProject());
-                    opName.append(":").append(request.getRegion());
-                    return HttpJsonOperationSnapshot.newBuilder()
-                        .setName(opName.toString())
-                        .setMetadata(response)
-                        .setDone(response.getStatus().equals(Status.DONE))
-                        .setResponse(response)
-                        .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
-                        .build();
-                  })
-              .setPollingRequestFactory(
-                  compoundOperationId -> {
-                    List<String> idComponents = Arrays.asList(compoundOperationId.split(":"));
-                    return GetRegionOperationRequest.newBuilder()
-                        .setOperation(idComponents.get(0))
-                        .setProject(idComponents.get(1))
-                        .setRegion(idComponents.get(2))
-                        .build();
-                  })
               .build();
 
   private static final ApiMethodDescriptor<DeleteAddressRequest, Operation> deleteMethodDescriptor =
@@ -286,28 +264,6 @@ public class HttpJsonAddressesStub extends AddressesStub {
               ProtoMessageResponseParser.<AddressList>newBuilder()
                   .setDefaultInstance(AddressList.getDefaultInstance())
                   .build())
-          .setOperationSnapshotFactory(
-              (ListAddressesRequest request, AddressList response) -> {
-                StringBuilder opName = new StringBuilder(response.getId());
-                opName.append(":").append(request.getProject());
-                opName.append(":").append(request.getRegion());
-                return HttpJsonOperationSnapshot.newBuilder()
-                    .setName(opName.toString())
-                    .setMetadata(response)
-                    .setDone(response.getStatus().equals(Status.DONE))
-                    .setResponse(response)
-                    .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
-                    .build();
-              })
-          .setPollingRequestFactory(
-              compoundOperationId -> {
-                List<String> idComponents = Arrays.asList(compoundOperationId.split(":"));
-                return GetRegionOperationRequest.newBuilder()
-                    .setOperation(idComponents.get(0))
-                    .setProject(idComponents.get(1))
-                    .setRegion(idComponents.get(2))
-                    .build();
-              })
           .build();
 
   private final UnaryCallable<AggregatedListAddressesRequest, AddressAggregatedList>
