@@ -52,6 +52,7 @@ import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -159,12 +160,14 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                 .setType(getTransportContext().stubCallableFactoryType())
                 .build()));
 
+    Map<String, Message> messageTypes = context.messages();
     List<Statement> classStatements =
         createClassStatements(
             service,
             protoMethodNameToDescriptorVarExprs,
             callableClassMemberVarExprs,
-            classMemberVarExprs);
+            classMemberVarExprs,
+            messageTypes);
 
     StubCommentComposer commentComposer =
         new StubCommentComposer(getTransportContext().transportName());
@@ -193,7 +196,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   protected abstract Statement createMethodDescriptorVariableDecl(
-      Service service, Method protoMethod, VariableExpr methodDescriptorVarExpr);
+      Service service, Method protoMethod, VariableExpr methodDescriptorVarExpr, Map<String, Message> messageTypes);
 
   protected abstract List<MethodDefinition> createOperationsStubGetterMethod(
       VariableExpr operationsStubVarExpr);
@@ -212,10 +215,11 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
       Service service,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
-      Map<String, VariableExpr> classMemberVarExprs) {
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, Message> messageTypes) {
     List<Statement> classStatements = new ArrayList<>();
     for (Statement statement :
-        createMethodDescriptorVariableDecls(service, protoMethodNameToDescriptorVarExprs)) {
+        createMethodDescriptorVariableDecls(service, protoMethodNameToDescriptorVarExprs, messageTypes)) {
       classStatements.add(statement);
       classStatements.add(EMPTY_LINE_STATEMENT);
     }
@@ -228,12 +232,12 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   protected List<Statement> createMethodDescriptorVariableDecls(
-      Service service, Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
+      Service service, Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs, Map<String, Message> messageTypes) {
     return service.methods().stream()
         .map(
             m ->
                 createMethodDescriptorVariableDecl(
-                    service, m, protoMethodNameToDescriptorVarExprs.get(m.name())))
+                    service, m, protoMethodNameToDescriptorVarExprs.get(m.name()), messageTypes))
         .collect(Collectors.toList());
   }
 
