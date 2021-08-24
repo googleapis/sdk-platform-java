@@ -113,6 +113,7 @@ public class AssetServiceClientTest {
             .addAllAssetTypes(new ArrayList<String>())
             .setContentType(ContentType.forNumber(0))
             .setOutputConfig(OutputConfig.newBuilder().build())
+            .addAllRelationshipTypes(new ArrayList<String>())
             .build();
 
     ExportAssetsResponse actualResponse = client.exportAssetsAsync(request).get();
@@ -127,6 +128,8 @@ public class AssetServiceClientTest {
     Assert.assertEquals(request.getAssetTypesList(), actualRequest.getAssetTypesList());
     Assert.assertEquals(request.getContentType(), actualRequest.getContentType());
     Assert.assertEquals(request.getOutputConfig(), actualRequest.getOutputConfig());
+    Assert.assertEquals(
+        request.getRelationshipTypesList(), actualRequest.getRelationshipTypesList());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -146,6 +149,7 @@ public class AssetServiceClientTest {
               .addAllAssetTypes(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))
               .setOutputConfig(OutputConfig.newBuilder().build())
+              .addAllRelationshipTypes(new ArrayList<String>())
               .build();
       client.exportAssetsAsync(request).get();
       Assert.fail("No exception raised");
@@ -258,6 +262,7 @@ public class AssetServiceClientTest {
             .addAllAssetNames(new ArrayList<String>())
             .setContentType(ContentType.forNumber(0))
             .setReadTimeWindow(TimeWindow.newBuilder().build())
+            .addAllRelationshipTypes(new ArrayList<String>())
             .build();
 
     BatchGetAssetsHistoryResponse actualResponse = client.batchGetAssetsHistory(request);
@@ -272,6 +277,8 @@ public class AssetServiceClientTest {
     Assert.assertEquals(request.getAssetNamesList(), actualRequest.getAssetNamesList());
     Assert.assertEquals(request.getContentType(), actualRequest.getContentType());
     Assert.assertEquals(request.getReadTimeWindow(), actualRequest.getReadTimeWindow());
+    Assert.assertEquals(
+        request.getRelationshipTypesList(), actualRequest.getRelationshipTypesList());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -290,6 +297,7 @@ public class AssetServiceClientTest {
               .addAllAssetNames(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))
               .setReadTimeWindow(TimeWindow.newBuilder().build())
+              .addAllRelationshipTypes(new ArrayList<String>())
               .build();
       client.batchGetAssetsHistory(request);
       Assert.fail("No exception raised");
@@ -308,6 +316,7 @@ public class AssetServiceClientTest {
             .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
+            .addAllRelationshipTypes(new ArrayList<String>())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -351,6 +360,7 @@ public class AssetServiceClientTest {
             .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
+            .addAllRelationshipTypes(new ArrayList<String>())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -394,6 +404,7 @@ public class AssetServiceClientTest {
             .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
+            .addAllRelationshipTypes(new ArrayList<String>())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -473,6 +484,7 @@ public class AssetServiceClientTest {
             .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
+            .addAllRelationshipTypes(new ArrayList<String>())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -775,6 +787,52 @@ public class AssetServiceClientTest {
       Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
       Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+    }
+  }
+
+  @Test
+  public void analyzeMoveTest() throws Exception {
+    AnalyzeMoveResponse expectedResponse =
+        AnalyzeMoveResponse.newBuilder().addAllMoveAnalysis(new ArrayList<MoveAnalysis>()).build();
+    mockAssetService.addResponse(expectedResponse);
+
+    AnalyzeMoveRequest request =
+        AnalyzeMoveRequest.newBuilder()
+            .setResource("resource-341064690")
+            .setDestinationParent("destinationParent-1733659048")
+            .build();
+
+    AnalyzeMoveResponse actualResponse = client.analyzeMove(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    AnalyzeMoveRequest actualRequest = ((AnalyzeMoveRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getDestinationParent(), actualRequest.getDestinationParent());
+    Assert.assertEquals(request.getView(), actualRequest.getView());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void analyzeMoveExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockAssetService.addException(exception);
+
+    try {
+      AnalyzeMoveRequest request =
+          AnalyzeMoveRequest.newBuilder()
+              .setResource("resource-341064690")
+              .setDestinationParent("destinationParent-1733659048")
+              .build();
+      client.analyzeMove(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
     }
   }
 }

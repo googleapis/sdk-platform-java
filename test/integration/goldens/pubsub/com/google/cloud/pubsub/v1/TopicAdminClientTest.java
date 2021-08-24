@@ -37,6 +37,7 @@ import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Duration;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import com.google.pubsub.v1.DeleteTopicRequest;
@@ -125,6 +126,7 @@ public class TopicAdminClientTest {
             .setKmsKeyName("kmsKeyName412586233")
             .setSchemaSettings(SchemaSettings.newBuilder().build())
             .setSatisfiesPzs(true)
+            .setMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockPublisher.addResponse(expectedResponse);
 
@@ -168,6 +170,7 @@ public class TopicAdminClientTest {
             .setKmsKeyName("kmsKeyName412586233")
             .setSchemaSettings(SchemaSettings.newBuilder().build())
             .setSatisfiesPzs(true)
+            .setMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockPublisher.addResponse(expectedResponse);
 
@@ -211,6 +214,7 @@ public class TopicAdminClientTest {
             .setKmsKeyName("kmsKeyName412586233")
             .setSchemaSettings(SchemaSettings.newBuilder().build())
             .setSatisfiesPzs(true)
+            .setMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockPublisher.addResponse(expectedResponse);
 
@@ -341,6 +345,7 @@ public class TopicAdminClientTest {
             .setKmsKeyName("kmsKeyName412586233")
             .setSchemaSettings(SchemaSettings.newBuilder().build())
             .setSatisfiesPzs(true)
+            .setMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockPublisher.addResponse(expectedResponse);
 
@@ -384,6 +389,7 @@ public class TopicAdminClientTest {
             .setKmsKeyName("kmsKeyName412586233")
             .setSchemaSettings(SchemaSettings.newBuilder().build())
             .setSatisfiesPzs(true)
+            .setMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockPublisher.addResponse(expectedResponse);
 

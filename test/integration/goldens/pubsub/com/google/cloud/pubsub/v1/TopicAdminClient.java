@@ -237,6 +237,7 @@ public class TopicAdminClient implements BackgroundResource {
    *           .setKmsKeyName("kmsKeyName412586233")
    *           .setSchemaSettings(SchemaSettings.newBuilder().build())
    *           .setSatisfiesPzs(true)
+   *           .setMessageRetentionDuration(Duration.newBuilder().build())
    *           .build();
    *   Topic response = topicAdminClient.createTopic(request);
    * }
@@ -266,6 +267,7 @@ public class TopicAdminClient implements BackgroundResource {
    *           .setKmsKeyName("kmsKeyName412586233")
    *           .setSchemaSettings(SchemaSettings.newBuilder().build())
    *           .setSatisfiesPzs(true)
+   *           .setMessageRetentionDuration(Duration.newBuilder().build())
    *           .build();
    *   ApiFuture<Topic> future = topicAdminClient.createTopicCallable().futureCall(request);
    *   // Do something.
