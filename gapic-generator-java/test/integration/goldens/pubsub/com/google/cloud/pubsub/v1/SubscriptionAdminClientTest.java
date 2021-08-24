@@ -149,6 +149,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -209,6 +210,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -269,6 +271,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -329,6 +332,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -389,6 +393,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -439,6 +444,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -489,6 +495,7 @@ public class SubscriptionAdminClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setTopicMessageRetentionDuration(Duration.newBuilder().build())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
