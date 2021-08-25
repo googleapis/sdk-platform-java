@@ -49,6 +49,15 @@ public abstract class Service {
     return !Strings.isNullOrEmpty(description());
   }
 
+  public boolean hasLroMethods() {
+    for (Method method : methods()) {
+      if (method.hasLro()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public abstract Builder toBuilder();
 
   public static Builder builder() {

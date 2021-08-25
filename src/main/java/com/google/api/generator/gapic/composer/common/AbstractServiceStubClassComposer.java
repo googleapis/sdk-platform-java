@@ -112,7 +112,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
   private List<MethodDefinition> createClassMethods(
       Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
-    boolean hasLroClient = hasLroMethods(service);
+    boolean hasLroClient = service.hasLroMethods();
     List<MethodDefinition> methods = new ArrayList<>();
     if (hasLroClient) {
       methods.add(createOperationsStubGetter(typeStore));
@@ -207,7 +207,11 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   private MethodDefinition createOperationsStubGetter(TypeStore typeStore) {
-    String methodName = "getOperationsStub";
+    String methodName =
+        String.format(
+            "get%s",
+            JavaStyle.toUpperCamelCase(getTransportContext().transportOperationsStubName()));
+
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(getTransportContext().operationsStubType())
@@ -226,15 +230,6 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             .setName("close")
             .build();
     return Arrays.asList(closeMethod);
-  }
-
-  private static boolean hasLroMethods(Service service) {
-    for (Method method : service.methods()) {
-      if (method.hasLro()) {
-        return true;
-      }
-    }
-    return false;
   }
 
   private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {

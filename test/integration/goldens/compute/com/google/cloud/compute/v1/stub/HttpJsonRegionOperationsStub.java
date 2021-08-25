@@ -27,7 +27,6 @@ import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
-import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
@@ -85,7 +84,6 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
   private final UnaryCallable<GetRegionOperationRequest, Operation> getCallable;
 
   private final BackgroundResource backgroundResources;
-  private final HttpJsonOperationsStub operationsStub;
   private final HttpJsonStubCallableFactory callableFactory;
 
   public static final HttpJsonRegionOperationsStub create(RegionOperationsStubSettings settings)
@@ -126,7 +124,6 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
       HttpJsonStubCallableFactory callableFactory)
       throws IOException {
     this.callableFactory = callableFactory;
-    this.operationsStub = HttpJsonOperationsStub.create(clientContext, callableFactory);
 
     HttpJsonCallSettings<GetRegionOperationRequest, Operation> getTransportSettings =
         HttpJsonCallSettings.<GetRegionOperationRequest, Operation>newBuilder()
@@ -146,10 +143,6 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
     List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
     methodDescriptors.add(getMethodDescriptor);
     return methodDescriptors;
-  }
-
-  public HttpJsonOperationsStub getOperationsStub() {
-    return operationsStub;
   }
 
   @Override

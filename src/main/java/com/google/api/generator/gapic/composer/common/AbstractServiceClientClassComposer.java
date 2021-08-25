@@ -235,7 +235,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         "settings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
     fieldNameToTypes.put("stub", typeStore.get(ClassNames.getServiceStubClassName(service)));
     if (hasLroClient) {
-      fieldNameToTypes.put("operationsClient", getTransportContext().operationsClientType());
+      fieldNameToTypes.put(
+          getTransportContext().operationsClientName(),
+          getTransportContext().operationsClientType());
     }
 
     return fieldNameToTypes.entrySet().stream()
@@ -377,7 +379,10 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                 .build());
     VariableExpr operationsClientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder().setType(operationsClientType).setName("operationsClient").build());
+            Variable.builder()
+                .setType(operationsClientType)
+                .setName(getTransportContext().operationsClientName())
+                .build());
 
     // Create the ServiceClient(ServiceSettings settings) ctor.
     List<Expr> ctorAssignmentExprs = new ArrayList<>();
@@ -407,10 +412,15 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                     .build())
             .build());
 
+    String operationsStubGetterName =
+        String.format(
+            "get%s",
+            JavaStyle.toUpperCamelCase(getTransportContext().transportOperationsStubName()));
+
     Expr clientArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
-            .setMethodName("getOperationsStub")
+            .setMethodName(operationsStubGetterName)
             .build();
     AssignmentExpr operationsClientAssignExpr =
         AssignmentExpr.builder()
@@ -485,9 +495,13 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     methodNameToTypes.put(
         "getSettings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
     methodNameToTypes.put("getStub", typeStore.get(ClassNames.getServiceStubClassName(service)));
-    String getOperationsClientMethodName = "getOperationsClient";
+    String getOperationsClientMethodName =
+        String.format(
+            "get%s",
+            JavaStyle.toUpperCamelCase(getTransportContext().operationsClientName()));
     if (hasLroClient) {
-      methodNameToTypes.put(getOperationsClientMethodName, getTransportContext().operationsClientType());
+      methodNameToTypes.put(
+          getOperationsClientMethodName, getTransportContext().operationsClientType());
     }
     AnnotationNode betaStubAnnotation =
         AnnotationNode.builder()

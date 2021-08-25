@@ -39,6 +39,7 @@ public abstract class GrpcContext extends TransportContext {
           .setStubCallableFactoryType(classToType(GrpcStubCallableFactory.class))
           .setMethodDescriptorClass(MethodDescriptor.class)
           .setTransportOperationsStubType(classToType(GrpcOperationsStub.class))
+          .setTransportOperationsStubName("operationsStub")
           // For grpc.ServiceSettingsClassComposer
           .setInstantiatingChannelProviderClass(InstantiatingGrpcChannelProvider.Builder.class)
           .setDefaultTransportProviderBuilderName("defaultGrpcTransportProviderBuilder")
@@ -57,6 +58,7 @@ public abstract class GrpcContext extends TransportContext {
               classToType(ProtoOperationTransformers.MetadataTransformer.class))
           // For ServiceClientClassComposer
           .setOperationsClientType(classToType(OperationsClient.class))
+          .setOperationsClientName("operationsClient")
           .build();
 
   public static TransportContext instance() {

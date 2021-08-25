@@ -39,6 +39,7 @@ public abstract class RestContext extends TransportContext {
           .setStubCallableFactoryType(classToType(HttpJsonStubCallableFactory.class))
           .setMethodDescriptorClass(ApiMethodDescriptor.class)
           .setTransportOperationsStubType(classToType(HttpJsonOperationsStub.class))
+          .setTransportOperationsStubName("httpJsonOperationsStub")
           // For httpjson.ServiceSettingsClassComposer
           .setInstantiatingChannelProviderClass(InstantiatingHttpJsonChannelProvider.Builder.class)
           .setDefaultTransportProviderBuilderName("defaultHttpJsonTransportProviderBuilder")
@@ -58,6 +59,7 @@ public abstract class RestContext extends TransportContext {
               classToType(ProtoOperationTransformers.MetadataTransformer.class))
           // For ServiceClientClassComposer
           .setOperationsClientType(classToType(OperationsClient.class))
+          .setOperationsClientName("httpJsonOperationsClient")
           .build();
 
   public static TransportContext instance() {
