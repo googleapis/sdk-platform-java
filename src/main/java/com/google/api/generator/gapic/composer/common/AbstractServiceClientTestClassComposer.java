@@ -470,7 +470,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = createDefaultValue(methodArg, resourceNames);
         methodExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -735,6 +735,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes);
 
+  protected abstract Expr createDefaultValue(
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames);
+
   protected List<Statement> createRpcExceptionTestStatements(
       Method method,
       List<MethodArgument> methodSignature,
@@ -766,7 +769,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = createDefaultValue(methodArg, resourceNames);
         tryBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())

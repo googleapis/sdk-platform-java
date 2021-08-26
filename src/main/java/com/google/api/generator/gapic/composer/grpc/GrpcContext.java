@@ -19,9 +19,11 @@ import com.google.api.gax.grpc.GrpcCallableFactory;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
+import com.google.api.gax.grpc.ProtoOperationTransformers;
 import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.longrunning.OperationsClient;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.longrunning.stub.OperationsStub;
 import io.grpc.MethodDescriptor;
@@ -37,6 +39,7 @@ public abstract class GrpcContext extends TransportContext {
           .setStubCallableFactoryType(classToType(GrpcStubCallableFactory.class))
           .setMethodDescriptorClass(MethodDescriptor.class)
           .setTransportOperationsStubType(classToType(GrpcOperationsStub.class))
+          .setTransportOperationsStubName("operationsStub")
           // For grpc.ServiceSettingsClassComposer
           .setInstantiatingChannelProviderClass(InstantiatingGrpcChannelProvider.Builder.class)
           .setDefaultTransportProviderBuilderName("defaultGrpcTransportProviderBuilder")
@@ -48,6 +51,14 @@ public abstract class GrpcContext extends TransportContext {
           .setTransportCallableFactoryType(classToType(GrpcCallableFactory.class))
           .setOperationsStubType(classToType(OperationsStub.class))
           .setTransportCallSettingsName("grpcCallSettings")
+          // For RetrySettingsComposer
+          .setOperationResponseTransformerType(
+              classToType(ProtoOperationTransformers.ResponseTransformer.class))
+          .setOperationMetadataTransformerType(
+              classToType(ProtoOperationTransformers.MetadataTransformer.class))
+          // For ServiceClientClassComposer
+          .setOperationsClientType(classToType(OperationsClient.class))
+          .setOperationsClientName("operationsClient")
           .build();
 
   public static TransportContext instance() {

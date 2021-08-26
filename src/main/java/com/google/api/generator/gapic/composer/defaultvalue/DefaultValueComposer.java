@@ -58,8 +58,11 @@ public class DefaultValueComposer {
       TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   public static Expr createDefaultValue(
-      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
-    if (methodArg.isResourceNameHelper()) {
+      MethodArgument methodArg,
+      Map<String, ResourceName> resourceNames,
+      boolean forceResourceNameInitializer) {
+    if (methodArg.isResourceNameHelper()
+        || (forceResourceNameInitializer && methodArg.field().hasResourceReference())) {
       Preconditions.checkState(
           methodArg.field().hasResourceReference(),
           String.format(
@@ -72,10 +75,21 @@ public class DefaultValueComposer {
           String.format(
               "No resource name found for reference %s",
               methodArg.field().resourceReference().resourceTypeString()));
-      return createDefaultValue(
-          resourceName,
-          resourceNames.values().stream().collect(Collectors.toList()),
-          methodArg.field().name());
+      Expr defValue =
+          createDefaultValue(
+              resourceName,
+              resourceNames.values().stream().collect(Collectors.toList()),
+              methodArg.field().name());
+
+      if (!methodArg.isResourceNameHelper() && methodArg.field().hasResourceReference()) {
+        defValue =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(defValue)
+                .setMethodName("toString")
+                .setReturnType(TypeNode.STRING)
+                .build();
+      }
+      return defValue;
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {

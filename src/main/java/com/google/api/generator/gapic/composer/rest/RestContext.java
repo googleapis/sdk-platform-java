@@ -21,6 +21,9 @@ import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
+import com.google.api.gax.httpjson.ProtoOperationTransformers;
+import com.google.api.gax.httpjson.longrunning.OperationsClient;
+import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
 import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
@@ -35,7 +38,8 @@ public abstract class RestContext extends TransportContext {
           .setCallSettingsClass(HttpJsonCallSettings.class)
           .setStubCallableFactoryType(classToType(HttpJsonStubCallableFactory.class))
           .setMethodDescriptorClass(ApiMethodDescriptor.class)
-          .setTransportOperationsStubType(null)
+          .setTransportOperationsStubType(classToType(HttpJsonOperationsStub.class))
+          .setTransportOperationsStubName("httpJsonOperationsStub")
           // For httpjson.ServiceSettingsClassComposer
           .setInstantiatingChannelProviderClass(InstantiatingHttpJsonChannelProvider.Builder.class)
           .setDefaultTransportProviderBuilderName("defaultHttpJsonTransportProviderBuilder")
@@ -45,8 +49,17 @@ public abstract class RestContext extends TransportContext {
           // For httpjson.HttpJsonServiceCallableFactoryClassComposer
           .setTransportCallSettingsType(classToType(HttpJsonCallSettings.class))
           .setTransportCallableFactoryType(classToType(HttpJsonCallableFactory.class))
+          // TODO: set to com.google.api.gax.httpjson.longrunning.stub.OperationsStub.class
           .setOperationsStubType(classToType(BackgroundResource.class))
           .setTransportCallSettingsName("httpJsonCallSettings")
+          // For RetrySettingsComposer
+          .setOperationResponseTransformerType(
+              classToType(ProtoOperationTransformers.ResponseTransformer.class))
+          .setOperationMetadataTransformerType(
+              classToType(ProtoOperationTransformers.MetadataTransformer.class))
+          // For ServiceClientClassComposer
+          .setOperationsClientType(classToType(OperationsClient.class))
+          .setOperationsClientName("httpJsonOperationsClient")
           .build();
 
   public static TransportContext instance() {
