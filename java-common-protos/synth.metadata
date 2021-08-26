@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "4942688dbe02580ea0be48e9a9366d489bb3c9d6"
+        "sha": "66db02e9b97c724179a2110671a51bc2ce92b3df"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "aa136fa6649f7d999bf3873d0e5fca75cb2354a5",
-        "internalRef": "382337225"
+        "sha": "ed739492993c4a99629b6430affdd6c0fb59d435",
+        "internalRef": "391764852"
       }
     },
     {
@@ -367,6 +367,7 @@
     "proto-google-common-protos/src/main/proto/google/api/usage.proto",
     "proto-google-common-protos/src/main/proto/google/api/visibility.proto",
     "proto-google-common-protos/src/main/proto/google/cloud/audit/audit_log.proto",
+    "proto-google-common-protos/src/main/proto/google/cloud/audit/bigquery_audit_metadata.proto",
     "proto-google-common-protos/src/main/proto/google/geo/type/viewport.proto",
     "proto-google-common-protos/src/main/proto/google/logging/type/http_request.proto",
     "proto-google-common-protos/src/main/proto/google/logging/type/log_severity.proto",
