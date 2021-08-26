@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.4.0](https://www.github.com/googleapis/java-common-protos/compare/v2.3.2...v2.4.0) (2021-08-26)
+
+
+### Features
+
+* add new FieldBehavior NON_EMPTY_DEFAULT ([#191](https://www.github.com/googleapis/java-common-protos/issues/191)) ([acb2206](https://www.github.com/googleapis/java-common-protos/commit/acb2206e4dbe0b94c4ebbbe6bd924a258469f836))
+* Add the `principal` field to the ServiceAccountDelegationInfo proto ([#183](https://www.github.com/googleapis/java-common-protos/issues/183)) ([b558909](https://www.github.com/googleapis/java-common-protos/commit/b558909b0355e5878e4785b76105735e2ca25422))
+* generate java files for extended_operations.proto ([#200](https://www.github.com/googleapis/java-common-protos/issues/200)) ([fec9c81](https://www.github.com/googleapis/java-common-protos/commit/fec9c8140c1a03f823d69a787b8c1f59d45879a6))
+
+
+### Bug Fixes
+
+* Add `shopt -s nullglob` to dependencies script ([#189](https://www.github.com/googleapis/java-common-protos/issues/189)) ([89605e8](https://www.github.com/googleapis/java-common-protos/commit/89605e8edb10bb3ab3aaaa49a4cefba3fa590953))
+* Update dependencies.sh to not break on mac ([#186](https://www.github.com/googleapis/java-common-protos/issues/186)) ([ae73232](https://www.github.com/googleapis/java-common-protos/commit/ae7323289c966d7690fcfcf672e19a58797be3df))
+
+
+### Documentation
+
+* modify some field level comments with new details and examples ([b558909](https://www.github.com/googleapis/java-common-protos/commit/b558909b0355e5878e4785b76105735e2ca25422))
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.17.3 ([#185](https://www.github.com/googleapis/java-common-protos/issues/185)) ([6f1b209](https://www.github.com/googleapis/java-common-protos/commit/6f1b209f32d8ee3ae38e9051f29d464fca507c84))
+* update dependency io.grpc:grpc-bom to v1.38.1 ([#187](https://www.github.com/googleapis/java-common-protos/issues/187)) ([1086c1c](https://www.github.com/googleapis/java-common-protos/commit/1086c1cb870e49bc4b68992d293176909bc58a2d))
+
 ### [2.3.2](https://www.github.com/googleapis/java-common-protos/compare/v2.3.1...v2.3.2) (2021-06-03)
 
 
