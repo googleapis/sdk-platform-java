@@ -138,6 +138,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                   "setOperationSnapshotFactory",
                   setOperationSnapshotFactoryExpr(protoMethod, messageTypes))
               .apply(expr);
+
       if(protoMethod.isOperationPollingMethod()) {
         expr =
             methodMaker
@@ -451,7 +452,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     VariableExpr opNameVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(stringBuilderType).setName("opName").build());
+
     MethodInvocationExpr getId = invoke(responseVarExpr, getMethodFormat(operationResponse.getNameFieldName()));
+
     Expr opNameObjectExpr =
         NewObjectExpr.builder().setType(stringBuilderType).setArguments(getId).build();
     AssignmentExpr opNameAssignExpr =
@@ -460,7 +463,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setValueExpr(opNameObjectExpr)
             .build();
     createBody.add(ExprStatement.withExpr(opNameAssignExpr));
-
 
     if(!protoMethod.isOperationPollingMethod()) {
 
@@ -504,8 +506,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       //         .apply(opNameAppendColonRegionExpr);
       // createBody.add(ExprStatement.withExpr(opNameAppendColonRegionExpr));
     }
-
     MethodInvocationExpr getStatusExpr = invoke(responseVarExpr, getMethodFormat(operationResponse.getStatusFieldName()));
+
     TypeNode statusType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -529,6 +531,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     MethodInvocationExpr getHttpErrorStatusCodeExpr = invoke(responseVarExpr, getMethodFormat(operationResponse.getErrorCodeFieldName()));
     MethodInvocationExpr getHttpErrorMessageExpr = invoke(responseVarExpr, getMethodFormat(operationResponse.getErrorMessageFieldName()));
     MethodInvocationExpr newBuilderExpr = staticBuilder(httpJsonOperationSnapshotType);
+
     newBuilderExpr =
         methodMaker
             .apply("setName", Collections.singletonList(opNameToStringExpr))
@@ -632,8 +635,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                 .setPakkage("com.google.cloud.compute.v1")
                 .setIsStaticImport(false)
                 .build());
-    MethodInvocationExpr newBuilderExpr = staticBuilder(getRegionOperationRequestType);
 
+    MethodInvocationExpr newBuilderExpr = staticBuilder(getRegionOperationRequestType);
     // Create method to return setExpressions given field
     //Get the request and its operation_request_fields annotations
     // Sort them alphabetically and loop through fields and add setExpressions
