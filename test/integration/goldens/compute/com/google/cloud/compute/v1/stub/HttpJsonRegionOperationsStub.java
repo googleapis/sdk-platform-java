@@ -85,9 +85,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
                       .build())
               .setOperationSnapshotFactory(
                   (GetRegionOperationRequest request, Operation response) -> {
-                    StringBuilder opName = new StringBuilder(response.getId());
-                    opName.append(":").append(request.getProject());
-                    opName.append(":").append(request.getRegion());
+                    StringBuilder opName = new StringBuilder(response.getName());
                     return HttpJsonOperationSnapshot.newBuilder()
                         .setName(opName.toString())
                         .setMetadata(response)

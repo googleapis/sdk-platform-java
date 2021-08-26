@@ -22,6 +22,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,6 +51,10 @@ public abstract class Message {
   public abstract TypeNode type();
 
   public abstract ImmutableMap<String, Field> fieldMap();
+
+  public abstract OperationResponse operationResponse();
+
+  public abstract Map<String, String> operationRequestFields();
 
   // The resource name annotation (and definition) in this message. Optional.
   // Expected dto be empty for messages that have no such definition.
@@ -103,7 +108,10 @@ public abstract class Message {
         .setOuterNestedTypes(Collections.emptyList())
         .setFields(Collections.emptyList())
         .setFieldMap(Collections.emptyMap())
-        .setEnumValues(Collections.emptyMap());
+        .setEnumValues(Collections.emptyMap())
+        .setOperationRequestFields(Collections.emptyMap())
+        .setOperationResponse(OperationResponse.builder().build());
+
   }
 
   @AutoValue.Builder
@@ -128,6 +136,10 @@ public abstract class Message {
     public abstract Builder setResource(ResourceName resource);
 
     public abstract Builder setOuterNestedTypes(List<String> outerNestedTypes);
+
+    public abstract Builder setOperationResponse(OperationResponse operationResponse);
+
+    public abstract Builder setOperationRequestFields(Map<String, String> operationRequestFields);
 
     abstract Builder setFieldMap(Map<String, Field> fieldMap);
 

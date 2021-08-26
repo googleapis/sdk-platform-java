@@ -66,6 +66,10 @@ public abstract class Method {
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
 
+  public abstract boolean operationPollingMethod();
+
+  public abstract String operationService();
+
   public boolean hasLro() {
     return lro() != null;
   }
@@ -80,6 +84,10 @@ public abstract class Method {
 
   public boolean isMixin() {
     return mixedInApiName() != null;
+  }
+
+  public boolean isOperationPollingMethod() {
+    return operationPollingMethod();
   }
 
   public abstract Builder toBuilder();
@@ -130,6 +138,10 @@ public abstract class Method {
     public abstract Builder setPageSizeFieldName(String pagedFieldName);
 
     public abstract Builder setIsDeprecated(boolean isDeprecated);
+
+    public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
+
+    public abstract Builder setOperationService(String operationService);
 
     public abstract Method build();
   }

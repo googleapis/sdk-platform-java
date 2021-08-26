@@ -76,6 +76,15 @@ def gapic_generator_java_repositories():
         ],
     )
 
+    #    local(
+    #        http_archive,
+    #        name = "com_google_googleapis_discovery",
+    ##        strip_prefix = "googleapis-discovery-2872d382ff767518e63d59ececf5d6f9224b21b4",
+    ##        urls = [
+    ##            "https://github.com/vam-google/googleapis-discovery/archive/2872d382ff767518e63d59ececf5d6f9224b21b4.zip",
+    ##        ],
+    #    )
+
     _maybe(
         native.bind,
         name = "guava",
