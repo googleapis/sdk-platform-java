@@ -89,11 +89,17 @@ build_proto("//google/longrunning:longrunning_java_proto")
 build_proto("//google/rpc:rpc_java_proto")
 build_proto("//google/rpc/context:attribute_context_java_proto")
 build_proto("//google/type:type_java_proto")
+build_proto("//google/cloud:extended_operations_java_proto")
 
 build_grpc("//google/longrunning:longrunning_java_grpc")
 
 java.format_code("proto-google-common-protos/src")
 java.format_code("grpc-google-common-protos/src")
+
+os.remove("proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadata.java")
+os.remove("proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadataOrBuilder.java")
+os.remove("proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadataProto.java")
+os.remove("proto-google-common-protos/src/main/proto/google/cloud/audit/bigquery_audit_metadata.proto")
 
 java.common_templates(excludes=[
   'README.md',
