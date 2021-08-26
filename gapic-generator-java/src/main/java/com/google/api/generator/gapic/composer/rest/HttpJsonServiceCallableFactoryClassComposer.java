@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.ApiMessage;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -35,8 +34,6 @@ public class HttpJsonServiceCallableFactoryClassComposer
 
   private static final TypeNode MESSAGE_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(ApiMessage.class));
-  private static final TypeNode BACKGROUND_RESOURCE_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(BackgroundResource.class));
 
   private HttpJsonServiceCallableFactoryClassComposer() {
     super(RestContext.instance());
@@ -69,7 +66,8 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 .reference()
                 .copyAndSetGenerics(
                     Arrays.asList(
-                        MESSAGE_TYPE.reference(), BACKGROUND_RESOURCE_TYPE.reference()))));
+                        MESSAGE_TYPE.reference(),
+                        getTransportContext().operationsStubType().reference()))));
   }
 
   @Override

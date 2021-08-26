@@ -1136,7 +1136,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private static ClassDefinition createNestedBuilderClass(
+  private ClassDefinition createNestedBuilderClass(
       Service service, @Nullable GapicServiceConfig serviceConfig, TypeStore typeStore) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
     String thisClassName = ClassNames.getServiceStubSettingsClassName(service);
@@ -1236,7 +1236,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return statements;
   }
 
-  private static List<MethodDefinition> createNestedClassMethods(
+  private List<MethodDefinition> createNestedClassMethods(
       Service service,
       GapicServiceConfig serviceConfig,
       TypeNode superType,
@@ -1258,7 +1258,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return nestedClassMethods;
   }
 
-  private static MethodDefinition createNestedClassInitDefaultsMethod(
+  private MethodDefinition createNestedClassInitDefaultsMethod(
       Service service, @Nullable GapicServiceConfig serviceConfig, TypeStore typeStore) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
     TypeNode builderType = typeStore.get(NESTED_BUILDER_CLASS_NAME);
@@ -1313,7 +1313,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                   method,
                   builderVarExpr,
                   NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
-                  NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
+                  NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR,
+                  getTransportContext().operationResponseTransformerType(),
+                  getTransportContext().operationMetadataTransformerType())));
       bodyStatements.add(EMPTY_LINE_STATEMENT);
     }
 

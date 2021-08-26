@@ -19,7 +19,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class TransportContext {
@@ -37,8 +36,9 @@ public abstract class TransportContext {
 
   public abstract Class<?> methodDescriptorClass();
 
-  @Nullable
   public abstract TypeNode transportOperationsStubType();
+
+  public abstract String transportOperationsStubName();
 
   // For AbstractServiceSettingsClassComposer
   public abstract Class<?> instantiatingChannelProviderClass();
@@ -58,6 +58,15 @@ public abstract class TransportContext {
   public abstract TypeNode operationsStubType();
 
   public abstract String transportCallSettingsName();
+
+  // For RetrySettingsComposer
+  public abstract TypeNode operationResponseTransformerType();
+
+  public abstract TypeNode operationMetadataTransformerType();
+
+  public abstract TypeNode operationsClientType();
+
+  public abstract String operationsClientName();
 
   protected static TypeNode classToType(Class<?> clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
@@ -100,7 +109,17 @@ public abstract class TransportContext {
 
     public abstract Builder setTransportOperationsStubType(TypeNode transportOperationsStubType);
 
+    public abstract Builder setTransportOperationsStubName(String transportOperationsStubName);
+
     public abstract Builder setOperationsStubType(TypeNode operationsStubType);
+
+    public abstract Builder setOperationResponseTransformerType(TypeNode operationResponseTransformerType);
+
+    public abstract Builder setOperationMetadataTransformerType(TypeNode operationMetadataTransformerType);
+
+    public abstract Builder setOperationsClientType(TypeNode operationsClientType);
+
+    public abstract Builder setOperationsClientName(String operationsClientName);
 
     public abstract TransportContext build();
   }

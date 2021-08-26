@@ -1056,6 +1056,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   }
 
   @Override
+  protected Expr createDefaultValue(
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
+    return DefaultValueComposer.createDefaultValue(methodArg, resourceNames, false);
+  }
+
+  @Override
   protected List<Statement> createRpcLroExceptionTestCatchBody(
       VariableExpr exceptionExpr, boolean isStreaming) {
     List<Expr> catchBodyExprs = new ArrayList<>();

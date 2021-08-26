@@ -17,14 +17,14 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
-import com.google.api.generator.gapic.composer.common.ServiceClientClassComposer;
-import com.google.api.generator.gapic.composer.common.ServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.grpc.MockServiceClassComposer;
 import com.google.api.generator.gapic.composer.grpc.MockServiceImplClassComposer;
+import com.google.api.generator.gapic.composer.grpc.ServiceClientClassComposer;
 import com.google.api.generator.gapic.composer.grpc.ServiceClientTestClassComposer;
 import com.google.api.generator.gapic.composer.grpc.ServiceSettingsClassComposer;
+import com.google.api.generator.gapic.composer.grpc.ServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.grpc.ServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposer;
@@ -76,8 +76,10 @@ public class Composer {
         .services()
         .forEach(
             s -> {
-              clazzes.add(ServiceStubClassComposer.instance().generate(context, s));
               if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceStubClassComposer.instance()
+                        .generate(context, s));
                 clazzes.add(
                     com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposer
                         .instance()
@@ -86,6 +88,7 @@ public class Composer {
                     HttpJsonServiceCallableFactoryClassComposer.instance().generate(context, s));
                 clazzes.add(HttpJsonServiceStubClassComposer.instance().generate(context, s));
               } else {
+                clazzes.add(ServiceStubClassComposer.instance().generate(context, s));
                 clazzes.add(ServiceStubSettingsClassComposer.instance().generate(context, s));
                 clazzes.add(
                     GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
@@ -101,13 +104,17 @@ public class Composer {
         .services()
         .forEach(
             s -> {
-              clazzes.add(ServiceClientClassComposer.instance().generate(context, s));
               if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceClientClassComposer
+                        .instance()
+                        .generate(context, s));
                 clazzes.add(
                     com.google.api.generator.gapic.composer.rest.ServiceSettingsClassComposer
                         .instance()
                         .generate(context, s));
               } else {
+                clazzes.add(ServiceClientClassComposer.instance().generate(context, s));
                 clazzes.add(ServiceSettingsClassComposer.instance().generate(context, s));
               }
             });
