@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.1](https://www.github.com/googleapis/java-common-protos/compare/v2.4.0...v2.4.1) (2021-08-27)
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-config to v1 ([#206](https://www.github.com/googleapis/java-common-protos/issues/206)) ([df8410e](https://www.github.com/googleapis/java-common-protos/commit/df8410e87f48e3d3585131e892767138a9dfe5fa))
+
 ## [2.4.0](https://www.github.com/googleapis/java-common-protos/compare/v2.3.2...v2.4.0) (2021-08-26)
 
 
