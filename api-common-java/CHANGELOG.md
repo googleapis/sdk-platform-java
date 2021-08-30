@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.3](https://www.github.com/googleapis/api-common-java/compare/v2.0.2...v2.0.3) (2021-08-30)
+
+
+### Dependencies
+
+* update gradle-nexus-publish-plugin ([#269](https://www.github.com/googleapis/api-common-java/issues/269)) ([7776834](https://www.github.com/googleapis/api-common-java/commit/7776834dd69d3f5556f852b8cb57e5fe6628ce5f))
+
 ### [2.0.2](https://www.github.com/googleapis/api-common-java/compare/v2.0.1...v2.0.2) (2021-08-20)
 
 
