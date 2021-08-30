@@ -10,19 +10,18 @@ buildscript {
   }
   dependencies {
     classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.9",
-      "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
+      "io.github.gradle-nexus:publish-plugin:1.1.0"
   }
 }
-
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
 apply plugin: 'signing'
 apply plugin: 'maven-publish'
 apply plugin: 'com.github.sherter.google-java-format'
-apply plugin: 'io.codearte.nexus-staging'
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
+
 
 group = "com.google.api"
 archivesBaseName = "api-common"
@@ -64,15 +63,15 @@ dependencies {
 
   annotationProcessor libraries.auto_value
 
-  compile libraries.guava,
+  implementation( libraries.guava,
     libraries.jsr305,
     libraries.javax_annotations,
-    libraries.auto_value_annotations
+    libraries.auto_value_annotations)
 
   compileOnly libraries.error_prone_annotations
 
-  testCompile libraries.junit,
-    libraries.truth
+  testImplementation(libraries.junit,
+    libraries.truth)
 }
 
 clean.doFirst {
@@ -97,7 +96,9 @@ jar {
 
 // Source jar
 // ----------
-
+project.gradle.taskGraph.whenReady {
+  println project.gradle.taskGraph.getAllTasks()
+}
 task sourcesJar(type: Jar, dependsOn: classes) {
   classifier = 'sources'
   from sourceSets.main.allSource
@@ -161,7 +162,7 @@ configurations {
 
 dependencies {
   codeGeneration libraries.auto_value, libraries.jsr305
-  compile libraries.jsr305, libraries.auto_value_annotations
+  implementation(libraries.jsr305, libraries.auto_value_annotations)
 }
 
 compileJava.classpath += configurations.codeGeneration
@@ -214,7 +215,7 @@ artifacts {
 }
 
 signing {
-  required { gradle.taskGraph.hasTask("uploadArchives") }
+  required { gradle.taskGraph.hasTask("publishToSonatype") }
   if (project.hasProperty('signing.gnupg.executable')) {
     useGpgCmd()
   }
@@ -222,10 +223,14 @@ signing {
 }
 
 if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-  nexusStaging {
-    username = ossrhUsername
-    password = ossrhPassword
+  nexusPublishing {
     packageGroup = "com.google.api"
+    repositories {
+      sonatype {   //or custom repository name
+        username = ossrhUsername
+        password = ossrhPassword
+      }
+    }
   }
 }
 
@@ -422,7 +427,7 @@ task stageRelease {
     exec {
       // We need to spawn a new gradle build process in order to upload appropriately
       // More details: http://stackoverflow.com/questions/31614735/gradle-uploadarchives-artificats-namespace-when-depending-on-a-plugin
-      commandLine './gradlew', 'uploadArchives'
+      commandLine './gradlew', 'publishToSonatype', 'closeAndReleaseSonatypeStagingRepository'
     }
   }
 }
