@@ -560,15 +560,17 @@ public class Parser {
     TypeNode messageType = TypeParser.parseType(messageDescriptor);
 
     List<FieldDescriptor> fields = messageDescriptor.getFields();
-
     HashMap<String, String> operationRequestFields = new HashMap<String, String>();
+    HashMap<String, String> operationResponseFields = new HashMap<String, String>();
     OperationResponse.Builder operationResponse = OperationResponse.builder();
-    // ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    // ExtendedOperationsProto.registerAllExtensions(registry);
     for(FieldDescriptor fd : fields) {
       if(fd.getOptions().hasExtension(ExtendedOperationsProto.operationRequestField)) {
         String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationRequestField);
         operationRequestFields.put(orf, fd.getName());
+      }
+      if(fd.getOptions().hasExtension(ExtendedOperationsProto.operationResponseField)) {
+        String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationResponseField);
+        operationResponseFields.put(orf, fd.getName());
       }
       if(fd.getOptions().hasExtension(ExtendedOperationsProto.operationField)) {
         OperationResponseMapping orm = fd.getOptions().getExtension(ExtendedOperationsProto.operationField);
@@ -586,7 +588,6 @@ public class Parser {
         }
       }
     }
-
     messages.put(
         messageType.reference().fullName(),
         Message.builder()
@@ -596,6 +597,7 @@ public class Parser {
             .setFields(parseFields(messageDescriptor, outputResourceReferencesSeen))
             .setOuterNestedTypes(outerNestedTypes)
             .setOperationRequestFields(operationRequestFields)
+            .setOperationResponseFields(operationResponseFields)
             .setOperationResponse(operationResponse.build())
             .build());
     return messages;
@@ -698,10 +700,12 @@ public class Parser {
                       /* protoPakkage */ protoMethod.getFile().getPackage(),
                       serviceDescriptor.getName(),
                       protoMethod.getName());
-      boolean operationPollingMethod =
-          protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationPollingMethod);
-      String operationService =
-          protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService);
+      boolean operationPollingMethod = false;
+      if(protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationPollingMethod))
+          operationPollingMethod = protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationPollingMethod);
+      String operationService = null;
+      if(protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService))
+          operationService = protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService);
 
       methods.add(
           methodBuilder

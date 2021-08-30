@@ -16,6 +16,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 // In composer:
 //     instead of:
@@ -29,20 +30,20 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class OperationResponse {
+  @Nullable
   public abstract String getNameFieldName();
 
+  @Nullable
   public abstract String getStatusFieldName();
 
+  @Nullable
   public abstract String getErrorCodeFieldName();
 
+  @Nullable
   public abstract String getErrorMessageFieldName();
 
   public static Builder builder() {
-    return new AutoValue_OperationResponse.Builder()
-        .setNameFieldName("")
-        .setStatusFieldName("")
-        .setErrorCodeFieldName("")
-        .setErrorMessageFieldName("");
+    return new AutoValue_OperationResponse.Builder();
   }
 
   @AutoValue.Builder

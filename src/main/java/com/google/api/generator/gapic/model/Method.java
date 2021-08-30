@@ -68,6 +68,7 @@ public abstract class Method {
 
   public abstract boolean operationPollingMethod();
 
+  @Nullable
   public abstract String operationService();
 
   public boolean hasLro() {
