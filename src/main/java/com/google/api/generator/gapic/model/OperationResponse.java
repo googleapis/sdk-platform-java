@@ -23,10 +23,11 @@ import javax.annotation.Nullable;
 //     MethodInvocation.newBuilder().setMethodName("getHttpErrorMessage");
 //     now do
 //     Message inputOperationMessage = messageTypes.get(method.outputType().reference().fullName())
-//     MethodInvocation.newBuilder().setMethodName(inputOperationMessage.getOperationMapping().getErrorMessageFieldName());
 //
-//     inputOperationMessage.getOperationMapping().getErrorMessageFieldName() in runtime will actually return "getHttpErrorMessage"
-
+// MethodInvocation.newBuilder().setMethodName(inputOperationMessage.getOperationMapping().getErrorMessageFieldName());
+//
+//     inputOperationMessage.getOperationMapping().getErrorMessageFieldName() in runtime will
+// actually return "getHttpErrorMessage"
 
 @AutoValue
 public abstract class OperationResponse {

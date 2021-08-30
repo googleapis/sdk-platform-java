@@ -59,7 +59,6 @@ import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -563,27 +562,25 @@ public class Parser {
     HashMap<String, String> operationRequestFields = new HashMap<String, String>();
     HashMap<String, String> operationResponseFields = new HashMap<String, String>();
     OperationResponse.Builder operationResponse = OperationResponse.builder();
-    for(FieldDescriptor fd : fields) {
-      if(fd.getOptions().hasExtension(ExtendedOperationsProto.operationRequestField)) {
+    for (FieldDescriptor fd : fields) {
+      if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationRequestField)) {
         String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationRequestField);
         operationRequestFields.put(orf, fd.getName());
       }
-      if(fd.getOptions().hasExtension(ExtendedOperationsProto.operationResponseField)) {
+      if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationResponseField)) {
         String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationResponseField);
         operationResponseFields.put(orf, fd.getName());
       }
-      if(fd.getOptions().hasExtension(ExtendedOperationsProto.operationField)) {
-        OperationResponseMapping orm = fd.getOptions().getExtension(ExtendedOperationsProto.operationField);
-        if(orm.equals(OperationResponseMapping.NAME)) {
+      if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationField)) {
+        OperationResponseMapping orm =
+            fd.getOptions().getExtension(ExtendedOperationsProto.operationField);
+        if (orm.equals(OperationResponseMapping.NAME)) {
           operationResponse.setNameFieldName(fd.getName());
-        }
-        else if(orm.equals(OperationResponseMapping.STATUS)) {
+        } else if (orm.equals(OperationResponseMapping.STATUS)) {
           operationResponse.setStatusFieldName(fd.getName());
-        }
-        else if(orm.equals(OperationResponseMapping.ERROR_CODE)) {
+        } else if (orm.equals(OperationResponseMapping.ERROR_CODE)) {
           operationResponse.setErrorCodeFieldName(fd.getName());
-        }
-        else if(orm.equals(OperationResponseMapping.ERROR_MESSAGE)) {
+        } else if (orm.equals(OperationResponseMapping.ERROR_MESSAGE)) {
           operationResponse.setErrorMessageFieldName(fd.getName());
         }
       }
@@ -701,11 +698,13 @@ public class Parser {
                       serviceDescriptor.getName(),
                       protoMethod.getName());
       boolean operationPollingMethod = false;
-      if(protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationPollingMethod))
-          operationPollingMethod = protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationPollingMethod);
+      if (protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationPollingMethod))
+        operationPollingMethod =
+            protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationPollingMethod);
       String operationService = null;
-      if(protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService))
-          operationService = protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService);
+      if (protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService))
+        operationService =
+            protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService);
 
       methods.add(
           methodBuilder
