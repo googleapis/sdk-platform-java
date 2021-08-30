@@ -100,6 +100,7 @@ os.remove("proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQu
 os.remove("proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadataOrBuilder.java")
 os.remove("proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadataProto.java")
 os.remove("proto-google-common-protos/src/main/proto/google/cloud/audit/bigquery_audit_metadata.proto")
+os.remove("proto-google-common-protos/src/main/proto/google/cloud/common_resources.proto")
 
 java.common_templates(excludes=[
   'README.md',
