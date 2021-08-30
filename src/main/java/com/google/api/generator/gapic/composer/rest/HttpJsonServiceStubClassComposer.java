@@ -501,7 +501,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("Status")
-                .setPakkage("com.google.cloud.compute.v1")
+                .setPakkage("com.google.cloud.compute.v1.Operation")
                 .setIsStaticImport(false)
                 .build());
     VariableExpr statusDoneExpr =
@@ -623,11 +623,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     createBody.add(ExprStatement.withExpr(idComponentsAssignExpr));
 
     // Generate return statement
-    // This will be replaced and edited based on annotations
     TypeNode getOperationRequestType = TypeNode.withReference(protoMethod.inputType().reference());
     MethodInvocationExpr newBuilderExpr = staticBuilder(getOperationRequestType);
-
-    // Set builder fields
     Map<String, String> responseFields = inputOperationMessage.operationResponseFields();
     // TODO: revise variable name
     List<String> responseFieldAnnotationNames = new ArrayList<String>(responseFields.keySet());
