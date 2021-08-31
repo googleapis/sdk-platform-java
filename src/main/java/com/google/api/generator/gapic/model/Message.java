@@ -51,13 +51,10 @@ public abstract class Message {
 
   public abstract ImmutableMap<String, Field> fieldMap();
 
-  @Nullable
   public abstract OperationResponse operationResponse();
 
-  @Nullable
   public abstract Map<String, String> operationRequestFields();
 
-  @Nullable
   public abstract Map<String, String> operationResponseFields();
 
   // The resource name annotation (and definition) in this message. Optional.
@@ -112,7 +109,10 @@ public abstract class Message {
         .setOuterNestedTypes(Collections.emptyList())
         .setFields(Collections.emptyList())
         .setFieldMap(Collections.emptyMap())
-        .setEnumValues(Collections.emptyMap());
+        .setEnumValues(Collections.emptyMap())
+        .setOperationResponseFields(Collections.emptyMap())
+        .setOperationRequestFields(Collections.emptyMap())
+        .setOperationResponse(OperationResponse.builder().build());
   }
 
   @AutoValue.Builder
