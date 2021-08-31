@@ -384,22 +384,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     return Collections.singletonList(expr);
   }
 
-  // Generates expr.methodName();
-  private MethodInvocationExpr invokeMethodfromVar(Expr expr, String methodName) {
-    return MethodInvocationExpr.builder()
-        .setExprReferenceExpr(expr)
-        .setMethodName(methodName)
-        .build();
-  }
-
-  // Generates call for new Builder method on static type
-  private MethodInvocationExpr staticBuilder(TypeNode type) {
-    return MethodInvocationExpr.builder()
-        .setStaticReferenceType(type)
-        .setMethodName("newBuilder")
-        .build();
-  }
-
   // Generates get[camelCase(fieldName)]
   private String getMethodFormat(String fieldName) {
     return "get" + JavaStyle.toUpperCamelCase(fieldName);
@@ -423,7 +407,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setArguments(colonValueExpr)
             .setExprReferenceExpr(nameVar)
             .build();
-    MethodInvocationExpr getField = invokeMethodfromVar(requestVar, getMethodFormat(fieldName));
+    MethodInvocationExpr getField = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(requestVar)
+        .setMethodName(getMethodFormat(fieldName))
+        .build();
     opNameAppendColonExpr =
         methodMaker
             .apply("append", Collections.singletonList(getField))
@@ -471,8 +458,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     VariableExpr opNameVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(stringBuilderType).setName("opName").build());
-    MethodInvocationExpr getId =
-        invokeMethodfromVar(responseVarExpr, getMethodFormat(operationResponse.getNameFieldName()));
+    MethodInvocationExpr getId = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(responseVarExpr)
+        .setMethodName(getMethodFormat(operationResponse.getNameFieldName()))
+        .build();
     Expr opNameObjectExpr =
         NewObjectExpr.builder().setType(stringBuilderType).setArguments(getId).build();
     AssignmentExpr opNameAssignExpr =
@@ -494,9 +483,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     }
 
     // Generate check for status == done
-    MethodInvocationExpr getStatusExpr =
-        invokeMethodfromVar(
-            responseVarExpr, getMethodFormat(operationResponse.getStatusFieldName()));
+    MethodInvocationExpr getStatusExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(responseVarExpr)
+        .setMethodName(getMethodFormat(operationResponse.getStatusFieldName()))
+        .build();
     TypeNode statusType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -517,14 +507,22 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
         TypeNode.withReference(ConcreteReference.withClazz(HttpJsonOperationSnapshot.class));
 
     // Generate getter methods from annotations
-    MethodInvocationExpr opNameToStringExpr = invokeMethodfromVar(opNameVarExpr, "toString");
-    MethodInvocationExpr getHttpErrorStatusCodeExpr =
-        invokeMethodfromVar(
-            responseVarExpr, getMethodFormat(operationResponse.getErrorCodeFieldName()));
-    MethodInvocationExpr getHttpErrorMessageExpr =
-        invokeMethodfromVar(
-            responseVarExpr, getMethodFormat(operationResponse.getErrorMessageFieldName()));
-    MethodInvocationExpr newBuilderExpr = staticBuilder(httpJsonOperationSnapshotType);
+    MethodInvocationExpr opNameToStringExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(opNameVarExpr)
+        .setMethodName("toString")
+        .build();
+    MethodInvocationExpr getHttpErrorStatusCodeExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(responseVarExpr)
+        .setMethodName(getMethodFormat(operationResponse.getErrorCodeFieldName()))
+        .build();
+    MethodInvocationExpr getHttpErrorMessageExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(responseVarExpr)
+        .setMethodName(getMethodFormat(operationResponse.getErrorMessageFieldName()))
+        .build();
+    MethodInvocationExpr newBuilderExpr = MethodInvocationExpr.builder()
+        .setStaticReferenceType(httpJsonOperationSnapshotType)
+        .setMethodName("newBuilder")
+        .build();
 
     newBuilderExpr =
         methodMaker
@@ -624,7 +622,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
 
     // Generate return statement
     TypeNode getOperationRequestType = TypeNode.withReference(protoMethod.inputType().reference());
-    MethodInvocationExpr newBuilderExpr = staticBuilder(getOperationRequestType);
+    MethodInvocationExpr newBuilderExpr = MethodInvocationExpr.builder()
+        .setStaticReferenceType(getOperationRequestType)
+        .setMethodName("newBuilder")
+        .build();
     Map<String, String> responseFields = inputOperationMessage.operationResponseFields();
     // TODO: revise variable name
     List<String> responseFieldAnnotationNames = new ArrayList<String>(responseFields.keySet());

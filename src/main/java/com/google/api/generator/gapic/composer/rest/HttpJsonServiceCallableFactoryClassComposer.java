@@ -121,16 +121,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
 
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
-    // arguments.set(
-    //     0,
-    //     arguments
-    //         .get(0)
-    //         .toBuilder()
-    //         .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
-    //         .build()); // httpJsonCallSettings);
-    // method = method.toBuilder().setArguments(arguments).build();
 
-    // arguments = method.arguments();
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();
     Variable operationCallSettingsVar = arguments.get(1).variable();
     Variable clientContextVar = arguments.get(2).variable();
