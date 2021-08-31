@@ -98,7 +98,8 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setMethodSignatures(ImmutableList.of())
         .setIsBatching(false)
-        .setIsDeprecated(false);
+        .setIsDeprecated(false)
+        .setOperationPollingMethod(false);
   }
 
   public static Stream toStream(boolean isClientStreaming, boolean isServerStreaming) {

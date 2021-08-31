@@ -18,7 +18,6 @@ package com.google.cloud.compute.v1.stub;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
-import com.google.api.gax.httpjson.ApiMessage;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
@@ -42,7 +41,7 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi
 public class HttpJsonAddressesCallableFactory
-    implements HttpJsonStubCallableFactory<ApiMessage, BackgroundResource> {
+    implements HttpJsonStubCallableFactory<Operation, BackgroundResource> {
 
   @Override
   public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(

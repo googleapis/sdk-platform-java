@@ -15,7 +15,6 @@
 package com.google.api.generator.gapic.composer.rest;
 
 import com.google.api.gax.core.BackgroundResource;
-import com.google.api.gax.httpjson.ApiMessage;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.rpc.OperationCallable;
@@ -47,7 +46,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
       new HttpJsonServiceCallableFactoryClassComposer();
 
   private static final TypeNode MESSAGE_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(ApiMessage.class));
+      TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
   private static final TypeNode BACKGROUND_RESOURCE_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(BackgroundResource.class));
 
@@ -122,16 +121,16 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
 
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
-    arguments.set(
-        0,
-        arguments
-            .get(0)
-            .toBuilder()
-            .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
-            .build()); // httpJsonCallSettings);
-    method = method.toBuilder().setArguments(arguments).build();
+    // arguments.set(
+    //     0,
+    //     arguments
+    //         .get(0)
+    //         .toBuilder()
+    //         .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
+    //         .build()); // httpJsonCallSettings);
+    // method = method.toBuilder().setArguments(arguments).build();
 
-    arguments = method.arguments();
+    // arguments = method.arguments();
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();
     Variable operationCallSettingsVar = arguments.get(1).variable();
     Variable clientContextVar = arguments.get(2).variable();
