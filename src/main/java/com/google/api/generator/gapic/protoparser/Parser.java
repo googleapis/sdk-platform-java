@@ -698,13 +698,15 @@ public class Parser {
                       serviceDescriptor.getName(),
                       protoMethod.getName());
       boolean operationPollingMethod = false;
-      if (protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationPollingMethod))
+      if (protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationPollingMethod)) {
         operationPollingMethod =
             protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationPollingMethod);
+      }
       String operationService = null;
-      if (protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService))
+      if (protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService)) {
         operationService =
             protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService);
+      }
 
       methods.add(
           methodBuilder
