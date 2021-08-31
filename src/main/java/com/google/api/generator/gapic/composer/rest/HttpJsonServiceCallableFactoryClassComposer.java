@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer.rest;
 
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.ApiMessage;
-import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.rpc.OperationCallable;
@@ -36,10 +35,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
-import java.lang.reflect.Type;
-import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -126,7 +122,13 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
 
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
-    arguments.set(0, arguments.get(0).toBuilder().setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName)).build());  //httpJsonCallSettings);
+    arguments.set(
+        0,
+        arguments
+            .get(0)
+            .toBuilder()
+            .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
+            .build()); // httpJsonCallSettings);
     method = method.toBuilder().setArguments(arguments).build();
 
     arguments = method.arguments();
