@@ -41,7 +41,7 @@ import com.google.cloud.compute.v1.DeleteAddressRequest;
 import com.google.cloud.compute.v1.InsertAddressRequest;
 import com.google.cloud.compute.v1.ListAddressesRequest;
 import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.Status;
+import com.google.cloud.compute.v1.Operation.Status;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

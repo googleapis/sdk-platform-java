@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer.rest;
 
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.ApiMessage;
+import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.rpc.OperationCallable;
@@ -35,7 +36,10 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
+import java.lang.reflect.Type;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -121,11 +125,15 @@ public class HttpJsonServiceCallableFactoryClassComposer
 
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
 
-    List<VariableExpr> arguments = method.arguments();
+    List<VariableExpr> arguments = new ArrayList<>(method.arguments());
+    arguments.set(0, arguments.get(0).toBuilder().setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName)).build());  //httpJsonCallSettings);
+    method = method.toBuilder().setArguments(arguments).build();
+
+    arguments = method.arguments();
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();
-    Variable callSettingsVar = arguments.get(1).variable();
+    Variable operationCallSettingsVar = arguments.get(1).variable();
     Variable clientContextVar = arguments.get(2).variable();
-    Variable operationsStub = arguments.get(3).variable();
+    Variable operationsStubVar = arguments.get(3).variable();
     // Generate innerCallable
     VariableExpr innerCallableVarExpr =
         VariableExpr.builder()
@@ -139,7 +147,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
             .build();
     MethodInvocationExpr getInitialCallSettingsExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(callSettingsVar))
+            .setExprReferenceExpr(VariableExpr.withVariable(operationCallSettingsVar))
             .setMethodName("getInitialCallSettings")
             .build();
     MethodInvocationExpr createBaseUnaryCallableExpr =
@@ -209,7 +217,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
     // Generate return statement
     MethodInvocationExpr longRunningClient =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(operationsStub))
+            .setExprReferenceExpr(VariableExpr.withVariable(operationsStubVar))
             .setMethodName("longRunningClient")
             .build();
     MethodInvocationExpr createOperationCallable =
@@ -218,7 +226,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 TypeNode.withReference(ConcreteReference.withClazz(HttpJsonCallableFactory.class)))
             .setMethodName("createOperationCallable")
             .setArguments(
-                VariableExpr.withVariable(callSettingsVar),
+                VariableExpr.withVariable(operationCallSettingsVar),
                 VariableExpr.withVariable(clientContextVar),
                 longRunningClient,
                 initialCallableVarExpr)

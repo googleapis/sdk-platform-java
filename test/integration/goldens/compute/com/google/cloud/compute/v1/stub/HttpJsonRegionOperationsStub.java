@@ -33,7 +33,7 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.Status;
+import com.google.cloud.compute.v1.Operation.Status;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -77,7 +77,7 @@ public class HttpJsonAddressesCallableFactory
   @Override
   public <RequestT, ResponseT, MetadataT>
       OperationCallable<RequestT, ResponseT, MetadataT> createOperationCallable(
-          HttpJsonCallSettings<RequestT, ApiMessage> httpJsonCallSettings,
+          HttpJsonCallSettings<RequestT, Operation> httpJsonCallSettings,
           OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,
           ClientContext clientContext,
           BackgroundResource operationsStub) {
