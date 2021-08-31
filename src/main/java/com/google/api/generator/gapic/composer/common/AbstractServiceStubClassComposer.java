@@ -27,7 +27,6 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
-import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
@@ -45,6 +44,7 @@ import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -115,14 +115,14 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     boolean hasLroClient = service.hasLroMethods();
     List<MethodDefinition> methods = new ArrayList<>();
     if (hasLroClient) {
-      methods.add(createOperationsStubGetter(typeStore));
+      methods.addAll(createOperationsStubGetters(typeStore));
     }
     methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
     return methods;
   }
 
-  private static List<MethodDefinition> createCallableGetters(
+  private List<MethodDefinition> createCallableGetters(
       Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
     // Use a traditional for-loop since the output cardinality is not necessarily 1:1 with that of
     // service.methods().
@@ -139,20 +139,19 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return javaMethods;
   }
 
-  private static MethodDefinition createOperationCallableGetter(
-      Method method, TypeStore typeStore) {
+  private MethodDefinition createOperationCallableGetter(Method method, TypeStore typeStore) {
     return createCallableGetterHelper(method, typeStore, true, false);
   }
 
-  private static MethodDefinition createPagedCallableGetter(Method method, TypeStore typeStore) {
+  private MethodDefinition createPagedCallableGetter(Method method, TypeStore typeStore) {
     return createCallableGetterHelper(method, typeStore, false, true);
   }
 
-  private static MethodDefinition createCallableGetter(Method method, TypeStore typeStore) {
+  private MethodDefinition createCallableGetter(Method method, TypeStore typeStore) {
     return createCallableGetterHelper(method, typeStore, false, false);
   }
 
-  private static MethodDefinition createCallableGetterHelper(
+  private MethodDefinition createCallableGetterHelper(
       Method method, TypeStore typeStore, boolean isLroCallable, boolean isPaged) {
     TypeNode returnType;
     switch (method.stream()) {
@@ -197,27 +196,24 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
     returnType = TypeNode.withReference(returnType.reference().copyAndSetGenerics(genericRefs));
 
-    return MethodDefinition.builder()
-        .setAnnotations(annotations)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(returnType)
-        .setName(methodName)
-        .setBody(createThrowUOEBody(methodName, typeStore))
-        .build();
+    return createCallableGetterMethodDefinition(returnType, methodName, annotations, typeStore);
   }
 
-  private MethodDefinition createOperationsStubGetter(TypeStore typeStore) {
-    String methodName =
-        String.format(
-            "get%s",
-            JavaStyle.toUpperCamelCase(getTransportContext().transportOperationsStubName()));
+  private List<MethodDefinition> createOperationsStubGetters(TypeStore typeStore) {
+    List<MethodDefinition> getters = new ArrayList<>();
 
-    return MethodDefinition.builder()
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(getTransportContext().operationsStubType())
-        .setName(methodName)
-        .setBody(createThrowUOEBody(methodName, typeStore))
-        .build();
+    Iterator<String> operationStubNameIt =
+        getTransportContext().transportOperationsStubNames().iterator();
+    Iterator<TypeNode> operationStubTypeIt = getTransportContext().operationsStubTypes().iterator();
+
+    while (operationStubNameIt.hasNext() && operationStubTypeIt.hasNext()) {
+      String methodName =
+          String.format("get%s", JavaStyle.toUpperCamelCase(operationStubNameIt.next()));
+
+      getters.add(createOperationsStubGetterMethodDefinition(operationStubTypeIt.next(), methodName, typeStore));
+    }
+
+    return getters;
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethodOverrides() {
@@ -262,13 +258,37 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return typeStore;
   }
 
-  private static List<Statement> createThrowUOEBody(String methodName, TypeStore typeStore) {
-    return Arrays.asList(
-        ExprStatement.withExpr(
-            ThrowExpr.builder()
-                .setType(typeStore.get("UnsupportedOperationException"))
-                .setMessageExpr(String.format("Not implemented: %s()", methodName))
-                .build()));
+  protected MethodDefinition createCallableGetterMethodDefinition(
+      TypeNode returnType, String methodName, List<AnnotationNode> annotations, TypeStore typeStore) {
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setAnnotations(annotations)
+        .setName(methodName)
+        .setReturnType(returnType)
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(
+                    ThrowExpr.builder()
+                        .setType(typeStore.get("UnsupportedOperationException"))
+                        .setMessageExpr(String.format("Not implemented: %s()", methodName))
+                        .build())))
+        .build();
+  }
+
+  protected MethodDefinition createOperationsStubGetterMethodDefinition(
+      TypeNode returnType, String methodName, TypeStore typeStore) {
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setName(methodName)
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(
+                    ThrowExpr.builder()
+                        .setType(typeStore.get("UnsupportedOperationException"))
+                        .setMessageExpr(String.format("Not implemented: %s()", methodName))
+                        .build())))
+        .build();
   }
 
   private static String getClientClassName(Service service) {

@@ -257,7 +257,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
               .setVariable(
                   Variable.builder()
                       .setName("operationsStub")
-                      .setType(getTransportContext().operationsStubType())
+                      .setType(getTransportContext().operationsStubTypes().get(0))
                       .build())
               .setIsDecl(true)
               .build());

@@ -9,6 +9,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/gapic/composer/comment:comment_files",
         "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue:defaultvalue_files",
         "//src/main/java/com/google/api/generator/gapic/composer/grpc:grpc_files",
+        "//src/main/java/com/google/api/generator/gapic/composer/grpcrest:grpcrest_files",
         "//src/main/java/com/google/api/generator/gapic/composer/resourcename:resourcename_files",
         "//src/main/java/com/google/api/generator/gapic/composer/rest:rest_files",
         "//src/main/java/com/google/api/generator/gapic/composer/samplecode:samplecode_files",

@@ -85,11 +85,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -132,7 +135,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
-    boolean hasLroClient = hasLroMethods(service);
+    boolean hasLroClient = service.hasLroMethods();
 
     Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
 
@@ -219,15 +222,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return methods;
   }
 
-  private static boolean hasLroMethods(Service service) {
-    for (Method method : service.methods()) {
-      if (method.hasLro()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   private List<Statement> createFieldDeclarations(
       Service service, TypeStore typeStore, boolean hasLroClient) {
     Map<String, TypeNode> fieldNameToTypes = new HashMap<>();
@@ -235,9 +229,12 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         "settings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
     fieldNameToTypes.put("stub", typeStore.get(ClassNames.getServiceStubClassName(service)));
     if (hasLroClient) {
-      fieldNameToTypes.put(
-          getTransportContext().operationsClientName(),
-          getTransportContext().operationsClientType());
+      Iterator<String> opClientName = getTransportContext().operationsClientNames().iterator();
+      Iterator<TypeNode> opClientType = getTransportContext().operationsClientTypes().iterator();
+
+      while (opClientName.hasNext() && opClientType.hasNext()) {
+        fieldNameToTypes.put(opClientName.next(), opClientType.next());
+      }
     }
 
     return fieldNameToTypes.entrySet().stream()
@@ -364,7 +361,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     String settingsName = ClassNames.getServiceSettingsClassName(service);
     TypeNode thisClassType = typeStore.get(thisClientName);
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
-    TypeNode operationsClientType = getTransportContext().operationsClientType();
     TypeNode exceptionType = typeStore.get("IOException");
 
     TypeNode settingsType = typeStore.get(settingsName);
@@ -376,12 +372,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             Variable.builder()
                 .setType(typeStore.get(ClassNames.getServiceStubClassName(service)))
                 .setName("stub")
-                .build());
-    VariableExpr operationsClientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setType(operationsClientType)
-                .setName(getTransportContext().operationsClientName())
                 .build());
 
     // Create the ServiceClient(ServiceSettings settings) ctor.
@@ -412,30 +402,10 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                     .build())
             .build());
 
-    String operationsStubGetterName =
-        String.format(
-            "get%s",
-            JavaStyle.toUpperCamelCase(getTransportContext().transportOperationsStubName()));
-
-    Expr clientArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
-            .setMethodName(operationsStubGetterName)
-            .build();
-    AssignmentExpr operationsClientAssignExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                operationsClientVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
-            .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(operationsClientType)
-                    .setMethodName("create")
-                    .setArguments(clientArgExpr)
-                    .setReturnType(operationsClientVarExpr.type())
-                    .build())
-            .build();
+    List<AssignmentExpr> operationsClientAssignExprs =
+        createOperationsClientAssignExprs(thisExpr, stubVarExpr);
     if (hasLroClient) {
-      ctorAssignmentExprs.add(operationsClientAssignExpr);
+      ctorAssignmentExprs.addAll(operationsClientAssignExprs);
     }
 
     methods.add(
@@ -466,7 +436,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setValueExpr(stubVarExpr)
             .build());
     if (hasLroClient) {
-      ctorAssignmentExprs.add(operationsClientAssignExpr);
+      ctorAssignmentExprs.addAll(operationsClientAssignExprs);
     }
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
@@ -489,19 +459,69 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return methods;
   }
 
+  private List<AssignmentExpr> createOperationsClientAssignExprs(
+      Expr thisExpr, VariableExpr stubVarExpr) {
+    List<AssignmentExpr> operationsClientAssignExprs = new ArrayList<>();
+
+    Iterator<TypeNode> opClientTypesIt = getTransportContext().operationsClientTypes().iterator();
+    Iterator<String> opClientNamesIt = getTransportContext().operationsClientNames().iterator();
+    Iterator<String> opStubNamesIt =
+        getTransportContext().transportOperationsStubNames().iterator();
+
+    while (opClientTypesIt.hasNext() && opClientNamesIt.hasNext() && opStubNamesIt.hasNext()) {
+      TypeNode operationsClientType = opClientTypesIt.next();
+      String opClientName = opClientNamesIt.next();
+      String opStubName = opStubNamesIt.next();
+
+      VariableExpr operationsClientVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(operationsClientType).setName(opClientName).build());
+
+      String operationsStubGetterName =
+          String.format("get%s", JavaStyle.toUpperCamelCase(opStubName));
+
+      Expr clientArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+              .setMethodName(operationsStubGetterName)
+              .build();
+
+      AssignmentExpr operationsClientAssignExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(
+                  operationsClientVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+              .setValueExpr(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(operationsClientType)
+                      .setMethodName("create")
+                      .setArguments(clientArgExpr)
+                      .setReturnType(operationsClientVarExpr.type())
+                      .build())
+              .build();
+      operationsClientAssignExprs.add(operationsClientAssignExpr);
+    }
+
+    return operationsClientAssignExprs;
+  }
+
   private List<MethodDefinition> createGetterMethods(
       Service service, TypeStore typeStore, boolean hasLroClient) {
     Map<String, TypeNode> methodNameToTypes = new LinkedHashMap<>();
     methodNameToTypes.put(
         "getSettings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
     methodNameToTypes.put("getStub", typeStore.get(ClassNames.getServiceStubClassName(service)));
-    String getOperationsClientMethodName =
-        String.format(
-            "get%s",
-            JavaStyle.toUpperCamelCase(getTransportContext().operationsClientName()));
+
+    Set<String> getOperationsClientMethodNames = new HashSet<>();
+
     if (hasLroClient) {
-      methodNameToTypes.put(
-          getOperationsClientMethodName, getTransportContext().operationsClientType());
+      Iterator<String> opClientNamesIt = getTransportContext().operationsClientNames().iterator();
+      Iterator<TypeNode> opClientTypesIt =  getTransportContext().operationsClientTypes().iterator();
+
+      while (opClientNamesIt.hasNext() && opClientTypesIt.hasNext()) {
+        String opClientMethodName = String.format("get%s", JavaStyle.toUpperCamelCase(opClientNamesIt.next()));
+        getOperationsClientMethodNames.add(opClientMethodName);
+        methodNameToTypes.put(opClientMethodName, opClientTypesIt.next());
+      }
     }
     AnnotationNode betaStubAnnotation =
         AnnotationNode.builder()
@@ -517,7 +537,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
               TypeNode methodReturnType = e.getValue();
               String returnVariableName = JavaStyle.toLowerCamelCase(methodName.substring(3));
               MethodDefinition.Builder methodBuilder = MethodDefinition.builder();
-              if (methodName.equals(getOperationsClientMethodName)) {
+              if (getOperationsClientMethodNames.contains(methodName)) {
                 methodBuilder =
                     methodBuilder.setHeaderCommentStatements(
                         ServiceClientCommentComposer.GET_OPERATIONS_CLIENT_METHOD_COMMENT);
