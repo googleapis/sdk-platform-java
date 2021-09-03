@@ -85,7 +85,8 @@ public class HttpJsonServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected MethodDefinition createOperationCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createOperationCallableMethod(
+      TypeStore typeStore, String operationService) {
     String methodVariantName = "Operation";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
@@ -103,6 +104,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 + " future.");
 
     // Generate generic method without the body
+    // TODO: change static usages to vapor references
     MethodDefinition method =
         createGenericCallableMethod(
             typeStore,
@@ -118,9 +120,20 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 .collect(Collectors.toList()),
             Arrays.asList(betaAnnotation));
 
+    // if (operationService.equals("")) {
+    //   return method.toBuilder().setReturnExpr(ValueExpr.createNullExpr()).build();
+    // }
+
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
 
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
+    // Variable stubVar = arguments.get(3).variable();
+    // stubVar = Variable.builder()
+    //     .setName(stubVar.identifier().name())
+    //     .setType(typeStore.get(operationService+"Stub"))
+    //     .build();
+    // arguments.set(3,VariableExpr.withVariable(stubVar));
+    // method = method.toBuilder().setArguments(arguments).build();
 
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();
     Variable operationCallSettingsVar = arguments.get(1).variable();
@@ -135,7 +148,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
                     .setType(
                         TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
                     .build())
-            .setTemplateObjects(Arrays.asList(requestTemplateName, "OperationSnapshot"))
+            .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
             .build();
     MethodInvocationExpr getInitialCallSettingsExpr =
         MethodInvocationExpr.builder()
@@ -160,6 +173,20 @@ public class HttpJsonServiceCallableFactoryClassComposer
             .build();
     createOperationCallableBody.add(ExprStatement.withExpr(innerCallableAssignExpr));
 
+    // This is a temporary solution
+    VaporReference requestT =
+        VaporReference.builder()
+            .setName("RequestT")
+            .setPakkage("com.google.cloud.compute.v1.stub")
+            .build();
+
+    TypeNode initialCallableType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(HttpJsonOperationSnapshotCallable.class)
+                .setGenerics(requestT, ConcreteReference.withClazz(Operation.class))
+                .build());
+
     // Generate initialCallable
     VariableExpr initialCallableVarExpr =
         VariableExpr.builder()
@@ -167,9 +194,9 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 Variable.builder()
                     .setName("initialCallable")
                     .setType(
-                        TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
+                        initialCallableType) // TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
                     .build())
-            .setTemplateObjects(Arrays.asList(requestTemplateName, "OperationSnapshot"))
+            // .setTemplateObjects(Arrays.asList(requestTemplateName, "OperationSnapshot"))
             .build();
     MethodInvocationExpr getMethodDescriptorExpr =
         MethodInvocationExpr.builder()
@@ -181,12 +208,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
             .setExprReferenceExpr(getMethodDescriptorExpr)
             .setMethodName("getOperationSnapshotFactory")
             .build();
-    // This is a temporary solution
-    VaporReference requestT =
-        VaporReference.builder()
-            .setName("RequestT")
-            .setPakkage("com.google.cloud.compute.v1.stub")
-            .build();
+
     TypeNode operationSnapshotCallableType =
         TypeNode.withReference(
             ConcreteReference.builder()
