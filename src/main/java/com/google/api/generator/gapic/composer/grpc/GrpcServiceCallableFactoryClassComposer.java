@@ -45,8 +45,10 @@ public class GrpcServiceCallableFactoryClassComposer
     return Arrays.asList(getTransportContext().stubCallableFactoryType());
   }
 
-  protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
-    List<MethodDefinition> classMethods = new ArrayList<>(super.createClassMethods(typeStore));
+  protected List<MethodDefinition> createClassMethods(
+      TypeStore typeStore, String operationService) {
+    List<MethodDefinition> classMethods =
+        new ArrayList<>(super.createClassMethods(typeStore, operationService));
     classMethods.addAll(
         Arrays.asList(
             createBidiStreamingCallableMethod(typeStore),
@@ -98,7 +100,8 @@ public class GrpcServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected MethodDefinition createOperationCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createOperationCallableMethod(
+      TypeStore typeStore, String operationService) {
     String methodVariantName = "Operation";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";

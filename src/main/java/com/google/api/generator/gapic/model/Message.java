@@ -18,6 +18,8 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
@@ -50,6 +52,12 @@ public abstract class Message {
   public abstract TypeNode type();
 
   public abstract ImmutableMap<String, Field> fieldMap();
+
+  public abstract OperationResponse operationResponse();
+
+  public abstract Map<String, String> operationRequestFields();
+
+  public abstract BiMap<String, String> operationResponseFields();
 
   // The resource name annotation (and definition) in this message. Optional.
   // Expected dto be empty for messages that have no such definition.
@@ -103,7 +111,10 @@ public abstract class Message {
         .setOuterNestedTypes(Collections.emptyList())
         .setFields(Collections.emptyList())
         .setFieldMap(Collections.emptyMap())
-        .setEnumValues(Collections.emptyMap());
+        .setEnumValues(Collections.emptyMap())
+        .setOperationResponseFields(HashBiMap.create())
+        .setOperationRequestFields(Collections.emptyMap())
+        .setOperationResponse(OperationResponse.builder().build());
   }
 
   @AutoValue.Builder
@@ -128,6 +139,13 @@ public abstract class Message {
     public abstract Builder setResource(ResourceName resource);
 
     public abstract Builder setOuterNestedTypes(List<String> outerNestedTypes);
+
+    public abstract Builder setOperationResponse(OperationResponse operationResponse);
+
+    public abstract Builder setOperationRequestFields(Map<String, String> operationRequestFields);
+
+    public abstract Builder setOperationResponseFields(
+        BiMap<String, String> operationRequestFields);
 
     abstract Builder setFieldMap(Map<String, Field> fieldMap);
 

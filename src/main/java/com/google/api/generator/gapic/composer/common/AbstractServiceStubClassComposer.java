@@ -57,6 +57,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import java.io.IOException;
@@ -152,6 +153,12 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                   .setType(getTransportContext().transportOperationsStubType())
                   .build()));
     }
+
+    boolean operationPollingMethod = checkOperationPollingMethod(service);
+    if(operationPollingMethod) {
+      declareLongRunningClient(classMemberVarExprs);
+    }
+
     classMemberVarExprs.put(
         CALLABLE_FACTORY_MEMBER_NAME,
         VariableExpr.withVariable(
@@ -383,7 +390,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         createOperationsStubGetterMethod(classMemberVarExprs.get(OPERATIONS_STUB_MEMBER_NAME)));
     javaMethods.addAll(createCallableGetterMethods(callableClassMemberVarExprs));
     javaMethods.addAll(
-        createStubOverrideMethods(classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME)));
+        createStubOverrideMethods(classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME), service));
     return javaMethods;
   }
 
@@ -625,12 +632,16 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     secondCtorExprs.clear();
     secondCtorStatements.add(EMPTY_LINE_STATEMENT);
 
+
+    secondCtorStatements.addAll(createLongRunningClient(service, typeStore));
+
     // Instantiate backgroundResources.
     MethodInvocationExpr getBackgroundResourcesMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientContextVarExpr)
             .setMethodName("getBackgroundResources")
             .build();
+
     VariableExpr backgroundResourcesVarExpr = classMemberVarExprs.get("backgroundResources");
     secondCtorExprs.add(
         AssignmentExpr.builder()
@@ -653,6 +664,14 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             secondCtorStatements);
 
     return Arrays.asList(firstCtor, secondCtor);
+  }
+
+  protected List<Statement> createLongRunningClient(Service service, TypeStore typeStore) {
+    return ImmutableList.of();
+  }
+
+  protected void declareLongRunningClient(Map<String, VariableExpr> classMemberVarExprs) {
+
   }
 
   private static Expr createCallableInitExpr(
@@ -762,7 +781,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   private List<MethodDefinition> createStubOverrideMethods(
-      VariableExpr backgroundResourcesVarExpr) {
+      VariableExpr backgroundResourcesVarExpr, Service service) {
     Function<String, MethodDefinition.Builder> methodMakerStarterFn =
         methodName ->
             MethodDefinition.builder()
@@ -826,6 +845,11 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                     .build())
             .build();
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    //TODO: check for operation polling method
+    boolean operationPollingMethod = checkOperationPollingMethod(service);
+    if (operationPollingMethod) {
+      getterLongRunningClient(javaMethods);
+    }
     javaMethods.add(
         methodMakerStarterFn
             .apply("close")
@@ -896,6 +920,19 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                     .build())
             .build());
     return javaMethods;
+  }
+
+  private boolean checkOperationPollingMethod(Service service) {
+    for(Method method : service.methods()) {
+      if(method.isOperationPollingMethod()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  protected void getterLongRunningClient(List<MethodDefinition> javaMethods) {
+
   }
 
   private TypeStore createDynamicTypes(Service service, String stubPakkage) {
