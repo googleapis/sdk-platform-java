@@ -19,12 +19,15 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
+import com.google.api.gax.httpjson.HttpJsonLongRunningClient;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.longrunning.OperationSnapshot;
+import com.google.api.gax.rpc.LongRunningClient;
+import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -40,12 +43,14 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
+import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
@@ -53,10 +58,10 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +131,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
         methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
 
-    // System.out.println(protoMethod.outputType().reference().simpleName());
     if (protoMethod.isOperationPollingMethod() || protoMethod.operationService() != null) {
       expr =
           methodMaker
@@ -169,6 +173,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
   protected List<MethodDefinition> createOperationsStubGetterMethod(
       VariableExpr operationsStubVarExpr) {
     return Collections.emptyList();
+  }
+
+  public HttpJsonServiceStubClassComposer(TransportContext transportContext) {
+    super(transportContext);
   }
 
   @Override
@@ -490,11 +498,17 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setExprReferenceExpr(responseVarExpr)
             .setMethodName(getMethodFormat(operationResponse.getStatusFieldName()))
             .build();
+
+    String statusTypeName = operationResponse.getStatusFieldTypeName();
+    String statusClassName = statusTypeName.substring(statusTypeName.lastIndexOf('.') + 1);
+    String statusPackage = protoMethod.servicePackage(); // "com" +
+    // statusTypeName.substring(0,statusTypeName.lastIndexOf('.'));
+
     TypeNode statusType =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName("Status")
-                .setPakkage("com.google.cloud.compute.v1.Operation")
+                .setName(statusClassName)
+                .setPakkage(statusPackage + "." + protoMethod.outputType().reference().simpleName())
                 .setIsStaticImport(false)
                 .build());
     VariableExpr statusDoneExpr =
@@ -503,7 +517,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setStaticReferenceType(statusType)
             .build();
     MethodInvocationExpr statusEqualsExpr =
-        methodMaker.apply("equals", Collections.singletonList(statusDoneExpr)).apply(getStatusExpr);
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(statusDoneExpr)
+            .setMethodName("equals")
+            .setArguments(getStatusExpr)
+            .build();
 
     // Generate return statement
     TypeNode httpJsonOperationSnapshotType =
@@ -634,11 +652,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .setStaticReferenceType(getOperationRequestType)
             .setMethodName("newBuilder")
             .build();
-    Map<String, String> responseFieldsMap = inputOperationMessage.operationResponseFields();
-    // TODO: revise variable name
+    BiMap<String, String> responseFieldsMap = inputOperationMessage.operationResponseFields();
     List<String> responseFieldAnnotationNames = new ArrayList<String>(responseFieldsMap.keySet());
     Collections.sort(responseFieldAnnotationNames);
-    Collection<String> responseFieldsNames = responseFieldsMap.values();
+    Set<String> responseFieldsNames = responseFieldsMap.inverse().keySet();
     Set<String> allFieldsNames = inputOperationMessage.fieldMap().keySet();
     ArrayList<String> nonResponseFieldsNames = new ArrayList<String>();
     for (String fieldName : allFieldsNames) {
@@ -840,5 +857,121 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                     ConcreteReference.builder().setClazz(HttpMethods.class).build()))
             .build();
     return Collections.singletonList(expr);
+  }
+
+  @Override
+  protected List<Statement> createLongRunningClient(Service service, TypeStore typeStore) {
+    boolean operation_polling_method = false;
+    Method protoMethod = null;
+    for (Method method : service.methods()) {
+      if (method.isOperationPollingMethod()) {
+        protoMethod = method;
+        operation_polling_method = true;
+        break;
+      }
+    }
+    if (operation_polling_method) {
+      Expr thisExpr =
+          ValueExpr.withValue(
+              ThisObjectValue.withType(
+                  typeStore.get(
+                      getTransportContext()
+                          .classNames()
+                          .getTransportServiceStubClassName(service))));
+
+      VariableExpr callable =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setName(protoMethod.name().toLowerCase() + "Callable")
+                  .setType(TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
+                  .build());
+      VariableExpr methodDescriptor =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setName(protoMethod.name().toLowerCase() + "MethodDescriptor")
+                  .setType(
+                      TypeNode.withReference(
+                          ConcreteReference.withClazz(ApiMethodDescriptor.class)))
+                  .build());
+
+      TypeNode httpJsonLongRunningClientType =
+          TypeNode.withReference(
+              ConcreteReference.builder()
+                  .setClazz(HttpJsonLongRunningClient.class)
+                  .setGenerics(
+                      Arrays.asList(
+                          protoMethod.inputType().reference(),
+                          protoMethod.outputType().reference()))
+                  .build());
+
+      NewObjectExpr HttpJsonLongRunningClient =
+          NewObjectExpr.builder()
+              .setType(httpJsonLongRunningClientType)
+              .setArguments(
+                  Arrays.asList(
+                      callable,
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(methodDescriptor)
+                          .setMethodName("getOperationSnapshotFactory")
+                          .build(),
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(methodDescriptor)
+                          .setMethodName("getPollingRequestFactory")
+                          .build()))
+              .build();
+
+      AssignmentExpr assignLongRunningClient =
+          AssignmentExpr.builder()
+              .setVariableExpr(
+                  VariableExpr.builder()
+                      .setExprReferenceExpr(thisExpr)
+                      .setVariable(
+                          Variable.builder()
+                              .setName("longRunningClient")
+                              .setType(
+                                  TypeNode.withReference(
+                                      ConcreteReference.withClazz(LongRunningClient.class)))
+                              .build())
+                      .build())
+              .setValueExpr(HttpJsonLongRunningClient)
+              .build();
+
+      return Arrays.asList(ExprStatement.withExpr(assignLongRunningClient));
+    } else {
+      return Collections.emptyList();
+    }
+  }
+
+  @Override
+  protected void declareLongRunningClient(Map<String, VariableExpr> classMemberVarExprs) {
+    classMemberVarExprs.put(
+        "longRunningClient",
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("longRunningClient")
+                .setType(
+                    TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
+                .build()));
+  }
+
+  @Override
+  protected void getterLongRunningClient(List<MethodDefinition> javaMethods) {
+    VariableExpr longRunningClient =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("longRunningClient")
+                .setType(
+                    TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
+                .build());
+
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setName("longRunningClient")
+            .setScope(ScopeNode.PUBLIC)
+            .setIsOverride(true)
+            .setReturnType(
+                TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
+            .setReturnExpr(longRunningClient)
+            .build());
   }
 }

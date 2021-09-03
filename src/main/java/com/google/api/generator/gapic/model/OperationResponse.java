@@ -32,6 +32,9 @@ public abstract class OperationResponse {
   @Nullable
   public abstract String getErrorMessageFieldName();
 
+  @Nullable
+  public abstract String getStatusFieldTypeName();
+
   public static Builder builder() {
     return new AutoValue_OperationResponse.Builder();
   }
@@ -45,6 +48,8 @@ public abstract class OperationResponse {
     public abstract Builder setErrorCodeFieldName(String val);
 
     public abstract Builder setErrorMessageFieldName(String val);
+
+    public abstract Builder setStatusFieldTypeName(String className);
 
     public abstract OperationResponse build();
   }

@@ -80,10 +80,10 @@ public class HttpJsonRegionOperationsCallableFactory
           OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,
           ClientContext clientContext,
           BackgroundResource operationsStub) {
-    UnaryCallable<RequestT, Operation> innerCallable =
+    UnaryCallable<RequestT, OperationSnapshot> innerCallable =
         HttpJsonCallableFactory.createBaseUnaryCallable(
             httpJsonCallSettings, callSettings.getInitialCallSettings(), clientContext);
-    UnaryCallable<RequestT, Operation> initialCallable =
+    UnaryCallable<RequestT, OperationSnapshot> initialCallable =
         new HttpJsonOperationSnapshotCallable<RequestT, Operation>(
             innerCallable,
             httpJsonCallSettings.getMethodDescriptor().getOperationSnapshotFactory());

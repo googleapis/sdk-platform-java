@@ -23,6 +23,7 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
+import com.google.api.gax.httpjson.HttpJsonLongRunningClient;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
@@ -30,6 +31,7 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
@@ -89,7 +91,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
                     return HttpJsonOperationSnapshot.newBuilder()
                         .setName(opName.toString())
                         .setMetadata(response)
-                        .setDone(response.getStatus().equals(Status.DONE))
+                        .setDone(Status.DONE.equals(response.getStatus()))
                         .setResponse(response)
                         .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
                         .build();
@@ -108,6 +110,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
   private final UnaryCallable<GetRegionOperationRequest, Operation> getCallable;
 
   private final BackgroundResource backgroundResources;
+  private final LongRunningClient longRunningClient;
   private final HttpJsonStubCallableFactory callableFactory;
 
   public static final HttpJsonRegionOperationsStub create(RegionOperationsStubSettings settings)
@@ -158,6 +161,11 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
         callableFactory.createUnaryCallable(
             getTransportSettings, settings.getSettings(), clientContext);
 
+    this.longRunningClient =
+        new HttpJsonLongRunningClient<GetRegionOperationRequest, Operation>(
+            getCallable,
+            getMethodDescriptor.getOperationSnapshotFactory(),
+            getMethodDescriptor.getPollingRequestFactory());
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
   }
@@ -172,6 +180,11 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
   @Override
   public UnaryCallable<GetRegionOperationRequest, Operation> getCallable() {
     return getCallable;
+  }
+
+  @Override
+  public LongRunningClient longRunningClient() {
+    return longRunningClient;
   }
 
   @Override

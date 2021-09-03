@@ -135,7 +135,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
                     .setType(
                         TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
                     .build())
-            .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
+            .setTemplateObjects(Arrays.asList(requestTemplateName, "OperationSnapshot"))
             .build();
     MethodInvocationExpr getInitialCallSettingsExpr =
         MethodInvocationExpr.builder()
@@ -169,7 +169,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
                     .setType(
                         TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
                     .build())
-            .setTemplateObjects(Arrays.asList(requestTemplateName, methodVariantName))
+            .setTemplateObjects(Arrays.asList(requestTemplateName, "OperationSnapshot"))
             .build();
     MethodInvocationExpr getMethodDescriptorExpr =
         MethodInvocationExpr.builder()

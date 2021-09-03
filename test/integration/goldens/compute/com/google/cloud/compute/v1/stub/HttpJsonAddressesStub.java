@@ -148,7 +148,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
                 return HttpJsonOperationSnapshot.newBuilder()
                     .setName(opName.toString())
                     .setMetadata(response)
-                    .setDone(response.getStatus().equals(Status.DONE))
+                    .setDone(Status.DONE.equals(response.getStatus()))
                     .setResponse(response)
                     .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
                     .build();
@@ -198,7 +198,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
                 return HttpJsonOperationSnapshot.newBuilder()
                     .setName(opName.toString())
                     .setMetadata(response)
-                    .setDone(response.getStatus().equals(Status.DONE))
+                    .setDone(Status.DONE.equals(response.getStatus()))
                     .setResponse(response)
                     .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
                     .build();
