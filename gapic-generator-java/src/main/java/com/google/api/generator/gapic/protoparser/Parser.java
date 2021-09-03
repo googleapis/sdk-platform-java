@@ -30,15 +30,20 @@ import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
+import com.google.cloud.ExtendedOperationsProto;
+import com.google.cloud.OperationResponseMapping;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.longrunning.OperationInfo;
@@ -554,6 +559,35 @@ public class Parser {
       }
     }
     TypeNode messageType = TypeParser.parseType(messageDescriptor);
+
+    List<FieldDescriptor> fields = messageDescriptor.getFields();
+    HashMap<String, String> operationRequestFields = new HashMap<String, String>();
+    BiMap<String, String> operationResponseFields = HashBiMap.create();
+    OperationResponse.Builder operationResponse = OperationResponse.builder();
+    for (FieldDescriptor fd : fields) {
+      if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationRequestField)) {
+        String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationRequestField);
+        operationRequestFields.put(orf, fd.getName());
+      }
+      if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationResponseField)) {
+        String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationResponseField);
+        operationResponseFields.put(orf, fd.getName());
+      }
+      if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationField)) {
+        OperationResponseMapping orm =
+            fd.getOptions().getExtension(ExtendedOperationsProto.operationField);
+        if (orm.equals(OperationResponseMapping.NAME)) {
+          operationResponse.setNameFieldName(fd.getName());
+        } else if (orm.equals(OperationResponseMapping.STATUS)) {
+          operationResponse.setStatusFieldName(fd.getName());
+          operationResponse.setStatusFieldTypeName(fd.toProto().getTypeName());
+        } else if (orm.equals(OperationResponseMapping.ERROR_CODE)) {
+          operationResponse.setErrorCodeFieldName(fd.getName());
+        } else if (orm.equals(OperationResponseMapping.ERROR_MESSAGE)) {
+          operationResponse.setErrorMessageFieldName(fd.getName());
+        }
+      }
+    }
     messages.put(
         messageType.reference().fullName(),
         Message.builder()
@@ -562,6 +596,9 @@ public class Parser {
             .setFullProtoName(messageDescriptor.getFullName())
             .setFields(parseFields(messageDescriptor, outputResourceReferencesSeen))
             .setOuterNestedTypes(outerNestedTypes)
+            .setOperationRequestFields(operationRequestFields)
+            .setOperationResponseFields(operationResponseFields)
+            .setOperationResponse(operationResponse.build())
             .build());
     return messages;
   }
@@ -664,6 +701,17 @@ public class Parser {
                       serviceDescriptor.getName(),
                       protoMethod.getName());
 
+      boolean operationPollingMethod =
+          protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationPollingMethod)
+              ? protoMethod
+                  .getOptions()
+                  .getExtension(ExtendedOperationsProto.operationPollingMethod)
+              : false;
+      String operationService =
+          protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService)
+              ? protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService)
+              : null;
+
       methods.add(
           methodBuilder
               .setName(protoMethod.getName())
@@ -684,6 +732,9 @@ public class Parser {
               .setIsBatching(isBatching)
               .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
               .setIsDeprecated(isDeprecated)
+              .setOperationPollingMethod(operationPollingMethod)
+              .setOperationService(operationService)
+              .setServicePackage(servicePackage)
               .build());
 
       // Any input type that has a resource reference will need a resource name helper class.

@@ -41,6 +41,7 @@ import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +69,13 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     GapicClass.Kind kind = Kind.STUB;
     String pakkage = String.format("%s.stub", service.pakkage());
 
+    String operationService = "";
+    for(Method method : service.methods()) {
+      if(method.operationService() != null) {
+        operationService = method.operationService();
+      }
+    }
+
     StubCommentComposer commentComposer =
         new StubCommentComposer(getTransportContext().transportName());
     ClassDefinition classDef =
@@ -79,7 +87,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .setAnnotations(createClassAnnotations(service, typeStore))
             .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
-            .setMethods(createClassMethods(typeStore))
+            .setMethods(createClassMethods(typeStore, operationService))
             .setScope(ScopeNode.PUBLIC)
             .build();
     return GapicClass.create(kind, classDef);
@@ -112,12 +120,12 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
    */
   protected abstract List<TypeNode> createClassImplements(TypeStore typeStore);
 
-  protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
+  protected List<MethodDefinition> createClassMethods(TypeStore typeStore, String operationService) {
     return Arrays.asList(
         createUnaryCallableMethod(typeStore),
         createPagedCallableMethod(typeStore),
         createBatchingCallableMethod(typeStore),
-        createOperationCallableMethod(typeStore));
+        createOperationCallableMethod(typeStore, operationService));
   }
 
   protected MethodDefinition createUnaryCallableMethod(TypeStore typeStore) {
@@ -182,7 +190,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .collect(Collectors.toList()));
   }
 
-  protected abstract MethodDefinition createOperationCallableMethod(TypeStore typeStore);
+  protected abstract MethodDefinition createOperationCallableMethod(TypeStore typeStore, String operationService);
 
   protected MethodDefinition createGenericCallableMethod(
       TypeStore typeStore,

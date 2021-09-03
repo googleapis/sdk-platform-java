@@ -38,14 +38,12 @@ import com.google.cloud.compute.v1.AddressAggregatedList;
 import com.google.cloud.compute.v1.AddressList;
 import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
 import com.google.cloud.compute.v1.DeleteAddressRequest;
-import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.InsertAddressRequest;
 import com.google.cloud.compute.v1.ListAddressesRequest;
 import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.Status;
+import com.google.cloud.compute.v1.Operation.Status;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,24 +142,15 @@ public class HttpJsonAddressesStub extends AddressesStub {
                   .build())
           .setOperationSnapshotFactory(
               (DeleteAddressRequest request, Operation response) -> {
-                StringBuilder opName = new StringBuilder(response.getId());
+                StringBuilder opName = new StringBuilder(response.getName());
                 opName.append(":").append(request.getProject());
                 opName.append(":").append(request.getRegion());
                 return HttpJsonOperationSnapshot.newBuilder()
                     .setName(opName.toString())
                     .setMetadata(response)
-                    .setDone(response.getStatus().equals(Status.DONE))
+                    .setDone(Status.DONE.equals(response.getStatus()))
                     .setResponse(response)
                     .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
-                    .build();
-              })
-          .setPollingRequestFactory(
-              compoundOperationId -> {
-                List<String> idComponents = Arrays.asList(compoundOperationId.split(":"));
-                return GetRegionOperationRequest.newBuilder()
-                    .setOperation(idComponents.get(0))
-                    .setProject(idComponents.get(1))
-                    .setRegion(idComponents.get(2))
                     .build();
               })
           .build();
@@ -203,24 +192,15 @@ public class HttpJsonAddressesStub extends AddressesStub {
                   .build())
           .setOperationSnapshotFactory(
               (InsertAddressRequest request, Operation response) -> {
-                StringBuilder opName = new StringBuilder(response.getId());
+                StringBuilder opName = new StringBuilder(response.getName());
                 opName.append(":").append(request.getProject());
                 opName.append(":").append(request.getRegion());
                 return HttpJsonOperationSnapshot.newBuilder()
                     .setName(opName.toString())
                     .setMetadata(response)
-                    .setDone(response.getStatus().equals(Status.DONE))
+                    .setDone(Status.DONE.equals(response.getStatus()))
                     .setResponse(response)
                     .setError(response.getHttpErrorStatusCode(), response.getHttpErrorMessage())
-                    .build();
-              })
-          .setPollingRequestFactory(
-              compoundOperationId -> {
-                List<String> idComponents = Arrays.asList(compoundOperationId.split(":"));
-                return GetRegionOperationRequest.newBuilder()
-                    .setOperation(idComponents.get(0))
-                    .setProject(idComponents.get(1))
-                    .setRegion(idComponents.get(2))
                     .build();
               })
           .build();

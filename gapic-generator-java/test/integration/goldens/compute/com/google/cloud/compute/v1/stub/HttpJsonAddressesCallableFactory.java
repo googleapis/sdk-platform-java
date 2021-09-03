@@ -18,7 +18,6 @@ package com.google.cloud.compute.v1.stub;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
-import com.google.api.gax.httpjson.ApiMessage;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
@@ -42,7 +41,7 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi
 public class HttpJsonAddressesCallableFactory
-    implements HttpJsonStubCallableFactory<ApiMessage, BackgroundResource> {
+    implements HttpJsonStubCallableFactory<Operation, BackgroundResource> {
 
   @Override
   public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
@@ -77,14 +76,14 @@ public class HttpJsonAddressesCallableFactory
   @Override
   public <RequestT, ResponseT, MetadataT>
       OperationCallable<RequestT, ResponseT, MetadataT> createOperationCallable(
-          HttpJsonCallSettings<RequestT, ApiMessage> httpJsonCallSettings,
+          HttpJsonCallSettings<RequestT, Operation> httpJsonCallSettings,
           OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,
           ClientContext clientContext,
           BackgroundResource operationsStub) {
     UnaryCallable<RequestT, Operation> innerCallable =
         HttpJsonCallableFactory.createBaseUnaryCallable(
             httpJsonCallSettings, callSettings.getInitialCallSettings(), clientContext);
-    UnaryCallable<RequestT, Operation> initialCallable =
+    HttpJsonOperationSnapshotCallable<RequestT, Operation> initialCallable =
         new HttpJsonOperationSnapshotCallable<RequestT, Operation>(
             innerCallable,
             httpJsonCallSettings.getMethodDescriptor().getOperationSnapshotFactory());
