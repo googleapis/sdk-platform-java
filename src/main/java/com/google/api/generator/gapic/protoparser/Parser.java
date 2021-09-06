@@ -20,6 +20,7 @@ import com.google.api.HttpRule;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -707,11 +708,6 @@ public class Parser {
                   .getOptions()
                   .getExtension(ExtendedOperationsProto.operationPollingMethod)
               : false;
-      String operationService =
-          protoMethod.getOptions().hasExtension(ExtendedOperationsProto.operationService)
-              ? protoMethod.getOptions().getExtension(ExtendedOperationsProto.operationService)
-              : null;
-
       methods.add(
           methodBuilder
               .setName(protoMethod.getName())
@@ -719,7 +715,7 @@ public class Parser {
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
               .setStream(
                   Method.toStream(protoMethod.isClientStreaming(), protoMethod.isServerStreaming()))
-              .setLro(parseLro(protoMethod, messageTypes))
+              .setLro(parseLro(servicePackage, protoMethod, messageTypes))
               .setMethodSignatures(
                   MethodSignatureParser.parseMethodSignatures(
                       protoMethod,
@@ -733,8 +729,6 @@ public class Parser {
               .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
               .setIsDeprecated(isDeprecated)
               .setOperationPollingMethod(operationPollingMethod)
-              .setOperationService(operationService)
-              .setServicePackage(servicePackage)
               .build());
 
       // Any input type that has a resource reference will need a resource name helper class.
@@ -776,18 +770,43 @@ public class Parser {
 
   @VisibleForTesting
   static LongrunningOperation parseLro(
-      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
+      String servicePackage, MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
     MethodOptions methodOptions = methodDescriptor.getOptions();
-    if (!methodOptions.hasExtension(OperationsProto.operationInfo)) {
+
+    TypeNode operationServiceStubType = null;
+    String responseTypeName = null;
+    String metadataTypeName = null;
+
+    if (methodOptions.hasExtension(OperationsProto.operationInfo)) {
+      OperationInfo lroInfo =
+          methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
+      responseTypeName = lroInfo.getResponseType();
+      metadataTypeName = lroInfo.getMetadataType();
+    }
+    if (methodOptions.hasExtension(ExtendedOperationsProto.operationService)) {
+      // TODO: support full package name for operations_service annotation value
+      String opServiceName = methodOptions.getExtension(ExtendedOperationsProto.operationService);
+      operationServiceStubType =
+          TypeNode.withReference(
+              VaporReference.builder()
+                  .setName(opServiceName + "Stub")
+                  .setPakkage(servicePackage + ".stub")
+                  .build());
+
+      if (responseTypeName == null) {
+        responseTypeName = methodDescriptor.getOutputType().getFullName();
+      }
+      if (metadataTypeName == null) {
+        metadataTypeName = methodDescriptor.getOutputType().getFullName();
+      }
+    }
+
+    if (responseTypeName == null || metadataTypeName == null) {
       return null;
     }
 
-    OperationInfo lroInfo =
-        methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
-
-    // These can be short names (e.g. FooMessage) or fully-qualified names with the *proto* package.
-    String responseTypeName = lroInfo.getResponseType();
-    String metadataTypeName = lroInfo.getMetadataType();
+    Message responseMessage = null;
+    Message metadataMessage = null;
 
     int lastDotIndex = responseTypeName.lastIndexOf('.');
     boolean isResponseTypeNameShortOnly = lastDotIndex < 0;
@@ -798,9 +817,6 @@ public class Parser {
     boolean isMetadataTypeNameShortOnly = lastDotIndex < 0;
     String metadataTypeShortName =
         lastDotIndex >= 0 ? metadataTypeName.substring(lastDotIndex + 1) : metadataTypeName;
-
-    Message responseMessage = null;
-    Message metadataMessage = null;
 
     // The messageTypes map keys to the Java fully-qualified name.
     for (Map.Entry<String, Message> messageEntry : messageTypes.entrySet()) {
@@ -844,7 +860,11 @@ public class Parser {
             "LRO metadata message %s not found in method %s",
             metadataTypeName, methodDescriptor.getName()));
 
-    return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
+    return LongrunningOperation.builder()
+        .setResponseType(responseMessage.type())
+        .setMetadataType(metadataMessage.type())
+        .setOperationServiceStubType(operationServiceStubType)
+        .build();
   }
 
   @VisibleForTesting

@@ -131,7 +131,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
         methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
 
-    if (protoMethod.isOperationPollingMethod() || protoMethod.operationService() != null) {
+    if (protoMethod.isOperationPollingMethod() || protoMethod.hasLro()) {
       expr =
           methodMaker
               .apply(
@@ -139,6 +139,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                   setOperationSnapshotFactoryExpr(protoMethod, messageTypes))
               .apply(expr);
     }
+
     if (protoMethod.isOperationPollingMethod()) {
       expr =
           methodMaker
@@ -470,7 +471,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     MethodInvocationExpr getId =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
-            .setMethodName(getMethodFormat(operationResponse.getNameFieldName()))
+            .setMethodName(getMethodFormat(operationResponse.nameFieldName()))
             .build();
     Expr opNameObjectExpr =
         NewObjectExpr.builder().setType(stringBuilderType).setArguments(getId).build();
@@ -496,19 +497,17 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     MethodInvocationExpr getStatusExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
-            .setMethodName(getMethodFormat(operationResponse.getStatusFieldName()))
+            .setMethodName(getMethodFormat(operationResponse.statusFieldName()))
             .build();
 
-    String statusTypeName = operationResponse.getStatusFieldTypeName();
+    String statusTypeName = operationResponse.statusFieldTypeName();
     String statusClassName = statusTypeName.substring(statusTypeName.lastIndexOf('.') + 1);
-    String statusPackage = protoMethod.servicePackage(); // "com" +
-    // statusTypeName.substring(0,statusTypeName.lastIndexOf('.'));
 
     TypeNode statusType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(statusClassName)
-                .setPakkage(statusPackage + "." + protoMethod.outputType().reference().simpleName())
+                .setPakkage(protoMethod.outputType().reference().fullName())
                 .setIsStaticImport(false)
                 .build());
     VariableExpr statusDoneExpr =
@@ -536,12 +535,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     MethodInvocationExpr getHttpErrorStatusCodeExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
-            .setMethodName(getMethodFormat(operationResponse.getErrorCodeFieldName()))
+            .setMethodName(getMethodFormat(operationResponse.errorCodeFieldName()))
             .build();
     MethodInvocationExpr getHttpErrorMessageExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
-            .setMethodName(getMethodFormat(operationResponse.getErrorMessageFieldName()))
+            .setMethodName(getMethodFormat(operationResponse.errorMessageFieldName()))
             .build();
     MethodInvocationExpr newBuilderExpr =
         MethodInvocationExpr.builder()
@@ -861,16 +860,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
 
   @Override
   protected List<Statement> createLongRunningClient(Service service, TypeStore typeStore) {
-    boolean operation_polling_method = false;
-    Method protoMethod = null;
-    for (Method method : service.methods()) {
-      if (method.isOperationPollingMethod()) {
-        protoMethod = method;
-        operation_polling_method = true;
-        break;
-      }
-    }
-    if (operation_polling_method) {
+    Method pollingMethod = service.operationPollingMethod();
+    if (pollingMethod != null) {
       Expr thisExpr =
           ValueExpr.withValue(
               ThisObjectValue.withType(
@@ -882,13 +873,13 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       VariableExpr callable =
           VariableExpr.withVariable(
               Variable.builder()
-                  .setName(protoMethod.name().toLowerCase() + "Callable")
+                  .setName(pollingMethod.name().toLowerCase() + "Callable")
                   .setType(TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
                   .build());
       VariableExpr methodDescriptor =
           VariableExpr.withVariable(
               Variable.builder()
-                  .setName(protoMethod.name().toLowerCase() + "MethodDescriptor")
+                  .setName(pollingMethod.name().toLowerCase() + "MethodDescriptor")
                   .setType(
                       TypeNode.withReference(
                           ConcreteReference.withClazz(ApiMethodDescriptor.class)))
@@ -900,8 +891,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                   .setClazz(HttpJsonLongRunningClient.class)
                   .setGenerics(
                       Arrays.asList(
-                          protoMethod.inputType().reference(),
-                          protoMethod.outputType().reference()))
+                          pollingMethod.inputType().reference(),
+                          pollingMethod.outputType().reference()))
                   .build());
 
       NewObjectExpr HttpJsonLongRunningClient =
@@ -943,19 +934,16 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
   }
 
   @Override
-  protected void declareLongRunningClient(Map<String, VariableExpr> classMemberVarExprs) {
-    classMemberVarExprs.put(
-        "longRunningClient",
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName("longRunningClient")
-                .setType(
-                    TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
-                .build()));
+  protected VariableExpr declareLongRunningClient() {
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setName("longRunningClient")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
+            .build());
   }
 
   @Override
-  protected void getterLongRunningClient(List<MethodDefinition> javaMethods) {
+  protected List<MethodDefinition> createLongRunningClientGetter() {
     VariableExpr longRunningClient =
         VariableExpr.withVariable(
             Variable.builder()
@@ -964,7 +952,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                     TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
                 .build());
 
-    javaMethods.add(
+    return ImmutableList.of(
         MethodDefinition.builder()
             .setName("longRunningClient")
             .setScope(ScopeNode.PUBLIC)

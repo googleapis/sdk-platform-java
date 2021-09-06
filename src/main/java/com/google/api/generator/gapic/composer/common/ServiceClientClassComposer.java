@@ -129,7 +129,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
-    boolean hasLroClient = hasLroMethods(service);
+    boolean hasLroClient = exposeOperationsClient(service);
 
     Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
 
@@ -216,9 +216,9 @@ public class ServiceClientClassComposer implements ClassComposer {
     return methods;
   }
 
-  private static boolean hasLroMethods(Service service) {
+  private static boolean exposeOperationsClient(Service service) {
     for (Method method : service.methods()) {
-      if (method.hasLro()) {
+      if (method.hasLro() && method.lro().operationServiceStubType() == null) {
         return true;
       }
     }

@@ -30,12 +30,15 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.cloud.compute.v1.stub.HttpJsonAddressesStub;
 import com.google.common.collect.Lists;
+import com.google.longrunning.Operation;
+import com.google.protobuf.Any;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -132,8 +135,8 @@ public class AddressesClientTest {
 
   @Test
   public void deleteTest() throws Exception {
-    Operation expectedResponse =
-        Operation.newBuilder()
+    com.google.cloud.compute.v1.Operation expectedResponse =
+        com.google.cloud.compute.v1.Operation.newBuilder()
             .setClientOperationId("clientOperationId-1230366697")
             .setCreationTimestamp("creationTimestamp-370203401")
             .setDescription("description-1724546052")
@@ -157,13 +160,20 @@ public class AddressesClientTest {
             .addAllWarnings(new ArrayList<Warnings>())
             .setZone("zone3744684")
             .build();
-    mockService.addResponse(expectedResponse);
+    Operation resultOperation =
+        Operation.newBuilder()
+            .setName("deleteTest")
+            .setDone(true)
+            .setResponse(Any.pack(expectedResponse))
+            .build();
+    mockService.addResponse(resultOperation);
 
     String project = "project-309310695";
     String region = "region-934795532";
     String address = "address-1147692044";
 
-    Operation actualResponse = client.delete(project, region, address);
+    com.google.cloud.compute.v1.Operation actualResponse =
+        client.deleteAsync(project, region, address).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
@@ -192,17 +202,16 @@ public class AddressesClientTest {
       String project = "project-309310695";
       String region = "region-934795532";
       String address = "address-1147692044";
-      client.delete(project, region, address);
+      client.deleteAsync(project, region, address).get();
       Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception.
+    } catch (ExecutionException e) {
     }
   }
 
   @Test
   public void insertTest() throws Exception {
-    Operation expectedResponse =
-        Operation.newBuilder()
+    com.google.cloud.compute.v1.Operation expectedResponse =
+        com.google.cloud.compute.v1.Operation.newBuilder()
             .setClientOperationId("clientOperationId-1230366697")
             .setCreationTimestamp("creationTimestamp-370203401")
             .setDescription("description-1724546052")
@@ -226,13 +235,20 @@ public class AddressesClientTest {
             .addAllWarnings(new ArrayList<Warnings>())
             .setZone("zone3744684")
             .build();
-    mockService.addResponse(expectedResponse);
+    Operation resultOperation =
+        Operation.newBuilder()
+            .setName("insertTest")
+            .setDone(true)
+            .setResponse(Any.pack(expectedResponse))
+            .build();
+    mockService.addResponse(resultOperation);
 
     String project = "project-309310695";
     String region = "region-934795532";
     Address addressResource = Address.newBuilder().build();
 
-    Operation actualResponse = client.insert(project, region, addressResource);
+    com.google.cloud.compute.v1.Operation actualResponse =
+        client.insertAsync(project, region, addressResource).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
@@ -261,10 +277,9 @@ public class AddressesClientTest {
       String project = "project-309310695";
       String region = "region-934795532";
       Address addressResource = Address.newBuilder().build();
-      client.insert(project, region, addressResource);
+      client.insertAsync(project, region, addressResource).get();
       Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception.
+    } catch (ExecutionException e) {
     }
   }
 

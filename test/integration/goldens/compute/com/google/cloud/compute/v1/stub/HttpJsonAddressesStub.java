@@ -33,6 +33,7 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.AddressAggregatedList;
 import com.google.cloud.compute.v1.AddressList;
@@ -251,11 +252,16 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private final UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
       aggregatedListPagedCallable;
   private final UnaryCallable<DeleteAddressRequest, Operation> deleteCallable;
+  private final OperationCallable<DeleteAddressRequest, Operation, Operation>
+      deleteOperationCallable;
   private final UnaryCallable<InsertAddressRequest, Operation> insertCallable;
+  private final OperationCallable<InsertAddressRequest, Operation, Operation>
+      insertOperationCallable;
   private final UnaryCallable<ListAddressesRequest, AddressList> listCallable;
   private final UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable;
 
   private final BackgroundResource backgroundResources;
+  private final HttpJsonRegionOperationsStub operationsStub;
   private final HttpJsonStubCallableFactory callableFactory;
 
   public static final HttpJsonAddressesStub create(AddressesStubSettings settings)
@@ -294,6 +300,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
       HttpJsonStubCallableFactory callableFactory)
       throws IOException {
     this.callableFactory = callableFactory;
+    this.operationsStub = HttpJsonRegionOperationsStub.create(clientContext, callableFactory);
 
     HttpJsonCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
         aggregatedListTransportSettings =
@@ -322,9 +329,21 @@ public class HttpJsonAddressesStub extends AddressesStub {
     this.deleteCallable =
         callableFactory.createUnaryCallable(
             deleteTransportSettings, settings.deleteSettings(), clientContext);
+    this.deleteOperationCallable =
+        callableFactory.createOperationCallable(
+            deleteTransportSettings,
+            settings.deleteOperationSettings(),
+            clientContext,
+            operationsStub);
     this.insertCallable =
         callableFactory.createUnaryCallable(
             insertTransportSettings, settings.insertSettings(), clientContext);
+    this.insertOperationCallable =
+        callableFactory.createOperationCallable(
+            insertTransportSettings,
+            settings.insertOperationSettings(),
+            clientContext,
+            operationsStub);
     this.listCallable =
         callableFactory.createUnaryCallable(
             listTransportSettings, settings.listSettings(), clientContext);
@@ -364,8 +383,18 @@ public class HttpJsonAddressesStub extends AddressesStub {
   }
 
   @Override
+  public OperationCallable<DeleteAddressRequest, Operation, Operation> deleteOperationCallable() {
+    return deleteOperationCallable;
+  }
+
+  @Override
   public UnaryCallable<InsertAddressRequest, Operation> insertCallable() {
     return insertCallable;
+  }
+
+  @Override
+  public OperationCallable<InsertAddressRequest, Operation, Operation> insertOperationCallable() {
+    return insertOperationCallable;
   }
 
   @Override

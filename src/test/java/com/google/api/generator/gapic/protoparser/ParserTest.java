@@ -201,7 +201,7 @@ public class ParserTest {
     assertEquals("Wait", waitMethodDescriptor.getName());
     messageTypes.remove("com.google.showcase.v1beta1.WaitResponse");
     assertThrows(
-        NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
+        NullPointerException.class, () -> Parser.parseLro("", waitMethodDescriptor, messageTypes));
   }
 
   @Test
@@ -211,7 +211,7 @@ public class ParserTest {
     assertEquals("Wait", waitMethodDescriptor.getName());
     messageTypes.remove("com.google.showcase.v1beta1.WaitMetadata");
     assertThrows(
-        NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
+        NullPointerException.class, () -> Parser.parseLro("", waitMethodDescriptor, messageTypes));
   }
 
   @Test

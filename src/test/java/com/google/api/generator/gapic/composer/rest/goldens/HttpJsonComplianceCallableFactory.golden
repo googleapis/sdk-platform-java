@@ -13,7 +13,6 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.stub.RequestT;
 import com.google.longrunning.Operation;
 import javax.annotation.Generated;
 
