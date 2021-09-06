@@ -67,7 +67,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 .copyAndSetGenerics(
                     Arrays.asList(
                         MESSAGE_TYPE.reference(),
-                        getTransportContext().operationsStubType().reference()))));
+                        getTransportContext().operationsStubTypes().get(0).reference()))));
   }
 
   @Override

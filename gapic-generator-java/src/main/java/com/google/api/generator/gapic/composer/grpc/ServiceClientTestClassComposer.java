@@ -143,7 +143,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Service service,
       GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      TypeStore typeStore) {
+      TypeStore typeStore,
+      String newBuilderMethod) {
     VariableExpr serviceHelperVarExpr = classMemberVarExprs.get(SERVICE_HELPER_VAR_NAME);
     Function<Service, VariableExpr> serviceToVarExprFn =
         s -> classMemberVarExprs.get(getMockServiceVarName(s));

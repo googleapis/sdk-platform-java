@@ -351,10 +351,12 @@ def java_gapic_assembly_gradle_pkg(
         grpc_target_dep = ["%s" % grpc_target]
 
     if client_deps:
-        if transport == "rest":
-            template_label = Label("//rules_java_gapic:resources/gradle/client_rest.gradle.tmpl")
-        else:
+        if not transport or transport == "rest":
             template_label = Label("//rules_java_gapic:resources/gradle/client_grpc.gradle.tmpl")
+        elif transport == "rest":
+            template_label = Label("//rules_java_gapic:resources/gradle/client_rest.gradle.tmpl")
+        elif transport == "grpc+rest":
+            template_label = Label("//rules_java_gapic:resources/gradle/client_grpcrest.gradle.tmpl")
 
         _java_gapic_gradle_pkg(
             name = client_target,
