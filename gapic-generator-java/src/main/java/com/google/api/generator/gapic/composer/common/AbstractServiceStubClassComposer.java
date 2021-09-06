@@ -44,6 +44,7 @@ import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
@@ -63,6 +64,7 @@ import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,19 +146,25 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                 .setName(BACKGROUND_RESOURCES_MEMBER_NAME)
                 .setType(FIXED_TYPESTORE.get("BackgroundResource"))
                 .build()));
-    if (getTransportContext().transportOperationsStubType() != null) {
+
+
+    TypeNode opeationsStubType = getTransportOperationsStubType(service);
+    if (opeationsStubType != null) {
       classMemberVarExprs.put(
           OPERATIONS_STUB_MEMBER_NAME,
           VariableExpr.withVariable(
               Variable.builder()
                   .setName(OPERATIONS_STUB_MEMBER_NAME)
-                  .setType(getTransportContext().transportOperationsStubType())
+                  .setType(opeationsStubType)
                   .build()));
     }
 
     boolean operationPollingMethod = checkOperationPollingMethod(service);
     if(operationPollingMethod) {
-      declareLongRunningClient(classMemberVarExprs);
+      VariableExpr longRunningVarExpr = declareLongRunningClient();
+      if (longRunningVarExpr != null) {
+        classMemberVarExprs.put("longRunningClient", longRunningVarExpr);
+      }
     }
 
     classMemberVarExprs.put(
@@ -554,14 +562,16 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             .setValueExpr(callableFactoryVarExpr)
             .build());
     VariableExpr operationsStubClassVarExpr = classMemberVarExprs.get(OPERATIONS_STUB_MEMBER_NAME);
-    if (getTransportContext().transportOperationsStubType() != null) {
+
+    TypeNode opeationsStubType = getTransportOperationsStubType(service);
+    if (opeationsStubType != null) {
       secondCtorExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(
                   operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
               .setValueExpr(
                   MethodInvocationExpr.builder()
-                      .setStaticReferenceType(getTransportContext().transportOperationsStubType())
+                      .setStaticReferenceType(opeationsStubType)
                       .setMethodName("create")
                       .setArguments(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr))
                       .setReturnType(operationsStubClassVarExpr.type())
@@ -670,8 +680,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return ImmutableList.of();
   }
 
-  protected void declareLongRunningClient(Map<String, VariableExpr> classMemberVarExprs) {
-
+  protected VariableExpr declareLongRunningClient() {
+    return null;
   }
 
   private static Expr createCallableInitExpr(
@@ -845,10 +855,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                     .build())
             .build();
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    //TODO: check for operation polling method
-    boolean operationPollingMethod = checkOperationPollingMethod(service);
-    if (operationPollingMethod) {
-      getterLongRunningClient(javaMethods);
+    if (service.operationPollingMethod() != null) {
+      javaMethods.addAll(createLongRunningClientGetter());
     }
     javaMethods.add(
         methodMakerStarterFn
@@ -931,8 +939,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return false;
   }
 
-  protected void getterLongRunningClient(List<MethodDefinition> javaMethods) {
-
+  protected List<MethodDefinition> createLongRunningClientGetter() {
+    return Collections.emptyList();
   }
 
   private TypeStore createDynamicTypes(Service service, String stubPakkage) {
@@ -1001,5 +1009,21 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
     return String.format(
         "%s.%s/%s", protoService.protoPakkage(), protoService.name(), protoMethod.name());
+  }
+
+  protected TypeNode getTransportOperationsStubType(Service service) {
+    TypeNode transportOpeationsStubType = service.operationServiceStubType();
+    if (transportOpeationsStubType == null) {
+      transportOpeationsStubType = getTransportContext().transportOperationsStubType();
+    }
+    else {
+      transportOpeationsStubType = TypeNode.withReference(
+          VaporReference.builder()
+              .setName("HttpJson" + transportOpeationsStubType.reference().simpleName())
+              .setPakkage(transportOpeationsStubType.reference().pakkage())
+              .build());
+    }
+
+    return transportOpeationsStubType;
   }
 }

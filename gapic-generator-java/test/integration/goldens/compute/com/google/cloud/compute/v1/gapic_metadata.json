@@ -14,10 +14,10 @@
               "methods": ["aggregatedList", "aggregatedList", "aggregatedListPagedCallable", "aggregatedListCallable"]
             },
             "Delete": {
-              "methods": ["delete", "delete", "deleteCallable"]
+              "methods": ["deleteAsync", "deleteAsync", "deleteOperationCallable", "deleteCallable"]
             },
             "Insert": {
-              "methods": ["insert", "insert", "insertCallable"]
+              "methods": ["insertAsync", "insertAsync", "insertOperationCallable", "insertCallable"]
             },
             "List": {
               "methods": ["list", "list", "listPagedCallable", "listCallable"]

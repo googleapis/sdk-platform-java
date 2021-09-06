@@ -68,12 +68,6 @@ public abstract class Method {
 
   public abstract boolean operationPollingMethod();
 
-  @Nullable
-  public abstract String operationService();
-
-  @Nullable
-  public abstract String servicePackage();
-
   public boolean hasLro() {
     return lro() != null;
   }
@@ -145,10 +139,6 @@ public abstract class Method {
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
-
-    public abstract Builder setOperationService(String operationService);
-
-    public abstract Builder setServicePackage(String servicePackage);
 
     public abstract Method build();
   }

@@ -17,7 +17,6 @@
 package com.google.cloud.compute.v1.stub;
 
 import com.google.api.core.BetaApi;
-import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
@@ -29,7 +28,7 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.longrunning.Operation;
+import com.google.cloud.compute.v1.Operation;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -41,7 +40,7 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi
 public class HttpJsonAddressesCallableFactory
-    implements HttpJsonStubCallableFactory<Operation, BackgroundResource> {
+    implements HttpJsonStubCallableFactory<Operation, RegionOperationsStub> {
 
   @Override
   public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
@@ -79,7 +78,7 @@ public class HttpJsonAddressesCallableFactory
           HttpJsonCallSettings<RequestT, Operation> httpJsonCallSettings,
           OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,
           ClientContext clientContext,
-          BackgroundResource operationsStub) {
+          RegionOperationsStub operationsStub) {
     UnaryCallable<RequestT, Operation> innerCallable =
         HttpJsonCallableFactory.createBaseUnaryCallable(
             httpJsonCallSettings, callSettings.getInitialCallSettings(), clientContext);
