@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.rpc.OperationCallable;
@@ -45,10 +44,8 @@ public class HttpJsonServiceCallableFactoryClassComposer
   private static final HttpJsonServiceCallableFactoryClassComposer INSTANCE =
       new HttpJsonServiceCallableFactoryClassComposer();
 
-  private static final TypeNode MESSAGE_TYPE =
+  private static final TypeNode DEFAULT_OPERATION_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
-  private static final TypeNode BACKGROUND_RESOURCE_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(BackgroundResource.class));
 
   private HttpJsonServiceCallableFactoryClassComposer() {
     super(RestContext.instance());
@@ -73,23 +70,29 @@ public class HttpJsonServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected List<TypeNode> createClassImplements(TypeStore typeStore) {
+  protected List<TypeNode> createClassImplements(TypeStore typeStore, Service service) {
+    TypeNode operationsStubType = getOperationsStubType(service);
+
+    TypeNode operationType = service.operationType();
+    if (operationType == null) {
+      operationType = DEFAULT_OPERATION_TYPE;
+    }
+
     return Arrays.asList(
         TypeNode.withReference(
             getTransportContext()
                 .stubCallableFactoryType()
                 .reference()
                 .copyAndSetGenerics(
-                    Arrays.asList(
-                        MESSAGE_TYPE.reference(), BACKGROUND_RESOURCE_TYPE.reference()))));
+                    Arrays.asList(operationType.reference(), operationsStubType.reference()))));
   }
 
   @Override
-  protected MethodDefinition createOperationCallableMethod(
-      TypeStore typeStore, String operationService) {
+  protected MethodDefinition createOperationCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Operation";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
+
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, "MetadataT");
 
@@ -104,36 +107,28 @@ public class HttpJsonServiceCallableFactoryClassComposer
                 + " future.");
 
     // Generate generic method without the body
-    // TODO: change static usages to vapor references
+    TypeNode operationType = service.operationType();
+    if (operationType == null) {
+      operationType = DEFAULT_OPERATION_TYPE;
+    }
     MethodDefinition method =
         createGenericCallableMethod(
+            service,
             typeStore,
             /*methodTemplateNames=*/ methodTemplateNames,
             /*returnCallableKindName=*/ methodVariantName,
             /*returnCallableTemplateNames=*/ methodTemplateNames,
             /*methodVariantName=*/ methodVariantName,
             /*httpJsonCallSettingsTemplateObjects=*/ Arrays.asList(
-                requestTemplateName, MESSAGE_TYPE),
+                requestTemplateName, operationType),
             /*callSettingsVariantName=*/ methodVariantName,
             /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
                 .map(n -> (Object) n)
                 .collect(Collectors.toList()),
             Arrays.asList(betaAnnotation));
 
-    // if (operationService.equals("")) {
-    //   return method.toBuilder().setReturnExpr(ValueExpr.createNullExpr()).build();
-    // }
-
     List<Statement> createOperationCallableBody = new ArrayList<Statement>(2);
-
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
-    // Variable stubVar = arguments.get(3).variable();
-    // stubVar = Variable.builder()
-    //     .setName(stubVar.identifier().name())
-    //     .setType(typeStore.get(operationService+"Stub"))
-    //     .build();
-    // arguments.set(3,VariableExpr.withVariable(stubVar));
-    // method = method.toBuilder().setArguments(arguments).build();
 
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();
     Variable operationCallSettingsVar = arguments.get(1).variable();
@@ -177,14 +172,14 @@ public class HttpJsonServiceCallableFactoryClassComposer
     VaporReference requestT =
         VaporReference.builder()
             .setName("RequestT")
-            .setPakkage("com.google.cloud.compute.v1.stub")
+            .setPakkage(service.pakkage() + ".stub")
             .build();
 
     TypeNode initialCallableType =
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(HttpJsonOperationSnapshotCallable.class)
-                .setGenerics(requestT, ConcreteReference.withClazz(Operation.class))
+                .setGenerics(requestT, operationType.reference())
                 .build());
 
     // Generate initialCallable
@@ -213,7 +208,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(HttpJsonOperationSnapshotCallable.class)
-                .setGenerics(requestT, ConcreteReference.withClazz(Operation.class))
+                .setGenerics(requestT, operationType.reference())
                 .build());
     NewObjectExpr initialCallableObject =
         NewObjectExpr.builder()

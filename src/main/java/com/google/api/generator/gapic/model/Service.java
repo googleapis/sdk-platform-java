@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -47,6 +48,35 @@ public abstract class Service {
 
   public boolean hasDescription() {
     return !Strings.isNullOrEmpty(description());
+  }
+
+  public Method operationPollingMethod() {
+    for (Method method : methods()) {
+      if (method.isOperationPollingMethod()) {
+        return method;
+      }
+    }
+    return null;
+  }
+
+  public TypeNode operationServiceStubType() {
+    for (Method method : methods()) {
+      if (method.hasLro() && method.lro().operationServiceStubType() != null) {
+        // All methods within the same service must have the same operationServiceTypeName if
+        // present
+        return method.lro().operationServiceStubType();
+      }
+    }
+    return null;
+  }
+
+  public TypeNode operationType() {
+    for (Method method : methods()) {
+      if (method.hasLro() && method.lro().operationServiceStubType() != null) {
+        return method.outputType();
+      }
+    }
+    return null;
   }
 
   public abstract Builder toBuilder();

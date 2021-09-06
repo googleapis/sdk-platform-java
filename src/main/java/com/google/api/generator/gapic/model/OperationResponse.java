@@ -21,19 +21,19 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class OperationResponse {
   @Nullable
-  public abstract String getNameFieldName();
+  public abstract String nameFieldName();
 
   @Nullable
-  public abstract String getStatusFieldName();
+  public abstract String statusFieldName();
 
   @Nullable
-  public abstract String getErrorCodeFieldName();
+  public abstract String errorCodeFieldName();
 
   @Nullable
-  public abstract String getErrorMessageFieldName();
+  public abstract String errorMessageFieldName();
 
   @Nullable
-  public abstract String getStatusFieldTypeName();
+  public abstract String statusFieldTypeName();
 
   public static Builder builder() {
     return new AutoValue_OperationResponse.Builder();

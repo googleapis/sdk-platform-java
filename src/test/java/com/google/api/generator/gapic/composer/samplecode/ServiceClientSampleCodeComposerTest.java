@@ -104,7 +104,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     TypeNode ttlTypeNode =
         TypeNode.withReference(
             VaporReference.builder().setName("Duration").setPakkage(PROTO_PACKAGE_NAME).build());
@@ -1252,7 +1256,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")
@@ -1305,7 +1313,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     TypeNode ttlTypeNode =
         TypeNode.withReference(
             VaporReference.builder().setName("Duration").setPakkage(PROTO_PACKAGE_NAME).build());
@@ -1372,7 +1384,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     TypeNode ttlTypeNode =
         TypeNode.withReference(
             VaporReference.builder().setName("Duration").setPakkage(PROTO_PACKAGE_NAME).build());
@@ -1528,7 +1544,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")
@@ -1581,7 +1601,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")
@@ -1732,7 +1756,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")
@@ -1784,7 +1812,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")
@@ -2348,7 +2380,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")
@@ -2399,7 +2435,11 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("WaitMetadata")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    LongrunningOperation lro =
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
         Method.builder()
             .setName("Wait")

@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class LongrunningOperation {
@@ -23,22 +24,21 @@ public abstract class LongrunningOperation {
 
   public abstract TypeNode metadataType();
 
-  public static LongrunningOperation withTypes(TypeNode responseType, TypeNode metadataType) {
-    return builder().setResponseType(responseType).setMetadataType(metadataType).build();
-  }
+  @Nullable
+  public abstract TypeNode operationServiceStubType();
 
-  // Private.
-  static Builder builder() {
+  public static Builder builder() {
     return new AutoValue_LongrunningOperation.Builder();
   }
 
-  // Private.
   @AutoValue.Builder
-  abstract static class Builder {
-    abstract Builder setResponseType(TypeNode responseType);
+  public abstract static class Builder {
+    public abstract Builder setResponseType(TypeNode responseType);
 
-    abstract Builder setMetadataType(TypeNode metadataType);
+    public abstract Builder setMetadataType(TypeNode metadataType);
 
-    abstract LongrunningOperation build();
+    public abstract Builder setOperationServiceStubType(TypeNode operationServiceType);
+
+    public abstract LongrunningOperation build();
   }
 }

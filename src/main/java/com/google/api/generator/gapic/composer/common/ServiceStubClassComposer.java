@@ -112,7 +112,11 @@ public class ServiceStubClassComposer implements ClassComposer {
     boolean hasLroClient = hasLroMethods(service);
     List<MethodDefinition> methods = new ArrayList<>();
     if (hasLroClient) {
-      methods.add(createOperationsStubGetter(typeStore));
+      TypeNode operationsStubType = service.operationServiceStubType();
+      if (operationsStubType == null) {
+        operationsStubType = typeStore.get("OperationsStub");
+      }
+      methods.add(createOperationsStubGetter(typeStore, operationsStubType));
     }
     methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
@@ -203,11 +207,11 @@ public class ServiceStubClassComposer implements ClassComposer {
         .build();
   }
 
-  private static MethodDefinition createOperationsStubGetter(TypeStore typeStore) {
+  private static MethodDefinition createOperationsStubGetter(TypeStore typeStore, TypeNode operationsStubType) {
     String methodName = "getOperationsStub";
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
-        .setReturnType(typeStore.get("OperationsStub"))
+        .setReturnType(operationsStubType)
         .setName(methodName)
         .setBody(createThrowUOEBody(methodName, typeStore))
         .build();
