@@ -73,7 +73,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     super(RestContext.instance());
   }
 
-  public static ServiceClientTestClassComposer instance() {
+  public static AbstractServiceClientTestClassComposer instance() {
     return INSTANCE;
   }
 
@@ -126,7 +126,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Service service,
       GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      TypeStore typeStore) {
+      TypeStore typeStore,
+      String newBuilderMethod) {
 
     VariableExpr mockServiceVarExpr = classMemberVarExprs.get(MOCK_SERVICE_VAR_NAME);
     VariableExpr clientVarExpr = classMemberVarExprs.get(CLIENT_VAR_NAME);
@@ -168,7 +169,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
-            .setMethodName("newBuilder")
+            .setMethodName(newBuilderMethod)
             .build();
 
     Expr transportChannelProviderExpr =

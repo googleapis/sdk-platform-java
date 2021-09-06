@@ -23,6 +23,7 @@ import com.google.api.gax.grpc.ProtoOperationTransformers;
 import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.OperationsClient;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.longrunning.stub.OperationsStub;
@@ -38,18 +39,24 @@ public abstract class GrpcContext extends TransportContext {
           .setCallSettingsClass(GrpcCallSettings.class)
           .setStubCallableFactoryType(classToType(GrpcStubCallableFactory.class))
           .setMethodDescriptorClass(MethodDescriptor.class)
-          .setTransportOperationsStubType(classToType(GrpcOperationsStub.class))
-          .setTransportOperationsStubName("operationsStub")
+          .setTransportOperationsStubTypes(ImmutableList.of(classToType(GrpcOperationsStub.class)))
+          .setTransportOperationsStubNames(ImmutableList.of("operationsStub"))
           // For grpc.ServiceSettingsClassComposer
-          .setInstantiatingChannelProviderClass(InstantiatingGrpcChannelProvider.Builder.class)
-          .setDefaultTransportProviderBuilderName("defaultGrpcTransportProviderBuilder")
+          .setInstantiatingChannelProviderClasses(
+              ImmutableList.of(InstantiatingGrpcChannelProvider.class))
+          .setInstantiatingChannelProviderBuilderClasses(
+              ImmutableList.of(InstantiatingGrpcChannelProvider.Builder.class))
+          .setDefaultTransportProviderBuilderNames(
+              ImmutableList.of("defaultGrpcTransportProviderBuilder"))
+          .setTransportApiClientHeaderProviderBuilderNames(
+              ImmutableList.of("defaultGrpcApiClientHeaderProviderBuilder"))
           // For grpc.ServiceStubSettingsClassComposer
-          .setTransportChannelType(classToType(GrpcTransportChannel.class))
-          .setTransportGetterName("getGrpcTransportName")
+          .setTransportChannelTypes(ImmutableList.of(classToType(GrpcTransportChannel.class)))
+          .setTransportGetterNames(ImmutableList.of("getGrpcTransportName"))
           // For grpc.GrpcServiceCallableFactoryClassComposer
           .setTransportCallSettingsType(classToType(GrpcCallSettings.class))
           .setTransportCallableFactoryType(classToType(GrpcCallableFactory.class))
-          .setOperationsStubType(classToType(OperationsStub.class))
+          .setOperationsStubTypes(ImmutableList.of(classToType(OperationsStub.class)))
           .setTransportCallSettingsName("grpcCallSettings")
           // For RetrySettingsComposer
           .setOperationResponseTransformerType(
@@ -57,8 +64,8 @@ public abstract class GrpcContext extends TransportContext {
           .setOperationMetadataTransformerType(
               classToType(ProtoOperationTransformers.MetadataTransformer.class))
           // For ServiceClientClassComposer
-          .setOperationsClientType(classToType(OperationsClient.class))
-          .setOperationsClientName("operationsClient")
+          .setOperationsClientTypes(ImmutableList.of(classToType(OperationsClient.class)))
+          .setOperationsClientNames(ImmutableList.of("operationsClient"))
           .build();
 
   public static TransportContext instance() {
