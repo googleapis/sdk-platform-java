@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.grpc;
+package com.google.api.generator.gapic.composer.grpcrest;
 
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
-import com.google.api.gax.grpc.GrpcTransportChannel;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
+import com.google.api.gax.httpjson.GaxHttpJsonProperties;
+import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -31,37 +31,31 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
-import java.util.Arrays;
-import java.util.Collections;
+import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceStubSettingsClassComposer extends AbstractServiceStubSettingsClassComposer {
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
 
-  private static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
-
   public static ServiceStubSettingsClassComposer instance() {
     return INSTANCE;
   }
 
   protected ServiceStubSettingsClassComposer() {
-    super(GrpcContext.instance());
-  }
-
-  private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
-        Arrays.asList(
-            GaxGrpcProperties.class,
-            GrpcTransportChannel.class,
-            InstantiatingGrpcChannelProvider.class);
-    return new TypeStore(concreteClazzes);
+    super(GrpcRestContext.instance());
   }
 
   @Override
   protected Expr initializeTransportProviderBuilder(
       MethodInvocationExpr transportChannelProviderBuilderExpr, TypeNode returnType) {
+    if (!returnType.reference().isFromPackage("com.google.api.gax.grpc")) {
+      return transportChannelProviderBuilderExpr;
+    }
+
     return MethodInvocationExpr.builder()
         .setExprReferenceExpr(transportChannelProviderBuilderExpr)
         .setMethodName("setMaxInboundMessageSize")
@@ -116,57 +110,40 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   }
 
   @Override
-  protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
-    TypeNode returnType =
-        TypeNode.withReference(
-            ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
-    MethodInvocationExpr credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_TYPESTORE.get("GoogleCredentialsProvider"))
-            .setMethodName("newBuilder")
-            .build();
-    credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credsProviderBuilderExpr)
-            .setMethodName("setScopesToApply")
-            .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
-            .setReturnType(returnType)
-            .build();
-
-    // This section is specific to GAPIC clients. It sets UseJwtAccessWithScope value to true to
-    // enable self signed JWT feature.
-    credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credsProviderBuilderExpr)
-            .setMethodName("setUseJwtAccessWithScope")
-            .setArguments(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
-            .setReturnType(returnType)
-            .build();
-
-    return MethodDefinition.builder()
-        .setHeaderCommentStatements(
-            SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
-        .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
-        .setReturnType(returnType)
-        .setName("defaultCredentialsProviderBuilder")
-        .setReturnExpr(credsProviderBuilderExpr)
-        .build();
-  }
-
-  @Override
   protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
-    return Collections.singletonList(
+
+    TypeNode returnType =
+        TypeNode.withReference(ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class));
+
+    return ImmutableList.of(
         createApiClientHeaderProviderBuilderMethod(
             service,
             typeStore,
-            "defaultApiClientHeaderProviderBuilder",
-            FIXED_GRPC_TYPESTORE.get(GaxGrpcProperties.class.getSimpleName()),
+            "defaultGrpcApiClientHeaderProviderBuilder",
+            TypeNode.withReference(ConcreteReference.withClazz(GaxGrpcProperties.class)),
             "getGrpcTokenName",
-            "getGrpcVersion"));
+            "getGrpcVersion"),
+        createApiClientHeaderProviderBuilderMethod(
+            service,
+            typeStore,
+            "defaultHttpJsonApiClientHeaderProviderBuilder",
+            TypeNode.withReference(ConcreteReference.withClazz(GaxHttpJsonProperties.class)),
+            "getHttpJsonTokenName",
+            "getHttpJsonVersion"),
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("defaultApiClientHeaderProviderBuilder")
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(
+                        typeStore.get(ClassNames.getServiceStubSettingsClassName(service)))
+                    .setMethodName("defaultGrpcApiClientHeaderProviderBuilder")
+                    .setReturnType(returnType)
+                    .build())
+            .build());
   }
 
   @Override
@@ -187,5 +164,37 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
         .setName("defaultTransportChannelProvider")
         .setReturnExpr(transportProviderBuilderExpr)
         .build();
+  }
+
+  @Override
+  protected List<MethodDefinition> createNestedClassCreateDefaultMethods(TypeStore typeStore) {
+    return ImmutableList.of(
+        createNestedClassCreateDefaultMethod(
+            typeStore,
+            "createDefault",
+            "defaultTransportChannelProvider",
+            null,
+            "defaultApiClientHeaderProviderBuilder"),
+        createNestedClassCreateDefaultMethod(
+            typeStore,
+            "createHttpJsonDefault",
+            null,
+            "defaultHttpJsonTransportProviderBuilder",
+            "defaultHttpJsonApiClientHeaderProviderBuilder"));
+  }
+
+  @Override
+  protected List<MethodDefinition> createNewBuilderMethods(
+      Service service,
+      TypeStore typeStore,
+      String newBuilderMethodName,
+      String createDefaultMethodName) {
+    List<MethodDefinition> methods = new ArrayList<>();
+    methods.addAll(
+        super.createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
+    methods.addAll(
+        super.createNewBuilderMethods(
+            service, typeStore, "newHttpJsonBuilder", "createHttpJsonDefault"));
+    return methods;
   }
 }

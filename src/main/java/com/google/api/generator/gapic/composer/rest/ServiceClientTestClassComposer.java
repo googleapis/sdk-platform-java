@@ -39,6 +39,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceClientTestClassComposer;
+import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -72,7 +73,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     super(RestContext.instance());
   }
 
-  public static ServiceClientTestClassComposer instance() {
+  public static AbstractServiceClientTestClassComposer instance() {
     return INSTANCE;
   }
 
@@ -125,7 +126,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Service service,
       GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      TypeStore typeStore) {
+      TypeStore typeStore,
+      String newBuilderMethod) {
 
     VariableExpr mockServiceVarExpr = classMemberVarExprs.get(MOCK_SERVICE_VAR_NAME);
     VariableExpr clientVarExpr = classMemberVarExprs.get(CLIENT_VAR_NAME);
@@ -167,7 +169,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
-            .setMethodName("newBuilder")
+            .setMethodName(newBuilderMethod)
             .build();
 
     Expr transportChannelProviderExpr =
@@ -420,7 +422,18 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    return null;
+    // Add some actual statements once implemented
+    List<Statement> methodStatements = new ArrayList<>();
+
+    String testMethodName = String.format("%sTest", JavaStyle.toLowerCamelCase(method.name()));
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(testMethodName)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(methodStatements)
+        .build();
   }
 
   @Override
@@ -511,6 +524,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     return Collections.emptyList();
+  }
+
+  @Override
+  protected Expr createDefaultValue(
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
+    return DefaultValueComposer.createDefaultValue(methodArg, resourceNames, true);
   }
 
   @Override

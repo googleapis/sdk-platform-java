@@ -17,23 +17,16 @@ package com.google.api.generator.gapic.composer.rest;
 import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
-import com.google.api.gax.rpc.ApiClientHeaderProvider;
-import com.google.api.generator.engine.ast.AnnotationNode;
-import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
-import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
-import com.google.api.generator.engine.ast.Variable;
-import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ServiceStubSettingsClassComposer extends AbstractServiceStubSettingsClassComposer {
   private static final ServiceStubSettingsClassComposer INSTANCE =
@@ -58,94 +51,16 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   }
 
   @Override
-  protected MethodDefinition createDefaultTransportTransportProviderBuilderMethod() {
-    // Create the defaultHttpJsonTransportProviderBuilder method.
-    TypeNode returnType =
-        TypeNode.withReference(
-            ConcreteReference.withClazz(InstantiatingHttpJsonChannelProvider.Builder.class));
-    MethodInvocationExpr transportChannelProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(
-                FIXED_REST_TYPESTORE.get(
-                    InstantiatingHttpJsonChannelProvider.class.getSimpleName()))
-            .setMethodName("newBuilder")
-            .setReturnType(returnType)
-            .build();
-    return MethodDefinition.builder()
-        .setHeaderCommentStatements(
-            SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
-        .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
-        .setReturnType(returnType)
-        .setName("defaultHttpJsonTransportProviderBuilder")
-        .setReturnExpr(transportChannelProviderBuilderExpr)
-        .build();
-  }
-
-  @Override
-  protected MethodDefinition createDefaultApiClientHeaderProviderBuilderMethod(
+  protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
-    // Create the defaultApiClientHeaderProviderBuilder method.
-    TypeNode returnType =
-        TypeNode.withReference(ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class));
-    MethodInvocationExpr returnExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_TYPESTORE.get("ApiClientHeaderProvider"))
-            .setMethodName("newBuilder")
-            .build();
-
-    MethodInvocationExpr versionArgExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_TYPESTORE.get("GaxProperties"))
-            .setMethodName("getLibraryVersion")
-            .setArguments(
-                VariableExpr.builder()
-                    .setVariable(
-                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
-                    .setStaticReferenceType(
-                        typeStore.get(ClassNames.getServiceStubSettingsClassName(service)))
-                    .build())
-            .build();
-
-    returnExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(returnExpr)
-            .setMethodName("setGeneratedLibToken")
-            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("gapic")), versionArgExpr)
-            .build();
-    returnExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(returnExpr)
-            .setMethodName("setTransportToken")
-            .setArguments(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()))
-                    .setMethodName("getHttpJsonTokenName")
-                    .build(),
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()))
-                    .setMethodName("getHttpJsonVersion")
-                    .build())
-            .setReturnType(returnType)
-            .build();
-
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for customizing headers is not stable yet and may change in the"
-                    + " future.")
-            .build();
-    return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
-        .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
-        .setReturnType(returnType)
-        .setName("defaultApiClientHeaderProviderBuilder")
-        .setReturnExpr(returnExpr)
-        .build();
+    return Collections.singletonList(
+        createApiClientHeaderProviderBuilderMethod(
+            service,
+            typeStore,
+            "defaultApiClientHeaderProviderBuilder",
+            FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()),
+            "getHttpJsonTokenName",
+            "getHttpJsonVersion"));
   }
 
   @Override

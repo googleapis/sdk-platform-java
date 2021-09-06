@@ -5,8 +5,6 @@ package(default_visibility = ["//visibility:public"])
 
 UPDATE_GOLDENS_TESTS = [
     "BatchingDescriptorComposerTest",
-    "ServiceClientClassComposerTest",
-    "ServiceStubClassComposerTest",
 ]
 
 TESTS = UPDATE_GOLDENS_TESTS + [

@@ -104,6 +104,7 @@ public class HttpRuleParser {
             validateAndConstructHttpBindings(queryParamNames, message, messageTypes, false))
         .setBodyParameters(
             validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, false))
+        .setIsAsteriskBody(body.equals(ASTERISK))
         .build();
   }
 

@@ -49,7 +49,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
+import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
@@ -66,12 +66,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassComposer {
+public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
   private static final HttpJsonServiceStubClassComposer INSTANCE =
       new HttpJsonServiceStubClassComposer();
 
@@ -99,6 +100,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             ProtoMessageRequestFormatter.class,
             ProtoMessageResponseParser.class,
             ProtoRestSerializer.class));
+  }
+
+  @Override
+  protected boolean generateOperationsStubLogic(Service service) {
+    return service.hasLroMethods();
   }
 
   @Override
@@ -348,16 +354,20 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .apply(expr);
 
     extractorVarType = TypeNode.STRING;
+    boolean asteriskBody = protoMethod.httpBindings().isAsteriskBody();
     expr =
         methodMaker
             .apply(
                 "setRequestBodyExtractor",
                 Arrays.asList(
-                    createFieldsExtractorClassInstance(
+                    createBodyFieldsExtractorClassInstance(
                         protoMethod,
                         extractorVarType,
-                        protoMethod.httpBindings().bodyParameters(),
-                        "toBody")))
+                        asteriskBody
+                            ? protoMethod.httpBindings().pathParameters()
+                            : protoMethod.httpBindings().bodyParameters(),
+                        "toBody",
+                        asteriskBody)))
             .apply(expr);
     expr = methodMaker.apply("build", Collections.emptyList()).apply(expr);
 
@@ -699,6 +709,102 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
             .build());
   }
 
+  private Expr createBodyFieldsExtractorClassInstance(
+      Method method,
+      TypeNode extractorReturnType,
+      Set<HttpBinding> httpBindingFieldNames,
+      String serializerMethodName,
+      boolean asteriskBody) {
+    List<Statement> bodyStatements = new ArrayList<>();
+
+    Expr returnExpr = null;
+    Expr serializerExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("create")
+            .setStaticReferenceType(
+                FIXED_REST_TYPESTORE.get(ProtoRestSerializer.class.getSimpleName()))
+            .build();
+
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    Expr bodyRequestExpr = requestVarExpr;
+    String requestMethodPrefix = "get";
+    String bodyParamName = null;
+
+    if (asteriskBody) {
+      bodyRequestExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(requestVarExpr)
+              .setMethodName("toBuilder")
+              .build();
+      // In case of `body: "*"` case we send the whole request message as a body, minus the fields
+      // in the path, therefore the "clear" prefix here.
+      requestMethodPrefix = "clear";
+    }
+
+    Expr prevExpr = bodyRequestExpr;
+    for (HttpBinding httpBindingFieldName : httpBindingFieldNames) {
+      // Handle foo.bar cases by descending into the subfields.
+      MethodInvocationExpr.Builder requestFieldMethodExprBuilder =
+          MethodInvocationExpr.builder().setExprReferenceExpr(prevExpr);
+      bodyParamName = JavaStyle.toLowerCamelCase(httpBindingFieldName.name());
+      String[] descendantFields = httpBindingFieldName.name().split("\\.");
+      if (asteriskBody && descendantFields.length > 1) {
+        // This is the `body: "*"` case, do not clean nested body fields as it a very rare, not
+        // well-defined case, and it is generally safer to send more than less in such case.
+        continue;
+      }
+
+      for (int i = 0; i < descendantFields.length; i++) {
+        String currFieldName = descendantFields[i];
+        String bindingFieldMethodName =
+            String.format("%s%s", requestMethodPrefix, JavaStyle.toUpperCamelCase(currFieldName));
+        requestFieldMethodExprBuilder =
+            requestFieldMethodExprBuilder.setMethodName(bindingFieldMethodName);
+
+        if (i < descendantFields.length - 1) {
+          requestFieldMethodExprBuilder =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(requestFieldMethodExprBuilder.build());
+        }
+      }
+      prevExpr = requestFieldMethodExprBuilder.build();
+    }
+
+    if (httpBindingFieldNames.isEmpty() && !asteriskBody) {
+      returnExpr = ValueExpr.createNullExpr();
+    } else {
+      ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
+      if (asteriskBody) {
+        prevExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(prevExpr)
+                .setMethodName("build")
+                .build();
+        bodyParamName = "*";
+      }
+      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue(bodyParamName)));
+      paramsPutArgs.add(prevExpr);
+
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(serializerExpr)
+              .setMethodName(serializerMethodName)
+              .setArguments(paramsPutArgs.build())
+              .setReturnType(extractorReturnType)
+              .build();
+    }
+
+    // Overrides FieldsExtractor
+    // (https://github.com/googleapis/gax-java/blob/12b18ee255d3fabe13bb3969df40753b29f830d5/gax-httpjson/src/main/java/com/google/api/gax/httpjson/FieldsExtractor.java).
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
   private Expr createFieldsExtractorClassInstance(
       Method method,
       TypeNode extractorReturnType,
@@ -706,64 +812,45 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       String serializerMethodName) {
     List<Statement> bodyStatements = new ArrayList<>();
 
-    Expr returnExpr = null;
-    VariableExpr fieldsVarExpr = null;
-    Expr serializerExpr = null;
-    if (extractorReturnType.isProtoPrimitiveType()) {
-      serializerExpr =
-          MethodInvocationExpr.builder()
-              .setMethodName("create")
-              .setStaticReferenceType(
-                  FIXED_REST_TYPESTORE.get(ProtoRestSerializer.class.getSimpleName()))
-              .build();
-      if (httpBindingFieldNames.isEmpty()) {
-        returnExpr = ValueExpr.createNullExpr();
-      }
+    VariableExpr fieldsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("fields").setType(extractorReturnType).build());
+    Expr fieldsAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(fieldsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(FIXED_REST_TYPESTORE.get(HashMap.class.getSimpleName()))
+                    .setIsGeneric(true)
+                    .build())
+            .build();
 
-    } else {
-      fieldsVarExpr =
-          VariableExpr.withVariable(
-              Variable.builder().setName("fields").setType(extractorReturnType).build());
-      Expr fieldsAssignExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(fieldsVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(
-                  NewObjectExpr.builder()
-                      .setType(FIXED_REST_TYPESTORE.get(HashMap.class.getSimpleName()))
-                      .setIsGeneric(true)
-                      .build())
-              .build();
+    bodyStatements.add(ExprStatement.withExpr(fieldsAssignExpr));
 
-      bodyStatements.add(ExprStatement.withExpr(fieldsAssignExpr));
-      returnExpr = fieldsVarExpr;
+    TypeNode serializerVarType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ProtoRestSerializer.class)
+                .setGenerics(method.inputType().reference())
+                .build());
 
-      TypeNode serializerVarType =
-          TypeNode.withReference(
-              ConcreteReference.builder()
-                  .setClazz(ProtoRestSerializer.class)
-                  .setGenerics(method.inputType().reference())
-                  .build());
+    VariableExpr serializerVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("serializer").setType(serializerVarType).build());
 
-      VariableExpr serializerVarExpr =
-          VariableExpr.withVariable(
-              Variable.builder().setName("serializer").setType(serializerVarType).build());
+    Expr serializerAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(serializerVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(
+                        FIXED_REST_TYPESTORE.get(ProtoRestSerializer.class.getSimpleName()))
+                    .setMethodName("create")
+                    .setReturnType(serializerVarType)
+                    .build())
+            .build();
 
-      Expr serializerAssignExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(serializerVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(
-                  MethodInvocationExpr.builder()
-                      .setStaticReferenceType(
-                          FIXED_REST_TYPESTORE.get(ProtoRestSerializer.class.getSimpleName()))
-                      .setMethodName("create")
-                      .setReturnType(serializerVarType)
-                      .build())
-              .build();
-
-      serializerExpr = serializerVarExpr;
-
-      bodyStatements.add(ExprStatement.withExpr(serializerAssignExpr));
-    }
+    bodyStatements.add(ExprStatement.withExpr(serializerAssignExpr));
 
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
@@ -806,9 +893,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
       MethodInvocationExpr requestHasExpr = requestFieldHasExprBuilder.build();
 
       ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
-      if (fieldsVarExpr != null) {
-        paramsPutArgs.add(fieldsVarExpr);
-      }
+
+      paramsPutArgs.add(fieldsVarExpr);
+
       paramsPutArgs.add(
           ValueExpr.withValue(
               StringObjectValue.withValue(
@@ -817,24 +904,20 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
 
       Expr paramsPutExpr =
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(serializerExpr)
+              .setExprReferenceExpr(serializerVarExpr)
               .setMethodName(serializerMethodName)
               .setArguments(paramsPutArgs.build())
               .setReturnType(extractorReturnType)
               .build();
 
-      if (fieldsVarExpr == null) {
-        returnExpr = paramsPutExpr;
+      if (httpBindingFieldName.isOptional()) {
+        bodyStatements.add(
+            IfStatement.builder()
+                .setConditionExpr(requestHasExpr)
+                .setBody(Arrays.asList(ExprStatement.withExpr(paramsPutExpr)))
+                .build());
       } else {
-        if (httpBindingFieldName.isOptional()) {
-          bodyStatements.add(
-              IfStatement.builder()
-                  .setConditionExpr(requestHasExpr)
-                  .setBody(Arrays.asList(ExprStatement.withExpr(paramsPutExpr)))
-                  .build());
-        } else {
-          bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
-        }
+        bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
       }
     }
 
@@ -843,7 +926,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
     return LambdaExpr.builder()
         .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
         .setBody(bodyStatements)
-        .setReturnExpr(returnExpr)
+        .setReturnExpr(fieldsVarExpr)
         .build();
   }
 
@@ -961,5 +1044,27 @@ public class HttpJsonServiceStubClassComposer extends AbstractServiceStubClassCo
                 TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
             .setReturnExpr(longRunningClient)
             .build());
+  }
+
+  protected Optional<String> getCallableCreatorMethodName(TypeNode callableVarExprType) {
+    final String typeName = callableVarExprType.reference().name();
+    String streamName = "Unary";
+
+    // Special handling for pagination methods.
+    if (callableVarExprType.reference().generics().size() == 2
+        && callableVarExprType.reference().generics().get(1).name().endsWith("PagedResponse")) {
+      streamName = "Paged";
+    } else {
+      if (typeName.startsWith("Client")) {
+        return Optional.empty(); // not supported in REST transport
+      } else if (typeName.startsWith("Server")) {
+        return Optional.empty(); // not supported in REST transport (for now)
+      } else if (typeName.startsWith("Bidi")) {
+        return Optional.empty(); // not supported in REST transport
+      } else if (typeName.startsWith("Operation")) {
+        streamName = "Operation";
+      }
+    }
+    return Optional.of(String.format("create%sCallable", streamName));
   }
 }

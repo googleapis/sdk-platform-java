@@ -79,6 +79,15 @@ public abstract class Service {
     return null;
   }
 
+  public boolean hasLroMethods() {
+    for (Method method : methods()) {
+      if (method.hasLro() && method.lro().operationServiceStubType() == null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public abstract Builder toBuilder();
 
   public static Builder builder() {

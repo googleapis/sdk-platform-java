@@ -1310,7 +1310,7 @@ public class ServiceClientSampleCodeComposer {
         .map(
             arg ->
                 !isStringTypedResourceName(arg, resourceNames)
-                    ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
+                    ? DefaultValueComposer.createDefaultValue(arg, resourceNames, false)
                     : stringResourceNameDefaultValueExpr.apply(arg))
         .collect(Collectors.toList());
   }

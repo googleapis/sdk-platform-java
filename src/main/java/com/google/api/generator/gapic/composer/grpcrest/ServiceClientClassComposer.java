@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.model;
+package com.google.api.generator.gapic.composer.grpcrest;
 
-public enum Transport {
-  REST,
-  GRPC,
-  GRPC_REST;
+import com.google.api.generator.gapic.composer.common.AbstractServiceClientClassComposer;
 
-  /**
-   * Parse command line transport argument in the format `grpc+rest`.
-   *
-   * @param name name of the transport. Valid inputs are "grpc", "rest", "grpc+rest"
-   * @return the {@code Transport} enum matching the command line argument
-   */
-  public static Transport parse(String name) {
-    return valueOf(name.replace('+', '_').toUpperCase());
+public class ServiceClientClassComposer extends AbstractServiceClientClassComposer {
+  private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
+
+  protected ServiceClientClassComposer() {
+    super(GrpcRestContext.instance());
+  }
+
+  public static ServiceClientClassComposer instance() {
+    return INSTANCE;
   }
 }
