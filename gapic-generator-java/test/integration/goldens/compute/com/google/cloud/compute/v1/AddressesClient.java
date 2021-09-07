@@ -329,6 +329,8 @@ public class AddressesClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
+  @BetaApi(
+      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<Operation, Operation> deleteAsync(DeleteAddressRequest request) {
     return deleteOperationCallable().futureCall(request);
   }
@@ -438,6 +440,8 @@ public class AddressesClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
+  @BetaApi(
+      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<Operation, Operation> insertAsync(InsertAddressRequest request) {
     return insertOperationCallable().futureCall(request);
   }

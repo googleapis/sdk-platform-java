@@ -36,6 +36,7 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
 import com.google.cloud.compute.v1.Operation.Status;
+import com.google.cloud.compute.v1.WaitRegionOperationRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +108,41 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
                   })
               .build();
 
+  private static final ApiMethodDescriptor<WaitRegionOperationRequest, Operation>
+      waitMethodDescriptor =
+          ApiMethodDescriptor.<WaitRegionOperationRequest, Operation>newBuilder()
+              .setFullMethodName("google.cloud.compute.v1.RegionOperations/Wait")
+              .setHttpMethod(HttpMethods.POST)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<WaitRegionOperationRequest>newBuilder()
+                      .setPath(
+                          "/compute/v1/projects/projects/{project}/regions/{region}/operations/{operation}/wait",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<WaitRegionOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "operation", request.getOperation());
+                            serializer.putPathParam(fields, "project", request.getProject());
+                            serializer.putPathParam(fields, "region", request.getRegion());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<WaitRegionOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<Operation>newBuilder()
+                      .setDefaultInstance(Operation.getDefaultInstance())
+                      .build())
+              .build();
+
   private final UnaryCallable<GetRegionOperationRequest, Operation> getCallable;
+  private final UnaryCallable<WaitRegionOperationRequest, Operation> waitCallable;
 
   private final BackgroundResource backgroundResources;
   private final LongRunningClient longRunningClient;
@@ -156,10 +191,17 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
         HttpJsonCallSettings.<GetRegionOperationRequest, Operation>newBuilder()
             .setMethodDescriptor(getMethodDescriptor)
             .build();
+    HttpJsonCallSettings<WaitRegionOperationRequest, Operation> waitTransportSettings =
+        HttpJsonCallSettings.<WaitRegionOperationRequest, Operation>newBuilder()
+            .setMethodDescriptor(waitMethodDescriptor)
+            .build();
 
     this.getCallable =
         callableFactory.createUnaryCallable(
             getTransportSettings, settings.getSettings(), clientContext);
+    this.waitCallable =
+        callableFactory.createUnaryCallable(
+            waitTransportSettings, settings.waitSettings(), clientContext);
 
     this.longRunningClient =
         new HttpJsonLongRunningClient<GetRegionOperationRequest, Operation>(
@@ -174,12 +216,18 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
   public static List<ApiMethodDescriptor> getMethodDescriptors() {
     List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
     methodDescriptors.add(getMethodDescriptor);
+    methodDescriptors.add(waitMethodDescriptor);
     return methodDescriptors;
   }
 
   @Override
   public UnaryCallable<GetRegionOperationRequest, Operation> getCallable() {
     return getCallable;
+  }
+
+  @Override
+  public UnaryCallable<WaitRegionOperationRequest, Operation> waitCallable() {
+    return waitCallable;
   }
 
   @Override

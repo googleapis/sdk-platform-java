@@ -33,6 +33,9 @@
           "rpcs": {
             "Get": {
               "methods": ["get", "get", "getCallable"]
+            },
+            "Wait": {
+              "methods": ["wait", "wait", "waitCallable"]
             }
           }
         }

@@ -135,7 +135,7 @@ def _java_gapic_srcjar(
 
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
-    elif transport != "rest":
+    elif not transport or transport == "grpc":
         for keyword in NO_GRPC_CONFIG_ALLOWLIST:
             if keyword not in name:
                 fail("Missing a gRPC service config file")
@@ -230,16 +230,25 @@ def java_gapic_library(
         "@javax_annotation_javax_annotation_api//jar",
     ]
 
-    if transport == "rest":
-        actual_deps += [
-            "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
-        ]
-    else:
+    if not transport or transport == "grpc":
         actual_deps += [
             "@com_google_api_gax_java//gax-grpc:gax_grpc",
             "@io_grpc_grpc_java//core:core",
             "@io_grpc_grpc_java//protobuf:protobuf",
         ]
+    elif transport == "rest":
+        actual_deps += [
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        ]
+    elif transport == "grpc+rest":
+        actual_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc",
+            "@io_grpc_grpc_java//core:core",
+            "@io_grpc_grpc_java//protobuf:protobuf",
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        ]
+    else:
+        fail("Unknown transport: %s" % transport)
 
     native.java_library(
         name = name,
@@ -256,11 +265,7 @@ def java_gapic_library(
         "@junit_junit//jar",
     ]
 
-    if transport == "rest":
-        actual_test_deps += [
-            "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
-        ]
-    else:
+    if not transport or transport == "grpc":
         actual_test_deps += [
             "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
             "@io_grpc_grpc_java//auth:auth",
@@ -268,6 +273,21 @@ def java_gapic_library(
             "@io_grpc_grpc_java//stub:stub",
             "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
         ]
+    elif transport == "rest":
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        ]
+    elif transport == "grpc+rest":
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+            "@io_grpc_grpc_java//auth:auth",
+            "@io_grpc_grpc_netty_shaded//jar",
+            "@io_grpc_grpc_java//stub:stub",
+            "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        ]
+    else:
+        fail("Unknown transport: %s" % transport)
 
     _append_dep_without_duplicates(actual_test_deps, test_deps)
     _append_dep_without_duplicates(actual_test_deps, actual_deps)

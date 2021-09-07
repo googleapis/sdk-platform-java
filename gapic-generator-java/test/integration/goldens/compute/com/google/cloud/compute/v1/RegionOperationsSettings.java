@@ -72,6 +72,11 @@ public class RegionOperationsSettings extends ClientSettings<RegionOperationsSet
     return ((RegionOperationsStubSettings) getStubSettings()).getSettings();
   }
 
+  /** Returns the object with the settings used for calls to wait. */
+  public UnaryCallSettings<WaitRegionOperationRequest, Operation> waitSettings() {
+    return ((RegionOperationsStubSettings) getStubSettings()).waitSettings();
+  }
+
   public static final RegionOperationsSettings create(RegionOperationsStubSettings stub)
       throws IOException {
     return new RegionOperationsSettings.Builder(stub.toBuilder()).build();
@@ -173,6 +178,11 @@ public class RegionOperationsSettings extends ClientSettings<RegionOperationsSet
     /** Returns the builder for the settings used for calls to get. */
     public UnaryCallSettings.Builder<GetRegionOperationRequest, Operation> getSettings() {
       return getStubSettingsBuilder().getSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to wait. */
+    public UnaryCallSettings.Builder<WaitRegionOperationRequest, Operation> waitSettings() {
+      return getStubSettingsBuilder().waitSettings();
     }
 
     @Override
