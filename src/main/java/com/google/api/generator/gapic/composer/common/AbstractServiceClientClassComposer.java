@@ -135,7 +135,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
-    boolean hasLroClient = exposeOperationsClient(service);
+    boolean hasLroClient = service.hasStandardLroMethods();
 
     Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
 
@@ -220,15 +220,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             service, messageTypes, typeStore, resourceNames, grpcRpcToJavaMethodMetadata));
     methods.addAll(createBackgroundResourceMethods(service, typeStore));
     return methods;
-  }
-
-  private static boolean exposeOperationsClient(Service service) {
-    for (Method method : service.methods()) {
-      if (method.hasLro() && method.lro().operationServiceStubType() == null) {
-        return true;
-      }
-    }
-    return false;
   }
 
   private List<Statement> createFieldDeclarations(

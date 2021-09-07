@@ -50,7 +50,6 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
-import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
@@ -178,12 +177,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
 
   @Override
   protected List<MethodDefinition> createOperationsStubGetterMethod(
-      VariableExpr operationsStubVarExpr) {
-    return Collections.emptyList();
-  }
-
-  public HttpJsonServiceStubClassComposer(TransportContext transportContext) {
-    super(transportContext);
+      Service service, VariableExpr operationsStubVarExpr) {
+    if (!service.hasStandardLroMethods()) {
+      return Collections.emptyList();
+    }
+    return super.createOperationsStubGetterMethod(service, operationsStubVarExpr);
   }
 
   @Override

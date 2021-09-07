@@ -81,6 +81,15 @@ public abstract class Service {
 
   public boolean hasLroMethods() {
     for (Method method : methods()) {
+      if (method.hasLro()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean hasStandardLroMethods() {
+    for (Method method : methods()) {
       if (method.hasLro() && method.lro().operationServiceStubType() == null) {
         return true;
       }

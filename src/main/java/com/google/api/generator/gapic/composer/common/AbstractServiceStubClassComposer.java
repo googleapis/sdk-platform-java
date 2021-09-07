@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
@@ -112,10 +113,11 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
   private List<MethodDefinition> createClassMethods(
       Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
-    boolean hasLroClient = service.hasLroMethods();
+    boolean hasLroClient = service.hasStandardLroMethods();
     List<MethodDefinition> methods = new ArrayList<>();
     if (hasLroClient) {
-      methods.addAll(createOperationsStubGetters(typeStore));
+      TypeNode operationsStubType = service.operationServiceStubType();
+      methods.addAll(createOperationsStubGetters(typeStore, operationsStubType));
     }
     methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
@@ -139,7 +141,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return javaMethods;
   }
 
-  private MethodDefinition createOperationCallableGetter(Method method, TypeStore typeStore) {
+  private MethodDefinition createOperationCallableGetter(
+      Method method, TypeStore typeStore) {
     return createCallableGetterHelper(method, typeStore, true, false);
   }
 
@@ -199,7 +202,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return createCallableGetterMethodDefinition(returnType, methodName, annotations, typeStore);
   }
 
-  private List<MethodDefinition> createOperationsStubGetters(TypeStore typeStore) {
+  private List<MethodDefinition> createOperationsStubGetters(TypeStore typeStore, TypeNode operationsStubType) {
     List<MethodDefinition> getters = new ArrayList<>();
 
     Iterator<String> operationStubNameIt =
@@ -209,8 +212,13 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     while (operationStubNameIt.hasNext() && operationStubTypeIt.hasNext()) {
       String methodName =
           String.format("get%s", JavaStyle.toUpperCamelCase(operationStubNameIt.next()));
+      //TODO: refactor this
+      TypeNode actualOperationsStubType = operationStubTypeIt.next();
+      if (operationsStubType != null) {
+        actualOperationsStubType = operationsStubType;
+      }
 
-      getters.add(createOperationsStubGetterMethodDefinition(operationStubTypeIt.next(), methodName, typeStore));
+      getters.add(createOperationsStubGetterMethodDefinition(actualOperationsStubType, methodName, typeStore));
     }
 
     return getters;
