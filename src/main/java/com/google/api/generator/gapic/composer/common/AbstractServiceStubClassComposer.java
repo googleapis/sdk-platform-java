@@ -18,11 +18,13 @@ import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.Reference;
@@ -30,6 +32,8 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -41,6 +45,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,12 +118,15 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
   private List<MethodDefinition> createClassMethods(
       Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
-    boolean hasLroClient = service.hasStandardLroMethods();
     List<MethodDefinition> methods = new ArrayList<>();
-    if (hasLroClient) {
+    if (service.hasStandardLroMethods()) {
       TypeNode operationsStubType = service.operationServiceStubType();
       methods.addAll(createOperationsStubGetters(typeStore, operationsStubType));
     }
+
+    if (service.operationPollingMethod() != null) {
+      methods.addAll(createLongRunningClientGetters(typeStore));
+     }
     methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
     return methods;
@@ -222,6 +230,14 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     }
 
     return getters;
+  }
+
+  private List<MethodDefinition> createLongRunningClientGetters(TypeStore typeStore) {
+    return ImmutableList.of(createCallableGetterMethodDefinition(
+        TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)),
+        "longRunningClient",
+        ImmutableList.of(AnnotationNode.withType(typeStore.get("BetaApi"))),
+        typeStore));
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethodOverrides() {

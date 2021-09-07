@@ -515,10 +515,11 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     if (hasLroClient) {
       Iterator<String> opClientNamesIt = getTransportContext().operationsClientNames().iterator();
-      Iterator<TypeNode> opClientTypesIt =  getTransportContext().operationsClientTypes().iterator();
+      Iterator<TypeNode> opClientTypesIt = getTransportContext().operationsClientTypes().iterator();
 
       while (opClientNamesIt.hasNext() && opClientTypesIt.hasNext()) {
-        String opClientMethodName = String.format("get%s", JavaStyle.toUpperCamelCase(opClientNamesIt.next()));
+        String opClientMethodName =
+            String.format("get%s", JavaStyle.toUpperCamelCase(opClientNamesIt.next()));
         getOperationsClientMethodNames.add(opClientMethodName);
         methodNameToTypes.put(opClientMethodName, opClientTypesIt.next());
       }
@@ -745,6 +746,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         method.isPaged()
             ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
+    List<AnnotationNode> annotations = new ArrayList<>();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
       methodOutputType =
@@ -755,6 +757,13 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                   .copyAndSetGenerics(
                       Arrays.asList(
                           lro.responseType().reference(), lro.metadataType().reference())));
+      if (method.hasLro() && method.lro().operationServiceStubType() != null) {
+        annotations.add(
+            AnnotationNode.withTypeAndDescription(
+                typeStore.get("BetaApi"),
+                "The surface for long-running operations is not stable yet and may change in the"
+                    + " future."));
+      }
     }
 
     // Construct the method that accepts a request proto.
@@ -796,8 +805,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setArguments(Arrays.asList(requestArgVarExpr));
 
     if (method.isDeprecated()) {
-      methodBuilder =
-          methodBuilder.setAnnotations(Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
 
     if (isProtoEmptyType(methodOutputType)) {
@@ -809,6 +817,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       methodBuilder =
           methodBuilder.setReturnExpr(callableMethodExpr).setReturnType(methodOutputType);
     }
+
+    methodBuilder.setAnnotations(annotations);
+
     return methodBuilder.build();
   }
 

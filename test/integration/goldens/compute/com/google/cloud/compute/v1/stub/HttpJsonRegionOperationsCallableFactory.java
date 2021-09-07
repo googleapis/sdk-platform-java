@@ -20,7 +20,6 @@ import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
-import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.ClientContext;
@@ -29,7 +28,6 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.longrunning.Operation;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -41,7 +39,7 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi
 public class HttpJsonRegionOperationsCallableFactory
-    implements HttpJsonStubCallableFactory<Operation, BackgroundResource> {
+    implements HttpJsonStubCallableFactory<Object, BackgroundResource> {
 
   @Override
   public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
@@ -76,18 +74,10 @@ public class HttpJsonRegionOperationsCallableFactory
   @Override
   public <RequestT, ResponseT, MetadataT>
       OperationCallable<RequestT, ResponseT, MetadataT> createOperationCallable(
-          HttpJsonCallSettings<RequestT, Operation> httpJsonCallSettings,
+          HttpJsonCallSettings<RequestT, Object> httpJsonCallSettings,
           OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,
           ClientContext clientContext,
           BackgroundResource operationsStub) {
-    UnaryCallable<RequestT, Operation> innerCallable =
-        HttpJsonCallableFactory.createBaseUnaryCallable(
-            httpJsonCallSettings, callSettings.getInitialCallSettings(), clientContext);
-    HttpJsonOperationSnapshotCallable<RequestT, Operation> initialCallable =
-        new HttpJsonOperationSnapshotCallable<RequestT, Operation>(
-            innerCallable,
-            httpJsonCallSettings.getMethodDescriptor().getOperationSnapshotFactory());
-    return HttpJsonCallableFactory.createOperationCallable(
-        callSettings, clientContext, operationsStub.longRunningClient(), initialCallable);
+    return null;
   }
 }

@@ -1023,27 +1023,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .build());
   }
 
-  @Override
-  protected List<MethodDefinition> createLongRunningClientGetter() {
-    VariableExpr longRunningClient =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName("longRunningClient")
-                .setType(
-                    TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
-                .build());
-
-    return ImmutableList.of(
-        MethodDefinition.builder()
-            .setName("longRunningClient")
-            .setScope(ScopeNode.PUBLIC)
-            .setIsOverride(true)
-            .setReturnType(
-                TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
-            .setReturnExpr(longRunningClient)
-            .build());
-  }
-
   protected Optional<String> getCallableCreatorMethodName(TypeNode callableVarExprType) {
     final String typeName = callableVarExprType.reference().name();
     String streamName = "Unary";

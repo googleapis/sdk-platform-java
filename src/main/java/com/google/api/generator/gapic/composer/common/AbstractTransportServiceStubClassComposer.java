@@ -20,6 +20,7 @@ import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.ServerStreamingCallable;
@@ -887,7 +888,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .build();
     List<MethodDefinition> javaMethods = new ArrayList<>();
     if (service.operationPollingMethod() != null) {
-      javaMethods.addAll(createLongRunningClientGetter());
+      javaMethods.addAll(createLongRunningClientGetters());
     }
     javaMethods.add(
         methodMakerStarterFn
@@ -970,8 +971,24 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return false;
   }
 
-  protected List<MethodDefinition> createLongRunningClientGetter() {
-    return Collections.emptyList();
+  protected List<MethodDefinition> createLongRunningClientGetters() {
+    VariableExpr longRunningClient =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("longRunningClient")
+                .setType(
+                    TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
+                .build());
+
+    return ImmutableList.of(
+        MethodDefinition.builder()
+            .setName("longRunningClient")
+            .setScope(ScopeNode.PUBLIC)
+            .setIsOverride(true)
+            .setReturnType(
+                TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
+            .setReturnExpr(longRunningClient)
+            .build());
   }
 
   private TypeStore createDynamicTypes(Service service, String stubPakkage) {
