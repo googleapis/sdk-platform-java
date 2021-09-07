@@ -299,7 +299,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
   protected TypeNode getOperationsStubType(Service service) {
     TypeNode opeationsStubType = service.operationServiceStubType();
     if (opeationsStubType == null) {
-      opeationsStubType = getTransportContext().operationsStubType();
+      opeationsStubType = getTransportContext().operationsStubTypes().get(0);
     }
     return opeationsStubType;
   }

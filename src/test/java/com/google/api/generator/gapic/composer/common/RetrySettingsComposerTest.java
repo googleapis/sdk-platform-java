@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.grpc.GrpcContext;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
@@ -329,7 +330,9 @@ public class RetrySettingsComposerTest {
             waitMethod,
             builderVarExpr,
             RETRY_CODES_DEFINITIONS_VAR_EXPR,
-            RETRY_PARAM_DEFINITIONS_VAR_EXPR);
+            RETRY_PARAM_DEFINITIONS_VAR_EXPR,
+            GrpcContext.instance().operationResponseTransformerType(),
+            GrpcContext.instance().operationMetadataTransformerType());
     builderExpr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(

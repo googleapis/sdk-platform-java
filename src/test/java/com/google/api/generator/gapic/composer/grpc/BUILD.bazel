@@ -8,8 +8,10 @@ TESTS = [
     "GrpcServiceStubClassComposerTest",
     "MockServiceClassComposerTest",
     "MockServiceImplClassComposerTest",
+    "ServiceClientClassComposerTest",
     "ServiceClientTestClassComposerTest",
     "ServiceSettingsClassComposerTest",
+    "ServiceStubClassComposerTest",
     "ServiceStubSettingsClassComposerTest",
 ]
 

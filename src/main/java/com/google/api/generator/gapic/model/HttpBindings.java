@@ -57,6 +57,8 @@ public abstract class HttpBindings {
 
   public abstract Set<HttpBinding> bodyParameters();
 
+  public abstract boolean isAsteriskBody();
+
   public static HttpBindings.Builder builder() {
     return new AutoValue_HttpBindings.Builder()
         .setPathParameters(ImmutableSet.of())
@@ -92,6 +94,8 @@ public abstract class HttpBindings {
     public abstract HttpBindings.Builder setQueryParameters(Set<HttpBinding> queryParameters);
 
     public abstract HttpBindings.Builder setBodyParameters(Set<HttpBinding> bodyParameters);
+
+    public abstract HttpBindings.Builder setIsAsteriskBody(boolean asteriskBody);
 
     public abstract HttpBindings autoBuild();
 

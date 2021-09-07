@@ -261,7 +261,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private final UnaryCallable<ListAddressesRequest, ListPagedResponse> listPagedCallable;
 
   private final BackgroundResource backgroundResources;
-  private final HttpJsonRegionOperationsStub operationsStub;
+  private final HttpJsonRegionOperationsStub httpJsonOperationsStub;
   private final HttpJsonStubCallableFactory callableFactory;
 
   public static final HttpJsonAddressesStub create(AddressesStubSettings settings)
@@ -300,7 +300,8 @@ public class HttpJsonAddressesStub extends AddressesStub {
       HttpJsonStubCallableFactory callableFactory)
       throws IOException {
     this.callableFactory = callableFactory;
-    this.operationsStub = HttpJsonRegionOperationsStub.create(clientContext, callableFactory);
+    this.httpJsonOperationsStub =
+        HttpJsonRegionOperationsStub.create(clientContext, callableFactory);
 
     HttpJsonCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
         aggregatedListTransportSettings =
@@ -334,7 +335,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
             deleteTransportSettings,
             settings.deleteOperationSettings(),
             clientContext,
-            operationsStub);
+            httpJsonOperationsStub);
     this.insertCallable =
         callableFactory.createUnaryCallable(
             insertTransportSettings, settings.insertSettings(), clientContext);
@@ -343,7 +344,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
             insertTransportSettings,
             settings.insertOperationSettings(),
             clientContext,
-            operationsStub);
+            httpJsonOperationsStub);
     this.listCallable =
         callableFactory.createUnaryCallable(
             listTransportSettings, settings.listSettings(), clientContext);

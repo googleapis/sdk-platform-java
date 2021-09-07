@@ -40,10 +40,6 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 public abstract class AddressesStub implements BackgroundResource {
 
-  public RegionOperationsStub getOperationsStub() {
-    throw new UnsupportedOperationException("Not implemented: getOperationsStub()");
-  }
-
   public UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
       aggregatedListPagedCallable() {
     throw new UnsupportedOperationException("Not implemented: aggregatedListPagedCallable()");

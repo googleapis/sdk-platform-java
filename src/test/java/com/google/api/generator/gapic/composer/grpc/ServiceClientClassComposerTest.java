@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.common;
+package com.google.api.generator.gapic.composer.grpc;
 
 import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
 
@@ -28,7 +28,7 @@ import org.junit.Test;
 public class ServiceClientClassComposerTest {
   @Test
   public void generateServiceClasses() {
-    GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, echoProtoService);
 
@@ -41,7 +41,7 @@ public class ServiceClientClassComposerTest {
 
   @Test
   public void generateServiceClasses_deprecated() {
-    GapicContext context = TestProtoLoader.instance().parseDeprecatedService();
+    GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 
@@ -55,7 +55,7 @@ public class ServiceClientClassComposerTest {
 
   @Test
   public void generateServiceClasses_methodSignatureHasNestedFields() {
-    GapicContext context = TestProtoLoader.instance().parseShowcaseIdentity();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseIdentity();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 
@@ -68,7 +68,7 @@ public class ServiceClientClassComposerTest {
 
   @Test
   public void generateServiceClasses_bookshopNameConflicts() {
-    GapicContext context = TestProtoLoader.instance().parseBookshopService();
+    GapicContext context = GrpcTestProtoLoader.instance().parseBookshopService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 

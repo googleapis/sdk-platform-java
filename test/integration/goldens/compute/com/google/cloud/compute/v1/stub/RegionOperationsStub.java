@@ -16,10 +16,13 @@
 
 package com.google.cloud.compute.v1.stub;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
+import com.google.cloud.compute.v1.WaitRegionOperationRequest;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -31,8 +34,17 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 public abstract class RegionOperationsStub implements BackgroundResource {
 
+  @BetaApi
+  public LongRunningClient longRunningClient() {
+    throw new UnsupportedOperationException("Not implemented: longRunningClient()");
+  }
+
   public UnaryCallable<GetRegionOperationRequest, Operation> getCallable() {
     throw new UnsupportedOperationException("Not implemented: getCallable()");
+  }
+
+  public UnaryCallable<WaitRegionOperationRequest, Operation> waitCallable() {
+    throw new UnsupportedOperationException("Not implemented: waitCallable()");
   }
 
   @Override

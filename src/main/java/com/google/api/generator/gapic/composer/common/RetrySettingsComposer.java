@@ -248,7 +248,9 @@ public class RetrySettingsComposer {
       Method method,
       VariableExpr builderVarExpr,
       VariableExpr retryableCodeDefsVarExpr,
-      VariableExpr retryParamDefsVarExpr) {
+      VariableExpr retryParamDefsVarExpr,
+      TypeNode operationResponseTransformer,
+      TypeNode operationMetadataTransformer) {
     Preconditions.checkState(
         method.hasLro(),
         String.format(
@@ -325,10 +327,7 @@ public class RetrySettingsComposer {
             .setMethodName("setResponseTransformer")
             .setArguments(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        TypeNode.withReference(
-                            ConcreteReference.withClazz(
-                                ProtoOperationTransformers.ResponseTransformer.class)))
+                    .setStaticReferenceType(operationResponseTransformer)
                     .setMethodName("create")
                     .setArguments(classFieldRefFn.apply(method.lro().responseType()))
                     .build())
@@ -339,10 +338,7 @@ public class RetrySettingsComposer {
             .setMethodName("setMetadataTransformer")
             .setArguments(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        TypeNode.withReference(
-                            ConcreteReference.withClazz(
-                                ProtoOperationTransformers.MetadataTransformer.class)))
+                    .setStaticReferenceType(operationMetadataTransformer)
                     .setMethodName("create")
                     .setArguments(classFieldRefFn.apply(method.lro().metadataType()))
                     .build())

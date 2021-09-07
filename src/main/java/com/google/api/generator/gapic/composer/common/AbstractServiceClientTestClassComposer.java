@@ -109,12 +109,14 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
+    return generate(ClassNames.getServiceClientTestClassName(service), context, service);
+  }
+
+  protected GapicClass generate(String className, GapicContext context, Service service) {
     Map<String, ResourceName> resourceNames = context.helperResourceNames();
-    Map<String, Message> messageTypes = context.messages();
     String pakkage = service.pakkage();
     TypeStore typeStore = new TypeStore();
     addDynamicTypes(context, service, typeStore);
-    String className = ClassNames.getServiceClientTestClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
     Map<String, VariableExpr> classMemberVarExprs =
@@ -196,7 +198,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.add(
-        createStartStaticServerMethod(service, context, classMemberVarExprs, typeStore));
+        createStartStaticServerMethod(
+            service, context, classMemberVarExprs, typeStore, "newBuilder"));
     javaMethods.add(createStopServerMethod(service, classMemberVarExprs));
     javaMethods.add(createSetUpMethod(service, classMemberVarExprs, typeStore));
     javaMethods.add(createTearDownMethod(service, classMemberVarExprs));
@@ -207,7 +210,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Service service,
       GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      TypeStore typeStore);
+      TypeStore typeStore,
+      String newBuilderMethod);
 
   protected abstract MethodDefinition createStopServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs);
@@ -470,7 +474,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = createDefaultValue(methodArg, resourceNames);
         methodExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -735,6 +739,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes);
 
+  protected abstract Expr createDefaultValue(
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames);
+
   protected List<Statement> createRpcExceptionTestStatements(
       Method method,
       List<MethodArgument> methodSignature,
@@ -766,7 +773,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = createDefaultValue(methodArg, resourceNames);
         tryBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
