@@ -4,22 +4,22 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "66db02e9b97c724179a2110671a51bc2ce92b3df"
+        "sha": "6f47302c3b61c514370262b2b3590d2caa0e4092"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "ed739492993c4a99629b6430affdd6c0fb59d435",
-        "internalRef": "391764852"
+        "sha": "aa15f328736501d01fac1d599655c392b5b12a3c",
+        "internalRef": "394033461"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "31728d872f50e439ded2f67fa8d67955b26a4e35"
+        "sha": "9a238a0623879c3de129a376c6085d4a862f6eb9"
       }
     }
   ],
@@ -33,6 +33,7 @@
     ".github/generated-files-bot.yml",
     ".github/readme/synth.py",
     ".github/release-please.yml",
+    ".github/release-trigger.yml",
     ".github/snippet-bot.yml",
     ".github/sync-repo-settings.yaml",
     ".github/trusted-contribution.yml",
@@ -141,6 +142,8 @@
     "proto-google-common-protos/src/main/java/com/google/api/Endpoint.java",
     "proto-google-common-protos/src/main/java/com/google/api/EndpointOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/api/EndpointProto.java",
+    "proto-google-common-protos/src/main/java/com/google/api/ErrorReason.java",
+    "proto-google-common-protos/src/main/java/com/google/api/ErrorReasonProto.java",
     "proto-google-common-protos/src/main/java/com/google/api/FieldBehavior.java",
     "proto-google-common-protos/src/main/java/com/google/api/FieldBehaviorProto.java",
     "proto-google-common-protos/src/main/java/com/google/api/Http.java",
@@ -222,6 +225,8 @@
     "proto-google-common-protos/src/main/java/com/google/api/VisibilityProto.java",
     "proto-google-common-protos/src/main/java/com/google/api/VisibilityRule.java",
     "proto-google-common-protos/src/main/java/com/google/api/VisibilityRuleOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/cloud/ExtendedOperationsProto.java",
+    "proto-google-common-protos/src/main/java/com/google/cloud/OperationResponseMapping.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuditLog.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuditLogOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuditLogProto.java",
@@ -229,6 +234,9 @@
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuthenticationInfoOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuthorizationInfo.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/AuthorizationInfoOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadata.java",
+    "proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadataOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/cloud/audit/BigQueryAuditMetadataProto.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/RequestMetadata.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/RequestMetadataOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/cloud/audit/ResourceLocation.java",
@@ -317,6 +325,9 @@
     "proto-google-common-protos/src/main/java/com/google/type/LatLng.java",
     "proto-google-common-protos/src/main/java/com/google/type/LatLngOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/LatLngProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/LocalizedText.java",
+    "proto-google-common-protos/src/main/java/com/google/type/LocalizedTextOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/type/LocalizedTextProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/Money.java",
     "proto-google-common-protos/src/main/java/com/google/type/MoneyOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/MoneyProto.java",
@@ -368,6 +379,8 @@
     "proto-google-common-protos/src/main/proto/google/api/visibility.proto",
     "proto-google-common-protos/src/main/proto/google/cloud/audit/audit_log.proto",
     "proto-google-common-protos/src/main/proto/google/cloud/audit/bigquery_audit_metadata.proto",
+    "proto-google-common-protos/src/main/proto/google/cloud/common_resources.proto",
+    "proto-google-common-protos/src/main/proto/google/cloud/extended_operations.proto",
     "proto-google-common-protos/src/main/proto/google/geo/type/viewport.proto",
     "proto-google-common-protos/src/main/proto/google/logging/type/http_request.proto",
     "proto-google-common-protos/src/main/proto/google/logging/type/log_severity.proto",
