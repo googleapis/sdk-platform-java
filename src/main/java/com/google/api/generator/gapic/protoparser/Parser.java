@@ -564,7 +564,7 @@ public class Parser {
     List<FieldDescriptor> fields = messageDescriptor.getFields();
     HashMap<String, String> operationRequestFields = new HashMap<String, String>();
     BiMap<String, String> operationResponseFields = HashBiMap.create();
-    OperationResponse.Builder operationResponse = OperationResponse.builder();
+    OperationResponse.Builder operationResponse = null;
     for (FieldDescriptor fd : fields) {
       if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationRequestField)) {
         String orf = fd.getOptions().getExtension(ExtendedOperationsProto.operationRequestField);
@@ -577,6 +577,9 @@ public class Parser {
       if (fd.getOptions().hasExtension(ExtendedOperationsProto.operationField)) {
         OperationResponseMapping orm =
             fd.getOptions().getExtension(ExtendedOperationsProto.operationField);
+        if (operationResponse == null) {
+          operationResponse = OperationResponse.builder();
+        }
         if (orm.equals(OperationResponseMapping.NAME)) {
           operationResponse.setNameFieldName(fd.getName());
         } else if (orm.equals(OperationResponseMapping.STATUS)) {
@@ -599,7 +602,7 @@ public class Parser {
             .setOuterNestedTypes(outerNestedTypes)
             .setOperationRequestFields(operationRequestFields)
             .setOperationResponseFields(operationResponseFields)
-            .setOperationResponse(operationResponse.build())
+            .setOperationResponse(operationResponse != null ? operationResponse.build() : null)
             .build());
     return messages;
   }
