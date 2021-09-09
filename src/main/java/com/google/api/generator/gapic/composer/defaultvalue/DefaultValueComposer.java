@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameTokenizer;
@@ -265,9 +266,12 @@ public class DefaultValueComposer {
             .setStaticReferenceType(message.type())
             .setMethodName("newBuilder")
             .build();
+
     for (Field field : message.fields()) {
       if (field.isContainedInOneof() // Avoid colliding fields.
-          || ((field.isMessage() || field.isEnum()) // Avoid importing unparsed messages.
+          || ((field.isMessage()
+                  || (field.isEnum()
+                      && message.operationResponse() == null)) // Avoid importing unparsed messages.
               && !field.isRepeated()
               && !messageTypes.containsKey(field.type().reference().fullName()))) {
         continue;
@@ -292,7 +296,34 @@ public class DefaultValueComposer {
                 .setReturnType(TypeNode.STRING)
                 .build();
       } else {
-        defaultExpr = createDefaultValue(field, true);
+        if (message.operationResponse() != null) {
+          if (field.name().equals(message.operationResponse().statusFieldName())) {
+            String statusTypeName = message.operationResponse().statusFieldTypeName();
+            String statusClassName = statusTypeName.substring(statusTypeName.lastIndexOf('.') + 1);
+
+            TypeNode statusType =
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName(statusClassName)
+                        .setPakkage(message.type().reference().fullName())
+                        .setIsStaticImport(false)
+                        .build());
+            defaultExpr =
+                VariableExpr.builder()
+                    .setVariable(Variable.builder().setName("DONE").setType(statusType).build())
+                    .setStaticReferenceType(statusType)
+                    .build();
+
+          } else if (field.name().equals(message.operationResponse().errorCodeFieldName())) {
+            defaultExpr =
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(field.type()).setValue("0").build());
+          }
+        }
+
+        if (defaultExpr == null) {
+          defaultExpr = createDefaultValue(field, true);
+        }
       }
       builderExpr =
           MethodInvocationExpr.builder()

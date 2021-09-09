@@ -28,10 +28,9 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.cloud.compute.v1.Operation.Status;
 import com.google.cloud.compute.v1.stub.HttpJsonAddressesStub;
 import com.google.common.collect.Lists;
-import com.google.longrunning.Operation;
-import com.google.protobuf.Any;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,15 +134,15 @@ public class AddressesClientTest {
 
   @Test
   public void deleteTest() throws Exception {
-    com.google.cloud.compute.v1.Operation expectedResponse =
-        com.google.cloud.compute.v1.Operation.newBuilder()
+    Operation expectedResponse =
+        Operation.newBuilder()
             .setClientOperationId("clientOperationId-1230366697")
             .setCreationTimestamp("creationTimestamp-370203401")
             .setDescription("description-1724546052")
             .setEndTime("endTime-1607243192")
             .setError(Error.newBuilder().build())
             .setHttpErrorMessage("httpErrorMessage1577303431")
-            .setHttpErrorStatusCode(1386087020)
+            .setHttpErrorStatusCode(0)
             .setId(3355)
             .setInsertTime("insertTime966165798")
             .setKind("kind3292052")
@@ -153,6 +152,7 @@ public class AddressesClientTest {
             .setRegion("region-934795532")
             .setSelfLink("selfLink1191800166")
             .setStartTime("startTime-2129294769")
+            .setStatus(Status.DONE)
             .setStatusMessage("statusMessage-958704715")
             .setTargetId(-815576439)
             .setTargetLink("targetLink486368555")
@@ -160,20 +160,13 @@ public class AddressesClientTest {
             .addAllWarnings(new ArrayList<Warnings>())
             .setZone("zone3744684")
             .build();
-    Operation resultOperation =
-        Operation.newBuilder()
-            .setName("deleteTest")
-            .setDone(true)
-            .setResponse(Any.pack(expectedResponse))
-            .build();
-    mockService.addResponse(resultOperation);
+    mockService.addResponse(expectedResponse);
 
     String project = "project-309310695";
     String region = "region-934795532";
     String address = "address-1147692044";
 
-    com.google.cloud.compute.v1.Operation actualResponse =
-        client.deleteAsync(project, region, address).get();
+    Operation actualResponse = client.deleteAsync(project, region, address).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
@@ -210,15 +203,15 @@ public class AddressesClientTest {
 
   @Test
   public void insertTest() throws Exception {
-    com.google.cloud.compute.v1.Operation expectedResponse =
-        com.google.cloud.compute.v1.Operation.newBuilder()
+    Operation expectedResponse =
+        Operation.newBuilder()
             .setClientOperationId("clientOperationId-1230366697")
             .setCreationTimestamp("creationTimestamp-370203401")
             .setDescription("description-1724546052")
             .setEndTime("endTime-1607243192")
             .setError(Error.newBuilder().build())
             .setHttpErrorMessage("httpErrorMessage1577303431")
-            .setHttpErrorStatusCode(1386087020)
+            .setHttpErrorStatusCode(0)
             .setId(3355)
             .setInsertTime("insertTime966165798")
             .setKind("kind3292052")
@@ -228,6 +221,7 @@ public class AddressesClientTest {
             .setRegion("region-934795532")
             .setSelfLink("selfLink1191800166")
             .setStartTime("startTime-2129294769")
+            .setStatus(Status.DONE)
             .setStatusMessage("statusMessage-958704715")
             .setTargetId(-815576439)
             .setTargetLink("targetLink486368555")
@@ -235,20 +229,13 @@ public class AddressesClientTest {
             .addAllWarnings(new ArrayList<Warnings>())
             .setZone("zone3744684")
             .build();
-    Operation resultOperation =
-        Operation.newBuilder()
-            .setName("insertTest")
-            .setDone(true)
-            .setResponse(Any.pack(expectedResponse))
-            .build();
-    mockService.addResponse(resultOperation);
+    mockService.addResponse(expectedResponse);
 
     String project = "project-309310695";
     String region = "region-934795532";
     Address addressResource = Address.newBuilder().build();
 
-    com.google.cloud.compute.v1.Operation actualResponse =
-        client.insertAsync(project, region, addressResource).get();
+    Operation actualResponse = client.insertAsync(project, region, addressResource).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();

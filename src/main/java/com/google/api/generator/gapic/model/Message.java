@@ -53,6 +53,7 @@ public abstract class Message {
 
   public abstract ImmutableMap<String, Field> fieldMap();
 
+  @Nullable
   public abstract OperationResponse operationResponse();
 
   public abstract Map<String, String> operationRequestFields();
@@ -113,8 +114,7 @@ public abstract class Message {
         .setFieldMap(Collections.emptyMap())
         .setEnumValues(Collections.emptyMap())
         .setOperationResponseFields(HashBiMap.create())
-        .setOperationRequestFields(Collections.emptyMap())
-        .setOperationResponse(OperationResponse.builder().build());
+        .setOperationRequestFields(Collections.emptyMap());
   }
 
   @AutoValue.Builder

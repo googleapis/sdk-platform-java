@@ -511,11 +511,14 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     String statusTypeName = operationResponse.statusFieldTypeName();
     String statusClassName = statusTypeName.substring(statusTypeName.lastIndexOf('.') + 1);
 
+    TypeNode opType =
+        protoMethod.hasLro() ? protoMethod.lro().responseType() : protoMethod.outputType();
+
     TypeNode statusType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(statusClassName)
-                .setPakkage(protoMethod.outputType().reference().fullName())
+                .setPakkage(opType.reference().fullName())
                 .setIsStaticImport(false)
                 .build());
     VariableExpr statusDoneExpr =

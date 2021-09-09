@@ -16,23 +16,17 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class OperationResponse {
-  @Nullable
   public abstract String nameFieldName();
 
-  @Nullable
   public abstract String statusFieldName();
 
-  @Nullable
   public abstract String errorCodeFieldName();
 
-  @Nullable
   public abstract String errorMessageFieldName();
 
-  @Nullable
   public abstract String statusFieldTypeName();
 
   public static Builder builder() {
