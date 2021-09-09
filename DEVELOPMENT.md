@@ -24,8 +24,8 @@
     cp -r gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta1
     ```
 
-3.  Add the new microgenerator rules to the protobuf directory's `BUILD.bazel`
-    file as follows:
+3.  Add the new microgenerator rules to
+    `googleapis/google/showcase/v1beta1/BUILD.bazel` file as follows:
 
     ```python
     load(
