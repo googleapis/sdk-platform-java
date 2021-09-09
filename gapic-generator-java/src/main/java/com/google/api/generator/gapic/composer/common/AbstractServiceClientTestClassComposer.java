@@ -59,6 +59,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -413,7 +414,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             .setValueExpr(expectedResponseValExpr)
             .build());
 
-    if (method.hasLro()) {
+    if (method.hasLro()
+        && (method.lro().operationServiceStubType() == null
+            || !method.lro().responseType().equals(method.outputType()))) {
+
       VariableExpr resultOperationVarExpr =
           VariableExpr.withVariable(
               Variable.builder()
@@ -908,24 +912,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             ClassNames.getServiceClientClassName(service));
       }
     }
-  }
-
-  private static TypeNode getOperationCallSettingsTypeHelper(
-      Method protoMethod, boolean isBuilder) {
-    Preconditions.checkState(
-        protoMethod.hasLro(),
-        String.format("Cannot get OperationCallSettings on non-LRO method %s", protoMethod.name()));
-    Class callSettingsClazz =
-        isBuilder ? OperationCallSettings.Builder.class : OperationCallSettings.class;
-    return TypeNode.withReference(
-        ConcreteReference.builder()
-            .setClazz(callSettingsClazz)
-            .setGenerics(
-                Arrays.asList(
-                    protoMethod.inputType().reference(),
-                    protoMethod.lro().responseType().reference(),
-                    protoMethod.lro().metadataType().reference()))
-            .build());
   }
 
   private static TypeNode getCallSettingsTypeHelper(
