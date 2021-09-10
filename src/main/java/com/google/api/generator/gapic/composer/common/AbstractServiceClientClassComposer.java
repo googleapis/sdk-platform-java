@@ -108,9 +108,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
 
-  private static final TypeNode OBJECTS_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(Objects.class));
-
   private enum CallableMethodKind {
     REGULAR,
     LRO,
@@ -237,7 +234,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
     }
 
-    return fieldNameToTypes.entrySet().stream()
+    return fieldNameToTypes
+        .entrySet()
+        .stream()
         .map(
             e -> {
               String varName = e.getKey();
@@ -363,7 +362,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     TypeNode exceptionType = typeStore.get("IOException");
 
-    TypeNode settingsType = typeStore.get(settingsName);
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(typeStore.get(settingsName)).build());
@@ -418,7 +416,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
             .setThrowsExceptions(Arrays.asList(exceptionType))
             .setBody(
-                ctorAssignmentExprs.stream()
+                ctorAssignmentExprs
+                    .stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
             .build());
@@ -451,7 +450,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(thisClassType)
             .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
             .setBody(
-                ctorAssignmentExprs.stream()
+                ctorAssignmentExprs
+                    .stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
             .build());
@@ -515,10 +515,11 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     if (hasLroClient) {
       Iterator<String> opClientNamesIt = getTransportContext().operationsClientNames().iterator();
-      Iterator<TypeNode> opClientTypesIt =  getTransportContext().operationsClientTypes().iterator();
+      Iterator<TypeNode> opClientTypesIt = getTransportContext().operationsClientTypes().iterator();
 
       while (opClientNamesIt.hasNext() && opClientTypesIt.hasNext()) {
-        String opClientMethodName = String.format("get%s", JavaStyle.toUpperCamelCase(opClientNamesIt.next()));
+        String opClientMethodName =
+            String.format("get%s", JavaStyle.toUpperCamelCase(opClientNamesIt.next()));
         getOperationsClientMethodNames.add(opClientMethodName);
         methodNameToTypes.put(opClientMethodName, opClientTypesIt.next());
       }
@@ -530,7 +531,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                 "A restructuring of stub classes is planned, so this may break in the future")
             .build();
 
-    return methodNameToTypes.entrySet().stream()
+    return methodNameToTypes
+        .entrySet()
+        .stream()
         .map(
             e -> {
               String methodName = e.getKey();
@@ -589,7 +592,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         grpcRpcToJavaMethodMetadata
             .get(method.name())
             .addAll(
-                generatedMethods.stream()
+                generatedMethods
+                    .stream()
                     .map(m -> javaMethodNameFn.apply(m))
                     .collect(Collectors.toList()));
         javaMethods.addAll(generatedMethods);
@@ -657,11 +661,11 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                           lro.responseType().reference(), lro.metadataType().reference())));
     }
 
-    String methodInputTypeName = methodInputType.reference().name();
     for (List<MethodArgument> signature : method.methodSignatures()) {
       // Get the argument list.
       List<VariableExpr> arguments =
-          signature.stream()
+          signature
+              .stream()
               .map(
                   methodArg ->
                       VariableExpr.builder()
@@ -1052,7 +1056,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(TypeNode.BOOLEAN)
             .setName("awaitTermination")
             .setArguments(
-                arguments.stream()
+                arguments
+                    .stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setThrowsExceptions(Arrays.asList(typeStore.get("InterruptedException")))
@@ -1196,12 +1201,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     VariableExpr inputVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("input").setType(methodPageType).build());
-    TypeNode anonClassType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ApiFunction.class)
-                .setGenerics(Arrays.asList(methodPageType.reference(), thisClassType.reference()))
-                .build());
 
     // Overrides ApiFunction.apply.
     // (https://github.com/googleapis/api-common-java/blob/debf25960dea0367b0d3b5e16d57d76c1d01947e/src/main/java/com/google/api/core/ApiFunction.java).
@@ -1240,7 +1239,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(returnType)
             .setName("createAsync")
             .setArguments(
-                Arrays.asList(contextVarExpr, futureResponseVarExpr).stream()
+                Arrays.asList(contextVarExpr, futureResponseVarExpr)
+                    .stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setBody(Arrays.asList(ExprStatement.withExpr(futurePageAssignExpr)))
@@ -1341,7 +1341,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setScope(ScopeNode.PRIVATE)
             .setReturnType(classType)
             .setArguments(
-                Arrays.asList(contextVarExpr, responseVarExpr).stream()
+                Arrays.asList(contextVarExpr, responseVarExpr)
+                    .stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setBody(
@@ -1373,7 +1374,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(classType)
             .setName("createPage")
             .setArguments(
-                Arrays.asList(contextVarExpr, responseVarExpr).stream()
+                Arrays.asList(contextVarExpr, responseVarExpr)
+                    .stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(
@@ -1405,7 +1407,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(futurePageType)
             .setName("createPageAsync")
             .setArguments(
-                Arrays.asList(contextVarExpr, futureResponseVarExpr).stream()
+                Arrays.asList(contextVarExpr, futureResponseVarExpr)
+                    .stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(
@@ -1482,7 +1485,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setScope(ScopeNode.PRIVATE)
             .setReturnType(classType)
             .setArguments(
-                Arrays.asList(pagesVarExpr, collectionSizeVarExpr).stream()
+                Arrays.asList(pagesVarExpr, collectionSizeVarExpr)
+                    .stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setBody(
@@ -1519,7 +1523,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(classType)
             .setName("createCollection")
             .setArguments(
-                Arrays.asList(pagesVarExpr, collectionSizeVarExpr).stream()
+                Arrays.asList(pagesVarExpr, collectionSizeVarExpr)
+                    .stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(
@@ -1562,7 +1567,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         rootFields.add(rootField);
       }
       Trie<Field> updatedTrie =
-          rootFieldToTrie.containsKey(rootField) ? rootFieldToTrie.get(rootField) : new Trie();
+          rootFieldToTrie.containsKey(rootField) ? rootFieldToTrie.get(rootField) : new Trie<>();
       List<Field> nestedFieldsWithChild = new ArrayList<>(arg.nestedFields());
       nestedFieldsWithChild.add(arg.field());
       updatedTrie.insert(nestedFieldsWithChild);
@@ -1661,7 +1666,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   }
 
   private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractPagedListResponse.class,
             ApiFunction.class,
@@ -1711,7 +1716,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
       typeStore.putAll(
           service.pakkage(),
-          Arrays.asList("%sPagedResponse", "%sPage", "%sFixedSizeCollection").stream()
+          Arrays.asList("%sPagedResponse", "%sPage", "%sFixedSizeCollection")
+              .stream()
               .map(p -> String.format(p, JavaStyle.toUpperCamelCase(method.name())))
               .collect(Collectors.toList()),
           true,
@@ -1721,7 +1727,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service.methods().stream()
+        service
+            .methods()
+            .stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
@@ -1760,15 +1768,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
-  }
-
-  private static void updateGapicMetadata(
-      GapicContext context, String protoPackage, String javaPackage) {
-    context.updateGapicMetadata(
-        context.gapicMetadata().toBuilder()
-            .setProtoPackage(protoPackage)
-            .setLibraryPackage(javaPackage)
-            .build());
   }
 
   private static void updateGapicMetadata(

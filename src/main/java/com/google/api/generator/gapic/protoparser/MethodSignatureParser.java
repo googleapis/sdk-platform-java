@@ -91,7 +91,9 @@ public class MethodSignatureParser {
         argumentNames.add(actualArgumentName);
         argumentNameToOverloads.put(
             actualArgumentName,
-            argumentTypes.entrySet().stream()
+            argumentTypes
+                .entrySet()
+                .stream()
                 .map(
                     e ->
                         MethodArgument.builder()
@@ -110,7 +112,8 @@ public class MethodSignatureParser {
     // Make the method signature order deterministic, which helps with unit testing and per-version
     // diffs.
     List<List<MethodArgument>> sortedMethodSignatures =
-        signatures.stream()
+        signatures
+            .stream()
             .sorted(
                 (s1, s2) -> {
                   // Sort by number of arguments first.
@@ -208,7 +211,8 @@ public class MethodSignatureParser {
       outputArgResourceNames.addAll(resourceNameArgs);
       typeToField.put(TypeNode.STRING, field);
       typeToField.putAll(
-          resourceNameArgs.stream()
+          resourceNameArgs
+              .stream()
               .collect(
                   Collectors.toMap(
                       r -> r.type(),
@@ -221,7 +225,9 @@ public class MethodSignatureParser {
                               .build())));
       // Only resource name helpers should have more than one entry.
       if (typeToField.size() > 1) {
-        typeToField.entrySet().stream()
+        typeToField
+            .entrySet()
+            .stream()
             .forEach(
                 e -> {
                   // Skip string-only variants or ResourceName generics.
@@ -283,16 +289,5 @@ public class MethodSignatureParser {
         patternsToResourceNames,
         argumentFieldPathAcc,
         outputArgResourceNames);
-  }
-
-  private static Map<String, ResourceName> createPatternResourceNameMap(
-      Map<String, ResourceName> resourceNames) {
-    Map<String, ResourceName> patternsToResourceNames = new HashMap<>();
-    for (ResourceName resourceName : resourceNames.values()) {
-      for (String pattern : resourceName.patterns()) {
-        patternsToResourceNames.put(pattern, resourceName);
-      }
-    }
-    return patternsToResourceNames;
   }
 }

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @AutoValue
-public abstract class JavaDocComment implements Comment {
+public abstract class JavaDocComment implements Comment, AstNode {
   @Override
   public abstract String comment();
 

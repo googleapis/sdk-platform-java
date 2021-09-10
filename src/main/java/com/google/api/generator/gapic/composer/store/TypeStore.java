@@ -28,13 +28,14 @@ public class TypeStore {
 
   public TypeStore() {}
 
-  public TypeStore(List<Class> concreteClasses) {
+  public TypeStore(List<Class<?>> concreteClasses) {
     putConcreteClassses(concreteClasses);
   }
 
-  private void putConcreteClassses(List<Class> concreteClasses) {
+  private void putConcreteClassses(List<Class<?>> concreteClasses) {
     store.putAll(
-        concreteClasses.stream()
+        concreteClasses
+            .stream()
             .collect(
                 Collectors.toMap(
                     Class::getSimpleName,
@@ -71,7 +72,7 @@ public class TypeStore {
                 .build()));
   }
 
-  public void putAll(List<Class> concreteClasses) {
+  public void putAll(List<Class<?>> concreteClasses) {
     putConcreteClassses(concreteClasses);
   }
 
@@ -87,7 +88,9 @@ public class TypeStore {
 
   public void putMessageTypes(String pakkage, Map<String, Message> messages) {
     store.putAll(
-        messages.entrySet().stream()
+        messages
+            .entrySet()
+            .stream()
             // Short-term hack for messages that have nested subtypes with colliding names. This
             // should work as long as there isn't heavy usage of fully-qualified nested subtypes in
             // general. A long-term fix would involve adding a custom type-store that handles

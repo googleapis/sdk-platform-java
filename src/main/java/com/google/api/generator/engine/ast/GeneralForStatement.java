@@ -59,25 +59,26 @@ public abstract class GeneralForStatement implements Statement {
         .build();
   }
 
+  public abstract Builder toBuilder();
+
   private static Builder builder() {
     return new AutoValue_GeneralForStatement.Builder().setBody(Collections.emptyList());
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
-    // Private setter.
-    abstract Builder setInitializationExpr(Expr initializationExpr);
-    // Private setter.
-    abstract Builder setTerminationExpr(Expr terminationExpr);
-    // Private setter.
-    abstract Builder setUpdateExpr(Expr incrementExpr);
-    // Private setter.
-    abstract Builder setBody(List<Statement> body);
+  public abstract static class Builder {
+    public abstract Builder setInitializationExpr(Expr initializationExpr);
+
+    public abstract Builder setTerminationExpr(Expr terminationExpr);
+
+    public abstract Builder setUpdateExpr(Expr incrementExpr);
+
+    public abstract Builder setBody(List<Statement> body);
 
     abstract GeneralForStatement autoBuild();
 
     // Type-checking will be done in the sub-expressions.
-    GeneralForStatement build() {
+    public GeneralForStatement build() {
       GeneralForStatement generalForStatement = autoBuild();
       NodeValidator.checkNoNullElements(
           generalForStatement.body(), "body", "general for-statement");

@@ -29,6 +29,8 @@ public abstract class CastExpr implements Expr {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_CastExpr.Builder();
   }

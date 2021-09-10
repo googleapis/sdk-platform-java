@@ -23,6 +23,7 @@ import java.util.List;
 
 @AutoValue
 public abstract class NewObjectExpr implements Expr {
+  @Override
   public abstract TypeNode type();
 
   public abstract ImmutableList<Expr> arguments();
@@ -37,6 +38,8 @@ public abstract class NewObjectExpr implements Expr {
   public static NewObjectExpr withType(TypeNode type) {
     return builder().setType(type).build();
   }
+
+  public abstract Builder toBuilder();
 
   public static Builder builder() {
     return new AutoValue_NewObjectExpr.Builder()

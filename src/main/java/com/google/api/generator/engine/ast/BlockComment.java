@@ -17,7 +17,8 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class BlockComment implements Comment {
+public abstract class BlockComment implements Comment, AstNode {
+  @Override
   public abstract String comment();
 
   @Override

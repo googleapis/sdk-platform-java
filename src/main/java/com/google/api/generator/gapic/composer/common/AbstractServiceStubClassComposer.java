@@ -51,7 +51,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceStubClassComposer implements ClassComposer {
-  private static final String DOT = ".";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private final TransportContext transportContext;
@@ -210,7 +209,9 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
       String methodName =
           String.format("get%s", JavaStyle.toUpperCamelCase(operationStubNameIt.next()));
 
-      getters.add(createOperationsStubGetterMethodDefinition(operationStubTypeIt.next(), methodName, typeStore));
+      getters.add(
+          createOperationsStubGetterMethodDefinition(
+              operationStubTypeIt.next(), methodName, typeStore));
     }
 
     return getters;
@@ -229,7 +230,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             BackgroundResource.class,
             BetaApi.class,
@@ -248,7 +249,9 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service.methods().stream()
+        service
+            .methods()
+            .stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
@@ -259,7 +262,10 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   protected MethodDefinition createCallableGetterMethodDefinition(
-      TypeNode returnType, String methodName, List<AnnotationNode> annotations, TypeStore typeStore) {
+      TypeNode returnType,
+      String methodName,
+      List<AnnotationNode> annotations,
+      TypeStore typeStore) {
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setAnnotations(annotations)
@@ -289,9 +295,5 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                         .setMessageExpr(String.format("Not implemented: %s()", methodName))
                         .build())))
         .build();
-  }
-
-  private static String getClientClassName(Service service) {
-    return String.format("%sClient", service.overriddenName());
   }
 }

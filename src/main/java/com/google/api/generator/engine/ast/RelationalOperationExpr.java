@@ -23,6 +23,7 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
   public abstract Expr rhsExpr();
 
+  @Override
   public abstract OperatorKind operatorKind();
 
   @Override
@@ -61,25 +62,25 @@ public abstract class RelationalOperationExpr implements OperationExpr {
         .build();
   }
 
+  public abstract Builder toBuilder();
+
   private static Builder builder() {
     return new AutoValue_RelationalOperationExpr.Builder();
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
+  public abstract static class Builder {
 
-    // Private setter.
-    abstract Builder setLhsExpr(Expr expr);
+    public abstract Builder setLhsExpr(Expr expr);
 
-    // Private setter.
-    abstract Builder setRhsExpr(Expr expr);
+    public abstract Builder setRhsExpr(Expr expr);
 
     // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
 
     abstract RelationalOperationExpr autoBuild();
 
-    private RelationalOperationExpr build() {
+    public RelationalOperationExpr build() {
       RelationalOperationExpr relationalOperationExpr = autoBuild();
       TypeNode lhsExprType = relationalOperationExpr.lhsExpr().type();
       TypeNode rhsExprType = relationalOperationExpr.rhsExpr().type();

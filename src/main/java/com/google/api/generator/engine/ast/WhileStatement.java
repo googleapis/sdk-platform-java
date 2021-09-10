@@ -31,6 +31,8 @@ public abstract class WhileStatement implements Statement {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_WhileStatement.Builder();
   }

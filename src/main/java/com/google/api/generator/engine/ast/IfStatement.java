@@ -36,6 +36,8 @@ public abstract class IfStatement implements Statement {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_IfStatement.Builder()
         .setElseIfs(ImmutableMap.of())
@@ -57,7 +59,7 @@ public abstract class IfStatement implements Statement {
 
     abstract ImmutableMap.Builder<Expr, List<Statement>> elseIfsBuilder();
 
-    abstract Builder setElseIfs(ImmutableMap<Expr, List<Statement>> elseIfBlocks);
+    public abstract Builder setElseIfs(ImmutableMap<Expr, List<Statement>> elseIfBlocks);
 
     abstract IfStatement autoBuild();
 

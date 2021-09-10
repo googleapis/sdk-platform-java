@@ -18,7 +18,7 @@ import com.google.api.generator.engine.escaper.MetacharEscaper;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class LineComment implements Comment {
+public abstract class LineComment implements Comment, AstNode {
   @Override
   public abstract String comment();
 

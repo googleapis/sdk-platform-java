@@ -32,6 +32,8 @@ public abstract class ForStatement implements Statement {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_ForStatement.Builder();
   }

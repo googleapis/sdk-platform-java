@@ -30,6 +30,8 @@ public abstract class ExprStatement implements Statement {
     return builder().setExpression(expr).build();
   }
 
+  public abstract Builder toBuilder();
+
   static Builder builder() {
     return new AutoValue_ExprStatement.Builder();
   }
