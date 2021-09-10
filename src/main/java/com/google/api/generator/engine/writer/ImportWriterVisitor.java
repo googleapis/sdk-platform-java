@@ -74,7 +74,6 @@ import javax.annotation.Nullable;
 
 public class ImportWriterVisitor implements AstNodeVisitor {
   private static final String DOT = ".";
-  private static final String NEWLINE = "\n";
   private static final String PKG_JAVA_LANG = "java.lang";
 
   private final Set<String> staticImports = new TreeSet<>();
@@ -94,7 +93,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   public void initialize(@Nonnull String currentPackage) {
     this.currentPackage = currentPackage;
-    this.currentClassName = null;
+    currentClassName = null;
   }
 
   public void initialize(@Nonnull String currentPackage, @Nonnull String currentClassName) {
@@ -124,7 +123,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
       updateShortNames();
     }
     return importShortNames.contains(shortName)
-        && imports.stream()
+        && imports
+            .stream()
             .filter(s -> s.equals(String.format("%s.%s", pakkage, shortName)))
             .findFirst()
             .orElse("")

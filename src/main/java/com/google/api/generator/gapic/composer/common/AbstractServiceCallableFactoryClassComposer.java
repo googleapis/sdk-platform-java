@@ -131,11 +131,13 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*transportCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*transportCallSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -157,7 +159,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*transportCallSettingsTemplateObjects=*/ Arrays.asList(
             requestTemplateName, responseTemplateName),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -173,11 +176,13 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         /*returnCallableKindName=*/ "Unary",
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*transportCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*transportCallSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -269,7 +274,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .setMethodName(methodName)
             .setStaticReferenceType(getTransportContext().transportCallableFactoryType())
             .setArguments(
-                arguments.stream()
+                arguments
+                    .stream()
                     .map(v -> v.toBuilder().setIsDecl(false).build())
                     .collect(Collectors.toList()))
             .setReturnType(returnType)
@@ -289,7 +295,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
   }
 
   private static TypeStore createTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             // Gax-java classes.
             BatchingCallSettings.class,

@@ -40,7 +40,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
-import com.google.protobuf.ByteString;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,8 +53,6 @@ public class DefaultValueComposer {
   private static TypeNode OPERATION_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
   private static TypeNode ANY_TYPE = TypeNode.withReference(ConcreteReference.withClazz(Any.class));
-  private static TypeNode BYTESTRING_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   public static Expr createDefaultValue(
       MethodArgument methodArg,
@@ -237,14 +234,16 @@ public class DefaultValueComposer {
               "of%sName",
               String.join(
                   "",
-                  patternPlaceholderTokens.stream()
+                  patternPlaceholderTokens
+                      .stream()
                       .map(s -> JavaStyle.toUpperCamelCase(s))
                       .collect(Collectors.toList())));
     }
 
     TypeNode resourceNameJavaType = resourceName.type();
     List<Expr> argExprs =
-        patternPlaceholderTokens.stream()
+        patternPlaceholderTokens
+            .stream()
             .map(
                 s ->
                     ValueExpr.withValue(

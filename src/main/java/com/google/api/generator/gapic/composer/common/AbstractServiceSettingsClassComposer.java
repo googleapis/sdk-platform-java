@@ -133,7 +133,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         service.methods().isEmpty()
             ? Optional.empty()
             : Optional.of(
-                service.methods().stream()
+                service
+                    .methods()
+                    .stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
                     .orElse(service.methods().get(0)));
@@ -324,7 +326,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                         .build());
     BiFunction<MethodDefinition.Builder, CommentStatement, MethodDefinition> methodMakerFn =
         (methodDefBuilder, comment) -> methodDefBuilder.setHeaderCommentStatements(comment).build();
-    Function<Class, TypeNode> typeMakerFn =
+    Function<Class<?>, TypeNode> typeMakerFn =
         c -> TypeNode.withReference(ConcreteReference.withClazz(c));
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -750,7 +752,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ApiClientHeaderProvider.class,
             ApiFunction.class,
@@ -793,7 +795,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service.methods().stream()
+        service
+            .methods()
+            .stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
@@ -815,7 +819,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     Preconditions.checkState(
         protoMethod.hasLro(),
         String.format("Cannot get OperationCallSettings on non-LRO method %s", protoMethod.name()));
-    Class callSettingsClazz =
+    Class<?> callSettingsClazz =
         isBuilder ? OperationCallSettings.Builder.class : OperationCallSettings.class;
     return TypeNode.withReference(
         ConcreteReference.builder()
@@ -838,7 +842,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   private static TypeNode getCallSettingsTypeHelper(
       Method protoMethod, TypeStore typeStore, boolean isBuilder) {
-    Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
+    Class<?> callSettingsClazz =
+        isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
     if (protoMethod.isPaged()) {
       callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
     } else if (protoMethod.isBatching()) {

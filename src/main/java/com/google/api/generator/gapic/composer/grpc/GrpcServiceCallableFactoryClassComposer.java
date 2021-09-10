@@ -45,6 +45,7 @@ public class GrpcServiceCallableFactoryClassComposer
     return Arrays.asList(getTransportContext().stubCallableFactoryType());
   }
 
+  @Override
   protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
     List<MethodDefinition> classMethods = new ArrayList<>(super.createClassMethods(typeStore));
     classMethods.addAll(
@@ -55,6 +56,7 @@ public class GrpcServiceCallableFactoryClassComposer
     return classMethods;
   }
 
+  @Override
   protected MethodDefinition createUnaryCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Unary";
     String requestTemplateName = "RequestT";
@@ -66,15 +68,18 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
 
+  @Override
   protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Paged";
     String requestTemplateName = "RequestT";
@@ -92,7 +97,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(
             requestTemplateName, responseTemplateName),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -112,7 +118,8 @@ public class GrpcServiceCallableFactoryClassComposer
         /*methodVariantName=*/ methodVariantName,
         /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(requestTemplateName, OPERATION_TYPE),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -128,11 +135,13 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ "Streaming",
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -148,11 +157,13 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -168,11 +179,13 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ "Streaming",
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames
+            .stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }

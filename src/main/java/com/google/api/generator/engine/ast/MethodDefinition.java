@@ -244,11 +244,11 @@ public abstract class MethodDefinition implements AstNode {
             "Abstract methods cannot be static, final, or private");
       }
 
-      // If this method overrides another, ensure that the Override annotaiton is the last one.
+      // If this method overrides another, ensure that the Override annotation is the last one.
       ImmutableList<AnnotationNode> processedAnnotations = annotations();
       if (isOverride()) {
         processedAnnotations =
-            annotations()
+            ImmutableList
                 .<AnnotationNode>builder()
                 .addAll(annotations())
                 .add(AnnotationNode.OVERRIDE)
@@ -256,7 +256,7 @@ public abstract class MethodDefinition implements AstNode {
       }
       // Remove duplicates while maintaining insertion order.
       setAnnotations(
-          new LinkedHashSet<AnnotationNode>(processedAnnotations)
+          new LinkedHashSet<>(processedAnnotations)
               .stream().collect(Collectors.toList()));
 
       MethodDefinition method = autoBuild();

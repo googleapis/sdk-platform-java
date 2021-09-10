@@ -234,7 +234,7 @@ public class MockServiceClassComposer implements ClassComposer {
   }
 
   private static TypeStore createTypes(Service service) {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractMessage.class, BetaApi.class, Generated.class, ServerServiceDefinition.class);
     TypeStore typeStore = new TypeStore(concreteClazzes);
