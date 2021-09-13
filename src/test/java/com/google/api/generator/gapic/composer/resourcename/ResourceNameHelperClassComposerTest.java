@@ -15,7 +15,7 @@
 package com.google.api.generator.gapic.composer.resourcename;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
@@ -96,9 +96,8 @@ public class ResourceNameHelperClassComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+    Parser.parseService(
+        echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     ResourceName foobarResname = resourceNames.get("showcase.googleapis.com/Foobar");
     assertThat(outputResourceNames).contains(foobarResname);

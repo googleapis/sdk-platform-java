@@ -297,7 +297,7 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private NewObjectExpr createNewObjectExpr(Class clazz) {
+  private NewObjectExpr createNewObjectExpr(Class<?> clazz) {
     return NewObjectExpr.builder()
         .setType(TypeNode.withReference(ConcreteReference.withClazz(clazz)))
         .setIsGeneric(true)
@@ -460,11 +460,8 @@ public class JavaCodeGeneratorTest {
   }
 
   private MethodDefinition createAddShelfMethod() {
-    ConcreteReference integerUtilRef =
-        ConcreteReference.builder().setClazz(Integer.class).setIsStaticImport(true).build();
     Variable nameVar = createVarFromType(TypeNode.STRING, "name");
     Variable seriesDoubleNumVar = createVarFromType(TypeNode.DOUBLE, "seriesDoubleNum");
-    Variable maxValueVar = createVarFromConcreteRef(integerUtilRef, "MAX_VALUE");
     CastExpr seriesNumDoubleToIntExpr =
         CastExpr.builder()
             .setExpr(VariableExpr.withVariable(seriesDoubleNumVar))

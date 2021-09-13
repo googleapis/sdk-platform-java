@@ -49,14 +49,12 @@ public class ForStatementTest {
         MethodInvocationExpr.builder().setMethodName("getSomeStrings").build();
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          ForStatement forStatement =
-              ForStatement.builder()
-                  .setLocalVariableExpr(variableExpr)
-                  .setCollectionExpr(methodExpr)
-                  .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-                  .build();
-        });
+        () ->
+            ForStatement.builder()
+                .setLocalVariableExpr(variableExpr)
+                .setCollectionExpr(methodExpr)
+                .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .build());
   }
 
   private static AssignmentExpr createAssignmentExpr() {

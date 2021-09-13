@@ -14,7 +14,7 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
