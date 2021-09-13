@@ -234,16 +234,14 @@ public class DefaultValueComposer {
               "of%sName",
               String.join(
                   "",
-                  patternPlaceholderTokens
-                      .stream()
+                  patternPlaceholderTokens.stream()
                       .map(s -> JavaStyle.toUpperCamelCase(s))
                       .collect(Collectors.toList())));
     }
 
     TypeNode resourceNameJavaType = resourceName.type();
     List<Expr> argExprs =
-        patternPlaceholderTokens
-            .stream()
+        patternPlaceholderTokens.stream()
             .map(
                 s ->
                     ValueExpr.withValue(

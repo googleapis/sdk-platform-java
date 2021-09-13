@@ -127,9 +127,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     fields.put(CLIENT_VAR_NAME, typeStore.get(ClassNames.getServiceClientClassName(service)));
     fields.put(CHANNEL_PROVIDER_VAR_NAME, FIXED_GRPC_TYPESTORE.get("LocalChannelProvider"));
 
-    return fields
-        .entrySet()
-        .stream()
+    return fields.entrySet().stream()
         .collect(
             Collectors.toMap(
                 Map.Entry::getKey,
@@ -165,9 +163,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     // Careful: Java 8 and 11 make different ordering choices if this set is not explicitly sorted.
     // Context: https://github.com/googleapis/gapic-generator-java/pull/750
     for (Service mixinService :
-        context
-            .mixinServices()
-            .stream()
+        context.mixinServices().stream()
             .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
             .collect(Collectors.toList())) {
       varInitExprs.add(serviceToVarInitExprFn.apply(mixinService));
@@ -1048,8 +1044,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     TryCatchStatement tryCatchBlock =
         TryCatchStatement.builder()
             .setTryBody(
-                tryBodyExprs
-                    .stream()
+                tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
             .addCatch(

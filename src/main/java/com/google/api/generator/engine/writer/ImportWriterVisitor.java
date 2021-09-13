@@ -123,8 +123,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
       updateShortNames();
     }
     return importShortNames.contains(shortName)
-        && imports
-            .stream()
+        && imports.stream()
             .filter(s -> s.equals(String.format("%s.%s", pakkage, shortName)))
             .findFirst()
             .orElse("")

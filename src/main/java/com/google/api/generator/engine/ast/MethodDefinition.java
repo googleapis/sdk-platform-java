@@ -248,16 +248,14 @@ public abstract class MethodDefinition implements AstNode {
       ImmutableList<AnnotationNode> processedAnnotations = annotations();
       if (isOverride()) {
         processedAnnotations =
-            ImmutableList
-                .<AnnotationNode>builder()
+            ImmutableList.<AnnotationNode>builder()
                 .addAll(annotations())
                 .add(AnnotationNode.OVERRIDE)
                 .build();
       }
       // Remove duplicates while maintaining insertion order.
       setAnnotations(
-          new LinkedHashSet<>(processedAnnotations)
-              .stream().collect(Collectors.toList()));
+          new LinkedHashSet<>(processedAnnotations).stream().collect(Collectors.toList()));
 
       MethodDefinition method = autoBuild();
 
