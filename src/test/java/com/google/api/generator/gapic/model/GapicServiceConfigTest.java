@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.util.Durations;
 import com.google.rpc.Code;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -45,7 +44,6 @@ public class GapicServiceConfigTest {
   @Test
   public void serviceConfig_noConfigsFound() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Service service = parseService(echoFileDescriptor);
 
     String jsonFilename = "retrying_grpc_service_config.json";
@@ -74,7 +72,6 @@ public class GapicServiceConfigTest {
   @Test
   public void serviceConfig_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Service service = parseService(echoFileDescriptor);
 
     String jsonFilename = "showcase_grpc_service_config.json";
@@ -129,7 +126,6 @@ public class GapicServiceConfigTest {
   @Test
   public void serviceConfig_withBatchingSettings() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Service service = parseService(echoFileDescriptor);
 
     String jsonFilename = "showcase_grpc_service_config.json";
@@ -203,12 +199,10 @@ public class GapicServiceConfigTest {
   @Test
   public void serviceConfig_withLroRetrySettings() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Service service = parseService(echoFileDescriptor);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
-    Optional<List<GapicBatchingSettings>> batchingSettingsOpt = Optional.empty();
 
     // Construct LRO retry settings.
     GapicLroRetrySettings origLroRetrySetting =
