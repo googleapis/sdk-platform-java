@@ -52,8 +52,7 @@ public class MethodSignatureParserTest {
                 .setField(Field.builder().setName(name).setType(type).build())
                 .build();
     List<MethodArgument> fooArgs =
-        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo)
-            .stream()
+        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
             .collect(Collectors.toList());
     Map<String, List<MethodArgument>> argumentNameToOverloads = new HashMap<>();
@@ -92,8 +91,7 @@ public class MethodSignatureParserTest {
                 .setField(Field.builder().setName(name).setType(type).build())
                 .build();
     List<MethodArgument> fooArgs =
-        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo)
-            .stream()
+        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
             .collect(Collectors.toList());
     Map<String, List<MethodArgument>> argumentNameToOverloads = new HashMap<>();
@@ -133,8 +131,7 @@ public class MethodSignatureParserTest {
                 .setField(Field.builder().setName(name).setType(type).build())
                 .build();
     List<MethodArgument> fooArgs =
-        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo)
-            .stream()
+        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
             .collect(Collectors.toList());
     Map<String, List<MethodArgument>> argumentNameToOverloads = new HashMap<>();
@@ -185,13 +182,11 @@ public class MethodSignatureParserTest {
                 .setField(Field.builder().setName(name).setType(type).build())
                 .build();
     List<MethodArgument> fooArgs =
-        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo)
-            .stream()
+        Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
             .collect(Collectors.toList());
     List<MethodArgument> barArgs =
-        Arrays.asList(TypeNode.STRING, barTypeOne, barTypeTwo, barTypeThree)
-            .stream()
+        Arrays.asList(TypeNode.STRING, barTypeOne, barTypeTwo, barTypeThree).stream()
             .map(t -> methodArgFn.apply(barName, t))
             .collect(Collectors.toList());
     Map<String, List<MethodArgument>> argumentNameToOverloads = new HashMap<>();

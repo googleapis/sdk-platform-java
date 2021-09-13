@@ -16,8 +16,8 @@ package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;

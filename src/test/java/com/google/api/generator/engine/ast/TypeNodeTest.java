@@ -16,8 +16,8 @@ package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import java.util.Arrays;
