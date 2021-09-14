@@ -28,6 +28,7 @@ public abstract class ReferenceConstructorExpr implements Expr {
     SUPER
   }
 
+  @Override
   public abstract TypeNode type();
 
   public abstract KeywordKind keywordKind();
@@ -73,7 +74,7 @@ public abstract class ReferenceConstructorExpr implements Expr {
     public ReferenceConstructorExpr build() {
       ReferenceConstructorExpr referenceConstructorExpr = autoBuild();
       Preconditions.checkState(
-          referenceConstructorExpr.type().isReferenceType(referenceConstructorExpr.type()),
+          TypeNode.isReferenceType(referenceConstructorExpr.type()),
           "A this/super constructor must have a reference type.");
 
       NodeValidator.checkNoNullElements(
