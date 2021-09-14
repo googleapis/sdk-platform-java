@@ -19,6 +19,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -56,7 +57,9 @@ public class GapicLroRetrySettingsParser {
     String fileContents = null;
 
     try {
-      fileContents = new String(Files.readAllBytes(Paths.get(gapicYamlConfigFilePath)));
+      fileContents =
+          new String(
+              Files.readAllBytes(Paths.get(gapicYamlConfigFilePath)), StandardCharsets.UTF_8);
     } catch (IOException e) {
       return Optional.empty();
     }
