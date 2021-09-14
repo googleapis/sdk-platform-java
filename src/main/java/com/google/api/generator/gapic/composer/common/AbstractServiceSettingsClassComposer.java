@@ -133,9 +133,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         service.methods().isEmpty()
             ? Optional.empty()
             : Optional.of(
-                service
-                    .methods()
-                    .stream()
+                service.methods().stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
                     .orElse(service.methods().get(0)));
@@ -795,9 +793,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),

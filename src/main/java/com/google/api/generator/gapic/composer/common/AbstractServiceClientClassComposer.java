@@ -234,9 +234,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
     }
 
-    return fieldNameToTypes
-        .entrySet()
-        .stream()
+    return fieldNameToTypes.entrySet().stream()
         .map(
             e -> {
               String varName = e.getKey();
@@ -416,8 +414,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
             .setThrowsExceptions(Arrays.asList(exceptionType))
             .setBody(
-                ctorAssignmentExprs
-                    .stream()
+                ctorAssignmentExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
             .build());
@@ -450,8 +447,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(thisClassType)
             .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
             .setBody(
-                ctorAssignmentExprs
-                    .stream()
+                ctorAssignmentExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
             .build());
@@ -531,9 +527,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                 "A restructuring of stub classes is planned, so this may break in the future")
             .build();
 
-    return methodNameToTypes
-        .entrySet()
-        .stream()
+    return methodNameToTypes.entrySet().stream()
         .map(
             e -> {
               String methodName = e.getKey();
@@ -592,8 +586,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         grpcRpcToJavaMethodMetadata
             .get(method.name())
             .addAll(
-                generatedMethods
-                    .stream()
+                generatedMethods.stream()
                     .map(m -> javaMethodNameFn.apply(m))
                     .collect(Collectors.toList()));
         javaMethods.addAll(generatedMethods);
@@ -664,8 +657,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     for (List<MethodArgument> signature : method.methodSignatures()) {
       // Get the argument list.
       List<VariableExpr> arguments =
-          signature
-              .stream()
+          signature.stream()
               .map(
                   methodArg ->
                       VariableExpr.builder()
@@ -1056,8 +1048,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(TypeNode.BOOLEAN)
             .setName("awaitTermination")
             .setArguments(
-                arguments
-                    .stream()
+                arguments.stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setThrowsExceptions(Arrays.asList(typeStore.get("InterruptedException")))
@@ -1239,8 +1230,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(returnType)
             .setName("createAsync")
             .setArguments(
-                Arrays.asList(contextVarExpr, futureResponseVarExpr)
-                    .stream()
+                Arrays.asList(contextVarExpr, futureResponseVarExpr).stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setBody(Arrays.asList(ExprStatement.withExpr(futurePageAssignExpr)))
@@ -1341,8 +1331,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setScope(ScopeNode.PRIVATE)
             .setReturnType(classType)
             .setArguments(
-                Arrays.asList(contextVarExpr, responseVarExpr)
-                    .stream()
+                Arrays.asList(contextVarExpr, responseVarExpr).stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setBody(
@@ -1374,8 +1363,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(classType)
             .setName("createPage")
             .setArguments(
-                Arrays.asList(contextVarExpr, responseVarExpr)
-                    .stream()
+                Arrays.asList(contextVarExpr, responseVarExpr).stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(
@@ -1407,8 +1395,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(futurePageType)
             .setName("createPageAsync")
             .setArguments(
-                Arrays.asList(contextVarExpr, futureResponseVarExpr)
-                    .stream()
+                Arrays.asList(contextVarExpr, futureResponseVarExpr).stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(
@@ -1485,8 +1472,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setScope(ScopeNode.PRIVATE)
             .setReturnType(classType)
             .setArguments(
-                Arrays.asList(pagesVarExpr, collectionSizeVarExpr)
-                    .stream()
+                Arrays.asList(pagesVarExpr, collectionSizeVarExpr).stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setBody(
@@ -1523,8 +1509,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setReturnType(classType)
             .setName("createCollection")
             .setArguments(
-                Arrays.asList(pagesVarExpr, collectionSizeVarExpr)
-                    .stream()
+                Arrays.asList(pagesVarExpr, collectionSizeVarExpr).stream()
                     .map(e -> e.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(
@@ -1716,8 +1701,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
       typeStore.putAll(
           service.pakkage(),
-          Arrays.asList("%sPagedResponse", "%sPage", "%sFixedSizeCollection")
-              .stream()
+          Arrays.asList("%sPagedResponse", "%sPage", "%sFixedSizeCollection").stream()
               .map(p -> String.format(p, JavaStyle.toUpperCamelCase(method.name())))
               .collect(Collectors.toList()),
           true,
@@ -1727,9 +1711,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),

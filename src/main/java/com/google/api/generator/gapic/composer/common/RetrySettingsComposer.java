@@ -474,8 +474,7 @@ public class RetrySettingsComposer {
             .setGenerics(Arrays.asList(STATUS_CODE_CODE_TYPE.reference()))
             .setMethodName("newArrayList")
             .setArguments(
-                retryCodes
-                    .stream()
+                retryCodes.stream()
                     .map(c -> toStatusCodeEnumRefExpr(c))
                     .collect(Collectors.toList()))
             .build();

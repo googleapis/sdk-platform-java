@@ -249,9 +249,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),

@@ -151,9 +151,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
     // Static fields go first.
     fieldDeclStatements.addAll(
-        classMemberVarExprs
-            .values()
-            .stream()
+        classMemberVarExprs.values().stream()
             .filter(v -> isMockVarExprFn.apply(v))
             .map(
                 v ->
@@ -166,9 +164,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             .collect(Collectors.toList()));
 
     fieldDeclStatements.addAll(
-        classMemberVarExprs
-            .values()
-            .stream()
+        classMemberVarExprs.values().stream()
             .filter(v -> !isMockVarExprFn.apply(v))
             .map(
                 v ->
@@ -235,9 +231,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         String mixinServiceName = method.mixedInApiName().substring(dotIndex + 1);
         String mixinServiceProtoPackage = method.mixedInApiName().substring(0, dotIndex);
         Optional<Service> mixinServiceOpt =
-            context
-                .mixinServices()
-                .stream()
+            context.mixinServices().stream()
                 .filter(
                     s ->
                         s.name().equals(mixinServiceName)
@@ -830,8 +824,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     TryCatchStatement tryCatchBlock =
         TryCatchStatement.builder()
             .setTryBody(
-                tryBodyExprs
-                    .stream()
+                tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
             .addCatch(catchExceptionVarExpr.toBuilder().setIsDecl(true).build(), catchBody)
@@ -891,9 +884,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),

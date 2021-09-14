@@ -230,8 +230,7 @@ public class BatchingDescriptorComposer {
             .setStatements(
                 Arrays.asList(
                     ExprStatement.withExpr(
-                        builderVarExpr
-                            .toBuilder()
+                        builderVarExpr.toBuilder()
                             .setIsDecl(true)
                             .setScope(ScopeNode.PRIVATE)
                             .build())))
@@ -358,8 +357,7 @@ public class BatchingDescriptorComposer {
               forIndexVarExpr,
               initValueExpr,
               subresponseCountVarExpr,
-              innerSubresponseForExprs
-                  .stream()
+              innerSubresponseForExprs.stream()
                   .map(e -> ExprStatement.withExpr(e))
                   .collect(Collectors.toList()));
 
@@ -439,8 +437,7 @@ public class BatchingDescriptorComposer {
         .setReturnType(TypeNode.VOID)
         .setName("splitResponse")
         .setArguments(
-            Arrays.asList(batchResponseVarExpr, batchVarExpr)
-                .stream()
+            Arrays.asList(batchResponseVarExpr, batchVarExpr).stream()
                 .map(v -> v.toBuilder().setIsDecl(true).build())
                 .collect(Collectors.toList()))
         .setBody(bodyStatements)
@@ -489,8 +486,7 @@ public class BatchingDescriptorComposer {
         .setReturnType(TypeNode.VOID)
         .setName("splitException")
         .setArguments(
-            Arrays.asList(throwableVarExpr, batchVarExpr)
-                .stream()
+            Arrays.asList(throwableVarExpr, batchVarExpr).stream()
                 .map(v -> v.toBuilder().setIsDecl(true).build())
                 .collect(Collectors.toList()))
         .setBody(Arrays.asList(forStatement))
