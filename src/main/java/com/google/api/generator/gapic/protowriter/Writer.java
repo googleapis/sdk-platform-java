@@ -24,6 +24,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
@@ -61,7 +62,7 @@ public class Writer {
       JarEntry jarEntry = new JarEntry(String.format("%s/%s.java", path, className));
       try {
         jos.putNextEntry(jarEntry);
-        jos.write(code.getBytes());
+        jos.write(code.getBytes(StandardCharsets.UTF_8));
       } catch (IOException e) {
         throw new GapicWriterException(
             String.format(
@@ -80,7 +81,7 @@ public class Writer {
     JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", path));
     try {
       jos.putNextEntry(jarEntry);
-      jos.write(code.getBytes());
+      jos.write(code.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException("Could not write code for package-info.java");
     }
@@ -90,7 +91,8 @@ public class Writer {
       jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
       try {
         jos.putNextEntry(jarEntry);
-        jos.write(JsonFormat.printer().print(context.gapicMetadata()).getBytes());
+        jos.write(
+            JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
       } catch (IOException e) {
         throw new GapicWriterException("Could not write gapic_metadata.json");
       }
