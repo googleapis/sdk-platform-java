@@ -20,6 +20,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -69,7 +70,9 @@ public class BatchingSettingsConfigParser {
     String fileContents = null;
 
     try {
-      fileContents = new String(Files.readAllBytes(Paths.get(gapicYamlConfigFilePath)));
+      fileContents =
+          new String(
+              Files.readAllBytes(Paths.get(gapicYamlConfigFilePath)), StandardCharsets.UTF_8);
     } catch (IOException e) {
       return Optional.empty();
     }
@@ -104,7 +107,7 @@ public class BatchingSettingsConfigParser {
             batchingOuterYamlConfig.containsKey(YAML_KEY_DESCRIPTOR),
             String.format(
                 "%s key expected but not found for method %s",
-                YAML_KEY_DESCRIPTOR, (String) methodYamlConfig.get(YAML_KEY_NAME)));
+                YAML_KEY_DESCRIPTOR, methodYamlConfig.get(YAML_KEY_NAME)));
 
         // Parse the threshold values first.
         Map<String, Object> batchingYamlConfig =
