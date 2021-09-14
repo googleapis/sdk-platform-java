@@ -15,10 +15,10 @@
 package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -26,7 +26,6 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.testgapic.v1beta1.BadMessageResnameDefProto;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.List;
@@ -38,13 +37,11 @@ import org.junit.Test;
 public class ResourceNameParserTest {
   private static final String MAIN_PACKAGE = "com.google.testgapic.v1beta1";
 
-  private ServiceDescriptor lockerService;
   private FileDescriptor lockerServiceFileDescriptor;
 
   @Before
   public void setUp() {
     lockerServiceFileDescriptor = LockerProto.getDescriptor();
-    lockerService = lockerServiceFileDescriptor.getServices().get(0);
   }
 
   @Test

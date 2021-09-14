@@ -15,7 +15,7 @@
 package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
@@ -894,10 +894,6 @@ public class ImportWriterVisitorTest {
   }
 
   /** =============================== HELPERS =============================== */
-  private static TypeNode createType(Class clazz) {
-    return TypeNode.withReference(ConcreteReference.withClazz(clazz));
-  }
-
   private static Variable createVariable(String variableName, TypeNode type) {
     return Variable.builder().setName(variableName).setType(type).build();
   }

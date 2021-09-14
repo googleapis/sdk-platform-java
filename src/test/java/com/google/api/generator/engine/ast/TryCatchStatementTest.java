@@ -15,7 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
@@ -86,11 +86,6 @@ public class TryCatchStatementTest {
 
   @Test
   public void validTryCatchStatement_sampleCode() {
-    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
-    TypeNode type = TypeNode.withReference(exceptionReference);
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
-
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
             .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
@@ -101,18 +96,12 @@ public class TryCatchStatementTest {
 
   @Test
   public void invalidTryCatchStatement_missingCatchVariable() {
-    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
-    TypeNode type = TypeNode.withReference(exceptionReference);
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
-
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          TryCatchStatement.builder()
-              .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-              .build();
-        });
+        () ->
+            TryCatchStatement.builder()
+                .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .build());
   }
 
   @Test
@@ -124,13 +113,11 @@ public class TryCatchStatementTest {
 
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          TryCatchStatement tryCatch =
-              TryCatchStatement.builder()
-                  .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-                  .addCatch(variableExpr, Collections.emptyList())
-                  .build();
-        });
+        () ->
+            TryCatchStatement.builder()
+                .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .addCatch(variableExpr, Collections.emptyList())
+                .build());
   }
 
   @Test
@@ -142,13 +129,11 @@ public class TryCatchStatementTest {
 
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          TryCatchStatement tryCatch =
-              TryCatchStatement.builder()
-                  .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-                  .addCatch(variableExpr, Collections.emptyList())
-                  .build();
-        });
+        () ->
+            TryCatchStatement.builder()
+                .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .addCatch(variableExpr, Collections.emptyList())
+                .build());
   }
 
   private static AssignmentExpr createAssignmentExpr() {
