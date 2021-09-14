@@ -493,8 +493,7 @@ public class RetrySettingsComposerTest {
             ConcreteReference.builder()
                 .setClazz(ImmutableMap.class)
                 .setGenerics(
-                    Arrays.asList(TypeNode.STRING, immutableSetType)
-                        .stream()
+                    Arrays.asList(TypeNode.STRING, immutableSetType).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());
@@ -514,8 +513,7 @@ public class RetrySettingsComposerTest {
             ConcreteReference.builder()
                 .setClazz(ImmutableMap.class)
                 .setGenerics(
-                    Arrays.asList(TypeNode.STRING, retrySettingsType)
-                        .stream()
+                    Arrays.asList(TypeNode.STRING, retrySettingsType).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());
