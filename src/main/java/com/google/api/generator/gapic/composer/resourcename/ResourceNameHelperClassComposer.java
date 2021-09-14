@@ -214,9 +214,7 @@ public class ResourceNameHelperClassComposer {
     //         "projects/{project}/locations/{location}/autoscalingPolicies/{autoscaling_policy}");
     for (int i = 0; i < patterns.size(); i++) {
       VariableExpr varExpr =
-          templateFinalVarExprs
-              .get(i)
-              .toBuilder()
+          templateFinalVarExprs.get(i).toBuilder()
               .setIsDecl(true)
               .setScope(ScopeNode.PRIVATE)
               .setIsStatic(true)
@@ -240,9 +238,7 @@ public class ResourceNameHelperClassComposer {
     }
 
     memberVars.add(
-        FIXED_CLASS_VARS
-            .get("fieldValuesMap")
-            .toBuilder()
+        FIXED_CLASS_VARS.get("fieldValuesMap").toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsVolatile(true)
@@ -1066,8 +1062,7 @@ public class ResourceNameHelperClassComposer {
             .setArguments(Arrays.asList(formattedStringVarExpr))
             .setReturnType(TypeNode.BOOLEAN)
             .build();
-    for (int i = 1; i < templateFinalVarExprs.size(); i++) {
-      VariableExpr templateVarExpr = templateFinalVarExprs.get(i);
+    for (VariableExpr templateVarExpr : templateFinalVarExprs) {
       returnOrExpr =
           LogicalOperationExpr.logicalOrWithExprs(
               returnOrExpr,
@@ -1247,8 +1242,7 @@ public class ResourceNameHelperClassComposer {
 
       List<Expr> instantiateArgExprs = new ArrayList<>();
       List<String> tokens = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList());
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
+      for (String token : tokens) {
         Preconditions.checkNotNull(
             patternTokenVarExprs.get(token),
             String.format(
@@ -1625,9 +1619,7 @@ public class ResourceNameHelperClassComposer {
                 .setStaticReferenceType(FIXED_TYPESTORE.get("Objects"))
                 .setMethodName("equals")
                 .setArguments(
-                    FIXED_CLASS_VARS
-                        .get("pathTemplate")
-                        .toBuilder()
+                    FIXED_CLASS_VARS.get("pathTemplate").toBuilder()
                         .setExprReferenceExpr(outerClassVarExpr)
                         .build(),
                     templateFinalVarExpr)
@@ -1647,17 +1639,14 @@ public class ResourceNameHelperClassComposer {
                 .build());
       }
 
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
-        String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
+      for (VariableExpr memberVarExpr : classMemberVarExprs) {
         VariableExpr currClassTokenVarExpr =
-            classMemberVarExprs.get(i).toBuilder().setExprReferenceExpr(thisExpr).build();
+            memberVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build();
         builderCtorBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(currClassTokenVarExpr)
                 .setValueExpr(
-                    currClassTokenVarExpr
-                        .toBuilder()
+                    currClassTokenVarExpr.toBuilder()
                         .setExprReferenceExpr(outerClassVarExpr)
                         .build())
                 .build());
