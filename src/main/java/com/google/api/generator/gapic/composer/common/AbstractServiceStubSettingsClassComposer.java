@@ -373,9 +373,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         service.methods().isEmpty()
             ? Optional.empty()
             : Optional.of(
-                service
-                    .methods()
-                    .stream()
+                service.methods().stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
                     .orElse(service.methods().get(0)));
@@ -451,8 +449,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR
-            .toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -489,9 +486,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     // Declare settings members.
     statements.addAll(
-        methodSettingsMemberVarExprs
-            .values()
-            .stream()
+        methodSettingsMemberVarExprs.values().stream()
             .map(
                 v ->
                     exprToStatementFn.apply(
@@ -644,8 +639,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(method.inputType())
             .setName("injectToken")
             .setArguments(
-                Arrays.asList(payloadVarExpr, strTokenVarExpr)
-                    .stream()
+                Arrays.asList(payloadVarExpr, strTokenVarExpr).stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(returnExpr)
@@ -674,8 +668,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(method.inputType())
             .setName("injectPageSize")
             .setArguments(
-                Arrays.asList(payloadVarExpr, pageSizeVarExpr)
-                    .stream()
+                Arrays.asList(payloadVarExpr, pageSizeVarExpr).stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setReturnExpr(returnExpr)
@@ -806,8 +799,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr
-                .toBuilder()
+            pagedListDescVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -946,8 +938,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr
-                .toBuilder()
+            pagedListResponseFactoryVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -993,9 +984,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setReturnExpr(e.getValue())
               .build();
         };
-    return methodSettingsMemberVarExprs
-        .entrySet()
-        .stream()
+    return methodSettingsMemberVarExprs.entrySet().stream()
         .map(e -> varToMethodFn.apply(e))
         .collect(Collectors.toList());
   }
@@ -1272,9 +1261,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                         .build())
                 .build();
     bodyStatements.addAll(
-        methodSettingsMemberVarExprs
-            .entrySet()
-            .stream()
+        methodSettingsMemberVarExprs.entrySet().stream()
             .map(e -> ExprStatement.withExpr(varInitExprFn.apply(e)))
             .collect(Collectors.toList()));
 
@@ -1299,8 +1286,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             ConcreteReference.builder()
                 .setClazz(StubSettings.Builder.class)
                 .setGenerics(
-                    Arrays.asList(typeStore.get(thisClassName), typeStore.get(className))
-                        .stream()
+                    Arrays.asList(typeStore.get(thisClassName), typeStore.get(className)).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());
@@ -1350,9 +1336,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     // Declare all the settings fields.
     exprs.addAll(
-        nestedMethodSettingsMemberVarExprs
-            .values()
-            .stream()
+        nestedMethodSettingsMemberVarExprs.values().stream()
             .map(v -> varDeclFn.apply(v))
             .collect(Collectors.toList()));
 
@@ -1550,9 +1534,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     ctorBodyStatements.add(EMPTY_LINE_STATEMENT);
 
     ctorBodyStatements.addAll(
-        nestedMethodSettingsMemberVarExprs
-            .entrySet()
-            .stream()
+        nestedMethodSettingsMemberVarExprs.entrySet().stream()
             .map(
                 e -> {
                   // TODO(miraleung): Extract this into another method.
@@ -1661,9 +1643,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                             .generics())
                     .setMethodName("of")
                     .setArguments(
-                        nestedMethodSettingsMemberVarExprs
-                            .values()
-                            .stream()
+                        nestedMethodSettingsMemberVarExprs.values().stream()
                             .filter(
                                 v ->
                                     isUnaryCallSettingsBuilderFn.apply(v.type())
@@ -1709,9 +1689,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // TODO(cleanup): Technically this should actually use the outer class's <method>Settings
     // members to avoid decoupling variable names.
     ctorBodyStatements.addAll(
-        nestedMethodSettingsMemberVarExprs
-            .values()
-            .stream()
+        nestedMethodSettingsMemberVarExprs.values().stream()
             .map(
                 v ->
                     ExprStatement.withExpr(
@@ -2072,9 +2050,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
@@ -2126,8 +2102,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             ConcreteReference.builder()
                 .setClazz(ImmutableMap.class)
                 .setGenerics(
-                    Arrays.asList(TypeNode.STRING, immutableSetType)
-                        .stream()
+                    Arrays.asList(TypeNode.STRING, immutableSetType).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());
@@ -2144,8 +2119,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             ConcreteReference.builder()
                 .setClazz(ImmutableMap.class)
                 .setGenerics(
-                    Arrays.asList(TypeNode.STRING, FIXED_TYPESTORE.get("RetrySettings"))
-                        .stream()
+                    Arrays.asList(TypeNode.STRING, FIXED_TYPESTORE.get("RetrySettings")).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());

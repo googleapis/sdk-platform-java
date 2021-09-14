@@ -254,9 +254,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   protected List<Statement> createMethodDescriptorVariableDecls(
       Service service, Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
-    return service
-        .methods()
-        .stream()
+    return service.methods().stream()
         .map(
             m ->
                 createMethodDescriptorVariableDecl(
@@ -266,9 +264,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   private static List<Statement> createClassMemberFieldDeclarations(
       Map<String, VariableExpr> fieldNameToVarExprs) {
-    return fieldNameToVarExprs
-        .values()
-        .stream()
+    return fieldNameToVarExprs.values().stream()
         .map(
             v ->
                 ExprStatement.withExpr(
@@ -282,9 +278,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   protected Map<String, VariableExpr> createProtoMethodNameToDescriptorClassMembers(
       Service service, Class<?> descriptorClass) {
-    return service
-        .methods()
-        .stream()
+    return service.methods().stream()
         .collect(
             Collectors.toMap(
                 Method::name,
@@ -429,8 +423,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                 .setReturnType(creatorMethodReturnType)
                 .setName("create")
                 .setArguments(
-                    argList
-                        .stream()
+                    argList.stream()
                         .map(v -> v.toBuilder().setIsDecl(true).build())
                         .collect(Collectors.toList()))
                 .setThrowsExceptions(
@@ -570,9 +563,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     secondCtorExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(
-                classMemberVarExprs
-                    .get("callableFactory")
-                    .toBuilder()
+                classMemberVarExprs.get("callableFactory").toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
             .setValueExpr(callableFactoryVarExpr)
@@ -601,9 +592,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
     // Transport settings local variables.
     Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs =
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .collect(
                 Collectors.toMap(
                     m -> JavaStyle.toLowerCamelCase(m.name()),
@@ -626,9 +615,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                                 .build())));
 
     secondCtorExprs.addAll(
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .map(
                 m ->
                     createTransportSettingsInitExpr(
@@ -644,9 +631,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
     // Initialize <method>Callable variables.
     secondCtorExprs.addAll(
-        callableClassMemberVarExprs
-            .entrySet()
-            .stream()
+        callableClassMemberVarExprs.entrySet().stream()
             .map(
                 e ->
                     createCallableInitExpr(
@@ -796,9 +781,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   private static List<MethodDefinition> createCallableGetterMethods(
       Map<String, VariableExpr> callableClassMemberVarExprs) {
-    return callableClassMemberVarExprs
-        .entrySet()
-        .stream()
+    return callableClassMemberVarExprs.entrySet().stream()
         .map(
             e ->
                 MethodDefinition.builder()
@@ -930,8 +913,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .apply("awaitTermination")
             .setReturnType(TypeNode.BOOLEAN)
             .setArguments(
-                awaitTerminationArgs
-                    .stream()
+                awaitTerminationArgs.stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
             .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("InterruptedException")))
@@ -940,8 +922,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                     .setExprReferenceExpr(backgroundResourcesVarExpr)
                     .setMethodName("awaitTermination")
                     .setArguments(
-                        awaitTerminationArgs
-                            .stream()
+                        awaitTerminationArgs.stream()
                             .map(v -> (Expr) v)
                             .collect(Collectors.toList()))
                     .setReturnType(TypeNode.BOOLEAN)
@@ -964,9 +945,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
-        service
-            .methods()
-            .stream()
+        service.methods().stream()
             .filter(m -> m.isPaged())
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
