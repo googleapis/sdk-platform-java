@@ -39,6 +39,8 @@ public abstract class NewObjectExpr implements Expr {
     return builder().setType(type).build();
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_NewObjectExpr.Builder()
         .setArguments(Collections.emptyList())

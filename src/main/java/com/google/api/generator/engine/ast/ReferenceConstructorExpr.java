@@ -40,6 +40,8 @@ public abstract class ReferenceConstructorExpr implements Expr {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder thisBuilder() {
     return new AutoValue_ReferenceConstructorExpr.Builder()
         .setArguments(Collections.emptyList())

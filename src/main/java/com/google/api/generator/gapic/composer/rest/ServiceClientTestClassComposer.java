@@ -101,14 +101,18 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     fields.put(
         MOCK_SERVICE_VAR_NAME, FIXED_REST_TYPESTORE.get(MockHttpService.class.getSimpleName()));
     fields.put(CLIENT_VAR_NAME, typeStore.get(ClassNames.getServiceClientClassName(service)));
-    return fields.entrySet().stream()
+    return fields
+        .entrySet()
+        .stream()
         .collect(Collectors.toMap(e -> e.getKey(), e -> varExprFn.apply(e.getKey(), e.getValue())));
   }
 
   @Override
   protected List<Statement> createClassMemberFieldDecls(
       Map<String, VariableExpr> classMemberVarExprs) {
-    return classMemberVarExprs.values().stream()
+    return classMemberVarExprs
+        .values()
+        .stream()
         .map(
             v ->
                 ExprStatement.withExpr(
@@ -237,7 +241,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
         .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setIsStatic(true)
         .setBody(
-            Arrays.asList(initMockServiceExpr, initLocalSettingsExpr, initClientExpr).stream()
+            Arrays.asList(initMockServiceExpr, initLocalSettingsExpr, initClientExpr)
+                .stream()
                 .map(e -> ExprStatement.withExpr(e))
                 .collect(Collectors.toList()))
         .build();

@@ -45,6 +45,8 @@ public abstract class TryCatchStatement implements Statement {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_TryCatchStatement.Builder()
         .setCatchVariableExprs(Collections.emptyList())
@@ -60,6 +62,8 @@ public abstract class TryCatchStatement implements Statement {
 
     public abstract Builder setIsSampleCode(boolean isSampleCode);
 
+    public abstract Builder setCatchBlocks(List<List<Statement>> body);
+
     public Builder addCatch(@Nonnull VariableExpr variableExpr, List<Statement> body) {
       List<VariableExpr> catchVarExprs = new ArrayList<>(catchVariableExprs());
       catchVarExprs.add(variableExpr);
@@ -72,8 +76,6 @@ public abstract class TryCatchStatement implements Statement {
 
     // Private.
     abstract Builder setCatchVariableExprs(List<VariableExpr> variableExpr);
-
-    abstract Builder setCatchBlocks(List<List<Statement>> body);
 
     abstract ImmutableList<Statement> tryBody();
 

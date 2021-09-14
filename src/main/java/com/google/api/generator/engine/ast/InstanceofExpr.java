@@ -33,6 +33,8 @@ public abstract class InstanceofExpr implements Expr {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_InstanceofExpr.Builder();
   }

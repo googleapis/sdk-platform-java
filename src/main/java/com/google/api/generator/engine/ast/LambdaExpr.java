@@ -43,6 +43,8 @@ public abstract class LambdaExpr implements Expr {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_LambdaExpr.Builder()
         .setArguments(Collections.emptyList())

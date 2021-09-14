@@ -35,13 +35,15 @@ public abstract class ReturnExpr implements Expr {
     return builder().setExpr(expr).build();
   }
 
+  public abstract Builder toBuilder();
+
   // Private.
   static Builder builder() {
     return new AutoValue_ReturnExpr.Builder();
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
+  public abstract static class Builder {
     public abstract Builder setExpr(Expr expr);
 
     // Private accessors.

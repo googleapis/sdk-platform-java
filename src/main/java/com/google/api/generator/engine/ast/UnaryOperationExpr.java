@@ -53,15 +53,16 @@ public abstract class UnaryOperationExpr implements OperationExpr {
         .build();
   }
 
+  public abstract Builder toBuilder();
+
   private static Builder builder() {
     return new AutoValue_UnaryOperationExpr.Builder();
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
+  public abstract static class Builder {
 
-    // Private setter.
-    abstract Builder setExpr(Expr expr);
+    public abstract Builder setExpr(Expr expr);
 
     // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
@@ -71,7 +72,7 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
     abstract UnaryOperationExpr autoBuild();
 
-    private UnaryOperationExpr build() {
+    public UnaryOperationExpr build() {
       UnaryOperationExpr unaryOperationExpr = autoBuild();
       TypeNode exprType = unaryOperationExpr.expr().type();
       OperatorKind operator = unaryOperationExpr.operatorKind();

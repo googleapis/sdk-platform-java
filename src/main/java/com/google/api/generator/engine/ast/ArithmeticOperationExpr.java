@@ -44,18 +44,18 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
         .build();
   }
 
+  public abstract Builder toBuilder();
+
   private static Builder builder() {
     return new AutoValue_ArithmeticOperationExpr.Builder();
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
+  public abstract static class Builder {
 
-    // Private setter.
-    abstract Builder setLhsExpr(Expr expr);
+    public abstract Builder setLhsExpr(Expr expr);
 
-    // Private setter.
-    abstract Builder setRhsExpr(Expr expr);
+    public abstract Builder setRhsExpr(Expr expr);
 
     // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
@@ -65,7 +65,7 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
     abstract ArithmeticOperationExpr autoBuild();
 
-    private ArithmeticOperationExpr build() {
+    public ArithmeticOperationExpr build() {
       ArithmeticOperationExpr arithmeticOperationExpr = autoBuild();
       TypeNode lhsExprType = arithmeticOperationExpr.lhsExpr().type();
       TypeNode rhsExprType = arithmeticOperationExpr.rhsExpr().type();

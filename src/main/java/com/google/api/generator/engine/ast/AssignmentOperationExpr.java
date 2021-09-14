@@ -54,24 +54,24 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
         .build();
   }
 
+  public abstract Builder toBuilder();
+
   private static Builder builder() {
     return new AutoValue_AssignmentOperationExpr.Builder();
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
-    // Private setter.
-    abstract Builder setVariableExpr(VariableExpr variableExpr);
+  public abstract static class Builder {
+    public abstract Builder setVariableExpr(VariableExpr variableExpr);
 
-    // Private setter.
-    abstract Builder setValueExpr(Expr valueExpr);
+    public abstract Builder setValueExpr(Expr valueExpr);
 
     // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
 
     abstract AssignmentOperationExpr autoBuild();
 
-    private AssignmentOperationExpr build() {
+    public AssignmentOperationExpr build() {
       AssignmentOperationExpr assignmentOperationExpr = autoBuild();
       TypeNode lhsType = assignmentOperationExpr.variableExpr().variable().type();
       TypeNode rhsType = assignmentOperationExpr.valueExpr().type();
