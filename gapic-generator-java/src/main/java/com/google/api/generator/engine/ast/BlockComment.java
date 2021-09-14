@@ -18,6 +18,7 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class BlockComment implements Comment {
+  @Override
   public abstract String comment();
 
   @Override
