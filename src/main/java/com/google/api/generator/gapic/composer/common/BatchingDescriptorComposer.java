@@ -66,7 +66,6 @@ public class BatchingDescriptorComposer {
   private static final TypeNode PARTITION_KEY_TYPE = toType(PartitionKey.class);
 
   private static final String ADD_ALL_METHOD_PATTERN = "addAll%s";
-  private static final String BATCH_FOO_INDEX_PATTERN = "batch%sIndex";
   private static final String GET_LIST_METHOD_PATTERN = "get%sList";
   private static final String GET_COUNT_METHOD_PATTERN = "get%sCount";
 
@@ -231,8 +230,7 @@ public class BatchingDescriptorComposer {
             .setStatements(
                 Arrays.asList(
                     ExprStatement.withExpr(
-                        builderVarExpr
-                            .toBuilder()
+                        builderVarExpr.toBuilder()
                             .setIsDecl(true)
                             .setScope(ScopeNode.PRIVATE)
                             .build())))
@@ -272,8 +270,6 @@ public class BatchingDescriptorComposer {
         VariableExpr.withVariable(
             Variable.builder().setType(batchedRequestIssuerType).setName("responder").build());
 
-    String upperCamelBatchedFieldName =
-        JavaStyle.toUpperCamelCase(batchingSettings.batchedFieldName());
     VariableExpr batchMessageIndexVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.INT).setName("batchMessageIndex").build());
@@ -541,7 +537,7 @@ public class BatchingDescriptorComposer {
         .build();
   }
 
-  private static TypeNode toType(Class clazz) {
+  private static TypeNode toType(Class<?> clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }
 

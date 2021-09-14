@@ -37,8 +37,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 public class TypeParser {
-  private static final String DOT = ".";
-
   private static Reference REFERENCE_BYTE_STRING = ConcreteReference.withClazz(ByteString.class);
   private static TypeNode TYPE_NODE_BYTE_STRING = TypeNode.withReference(REFERENCE_BYTE_STRING);
 
@@ -245,8 +243,6 @@ public class TypeParser {
 
   @VisibleForTesting
   static TypeNode createListType(FieldDescriptor field) {
-    JavaType protoFieldType = field.getJavaType();
-
     Reference listReference =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -259,7 +255,6 @@ public class TypeParser {
   static TypeNode createMapType(FieldDescriptor field) {
     Preconditions.checkState(
         field.isMapField(), "createMapType can only be called on map-type fields");
-    JavaType protoJavaType = field.getJavaType();
 
     Descriptor type = field.getMessageType();
     FieldDescriptor keyField = type.findFieldByName("key");

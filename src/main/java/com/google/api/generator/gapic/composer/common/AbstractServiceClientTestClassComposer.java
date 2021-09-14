@@ -20,13 +20,8 @@ import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
-import com.google.api.gax.rpc.OperationCallSettings;
-import com.google.api.gax.rpc.PagedCallSettings;
-import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.api.gax.rpc.StreamingCallSettings;
-import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -847,7 +842,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
    */
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractMessage.class,
             After.class,
@@ -910,70 +905,12 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     }
   }
 
-  private static TypeNode getOperationCallSettingsTypeHelper(
-      Method protoMethod, boolean isBuilder) {
-    Preconditions.checkState(
-        protoMethod.hasLro(),
-        String.format("Cannot get OperationCallSettings on non-LRO method %s", protoMethod.name()));
-    Class callSettingsClazz =
-        isBuilder ? OperationCallSettings.Builder.class : OperationCallSettings.class;
-    return TypeNode.withReference(
-        ConcreteReference.builder()
-            .setClazz(callSettingsClazz)
-            .setGenerics(
-                Arrays.asList(
-                    protoMethod.inputType().reference(),
-                    protoMethod.lro().responseType().reference(),
-                    protoMethod.lro().metadataType().reference()))
-            .build());
-  }
-
-  private static TypeNode getCallSettingsTypeHelper(
-      Method protoMethod, TypeStore typeStore, boolean isBuilder) {
-    Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
-    if (protoMethod.isPaged()) {
-      callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
-    } else {
-      switch (protoMethod.stream()) {
-        case CLIENT:
-          // Fall through.
-        case BIDI:
-          callSettingsClazz =
-              isBuilder ? StreamingCallSettings.Builder.class : StreamingCallSettings.class;
-          break;
-        case SERVER:
-          callSettingsClazz =
-              isBuilder
-                  ? ServerStreamingCallSettings.Builder.class
-                  : ServerStreamingCallSettings.class;
-          break;
-        case NONE:
-          // Fall through
-        default:
-          // Fall through
-      }
-    }
-
-    List<Reference> generics = new ArrayList<>();
-    generics.add(protoMethod.inputType().reference());
-    generics.add(protoMethod.outputType().reference());
-    if (protoMethod.isPaged()) {
-      generics.add(
-          typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
-              .reference());
-    }
-
-    return TypeNode.withReference(
-        ConcreteReference.builder().setClazz(callSettingsClazz).setGenerics(generics).build());
-  }
-
   protected static TypeNode getCallableType(Method protoMethod) {
     Preconditions.checkState(
         !protoMethod.stream().equals(Method.Stream.NONE),
         "No callable type exists for non-streaming methods.");
 
-    Class callableClazz = ClientStreamingCallable.class;
+    Class<?> callableClazz = ClientStreamingCallable.class;
     switch (protoMethod.stream()) {
       case BIDI:
         callableClazz = BidiStreamingCallable.class;

@@ -284,15 +284,4 @@ public class MethodSignatureParser {
         argumentFieldPathAcc,
         outputArgResourceNames);
   }
-
-  private static Map<String, ResourceName> createPatternResourceNameMap(
-      Map<String, ResourceName> resourceNames) {
-    Map<String, ResourceName> patternsToResourceNames = new HashMap<>();
-    for (ResourceName resourceName : resourceNames.values()) {
-      for (String pattern : resourceName.patterns()) {
-        patternsToResourceNames.put(pattern, resourceName);
-      }
-    }
-    return patternsToResourceNames;
-  }
 }
