@@ -68,13 +68,11 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -97,8 +95,7 @@ public class GrpcServiceCallableFactoryClassComposer
         /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(
             requestTemplateName, responseTemplateName),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -118,8 +115,7 @@ public class GrpcServiceCallableFactoryClassComposer
         /*methodVariantName=*/ methodVariantName,
         /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(requestTemplateName, OPERATION_TYPE),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -135,13 +131,11 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ "Streaming",
-        /*callSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -157,13 +151,11 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -179,13 +171,11 @@ public class GrpcServiceCallableFactoryClassComposer
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
         /*callSettingsVariantName=*/ "Streaming",
-        /*callSettingsTemplateObjects=*/ methodTemplateNames
-            .stream()
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }

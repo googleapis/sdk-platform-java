@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.protowriter;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.utils.AstTransformer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -52,6 +53,10 @@ public class Writer {
 
     for (GapicClass gapicClazz : clazzes) {
       ClassDefinition clazz = gapicClazz.classDefinition();
+
+      AstTransformer transformer = new AstTransformer();
+      clazz.accept(transformer);
+      clazz = (ClassDefinition) transformer.getTransformedAst();
 
       clazz.accept(codeWriter);
       String code = codeWriter.write();

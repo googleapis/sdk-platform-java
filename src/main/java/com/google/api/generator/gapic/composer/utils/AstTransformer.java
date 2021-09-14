@@ -39,7 +39,6 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
-import com.google.api.generator.engine.ast.ThrowExpr.Builder;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.UnaryOperationExpr;
@@ -50,8 +49,10 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
@@ -105,7 +106,8 @@ public class AstTransformer implements AstNodeVisitor {
     Expr thenExpr = transform(tenaryExpr.thenExpr(), Expr.class);
     Expr elseExpr = transform(tenaryExpr.elseExpr(), Expr.class);
     node =
-        tenaryExpr.toBuilder()
+        tenaryExpr
+            .toBuilder()
             .setConditionExpr(conditionExpr)
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
@@ -131,23 +133,42 @@ public class AstTransformer implements AstNodeVisitor {
 
   @Override
   public void visit(AnonymousClassExpr anonymousClassExpr) {
-    node = anonymousClassExpr; // TODO: transform to lambda if possible
+    // Transform to a lambda if feasible.
+    if (anonymousClassExpr.statements().isEmpty() && anonymousClassExpr.methods().size() == 1) {
+      MethodDefinition method = anonymousClassExpr.methods().get(0);
+      // TODO: handle the case where returnExpr is null after fixing
+      // https://github.com/googleapis/gapic-generator-java/issues/843
+      if (method.returnExpr() != null) {
+        List<Statement> body = transform(method.body(), Statement.class);
+        ReturnExpr returnExpr = transform(method.returnExpr(), ReturnExpr.class);
+        LambdaExpr lambda =
+            LambdaExpr.builder()
+                .setArguments(method.arguments())
+                .setBody(body)
+                .setReturnExpr(returnExpr)
+                .build();
+        node = CastExpr.builder().setType(anonymousClassExpr.type()).setExpr(lambda).build();
+        return;
+      }
+    }
+
+    List<Statement> statements = transform(anonymousClassExpr.statements(), Statement.class);
+    List<MethodDefinition> methods =
+        transform(anonymousClassExpr.methods(), MethodDefinition.class);
+    node = anonymousClassExpr.toBuilder().setStatements(statements).setMethods(methods).build();
   }
 
   @Override
   public void visit(ThrowExpr throwExpr) {
-    Builder builder = throwExpr.toBuilder();
-    Expr currentThrowExpr = throwExpr.throwExpr();
-    Expr currentMessageExpr = throwExpr.messageExpr();
-    Expr currentCauseExpr = throwExpr.causeExpr();
-    if (currentThrowExpr != null) {
-      builder.setThrowExpr(transform(currentThrowExpr, Expr.class));
+    ThrowExpr.Builder builder = throwExpr.toBuilder();
+    if (throwExpr.throwExpr() != null) {
+      builder.setThrowExpr(transform(throwExpr.throwExpr(), Expr.class));
     }
-    if (currentMessageExpr != null) {
-      builder.setMessageExpr(transform(currentMessageExpr, Expr.class));
+    if (throwExpr.messageExpr() != null) {
+      builder.setMessageExpr(transform(throwExpr.messageExpr(), Expr.class));
     }
-    if (currentCauseExpr != null) {
-      builder.setCauseExpr(transform(currentCauseExpr, Expr.class));
+    if (throwExpr.causeExpr() != null) {
+      builder.setCauseExpr(transform(throwExpr.causeExpr(), Expr.class));
     }
     node = builder.build();
   }
@@ -253,14 +274,16 @@ public class AstTransformer implements AstNodeVisitor {
     Expr conditionExpr = transform(ifStatement.conditionExpr(), Expr.class);
     List<Statement> body = transform(ifStatement.body(), Statement.class);
     List<Statement> elseBody = transform(ifStatement.elseBody(), Statement.class);
-    Map<Expr, List<Statement>> elseIfs =
-        ifStatement.elseIfs().entrySet().stream()
-            .collect(
-                Collectors.toMap(
-                    e -> transform(e.getKey(), Expr.class),
-                    e -> transform(e.getValue(), Statement.class)));
+
+    Map<Expr, List<Statement>> elseIfs = new LinkedHashMap<>();
+    for (Entry<Expr, List<Statement>> entry : ifStatement.elseIfs().entrySet()) {
+      elseIfs.put(
+          transform(entry.getKey(), Expr.class), transform(entry.getValue(), Statement.class));
+    }
+
     node =
-        ifStatement.toBuilder()
+        ifStatement
+            .toBuilder()
             .setConditionExpr(conditionExpr)
             .setBody(body)
             .setElseBody(elseBody)
@@ -282,7 +305,8 @@ public class AstTransformer implements AstNodeVisitor {
     Expr updateExpr = transform(generalForStatement.updateExpr(), Expr.class);
     List<Statement> body = transform(generalForStatement.body(), Statement.class);
     node =
-        generalForStatement.toBuilder()
+        generalForStatement
+            .toBuilder()
             .setInitializationExpr(initializationExpr)
             .setTerminationExpr(terminationExpr)
             .setUpdateExpr(updateExpr)

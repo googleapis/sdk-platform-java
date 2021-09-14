@@ -98,10 +98,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
     // Use the full name java.lang.Object if there is a proto message that is also named "Object".
     // Affects GCS.
-    if (context
-        .messages()
-        .keySet()
-        .stream()
+    if (context.messages().keySet().stream()
         .anyMatch(s -> s.equals("Object") || s.endsWith(".Object"))) {
       javaObjectReference =
           ConcreteReference.builder().setClazz(Object.class).setUseFullName(true).build();
@@ -274,9 +271,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createProtoMethodOverrides(Service service) {
-    return service
-        .methods()
-        .stream()
+    return service.methods().stream()
         .filter(m -> !m.isMixin()) // Mixin APIs will get their own generated mocks.
         .map(m -> createGenericProtoMethodOverride(m))
         .collect(Collectors.toList());
@@ -651,8 +646,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                     .setIsGeneric(true)
                     .build())
             .build();
-    return Arrays.asList(assignRequestVarExpr, assignResponsesVarExpr)
-        .stream()
+    return Arrays.asList(assignRequestVarExpr, assignResponsesVarExpr).stream()
         .map(e -> ExprStatement.withExpr(e))
         .collect(Collectors.toList());
   }
