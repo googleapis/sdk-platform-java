@@ -1187,7 +1187,6 @@ public class ResourceNameHelperClassComposer {
             .build();
 
     // Outer if-block.
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
     IfStatement outerIfStatement =
         IfStatement.builder()
             .setConditionExpr(fieldValuesMapNullCheckExpr)
@@ -1566,7 +1565,6 @@ public class ResourceNameHelperClassComposer {
     for (int i = 0; i < tokens.size(); i++) {
       String token = tokens.get(i);
       String upperCamelTokenName = JavaStyle.toUpperCamelCase(token);
-      String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
       VariableExpr currClassTokenVarExpr = classMemberVarExprs.get(i);
 
       // Getter.
@@ -1702,7 +1700,7 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
             BetaApi.class,

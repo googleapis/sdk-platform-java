@@ -24,8 +24,10 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
   public abstract Expr rhsExpr();
 
+  @Override
   public abstract OperatorKind operatorKind();
 
+  @Override
   public abstract TypeNode type();
 
   @Override

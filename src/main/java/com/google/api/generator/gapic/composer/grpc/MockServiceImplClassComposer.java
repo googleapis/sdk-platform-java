@@ -596,7 +596,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractMessage.class,
             ArrayList.class,

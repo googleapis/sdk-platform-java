@@ -62,7 +62,6 @@ import java.util.stream.Collectors;
 
 public class ServiceClientTestClassComposer extends AbstractServiceClientTestClassComposer {
   private static final String MOCK_SERVICE_VAR_NAME = "mockService";
-  private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
 
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();

@@ -592,6 +592,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return Collections.singletonList(expr);
   }
 
+  @Override
   protected Optional<String> getCallableCreatorMethodName(TypeNode callableVarExprType) {
     final String typeName = callableVarExprType.reference().name();
     String streamName = "Unary";

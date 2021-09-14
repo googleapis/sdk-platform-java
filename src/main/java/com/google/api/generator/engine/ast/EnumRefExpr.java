@@ -21,6 +21,7 @@ import com.google.common.base.Preconditions;
 public abstract class EnumRefExpr implements Expr {
   public abstract IdentifierNode identifier();
 
+  @Override
   public abstract TypeNode type();
 
   @Override
