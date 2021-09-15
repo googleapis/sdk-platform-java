@@ -1246,8 +1246,7 @@ public class ResourceNameHelperClassComposer {
 
       List<Expr> instantiateArgExprs = new ArrayList<>();
       List<String> tokens = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList());
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
+      for (String token : tokens) {
         Preconditions.checkNotNull(
             patternTokenVarExprs.get(token),
             String.format(
@@ -1645,9 +1644,9 @@ public class ResourceNameHelperClassComposer {
                 .build());
       }
 
-      for (int i = 0; i < tokens.size(); i++) {
+      for (VariableExpr memberVarExpr : classMemberVarExprs) {
         VariableExpr currClassTokenVarExpr =
-            classMemberVarExprs.get(i).toBuilder().setExprReferenceExpr(thisExpr).build();
+            memberVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build();
         builderCtorBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(currClassTokenVarExpr)
