@@ -207,15 +207,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     varInitExprs.add(initServiceHelperExpr);
     varInitExprs.add(startServiceHelperExpr);
 
-    List<Statement> body = new ArrayList<>();
-
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
         .setName("startStaticServer")
-        .setBody(body)
         .setBody(
             varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
