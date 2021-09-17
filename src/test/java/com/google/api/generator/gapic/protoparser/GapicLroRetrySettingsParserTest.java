@@ -14,8 +14,8 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import java.nio.file.Path;

@@ -14,9 +14,9 @@
 
 package com.google.api.generator.engine.ast;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.base.Function;
 import java.util.Arrays;
@@ -103,10 +103,7 @@ public class AnonymousClassExprTest {
   public void invalidAnonymousClass_primitiveType() {
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          AnonymousClassExpr anonymousClassExpr =
-              AnonymousClassExpr.builder().setType(TypeNode.INT).build();
-        });
+        () -> AnonymousClassExpr.builder().setType(TypeNode.INT).build());
   }
 
   @Test
@@ -126,10 +123,7 @@ public class AnonymousClassExprTest {
 
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          AnonymousClassExpr anonymousClassExpr =
-              AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
-        });
+        () -> AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build());
   }
 
   @Test
@@ -145,10 +139,7 @@ public class AnonymousClassExprTest {
             .build();
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          AnonymousClassExpr anonymousClassExpr =
-              AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
-        });
+        () -> AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build());
   }
 
   @Test
@@ -162,13 +153,11 @@ public class AnonymousClassExprTest {
     ExprStatement exprStatement = ExprStatement.withExpr(variableExpr);
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          AnonymousClassExpr anonymousClassExpr =
-              AnonymousClassExpr.builder()
-                  .setType(type)
-                  .setStatements(Arrays.asList(exprStatement))
-                  .build();
-        });
+        () ->
+            AnonymousClassExpr.builder()
+                .setType(type)
+                .setStatements(Arrays.asList(exprStatement))
+                .build());
   }
 
   private static AssignmentExpr createAssignmentExpr(
