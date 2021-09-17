@@ -14,16 +14,13 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.MethodArgument;
-import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,20 +28,9 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.junit.Before;
 import org.junit.Test;
 
 public class MethodSignatureParserTest {
-  private static final String MAIN_PACKAGE = "com.google.testgapic.v1beta1";
-
-  private ServiceDescriptor lockerService;
-  private FileDescriptor lockerServiceFileDescriptor;
-
-  @Before
-  public void setUp() {
-    lockerServiceFileDescriptor = LockerProto.getDescriptor();
-    lockerService = lockerServiceFileDescriptor.getServices().get(0);
-  }
 
   @Test
   public void flattenMethodSignatures_basic() {
