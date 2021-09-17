@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;

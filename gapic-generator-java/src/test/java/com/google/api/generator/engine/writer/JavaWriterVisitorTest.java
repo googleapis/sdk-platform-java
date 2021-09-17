@@ -15,7 +15,7 @@
 package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
@@ -334,7 +334,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr_scopedDecl() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -349,7 +348,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr_scopedStaticFinalDecl() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -366,7 +364,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr_scopedStaticFinalVolatileDecl() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -644,9 +641,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeTernaryExpr_basic() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
-    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
-
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -1579,11 +1573,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeTryCatchStatement_sampleCodeNoCatch() {
-    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
-    TypeNode type = TypeNode.withReference(exceptionReference);
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
-
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
             .setTryBody(

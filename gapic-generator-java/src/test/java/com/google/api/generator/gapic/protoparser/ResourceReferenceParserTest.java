@@ -14,16 +14,15 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,13 +34,11 @@ import org.junit.Test;
 public class ResourceReferenceParserTest {
   private static final String MAIN_PACKAGE = "com.google.testgapic.v1beta1";
 
-  private ServiceDescriptor lockerService;
   private FileDescriptor lockerServiceFileDescriptor;
 
   @Before
   public void setUp() {
     lockerServiceFileDescriptor = LockerProto.getDescriptor();
-    lockerService = lockerServiceFileDescriptor.getServices().get(0);
   }
 
   @Test
@@ -173,7 +170,6 @@ public class ResourceReferenceParserTest {
 
   @Test
   public void resolvePackages_resourcePackageIsSameAsService() {
-    String resourcePackage = "com.google.testgapic.v1beta1.common";
     assertEquals(MAIN_PACKAGE, ResourceReferenceParser.resolvePackages(MAIN_PACKAGE, MAIN_PACKAGE));
   }
 

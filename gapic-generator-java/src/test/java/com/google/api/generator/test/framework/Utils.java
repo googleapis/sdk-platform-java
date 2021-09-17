@@ -33,7 +33,7 @@ public class Utils {
    * @param fileName the name of saved file, usually it is test method name with suffix `.golden`.
    * @param codegen the generated code from JUnit test.
    */
-  public static void saveCodegenToFile(Class clazz, String fileName, String codegen) {
+  public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
     // This system environment variable `TEST_OUTPUT_HOME` is used to specify a folder
     // which contains generated output from JUnit test.
     // It will be set when running `bazel run testTarget_update` command.
@@ -51,15 +51,15 @@ public class Utils {
     }
   }
 
-  private static String getTestoutGoldenDir(Class clazz) {
+  private static String getTestoutGoldenDir(Class<?> clazz) {
     return clazz.getPackage().getName().replace(".", "/") + "/goldens/";
   }
 
-  public static String getGoldenDir(Class clazz) {
+  public static String getGoldenDir(Class<?> clazz) {
     return "src/test/java/" + clazz.getPackage().getName().replace(".", "/") + "/goldens/";
   }
 
-  public static String getClassName(Class clazz) {
+  public static String getClassName(Class<?> clazz) {
     return clazz.getSimpleName();
   }
 
