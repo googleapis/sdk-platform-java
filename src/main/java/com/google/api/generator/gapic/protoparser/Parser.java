@@ -128,9 +128,7 @@ public class Parser {
     Optional<String> serviceYamlConfigPathOpt =
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
-        serviceYamlConfigPathOpt.isPresent()
-            ? ServiceYamlParser.parse(serviceYamlConfigPathOpt.get())
-            : Optional.empty();
+        serviceYamlConfigPathOpt.flatMap(ServiceYamlParser::parse);
 
     // Collect the resource references seen in messages.
     Set<ResourceReference> outputResourceReferencesSeen = new HashSet<>();
