@@ -115,8 +115,8 @@ public class Parser {
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
 
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
-    String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(serviceConfigPathOpt.orElse(null));
     if (serviceConfigOpt.isPresent()) {
       GapicServiceConfig serviceConfig = serviceConfigOpt.get();
       serviceConfig.setLroRetrySettings(lroRetrySettingsOpt);
@@ -171,7 +171,7 @@ public class Parser {
       Function<ResourceName, String> typeNameFn =
           r -> r.resourceTypeString().substring(r.resourceTypeString().indexOf("/") + 1);
       Function<Set<ResourceName>, Set<String>> typeStringSetFn =
-          sr -> sr.stream().map(r -> typeNameFn.apply(r)).collect(Collectors.toSet());
+          sr -> sr.stream().map(typeNameFn).collect(Collectors.toSet());
 
       // Include all resource names present in message types for backwards-compatibility with the
       // monolith. In the future, this should be removed on a client library major semver update.
@@ -202,9 +202,9 @@ public class Parser {
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
-        .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
+        .setServiceConfig(serviceConfigOpt.orElse(null))
         .setGapicMetadataEnabled(willGenerateMetadata)
-        .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
+        .setServiceYamlProto(serviceYamlProtoOpt.orElse(null))
         .setTransport(transport)
         .build();
   }
@@ -533,7 +533,7 @@ public class Parser {
 
   private static Map<String, Message> parseMessages(
       Descriptor messageDescriptor, Set<ResourceReference> outputResourceReferencesSeen) {
-    return parseMessages(messageDescriptor, outputResourceReferencesSeen, new ArrayList<String>());
+    return parseMessages(messageDescriptor, outputResourceReferencesSeen, new ArrayList<>());
   }
 
   private static Map<String, Message> parseMessages(
@@ -829,7 +829,7 @@ public class Parser {
 
   @VisibleForTesting
   static String sanitizeDefaultHost(String rawDefaultHost) {
-    if (rawDefaultHost.indexOf(COLON) >= 0) {
+    if (rawDefaultHost.contains(COLON)) {
       // A port is already present, just return the existing string.
       return rawDefaultHost;
     }
