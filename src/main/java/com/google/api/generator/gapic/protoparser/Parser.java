@@ -378,7 +378,7 @@ public class Parser {
     outputMixinServices.addAll(
         outputMixinServiceSet.stream()
             .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
-            .collect(Collectors.toSet()));
+            .collect(Collectors.toList()));
     return services;
   }
 
