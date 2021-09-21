@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.grpcrest;
 
-import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.grpc.ProtoOperationTransformers;
@@ -72,7 +71,8 @@ public abstract class GrpcRestContext extends TransportContext {
           .setTransportCallableFactoryType(null)
           .setOperationsStubTypes(
               ImmutableList.of(
-                  classToType(OperationsStub.class), classToType(BackgroundResource.class)))
+                  classToType(OperationsStub.class),
+                  classToType(com.google.api.gax.httpjson.longrunning.stub.OperationsStub.class)))
           .setTransportCallSettingsName(null)
           // For RetrySettingsComposer
           // TODO: fix when LRO for REST RE FIXED

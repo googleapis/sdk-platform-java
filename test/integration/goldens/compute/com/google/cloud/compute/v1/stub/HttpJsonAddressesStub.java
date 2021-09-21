@@ -43,6 +43,7 @@ import com.google.cloud.compute.v1.InsertAddressRequest;
 import com.google.cloud.compute.v1.ListAddressesRequest;
 import com.google.cloud.compute.v1.Operation;
 import com.google.cloud.compute.v1.Operation.Status;
+import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +61,9 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
 public class HttpJsonAddressesStub extends AddressesStub {
+  private static final TypeRegistry typeRegistry =
+      TypeRegistry.newBuilder().add(Operation.getDescriptor()).build();
+
   private static final ApiMethodDescriptor<AggregatedListAddressesRequest, AddressAggregatedList>
       aggregatedListMethodDescriptor =
           ApiMethodDescriptor.<AggregatedListAddressesRequest, AddressAggregatedList>newBuilder()
@@ -105,6 +109,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<AddressAggregatedList>newBuilder()
                       .setDefaultInstance(AddressAggregatedList.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -140,6 +145,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
           .setResponseParser(
               ProtoMessageResponseParser.<Operation>newBuilder()
                   .setDefaultInstance(Operation.getDefaultInstance())
+                  .setDefaultTypeRegistry(typeRegistry)
                   .build())
           .setOperationSnapshotFactory(
               (DeleteAddressRequest request, Operation response) -> {
@@ -190,6 +196,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
           .setResponseParser(
               ProtoMessageResponseParser.<Operation>newBuilder()
                   .setDefaultInstance(Operation.getDefaultInstance())
+                  .setDefaultTypeRegistry(typeRegistry)
                   .build())
           .setOperationSnapshotFactory(
               (InsertAddressRequest request, Operation response) -> {
@@ -244,6 +251,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
           .setResponseParser(
               ProtoMessageResponseParser.<AddressList>newBuilder()
                   .setDefaultInstance(AddressList.getDefaultInstance())
+                  .setDefaultTypeRegistry(typeRegistry)
                   .build())
           .build();
 
@@ -307,18 +315,22 @@ public class HttpJsonAddressesStub extends AddressesStub {
         aggregatedListTransportSettings =
             HttpJsonCallSettings.<AggregatedListAddressesRequest, AddressAggregatedList>newBuilder()
                 .setMethodDescriptor(aggregatedListMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
                 .build();
     HttpJsonCallSettings<DeleteAddressRequest, Operation> deleteTransportSettings =
         HttpJsonCallSettings.<DeleteAddressRequest, Operation>newBuilder()
             .setMethodDescriptor(deleteMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<InsertAddressRequest, Operation> insertTransportSettings =
         HttpJsonCallSettings.<InsertAddressRequest, Operation>newBuilder()
             .setMethodDescriptor(insertMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<ListAddressesRequest, AddressList> listTransportSettings =
         HttpJsonCallSettings.<ListAddressesRequest, AddressList>newBuilder()
             .setMethodDescriptor(listMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
 
     this.aggregatedListCallable =

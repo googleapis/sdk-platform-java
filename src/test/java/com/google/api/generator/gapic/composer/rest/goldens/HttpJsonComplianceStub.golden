@@ -13,6 +13,7 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
 import java.io.IOException;
@@ -33,6 +34,8 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
 public class HttpJsonComplianceStub extends ComplianceStub {
+  private static final TypeRegistry typeRegistry = TypeRegistry.newBuilder().build();
+
   private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
       repeatDataBodyMethodDescriptor =
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
@@ -62,6 +65,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -96,6 +100,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -130,6 +135,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -176,6 +182,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -220,6 +227,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -261,6 +269,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<RepeatResponse>newBuilder()
                       .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -315,27 +324,33 @@ public class HttpJsonComplianceStub extends ComplianceStub {
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyTransportSettings =
         HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
             .setMethodDescriptor(repeatDataBodyMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyInfoTransportSettings =
         HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
             .setMethodDescriptor(repeatDataBodyInfoMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataQueryTransportSettings =
         HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
             .setMethodDescriptor(repeatDataQueryMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataSimplePathTransportSettings =
         HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
             .setMethodDescriptor(repeatDataSimplePathMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataPathResourceTransportSettings =
         HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
             .setMethodDescriptor(repeatDataPathResourceMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse>
         repeatDataPathTrailingResourceTransportSettings =
             HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
                 .setMethodDescriptor(repeatDataPathTrailingResourceMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
                 .build();
 
     this.repeatDataBodyCallable =
