@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer.common;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
+import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
@@ -119,6 +120,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             IOException.class,
             Operation.class,
             OperationCallable.class,
+            OperationSnapshot.class,
             RequestParamsExtractor.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
@@ -161,7 +163,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     }
 
     boolean operationPollingMethod = checkOperationPollingMethod(service);
-    if(operationPollingMethod) {
+    if (operationPollingMethod) {
       VariableExpr longRunningVarExpr = declareLongRunningClient();
       if (longRunningVarExpr != null) {
         classMemberVarExprs.put("longRunningClient", longRunningVarExpr);
@@ -212,7 +214,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   protected abstract Statement createMethodDescriptorVariableDecl(
-      Service service, Method protoMethod, VariableExpr methodDescriptorVarExpr, Map<String, Message> messageTypes);
+      Service service,
+      Method protoMethod,
+      VariableExpr methodDescriptorVarExpr,
+      Map<String, Message> messageTypes);
 
   protected boolean generateOperationsStubLogic(Service service) {
     return true;
@@ -227,7 +232,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     String methodName =
         String.format(
             "get%s",
-            JavaStyle.toUpperCamelCase(getTransportContext().transportOperationsStubNames().get(0)));
+            JavaStyle.toUpperCamelCase(
+                getTransportContext().transportOperationsStubNames().get(0)));
 
     return Arrays.asList(
         MethodDefinition.builder()
@@ -248,6 +254,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return Arrays.asList();
   }
 
+  protected List<Statement> createTypeRegistry(Service service) {
+    return Arrays.asList();
+  }
+
   protected List<Statement> createClassStatements(
       Service service,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
@@ -255,8 +265,15 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, Message> messageTypes) {
     List<Statement> classStatements = new ArrayList<>();
+
+    classStatements.addAll(createTypeRegistry(service));
+    if (!classStatements.isEmpty()) {
+      classStatements.add(EMPTY_LINE_STATEMENT);
+    }
+
     for (Statement statement :
-        createMethodDescriptorVariableDecls(service, protoMethodNameToDescriptorVarExprs, messageTypes)) {
+        createMethodDescriptorVariableDecls(
+            service, protoMethodNameToDescriptorVarExprs, messageTypes)) {
       classStatements.add(statement);
       classStatements.add(EMPTY_LINE_STATEMENT);
     }
@@ -265,11 +282,15 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     classStatements.add(EMPTY_LINE_STATEMENT);
 
     classStatements.addAll(createClassMemberFieldDeclarations(classMemberVarExprs));
+    classStatements.add(EMPTY_LINE_STATEMENT);
+
     return classStatements;
   }
 
   protected List<Statement> createMethodDescriptorVariableDecls(
-      Service service, Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs, Map<String, Message> messageTypes) {
+      Service service,
+      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
+      Map<String, Message> messageTypes) {
     return service.methods().stream()
         .map(
             m ->
@@ -418,14 +439,17 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         createGetMethodDescriptorsMethod(service, typeStore, protoMethodNameToDescriptorVarExprs));
     javaMethods.addAll(
         createOperationsStubGetterMethod(
-            service, classMemberVarExprs.get(getTransportContext().transportOperationsStubNames().get(0))));
+            service,
+            classMemberVarExprs.get(getTransportContext().transportOperationsStubNames().get(0))));
     javaMethods.addAll(createCallableGetterMethods(callableClassMemberVarExprs));
     javaMethods.addAll(
-        createStubOverrideMethods(classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME), service));
+        createStubOverrideMethods(
+            classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME), service));
     return javaMethods;
   }
 
-  protected List<MethodDefinition> createStaticCreatorMethods(Service service, TypeStore typeStore, String newBuilderMethod) {
+  protected List<MethodDefinition> createStaticCreatorMethods(
+      Service service, TypeStore typeStore, String newBuilderMethod) {
     TypeNode creatorMethodReturnType =
         typeStore.get(getTransportContext().classNames().getTransportServiceStubClassName(service));
     Function<List<VariableExpr>, MethodDefinition.Builder> creatorMethodStarterFn =
@@ -584,22 +608,16 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                     .build())
             .setValueExpr(callableFactoryVarExpr)
             .build());
-    VariableExpr operationsStubClassVarExpr = classMemberVarExprs.get(getTransportContext().transportOperationsStubNames().get(0));
-    //TODO: refactor this
+    VariableExpr operationsStubClassVarExpr =
+        classMemberVarExprs.get(getTransportContext().transportOperationsStubNames().get(0));
+    // TODO: refactor this
     if (generateOperationsStubLogic(service)) {
-      TypeNode opeationsStubType = getTransportOperationsStubType(service);
-      secondCtorExprs.add(
-          AssignmentExpr.builder()
-              .setVariableExpr(
-                  operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
-              .setValueExpr(
-                  MethodInvocationExpr.builder()
-                      .setStaticReferenceType(opeationsStubType)
-                      .setMethodName("create")
-                      .setArguments(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr))
-                      .setReturnType(operationsStubClassVarExpr.type())
-                      .build())
-              .build());
+      secondCtorExprs.addAll(createOperationsStubInitExpr(
+          service,
+          thisExpr,
+          operationsStubClassVarExpr,
+          clientContextVarExpr,
+          callableFactoryVarExpr));
     }
     secondCtorStatements.addAll(
         secondCtorExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
@@ -665,7 +683,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     secondCtorExprs.clear();
     secondCtorStatements.add(EMPTY_LINE_STATEMENT);
 
-
     secondCtorStatements.addAll(createLongRunningClient(service, typeStore));
 
     // Instantiate backgroundResources.
@@ -697,6 +714,27 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             secondCtorStatements);
 
     return Arrays.asList(firstCtor, secondCtor);
+  }
+
+  protected List<Expr> createOperationsStubInitExpr(
+      Service service,
+      Expr thisExpr,
+      VariableExpr operationsStubClassVarExpr,
+      VariableExpr clientContextVarExpr,
+      VariableExpr callableFactoryVarExpr) {
+    TypeNode opeationsStubType = getTransportOperationsStubType(service);
+    return Collections.singletonList(
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(opeationsStubType)
+                    .setMethodName("create")
+                    .setArguments(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr))
+                    .setReturnType(operationsStubClassVarExpr.type())
+                    .build())
+            .build());
   }
 
   protected List<Statement> createLongRunningClient(Service service, TypeStore typeStore) {
@@ -963,8 +1001,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private boolean checkOperationPollingMethod(Service service) {
-    for(Method method : service.methods()) {
-      if(method.isOperationPollingMethod()) {
+    for (Method method : service.methods()) {
+      if (method.isOperationPollingMethod()) {
         return true;
       }
     }
@@ -1063,13 +1101,13 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     TypeNode transportOpeationsStubType = service.operationServiceStubType();
     if (transportOpeationsStubType == null) {
       transportOpeationsStubType = getTransportContext().transportOperationsStubTypes().get(0);
-    }
-    else {
-      transportOpeationsStubType = TypeNode.withReference(
-          VaporReference.builder()
-              .setName("HttpJson" + transportOpeationsStubType.reference().simpleName())
-              .setPakkage(transportOpeationsStubType.reference().pakkage())
-              .build());
+    } else {
+      transportOpeationsStubType =
+          TypeNode.withReference(
+              VaporReference.builder()
+                  .setName("HttpJson" + transportOpeationsStubType.reference().simpleName())
+                  .setPakkage(transportOpeationsStubType.reference().pakkage())
+                  .build());
     }
 
     return transportOpeationsStubType;

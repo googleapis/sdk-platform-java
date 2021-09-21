@@ -27,14 +27,13 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.collect.ImmutableList;
+import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +45,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
       new HttpJsonServiceCallableFactoryClassComposer();
 
   private static final TypeNode DEFAULT_OPERATION_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(Object.class));
+      TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
 
   private HttpJsonServiceCallableFactoryClassComposer() {
     super(RestContext.instance());
@@ -129,15 +128,6 @@ public class HttpJsonServiceCallableFactoryClassComposer
             Arrays.asList(betaAnnotation));
 
     List<Statement> createOperationCallableBody = new ArrayList<>();
-    if (service.operationServiceStubType() == null) {
-      // It is an Operation polling service, it cannot contain LRO methods
-      return method
-          .toBuilder()
-          .setBody(ImmutableList.of())
-          .setReturnExpr(ValueExpr.createNullExpr())
-          .build();
-    }
-
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
 
     Variable httpJsonCallSettingsVar = arguments.get(0).variable();

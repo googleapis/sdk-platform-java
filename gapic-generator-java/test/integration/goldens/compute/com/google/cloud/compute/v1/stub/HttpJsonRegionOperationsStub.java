@@ -37,6 +37,7 @@ import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
 import com.google.cloud.compute.v1.Operation.Status;
 import com.google.cloud.compute.v1.WaitRegionOperationRequest;
+import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +56,8 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
 public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
+  private static final TypeRegistry typeRegistry = TypeRegistry.newBuilder().build();
+
   private static final ApiMethodDescriptor<GetRegionOperationRequest, Operation>
       getMethodDescriptor =
           ApiMethodDescriptor.<GetRegionOperationRequest, Operation>newBuilder()
@@ -85,6 +88,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<Operation>newBuilder()
                       .setDefaultInstance(Operation.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .setOperationSnapshotFactory(
                   (GetRegionOperationRequest request, Operation response) -> {
@@ -138,6 +142,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<Operation>newBuilder()
                       .setDefaultInstance(Operation.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
 
@@ -190,10 +195,12 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
     HttpJsonCallSettings<GetRegionOperationRequest, Operation> getTransportSettings =
         HttpJsonCallSettings.<GetRegionOperationRequest, Operation>newBuilder()
             .setMethodDescriptor(getMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<WaitRegionOperationRequest, Operation> waitTransportSettings =
         HttpJsonCallSettings.<WaitRegionOperationRequest, Operation>newBuilder()
             .setMethodDescriptor(waitMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
             .build();
 
     this.getCallable =

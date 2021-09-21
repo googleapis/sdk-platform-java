@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
@@ -24,6 +23,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.httpjson.ProtoOperationTransformers;
 import com.google.api.gax.httpjson.longrunning.OperationsClient;
 import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
+import com.google.api.gax.httpjson.longrunning.stub.OperationsStub;
 import com.google.api.generator.gapic.composer.common.TransportContext;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
@@ -58,7 +58,7 @@ public abstract class RestContext extends TransportContext {
           .setTransportCallSettingsType(classToType(HttpJsonCallSettings.class))
           .setTransportCallableFactoryType(classToType(HttpJsonCallableFactory.class))
           // TODO: set to com.google.api.gax.httpjson.longrunning.stub.OperationsStub.class
-          .setOperationsStubTypes(ImmutableList.of(classToType(BackgroundResource.class)))
+          .setOperationsStubTypes(ImmutableList.of(classToType(OperationsStub.class)))
           .setTransportCallSettingsName("httpJsonCallSettings")
           // For RetrySettingsComposer
           .setOperationResponseTransformerType(
