@@ -1,5 +1,15 @@
 # Changelog
 
+### [2.5.1](https://www.github.com/googleapis/java-common-protos/compare/v2.5.0...v2.5.1) (2021-09-24)
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.18.0 ([#224](https://www.github.com/googleapis/java-common-protos/issues/224)) ([7b41003](https://www.github.com/googleapis/java-common-protos/commit/7b4100372c2f614c929f27f1659d9d1b6bd7d716))
+* update dependency com.google.protobuf:protobuf-java to v3.18.0 ([#225](https://www.github.com/googleapis/java-common-protos/issues/225)) ([9205c62](https://www.github.com/googleapis/java-common-protos/commit/9205c625308f82c4a2bf512b20b81bb5484a5ae9))
+* update dependency io.grpc:grpc-protobuf to v1.41.0 ([#228](https://www.github.com/googleapis/java-common-protos/issues/228)) ([484e5c1](https://www.github.com/googleapis/java-common-protos/commit/484e5c111a7030693fb6462ac3e4b8928ddca3f3))
+* update dependency io.grpc:grpc-stub to v1.41.0 ([#229](https://www.github.com/googleapis/java-common-protos/issues/229)) ([82de6a1](https://www.github.com/googleapis/java-common-protos/commit/82de6a18804e4c88b6f10422b2781a869aa61078))
+
 ## [2.5.0](https://www.github.com/googleapis/java-common-protos/compare/v2.4.1...v2.5.0) (2021-08-30)
 
 
