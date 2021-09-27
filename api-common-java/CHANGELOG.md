@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.4](https://www.github.com/googleapis/api-common-java/compare/v2.0.3...v2.0.4) (2021-09-27)
+
+
+### Dependencies
+
+* update dependency com.google.guava:guava to v31 ([#277](https://www.github.com/googleapis/api-common-java/issues/277)) ([c2457e8](https://www.github.com/googleapis/api-common-java/commit/c2457e84ae7c3b5da1498c4394049f39d9fb95c3))
+
 ### [2.0.3](https://www.github.com/googleapis/api-common-java/compare/v2.0.2...v2.0.3) (2021-08-30)
 
 
