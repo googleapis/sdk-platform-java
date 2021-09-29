@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
+load("@rules_gapic//:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
 
-SERVICE_YAML_ALLOWLIST = ["clouddms", "cloudkms", "datastream", "pubsub"]
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
 def _java_gapic_postprocess_srcjar_impl(ctx):
@@ -119,6 +118,57 @@ def _append_dep_without_duplicates(dest_deps, new_deps):
             dest_deps.append(new_deps[i])
     return dest_deps
 
+def _java_gapic_srcjar(
+        name,
+        srcs,
+        grpc_service_config,
+        gapic_yaml,
+        service_yaml,
+        # possible values are: "grpc", "rest", "grpc+rest"
+        transport,
+        # Can be used to provide a java_library with a customized generator,
+        # like the one which dumps descriptor to a file for future debugging.
+        java_generator_name = "java_gapic",
+        output_suffix = ".srcjar",
+        **kwargs):
+    file_args_dict = {}
+
+    if grpc_service_config:
+        file_args_dict[grpc_service_config] = "grpc-service-config"
+    elif not transport or transport == "grpc":
+        for keyword in NO_GRPC_CONFIG_ALLOWLIST:
+            if keyword not in name:
+                fail("Missing a gRPC service config file")
+
+    if gapic_yaml:
+        file_args_dict[gapic_yaml] = "gapic-config"
+
+    if service_yaml:
+        file_args_dict[service_yaml] = "api-service-config"
+
+    output_suffix = ".srcjar"
+    opt_args = []
+
+    if transport:
+        opt_args.append("transport=%s" % transport)
+
+    # Produces the GAPIC metadata file if this flag is set. to any value.
+    # Protoc invocation: --java_gapic_opt=metadata
+    plugin_args = ["metadata"]
+
+    proto_custom_library(
+        name = name,
+        deps = srcs,
+        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % java_generator_name),
+        plugin_args = plugin_args,
+        plugin_file_args = {},
+        opt_file_args = file_args_dict,
+        output_type = java_generator_name,
+        output_suffix = output_suffix,
+        opt_args = opt_args,
+        **kwargs
+    )
+
 def java_gapic_library(
         name,
         srcs,
@@ -127,51 +177,20 @@ def java_gapic_library(
         service_yaml = None,
         deps = [],
         test_deps = [],
+        # possible values are: "grpc", "rest", "grpc+rest"
+        transport = None,
         **kwargs):
-    file_args_dict = {}
-
-    if grpc_service_config:
-        file_args_dict[grpc_service_config] = "grpc-service-config"
-    else:
-        for keyword in NO_GRPC_CONFIG_ALLOWLIST:
-            if keyword not in name:
-                fail("Missing a gRPC service config file")
-
-    if gapic_yaml:
-        file_args_dict[gapic_yaml] = "gapic-config"
-
-    # Check the allow-list.
-    # TODO: Open this up after mixins are published, and gate on
-    # the allowlisted "mixed-in" APIs present in Java.
-    if service_yaml:
-        service_yaml_in_allowlist = False
-        for keyword in SERVICE_YAML_ALLOWLIST:
-            if keyword in service_yaml:
-                service_yaml_in_allowlist = True
-                break
-        if service_yaml_in_allowlist:
-            file_args_dict[service_yaml] = "api-service-config"
-        else:
-            fail("Service.yaml is no longer supported in the Java microgenerator")
-
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
-    output_suffix = ".srcjar"
 
-    # Produces the GAPIC metadata file if this flag is set. to any value.
-    # Protoc invocation: --java_gapic_opt=metadata
-    plugin_args = ["metadata"]
-
-    _java_generator_name = "java_gapic"
-    proto_custom_library(
+    _java_gapic_srcjar(
         name = raw_srcjar_name,
-        deps = srcs,
-        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % _java_generator_name),
-        plugin_args = plugin_args,
-        plugin_file_args = {},
-        opt_file_args = file_args_dict,
-        output_type = _java_generator_name,
-        output_suffix = output_suffix,
+        srcs = srcs,
+        grpc_service_config = grpc_service_config,
+        gapic_yaml = gapic_yaml,
+        service_yaml = service_yaml,
+        transport = transport,
+        java_generator_name = "java_gapic",
         **kwargs
     )
 
@@ -201,10 +220,7 @@ def java_gapic_library(
         "@com_google_protobuf//:protobuf_java",
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//gax:gax",
-        "@com_google_api_gax_java//gax-grpc:gax_grpc",
         "@com_google_guava_guava//jar",
-        "@io_grpc_grpc_java//core:core",
-        "@io_grpc_grpc_java//protobuf:protobuf",
         "@com_google_code_findbugs_jsr305//jar",
         "@org_threeten_threetenbp//jar",
         "@io_opencensus_opencensus_api//jar",
@@ -213,6 +229,26 @@ def java_gapic_library(
         "@com_google_http_client_google_http_client//jar",
         "@javax_annotation_javax_annotation_api//jar",
     ]
+
+    if not transport or transport == "grpc":
+        actual_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc",
+            "@io_grpc_grpc_java//core:core",
+            "@io_grpc_grpc_java//protobuf:protobuf",
+        ]
+    elif transport == "rest":
+        actual_deps += [
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        ]
+    elif transport == "grpc+rest":
+        actual_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc",
+            "@io_grpc_grpc_java//core:core",
+            "@io_grpc_grpc_java//protobuf:protobuf",
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        ]
+    else:
+        fail("Unknown transport: %s" % transport)
 
     native.java_library(
         name = name,
@@ -224,15 +260,35 @@ def java_gapic_library(
     # Test deps.
     actual_test_deps = [
         "@com_google_googleapis//google/type:type_java_proto",  # Commonly used.
-        "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
         "@com_google_api_gax_java//gax:gax_testlib",
         "@com_google_code_gson_gson//jar",
-        "@io_grpc_grpc_java//auth:auth",
-        "@io_grpc_grpc_netty_shaded//jar",
-        "@io_grpc_grpc_java//stub:stub",
-        "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
         "@junit_junit//jar",
     ]
+
+    if not transport or transport == "grpc":
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+            "@io_grpc_grpc_java//auth:auth",
+            "@io_grpc_grpc_netty_shaded//jar",
+            "@io_grpc_grpc_java//stub:stub",
+            "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+        ]
+    elif transport == "rest":
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        ]
+    elif transport == "grpc+rest":
+        actual_test_deps += [
+            "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+            "@io_grpc_grpc_java//auth:auth",
+            "@io_grpc_grpc_netty_shaded//jar",
+            "@io_grpc_grpc_java//stub:stub",
+            "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+            "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        ]
+    else:
+        fail("Unknown transport: %s" % transport)
+
     _append_dep_without_duplicates(actual_test_deps, test_deps)
     _append_dep_without_duplicates(actual_test_deps, actual_deps)
 
@@ -254,5 +310,28 @@ def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
     native.test_suite(
         name = name,
         tests = test_classes,
+        **kwargs
+    )
+
+# A debugging rule, to dump CodeGenereatorRequest from protoc as is to a file,
+# which then can be used to run gapic-generator directly instead of relying on
+# protoc to launch it. This would simplify attaching the debugger and/or
+# working with stdin/stderr.
+def java_generator_request_dump(
+        name,
+        srcs,
+        grpc_service_config = None,
+        gapic_yaml = None,
+        service_yaml = None,
+        transport = None,
+        **kwargs):
+    _java_gapic_srcjar(
+        name = name,
+        srcs = srcs,
+        grpc_service_config = grpc_service_config,
+        gapic_yaml = gapic_yaml,
+        service_yaml = service_yaml,
+        transport = transport,
+        java_generator_name = "code_generator_request_dumper",
         **kwargs
     )

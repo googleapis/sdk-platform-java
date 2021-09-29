@@ -81,6 +81,9 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
   public static final TypeNode VOID_OBJECT = withReference(ConcreteReference.withClazz(Void.class));
 
+  public static final TypeNode THROWABLE =
+      withReference(ConcreteReference.withClazz(Throwable.class));
+
   public static final TypeNode DEPRECATED =
       withReference(ConcreteReference.withClazz(Deprecated.class));
 
@@ -109,7 +112,7 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
       return -1;
     }
 
-    if (this.equals(TypeNode.NULL)) {
+    if (equals(TypeNode.NULL)) {
       // Can't self-compare, so we don't need to check whether the other one is TypeNode.NULL.
       return other.isPrimitiveType() ? 1 : -1;
     }
@@ -158,7 +161,7 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
     return TypeNode.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
   }
 
-  public static TypeNode withExceptionClazz(Class clazz) {
+  public static TypeNode withExceptionClazz(Class<?> clazz) {
     Preconditions.checkState(Exception.class.isAssignableFrom(clazz));
     return withReference(ConcreteReference.withClazz(clazz));
   }
@@ -197,11 +200,11 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   }
 
   public boolean isProtoPrimitiveType() {
-    return isPrimitiveType() || this.equals(TypeNode.STRING) || this.equals(TypeNode.BYTESTRING);
+    return isPrimitiveType() || equals(TypeNode.STRING) || equals(TypeNode.BYTESTRING);
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {
-    boolean oneTypeIsNull = this.equals(TypeNode.NULL) ^ other.equals(TypeNode.NULL);
+    boolean oneTypeIsNull = equals(TypeNode.NULL) ^ other.equals(TypeNode.NULL);
     return !isPrimitiveType()
         && !other.isPrimitiveType()
         && isArray() == other.isArray()
@@ -251,20 +254,6 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
       return Objects.equals(this, BOXED_TYPE_MAP.get(other));
     }
     return Objects.equals(other, BOXED_TYPE_MAP.get(this));
-  }
-
-  private static TypeNode createPrimitiveType(TypeKind typeKind) {
-    if (!isPrimitiveType(typeKind)) {
-      throw new IllegalArgumentException("Object is not a primitive type.");
-    }
-    return TypeNode.builder().setTypeKind(typeKind).build();
-  }
-
-  private static TypeNode createPrimitiveArrayType(TypeKind typeKind) {
-    if (typeKind.equals(TypeKind.OBJECT)) {
-      throw new IllegalArgumentException("Object is not a primitive type.");
-    }
-    return TypeNode.builder().setTypeKind(typeKind).setIsArray(true).build();
   }
 
   private static boolean isPrimitiveType(TypeKind typeKind) {

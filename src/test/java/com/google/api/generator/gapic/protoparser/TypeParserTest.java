@@ -14,7 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.Reference;
 import com.google.protobuf.Descriptors.Descriptor;
@@ -26,7 +26,6 @@ import com.google.testgapic.v1beta1.NestedMessageProto;
 import org.junit.Test;
 
 public class TypeParserTest {
-  private static final String ECHO_PACKAGE = "com.google.showcase.v1beta1";
   // TODO(miraleung): Backfill with more tests (e.g. field, message, methods) for Parser.java.
   @Test
   public void parseMessageType_basic() {

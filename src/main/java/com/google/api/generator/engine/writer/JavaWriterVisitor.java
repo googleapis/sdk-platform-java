@@ -81,7 +81,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String BLOCK_COMMENT_START = "/*";
   private static final String BLOCK_COMMENT_END = "*/";
   private static final String DOT = ".";
-  private static final String ESCAPED_QUOTE = "\"";
   private static final String EQUALS = "=";
   private static final String LEFT_ANGLE = "<";
   private static final String LEFT_BRACE = "{";
@@ -392,12 +391,26 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(ThrowExpr throwExpr) {
     buffer.append(THROW);
     space();
+    // If throwExpr is present, then messageExpr and causeExpr will not be present. Relies on AST
+    // build-time checks.
+    if (throwExpr.throwExpr() != null) {
+      throwExpr.throwExpr().accept(this);
+      return;
+    }
+
     buffer.append(NEW);
     space();
     throwExpr.type().accept(this);
     leftParen();
     if (throwExpr.messageExpr() != null) {
       throwExpr.messageExpr().accept(this);
+    }
+    if (throwExpr.causeExpr() != null) {
+      if (throwExpr.messageExpr() != null) {
+        buffer.append(COMMA);
+        space();
+      }
+      throwExpr.causeExpr().accept(this);
     }
     rightParen();
   }
@@ -689,17 +702,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     statements(tryCatchStatement.tryBody());
     rightBrace();
 
-    if (tryCatchStatement.catchVariableExpr() != null) {
+    for (int i = 0; i < tryCatchStatement.catchVariableExprs().size(); i++) {
       space();
       buffer.append(CATCH);
       space();
       leftParen();
-      tryCatchStatement.catchVariableExpr().accept(this);
+      tryCatchStatement.catchVariableExprs().get(i).accept(this);
       rightParen();
       space();
       leftBrace();
       newline();
-      statements(tryCatchStatement.catchBody());
+      statements(tryCatchStatement.catchBlocks().get(i));
       rightBrace();
     }
     newline();
@@ -737,6 +750,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== COMMENT =============================== */
+  @Override
   public void visit(LineComment lineComment) {
     // Split comments by new line and add `//` to each line.
     String formattedSource =
@@ -745,6 +759,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(formattedSource);
   }
 
+  @Override
   public void visit(BlockComment blockComment) {
     // Split comments by new line and embrace the comment block with `/* */`.
     StringBuilder sourceComment = new StringBuilder();
@@ -758,6 +773,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(JavaFormatter.format(sourceComment.toString()));
   }
 
+  @Override
   public void visit(JavaDocComment javaDocComment) {
     StringBuilder sourceComment = new StringBuilder();
     sourceComment.append(JAVADOC_COMMENT_START).append(NEWLINE);
@@ -851,7 +867,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       buffer.append(THROWS);
       space();
 
-      int numExceptionsThrown = methodDefinition.throwsExceptions().size();
       Iterator<TypeNode> exceptionIter = methodDefinition.throwsExceptions().iterator();
       while (exceptionIter.hasNext()) {
         TypeNode exceptionType = exceptionIter.next();

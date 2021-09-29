@@ -34,8 +34,19 @@ genrule(
 )
 
 proto_library(
+    name = "bookshop_proto",
+    srcs = ["bookshop.proto"],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+proto_library(
     name = "showcase_proto",
     srcs = [
+        "compliance.proto",
         "echo.proto",
         "identity.proto",
         "testing.proto",
@@ -98,6 +109,11 @@ proto_library(
 java_proto_library(
     name = "deprecated_service_java_proto",
     deps = [":deprecated_service_proto"],
+)
+
+java_proto_library(
+    name = "bookshop_java_proto",
+    deps = [":bookshop_proto"],
 )
 
 java_proto_library(

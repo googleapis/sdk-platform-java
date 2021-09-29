@@ -14,11 +14,16 @@
 
 package com.google.api.generator.gapic.composer.defaultvalue;
 
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -31,12 +36,13 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
-import com.google.protobuf.ByteString;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,12 +53,13 @@ public class DefaultValueComposer {
   private static TypeNode OPERATION_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
   private static TypeNode ANY_TYPE = TypeNode.withReference(ConcreteReference.withClazz(Any.class));
-  private static TypeNode BYTESTRING_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   public static Expr createDefaultValue(
-      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
-    if (methodArg.isResourceNameHelper()) {
+      MethodArgument methodArg,
+      Map<String, ResourceName> resourceNames,
+      boolean forceResourceNameInitializer) {
+    if (methodArg.isResourceNameHelper()
+        || (forceResourceNameInitializer && methodArg.field().hasResourceReference())) {
       Preconditions.checkState(
           methodArg.field().hasResourceReference(),
           String.format(
@@ -65,10 +72,21 @@ public class DefaultValueComposer {
           String.format(
               "No resource name found for reference %s",
               methodArg.field().resourceReference().resourceTypeString()));
-      return createDefaultValue(
-          resourceName,
-          resourceNames.values().stream().collect(Collectors.toList()),
-          methodArg.field().name());
+      Expr defValue =
+          createDefaultValue(
+              resourceName,
+              resourceNames.values().stream().collect(Collectors.toList()),
+              methodArg.field().name());
+
+      if (!methodArg.isResourceNameHelper() && methodArg.field().hasResourceReference()) {
+        defValue =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(defValue)
+                .setMethodName("toString")
+                .setReturnType(TypeNode.STRING)
+                .build();
+      }
+      return defValue;
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {
@@ -157,6 +175,16 @@ public class DefaultValueComposer {
 
   public static Expr createDefaultValue(
       ResourceName resourceName, List<ResourceName> resnames, String fieldOrMessageName) {
+    return createDefaultValueResourceHelper(resourceName, resnames, fieldOrMessageName, true);
+  }
+
+  @VisibleForTesting
+  static Expr createDefaultValueResourceHelper(
+      ResourceName resourceName,
+      List<ResourceName> resnames,
+      String fieldOrMessageName,
+      boolean allowAnonResourceNameClass) {
+
     boolean hasOnePattern = resourceName.patterns().size() == 1;
     if (resourceName.isOnlyWildcard()) {
       List<ResourceName> unexaminedResnames = new ArrayList<>(resnames);
@@ -170,9 +198,11 @@ public class DefaultValueComposer {
       }
 
       if (unexaminedResnames.isEmpty()) {
-        return ValueExpr.withValue(
-            StringObjectValue.withValue(
-                String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
+        return allowAnonResourceNameClass
+            ? createAnonymousResourceNameClass(fieldOrMessageName)
+            : ValueExpr.withValue(
+                StringObjectValue.withValue(
+                    String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
       }
     }
 
@@ -247,10 +277,11 @@ public class DefaultValueComposer {
       if (field.hasResourceReference()
           && resourceNames.get(field.resourceReference().resourceTypeString()) != null) {
         defaultExpr =
-            createDefaultValue(
+            createDefaultValueResourceHelper(
                 resourceNames.get(field.resourceReference().resourceTypeString()),
                 resourceNames.values().stream().collect(Collectors.toList()),
-                message.name());
+                message.name(),
+                /* allowAnonResourceNameClass = */ false);
         defaultExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(defaultExpr)
@@ -315,7 +346,19 @@ public class DefaultValueComposer {
   }
 
   public static Expr createSimplePagedResponse(
-      TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr) {
+      TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr, boolean isMap) {
+    // Code for paginated maps:
+    // AggregatedMessageList.newBuilder()
+    //     .setNextPageToken("")
+    //     .putAllItems(Collections.singletonMap("items", responsesElement))
+    //     .build();
+    //
+    // Code for paginated arrays:
+    // MessageList expectedResponse =
+    //     AddressList.newBuilder()
+    //         .setNextPageToken("")
+    //         .addAllItems(Arrays.asList(responsesElement))
+    //         .build();
     Expr pagedResponseExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(responseType)
@@ -327,22 +370,131 @@ public class DefaultValueComposer {
             .setMethodName("setNextPageToken")
             .setArguments(ValueExpr.withValue(StringObjectValue.withValue("")))
             .build();
-    pagedResponseExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(pagedResponseExpr)
-            .setMethodName(String.format("addAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
-            .setArguments(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(
-                        TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
-                    .setMethodName("asList")
-                    .setArguments(responseElementVarExpr)
-                    .build())
-            .build();
+    if (isMap) {
+      pagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(pagedResponseExpr)
+              .setMethodName(
+                  String.format("putAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+              .setArguments(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(
+                          TypeNode.withReference(ConcreteReference.withClazz(Collections.class)))
+                      .setMethodName("singletonMap")
+                      .setArguments(
+                          ValueExpr.withValue(
+                              StringObjectValue.withValue(
+                                  JavaStyle.toLowerCamelCase(repeatedFieldName))),
+                          responseElementVarExpr)
+                      .build())
+              .build();
+    } else {
+      pagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(pagedResponseExpr)
+              .setMethodName(
+                  String.format("addAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
+              .setArguments(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(
+                          TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
+                      .setMethodName("asList")
+                      .setArguments(responseElementVarExpr)
+                      .build())
+              .build();
+    }
     return MethodInvocationExpr.builder()
         .setExprReferenceExpr(pagedResponseExpr)
         .setMethodName("build")
         .setReturnType(responseType)
+        .build();
+  }
+
+  @VisibleForTesting
+  static AnonymousClassExpr createAnonymousResourceNameClass(String fieldOrMessageName) {
+    TypeNode stringMapType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Map.class)
+                .setGenerics(
+                    Arrays.asList(
+                        ConcreteReference.withClazz(String.class),
+                        ConcreteReference.withClazz(String.class)))
+                .build());
+
+    // Method code:
+    // @Override
+    // public Map<String, String> getFieldValuesMap() {
+    //   Map<String, String> fieldValuesMap = new HashMap<>();
+    //   fieldValuesMap.put("resource", "resource-12345");
+    //   return fieldValuesMap;
+    // }
+    VariableExpr fieldValuesMapVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(stringMapType).setName("fieldValuesMap").build());
+    StringObjectValue fieldOrMessageStringValue =
+        StringObjectValue.withValue(
+            String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode()));
+
+    List<Expr> bodyExprs =
+        Arrays.asList(
+            AssignmentExpr.builder()
+                .setVariableExpr(fieldValuesMapVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(
+                    NewObjectExpr.builder()
+                        .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
+                        .setIsGeneric(true)
+                        .build())
+                .build(),
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(fieldValuesMapVarExpr)
+                .setMethodName("put")
+                .setArguments(
+                    ValueExpr.withValue(StringObjectValue.withValue(fieldOrMessageName)),
+                    ValueExpr.withValue(fieldOrMessageStringValue))
+                .build());
+
+    MethodDefinition getFieldValuesMapMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(stringMapType)
+            .setName("getFieldValuesMap")
+            .setBody(
+                bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+            .setReturnExpr(fieldValuesMapVarExpr)
+            .build();
+
+    // Method code:
+    // @Override
+    // public String getFieldValue(String fieldName) {
+    //   return getFieldValuesMap().get(fieldName);
+    // }
+    VariableExpr fieldNameVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("fieldName").build());
+    MethodDefinition getFieldValueMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.STRING)
+            .setName("getFieldValue")
+            .setArguments(fieldNameVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder().setMethodName("getFieldValuesMap").build())
+                    .setMethodName("get")
+                    .setArguments(fieldNameVarExpr)
+                    .setReturnType(TypeNode.STRING)
+                    .build())
+            .build();
+
+    return AnonymousClassExpr.builder()
+        .setType(
+            TypeNode.withReference(
+                ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class)))
+        .setMethods(Arrays.asList(getFieldValuesMapMethod, getFieldValueMethod))
         .build();
   }
 }

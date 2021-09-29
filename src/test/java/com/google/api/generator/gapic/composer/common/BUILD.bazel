@@ -5,8 +5,6 @@ package(default_visibility = ["//visibility:public"])
 
 UPDATE_GOLDENS_TESTS = [
     "BatchingDescriptorComposerTest",
-    "ServiceClientClassComposerTest",
-    "ServiceStubClassComposerTest",
 ]
 
 TESTS = UPDATE_GOLDENS_TESTS + [
@@ -29,6 +27,7 @@ TEST_DEPS = [
     "//src/main/java/com/google/api/generator/gapic/protoparser",
     "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
     "//src/test/java/com/google/api/generator/gapic/testdata:deprecated_service_java_proto",
+    "//src/test/java/com/google/api/generator/gapic/testdata:bookshop_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
     "@com_google_api_api_common//jar",

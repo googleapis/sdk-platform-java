@@ -20,28 +20,19 @@ import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
-import com.google.api.gax.rpc.OperationCallSettings;
-import com.google.api.gax.rpc.PagedCallSettings;
-import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.api.gax.rpc.StreamingCallSettings;
-import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
-import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -80,6 +71,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import org.junit.After;
@@ -98,7 +90,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
   protected static final AnnotationNode TEST_ANNOTATION =
-        AnnotationNode.withType(FIXED_TYPESTORE.get("Test"));
+      AnnotationNode.withType(FIXED_TYPESTORE.get("Test"));
 
   private final TransportContext transportContext;
 
@@ -112,12 +104,14 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
+    return generate(ClassNames.getServiceClientTestClassName(service), context, service);
+  }
+
+  protected GapicClass generate(String className, GapicContext context, Service service) {
     Map<String, ResourceName> resourceNames = context.helperResourceNames();
-    Map<String, Message> messageTypes = context.messages();
     String pakkage = service.pakkage();
     TypeStore typeStore = new TypeStore();
     addDynamicTypes(context, service, typeStore);
-    String className = ClassNames.getServiceClientTestClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
     Map<String, VariableExpr> classMemberVarExprs =
@@ -149,16 +143,35 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected List<Statement> createClassMemberFieldDecls(
       Map<String, VariableExpr> classMemberVarExprs) {
-    return classMemberVarExprs.values().stream()
-        .map(
-            v ->
-                ExprStatement.withExpr(
-                    v.toBuilder()
-                        .setIsDecl(true)
-                        .setScope(ScopeNode.PRIVATE)
-                        .setIsStatic(v.type().reference().name().startsWith("Mock"))
-                        .build()))
-        .collect(Collectors.toList());
+    Function<VariableExpr, Boolean> isMockVarExprFn =
+        v -> v.type().reference().name().startsWith("Mock");
+
+    // Ordering matters for pretty-printing and ensuring that test output is deterministic.
+    List<Statement> fieldDeclStatements = new ArrayList<>();
+
+    // Static fields go first.
+    fieldDeclStatements.addAll(
+        classMemberVarExprs.values().stream()
+            .filter(v -> isMockVarExprFn.apply(v))
+            .map(
+                v ->
+                    ExprStatement.withExpr(
+                        v.toBuilder()
+                            .setIsDecl(true)
+                            .setScope(ScopeNode.PRIVATE)
+                            .setIsStatic(true)
+                            .build()))
+            .collect(Collectors.toList()));
+
+    fieldDeclStatements.addAll(
+        classMemberVarExprs.values().stream()
+            .filter(v -> !isMockVarExprFn.apply(v))
+            .map(
+                v ->
+                    ExprStatement.withExpr(
+                        v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).build()))
+            .collect(Collectors.toList()));
+    return fieldDeclStatements;
   }
 
   private List<MethodDefinition> createClassMethods(
@@ -180,7 +193,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.add(
-        createStartStaticServerMethod(service, context, classMemberVarExprs, typeStore));
+        createStartStaticServerMethod(
+            service, context, classMemberVarExprs, typeStore, "newBuilder"));
     javaMethods.add(createStopServerMethod(service, classMemberVarExprs));
     javaMethods.add(createSetUpMethod(service, classMemberVarExprs, typeStore));
     javaMethods.add(createTearDownMethod(service, classMemberVarExprs));
@@ -191,7 +205,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Service service,
       GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      TypeStore typeStore);
+      TypeStore typeStore,
+      String newBuilderMethod);
 
   protected abstract MethodDefinition createStopServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs);
@@ -317,15 +332,21 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     String mockServiceVarName = getMockServiceVarName(rpcService);
     if (method.isPaged()) {
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
           String.format(
               "No repeated field found for paged method %s with output message type %s",
               method.name(), methodOutputMessage.name()));
 
-      // Must be a non-repeated type.
-      repeatedResponseType = repeatedPagedResultsField.type();
+      if (repeatedPagedResultsField.isMap()) {
+        repeatedResponseType =
+            TypeNode.withReference(repeatedPagedResultsField.type().reference().generics().get(1));
+      } else {
+        // Must be a non-repeated type.
+        repeatedResponseType = repeatedPagedResultsField.type();
+      }
+
       responsesElementVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setType(repeatedResponseType).setName("responsesElement").build());
@@ -348,7 +369,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-      Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Field firstRepeatedField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
       Preconditions.checkNotNull(
           firstRepeatedField,
           String.format(
@@ -357,7 +378,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
       expectedResponseValExpr =
           DefaultValueComposer.createSimplePagedResponse(
-              method.outputType(), firstRepeatedField.name(), responsesElementVarExpr);
+              method.outputType(),
+              firstRepeatedField.name(),
+              responsesElementVarExpr,
+              firstRepeatedField.isMap());
     } else {
       if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
         expectedResponseValExpr =
@@ -445,7 +469,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = createDefaultValue(methodArg, resourceNames);
         methodExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -500,6 +524,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     }
 
     if (method.isPaged()) {
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
+
       // Assign the resources variable.
       VariableExpr resourcesVarExpr =
           VariableExpr.withVariable(
@@ -508,7 +535,8 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                       TypeNode.withReference(
                           ConcreteReference.builder()
                               .setClazz(List.class)
-                              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                              .setGenerics(
+                                  Arrays.asList(repeatedPagedResultsField.type().reference()))
                               .build()))
                   .setName("resources")
                   .build());
@@ -554,8 +582,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               .build());
 
       // Assert the responses are equivalent.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
           String.format(
@@ -564,19 +590,52 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
       Expr zeroExpr =
           ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
-      Expr expectedPagedResponseExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(expectedResponseVarExpr)
-              .setMethodName(
-                  String.format(
-                      "get%sList", JavaStyle.toUpperCamelCase(repeatedPagedResultsField.name())))
-              .build();
-      expectedPagedResponseExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(expectedPagedResponseExpr)
-              .setMethodName("get")
-              .setArguments(zeroExpr)
-              .build();
+
+      // Generated code:
+      // Assert.assertEquals(
+      //   expectedResponse.getItemsMap().entrySet().iterator().next(), resources.get(0));
+      // )
+      Expr expectedPagedResponseExpr;
+      if (repeatedPagedResultsField.isMap()) {
+        expectedPagedResponseExpr =
+            MethodInvocationExpr.builder()
+                .setMethodName("next")
+                .setExprReferenceExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("iterator")
+                        .setExprReferenceExpr(
+                            MethodInvocationExpr.builder()
+                                .setMethodName("entrySet")
+                                .setExprReferenceExpr(
+                                    MethodInvocationExpr.builder()
+                                        .setExprReferenceExpr(expectedResponseVarExpr)
+                                        .setMethodName(
+                                            String.format(
+                                                "get%sMap",
+                                                JavaStyle.toUpperCamelCase(
+                                                    repeatedPagedResultsField.name())))
+                                        .build())
+                                .build())
+                        .build())
+                .build();
+
+      } else {
+        // Generated code:
+        // Assert.assertEquals(expectedResponse.getItemsList().get(0), resources.get(0));
+        expectedPagedResponseExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(expectedResponseVarExpr)
+                .setMethodName(
+                    String.format(
+                        "get%sList", JavaStyle.toUpperCamelCase(repeatedPagedResultsField.name())))
+                .build();
+        expectedPagedResponseExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(expectedPagedResponseExpr)
+                .setMethodName("get")
+                .setArguments(zeroExpr)
+                .build();
+      }
       Expr actualPagedResponseExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(resourcesVarExpr)
@@ -675,6 +734,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes);
 
+  protected abstract Expr createDefaultValue(
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames);
+
   protected List<Statement> createRpcExceptionTestStatements(
       Method method,
       List<MethodArgument> methodSignature,
@@ -706,7 +768,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = createDefaultValue(methodArg, resourceNames);
         tryBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -765,8 +827,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                 tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
-            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
-            .setCatchBody(catchBody)
+            .addCatch(catchExceptionVarExpr.toBuilder().setIsDecl(true).build(), catchBody)
             .build();
 
     return Arrays.asList(EMPTY_LINE_STATEMENT, tryCatchBlock);
@@ -781,7 +842,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
    */
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractMessage.class,
             After.class,
@@ -816,8 +877,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         Arrays.asList(
             ClassNames.getMockServiceClassName(service),
             ClassNames.getServiceClientClassName(service),
-            ClassNames.getServiceSettingsClassName(service),
-            getTransportContext().classNames().getTransportServiceStubClassName(service)));
+            ClassNames.getServiceSettingsClassName(service)));
+    String stubPakkage = String.format("%s.stub", service.pakkage());
+    typeStore.put(
+        stubPakkage, getTransportContext().classNames().getTransportServiceStubClassName(service));
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
@@ -842,70 +905,12 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     }
   }
 
-  private static TypeNode getOperationCallSettingsTypeHelper(
-      Method protoMethod, boolean isBuilder) {
-    Preconditions.checkState(
-        protoMethod.hasLro(),
-        String.format("Cannot get OperationCallSettings on non-LRO method %s", protoMethod.name()));
-    Class callSettingsClazz =
-        isBuilder ? OperationCallSettings.Builder.class : OperationCallSettings.class;
-    return TypeNode.withReference(
-        ConcreteReference.builder()
-            .setClazz(callSettingsClazz)
-            .setGenerics(
-                Arrays.asList(
-                    protoMethod.inputType().reference(),
-                    protoMethod.lro().responseType().reference(),
-                    protoMethod.lro().metadataType().reference()))
-            .build());
-  }
-
-  private static TypeNode getCallSettingsTypeHelper(
-      Method protoMethod, TypeStore typeStore, boolean isBuilder) {
-    Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
-    if (protoMethod.isPaged()) {
-      callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
-    } else {
-      switch (protoMethod.stream()) {
-        case CLIENT:
-          // Fall through.
-        case BIDI:
-          callSettingsClazz =
-              isBuilder ? StreamingCallSettings.Builder.class : StreamingCallSettings.class;
-          break;
-        case SERVER:
-          callSettingsClazz =
-              isBuilder
-                  ? ServerStreamingCallSettings.Builder.class
-                  : ServerStreamingCallSettings.class;
-          break;
-        case NONE:
-          // Fall through
-        default:
-          // Fall through
-      }
-    }
-
-    List<Reference> generics = new ArrayList<>();
-    generics.add(protoMethod.inputType().reference());
-    generics.add(protoMethod.outputType().reference());
-    if (protoMethod.isPaged()) {
-      generics.add(
-          typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
-              .reference());
-    }
-
-    return TypeNode.withReference(
-        ConcreteReference.builder().setClazz(callSettingsClazz).setGenerics(generics).build());
-  }
-
   protected static TypeNode getCallableType(Method protoMethod) {
     Preconditions.checkState(
         !protoMethod.stream().equals(Method.Stream.NONE),
         "No callable type exists for non-streaming methods.");
 
-    Class callableClazz = ClientStreamingCallable.class;
+    Class<?> callableClazz = ClientStreamingCallable.class;
     switch (protoMethod.stream()) {
       case BIDI:
         callableClazz = BidiStreamingCallable.class;

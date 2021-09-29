@@ -17,8 +17,6 @@ package com.google.api.generator.gapic.model;
 public enum Transport {
   REST,
   GRPC,
-  // Never used in the context as is, must be split into two contexts (REST and GRPC respectively)
-  // instead.
   GRPC_REST;
 
   /**

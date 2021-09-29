@@ -16,7 +16,6 @@
 
 package com.google.cloud.example.library.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -47,6 +46,7 @@ import com.google.example.library.v1.Shelf;
 import com.google.example.library.v1.ShelfName;
 import com.google.example.library.v1.UpdateBookRequest;
 import com.google.protobuf.Empty;
+import com.google.protobuf.FieldMask;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -264,7 +264,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
+   *   String name = ShelfName.of("[SHELF_ID]").toString();
    *   Shelf response = libraryServiceClient.getShelf(name);
    * }
    * }</pre>
@@ -285,7 +285,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   GetShelfRequest request = GetShelfRequest.newBuilder().setName("name3373707").build();
+   *   GetShelfRequest request =
+   *       GetShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
    *   Shelf response = libraryServiceClient.getShelf(request);
    * }
    * }</pre>
@@ -305,7 +306,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   GetShelfRequest request = GetShelfRequest.newBuilder().setName("name3373707").build();
+   *   GetShelfRequest request =
+   *       GetShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
    *   ApiFuture<Shelf> future = libraryServiceClient.getShelfCallable().futureCall(request);
    *   // Do something.
    *   Shelf response = future.get();
@@ -433,7 +435,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
+   *   String name = ShelfName.of("[SHELF_ID]").toString();
    *   libraryServiceClient.deleteShelf(name);
    * }
    * }</pre>
@@ -454,7 +456,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   DeleteShelfRequest request = DeleteShelfRequest.newBuilder().setName("name3373707").build();
+   *   DeleteShelfRequest request =
+   *       DeleteShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
    *   libraryServiceClient.deleteShelf(request);
    * }
    * }</pre>
@@ -474,7 +477,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   DeleteShelfRequest request = DeleteShelfRequest.newBuilder().setName("name3373707").build();
+   *   DeleteShelfRequest request =
+   *       DeleteShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
    *   ApiFuture<Empty> future = libraryServiceClient.deleteShelfCallable().futureCall(request);
    *   // Do something.
    *   future.get();
@@ -499,20 +503,20 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
-   *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelf);
    * }
    * }</pre>
    *
    * @param name The name of the shelf we're adding books to.
-   * @param otherShelfName The name of the shelf we're removing books from and deleting.
+   * @param otherShelf The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Shelf mergeShelves(ShelfName name, ShelfName otherShelfName) {
+  public final Shelf mergeShelves(ShelfName name, ShelfName otherShelf) {
     MergeShelvesRequest request =
         MergeShelvesRequest.newBuilder()
             .setName(name == null ? null : name.toString())
-            .setOtherShelfName(otherShelfName == null ? null : otherShelfName.toString())
+            .setOtherShelf(otherShelf == null ? null : otherShelf.toString())
             .build();
     return mergeShelves(request);
   }
@@ -531,20 +535,20 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
-   *   String otherShelfName = "otherShelfName-1942963547";
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   String otherShelf = ShelfName.of("[SHELF_ID]").toString();
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelf);
    * }
    * }</pre>
    *
    * @param name The name of the shelf we're adding books to.
-   * @param otherShelfName The name of the shelf we're removing books from and deleting.
+   * @param otherShelf The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Shelf mergeShelves(ShelfName name, String otherShelfName) {
+  public final Shelf mergeShelves(ShelfName name, String otherShelf) {
     MergeShelvesRequest request =
         MergeShelvesRequest.newBuilder()
             .setName(name == null ? null : name.toString())
-            .setOtherShelfName(otherShelfName)
+            .setOtherShelf(otherShelf)
             .build();
     return mergeShelves(request);
   }
@@ -562,21 +566,21 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
-   *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   String name = ShelfName.of("[SHELF_ID]").toString();
+   *   ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelf);
    * }
    * }</pre>
    *
    * @param name The name of the shelf we're adding books to.
-   * @param otherShelfName The name of the shelf we're removing books from and deleting.
+   * @param otherShelf The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Shelf mergeShelves(String name, ShelfName otherShelfName) {
+  public final Shelf mergeShelves(String name, ShelfName otherShelf) {
     MergeShelvesRequest request =
         MergeShelvesRequest.newBuilder()
             .setName(name)
-            .setOtherShelfName(otherShelfName == null ? null : otherShelfName.toString())
+            .setOtherShelf(otherShelf == null ? null : otherShelf.toString())
             .build();
     return mergeShelves(request);
   }
@@ -594,19 +598,19 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
-   *   String otherShelfName = "otherShelfName-1942963547";
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   String name = ShelfName.of("[SHELF_ID]").toString();
+   *   String otherShelf = ShelfName.of("[SHELF_ID]").toString();
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelf);
    * }
    * }</pre>
    *
    * @param name The name of the shelf we're adding books to.
-   * @param otherShelfName The name of the shelf we're removing books from and deleting.
+   * @param otherShelf The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Shelf mergeShelves(String name, String otherShelfName) {
+  public final Shelf mergeShelves(String name, String otherShelf) {
     MergeShelvesRequest request =
-        MergeShelvesRequest.newBuilder().setName(name).setOtherShelfName(otherShelfName).build();
+        MergeShelvesRequest.newBuilder().setName(name).setOtherShelf(otherShelf).build();
     return mergeShelves(request);
   }
 
@@ -625,8 +629,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MergeShelvesRequest request =
    *       MergeShelvesRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOtherShelfName("otherShelfName-1942963547")
+   *           .setName(ShelfName.of("[SHELF_ID]").toString())
+   *           .setOtherShelf(ShelfName.of("[SHELF_ID]").toString())
    *           .build();
    *   Shelf response = libraryServiceClient.mergeShelves(request);
    * }
@@ -654,8 +658,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MergeShelvesRequest request =
    *       MergeShelvesRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOtherShelfName("otherShelfName-1942963547")
+   *           .setName(ShelfName.of("[SHELF_ID]").toString())
+   *           .setOtherShelf(ShelfName.of("[SHELF_ID]").toString())
    *           .build();
    *   ApiFuture<Shelf> future = libraryServiceClient.mergeShelvesCallable().futureCall(request);
    *   // Do something.
@@ -675,20 +679,20 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   ShelfName parent = ShelfName.of("[SHELF_ID]");
    *   Book book = Book.newBuilder().build();
-   *   Book response = libraryServiceClient.createBook(name, book);
+   *   Book response = libraryServiceClient.createBook(parent, book);
    * }
    * }</pre>
    *
-   * @param name The name of the shelf in which the book is created.
+   * @param parent The name of the shelf in which the book is created.
    * @param book The book to create.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Book createBook(ShelfName name, Book book) {
+  public final Book createBook(ShelfName parent, Book book) {
     CreateBookRequest request =
         CreateBookRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setBook(book)
             .build();
     return createBook(request);
@@ -702,18 +706,19 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
+   *   String parent = ShelfName.of("[SHELF_ID]").toString();
    *   Book book = Book.newBuilder().build();
-   *   Book response = libraryServiceClient.createBook(name, book);
+   *   Book response = libraryServiceClient.createBook(parent, book);
    * }
    * }</pre>
    *
-   * @param name The name of the shelf in which the book is created.
+   * @param parent The name of the shelf in which the book is created.
    * @param book The book to create.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Book createBook(String name, Book book) {
-    CreateBookRequest request = CreateBookRequest.newBuilder().setName(name).setBook(book).build();
+  public final Book createBook(String parent, Book book) {
+    CreateBookRequest request =
+        CreateBookRequest.newBuilder().setParent(parent).setBook(book).build();
     return createBook(request);
   }
 
@@ -727,7 +732,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   CreateBookRequest request =
    *       CreateBookRequest.newBuilder()
-   *           .setName("name3373707")
+   *           .setParent(ShelfName.of("[SHELF_ID]").toString())
    *           .setBook(Book.newBuilder().build())
    *           .build();
    *   Book response = libraryServiceClient.createBook(request);
@@ -751,7 +756,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   CreateBookRequest request =
    *       CreateBookRequest.newBuilder()
-   *           .setName("name3373707")
+   *           .setParent(ShelfName.of("[SHELF_ID]").toString())
    *           .setBook(Book.newBuilder().build())
    *           .build();
    *   ApiFuture<Book> future = libraryServiceClient.createBookCallable().futureCall(request);
@@ -772,7 +777,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+   *   BookName name = BookName.of("[SHELF]", "[BOOK]");
    *   Book response = libraryServiceClient.getBook(name);
    * }
    * }</pre>
@@ -794,7 +799,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
+   *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
    *   Book response = libraryServiceClient.getBook(name);
    * }
    * }</pre>
@@ -815,7 +820,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   GetBookRequest request = GetBookRequest.newBuilder().setName("name3373707").build();
+   *   GetBookRequest request =
+   *       GetBookRequest.newBuilder().setName(BookName.of("[SHELF]", "[BOOK]").toString()).build();
    *   Book response = libraryServiceClient.getBook(request);
    * }
    * }</pre>
@@ -835,7 +841,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   GetBookRequest request = GetBookRequest.newBuilder().setName("name3373707").build();
+   *   GetBookRequest request =
+   *       GetBookRequest.newBuilder().setName(BookName.of("[SHELF]", "[BOOK]").toString()).build();
    *   ApiFuture<Book> future = libraryServiceClient.getBookCallable().futureCall(request);
    *   // Do something.
    *   Book response = future.get();
@@ -856,19 +863,19 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   ShelfName name = ShelfName.of("[SHELF_ID]");
-   *   for (Book element : libraryServiceClient.listBooks(name).iterateAll()) {
+   *   ShelfName parent = ShelfName.of("[SHELF_ID]");
+   *   for (Book element : libraryServiceClient.listBooks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
    * }</pre>
    *
-   * @param name The name of the shelf whose books we'd like to list.
+   * @param parent The name of the shelf whose books we'd like to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final ListBooksPagedResponse listBooks(ShelfName name) {
+  public final ListBooksPagedResponse listBooks(ShelfName parent) {
     ListBooksRequest request =
-        ListBooksRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+        ListBooksRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listBooks(request);
   }
 
@@ -882,18 +889,18 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
-   *   for (Book element : libraryServiceClient.listBooks(name).iterateAll()) {
+   *   String parent = ShelfName.of("[SHELF_ID]").toString();
+   *   for (Book element : libraryServiceClient.listBooks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
    * }</pre>
    *
-   * @param name The name of the shelf whose books we'd like to list.
+   * @param parent The name of the shelf whose books we'd like to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final ListBooksPagedResponse listBooks(String name) {
-    ListBooksRequest request = ListBooksRequest.newBuilder().setName(name).build();
+  public final ListBooksPagedResponse listBooks(String parent) {
+    ListBooksRequest request = ListBooksRequest.newBuilder().setParent(parent).build();
     return listBooks(request);
   }
 
@@ -909,7 +916,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListBooksRequest request =
    *       ListBooksRequest.newBuilder()
-   *           .setName("name3373707")
+   *           .setParent(ShelfName.of("[SHELF_ID]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -938,7 +945,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListBooksRequest request =
    *       ListBooksRequest.newBuilder()
-   *           .setName("name3373707")
+   *           .setParent(ShelfName.of("[SHELF_ID]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -966,7 +973,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListBooksRequest request =
    *       ListBooksRequest.newBuilder()
-   *           .setName("name3373707")
+   *           .setParent(ShelfName.of("[SHELF_ID]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -997,7 +1004,53 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   DeleteBookRequest request = DeleteBookRequest.newBuilder().setName("name3373707").build();
+   *   BookName name = BookName.of("[SHELF]", "[BOOK]");
+   *   libraryServiceClient.deleteBook(name);
+   * }
+   * }</pre>
+   *
+   * @param name The name of the book to delete.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteBook(BookName name) {
+    DeleteBookRequest request =
+        DeleteBookRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+    deleteBook(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a book. Returns NOT_FOUND if the book does not exist.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
+   *   libraryServiceClient.deleteBook(name);
+   * }
+   * }</pre>
+   *
+   * @param name The name of the book to delete.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteBook(String name) {
+    DeleteBookRequest request = DeleteBookRequest.newBuilder().setName(name).build();
+    deleteBook(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a book. Returns NOT_FOUND if the book does not exist.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   DeleteBookRequest request =
+   *       DeleteBookRequest.newBuilder()
+   *           .setName(BookName.of("[SHELF]", "[BOOK]").toString())
+   *           .build();
    *   libraryServiceClient.deleteBook(request);
    * }
    * }</pre>
@@ -1017,7 +1070,10 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   DeleteBookRequest request = DeleteBookRequest.newBuilder().setName("name3373707").build();
+   *   DeleteBookRequest request =
+   *       DeleteBookRequest.newBuilder()
+   *           .setName(BookName.of("[SHELF]", "[BOOK]").toString())
+   *           .build();
    *   ApiFuture<Empty> future = libraryServiceClient.deleteBookCallable().futureCall(request);
    *   // Do something.
    *   future.get();
@@ -1038,15 +1094,18 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   Book book = Book.newBuilder().build();
-   *   Book response = libraryServiceClient.updateBook(book);
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   Book response = libraryServiceClient.updateBook(book, updateMask);
    * }
    * }</pre>
    *
-   * @param book The book to update with. The name must match or be empty.
+   * @param book The name of the book to update.
+   * @param updateMask Required. Mask of fields to update.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Book updateBook(Book book) {
-    UpdateBookRequest request = UpdateBookRequest.newBuilder().setBook(book).build();
+  public final Book updateBook(Book book, FieldMask updateMask) {
+    UpdateBookRequest request =
+        UpdateBookRequest.newBuilder().setBook(book).setUpdateMask(updateMask).build();
     return updateBook(request);
   }
 
@@ -1061,8 +1120,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   UpdateBookRequest request =
    *       UpdateBookRequest.newBuilder()
-   *           .setName("name3373707")
    *           .setBook(Book.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   Book response = libraryServiceClient.updateBook(request);
    * }
@@ -1086,8 +1145,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   UpdateBookRequest request =
    *       UpdateBookRequest.newBuilder()
-   *           .setName("name3373707")
    *           .setBook(Book.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Book> future = libraryServiceClient.updateBookCallable().futureCall(request);
    *   // Do something.
@@ -1108,7 +1167,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+   *   BookName name = BookName.of("[SHELF]", "[BOOK]");
    *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
    *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
    * }
@@ -1136,8 +1195,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
-   *   String otherShelfName = "otherShelfName-1942963547";
+   *   BookName name = BookName.of("[SHELF]", "[BOOK]");
+   *   String otherShelfName = ShelfName.of("[SHELF_ID]").toString();
    *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
    * }
    * }</pre>
@@ -1164,7 +1223,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
+   *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
    *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
    *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
    * }
@@ -1192,8 +1251,8 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
-   *   String name = "name3373707";
-   *   String otherShelfName = "otherShelfName-1942963547";
+   *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
+   *   String otherShelfName = ShelfName.of("[SHELF_ID]").toString();
    *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
    * }
    * }</pre>
@@ -1219,8 +1278,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MoveBookRequest request =
    *       MoveBookRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOtherShelfName("otherShelfName-1942963547")
+   *           .setName(BookName.of("[SHELF]", "[BOOK]").toString())
+   *           .setOtherShelfName(ShelfName.of("[SHELF_ID]").toString())
    *           .build();
    *   Book response = libraryServiceClient.moveBook(request);
    * }
@@ -1244,8 +1303,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MoveBookRequest request =
    *       MoveBookRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOtherShelfName("otherShelfName-1942963547")
+   *           .setName(BookName.of("[SHELF]", "[BOOK]").toString())
+   *           .setOtherShelfName(ShelfName.of("[SHELF_ID]").toString())
    *           .build();
    *   ApiFuture<Book> future = libraryServiceClient.moveBookCallable().futureCall(request);
    *   // Do something.
@@ -1301,14 +1360,7 @@ public class LibraryServiceClient implements BackgroundResource {
       ApiFuture<ListShelvesPage> futurePage =
           ListShelvesPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListShelvesPage, ListShelvesPagedResponse>() {
-            @Override
-            public ListShelvesPagedResponse apply(ListShelvesPage input) {
-              return new ListShelvesPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListShelvesPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListShelvesPagedResponse(ListShelvesPage page) {
@@ -1377,14 +1429,7 @@ public class LibraryServiceClient implements BackgroundResource {
       ApiFuture<ListBooksPage> futurePage =
           ListBooksPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListBooksPage, ListBooksPagedResponse>() {
-            @Override
-            public ListBooksPagedResponse apply(ListBooksPage input) {
-              return new ListBooksPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListBooksPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListBooksPagedResponse(ListBooksPage page) {

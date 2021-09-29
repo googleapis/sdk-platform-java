@@ -16,7 +16,6 @@
 
 package com.google.cloud.pubsub.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -32,7 +31,6 @@ import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
-import com.google.iam.v1.ProjectName;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -49,6 +47,7 @@ import com.google.pubsub.v1.ListSubscriptionsRequest;
 import com.google.pubsub.v1.ListSubscriptionsResponse;
 import com.google.pubsub.v1.ModifyAckDeadlineRequest;
 import com.google.pubsub.v1.ModifyPushConfigRequest;
+import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.PullRequest;
 import com.google.pubsub.v1.PullResponse;
 import com.google.pubsub.v1.PushConfig;
@@ -1188,6 +1187,63 @@ public class SubscriptionAdminClient implements BackgroundResource {
    */
   public final UnaryCallable<AcknowledgeRequest, Empty> acknowledgeCallable() {
     return stub.acknowledgeCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many
+   * concurrent pull requests pending for the given subscription.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *   int maxMessages = 496131527;
+   *   PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   * }
+   * }</pre>
+   *
+   * @param subscription Required. The subscription from which messages should be pulled. Format is
+   *     `projects/{project}/subscriptions/{sub}`.
+   * @param maxMessages Required. The maximum number of messages to return for this request. Must be
+   *     a positive integer. The Pub/Sub system may return fewer than the number specified.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PullResponse pull(SubscriptionName subscription, int maxMessages) {
+    PullRequest request =
+        PullRequest.newBuilder()
+            .setSubscription(subscription == null ? null : subscription.toString())
+            .setMaxMessages(maxMessages)
+            .build();
+    return pull(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many
+   * concurrent pull requests pending for the given subscription.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *   int maxMessages = 496131527;
+   *   PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   * }
+   * }</pre>
+   *
+   * @param subscription Required. The subscription from which messages should be pulled. Format is
+   *     `projects/{project}/subscriptions/{sub}`.
+   * @param maxMessages Required. The maximum number of messages to return for this request. Must be
+   *     a positive integer. The Pub/Sub system may return fewer than the number specified.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PullResponse pull(String subscription, int maxMessages) {
+    PullRequest request =
+        PullRequest.newBuilder().setSubscription(subscription).setMaxMessages(maxMessages).build();
+    return pull(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -2440,12 +2496,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
           ListSubscriptionsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListSubscriptionsPage, ListSubscriptionsPagedResponse>() {
-            @Override
-            public ListSubscriptionsPagedResponse apply(ListSubscriptionsPage input) {
-              return new ListSubscriptionsPagedResponse(input);
-            }
-          },
+          input -> new ListSubscriptionsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -2525,12 +2576,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
           ListSnapshotsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListSnapshotsPage, ListSnapshotsPagedResponse>() {
-            @Override
-            public ListSnapshotsPagedResponse apply(ListSnapshotsPage input) {
-              return new ListSnapshotsPagedResponse(input);
-            }
-          },
+          input -> new ListSnapshotsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 

@@ -19,6 +19,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 public interface Reference extends AstNode {
+  @Override
   void accept(AstNodeVisitor visitor);
 
   ImmutableList<Reference> generics();

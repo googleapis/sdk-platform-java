@@ -66,22 +66,22 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class KeyManagementServiceClientTest {
-  private static MockKeyManagementService mockKeyManagementService;
-  private static MockServiceHelper mockServiceHelper;
-  private KeyManagementServiceClient client;
   private static MockIAMPolicy mockIAMPolicy;
+  private static MockKeyManagementService mockKeyManagementService;
   private static MockLocations mockLocations;
+  private static MockServiceHelper mockServiceHelper;
   private LocalChannelProvider channelProvider;
+  private KeyManagementServiceClient client;
 
   @BeforeClass
   public static void startStaticServer() {
     mockKeyManagementService = new MockKeyManagementService();
-    mockIAMPolicy = new MockIAMPolicy();
     mockLocations = new MockLocations();
+    mockIAMPolicy = new MockIAMPolicy();
     mockServiceHelper =
         new MockServiceHelper(
             UUID.randomUUID().toString(),
-            Arrays.<MockGrpcService>asList(mockKeyManagementService, mockIAMPolicy, mockLocations));
+            Arrays.<MockGrpcService>asList(mockKeyManagementService, mockLocations, mockIAMPolicy));
     mockServiceHelper.start();
   }
 
@@ -752,14 +752,7 @@ public class KeyManagementServiceClientTest {
         PublicKey.newBuilder()
             .setPem("pem110872")
             .setPemCrc32C(Int64Value.newBuilder().build())
-            .setName(
-                PublicKeyName.of(
-                        "[PROJECT]",
-                        "[LOCATION]",
-                        "[KEY_RING]",
-                        "[CRYPTO_KEY]",
-                        "[CRYPTO_KEY_VERSION]")
-                    .toString())
+            .setName("name3373707")
             .build();
     mockKeyManagementService.addResponse(expectedResponse);
 
@@ -803,14 +796,7 @@ public class KeyManagementServiceClientTest {
         PublicKey.newBuilder()
             .setPem("pem110872")
             .setPemCrc32C(Int64Value.newBuilder().build())
-            .setName(
-                PublicKeyName.of(
-                        "[PROJECT]",
-                        "[LOCATION]",
-                        "[KEY_RING]",
-                        "[CRYPTO_KEY]",
-                        "[CRYPTO_KEY_VERSION]")
-                    .toString())
+            .setName("name3373707")
             .build();
     mockKeyManagementService.addResponse(expectedResponse);
 

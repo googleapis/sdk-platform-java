@@ -14,8 +14,8 @@
 
 package com.google.api.generator.gapic.composer.common;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -27,6 +27,7 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -51,8 +52,7 @@ import java.util.Set;
 
 public class TestProtoLoader {
   private static final TestProtoLoader INSTANCE =
-      new TestProtoLoader(
-          Transport.GRPC, "src/test/java/com/google/api/generator/gapic/testdata/");
+      new TestProtoLoader(Transport.GRPC, "src/test/java/com/google/api/generator/gapic/testdata/");
   private final String testFilesDirectory;
   private final Transport transport;
 
@@ -78,6 +78,34 @@ public class TestProtoLoader {
             fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     String jsonFilename = "deprecated_service_grpc_service_config.json";
+    Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseBookshopService() {
+    FileDescriptor fileDescriptor = BookshopProto.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "Bookshop");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    String jsonFilename = "bookshop_grpc_service_config.json";
     Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
@@ -267,5 +295,9 @@ public class TestProtoLoader {
 
   public String getTestFilesDirectory() {
     return testFilesDirectory;
+  }
+
+  public Transport getTransport() {
+    return transport;
   }
 }

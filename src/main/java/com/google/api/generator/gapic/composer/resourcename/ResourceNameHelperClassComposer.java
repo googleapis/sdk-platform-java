@@ -49,6 +49,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
@@ -79,8 +80,10 @@ public class ResourceNameHelperClassComposer {
       new ResourceNameHelperClassComposer();
 
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+  private static final Map<String, VariableExpr> FIXED_CLASS_VARS =
+      createFixedClassMemberVariables();
 
-  private static Map<String, VariableExpr> FIXED_CLASS_VARS = createFixedClassMemberVariables();
+  private static Reference javaObjectReference = ConcreteReference.withClazz(Object.class);
 
   private ResourceNameHelperClassComposer() {}
 
@@ -88,14 +91,25 @@ public class ResourceNameHelperClassComposer {
     return INSTANCE;
   }
 
-  public GapicClass generate(ResourceName resourceName) {
+  public GapicClass generate(ResourceName resourceName, GapicContext context) {
+    // Set up types.
     List<List<String>> tokenHierarchies =
         ResourceNameTokenizer.parseTokenHierarchy(resourceName.patterns());
     TypeStore typeStore = createDynamicTypes(resourceName, tokenHierarchies);
+    // Use the full name java.lang.Object if there is a proto message that is also named "Object".
+    // Affects GCS.
+    if (context.messages().keySet().stream()
+        .anyMatch(s -> s.equals("Object") || s.endsWith(".Object"))) {
+      javaObjectReference =
+          ConcreteReference.builder().setClazz(Object.class).setUseFullName(true).build();
+    }
+
+    // Set up variables.
     List<VariableExpr> templateFinalVarExprs = createTemplateClassMembers(tokenHierarchies);
     Map<String, VariableExpr> patternTokenVarExprs =
         createPatternTokenClassMembers(tokenHierarchies);
 
+    // Check invariants.
     Preconditions.checkState(
         patternTokenVarExprs.size() > 0,
         String.format("No patterns found for resource name %s", resourceName.resourceTypeString()));
@@ -200,7 +214,9 @@ public class ResourceNameHelperClassComposer {
     //         "projects/{project}/locations/{location}/autoscalingPolicies/{autoscaling_policy}");
     for (int i = 0; i < patterns.size(); i++) {
       VariableExpr varExpr =
-          templateFinalVarExprs.get(i).toBuilder()
+          templateFinalVarExprs
+              .get(i)
+              .toBuilder()
               .setIsDecl(true)
               .setScope(ScopeNode.PRIVATE)
               .setIsStatic(true)
@@ -224,7 +240,9 @@ public class ResourceNameHelperClassComposer {
     }
 
     memberVars.add(
-        FIXED_CLASS_VARS.get("fieldValuesMap").toBuilder()
+        FIXED_CLASS_VARS
+            .get("fieldValuesMap")
+            .toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsVolatile(true)
@@ -1174,7 +1192,6 @@ public class ResourceNameHelperClassComposer {
             .build();
 
     // Outer if-block.
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
     IfStatement outerIfStatement =
         IfStatement.builder()
             .setConditionExpr(fieldValuesMapNullCheckExpr)
@@ -1229,8 +1246,7 @@ public class ResourceNameHelperClassComposer {
 
       List<Expr> instantiateArgExprs = new ArrayList<>();
       List<String> tokens = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList());
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
+      for (String token : tokens) {
         Preconditions.checkNotNull(
             patternTokenVarExprs.get(token),
             String.format(
@@ -1288,7 +1304,11 @@ public class ResourceNameHelperClassComposer {
   private static MethodDefinition createEqualsMethod(
       ResourceName resourceName, List<List<String>> tokenHierarchies, TypeStore typeStore) {
     // Create method definition variables.
-    Variable oVariable = Variable.builder().setType(TypeNode.OBJECT).setName("o").build();
+    Variable oVariable =
+        Variable.builder()
+            .setType(TypeNode.withReference(javaObjectReference))
+            .setName("o")
+            .build();
     VariableExpr argVarExpr =
         VariableExpr.builder().setIsDecl(false).setVariable(oVariable).build();
     TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
@@ -1550,7 +1570,6 @@ public class ResourceNameHelperClassComposer {
     for (int i = 0; i < tokens.size(); i++) {
       String token = tokens.get(i);
       String upperCamelTokenName = JavaStyle.toUpperCamelCase(token);
-      String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
       VariableExpr currClassTokenVarExpr = classMemberVarExprs.get(i);
 
       // Getter.
@@ -1603,7 +1622,9 @@ public class ResourceNameHelperClassComposer {
                 .setStaticReferenceType(FIXED_TYPESTORE.get("Objects"))
                 .setMethodName("equals")
                 .setArguments(
-                    FIXED_CLASS_VARS.get("pathTemplate").toBuilder()
+                    FIXED_CLASS_VARS
+                        .get("pathTemplate")
+                        .toBuilder()
                         .setExprReferenceExpr(outerClassVarExpr)
                         .build(),
                     templateFinalVarExpr)
@@ -1623,15 +1644,15 @@ public class ResourceNameHelperClassComposer {
                 .build());
       }
 
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
-        String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
-        VariableExpr currClassTokenVarExpr = classMemberVarExprs.get(i);
+      for (VariableExpr memberVarExpr : classMemberVarExprs) {
+        VariableExpr currClassTokenVarExpr =
+            memberVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build();
         builderCtorBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(currClassTokenVarExpr)
                 .setValueExpr(
-                    currClassTokenVarExpr.toBuilder()
+                    currClassTokenVarExpr
+                        .toBuilder()
                         .setExprReferenceExpr(outerClassVarExpr)
                         .build())
                 .build());
@@ -1687,7 +1708,7 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
             BetaApi.class,

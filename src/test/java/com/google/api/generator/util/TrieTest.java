@@ -14,9 +14,9 @@
 
 package com.google.api.generator.util;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.testutils.LineFormatter;
 import java.util.Arrays;
@@ -69,7 +69,6 @@ public class TrieTest {
   @Test
   public void dfsTraverseAndReduce_emptyTrie() {
     // Add up points in the tree, where each parent gets (num child node points) * 2 + 1.
-    int baseValue = 0;
     Function<String, Integer> parentPreprocFn = nodeVal -> new Integer(0);
     BiFunction<String, Integer, Integer> leafReduceFn =
         (nodeVal, accVal) -> new Integer(accVal + 1);
@@ -84,7 +83,6 @@ public class TrieTest {
   @Test
   public void dfsTraverseAndReduce_singleNodeTrie() {
     // Add up points in the tree, where each parent gets (num child node points) * 2 + 1.
-    int baseValue = 0;
     Function<String, Integer> parentPreprocFn = nodeVal -> new Integer(0);
     BiFunction<String, Integer, Integer> leafReduceFn =
         (nodeVal, accVal) -> new Integer(accVal + 1);

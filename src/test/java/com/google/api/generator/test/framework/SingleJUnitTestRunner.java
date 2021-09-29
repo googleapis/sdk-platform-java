@@ -28,7 +28,7 @@ public class SingleJUnitTestRunner {
       throw new MissingRequiredArgException("Missing the JUnit class name argument.");
     }
     String className = args[0];
-    Class clazz = null;
+    Class<?> clazz = null;
     try {
       clazz = Class.forName(className);
     } catch (ClassNotFoundException e) {

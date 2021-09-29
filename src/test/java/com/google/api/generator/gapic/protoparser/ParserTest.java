@@ -15,10 +15,10 @@
 package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
@@ -30,6 +30,8 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
+import com.google.api.generator.gapic.model.Transport;
+import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -97,6 +99,17 @@ public class ParserTest {
   }
 
   @Test
+  public void parseMessages_fieldNameConflicts() {
+    FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
+    Message requestMessage = messageTypes.get("com.google.bookshop.v1beta1.GetBookRequest");
+    // Check that field names have been changed.
+    assertThat(requestMessage.fieldMap()).containsKey("books_count1");
+    assertThat(requestMessage.fieldMap()).containsKey("books_list2");
+    assertThat(requestMessage.fieldMap()).containsKey("books3");
+  }
+
+  @Test
   public void parseMethods_basic() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -108,9 +121,10 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
-            outputResourceNames);
+            outputResourceNames,
+            Transport.GRPC);
 
-    assertEquals(9, methods.size());
+    assertEquals(10, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method echoMethod = methods.get(0);
@@ -165,9 +179,10 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
-            outputResourceNames);
+            outputResourceNames,
+            Transport.GRPC);
 
-    assertEquals(9, methods.size());
+    assertEquals(10, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method waitMethod = methods.get(7);
@@ -209,14 +224,6 @@ public class ParserTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
 
-    List<Method> methods =
-        Parser.parseMethods(
-            echoService,
-            ECHO_PACKAGE,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
     assertThat(
             MethodSignatureParser.parseMethodSignatures(
                 methodDescriptor,
@@ -238,14 +245,6 @@ public class ParserTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
 
-    List<Method> methods =
-        Parser.parseMethods(
-            echoService,
-            ECHO_PACKAGE,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
     List<List<MethodArgument>> methodArgs =
         MethodSignatureParser.parseMethodSignatures(
             methodDescriptor,

@@ -20,6 +20,7 @@ import com.google.common.escape.Escapers;
 
 @AutoValue
 public abstract class StringObjectValue implements ObjectValue {
+  @Override
   public abstract String value();
 
   @Override

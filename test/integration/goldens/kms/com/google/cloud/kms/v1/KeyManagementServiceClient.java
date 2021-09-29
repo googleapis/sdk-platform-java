@@ -16,7 +16,6 @@
 
 package com.google.cloud.kms.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -2148,7 +2147,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
-   *   ResourceName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *   ResourceName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
    *   ByteString plaintext = ByteString.EMPTY;
    *   EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
    * }
@@ -2188,7 +2187,8 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (KeyManagementServiceClient keyManagementServiceClient =
    *     KeyManagementServiceClient.create()) {
-   *   String name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *   String name =
+   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
    *   ByteString plaintext = ByteString.EMPTY;
    *   EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
    * }
@@ -2227,7 +2227,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   EncryptRequest request =
    *       EncryptRequest.newBuilder()
-   *           .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setName(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setPlaintext(ByteString.EMPTY)
    *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
    *           .setPlaintextCrc32C(Int64Value.newBuilder().build())
@@ -2258,7 +2260,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   EncryptRequest request =
    *       EncryptRequest.newBuilder()
-   *           .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setName(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setPlaintext(ByteString.EMPTY)
    *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
    *           .setPlaintextCrc32C(Int64Value.newBuilder().build())
@@ -3154,7 +3158,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = keyManagementServiceClient.getIamPolicy(request);
@@ -3180,7 +3186,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future =
@@ -3343,7 +3351,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(request);
@@ -3369,7 +3379,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     KeyManagementServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *           .setResource(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =
@@ -3429,12 +3441,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListKeyRingsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListKeyRingsPage, ListKeyRingsPagedResponse>() {
-            @Override
-            public ListKeyRingsPagedResponse apply(ListKeyRingsPage input) {
-              return new ListKeyRingsPagedResponse(input);
-            }
-          },
+          input -> new ListKeyRingsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3509,12 +3516,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListCryptoKeysPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListCryptoKeysPage, ListCryptoKeysPagedResponse>() {
-            @Override
-            public ListCryptoKeysPagedResponse apply(ListCryptoKeysPage input) {
-              return new ListCryptoKeysPagedResponse(input);
-            }
-          },
+          input -> new ListCryptoKeysPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3591,12 +3593,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListCryptoKeyVersionsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListCryptoKeyVersionsPage, ListCryptoKeyVersionsPagedResponse>() {
-            @Override
-            public ListCryptoKeyVersionsPagedResponse apply(ListCryptoKeyVersionsPage input) {
-              return new ListCryptoKeyVersionsPagedResponse(input);
-            }
-          },
+          input -> new ListCryptoKeyVersionsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3679,12 +3676,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListImportJobsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListImportJobsPage, ListImportJobsPagedResponse>() {
-            @Override
-            public ListImportJobsPagedResponse apply(ListImportJobsPage input) {
-              return new ListImportJobsPagedResponse(input);
-            }
-          },
+          input -> new ListImportJobsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -3760,12 +3752,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
           ListLocationsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListLocationsPage, ListLocationsPagedResponse>() {
-            @Override
-            public ListLocationsPagedResponse apply(ListLocationsPage input) {
-              return new ListLocationsPagedResponse(input);
-            }
-          },
+          input -> new ListLocationsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 

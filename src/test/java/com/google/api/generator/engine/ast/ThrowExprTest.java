@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
@@ -24,7 +25,24 @@ public class ThrowExprTest {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     ThrowExpr.builder().setType(npeType).build();
     // No exception thrown, we're good.
+  }
 
+  @Test
+  public void createThrowExpr_basicExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    VariableExpr throwVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("e")
+                    .setType(TypeNode.withExceptionClazz(RuntimeException.class))
+                    .build())
+            .build();
+    ThrowExpr throwExpr = ThrowExpr.builder().setThrowExpr(throwVarExpr).build();
+    assertEquals(throwVarExpr.variable().type(), throwExpr.type());
+    // Setting the type doesn't matter.
+    throwExpr = ThrowExpr.builder().setThrowExpr(throwVarExpr).setType(npeType).build();
+    assertEquals(throwVarExpr.variable().type(), throwExpr.type());
   }
 
   @Test
@@ -61,5 +79,137 @@ public class ThrowExprTest {
     assertThrows(
         IllegalStateException.class,
         () -> ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build());
+  }
+
+  @Test
+  public void createThrowExpr_causeExpr() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr.builder()
+        .setType(npeType)
+        .setCauseExpr(
+            NewObjectExpr.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                .build())
+        .build();
+    // Successfully created a ThrowExpr.
+  }
+
+  @Test
+  public void createThrowExpr_causeExpr_throwableSubtype() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr.builder()
+        .setType(npeType)
+        .setCauseExpr(
+            NewObjectExpr.builder()
+                .setType(TypeNode.withExceptionClazz(IllegalStateException.class))
+                .build())
+        .build();
+    // Successfully created a ThrowExpr.
+  }
+
+  @Test
+  public void createThrowExpr_causeExpr_onThrowableSubtype() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            ThrowExpr.builder()
+                .setType(npeType)
+                .setCauseExpr(NewObjectExpr.builder().setType(TypeNode.STRING).build())
+                .build());
+  }
+
+  @Test
+  public void createThrowExpr_messageAndCauseExpr() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr.builder()
+        .setType(npeType)
+        .setMessageExpr(messageExpr)
+        .setCauseExpr(
+            NewObjectExpr.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                .build())
+        .build();
+    // Successfully created a ThrowExpr.
+  }
+
+  @Test
+  public void createThrowExpr_cannotThrowVariableDeclaration() {
+    VariableExpr throwVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("e")
+                    .setType(TypeNode.withExceptionClazz(RuntimeException.class))
+                    .build())
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            ThrowExpr.builder()
+                .setThrowExpr(throwVarExpr.toBuilder().setIsDecl(true).build())
+                .build());
+  }
+
+  @Test
+  public void createThrowExpr_cannotThrowNonExceptionTypedExpr() {
+    VariableExpr throwVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("str").setType(TypeNode.STRING).build())
+            .build();
+    assertThrows(
+        IllegalStateException.class, () -> ThrowExpr.builder().setThrowExpr(throwVarExpr).build());
+  }
+
+  @Test
+  public void createThrowExpr_cannotHaveThrowVariableAndMessageExprPresent() {
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    VariableExpr throwVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("e")
+                    .setType(TypeNode.withExceptionClazz(RuntimeException.class))
+                    .build())
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> ThrowExpr.builder().setThrowExpr(throwVarExpr).setMessageExpr(messageExpr).build());
+  }
+
+  @Test
+  public void createThrowExpr_cannotHaveThrowVariableAndCauseExprPresent() {
+    VariableExpr throwVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("e")
+                    .setType(TypeNode.withExceptionClazz(RuntimeException.class))
+                    .build())
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            ThrowExpr.builder()
+                .setThrowExpr(throwVarExpr)
+                .setCauseExpr(
+                    NewObjectExpr.builder()
+                        .setType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+                        .build())
+                .build());
   }
 }

@@ -1,6 +1,7 @@
 workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
 # DO NOT REMOVE.
 # This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
@@ -14,41 +15,24 @@ http_archive(
     ],
 )
 
-load("//:repository_rules.bzl", "gapic_generator_java_properties")
-
-gapic_generator_java_properties(
-    name = "gapic_generator_java_properties",
-    file = "//:dependencies.properties",
+jvm_maven_import_external(
+    name = "google_java_format_all_deps",
+    artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
+    licenses = [
+        "notice",
+        "reciprocal",
+    ],
+    server_urls = [
+        "https://repo.maven.apache.org/maven2/",
+        "http://repo1.maven.org/maven2/",
+    ],
 )
 
-load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
-load("//:repositories.bzl", "gapic_generator_java_repositories")
-
-gapic_generator_java_repositories()
-
-# protobuf
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
-
-# Java dependencies.
-# Import the monolith so we can transitively use its gapic rules for googleapis.
-http_archive(
-    name = "com_google_api_codegen",
-    strip_prefix = "gapic-generator-2.4.6",
-    urls = ["https://github.com/googleapis/gapic-generator/archive/v2.4.6.zip"],
-)
-
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    gapic = True,
-    grpc = True,
-    java = True,
-)
-
-_gax_java_version = PROPERTIES["version.com_google_gax_java"]
+# gax-java and its transitive dependencies must be imported before
+# gapic-generator-java dependencies to match the order in googleapis repository,
+# which in its turn, prioritizes actual generated clients runtime dependencies
+# over the generator dependencies.
+_gax_java_version = "2.3.0"
 
 http_archive(
     name = "com_google_api_gax_java",
@@ -67,6 +51,48 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
+load("//:repository_rules.bzl", "gapic_generator_java_properties")
+
+gapic_generator_java_properties(
+    name = "gapic_generator_java_properties",
+    file = "//:dependencies.properties",
+)
+
+load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("//:repositories.bzl", "gapic_generator_java_repositories")
+
+gapic_generator_java_repositories()
+
+# protobuf
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+# Bazel rules.
+_rules_gapic_version = "0.5.5"
+
+http_archive(
+    name = "rules_gapic",
+    strip_prefix = "rules_gapic-%s" % _rules_gapic_version,
+    urls = ["https://github.com/googleapis/rules_gapic/archive/v%s.tar.gz" % _rules_gapic_version],
+)
+
+# Java dependencies.
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    gapic = True,
+    grpc = True,
+    java = True,
+)
+
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
+
+http_archive(
+    name = "com_google_disco_to_proto3_converter",
+    strip_prefix = "disco-to-proto3-converter-4b0956884b1aa9b367cf41488b622dc12eb16652",
+    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/4b0956884b1aa9b367cf41488b622dc12eb16652.zip"],
+)

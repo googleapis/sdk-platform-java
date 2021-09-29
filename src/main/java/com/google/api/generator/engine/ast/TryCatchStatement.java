@@ -17,8 +17,10 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -26,11 +28,12 @@ public abstract class TryCatchStatement implements Statement {
 
   // Required.
   public abstract ImmutableList<Statement> tryBody();
+
   // Optional only if the sample code bit is set (i.e. this is sample code).
-  @Nullable
-  public abstract VariableExpr catchVariableExpr();
+  public abstract List<VariableExpr> catchVariableExprs();
   // Optional only if the sample code bit is set (i.e. this is sample code).
-  public abstract ImmutableList<Statement> catchBody();
+  public abstract List<List<Statement>> catchBlocks();
+
   // Optional.
   @Nullable
   public abstract AssignmentExpr tryResourceExpr();
@@ -44,8 +47,9 @@ public abstract class TryCatchStatement implements Statement {
 
   public static Builder builder() {
     return new AutoValue_TryCatchStatement.Builder()
-        .setIsSampleCode(false)
-        .setCatchBody(Collections.emptyList());
+        .setCatchVariableExprs(Collections.emptyList())
+        .setCatchBlocks(Collections.emptyList())
+        .setIsSampleCode(false);
   }
 
   @AutoValue.Builder
@@ -54,32 +58,61 @@ public abstract class TryCatchStatement implements Statement {
 
     public abstract Builder setTryBody(List<Statement> body);
 
-    public abstract Builder setCatchVariableExpr(VariableExpr variableExpr);
-
-    public abstract Builder setCatchBody(List<Statement> body);
-
     public abstract Builder setIsSampleCode(boolean isSampleCode);
+
+    public Builder addCatch(@Nonnull VariableExpr variableExpr, List<Statement> body) {
+      List<VariableExpr> catchVarExprs = new ArrayList<>(catchVariableExprs());
+      catchVarExprs.add(variableExpr);
+      setCatchVariableExprs(catchVarExprs);
+
+      List<List<Statement>> blocks = new ArrayList<>(catchBlocks());
+      blocks.add(body);
+      return setCatchBlocks(blocks);
+    }
+
+    // Private.
+    abstract Builder setCatchVariableExprs(List<VariableExpr> variableExpr);
+
+    abstract Builder setCatchBlocks(List<List<Statement>> body);
+
+    abstract ImmutableList<Statement> tryBody();
+
+    abstract boolean isSampleCode();
+
+    abstract List<VariableExpr> catchVariableExprs();
+
+    abstract List<List<Statement>> catchBlocks();
 
     abstract TryCatchStatement autoBuild();
 
     public TryCatchStatement build() {
-      TryCatchStatement tryCatchStatement = autoBuild();
-      NodeValidator.checkNoNullElements(tryCatchStatement.tryBody(), "try body", "try-catch");
-      NodeValidator.checkNoNullElements(tryCatchStatement.catchBody(), "catch body", "try-catch");
+      NodeValidator.checkNoNullElements(tryBody(), "try body", "try-catch");
+      NodeValidator.checkNoNullElements(
+          catchVariableExprs(), "catch variable expressions", "try-catch");
+      catchBlocks()
+          .forEach(body -> NodeValidator.checkNoNullElements(body, "catch body", "try-catch"));
 
-      if (!tryCatchStatement.isSampleCode()) {
-        Preconditions.checkNotNull(
-            tryCatchStatement.catchVariableExpr(),
+      if (!isSampleCode()) {
+        Preconditions.checkState(
+            !catchVariableExprs().isEmpty(),
             "Catch variable expression must be set for real, non-sample try-catch blocks.");
         Preconditions.checkState(
-            tryCatchStatement.catchVariableExpr().isDecl(),
-            "Catch variable expression must be a declaration");
+            catchVariableExprs().stream().allMatch(v -> v.isDecl()),
+            "Catch variable expressions must all be declarations");
         Preconditions.checkState(
-            TypeNode.isExceptionType(tryCatchStatement.catchVariableExpr().variable().type()),
-            "Catch variable must be an Exception object reference");
+            catchVariableExprs().stream()
+                .allMatch(v -> TypeNode.isExceptionType(v.variable().type())),
+            "Catch variables must be an Exception object references");
       }
 
-      return tryCatchStatement;
+      // Catch any potential future breakage due to changing addCatch above.
+      Preconditions.checkState(
+          catchVariableExprs().size() == catchBlocks().size(),
+          String.format(
+              "%d catch variables found and %d blocks found, but these numbers must be equal",
+              catchVariableExprs().size(), catchBlocks().size()));
+
+      return autoBuild();
     }
   }
 }

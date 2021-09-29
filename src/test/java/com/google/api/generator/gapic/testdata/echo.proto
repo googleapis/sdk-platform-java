@@ -130,6 +130,15 @@ service Echo {
       body: "*"
     };
   };
+
+  // This method primarily tests Java name collisions by using the Object
+  // message.
+  rpc CollideName(EchoRequest) returns (Object) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:foo"
+      body: "*"
+    };
+  }
 }
 
 // A severity enum used to test enum capabilities in GAPIC surfaces
@@ -191,6 +200,12 @@ message EchoResponse {
 
   // The severity specified in the request.
   Severity severity = 2;
+}
+
+// Tests name collisions with java.lang.Object.
+message Object {
+  // The content specified in the request.
+  string content = 1;
 }
 
 // The request message for the Expand method.

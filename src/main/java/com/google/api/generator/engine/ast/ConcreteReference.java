@@ -32,10 +32,10 @@ public abstract class ConcreteReference implements Reference {
   private static final String RIGHT_ANGLE = ">";
   private static final String QUESTION_MARK = "?";
 
-  private static final Class WILDCARD_CLAZZ = ReferenceWildcard.class;
+  private static final Class<?> WILDCARD_CLAZZ = ReferenceWildcard.class;
 
   // Private.
-  abstract Class clazz();
+  abstract Class<?> clazz();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -105,7 +105,7 @@ public abstract class ConcreteReference implements Reference {
     }
     // The innermost type will be the last element in the list.
     ImmutableList.Builder<String> listBuilder = new ImmutableList.Builder<>();
-    Class currentClz = clazz();
+    Class<?> currentClz = clazz();
     while (currentClz.getEnclosingClass() != null) {
       listBuilder.add(currentClz.getEnclosingClass().getSimpleName());
       currentClz = currentClz.getEnclosingClass();
@@ -198,7 +198,7 @@ public abstract class ConcreteReference implements Reference {
     return toBuilder().setGenerics(generics).build();
   }
 
-  public static ConcreteReference withClazz(Class clazz) {
+  public static ConcreteReference withClazz(Class<?> clazz) {
     return builder().setClazz(clazz).build();
   }
 
@@ -222,7 +222,7 @@ public abstract class ConcreteReference implements Reference {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setClazz(Class clazz);
+    public abstract Builder setClazz(Class<?> clazz);
 
     public abstract Builder setUseFullName(boolean useFullName);
 
@@ -239,7 +239,7 @@ public abstract class ConcreteReference implements Reference {
     public abstract ConcreteReference autoBuild();
 
     // Private.
-    abstract Class clazz();
+    abstract Class<?> clazz();
 
     abstract ImmutableList<Reference> generics();
 

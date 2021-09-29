@@ -111,6 +111,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return ((EchoStubSettings) getStubSettings()).blockSettings();
   }
 
+  /** Returns the object with the settings used for calls to collideName. */
+  public UnaryCallSettings<EchoRequest, Object> collideNameSettings() {
+    return ((EchoStubSettings) getStubSettings()).collideNameSettings();
+  }
+
   public static final EchoSettings create(EchoStubSettings stub) throws IOException {
     return new EchoSettings.Builder(stub.toBuilder()).build();
   }
@@ -195,14 +200,13 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
       return ((EchoStubSettings.Builder) getStubSettings());
     }
 
-    // NEXT_MAJOR_VER: remove 'throws Exception'.
     /**
      * Applies the given settings updater function to all of the unary API methods in this service.
      *
      * <p>Note: This method does not support applying settings to streaming methods.
      */
     public Builder applyToAllUnaryMethods(
-        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) throws Exception {
+        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) {
       super.applyToAllUnaryMethods(
           getStubSettingsBuilder().unaryMethodSettingsBuilders(), settingsUpdater);
       return this;
@@ -261,6 +265,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     /** Returns the builder for the settings used for calls to block. */
     public UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings() {
       return getStubSettingsBuilder().blockSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to collideName. */
+    public UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings() {
+      return getStubSettingsBuilder().collideNameSettings();
     }
 
     @Override

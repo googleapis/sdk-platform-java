@@ -32,8 +32,6 @@ public class CastExprTest {
 
   @Test
   public void validCastExpr_basicNull() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
-    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     CastExpr.builder()
         .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
         .setExpr(ValueExpr.createNullExpr())

@@ -14,34 +14,18 @@
 
 package com.google.api.generator;
 
-import com.google.api.AnnotationsProto;
-import com.google.api.ClientProto;
-import com.google.api.FieldBehaviorProto;
-import com.google.api.ResourceProto;
 import com.google.api.generator.gapic.Generator;
-import com.google.longrunning.OperationsProto;
-import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
 
 public class Main {
-  public static void main(String[] args)
-      throws IOException, InterruptedException, DescriptorValidationException {
+  public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    registerAllExtensions(registry);
+    ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
     CodeGeneratorResponse response = Generator.generateGapic(request);
     response.writeTo(System.out);
-  }
-
-  /** Register all extensions needed to process API protofiles. */
-  private static void registerAllExtensions(ExtensionRegistry extensionRegistry) {
-    OperationsProto.registerAllExtensions(extensionRegistry);
-    AnnotationsProto.registerAllExtensions(extensionRegistry);
-    ClientProto.registerAllExtensions(extensionRegistry);
-    ResourceProto.registerAllExtensions(extensionRegistry);
-    FieldBehaviorProto.registerAllExtensions(extensionRegistry);
   }
 }
