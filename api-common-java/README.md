@@ -1,7 +1,7 @@
 API Common for Java
 ==============================
 
-[![Build Status](https://travis-ci.org/googleapis/api-common-java.svg?branch=master)](https://travis-ci.org/googleapis/api-common-java)
+[![Build Status](https://travis-ci.org/googleapis/api-common-java.svg?branch=main)](https://travis-ci.org/googleapis/api-common-java)
 
 - [Documentation](https://googleapis.dev/java/api-common/latest/index.html)
 
@@ -67,6 +67,6 @@ After making changes, run the following commands to format your code and test yo
 ./gradlew test
 ```
 
-[CONTRIBUTING]:https://github.com/googleapis/api-common-java/blob/master/CONTRIBUTING.md
-[LICENSE]: https://github.com/googleapis/api-common-java/blob/master/LICENSE
+[CONTRIBUTING]:https://github.com/googleapis/api-common-java/blob/main/CONTRIBUTING.md
+[LICENSE]: https://github.com/googleapis/api-common-java/blob/main/LICENSE
 
