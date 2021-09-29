@@ -41,6 +41,7 @@ import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.Object;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -103,6 +104,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata>
       waitOperationSettings;
   private final UnaryCallSettings<BlockRequest, BlockResponse> blockSettings;
+  private final UnaryCallSettings<EchoRequest, Object> collideNameSettings;
 
   private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
       PAGED_EXPAND_PAGE_STR_DESC =
@@ -262,6 +264,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return blockSettings;
   }
 
+  /** Returns the object with the settings used for calls to collideName. */
+  public UnaryCallSettings<EchoRequest, Object> collideNameSettings() {
+    return collideNameSettings;
+  }
+
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public EchoStub createStub() throws IOException {
     if (getTransportChannelProvider()
@@ -284,6 +291,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return "localhost:7469";
   }
 
+  /** Returns the default mTLS service endpoint. */
+  public static String getDefaultMtlsEndpoint() {
+    return "localhost:7469";
+  }
+
   /** Returns the default service scopes. */
   public static List<String> getDefaultServiceScopes() {
     return DEFAULT_SERVICE_SCOPES;
@@ -291,7 +303,9 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
   /** Returns a builder for the default credentials for this service. */
   public static GoogleCredentialsProvider.Builder defaultCredentialsProviderBuilder() {
-    return GoogleCredentialsProvider.newBuilder().setScopesToApply(DEFAULT_SERVICE_SCOPES);
+    return GoogleCredentialsProvider.newBuilder()
+        .setScopesToApply(DEFAULT_SERVICE_SCOPES)
+        .setUseJwtAccessWithScope(true);
   }
 
   /** Returns a builder for the default ChannelProvider for this service. */
@@ -340,6 +354,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     waitSettings = settingsBuilder.waitSettings().build();
     waitOperationSettings = settingsBuilder.waitOperationSettings().build();
     blockSettings = settingsBuilder.blockSettings().build();
+    collideNameSettings = settingsBuilder.collideNameSettings().build();
   }
 
   /** Builder for EchoStubSettings. */
@@ -360,6 +375,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     private final OperationCallSettings.Builder<WaitRequest, WaitResponse, WaitMetadata>
         waitOperationSettings;
     private final UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings;
+    private final UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -420,6 +436,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       waitOperationSettings = OperationCallSettings.newBuilder();
       blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      collideNameSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -427,7 +444,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               pagedExpandSettings,
               simplePagedExpandSettings,
               waitSettings,
-              blockSettings);
+              blockSettings,
+              collideNameSettings);
       initDefaults(this);
     }
 
@@ -444,6 +462,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = settings.waitSettings.toBuilder();
       waitOperationSettings = settings.waitOperationSettings.toBuilder();
       blockSettings = settings.blockSettings.toBuilder();
+      collideNameSettings = settings.collideNameSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -451,7 +470,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               pagedExpandSettings,
               simplePagedExpandSettings,
               waitSettings,
-              blockSettings);
+              blockSettings,
+              collideNameSettings);
     }
 
     private static Builder createDefault() {
@@ -461,6 +481,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);
     }
@@ -497,6 +519,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
       builder
+          .collideNameSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
           .waitOperationSettings()
           .setInitialCallSettings(
               UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
@@ -522,14 +549,13 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       return builder;
     }
 
-    // NEXT_MAJOR_VER: remove 'throws Exception'.
     /**
      * Applies the given settings updater function to all of the unary API methods in this service.
      *
      * <p>Note: This method does not support applying settings to streaming methods.
      */
     public Builder applyToAllUnaryMethods(
-        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) throws Exception {
+        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) {
       super.applyToAllUnaryMethods(unaryMethodSettingsBuilders, settingsUpdater);
       return this;
     }
@@ -593,6 +619,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     /** Returns the builder for the settings used for calls to block. */
     public UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings() {
       return blockSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to collideName. */
+    public UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings() {
+      return collideNameSettings;
     }
 
     @Override

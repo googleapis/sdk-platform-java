@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -70,6 +71,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
     // the first method in the service's methods list.
     Method method =
@@ -232,6 +234,7 @@ public class ServiceClientSampleCodeComposer {
       List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -278,6 +281,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -336,6 +340,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -448,6 +453,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -477,7 +483,7 @@ public class ServiceClientSampleCodeComposer {
 
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
         String.format(
@@ -567,6 +573,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -616,6 +623,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    resourceNames = sortAlphabetically(resourceNames);
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -708,7 +716,7 @@ public class ServiceClientSampleCodeComposer {
         "Output message %s not found, keys: ",
         method.outputType().reference().fullName(),
         messageTypes.keySet().toString());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
         String.format(
@@ -1134,7 +1142,7 @@ public class ServiceClientSampleCodeComposer {
       Map<String, Message> messageTypes) {
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
     Preconditions.checkNotNull(
         repeatedPagedResultsField,
         String.format(
@@ -1302,7 +1310,7 @@ public class ServiceClientSampleCodeComposer {
         .map(
             arg ->
                 !isStringTypedResourceName(arg, resourceNames)
-                    ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
+                    ? DefaultValueComposer.createDefaultValue(arg, resourceNames, false)
                     : stringResourceNameDefaultValueExpr.apply(arg))
         .collect(Collectors.toList());
   }
@@ -1348,5 +1356,17 @@ public class ServiceClientSampleCodeComposer {
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
+  }
+
+  /**
+   * Returns the same "resource type name" to "resource name" key-value map as given, but sorted in
+   * alphabetical order. This prevents resource name flip-flopping between executions on the various
+   * machines used for client library publication.
+   */
+  private static TreeMap<String, ResourceName> sortAlphabetically(
+      Map<String, ResourceName> unsorted) {
+    // This simple wrapper is not redundant because it hides implementation details from the
+    // callers.
+    return new TreeMap<>(unsorted);
   }
 }

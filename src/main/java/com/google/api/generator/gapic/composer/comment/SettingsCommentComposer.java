@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer.comment;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -28,7 +27,6 @@ import java.util.stream.Collectors;
 public class SettingsCommentComposer {
   private static final String COLON = ":";
 
-  private static final String STUB_PATTERN = "%sStub";
   private static final String BUILDER_CLASS_DOC_PATTERN = "Builder for %s.";
   private static final String CALL_SETTINGS_METHOD_DOC_PATTERN =
       "Returns the object with the settings used for calls to %s.";
@@ -61,6 +59,8 @@ public class SettingsCommentComposer {
       toSimpleComment("Returns a builder for the default ExecutorProvider for this service.");
   public static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
       toSimpleComment("Returns the default service endpoint.");
+  public static final CommentStatement DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT =
+      toSimpleComment("Returns the default mTLS service endpoint.");
   public static final CommentStatement DEFAULT_SERVICE_SCOPES_METHOD_COMMENT =
       toSimpleComment("Returns the default service scopes.");
 
@@ -78,7 +78,6 @@ public class SettingsCommentComposer {
 
   public static final List<CommentStatement> APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS =
       Arrays.asList(
-              LineComment.withComment("NEXT_MAJOR_VER: remove 'throws Exception'."),
               JavaDocComment.builder()
                   .addComment(
                       "Applies the given settings updater function to all of the unary API methods"

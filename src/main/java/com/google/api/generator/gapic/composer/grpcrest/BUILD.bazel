@@ -1,0 +1,55 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "grpcrest_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "grpcrest",
+    srcs = [
+        ":grpcrest_files",
+    ],
+    deps = [
+        "//:service_config_java_proto",
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/writer",
+        "//src/main/java/com/google/api/generator/gapic:status_java_proto",
+        "//src/main/java/com/google/api/generator/gapic/composer/comment",
+        "//src/main/java/com/google/api/generator/gapic/composer/common",
+        "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
+        "//src/main/java/com/google/api/generator/gapic/composer/resourcename",
+        "//src/main/java/com/google/api/generator/gapic/composer/rest",
+        "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
+        "//src/main/java/com/google/api/generator/gapic/composer/store",
+        "//src/main/java/com/google/api/generator/gapic/composer/utils",
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/utils",
+        "//src/main/java/com/google/api/generator/util",
+        "@com_google_api_api_common//jar",
+        "@com_google_api_gax_java//gax",
+        "@com_google_api_gax_java//gax:gax_testlib",
+        "@com_google_api_gax_java//gax-grpc:gax_grpc",
+        "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+        "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        "@com_google_code_findbugs_jsr305//jar",
+        "@com_google_googleapis//gapic/metadata:metadata_java_proto",
+        "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
+        "@com_google_googleapis//google/rpc:rpc_java_proto",
+        "@com_google_guava_guava//jar",
+        "@com_google_http_client_google_http_client//jar",
+        "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//:protobuf_java_util",
+        "@com_google_protobuf//java/core",
+        "@io_grpc_grpc_java//api",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//stub",
+        "@javax_annotation_javax_annotation_api//jar",
+        "@junit_junit//jar",
+        "@org_threeten_threetenbp//jar",
+    ],
+)

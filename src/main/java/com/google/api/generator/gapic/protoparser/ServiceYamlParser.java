@@ -21,6 +21,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
@@ -37,7 +38,8 @@ public class ServiceYamlParser {
 
     String fileContents = null;
     try {
-      fileContents = new String(Files.readAllBytes(Paths.get(serviceYamlFilePath)));
+      fileContents =
+          new String(Files.readAllBytes(Paths.get(serviceYamlFilePath)), StandardCharsets.UTF_8);
     } catch (IOException e) {
       return Optional.empty();
     }

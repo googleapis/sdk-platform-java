@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.auto.value.AutoValue;
+import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -29,35 +30,56 @@ public abstract class TransportContext {
   // For AbstractServiceStubClassComposer
   public abstract Transport transport();
 
+  @Nullable
   public abstract String transportName();
 
+  @Nullable
   public abstract Class<?> callSettingsClass();
 
+  @Nullable
   public abstract TypeNode stubCallableFactoryType();
 
+  @Nullable
   public abstract Class<?> methodDescriptorClass();
 
-  @Nullable
-  public abstract TypeNode transportOperationsStubType();
+  public abstract List<TypeNode> transportOperationsStubTypes();
+
+  public abstract List<String> transportOperationsStubNames();
 
   // For AbstractServiceSettingsClassComposer
-  public abstract Class<?> instantiatingChannelProviderClass();
+  public abstract List<Class<?>> instantiatingChannelProviderClasses();
 
-  public abstract String defaultTransportProviderBuilderName();
+  public abstract List<Class<?>> instantiatingChannelProviderBuilderClasses();
+
+  public abstract List<String> defaultTransportProviderBuilderNames();
+
+  public abstract List<String> transportApiClientHeaderProviderBuilderNames();
 
   // For AbstractServiceStubSettingsClassComposer
-  public abstract TypeNode transportChannelType();
+  public abstract List<TypeNode> transportChannelTypes();
 
-  public abstract String transportGetterName();
+  public abstract List<String> transportGetterNames();
 
   // For AbstractServiceCallableFactoryClassComposer
+  @Nullable
   public abstract TypeNode transportCallSettingsType();
 
+  @Nullable
   public abstract TypeNode transportCallableFactoryType();
 
-  public abstract TypeNode operationsStubType();
+  public abstract List<TypeNode> operationsStubTypes();
 
+  @Nullable
   public abstract String transportCallSettingsName();
+
+  // For RetrySettingsComposer
+  public abstract TypeNode operationResponseTransformerType();
+
+  public abstract TypeNode operationMetadataTransformerType();
+
+  public abstract List<TypeNode> operationsClientTypes();
+
+  public abstract List<String> operationsClientNames();
 
   protected static TypeNode classToType(Class<?> clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
@@ -82,15 +104,21 @@ public abstract class TransportContext {
 
     public abstract Builder setMethodDescriptorClass(Class<?> methodDescriptorClass);
 
-    public abstract Builder setInstantiatingChannelProviderClass(
-        Class<?> instantiatingChannelProviderClass);
+    public abstract Builder setInstantiatingChannelProviderClasses(
+        List<Class<?>> instantiatingChannelProviderClasses);
 
-    public abstract Builder setDefaultTransportProviderBuilderName(
-        String defaultTransportProviderBuilderName);
+    public abstract Builder setInstantiatingChannelProviderBuilderClasses(
+        List<Class<?>> instantiatingChannelProviderBuilderClasses);
 
-    public abstract Builder setTransportChannelType(TypeNode transportChannelType);
+    public abstract Builder setDefaultTransportProviderBuilderNames(
+        List<String> defaultTransportProviderBuilderNames);
 
-    public abstract Builder setTransportGetterName(String transportGetterName);
+    public abstract Builder setTransportApiClientHeaderProviderBuilderNames(
+        List<String> transportApiClientHeaderProviderBuilderNames);
+
+    public abstract Builder setTransportChannelTypes(List<TypeNode> transportChannelTypes);
+
+    public abstract Builder setTransportGetterNames(List<String> transportGetterNames);
 
     public abstract Builder setTransportCallSettingsType(TypeNode transportCallSettingsType);
 
@@ -98,9 +126,19 @@ public abstract class TransportContext {
 
     public abstract Builder setTransportCallSettingsName(String transportCallSettingsName);
 
-    public abstract Builder setTransportOperationsStubType(TypeNode transportOperationsStubType);
+    public abstract Builder setTransportOperationsStubTypes(List<TypeNode> transportOperationsStubTypes);
 
-    public abstract Builder setOperationsStubType(TypeNode operationsStubType);
+    public abstract Builder setTransportOperationsStubNames(List<String> transportOperationsStubNames);
+
+    public abstract Builder setOperationsStubTypes(List<TypeNode> operationsStubType);
+
+    public abstract Builder setOperationResponseTransformerType(TypeNode operationResponseTransformerType);
+
+    public abstract Builder setOperationMetadataTransformerType(TypeNode operationMetadataTransformerType);
+
+    public abstract Builder setOperationsClientTypes(List<TypeNode> operationsClientTypes);
+
+    public abstract Builder setOperationsClientNames(List<String> operationsClientNames);
 
     public abstract TransportContext build();
   }

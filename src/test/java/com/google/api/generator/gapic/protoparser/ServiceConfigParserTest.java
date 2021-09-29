@@ -14,9 +14,9 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.protobuf.util.Durations;
 import com.google.rpc.Code;

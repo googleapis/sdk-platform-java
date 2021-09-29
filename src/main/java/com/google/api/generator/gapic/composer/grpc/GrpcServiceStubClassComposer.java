@@ -16,14 +16,12 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
-import com.google.api.gax.rpc.RequestParamsExtractor;
-import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -32,10 +30,9 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.composer.common.AbstractServiceStubClassComposer;
-import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
+import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -54,7 +51,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class GrpcServiceStubClassComposer extends AbstractServiceStubClassComposer {
+public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
   private static final GrpcServiceStubClassComposer INSTANCE = new GrpcServiceStubClassComposer();
 
   // Legacy support for the original reroute_to_grpc_interface option in gapic.yaml. These two APIs
@@ -75,7 +72,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             GrpcCallSettings.class,
             GrpcOperationsStub.class,
@@ -155,7 +152,8 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr.toBuilder()
+                methodDescriptorVarExpr
+                    .toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -191,18 +189,6 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
   }
 
   @Override
-  protected List<MethodDefinition> createOperationsStubGetterMethod(
-      VariableExpr operationsStubVarExpr) {
-    return Arrays.asList(
-        MethodDefinition.builder()
-            .setScope(ScopeNode.PUBLIC)
-            .setReturnType(operationsStubVarExpr.type())
-            .setName("getOperationsStub")
-            .setReturnExpr(operationsStubVarExpr)
-            .build());
-  }
-
-  @Override
   protected Expr createTransportSettingsInitExpr(
       Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
     MethodInvocationExpr callSettingsBuilderExpr =
@@ -223,7 +209,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
               .setMethodName("setParamsExtractor")
-              .setArguments(createRequestParamsExtractorAnonClass(method))
+              .setArguments(createRequestParamsExtractorClassInstance(method))
               .build();
     }
 
@@ -255,7 +241,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     return String.format("google.iam.v1.IAMPolicy/%s", protoMethod.name());
   }
 
-  private AnonymousClassExpr createRequestParamsExtractorAnonClass(Method method) {
+  private LambdaExpr createRequestParamsExtractorClassInstance(Method method) {
     Preconditions.checkState(
         method.hasHttpBindings(), String.format("Method %s has no HTTP binding", method.name()));
 
@@ -268,9 +254,6 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
     VariableExpr paramsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("params").setType(paramsVarType).build());
-    VariableExpr reqeustVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("request").setType(method.inputType()).build());
 
     Expr paramsAssignExpr =
         AssignmentExpr.builder()
@@ -289,11 +272,11 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
 
-    for (String httpBindingFieldName : method.httpBindings()) {
+    for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
           MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
-      String[] descendantFields = httpBindingFieldName.split("\\.");
+      String[] descendantFields = httpBindingFieldBinding.name().split("\\.");
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =
@@ -320,7 +303,7 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
               .setExprReferenceExpr(paramsVarExpr)
               .setMethodName("put")
               .setArguments(
-                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldName)),
+                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
                   valueOfExpr)
               .build();
       bodyExprs.add(paramsPutExpr);
@@ -339,24 +322,13 @@ public class GrpcServiceStubClassComposer extends AbstractServiceStubClassCompos
             .setReturnType(returnType)
             .build();
 
-    MethodDefinition extractMethod =
-        MethodDefinition.builder()
-            .setIsOverride(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setReturnType(returnType)
-            .setName("extract")
-            .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(
-                bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
-            .setReturnExpr(returnExpr)
-            .build();
-
-    TypeNode anonClassType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(RequestParamsExtractor.class)
-                .setGenerics(method.inputType().reference())
-                .build());
-    return AnonymousClassExpr.builder().setType(anonClassType).setMethods(extractMethod).build();
+    // Overrides extract().
+    // https://github.com/googleapis/gax-java/blob/8d45d186e36ae97b789a6f89d80ae5213a773b65/gax/src/main/java/com/google/api/gax/rpc/RequestParamsExtractor.java#L55
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setReturnExpr(returnExpr)
+        .build();
   }
 }

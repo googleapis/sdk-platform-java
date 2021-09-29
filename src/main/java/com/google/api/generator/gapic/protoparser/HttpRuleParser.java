@@ -18,16 +18,18 @@ import com.google.api.AnnotationsProto;
 import com.google.api.HttpRule;
 import com.google.api.HttpRule.PatternCase;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.HttpBindings;
+import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Sets;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -36,11 +38,11 @@ import java.util.stream.Collectors;
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
 
-  public static Optional<List<String>> parseHttpBindings(
+  public static HttpBindings parse(
       MethodDescriptor protoMethod, Message inputMessage, Map<String, Message> messageTypes) {
     MethodOptions methodOptions = protoMethod.getOptions();
     if (!methodOptions.hasExtension(AnnotationsProto.http)) {
-      return Optional.empty();
+      return null;
     }
 
     HttpRule httpRule = methodOptions.getExtension(AnnotationsProto.http);
@@ -53,86 +55,126 @@ public class HttpRuleParser {
     return parseHttpRuleHelper(httpRule, Optional.of(inputMessage), messageTypes);
   }
 
-  public static Optional<List<String>> parseHttpRule(HttpRule httpRule) {
+  public static HttpBindings parseHttpRule(HttpRule httpRule) {
     return parseHttpRuleHelper(httpRule, Optional.empty(), Collections.emptyMap());
   }
 
-  private static Optional<List<String>> parseHttpRuleHelper(
+  private static HttpBindings parseHttpRuleHelper(
       HttpRule httpRule, Optional<Message> inputMessageOpt, Map<String, Message> messageTypes) {
     // Get pattern.
-    Set<String> uniqueBindings = getHttpVerbPattern(httpRule);
-    if (uniqueBindings.isEmpty()) {
-      return Optional.empty();
-    }
-
+    String pattern = getHttpVerbPattern(httpRule);
+    ImmutableSet.Builder<String> bindingsBuilder = getPatternBindings(pattern);
     if (httpRule.getAdditionalBindingsCount() > 0) {
       for (HttpRule additionalRule : httpRule.getAdditionalBindingsList()) {
-        uniqueBindings.addAll(getHttpVerbPattern(additionalRule));
+        // TODO: save additional bindings path in HttpRuleBindings
+        bindingsBuilder.addAll(getPatternBindings(getHttpVerbPattern(additionalRule)).build());
       }
     }
 
-    List<String> bindings = new ArrayList<>(uniqueBindings);
-    Collections.sort(bindings);
+    Set<String> pathParamNames = bindingsBuilder.build();
 
-    // Binding validation.
-    for (String binding : bindings) {
+    // TODO: support nested message fields bindings
+    String body = httpRule.getBody();
+    Set<String> bodyParamNames;
+    Set<String> queryParamNames;
+    if (!inputMessageOpt.isPresent()) {
+      // Must be a mixin, do not support full HttpRuleBindings for now
+      bodyParamNames = ImmutableSet.of();
+      queryParamNames = ImmutableSet.of();
+    } else if (Strings.isNullOrEmpty(body)) {
+      bodyParamNames = ImmutableSet.of();
+      queryParamNames = Sets.difference(inputMessageOpt.get().fieldMap().keySet(), pathParamNames);
+    } else if (body.equals(ASTERISK)) {
+      bodyParamNames = Sets.difference(inputMessageOpt.get().fieldMap().keySet(), pathParamNames);
+      queryParamNames = ImmutableSet.of();
+    } else {
+      bodyParamNames = ImmutableSet.of(body);
+      Set<String> bodyBinidngsUnion = Sets.union(bodyParamNames, pathParamNames);
+      queryParamNames =
+          Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bodyBinidngsUnion);
+    }
+
+    Message message = inputMessageOpt.orElse(null);
+    return HttpBindings.builder()
+        .setHttpVerb(HttpBindings.HttpVerb.valueOf(httpRule.getPatternCase().toString()))
+        .setPattern(pattern)
+        .setPathParameters(
+            validateAndConstructHttpBindings(pathParamNames, message, messageTypes, true))
+        .setQueryParameters(
+            validateAndConstructHttpBindings(queryParamNames, message, messageTypes, false))
+        .setBodyParameters(
+            validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, false))
+        .setIsAsteriskBody(body.equals(ASTERISK))
+        .build();
+  }
+
+  private static Set<HttpBinding> validateAndConstructHttpBindings(
+      Set<String> paramNames,
+      Message inputMessage,
+      Map<String, Message> messageTypes,
+      boolean isPath) {
+    ImmutableSortedSet.Builder<HttpBinding> httpBindings = ImmutableSortedSet.naturalOrder();
+    for (String paramName : paramNames) {
       // Handle foo.bar cases by descending into the subfields.
-      String[] descendantBindings = binding.split("\\.");
-      Optional<Message> containingMessageOpt = inputMessageOpt;
-      for (int i = 0; i < descendantBindings.length; i++) {
-        String subField = descendantBindings[i];
-        if (!containingMessageOpt.isPresent()) {
-          continue;
-        }
-
-        if (i < descendantBindings.length - 1) {
-          Field field = containingMessageOpt.get().fieldMap().get(subField);
-          containingMessageOpt = Optional.of(messageTypes.get(field.type().reference().fullName()));
+      String[] subFields = paramName.split("\\.");
+      if (inputMessage == null) {
+        httpBindings.add(HttpBinding.create(paramName, false));
+        continue;
+      }
+      Message nestedMessage = inputMessage;
+      for (int i = 0; i < subFields.length; i++) {
+        String subFieldName = subFields[i];
+        if (i < subFields.length - 1) {
+          Field field = nestedMessage.fieldMap().get(subFieldName);
+          nestedMessage = messageTypes.get(field.type().reference().fullName());
           Preconditions.checkNotNull(
-              containingMessageOpt.get(),
+              nestedMessage,
               String.format(
                   "No containing message found for field %s with type %s",
                   field.name(), field.type().reference().simpleName()));
+
         } else {
-          checkHttpFieldIsValid(subField, containingMessageOpt.get(), false);
+          if (isPath) {
+            checkHttpFieldIsValid(subFieldName, nestedMessage, !isPath);
+          }
+          Field field = nestedMessage.fieldMap().get(subFieldName);
+          httpBindings.add(HttpBinding.create(paramName, field.isProto3Optional()));
         }
       }
     }
-
-    return Optional.of(bindings);
+    return httpBindings.build();
   }
 
-  private static Set<String> getHttpVerbPattern(HttpRule httpRule) {
-    String pattern = null;
-    // Assign a temp variable to prevent the formatter from removing the import.
+  private static String getHttpVerbPattern(HttpRule httpRule) {
     PatternCase patternCase = httpRule.getPatternCase();
     switch (patternCase) {
       case GET:
-        pattern = httpRule.getGet();
-        break;
+        return httpRule.getGet();
       case PUT:
-        pattern = httpRule.getPut();
-        break;
+        return httpRule.getPut();
       case POST:
-        pattern = httpRule.getPost();
-        break;
+        return httpRule.getPost();
       case DELETE:
-        pattern = httpRule.getDelete();
-        break;
+        return httpRule.getDelete();
       case PATCH:
-        pattern = httpRule.getPatch();
-        break;
+        return httpRule.getPatch();
       case CUSTOM: // Invalid pattern.
         // Fall through.
       default:
-        return Collections.emptySet();
+        return "";
+    }
+  }
+
+  private static ImmutableSortedSet.Builder<String> getPatternBindings(String pattern) {
+    ImmutableSortedSet.Builder<String> bindings = ImmutableSortedSet.naturalOrder();
+    if (pattern.isEmpty()) {
+      return bindings;
     }
 
     PathTemplate template = PathTemplate.create(pattern);
-    Set<String> bindings =
-        new HashSet<String>(
-            // Filter out any unbound variable like "$0, $1, etc.
-            template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toList()));
+    // Filter out any unbound variable like "$0, $1, etc.
+    bindings.addAll(
+        template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toSet()));
     return bindings;
   }
 

@@ -15,17 +15,17 @@
 ## Running the Plugin
 
 1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
-    [gapic-showcase](https://github.com/googleapis/gapic-showcase/) and install
-    protoc.
+    [gapic-showcase](https://github.com/googleapis/gapic-showcase/).
 
 2.  Copy the protos from Showcase into googleapis/google/showcase.
 
     ```sh
-    cp gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta
+    mkdir googleapis/google/showcase
+    cp -r gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta1
     ```
 
-3.  Add the new microgenerator rules to the protobuf directory's `BUILD.bazel`
-    file as follows:
+3.  Add the new microgenerator rules to
+    `googleapis/google/showcase/v1beta1/BUILD.bazel` file as follows:
 
     ```python
     load(
@@ -33,6 +33,22 @@
         # Existing rules here.
         "java_gapic_assembly_gradle_pkg",
         "java_gapic_library",
+        "java_proto_library",
+        "proto_library_with_info",
+    )
+
+    proto_library_with_info(
+        name = "showcase_proto_with_info",
+        deps = [
+            ":showcase_proto",
+        ],
+    )
+
+    java_proto_library(
+        name = "showcase_java_proto",
+        deps = [
+            "showcase_proto",
+        ],
     )
 
     # This should either replace the existing monolith target or have a unique name
@@ -97,13 +113,6 @@
     bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest
     ```
 
--   Update goldens files based on code generation in unit test, for example
-    `JavaCodeGeneratorTest.java`
-
-    ```sh
-    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
-    ```
-
 -   Run a single integration test for API like `Redis`, it generates Java source
     code using the Java microgenerator and compares them with the goldens files
     in `test/integration/goldens/redis`.
@@ -112,10 +121,20 @@
     bazel test //test/integration:redis
     ```
 
--   Update goldens files based on code generation in integration test, for
-    example `Redis`. It generates Java source code using the Java microgenerator
-    and overwrites the goldens files in `test/integration/goldens/redis` based
-    on code generation.
+-   Run all unit and integration tests.
+
+    ```sh
+    bazel test $(bazel query "src/test/..." | grep "Test$") //test/integration/...
+    ```
+
+-   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
+
+    ```sh
+    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
+    ```
+
+-   Update integration test golden files, for example `Redis`. This clobbers all the
+    files in `test/integration/goldens/redis`.
 
     ```sh
     bazel run //test/integration:redis_update

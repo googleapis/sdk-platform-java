@@ -33,7 +33,6 @@ import java.util.stream.Stream;
 
 public class ServiceClientCommentComposer {
   // Tokens.
-  private static final String COLON = ":";
   private static final String EMPTY_STRING = "";
   private static final String API_EXCEPTION_TYPE_NAME = "com.google.api.gax.rpc.ApiException";
   private static final String EXCEPTION_CONDITION = "if the remote call fails";

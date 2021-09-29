@@ -194,9 +194,9 @@ public class TestName implements ResourceName {
     }
 
     private Builder(TestName testName) {
-      session = testName.session;
-      shardId = testName.shardId;
-      testId = testName.testId;
+      this.session = testName.session;
+      this.shardId = testName.shardId;
+      this.testId = testName.testId;
     }
 
     public TestName build() {

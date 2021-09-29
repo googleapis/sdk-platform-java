@@ -120,7 +120,7 @@ public class BillingAccountLocationName implements ResourceName {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (o == this) {
       return true;
     }
@@ -168,8 +168,8 @@ public class BillingAccountLocationName implements ResourceName {
     }
 
     private Builder(BillingAccountLocationName billingAccountLocationName) {
-      billingAccount = billingAccountLocationName.billingAccount;
-      location = billingAccountLocationName.location;
+      this.billingAccount = billingAccountLocationName.billingAccount;
+      this.location = billingAccountLocationName.location;
     }
 
     public BillingAccountLocationName build() {

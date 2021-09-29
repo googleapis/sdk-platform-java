@@ -62,11 +62,13 @@ import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -172,6 +174,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
     javaMethods.add(createCreatorMethod(service, typeStore));
     javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
+    javaMethods.addAll(createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
@@ -321,7 +324,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                         .build());
     BiFunction<MethodDefinition.Builder, CommentStatement, MethodDefinition> methodMakerFn =
         (methodDefBuilder, comment) -> methodDefBuilder.setHeaderCommentStatements(comment).build();
-    Function<Class, TypeNode> typeMakerFn =
+    Function<Class<?>, TypeNode> typeMakerFn =
         c -> TypeNode.withReference(ConcreteReference.withClazz(c));
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -351,12 +354,19 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                 "defaultCredentialsProviderBuilder",
                 typeMakerFn.apply(GoogleCredentialsProvider.Builder.class)),
             SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT));
-    javaMethods.add(
-        methodMakerFn.apply(
-            methodStarterFn.apply(
-                getTransportContext().defaultTransportProviderBuilderName(),
-                typeMakerFn.apply(getTransportContext().instantiatingChannelProviderClass())),
-            SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+
+    Iterator<String> providerBuilderNamesIt =
+        getTransportContext().defaultTransportProviderBuilderNames().iterator();
+    Iterator<Class<?>> channelProviderClassesIt =
+        getTransportContext().instantiatingChannelProviderBuilderClasses().iterator();
+    while (providerBuilderNamesIt.hasNext() && channelProviderClassesIt.hasNext()) {
+      javaMethods.add(
+          methodMakerFn.apply(
+              methodStarterFn.apply(
+                  providerBuilderNamesIt.next(),
+                  typeMakerFn.apply(channelProviderClassesIt.next())),
+              SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+    }
 
     javaMethods.add(
         methodStarterFn
@@ -383,23 +393,31 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return javaMethods;
   }
 
-  private static List<MethodDefinition> createBuilderHelperMethods(
-      Service service, TypeStore typeStore) {
+  protected List<MethodDefinition> createNewBuilderMethods(
+      Service service,
+      TypeStore typeStore,
+      String newBuilderMethodName,
+      String createDefaultMethodName) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
-    MethodDefinition newBuilderMethodOne =
+    return ImmutableList.of(
         MethodDefinition.builder()
             .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderType)
-            .setName("newBuilder")
+            .setName(newBuilderMethodName)
             .setReturnExpr(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(builderType)
-                    .setMethodName("createDefault")
+                    .setMethodName(createDefaultMethodName)
                     .setReturnType(builderType)
                     .build())
-            .build();
+            .build());
+  }
+
+  private static List<MethodDefinition> createBuilderHelperMethods(
+      Service service, TypeStore typeStore) {
+    TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
 
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
@@ -439,10 +457,10 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     .build())
             .build();
 
-    return Arrays.asList(newBuilderMethodOne, newBuilderMethodTwo, toBuilderMethod);
+    return Arrays.asList(newBuilderMethodTwo, toBuilderMethod);
   }
 
-  private static ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
+  private ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.createBuilderClassComment(
@@ -466,11 +484,12 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .build();
   }
 
-  private static List<MethodDefinition> createNestedBuilderClassMethods(
+  private List<MethodDefinition> createNestedBuilderClassMethods(
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createNestedBuilderConstructorMethods(service, typeStore));
-    javaMethods.add(createNestedBuilderCreatorMethod(service, typeStore));
+    javaMethods.addAll(
+        createNestedBuilderCreatorMethods(service, typeStore, "newBuilder", "createDefault"));
     javaMethods.add(createNestedBuilderStubSettingsBuilderMethod(service, typeStore));
     javaMethods.add(createNestedBuilderApplyToAllUnaryMethod(service, typeStore));
     javaMethods.addAll(createNestedBuilderSettingsGetterMethods(service, typeStore));
@@ -557,23 +576,28 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     return Arrays.asList(noArgCtor, clientContextCtor, settingsCtor, stubSettingsCtor);
   }
 
-  private static MethodDefinition createNestedBuilderCreatorMethod(
-      Service service, TypeStore typeStore) {
+  protected List<MethodDefinition> createNestedBuilderCreatorMethods(
+      Service service,
+      TypeStore typeStore,
+      String newBuilderMethodName,
+      String createDefaultMethodName) {
     MethodInvocationExpr ctorArg =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
                 typeStore.get(ClassNames.getServiceStubSettingsClassName(service)))
-            .setMethodName("newBuilder")
+            .setMethodName(newBuilderMethodName)
             .build();
 
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
-    return MethodDefinition.builder()
-        .setScope(ScopeNode.PRIVATE)
-        .setIsStatic(true)
-        .setReturnType(builderType)
-        .setName("createDefault")
-        .setReturnExpr(NewObjectExpr.builder().setType(builderType).setArguments(ctorArg).build())
-        .build();
+    return ImmutableList.of(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setReturnType(builderType)
+            .setName(createDefaultMethodName)
+            .setReturnExpr(
+                NewObjectExpr.builder().setType(builderType).setArguments(ctorArg).build())
+            .build());
   }
 
   private static MethodDefinition createNestedBuilderStubSettingsBuilderMethod(
@@ -648,8 +672,6 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         .setReturnType(builderType)
         .setName(javaMethodName)
         .setArguments(Arrays.asList(settingsUpdaterVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(
-            Arrays.asList(TypeNode.withReference(ConcreteReference.withClazz(Exception.class))))
         .setBody(Arrays.asList(ExprStatement.withExpr(applyMethodExpr)))
         .setReturnExpr(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
         .build();
@@ -728,7 +750,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ApiClientHeaderProvider.class,
             ApiFunction.class,
@@ -793,7 +815,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     Preconditions.checkState(
         protoMethod.hasLro(),
         String.format("Cannot get OperationCallSettings on non-LRO method %s", protoMethod.name()));
-    Class callSettingsClazz =
+    Class<?> callSettingsClazz =
         isBuilder ? OperationCallSettings.Builder.class : OperationCallSettings.class;
     return TypeNode.withReference(
         ConcreteReference.builder()
@@ -816,7 +838,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   private static TypeNode getCallSettingsTypeHelper(
       Method protoMethod, TypeStore typeStore, boolean isBuilder) {
-    Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
+    Class<?> callSettingsClazz =
+        isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
     if (protoMethod.isPaged()) {
       callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
     } else if (protoMethod.isBatching()) {

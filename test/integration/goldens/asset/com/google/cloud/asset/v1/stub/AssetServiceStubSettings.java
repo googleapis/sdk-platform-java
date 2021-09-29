@@ -16,6 +16,7 @@
 
 package com.google.cloud.asset.v1.stub;
 
+import static com.google.cloud.asset.v1.AssetServiceClient.ListAssetsPagedResponse;
 import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllIamPoliciesPagedResponse;
 import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllResourcesPagedResponse;
 
@@ -49,6 +50,7 @@ import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyResponse;
+import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
 import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
 import com.google.cloud.asset.v1.CreateFeedRequest;
@@ -58,6 +60,8 @@ import com.google.cloud.asset.v1.ExportAssetsResponse;
 import com.google.cloud.asset.v1.Feed;
 import com.google.cloud.asset.v1.GetFeedRequest;
 import com.google.cloud.asset.v1.IamPolicySearchResult;
+import com.google.cloud.asset.v1.ListAssetsRequest;
+import com.google.cloud.asset.v1.ListAssetsResponse;
 import com.google.cloud.asset.v1.ListFeedsRequest;
 import com.google.cloud.asset.v1.ListFeedsResponse;
 import com.google.cloud.asset.v1.ResourceSearchResult;
@@ -119,6 +123,8 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
   private final OperationCallSettings<
           ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
       exportAssetsOperationSettings;
+  private final PagedCallSettings<ListAssetsRequest, ListAssetsResponse, ListAssetsPagedResponse>
+      listAssetsSettings;
   private final UnaryCallSettings<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistorySettings;
   private final UnaryCallSettings<CreateFeedRequest, Feed> createFeedSettings;
@@ -143,6 +149,42 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           AnalyzeIamPolicyLongrunningResponse,
           AnalyzeIamPolicyLongrunningRequest>
       analyzeIamPolicyLongrunningOperationSettings;
+
+  private static final PagedListDescriptor<ListAssetsRequest, ListAssetsResponse, Asset>
+      LIST_ASSETS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListAssetsRequest, ListAssetsResponse, Asset>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListAssetsRequest injectToken(ListAssetsRequest payload, String token) {
+              return ListAssetsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListAssetsRequest injectPageSize(ListAssetsRequest payload, int pageSize) {
+              return ListAssetsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListAssetsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListAssetsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Asset> extractResources(ListAssetsResponse payload) {
+              return payload.getAssetsList() == null
+                  ? ImmutableList.<Asset>of()
+                  : payload.getAssetsList();
+            }
+          };
 
   private static final PagedListDescriptor<
           SearchAllResourcesRequest, SearchAllResourcesResponse, ResourceSearchResult>
@@ -227,6 +269,23 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           };
 
   private static final PagedListResponseFactory<
+          ListAssetsRequest, ListAssetsResponse, ListAssetsPagedResponse>
+      LIST_ASSETS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListAssetsRequest, ListAssetsResponse, ListAssetsPagedResponse>() {
+            @Override
+            public ApiFuture<ListAssetsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListAssetsRequest, ListAssetsResponse> callable,
+                ListAssetsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListAssetsResponse> futureResponse) {
+              PageContext<ListAssetsRequest, ListAssetsResponse, Asset> pageContext =
+                  PageContext.create(callable, LIST_ASSETS_PAGE_STR_DESC, request, context);
+              return ListAssetsPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
           SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
       SEARCH_ALL_RESOURCES_PAGE_STR_FACT =
           new PagedListResponseFactory<
@@ -283,6 +342,12 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
   public OperationCallSettings<ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
       exportAssetsOperationSettings() {
     return exportAssetsOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listAssets. */
+  public PagedCallSettings<ListAssetsRequest, ListAssetsResponse, ListAssetsPagedResponse>
+      listAssetsSettings() {
+    return listAssetsSettings;
   }
 
   /** Returns the object with the settings used for calls to batchGetAssetsHistory. */
@@ -375,6 +440,11 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     return "cloudasset.googleapis.com:443";
   }
 
+  /** Returns the default mTLS service endpoint. */
+  public static String getDefaultMtlsEndpoint() {
+    return "cloudasset.mtls.googleapis.com:443";
+  }
+
   /** Returns the default service scopes. */
   public static List<String> getDefaultServiceScopes() {
     return DEFAULT_SERVICE_SCOPES;
@@ -382,7 +452,9 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
   /** Returns a builder for the default credentials for this service. */
   public static GoogleCredentialsProvider.Builder defaultCredentialsProviderBuilder() {
-    return GoogleCredentialsProvider.newBuilder().setScopesToApply(DEFAULT_SERVICE_SCOPES);
+    return GoogleCredentialsProvider.newBuilder()
+        .setScopesToApply(DEFAULT_SERVICE_SCOPES)
+        .setUseJwtAccessWithScope(true);
   }
 
   /** Returns a builder for the default ChannelProvider for this service. */
@@ -424,6 +496,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
     exportAssetsSettings = settingsBuilder.exportAssetsSettings().build();
     exportAssetsOperationSettings = settingsBuilder.exportAssetsOperationSettings().build();
+    listAssetsSettings = settingsBuilder.listAssetsSettings().build();
     batchGetAssetsHistorySettings = settingsBuilder.batchGetAssetsHistorySettings().build();
     createFeedSettings = settingsBuilder.createFeedSettings().build();
     getFeedSettings = settingsBuilder.getFeedSettings().build();
@@ -446,6 +519,9 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     private final OperationCallSettings.Builder<
             ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
         exportAssetsOperationSettings;
+    private final PagedCallSettings.Builder<
+            ListAssetsRequest, ListAssetsResponse, ListAssetsPagedResponse>
+        listAssetsSettings;
     private final UnaryCallSettings.Builder<
             BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
         batchGetAssetsHistorySettings;
@@ -486,9 +562,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
                   StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
       definitions.put(
           "retry_policy_2_codes",
-          ImmutableSet.copyOf(
-              Lists.<StatusCode.Code>newArrayList(
-                  StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
+          ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList(StatusCode.Code.UNAVAILABLE)));
       definitions.put(
           "retry_policy_3_codes",
           ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList(StatusCode.Code.UNAVAILABLE)));
@@ -524,10 +598,10 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               .setInitialRetryDelay(Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.3)
               .setMaxRetryDelay(Duration.ofMillis(60000L))
-              .setInitialRpcTimeout(Duration.ofMillis(15000L))
+              .setInitialRpcTimeout(Duration.ofMillis(30000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(15000L))
-              .setTotalTimeout(Duration.ofMillis(15000L))
+              .setMaxRpcTimeout(Duration.ofMillis(30000L))
+              .setTotalTimeout(Duration.ofMillis(30000L))
               .build();
       definitions.put("retry_policy_2_params", settings);
       settings =
@@ -553,6 +627,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
       exportAssetsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       exportAssetsOperationSettings = OperationCallSettings.newBuilder();
+      listAssetsSettings = PagedCallSettings.newBuilder(LIST_ASSETS_PAGE_STR_FACT);
       batchGetAssetsHistorySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       createFeedSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       getFeedSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
@@ -569,6 +644,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               exportAssetsSettings,
+              listAssetsSettings,
               batchGetAssetsHistorySettings,
               createFeedSettings,
               getFeedSettings,
@@ -587,6 +663,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
       exportAssetsSettings = settings.exportAssetsSettings.toBuilder();
       exportAssetsOperationSettings = settings.exportAssetsOperationSettings.toBuilder();
+      listAssetsSettings = settings.listAssetsSettings.toBuilder();
       batchGetAssetsHistorySettings = settings.batchGetAssetsHistorySettings.toBuilder();
       createFeedSettings = settings.createFeedSettings.toBuilder();
       getFeedSettings = settings.getFeedSettings.toBuilder();
@@ -604,6 +681,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               exportAssetsSettings,
+              listAssetsSettings,
               batchGetAssetsHistorySettings,
               createFeedSettings,
               getFeedSettings,
@@ -623,6 +701,8 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);
     }
@@ -632,6 +712,11 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           .exportAssetsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .listAssetsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
 
       builder
           .batchGetAssetsHistorySettings()
@@ -737,14 +822,13 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       return builder;
     }
 
-    // NEXT_MAJOR_VER: remove 'throws Exception'.
     /**
      * Applies the given settings updater function to all of the unary API methods in this service.
      *
      * <p>Note: This method does not support applying settings to streaming methods.
      */
     public Builder applyToAllUnaryMethods(
-        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) throws Exception {
+        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) {
       super.applyToAllUnaryMethods(unaryMethodSettingsBuilders, settingsUpdater);
       return this;
     }
@@ -765,6 +849,12 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
         exportAssetsOperationSettings() {
       return exportAssetsOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listAssets. */
+    public PagedCallSettings.Builder<ListAssetsRequest, ListAssetsResponse, ListAssetsPagedResponse>
+        listAssetsSettings() {
+      return listAssetsSettings;
     }
 
     /** Returns the builder for the settings used for calls to batchGetAssetsHistory. */

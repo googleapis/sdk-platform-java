@@ -44,6 +44,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -102,6 +103,13 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return annotations;
   }
 
+  /**
+   * Construct the type to be implemented by the generated callable factory.
+   *
+   * @param typeStore type store with common types
+   * @return {@code TypeNode} containing the interface to be implemented by the generated callable
+   *     factory class.
+   */
   protected abstract List<TypeNode> createClassImplements(TypeStore typeStore);
 
   protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
@@ -185,6 +193,28 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
       List<Object> transportCallSettingsTemplateObjects,
       String callSettingsVariantName,
       List<Object> callSettingsTemplateObjects) {
+    return createGenericCallableMethod(
+        typeStore,
+        methodTemplateNames,
+        returnCallableKindName,
+        returnCallableTemplateNames,
+        methodVariantName,
+        transportCallSettingsTemplateObjects,
+        callSettingsVariantName,
+        callSettingsTemplateObjects,
+        Collections.emptyList());
+  }
+
+  protected MethodDefinition createGenericCallableMethod(
+      TypeStore typeStore,
+      List<String> methodTemplateNames,
+      String returnCallableKindName,
+      List<String> returnCallableTemplateNames,
+      String methodVariantName,
+      List<Object> transportCallSettingsTemplateObjects,
+      String callSettingsVariantName,
+      List<Object> callSettingsTemplateObjects,
+      List<AnnotationNode> annotations) {
 
     String methodName = String.format("create%sCallable", methodVariantName);
     String callSettingsTypeName = String.format("%sCallSettings", callSettingsVariantName);
@@ -227,7 +257,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
               .setVariable(
                   Variable.builder()
                       .setName("operationsStub")
-                      .setType(getTransportContext().operationsStubType())
+                      .setType(getTransportContext().operationsStubTypes().get(0))
                       .build())
               .setIsDecl(true)
               .build());
@@ -254,11 +284,12 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         .setName(methodName)
         .setArguments(arguments)
         .setReturnExpr(returnExpr)
+        .setAnnotations(annotations)
         .build();
   }
 
   private static TypeStore createTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             // Gax-java classes.
             BatchingCallSettings.class,

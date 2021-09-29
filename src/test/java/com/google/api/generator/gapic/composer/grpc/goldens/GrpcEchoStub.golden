@@ -21,6 +21,7 @@ import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.Object;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -117,6 +118,14 @@ public class GrpcEchoStub extends EchoStub {
           .setResponseMarshaller(ProtoUtils.marshaller(BlockResponse.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<EchoRequest, Object> collideNameMethodDescriptor =
+      MethodDescriptor.<EchoRequest, Object>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.showcase.v1beta1.Echo/CollideName")
+          .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable;
@@ -131,6 +140,7 @@ public class GrpcEchoStub extends EchoStub {
   private final UnaryCallable<WaitRequest, Operation> waitCallable;
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
+  private final UnaryCallable<EchoRequest, Object> collideNameCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -206,6 +216,10 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<BlockRequest, BlockResponse>newBuilder()
             .setMethodDescriptor(blockMethodDescriptor)
             .build();
+    GrpcCallSettings<EchoRequest, Object> collideNameTransportSettings =
+        GrpcCallSettings.<EchoRequest, Object>newBuilder()
+            .setMethodDescriptor(collideNameMethodDescriptor)
+            .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -247,6 +261,9 @@ public class GrpcEchoStub extends EchoStub {
     this.blockCallable =
         callableFactory.createUnaryCallable(
             blockTransportSettings, settings.blockSettings(), clientContext);
+    this.collideNameCallable =
+        callableFactory.createUnaryCallable(
+            collideNameTransportSettings, settings.collideNameSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -318,8 +335,19 @@ public class GrpcEchoStub extends EchoStub {
   }
 
   @Override
+  public UnaryCallable<EchoRequest, Object> collideNameCallable() {
+    return collideNameCallable;
+  }
+
+  @Override
   public final void close() {
-    shutdown();
+    try {
+      backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to close resource", e);
+    }
   }
 
   @Override

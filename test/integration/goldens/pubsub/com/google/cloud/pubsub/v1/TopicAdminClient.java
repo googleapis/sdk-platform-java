@@ -16,7 +16,6 @@
 
 package com.google.cloud.pubsub.v1;
 
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
@@ -31,7 +30,6 @@ import com.google.cloud.pubsub.v1.stub.PublisherStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
-import com.google.iam.v1.ProjectName;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -46,6 +44,7 @@ import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
 import com.google.pubsub.v1.ListTopicSubscriptionsResponse;
 import com.google.pubsub.v1.ListTopicsRequest;
 import com.google.pubsub.v1.ListTopicsResponse;
+import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.PublishRequest;
 import com.google.pubsub.v1.PublishResponse;
 import com.google.pubsub.v1.PubsubMessage;
@@ -1309,14 +1308,7 @@ public class TopicAdminClient implements BackgroundResource {
       ApiFuture<ListTopicsPage> futurePage =
           ListTopicsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
-          futurePage,
-          new ApiFunction<ListTopicsPage, ListTopicsPagedResponse>() {
-            @Override
-            public ListTopicsPagedResponse apply(ListTopicsPage input) {
-              return new ListTopicsPagedResponse(input);
-            }
-          },
-          MoreExecutors.directExecutor());
+          futurePage, input -> new ListTopicsPagedResponse(input), MoreExecutors.directExecutor());
     }
 
     private ListTopicsPagedResponse(ListTopicsPage page) {
@@ -1390,12 +1382,7 @@ public class TopicAdminClient implements BackgroundResource {
           ListTopicSubscriptionsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListTopicSubscriptionsPage, ListTopicSubscriptionsPagedResponse>() {
-            @Override
-            public ListTopicSubscriptionsPagedResponse apply(ListTopicSubscriptionsPage input) {
-              return new ListTopicSubscriptionsPagedResponse(input);
-            }
-          },
+          input -> new ListTopicSubscriptionsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 
@@ -1475,12 +1462,7 @@ public class TopicAdminClient implements BackgroundResource {
           ListTopicSnapshotsPage.createEmptyPage().createPageAsync(context, futureResponse);
       return ApiFutures.transform(
           futurePage,
-          new ApiFunction<ListTopicSnapshotsPage, ListTopicSnapshotsPagedResponse>() {
-            @Override
-            public ListTopicSnapshotsPagedResponse apply(ListTopicSnapshotsPage input) {
-              return new ListTopicSnapshotsPagedResponse(input);
-            }
-          },
+          input -> new ListTopicSnapshotsPagedResponse(input),
           MoreExecutors.directExecutor());
     }
 

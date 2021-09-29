@@ -53,14 +53,13 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.AbstractMessage;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -73,7 +72,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
 
-  protected static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
+  private static final TypeStore FIXED_GRPC_TYPESTORE = createStaticTypes();
 
   private static final TypeNode LIST_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(List.class));
@@ -97,7 +96,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             GaxGrpcProperties.class,
             LocalChannelProvider.class,
@@ -115,7 +114,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     BiFunction<String, TypeNode, VariableExpr> varExprFn =
         (name, type) ->
             VariableExpr.withVariable(Variable.builder().setName(name).setType(type).build());
-    Map<String, TypeNode> fields = new LinkedHashMap<>();
+    // Keep keys sorted in alphabetical order to ensure that the test output is deterministic.
+    Map<String, TypeNode> fields = new TreeMap<>();
     fields.put(
         getMockServiceVarName(service), typeStore.get(ClassNames.getMockServiceClassName(service)));
     for (Service mixinService : context.mixinServices()) {
@@ -132,8 +132,10 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
             Collectors.toMap(
                 Map.Entry::getKey,
                 e -> varExprFn.apply(e.getKey(), e.getValue()),
-                (u, v) -> {throw new IllegalStateException();},
-                LinkedHashMap::new));
+                (u, v) -> {
+                  throw new IllegalStateException();
+                },
+                TreeMap::new));
   }
 
   @Override
@@ -141,7 +143,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Service service,
       GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      TypeStore typeStore) {
+      TypeStore typeStore,
+      String newBuilderMethod) {
     VariableExpr serviceHelperVarExpr = classMemberVarExprs.get(SERVICE_HELPER_VAR_NAME);
     Function<Service, VariableExpr> serviceToVarExprFn =
         s -> classMemberVarExprs.get(getMockServiceVarName(s));
@@ -157,7 +160,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     List<Expr> mockServiceVarExprs = new ArrayList<>();
     varInitExprs.add(serviceToVarInitExprFn.apply(service));
     mockServiceVarExprs.add(serviceToVarExprFn.apply(service));
-    for (Service mixinService : context.mixinServices()) {
+    // Careful: Java 8 and 11 make different ordering choices if this set is not explicitly sorted.
+    // Context: https://github.com/googleapis/gapic-generator-java/pull/750
+    for (Service mixinService :
+        context.mixinServices().stream()
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toList())) {
       varInitExprs.add(serviceToVarInitExprFn.apply(mixinService));
       mockServiceVarExprs.add(serviceToVarExprFn.apply(mixinService));
     }
@@ -1036,12 +1044,19 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                 tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
-            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
-            .setCatchBody(createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, true))
+            .addCatch(
+                catchExceptionVarExpr.toBuilder().setIsDecl(true).build(),
+                createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, true))
             .build();
 
     statements.add(tryCatchBlock);
     return statements;
+  }
+
+  @Override
+  protected Expr createDefaultValue(
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
+    return DefaultValueComposer.createDefaultValue(methodArg, resourceNames, false);
   }
 
   @Override

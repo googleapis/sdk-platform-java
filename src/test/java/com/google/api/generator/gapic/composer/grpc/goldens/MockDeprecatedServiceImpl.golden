@@ -15,7 +15,7 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 public class MockDeprecatedServiceImpl extends DeprecatedServiceImplBase {
   private List<AbstractMessage> requests;
-  private Queue<Object> responses;
+  private Queue<java.lang.Object> responses;
 
   public MockDeprecatedServiceImpl() {
     requests = new ArrayList<>();
@@ -31,7 +31,7 @@ public class MockDeprecatedServiceImpl extends DeprecatedServiceImplBase {
   }
 
   public void setResponses(List<AbstractMessage> responses) {
-    this.responses = new LinkedList<Object>(responses);
+    this.responses = new LinkedList<java.lang.Object>(responses);
   }
 
   public void addException(Exception exception) {
@@ -45,7 +45,7 @@ public class MockDeprecatedServiceImpl extends DeprecatedServiceImplBase {
 
   @Override
   public void fastFibonacci(FibonacciRequest request, StreamObserver<Empty> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof Empty) {
       requests.add(request);
       responseObserver.onNext(((Empty) response));
@@ -65,7 +65,7 @@ public class MockDeprecatedServiceImpl extends DeprecatedServiceImplBase {
 
   @Override
   public void slowFibonacci(FibonacciRequest request, StreamObserver<Empty> responseObserver) {
-    Object response = responses.poll();
+    java.lang.Object response = responses.poll();
     if (response instanceof Empty) {
       requests.add(request);
       responseObserver.onNext(((Empty) response));

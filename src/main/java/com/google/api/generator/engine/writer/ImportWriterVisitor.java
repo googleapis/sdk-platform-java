@@ -74,7 +74,6 @@ import javax.annotation.Nullable;
 
 public class ImportWriterVisitor implements AstNodeVisitor {
   private static final String DOT = ".";
-  private static final String NEWLINE = "\n";
   private static final String PKG_JAVA_LANG = "java.lang";
 
   private final Set<String> staticImports = new TreeSet<>();
@@ -94,7 +93,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   public void initialize(@Nonnull String currentPackage) {
     this.currentPackage = currentPackage;
-    this.currentClassName = null;
+    currentClassName = null;
   }
 
   public void initialize(@Nonnull String currentPackage, @Nonnull String currentClassName) {
@@ -231,8 +230,18 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ThrowExpr throwExpr) {
     throwExpr.type().accept(this);
+    // If throwExpr is present, then messageExpr and causeExpr will not be present. Relies on AST
+    // build-time checks.
+    if (throwExpr.throwExpr() != null) {
+      throwExpr.throwExpr().accept(this);
+      return;
+    }
+
     if (throwExpr.messageExpr() != null) {
       throwExpr.messageExpr().accept(this);
+    }
+    if (throwExpr.causeExpr() != null) {
+      throwExpr.causeExpr().accept(this);
     }
   }
 
@@ -352,11 +361,13 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     statements(tryCatchStatement.tryBody());
 
     Preconditions.checkState(
-        !tryCatchStatement.isSampleCode() && tryCatchStatement.catchVariableExpr() != null,
+        !tryCatchStatement.isSampleCode() && !tryCatchStatement.catchVariableExprs().isEmpty(),
         "Import generation should not be invoked on sample code, but was found when visiting a"
             + " try-catch block");
-    tryCatchStatement.catchVariableExpr().accept(this);
-    statements(tryCatchStatement.catchBody());
+    for (int i = 0; i < tryCatchStatement.catchVariableExprs().size(); i++) {
+      tryCatchStatement.catchVariableExprs().get(i).accept(this);
+      statements(tryCatchStatement.catchBlocks().get(i));
+    }
   }
 
   @Override

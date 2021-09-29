@@ -45,6 +45,7 @@ public class GrpcServiceCallableFactoryClassComposer
     return Arrays.asList(getTransportContext().stubCallableFactoryType());
   }
 
+  @Override
   protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
     List<MethodDefinition> classMethods = new ArrayList<>(super.createClassMethods(typeStore));
     classMethods.addAll(
@@ -55,6 +56,7 @@ public class GrpcServiceCallableFactoryClassComposer
     return classMethods;
   }
 
+  @Override
   protected MethodDefinition createUnaryCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Unary";
     String requestTemplateName = "RequestT";
@@ -75,6 +77,7 @@ public class GrpcServiceCallableFactoryClassComposer
             .collect(Collectors.toList()));
   }
 
+  @Override
   protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Paged";
     String requestTemplateName = "RequestT";

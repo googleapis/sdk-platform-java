@@ -15,8 +15,8 @@
 package com.google.api.generator.gapic.composer.common;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.generator.engine.ast.BlockStatement;
@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.grpc.GrpcContext;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
@@ -41,7 +42,6 @@ import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -141,7 +141,6 @@ public class RetrySettingsComposerTest {
   @Test
   public void codesDefinitionsBlock_noConfigsFound() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -178,7 +177,6 @@ public class RetrySettingsComposerTest {
   @Test
   public void codesDefinitionsBlock_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -218,7 +216,6 @@ public class RetrySettingsComposerTest {
   @Test
   public void simpleBuilderExpr_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -300,7 +297,6 @@ public class RetrySettingsComposerTest {
   @Test
   public void lroBuilderExpr() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -329,7 +325,9 @@ public class RetrySettingsComposerTest {
             waitMethod,
             builderVarExpr,
             RETRY_CODES_DEFINITIONS_VAR_EXPR,
-            RETRY_PARAM_DEFINITIONS_VAR_EXPR);
+            RETRY_PARAM_DEFINITIONS_VAR_EXPR,
+            GrpcContext.instance().operationResponseTransformerType(),
+            GrpcContext.instance().operationMetadataTransformerType());
     builderExpr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(

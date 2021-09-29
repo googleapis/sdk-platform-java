@@ -4,6 +4,13 @@ filegroup(
     name = "gapic_files",
     srcs = [
         "//src/test/java/com/google/api/generator/gapic/composer:composer_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/defaultvalue:defaultvalue_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/grpc:grpc_files",
+        #        "//src/test/java/com/google/api/generator/gapic/composer/grpcrest:grpcrest_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/resourcename:resourcename_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/rest:rest_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/samplecode:samplecode_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/utils:utils_files",
         "//src/test/java/com/google/api/generator/gapic/model:model_files",
         "//src/test/java/com/google/api/generator/gapic/protoparser:protoparser_files",
         "//src/test/java/com/google/api/generator/gapic/utils:utils_files",
