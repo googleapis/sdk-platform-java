@@ -75,47 +75,6 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   }
 
   @Override
-  protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
-    TypeNode returnType =
-        TypeNode.withReference(
-            ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
-    MethodInvocationExpr credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_TYPESTORE.get("GoogleCredentialsProvider"))
-            .setMethodName("newBuilder")
-            .build();
-    credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credsProviderBuilderExpr)
-            .setMethodName("setScopesToApply")
-            .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
-            .setReturnType(returnType)
-            .build();
-
-    // This section is specific to GAPIC clients. It sets UseJwtAccessWithScope value to true to
-    // enable self signed JWT feature.
-    credsProviderBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credsProviderBuilderExpr)
-            .setMethodName("setUseJwtAccessWithScope")
-            .setArguments(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
-            .setReturnType(returnType)
-            .build();
-
-    return MethodDefinition.builder()
-        .setHeaderCommentStatements(
-            SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
-        .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
-        .setReturnType(returnType)
-        .setName("defaultCredentialsProviderBuilder")
-        .setReturnExpr(credsProviderBuilderExpr)
-        .build();
-  }
-
-  @Override
   protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
     return Collections.singletonList(
