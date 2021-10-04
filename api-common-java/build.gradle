@@ -100,7 +100,7 @@ project.gradle.taskGraph.whenReady {
   println project.gradle.taskGraph.getAllTasks()
 }
 task sourcesJar(type: Jar, dependsOn: classes) {
-  classifier = 'sources'
+  archiveClassifier = 'sources'
   from sourceSets.main.allSource
 }
 
@@ -108,7 +108,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 // -------
 
 task javadocJar(type: Jar) {
-  classifier = 'javadoc'
+  archiveClassifier = 'javadoc'
   from javadoc
 }
 
@@ -121,7 +121,7 @@ javadoc.options {
 // -------
 
 task javadocJarV3(type: Jar) {
-  classifier = 'javadoc'
+  archiveClassifier = 'javadoc'
   from javadoc
 }
 
@@ -215,7 +215,7 @@ artifacts {
 }
 
 signing {
-  required { gradle.taskGraph.hasTask("publishToSonatype") }
+  required { gradle.taskGraph.hasTask("uploadArchives") }
   if (project.hasProperty('signing.gnupg.executable')) {
     useGpgCmd()
   }
@@ -237,7 +237,7 @@ if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
 afterEvaluate {
   publishing {
     publications {
-      mavenJava(MavenPublication) {
+      release(MavenPublication) {
         version = project.version
 
         from components.java
@@ -293,7 +293,7 @@ afterEvaluate {
       if (project.hasProperty('signing.gnupg.executable')) {
         useGpgCmd()
       }
-      sign publishing.publications.mavenJava
+      sign publishing.publications
     }
   }
 }
@@ -402,7 +402,7 @@ task createApiDocsRedirect {
 }
 
 task publishDocs {
-  dependsOn 'closeAndReleaseRepository'
+  dependsOn 'publishToSonatype'
   doLast {
     exec {
       workingDir './tmp_gh-pages'
@@ -425,9 +425,7 @@ task stageRelease {
   dependsOn 'createApiDocsRedirect'
   doLast {
     exec {
-      // We need to spawn a new gradle build process in order to upload appropriately
-      // More details: http://stackoverflow.com/questions/31614735/gradle-uploadarchives-artificats-namespace-when-depending-on-a-plugin
-      commandLine './gradlew', 'publishToSonatype', 'closeAndReleaseSonatypeStagingRepository'
+      commandLine './gradlew', 'uploadArchives'
     }
   }
 }
