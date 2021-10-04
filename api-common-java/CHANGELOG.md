@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://www.github.com/googleapis/api-common-java/compare/v2.0.4...v2.1.0) (2021-10-04)
+
+
+### Features
+
+* use gadle-publish plugin ([#284](https://www.github.com/googleapis/api-common-java/issues/284)) ([d489502](https://www.github.com/googleapis/api-common-java/commit/d489502e6020e7ac6af56bed3c2c9f299cf7fe07))
+
 ### [2.0.4](https://www.github.com/googleapis/api-common-java/compare/v2.0.3...v2.0.4) (2021-09-27)
 
 
