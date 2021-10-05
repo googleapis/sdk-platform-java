@@ -1,8 +1,6 @@
 # Changelog
 
-### Dependencies
-
-### [2.0.3](https://www.github.com/googleapis/api-common-java/compare/v2.0.2...v2.0.3) (2021-08-30)
+### [2.0.3](https://www.github.com/googleapis/api-common-java/compare/v2.0.2...v2.0.3) (2021-10-05)
 
 
 ### Dependencies
