@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.1](https://www.github.com/googleapis/api-common-java/compare/v2.1.0...v2.1.1) (2021-10-05)
+
+
+### Dependencies
+
+* fix publishing script ([#287](https://www.github.com/googleapis/api-common-java/issues/287)) ([39be94a](https://www.github.com/googleapis/api-common-java/commit/39be94af0331318004fab25b071edcd1d96b9753))
+
 ## [2.1.0](https://www.github.com/googleapis/api-common-java/compare/v2.0.4...v2.1.0) (2021-10-04)
 
 
