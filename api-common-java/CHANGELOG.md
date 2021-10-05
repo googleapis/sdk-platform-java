@@ -1,25 +1,6 @@
 # Changelog
 
-### [2.1.1](https://www.github.com/googleapis/api-common-java/compare/v2.1.0...v2.1.1) (2021-10-05)
-
-
 ### Dependencies
-
-* fix publishing script ([#287](https://www.github.com/googleapis/api-common-java/issues/287)) ([39be94a](https://www.github.com/googleapis/api-common-java/commit/39be94af0331318004fab25b071edcd1d96b9753))
-
-## [2.1.0](https://www.github.com/googleapis/api-common-java/compare/v2.0.4...v2.1.0) (2021-10-04)
-
-
-### Features
-
-* use gadle-publish plugin ([#284](https://www.github.com/googleapis/api-common-java/issues/284)) ([d489502](https://www.github.com/googleapis/api-common-java/commit/d489502e6020e7ac6af56bed3c2c9f299cf7fe07))
-
-### [2.0.4](https://www.github.com/googleapis/api-common-java/compare/v2.0.3...v2.0.4) (2021-09-27)
-
-
-### Dependencies
-
-* update dependency com.google.guava:guava to v31 ([#277](https://www.github.com/googleapis/api-common-java/issues/277)) ([c2457e8](https://www.github.com/googleapis/api-common-java/commit/c2457e84ae7c3b5da1498c4394049f39d9fb95c3))
 
 ### [2.0.3](https://www.github.com/googleapis/api-common-java/compare/v2.0.2...v2.0.3) (2021-08-30)
 
@@ -27,6 +8,8 @@
 ### Dependencies
 
 * update gradle-nexus-publish-plugin ([#269](https://www.github.com/googleapis/api-common-java/issues/269)) ([7776834](https://www.github.com/googleapis/api-common-java/commit/7776834dd69d3f5556f852b8cb57e5fe6628ce5f))
+
+* update dependency com.google.guava:guava to v31 ([#277](https://www.github.com/googleapis/api-common-java/issues/277)) ([c2457e8](https://www.github.com/googleapis/api-common-java/commit/c2457e84ae7c3b5da1498c4394049f39d9fb95c3))
 
 ### [2.0.2](https://www.github.com/googleapis/api-common-java/compare/v2.0.1...v2.0.2) (2021-08-20)
 
