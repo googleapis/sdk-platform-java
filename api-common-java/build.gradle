@@ -237,7 +237,7 @@ if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
 afterEvaluate {
   publishing {
     publications {
-      release(MavenPublication) {
+      mavenJava(MavenPublication) {
         version = project.version
 
         from components.java
@@ -402,7 +402,7 @@ task createApiDocsRedirect {
 }
 
 task publishDocs {
-  dependsOn 'publishToSonatype'
+  dependsOn 'publishReleasePublicationToSonatypeRepository'
   doLast {
     exec {
       workingDir './tmp_gh-pages'
