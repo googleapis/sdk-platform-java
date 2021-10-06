@@ -18,7 +18,9 @@ public interface OperationExpr extends Expr {
 
   OperatorKind operatorKind();
 
+  @Override
   TypeNode type();
 
+  @Override
   void accept(AstNodeVisitor visitor);
 }

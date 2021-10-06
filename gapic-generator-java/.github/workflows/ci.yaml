@@ -1,14 +1,14 @@
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 name: ci
 jobs:
   build:
     runs-on: ubuntu-latest
     container: gcr.io/gapic-images/googleapis-bazel:20210105
-    # Dockerfile for this image: https://github.com/googleapis/googleapis-discovery/blob/master/Dockerfile
+    # Dockerfile for this image: https://github.com/googleapis/googleapis-discovery/blob/main/Dockerfile
     # If you update its version, please also update it below in
     # 'Cache Bazel files' - unfortunately it cannot accept variables at this
     # time.

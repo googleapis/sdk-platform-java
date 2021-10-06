@@ -14,7 +14,7 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -32,7 +32,6 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,7 +54,6 @@ public class ServiceClientSampleCodeComposerTest {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(

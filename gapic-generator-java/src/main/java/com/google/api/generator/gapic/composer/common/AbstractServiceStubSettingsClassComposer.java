@@ -1278,7 +1278,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service, @Nullable GapicServiceConfig serviceConfig, TypeStore typeStore) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
     String thisClassName = ClassNames.getServiceStubSettingsClassName(service);
-    TypeNode outerThisClassType = typeStore.get(thisClassName);
 
     String className = "Builder";
 
@@ -1982,7 +1981,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ApiCallContext.class,
             ApiClientHeaderProvider.class,
@@ -2140,7 +2139,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       TypeStore typeStore,
       boolean isBatchingSettings,
       final boolean isSettingsBuilder) {
-    Function<Class, TypeNode> typeMakerFn =
+    Function<Class<?>, TypeNode> typeMakerFn =
         clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
     TypeNode callSettingsType =
