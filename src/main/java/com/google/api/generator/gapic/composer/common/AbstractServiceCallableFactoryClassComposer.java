@@ -306,7 +306,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
 
 
   private TypeStore createTypes(Service service) {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             // Gax-java classes.
             BatchingCallSettings.class,

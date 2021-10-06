@@ -106,7 +106,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             BackgroundResource.class,
             BackgroundResourceAggregation.class,

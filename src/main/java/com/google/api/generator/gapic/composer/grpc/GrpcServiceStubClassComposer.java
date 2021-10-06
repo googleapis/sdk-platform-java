@@ -73,7 +73,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             GrpcCallSettings.class,
             GrpcOperationsStub.class,
@@ -258,9 +258,6 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     VariableExpr paramsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("params").setType(paramsVarType).build());
-    VariableExpr reqeustVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("request").setType(method.inputType()).build());
 
     Expr paramsAssignExpr =
         AssignmentExpr.builder()

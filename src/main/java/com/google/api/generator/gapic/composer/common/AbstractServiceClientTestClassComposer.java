@@ -20,13 +20,8 @@ import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
-import com.google.api.gax.rpc.OperationCallSettings;
-import com.google.api.gax.rpc.PagedCallSettings;
-import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.api.gax.rpc.StreamingCallSettings;
-import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -851,7 +846,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
    */
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractMessage.class,
             After.class,
@@ -959,7 +954,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         !protoMethod.stream().equals(Method.Stream.NONE),
         "No callable type exists for non-streaming methods.");
 
-    Class callableClazz = ClientStreamingCallable.class;
+    Class<?> callableClazz = ClientStreamingCallable.class;
     switch (protoMethod.stream()) {
       case BIDI:
         callableClazz = BidiStreamingCallable.class;

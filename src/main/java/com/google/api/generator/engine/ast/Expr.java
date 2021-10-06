@@ -17,5 +17,6 @@ package com.google.api.generator.engine.ast;
 public interface Expr extends AstNode {
   TypeNode type();
 
+  @Override
   void accept(AstNodeVisitor visitor);
 }

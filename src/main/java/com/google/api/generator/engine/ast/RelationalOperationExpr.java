@@ -23,6 +23,7 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
   public abstract Expr rhsExpr();
 
+  @Override
   public abstract OperatorKind operatorKind();
 
   @Override

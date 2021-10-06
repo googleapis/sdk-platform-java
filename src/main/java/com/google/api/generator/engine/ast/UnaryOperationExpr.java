@@ -22,10 +22,13 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
   public abstract Expr expr();
 
+  @Override
   public abstract OperatorKind operatorKind();
 
+  @Override
   public abstract TypeNode type();
 
+  @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
   }

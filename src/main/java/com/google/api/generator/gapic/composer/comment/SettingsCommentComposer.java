@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class SettingsCommentComposer {
   private static final String COLON = ":";
 
-  private static final String STUB_PATTERN = "%sStub";
   private static final String BUILDER_CLASS_DOC_PATTERN = "Builder for %s.";
   private static final String CALL_SETTINGS_METHOD_DOC_PATTERN =
       "Returns the object with the settings used for calls to %s.";

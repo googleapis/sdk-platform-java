@@ -15,10 +15,10 @@
 package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
@@ -224,15 +224,6 @@ public class ParserTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
 
-    List<Method> methods =
-        Parser.parseMethods(
-            echoService,
-            ECHO_PACKAGE,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames,
-            Transport.GRPC);
     assertThat(
             MethodSignatureParser.parseMethodSignatures(
                 methodDescriptor,
@@ -254,15 +245,6 @@ public class ParserTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
 
-    List<Method> methods =
-        Parser.parseMethods(
-            echoService,
-            ECHO_PACKAGE,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames,
-            Transport.GRPC);
     List<List<MethodArgument>> methodArgs =
         MethodSignatureParser.parseMethodSignatures(
             methodDescriptor,

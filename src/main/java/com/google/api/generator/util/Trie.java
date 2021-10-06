@@ -24,17 +24,17 @@ import java.util.function.Function;
  * A common-prefix trie. T represents the type of each "char" in a word (which is a T-typed list).
  */
 public class Trie<T> {
-  private class Node<T> {
-    final T chr;
+  private class Node<U> {
+    final U chr;
     // Maintain insertion order to enable deterministic test output.
-    Map<T, Node<T>> children = new LinkedHashMap<>();
+    Map<U, Node<U>> children = new LinkedHashMap<>();
     boolean isLeaf;
 
     Node() {
       chr = null;
     }
 
-    Node(T chr) {
+    Node(U chr) {
       this.chr = chr;
     }
   }
@@ -42,18 +42,18 @@ public class Trie<T> {
   private Node<T> root;
 
   public Trie() {
-    root = new Node();
+    root = new Node<>();
   }
 
   public void insert(List<T> word) {
     Map<T, Node<T>> children = root.children;
     for (int i = 0; i < word.size(); i++) {
       T chr = word.get(i);
-      Node t;
+      Node<T> t;
       if (children.containsKey(chr)) {
         t = children.get(chr);
       } else {
-        t = new Node(chr);
+        t = new Node<>(chr);
         children.put(chr, t);
       }
       children = t.children;
@@ -65,7 +65,7 @@ public class Trie<T> {
 
   /** Returns true if the word is in the trie. */
   public boolean search(List<T> word) {
-    Node node = searchNode(word);
+    Node<T> node = searchNode(word);
     return node != null && node.isLeaf;
   }
 
@@ -119,11 +119,10 @@ public class Trie<T> {
     return parentPostprocFn.apply(node.chr, baseValue, leafReducedValue);
   }
 
-  private Node searchNode(List<T> word) {
+  private Node<T> searchNode(List<T> word) {
     Map<T, Node<T>> children = root.children;
-    Node t = null;
-    for (int i = 0; i < word.size(); i++) {
-      T chr = word.get(i);
+    Node<T> t = null;
+    for (T chr : word) {
       if (children.containsKey(chr)) {
         t = children.get(chr);
         children = t.children;
