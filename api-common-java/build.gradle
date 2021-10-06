@@ -404,7 +404,7 @@ task createApiDocsRedirect {
 }
 
 task publishDocs {
-  dependsOn 'publishReleasePublicationToSonatypeRepository'
+  dependsOn 'closeAndReleaseSonatypeStagingRepository'
   doLast {
     exec {
       workingDir './tmp_gh-pages'
