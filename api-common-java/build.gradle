@@ -26,7 +26,7 @@ apply plugin: 'io.github.gradle-nexus.publish-plugin'
 group = "com.google.api"
 archivesBaseName = "api-common"
 
-project.version = "2.0.4-SNAPSHOT" // {x-version-update:api-common:current}
+project.version = "2.0.3-SNAPSHOT" // {x-version-update:api-common:current}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -227,8 +227,8 @@ if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
     packageGroup = "com.google.api"
     repositories {
       sonatype {   //or custom repository name
-        nexusUrl.set(uri("https://google.oss.sonatype.org/service/local/staging/deploy/maven2/"))
-        snapshotRepositoryUrl.set(uri("https://google.oss.sonatype.org/content/repositories/snapshots/"))
+        nexusUrl.set(uri('https://google.oss.sonatype.org/service/local/'))
+        snapshotRepositoryUrl.set(uri('https://google.oss.sonatype.org/content/repositories/snapshots/'))
         username = ossrhUsername
         password = ossrhPassword
       }
