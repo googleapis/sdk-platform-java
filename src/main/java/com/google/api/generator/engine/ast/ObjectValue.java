@@ -15,7 +15,9 @@
 package com.google.api.generator.engine.ast;
 
 public interface ObjectValue extends Value {
+  @Override
   TypeNode type();
 
+  @Override
   String value();
 }

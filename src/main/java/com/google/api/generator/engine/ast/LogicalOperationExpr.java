@@ -24,6 +24,7 @@ public abstract class LogicalOperationExpr implements OperationExpr {
 
   public abstract Expr rhsExpr();
 
+  @Override
   public abstract OperatorKind operatorKind();
 
   @Override

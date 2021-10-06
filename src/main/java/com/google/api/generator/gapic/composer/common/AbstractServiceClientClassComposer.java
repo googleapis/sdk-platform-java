@@ -108,9 +108,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
 
-  private static final TypeNode OBJECTS_TYPE =
-      TypeNode.withReference(ConcreteReference.withClazz(Objects.class));
-
   private enum CallableMethodKind {
     REGULAR,
     LRO,
@@ -363,7 +360,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     TypeNode exceptionType = typeStore.get("IOException");
 
-    TypeNode settingsType = typeStore.get(settingsName);
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(typeStore.get(settingsName)).build());
@@ -658,7 +654,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                           lro.responseType().reference(), lro.metadataType().reference())));
     }
 
-    String methodInputTypeName = methodInputType.reference().name();
     for (List<MethodArgument> signature : method.methodSignatures()) {
       // Get the argument list.
       List<VariableExpr> arguments =
@@ -1207,12 +1202,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     VariableExpr inputVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("input").setType(methodPageType).build());
-    TypeNode anonClassType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ApiFunction.class)
-                .setGenerics(Arrays.asList(methodPageType.reference(), thisClassType.reference()))
-                .build());
 
     // Overrides ApiFunction.apply.
     // (https://github.com/googleapis/api-common-java/blob/debf25960dea0367b0d3b5e16d57d76c1d01947e/src/main/java/com/google/api/core/ApiFunction.java).
@@ -1573,7 +1562,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         rootFields.add(rootField);
       }
       Trie<Field> updatedTrie =
-          rootFieldToTrie.containsKey(rootField) ? rootFieldToTrie.get(rootField) : new Trie();
+          rootFieldToTrie.containsKey(rootField) ? rootFieldToTrie.get(rootField) : new Trie<>();
       List<Field> nestedFieldsWithChild = new ArrayList<>(arg.nestedFields());
       nestedFieldsWithChild.add(arg.field());
       updatedTrie.insert(nestedFieldsWithChild);
@@ -1672,7 +1661,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   }
 
   private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             AbstractPagedListResponse.class,
             ApiFunction.class,
@@ -1771,15 +1760,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
-  }
-
-  private static void updateGapicMetadata(
-      GapicContext context, String protoPackage, String javaPackage) {
-    context.updateGapicMetadata(
-        context.gapicMetadata().toBuilder()
-            .setProtoPackage(protoPackage)
-            .setLibraryPackage(javaPackage)
-            .build());
   }
 
   private static void updateGapicMetadata(

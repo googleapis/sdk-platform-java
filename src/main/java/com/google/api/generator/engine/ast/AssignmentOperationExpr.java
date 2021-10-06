@@ -23,6 +23,7 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
 
   public abstract Expr valueExpr();
 
+  @Override
   public abstract OperatorKind operatorKind();
 
   @Override

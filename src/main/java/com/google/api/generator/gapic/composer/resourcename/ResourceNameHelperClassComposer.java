@@ -1192,7 +1192,6 @@ public class ResourceNameHelperClassComposer {
             .build();
 
     // Outer if-block.
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
     IfStatement outerIfStatement =
         IfStatement.builder()
             .setConditionExpr(fieldValuesMapNullCheckExpr)
@@ -1247,8 +1246,7 @@ public class ResourceNameHelperClassComposer {
 
       List<Expr> instantiateArgExprs = new ArrayList<>();
       List<String> tokens = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList());
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
+      for (String token : tokens) {
         Preconditions.checkNotNull(
             patternTokenVarExprs.get(token),
             String.format(
@@ -1572,7 +1570,6 @@ public class ResourceNameHelperClassComposer {
     for (int i = 0; i < tokens.size(); i++) {
       String token = tokens.get(i);
       String upperCamelTokenName = JavaStyle.toUpperCamelCase(token);
-      String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
       VariableExpr currClassTokenVarExpr = classMemberVarExprs.get(i);
 
       // Getter.
@@ -1647,11 +1644,9 @@ public class ResourceNameHelperClassComposer {
                 .build());
       }
 
-      for (int i = 0; i < tokens.size(); i++) {
-        String token = tokens.get(i);
-        String lowerCamelTokenName = JavaStyle.toLowerCamelCase(token);
+      for (VariableExpr memberVarExpr : classMemberVarExprs) {
         VariableExpr currClassTokenVarExpr =
-            classMemberVarExprs.get(i).toBuilder().setExprReferenceExpr(thisExpr).build();
+            memberVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build();
         builderCtorBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(currClassTokenVarExpr)
@@ -1713,7 +1708,7 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
             BetaApi.class,

@@ -51,7 +51,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             GaxGrpcProperties.class,
             GrpcTransportChannel.class,

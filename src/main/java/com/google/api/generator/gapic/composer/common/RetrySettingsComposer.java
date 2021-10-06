@@ -711,7 +711,7 @@ public class RetrySettingsComposer {
   }
 
   private static TypeStore createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             BatchingSettings.class,
             org.threeten.bp.Duration.class,
