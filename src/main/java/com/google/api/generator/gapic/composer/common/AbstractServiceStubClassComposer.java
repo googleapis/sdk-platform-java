@@ -253,7 +253,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             BackgroundResource.class,
             BetaApi.class,

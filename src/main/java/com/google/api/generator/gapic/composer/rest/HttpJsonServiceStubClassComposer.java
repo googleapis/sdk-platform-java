@@ -119,11 +119,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   @Override
-  protected boolean generateOperationsStubLogic(Service service) {
-    return service.hasLroMethods();
-  }
-
-  @Override
   protected Statement createMethodDescriptorVariableDecl(
       Service service,
       Method protoMethod,
