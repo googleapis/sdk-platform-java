@@ -215,6 +215,16 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
             .setReturnType(returnType)
             .build();
+    // enable self signed JWT.
+    credsProviderBuilderExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(credsProviderBuilderExpr)
+                    .setMethodName("setUseJwtAccessWithScope")
+                    .setArguments(
+                            ValueExpr.withValue(
+                                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
+                    .setReturnType(returnType)
+                    .build();
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
