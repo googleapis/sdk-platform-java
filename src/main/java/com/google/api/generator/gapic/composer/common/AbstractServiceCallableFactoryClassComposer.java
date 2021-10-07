@@ -78,7 +78,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
                 commentComposer.createTransportServiceCallableFactoryClassHeaderComments(
                     service.name(), service.isDeprecated()))
             .setAnnotations(createClassAnnotations(service, typeStore))
-            .setImplementsTypes(createClassImplements(typeStore, service))
+            .setImplementsTypes(createClassImplements(service, typeStore))
             .setName(className)
             .setMethods(createClassMethods(service, typeStore))
             .setScope(ScopeNode.PUBLIC)
@@ -111,7 +111,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
    * @return {@code TypeNode} containing the interface to be implemented by the generated callable
    *     factory class.
    */
-  protected abstract List<TypeNode> createClassImplements(TypeStore typeStore, Service service);
+  protected abstract List<TypeNode> createClassImplements(Service service, TypeStore typeStore);
 
   protected List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
     return Arrays.asList(
@@ -297,11 +297,11 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
   }
 
   protected TypeNode getOperationsStubType(Service service) {
-    TypeNode opeationsStubType = service.operationServiceStubType();
-    if (opeationsStubType == null) {
-      opeationsStubType = getTransportContext().operationsStubTypes().get(0);
+    TypeNode operationsStubType = service.operationServiceStubType();
+    if (operationsStubType == null) {
+      operationsStubType = getTransportContext().operationsStubTypes().get(0);
     }
-    return opeationsStubType;
+    return operationsStubType;
   }
 
 

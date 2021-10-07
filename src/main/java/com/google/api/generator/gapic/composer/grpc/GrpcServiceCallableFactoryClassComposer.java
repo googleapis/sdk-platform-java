@@ -42,7 +42,7 @@ public class GrpcServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected List<TypeNode> createClassImplements(TypeStore typeStore, Service service) {
+  protected List<TypeNode> createClassImplements(Service service, TypeStore typeStore) {
     return Arrays.asList(getTransportContext().stubCallableFactoryType());
   }
 

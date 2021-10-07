@@ -76,6 +76,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
+import javax.annotation.Nullable;
 
 public abstract class AbstractTransportServiceStubClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
@@ -152,13 +153,13 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                 .build()));
     if (generateOperationsStubLogic(service)) {
       // Transport-specific service stub may have only one element of the following, thus get(0).
-      TypeNode opeationsStubType = getTransportOperationsStubType(service);
+      TypeNode operationsStubType = getTransportOperationsStubType(service);
       classMemberVarExprs.put(
           getTransportContext().transportOperationsStubNames().get(0),
           VariableExpr.withVariable(
               Variable.builder()
                   .setName(getTransportContext().transportOperationsStubNames().get(0))
-                  .setType(opeationsStubType)
+                  .setType(operationsStubType)
                   .build()));
     }
 
@@ -741,6 +742,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return ImmutableList.of();
   }
 
+  @Nullable
   protected VariableExpr declareLongRunningClient() {
     return null;
   }
@@ -1001,12 +1003,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private boolean checkOperationPollingMethod(Service service) {
-    for (Method method : service.methods()) {
-      if (method.isOperationPollingMethod()) {
-        return true;
-      }
-    }
-    return false;
+    return service.methods().stream().anyMatch(Method::isOperationPollingMethod);
   }
 
   protected List<MethodDefinition> createLongRunningClientGetters() {
