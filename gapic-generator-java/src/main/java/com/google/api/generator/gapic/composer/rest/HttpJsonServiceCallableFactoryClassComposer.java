@@ -70,7 +70,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected List<TypeNode> createClassImplements(TypeStore typeStore, Service service) {
+  protected List<TypeNode> createClassImplements(Service service, TypeStore typeStore) {
     TypeNode operationsStubType = getOperationsStubType(service);
 
     TypeNode operationType = service.operationType();
@@ -186,12 +186,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
     VariableExpr initialCallableVarExpr =
         VariableExpr.builder()
             .setVariable(
-                Variable.builder()
-                    .setName("initialCallable")
-                    .setType(
-                        initialCallableType) // TypeNode.withReference(ConcreteReference.withClazz(UnaryCallable.class)))
-                    .build())
-            // .setTemplateObjects(Arrays.asList(requestTemplateName, "OperationSnapshot"))
+                Variable.builder().setName("initialCallable").setType(initialCallableType).build())
             .build();
     MethodInvocationExpr getMethodDescriptorExpr =
         MethodInvocationExpr.builder()

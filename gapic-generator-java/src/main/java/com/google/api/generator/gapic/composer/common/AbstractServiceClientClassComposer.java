@@ -752,7 +752,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                   .copyAndSetGenerics(
                       Arrays.asList(
                           lro.responseType().reference(), lro.metadataType().reference())));
-      if (method.hasLro() && method.lro().operationServiceStubType() != null) {
+      if (method.lro().operationServiceStubType() != null) {
         annotations.add(
             AnnotationNode.withTypeAndDescription(
                 typeStore.get("BetaApi"),

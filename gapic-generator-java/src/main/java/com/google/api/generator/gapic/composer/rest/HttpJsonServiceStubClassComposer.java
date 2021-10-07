@@ -985,12 +985,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       VariableExpr operationsStubClassVarExpr,
       VariableExpr clientContextVarExpr,
       VariableExpr callableFactoryVarExpr) {
-    TypeNode opeationsStubType = getTransportOperationsStubType(service);
+    TypeNode operationsStubType = getTransportOperationsStubType(service);
     String standardOpStub = HttpJsonOperationsStub.class.getName();
 
     List<Expr> arguments =
         new ArrayList<>(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr));
-    if (standardOpStub.equals(opeationsStubType.reference().fullName())) {
+    if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
 
@@ -1000,7 +1000,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(opeationsStubType)
+                    .setStaticReferenceType(operationsStubType)
                     .setMethodName("create")
                     .setArguments(arguments)
                     .setReturnType(operationsStubClassVarExpr.type())
