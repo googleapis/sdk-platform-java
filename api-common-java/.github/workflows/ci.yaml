@@ -22,7 +22,7 @@ jobs:
     - name: Gradle Test
       run: ./gradlew test
     - name: Gradle Build
-      run: ./gradlew build
+      run: ./gradlew build install
   format:
     runs-on: ubuntu-latest
     steps:
