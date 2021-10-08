@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.5](https://www.github.com/googleapis/api-common-java/compare/v2.0.4...v2.0.5) (2021-10-08)
+
+
+### Dependencies
+
+* add maven plugin to enable install ([#304](https://www.github.com/googleapis/api-common-java/issues/304)) ([ea0b777](https://www.github.com/googleapis/api-common-java/commit/ea0b7773c799db16b2ae68ff600dcacaca52abf9))
+
 ### [2.0.4](https://www.github.com/googleapis/api-common-java/compare/v2.0.3...v2.0.4) (2021-10-06)
 
 
