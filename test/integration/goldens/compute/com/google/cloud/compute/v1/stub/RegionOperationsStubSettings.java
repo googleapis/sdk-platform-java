@@ -33,6 +33,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.cloud.compute.v1.GetRegionOperationRequest;
 import com.google.cloud.compute.v1.Operation;
+import com.google.cloud.compute.v1.WaitRegionOperationRequest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -85,10 +86,16 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
           .build();
 
   private final UnaryCallSettings<GetRegionOperationRequest, Operation> getSettings;
+  private final UnaryCallSettings<WaitRegionOperationRequest, Operation> waitSettings;
 
   /** Returns the object with the settings used for calls to get. */
   public UnaryCallSettings<GetRegionOperationRequest, Operation> getSettings() {
     return getSettings;
+  }
+
+  /** Returns the object with the settings used for calls to wait. */
+  public UnaryCallSettings<WaitRegionOperationRequest, Operation> waitSettings() {
+    return waitSettings;
   }
 
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
@@ -169,12 +176,14 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
     super(settingsBuilder);
 
     getSettings = settingsBuilder.getSettings().build();
+    waitSettings = settingsBuilder.waitSettings().build();
   }
 
   /** Builder for RegionOperationsStubSettings. */
   public static class Builder extends StubSettings.Builder<RegionOperationsStubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<GetRegionOperationRequest, Operation> getSettings;
+    private final UnaryCallSettings.Builder<WaitRegionOperationRequest, Operation> waitSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -186,6 +195,7 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
                   StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
+      definitions.put("no_retry_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
       RETRYABLE_CODE_DEFINITIONS = definitions.build();
     }
 
@@ -205,6 +215,8 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
               .setTotalTimeout(Duration.ofMillis(600000L))
               .build();
       definitions.put("retry_policy_0_params", settings);
+      settings = RetrySettings.newBuilder().setRpcTimeoutMultiplier(1.0).build();
+      definitions.put("no_retry_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
     }
 
@@ -216,8 +228,10 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
       super(clientContext);
 
       getSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
-      unaryMethodSettingsBuilders = ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(getSettings);
+      unaryMethodSettingsBuilders =
+          ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(getSettings, waitSettings);
       initDefaults(this);
     }
 
@@ -225,8 +239,10 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
       super(settings);
 
       getSettings = settings.getSettings.toBuilder();
+      waitSettings = settings.waitSettings.toBuilder();
 
-      unaryMethodSettingsBuilders = ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(getSettings);
+      unaryMethodSettingsBuilders =
+          ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(getSettings, waitSettings);
     }
 
     private static Builder createDefault() {
@@ -247,6 +263,11 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
           .getSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_0_params"));
+
+      builder
+          .waitSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
 
       return builder;
     }
@@ -269,6 +290,11 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
     /** Returns the builder for the settings used for calls to get. */
     public UnaryCallSettings.Builder<GetRegionOperationRequest, Operation> getSettings() {
       return getSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to wait. */
+    public UnaryCallSettings.Builder<WaitRegionOperationRequest, Operation> waitSettings() {
+      return waitSettings;
     }
 
     @Override

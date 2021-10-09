@@ -20,8 +20,12 @@ import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
+import com.google.api.gax.rpc.PagedCallSettings;
+import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.StreamingCallSettings;
+import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -54,6 +58,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -408,7 +413,10 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             .setValueExpr(expectedResponseValExpr)
             .build());
 
-    if (method.hasLro()) {
+    if (method.hasLro()
+        && (method.lro().operationServiceStubType() == null
+            || !method.lro().responseType().equals(method.outputType()))) {
+
       VariableExpr resultOperationVarExpr =
           VariableExpr.withVariable(
               Variable.builder()
@@ -903,6 +911,46 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             ClassNames.getServiceClientClassName(service));
       }
     }
+  }
+
+  private static TypeNode getCallSettingsTypeHelper(
+      Method protoMethod, TypeStore typeStore, boolean isBuilder) {
+    Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
+    if (protoMethod.isPaged()) {
+      callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
+    } else {
+      switch (protoMethod.stream()) {
+        case CLIENT:
+          // Fall through.
+        case BIDI:
+          callSettingsClazz =
+              isBuilder ? StreamingCallSettings.Builder.class : StreamingCallSettings.class;
+          break;
+        case SERVER:
+          callSettingsClazz =
+              isBuilder
+                  ? ServerStreamingCallSettings.Builder.class
+                  : ServerStreamingCallSettings.class;
+          break;
+        case NONE:
+          // Fall through
+        default:
+          // Fall through
+      }
+    }
+
+    List<Reference> generics = new ArrayList<>();
+    generics.add(protoMethod.inputType().reference());
+    generics.add(protoMethod.outputType().reference());
+    if (protoMethod.isPaged()) {
+      generics.add(
+          typeStore
+              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
+              .reference());
+    }
+
+    return TypeNode.withReference(
+        ConcreteReference.builder().setClazz(callSettingsClazz).setGenerics(generics).build());
   }
 
   protected static TypeNode getCallableType(Method protoMethod) {

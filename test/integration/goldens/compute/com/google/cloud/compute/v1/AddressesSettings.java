@@ -27,6 +27,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientSettings;
+import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
@@ -51,15 +52,15 @@ import javax.annotation.Generated;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of delete to 30 seconds:
+ * <p>For example, to set the total timeout of aggregatedList to 30 seconds:
  *
  * <pre>{@code
  * AddressesSettings.Builder addressesSettingsBuilder = AddressesSettings.newBuilder();
  * addressesSettingsBuilder
- *     .deleteSettings()
+ *     .aggregatedListSettings()
  *     .setRetrySettings(
  *         addressesSettingsBuilder
- *             .deleteSettings()
+ *             .aggregatedListSettings()
  *             .getRetrySettings()
  *             .toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
@@ -82,9 +83,21 @@ public class AddressesSettings extends ClientSettings<AddressesSettings> {
     return ((AddressesStubSettings) getStubSettings()).deleteSettings();
   }
 
+  /** Returns the object with the settings used for calls to delete. */
+  public OperationCallSettings<DeleteAddressRequest, Operation, Operation>
+      deleteOperationSettings() {
+    return ((AddressesStubSettings) getStubSettings()).deleteOperationSettings();
+  }
+
   /** Returns the object with the settings used for calls to insert. */
   public UnaryCallSettings<InsertAddressRequest, Operation> insertSettings() {
     return ((AddressesStubSettings) getStubSettings()).insertSettings();
+  }
+
+  /** Returns the object with the settings used for calls to insert. */
+  public OperationCallSettings<InsertAddressRequest, Operation, Operation>
+      insertOperationSettings() {
+    return ((AddressesStubSettings) getStubSettings()).insertOperationSettings();
   }
 
   /** Returns the object with the settings used for calls to list. */
@@ -201,9 +214,21 @@ public class AddressesSettings extends ClientSettings<AddressesSettings> {
       return getStubSettingsBuilder().deleteSettings();
     }
 
+    /** Returns the builder for the settings used for calls to delete. */
+    public OperationCallSettings.Builder<DeleteAddressRequest, Operation, Operation>
+        deleteOperationSettings() {
+      return getStubSettingsBuilder().deleteOperationSettings();
+    }
+
     /** Returns the builder for the settings used for calls to insert. */
     public UnaryCallSettings.Builder<InsertAddressRequest, Operation> insertSettings() {
       return getStubSettingsBuilder().insertSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to insert. */
+    public OperationCallSettings.Builder<InsertAddressRequest, Operation, Operation>
+        insertOperationSettings() {
+      return getStubSettingsBuilder().insertOperationSettings();
     }
 
     /** Returns the builder for the settings used for calls to list. */

@@ -56,6 +56,7 @@ proto_library(
         "@com_google_googleapis//google/api:client_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/cloud:extended_operations_proto",
         "@com_google_googleapis//google/longrunning:operations_proto",
         "@com_google_googleapis//google/rpc:error_details_proto",
         "@com_google_googleapis//google/rpc:status_proto",

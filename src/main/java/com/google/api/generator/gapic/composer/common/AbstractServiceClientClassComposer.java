@@ -132,7 +132,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
-    boolean hasLroClient = service.hasLroMethods();
+    boolean hasLroClient = service.hasStandardLroMethods();
 
     Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
 
@@ -741,6 +741,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         method.isPaged()
             ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
+    List<AnnotationNode> annotations = new ArrayList<>();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
       methodOutputType =
@@ -751,6 +752,13 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                   .copyAndSetGenerics(
                       Arrays.asList(
                           lro.responseType().reference(), lro.metadataType().reference())));
+      if (method.lro().operationServiceStubType() != null) {
+        annotations.add(
+            AnnotationNode.withTypeAndDescription(
+                typeStore.get("BetaApi"),
+                "The surface for long-running operations is not stable yet and may change in the"
+                    + " future."));
+      }
     }
 
     // Construct the method that accepts a request proto.
@@ -792,8 +800,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setArguments(Arrays.asList(requestArgVarExpr));
 
     if (method.isDeprecated()) {
-      methodBuilder =
-          methodBuilder.setAnnotations(Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
 
     if (isProtoEmptyType(methodOutputType)) {
@@ -805,6 +812,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       methodBuilder =
           methodBuilder.setReturnExpr(callableMethodExpr).setReturnType(methodOutputType);
     }
+
+    methodBuilder.setAnnotations(annotations);
+
     return methodBuilder.build();
   }
 
