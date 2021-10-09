@@ -18,6 +18,7 @@ import com.google.api.AnnotationsProto;
 import com.google.api.ClientProto;
 import com.google.api.FieldBehaviorProto;
 import com.google.api.ResourceProto;
+import com.google.cloud.ExtendedOperationsProto;
 import com.google.longrunning.OperationsProto;
 import com.google.protobuf.ExtensionRegistry;
 
@@ -29,5 +30,6 @@ public class ProtoRegistry {
     ClientProto.registerAllExtensions(extensionRegistry);
     ResourceProto.registerAllExtensions(extensionRegistry);
     FieldBehaviorProto.registerAllExtensions(extensionRegistry);
+    ExtendedOperationsProto.registerAllExtensions(extensionRegistry);
   }
 }

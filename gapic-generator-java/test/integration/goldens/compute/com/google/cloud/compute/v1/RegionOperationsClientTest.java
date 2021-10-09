@@ -25,6 +25,7 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.cloud.compute.v1.Operation.Status;
 import com.google.cloud.compute.v1.stub.HttpJsonRegionOperationsStub;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,8 +83,8 @@ public class RegionOperationsClientTest {
             .setEndTime("endTime-1607243192")
             .setError(Error.newBuilder().build())
             .setHttpErrorMessage("httpErrorMessage1577303431")
-            .setHttpErrorStatusCode(1386087020)
-            .setId("id3355")
+            .setHttpErrorStatusCode(0)
+            .setId(3355)
             .setInsertTime("insertTime966165798")
             .setKind("kind3292052")
             .setName("name3373707")
@@ -92,8 +93,9 @@ public class RegionOperationsClientTest {
             .setRegion("region-934795532")
             .setSelfLink("selfLink1191800166")
             .setStartTime("startTime-2129294769")
+            .setStatus(Status.DONE)
             .setStatusMessage("statusMessage-958704715")
-            .setTargetId("targetId-441951604")
+            .setTargetId(-815576439)
             .setTargetLink("targetLink486368555")
             .setUser("user3599307")
             .addAllWarnings(new ArrayList<Warnings>())
@@ -135,6 +137,76 @@ public class RegionOperationsClientTest {
       String region = "region-934795532";
       String operation = "operation1662702951";
       client.get(project, region, operation);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void waitTest() throws Exception {
+    Operation expectedResponse =
+        Operation.newBuilder()
+            .setClientOperationId("clientOperationId-1230366697")
+            .setCreationTimestamp("creationTimestamp-370203401")
+            .setDescription("description-1724546052")
+            .setEndTime("endTime-1607243192")
+            .setError(Error.newBuilder().build())
+            .setHttpErrorMessage("httpErrorMessage1577303431")
+            .setHttpErrorStatusCode(0)
+            .setId(3355)
+            .setInsertTime("insertTime966165798")
+            .setKind("kind3292052")
+            .setName("name3373707")
+            .setOperationType("operationType91999553")
+            .setProgress(-1001078227)
+            .setRegion("region-934795532")
+            .setSelfLink("selfLink1191800166")
+            .setStartTime("startTime-2129294769")
+            .setStatus(Status.DONE)
+            .setStatusMessage("statusMessage-958704715")
+            .setTargetId(-815576439)
+            .setTargetLink("targetLink486368555")
+            .setUser("user3599307")
+            .addAllWarnings(new ArrayList<Warnings>())
+            .setZone("zone3744684")
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    String project = "project-309310695";
+    String region = "region-934795532";
+    String operation = "operation1662702951";
+
+    Operation actualResponse = client.wait(project, region, operation);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void waitExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      String project = "project-309310695";
+      String region = "region-934795532";
+      String operation = "operation1662702951";
+      client.wait(project, region, operation);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.

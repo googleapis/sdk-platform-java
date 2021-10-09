@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -84,7 +85,10 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
 
   @Override
   protected Statement createMethodDescriptorVariableDecl(
-      Service service, Method protoMethod, VariableExpr methodDescriptorVarExpr) {
+      Service service,
+      Method protoMethod,
+      VariableExpr methodDescriptorVarExpr,
+      Map<String, Message> messageTypes) {
     MethodInvocationExpr methodDescriptorMaker =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")

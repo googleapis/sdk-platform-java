@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.model.Service;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,28 +42,30 @@ public class GrpcServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected List<TypeNode> createClassImplements(TypeStore typeStore) {
+  protected List<TypeNode> createClassImplements(Service service, TypeStore typeStore) {
     return Arrays.asList(getTransportContext().stubCallableFactoryType());
   }
 
   @Override
-  protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
-    List<MethodDefinition> classMethods = new ArrayList<>(super.createClassMethods(typeStore));
+  protected List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
+    List<MethodDefinition> classMethods =
+        new ArrayList<>(super.createClassMethods(service, typeStore));
     classMethods.addAll(
         Arrays.asList(
-            createBidiStreamingCallableMethod(typeStore),
-            createServerStreamingCallableMethod(typeStore),
-            createClientStreamingCallableMethod(typeStore)));
+            createBidiStreamingCallableMethod(service, typeStore),
+            createServerStreamingCallableMethod(service, typeStore),
+            createClientStreamingCallableMethod(service, typeStore)));
     return classMethods;
   }
 
   @Override
-  protected MethodDefinition createUnaryCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createUnaryCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Unary";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
@@ -78,7 +81,7 @@ public class GrpcServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createPagedCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Paged";
     String requestTemplateName = "RequestT";
     String pagedResponseTemplateName = "PagedListResponseT";
@@ -86,6 +89,7 @@ public class GrpcServiceCallableFactoryClassComposer
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, pagedResponseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ "Unary",
@@ -101,13 +105,14 @@ public class GrpcServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected MethodDefinition createOperationCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createOperationCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Operation";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, "MetadataT");
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
@@ -120,12 +125,13 @@ public class GrpcServiceCallableFactoryClassComposer
             .collect(Collectors.toList()));
   }
 
-  private MethodDefinition createBidiStreamingCallableMethod(TypeStore typeStore) {
+  private MethodDefinition createBidiStreamingCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "BidiStreaming";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
@@ -140,12 +146,14 @@ public class GrpcServiceCallableFactoryClassComposer
             .collect(Collectors.toList()));
   }
 
-  private MethodDefinition createServerStreamingCallableMethod(TypeStore typeStore) {
+  private MethodDefinition createServerStreamingCallableMethod(
+      Service service, TypeStore typeStore) {
     String methodVariantName = "ServerStreaming";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
@@ -160,12 +168,14 @@ public class GrpcServiceCallableFactoryClassComposer
             .collect(Collectors.toList()));
   }
 
-  private MethodDefinition createClientStreamingCallableMethod(TypeStore typeStore) {
+  private MethodDefinition createClientStreamingCallableMethod(
+      Service service, TypeStore typeStore) {
     String methodVariantName = "ClientStreaming";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,

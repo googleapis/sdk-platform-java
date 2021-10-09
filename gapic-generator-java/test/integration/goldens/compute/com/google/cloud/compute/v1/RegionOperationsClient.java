@@ -222,6 +222,112 @@ public class RegionOperationsClient implements BackgroundResource {
     return stub.getCallable();
   }
 
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Waits for the specified Operation resource to return as `DONE` or for the request to approach
+   * the 2 minute deadline, and retrieves the specified Operation resource. This method differs from
+   * the `GET` method in that it waits for no more than the default deadline (2 minutes) and then
+   * returns the current state of the operation, which might be `DONE` or still in progress.
+   *
+   * <p>This method is called on a best-effort basis. Specifically: - In uncommon cases, when the
+   * server is overloaded, the request might return before the default deadline is reached, or might
+   * return after zero seconds. - If the default deadline is reached, there is no guarantee that the
+   * operation is actually done when the method returns. Be prepared to retry if the operation is
+   * not `DONE`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *   String project = "project-309310695";
+   *   String region = "region-934795532";
+   *   String operation = "operation1662702951";
+   *   Operation response = regionOperationsClient.wait(project, region, operation);
+   * }
+   * }</pre>
+   *
+   * @param project Project ID for this request.
+   * @param region Name of the region for this request.
+   * @param operation Name of the Operations resource to return.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Operation wait(String project, String region, String operation) {
+    WaitRegionOperationRequest request =
+        WaitRegionOperationRequest.newBuilder()
+            .setProject(project)
+            .setRegion(region)
+            .setOperation(operation)
+            .build();
+    return wait(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Waits for the specified Operation resource to return as `DONE` or for the request to approach
+   * the 2 minute deadline, and retrieves the specified Operation resource. This method differs from
+   * the `GET` method in that it waits for no more than the default deadline (2 minutes) and then
+   * returns the current state of the operation, which might be `DONE` or still in progress.
+   *
+   * <p>This method is called on a best-effort basis. Specifically: - In uncommon cases, when the
+   * server is overloaded, the request might return before the default deadline is reached, or might
+   * return after zero seconds. - If the default deadline is reached, there is no guarantee that the
+   * operation is actually done when the method returns. Be prepared to retry if the operation is
+   * not `DONE`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *   WaitRegionOperationRequest request =
+   *       WaitRegionOperationRequest.newBuilder()
+   *           .setOperation("operation1662702951")
+   *           .setProject("project-309310695")
+   *           .setRegion("region-934795532")
+   *           .build();
+   *   Operation response = regionOperationsClient.wait(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Operation wait(WaitRegionOperationRequest request) {
+    return waitCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Waits for the specified Operation resource to return as `DONE` or for the request to approach
+   * the 2 minute deadline, and retrieves the specified Operation resource. This method differs from
+   * the `GET` method in that it waits for no more than the default deadline (2 minutes) and then
+   * returns the current state of the operation, which might be `DONE` or still in progress.
+   *
+   * <p>This method is called on a best-effort basis. Specifically: - In uncommon cases, when the
+   * server is overloaded, the request might return before the default deadline is reached, or might
+   * return after zero seconds. - If the default deadline is reached, there is no guarantee that the
+   * operation is actually done when the method returns. Be prepared to retry if the operation is
+   * not `DONE`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *   WaitRegionOperationRequest request =
+   *       WaitRegionOperationRequest.newBuilder()
+   *           .setOperation("operation1662702951")
+   *           .setProject("project-309310695")
+   *           .setRegion("region-934795532")
+   *           .build();
+   *   ApiFuture<Operation> future = regionOperationsClient.waitCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<WaitRegionOperationRequest, Operation> waitCallable() {
+    return stub.waitCallable();
+  }
+
   @Override
   public final void close() {
     stub.close();

@@ -62,7 +62,8 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
-    TypeStore typeStore = createTypes();
+    TypeStore typeStore = createTypes(service);
+
     String className =
         getTransportContext().classNames().getTransportServiceCallableFactoryClassName(service);
     GapicClass.Kind kind = Kind.STUB;
@@ -77,9 +78,9 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
                 commentComposer.createTransportServiceCallableFactoryClassHeaderComments(
                     service.name(), service.isDeprecated()))
             .setAnnotations(createClassAnnotations(service, typeStore))
-            .setImplementsTypes(createClassImplements(typeStore))
+            .setImplementsTypes(createClassImplements(service, typeStore))
             .setName(className)
-            .setMethods(createClassMethods(typeStore))
+            .setMethods(createClassMethods(service, typeStore))
             .setScope(ScopeNode.PUBLIC)
             .build();
     return GapicClass.create(kind, classDef);
@@ -110,22 +111,23 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
    * @return {@code TypeNode} containing the interface to be implemented by the generated callable
    *     factory class.
    */
-  protected abstract List<TypeNode> createClassImplements(TypeStore typeStore);
+  protected abstract List<TypeNode> createClassImplements(Service service, TypeStore typeStore);
 
-  protected List<MethodDefinition> createClassMethods(TypeStore typeStore) {
+  protected List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
     return Arrays.asList(
-        createUnaryCallableMethod(typeStore),
-        createPagedCallableMethod(typeStore),
-        createBatchingCallableMethod(typeStore),
-        createOperationCallableMethod(typeStore));
+        createUnaryCallableMethod(service, typeStore),
+        createPagedCallableMethod(service, typeStore),
+        createBatchingCallableMethod(service, typeStore),
+        createOperationCallableMethod(service, typeStore));
   }
 
-  protected MethodDefinition createUnaryCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createUnaryCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Unary";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
@@ -140,7 +142,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .collect(Collectors.toList()));
   }
 
-  protected MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createPagedCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Paged";
     String requestTemplateName = "RequestT";
     String pagedResponseTemplateName = "PagedListResponseT";
@@ -148,6 +150,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, pagedResponseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ "Unary",
@@ -162,12 +165,13 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .collect(Collectors.toList()));
   }
 
-  protected MethodDefinition createBatchingCallableMethod(TypeStore typeStore) {
+  protected MethodDefinition createBatchingCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Batching";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
+        service,
         typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ "Unary",
@@ -182,9 +186,11 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .collect(Collectors.toList()));
   }
 
-  protected abstract MethodDefinition createOperationCallableMethod(TypeStore typeStore);
+  protected abstract MethodDefinition createOperationCallableMethod(
+      Service service, TypeStore typeStore);
 
   protected MethodDefinition createGenericCallableMethod(
+      Service service,
       TypeStore typeStore,
       List<String> methodTemplateNames,
       String returnCallableKindName,
@@ -194,6 +200,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
       String callSettingsVariantName,
       List<Object> callSettingsTemplateObjects) {
     return createGenericCallableMethod(
+        service,
         typeStore,
         methodTemplateNames,
         returnCallableKindName,
@@ -206,6 +213,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
   }
 
   protected MethodDefinition createGenericCallableMethod(
+      Service service,
       TypeStore typeStore,
       List<String> methodTemplateNames,
       String returnCallableKindName,
@@ -257,7 +265,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
               .setVariable(
                   Variable.builder()
                       .setName("operationsStub")
-                      .setType(getTransportContext().operationsStubTypes().get(0))
+                      .setType(getOperationsStubType(service))
                       .build())
               .setIsDecl(true)
               .build());
@@ -288,7 +296,16 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
         .build();
   }
 
-  private static TypeStore createTypes() {
+  protected TypeNode getOperationsStubType(Service service) {
+    TypeNode operationsStubType = service.operationServiceStubType();
+    if (operationsStubType == null) {
+      operationsStubType = getTransportContext().operationsStubTypes().get(0);
+    }
+    return operationsStubType;
+  }
+
+
+  private TypeStore createTypes(Service service) {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
             // Gax-java classes.

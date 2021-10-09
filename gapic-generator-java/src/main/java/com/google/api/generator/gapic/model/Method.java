@@ -66,6 +66,8 @@ public abstract class Method {
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
 
+  public abstract boolean operationPollingMethod();
+
   public boolean hasLro() {
     return lro() != null;
   }
@@ -82,6 +84,10 @@ public abstract class Method {
     return mixedInApiName() != null;
   }
 
+  public boolean isOperationPollingMethod() {
+    return operationPollingMethod();
+  }
+
   public abstract Builder toBuilder();
 
   public static Builder builder() {
@@ -89,7 +95,8 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setMethodSignatures(ImmutableList.of())
         .setIsBatching(false)
-        .setIsDeprecated(false);
+        .setIsDeprecated(false)
+        .setOperationPollingMethod(false);
   }
 
   public static Stream toStream(boolean isClientStreaming, boolean isServerStreaming) {
@@ -130,6 +137,8 @@ public abstract class Method {
     public abstract Builder setPageSizeFieldName(String pagedFieldName);
 
     public abstract Builder setIsDeprecated(boolean isDeprecated);
+
+    public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
 
     public abstract Method build();
   }

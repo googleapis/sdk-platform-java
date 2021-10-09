@@ -18,17 +18,22 @@ import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -40,6 +45,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +57,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceStubClassComposer implements ClassComposer {
+  private static final String DOT = ".";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private final TransportContext transportContext;
@@ -111,11 +118,15 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
   private List<MethodDefinition> createClassMethods(
       Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
-    boolean hasLroClient = service.hasLroMethods();
     List<MethodDefinition> methods = new ArrayList<>();
-    if (hasLroClient) {
-      methods.addAll(createOperationsStubGetters(typeStore));
+    if (service.hasStandardLroMethods()) {
+      TypeNode operationsStubType = service.operationServiceStubType();
+      methods.addAll(createOperationsStubGetters(typeStore, operationsStubType));
     }
+
+    if (service.operationPollingMethod() != null) {
+      methods.addAll(createLongRunningClientGetters(typeStore));
+     }
     methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
     return methods;
@@ -138,7 +149,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return javaMethods;
   }
 
-  private MethodDefinition createOperationCallableGetter(Method method, TypeStore typeStore) {
+  private MethodDefinition createOperationCallableGetter(
+      Method method, TypeStore typeStore) {
     return createCallableGetterHelper(method, typeStore, true, false);
   }
 
@@ -198,7 +210,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return createCallableGetterMethodDefinition(returnType, methodName, annotations, typeStore);
   }
 
-  private List<MethodDefinition> createOperationsStubGetters(TypeStore typeStore) {
+  private List<MethodDefinition> createOperationsStubGetters(TypeStore typeStore, TypeNode operationsStubType) {
     List<MethodDefinition> getters = new ArrayList<>();
 
     Iterator<String> operationStubNameIt =
@@ -208,13 +220,24 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     while (operationStubNameIt.hasNext() && operationStubTypeIt.hasNext()) {
       String methodName =
           String.format("get%s", JavaStyle.toUpperCamelCase(operationStubNameIt.next()));
+      //TODO: refactor this
+      TypeNode actualOperationsStubType = operationStubTypeIt.next();
+      if (operationsStubType != null) {
+        actualOperationsStubType = operationsStubType;
+      }
 
-      getters.add(
-          createOperationsStubGetterMethodDefinition(
-              operationStubTypeIt.next(), methodName, typeStore));
+      getters.add(createOperationsStubGetterMethodDefinition(actualOperationsStubType, methodName, typeStore));
     }
 
     return getters;
+  }
+
+  private List<MethodDefinition> createLongRunningClientGetters(TypeStore typeStore) {
+    return ImmutableList.of(createCallableGetterMethodDefinition(
+        TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)),
+        "longRunningClient",
+        ImmutableList.of(AnnotationNode.withType(typeStore.get("BetaApi"))),
+        typeStore));
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethodOverrides() {
@@ -260,10 +283,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   protected MethodDefinition createCallableGetterMethodDefinition(
-      TypeNode returnType,
-      String methodName,
-      List<AnnotationNode> annotations,
-      TypeStore typeStore) {
+      TypeNode returnType, String methodName, List<AnnotationNode> annotations, TypeStore typeStore) {
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setAnnotations(annotations)
@@ -293,5 +313,9 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                         .setMessageExpr(String.format("Not implemented: %s()", methodName))
                         .build())))
         .build();
+  }
+
+  private static String getClientClassName(Service service) {
+    return String.format("%sClient", service.overriddenName());
   }
 }
