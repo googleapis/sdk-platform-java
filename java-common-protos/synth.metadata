@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "c408f1d14f95f15fe741ff584554fce431146c00"
+        "sha": "08b5c8545ed6f29a11ae4d3f061df47f40234bd1"
       }
     },
     {
@@ -200,6 +200,11 @@
     "proto-google-common-protos/src/main/java/com/google/api/ResourceProto.java",
     "proto-google-common-protos/src/main/java/com/google/api/ResourceReference.java",
     "proto-google-common-protos/src/main/java/com/google/api/ResourceReferenceOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/api/RoutingParameter.java",
+    "proto-google-common-protos/src/main/java/com/google/api/RoutingParameterOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/api/RoutingProto.java",
+    "proto-google-common-protos/src/main/java/com/google/api/RoutingRule.java",
+    "proto-google-common-protos/src/main/java/com/google/api/RoutingRuleOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/api/Service.java",
     "proto-google-common-protos/src/main/java/com/google/api/ServiceOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/api/ServiceProto.java",
