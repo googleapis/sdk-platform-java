@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.6.0](https://www.github.com/googleapis/java-common-protos/compare/v2.5.1...v2.6.0) (2021-10-14)
+
+
+### Features
+
+* add API classes for routing information ([#241](https://www.github.com/googleapis/java-common-protos/issues/241)) ([d1136e1](https://www.github.com/googleapis/java-common-protos/commit/d1136e139cd74bef717a73b3a8fc3b82055ab18e))
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.18.1 ([#237](https://www.github.com/googleapis/java-common-protos/issues/237)) ([e6da4bb](https://www.github.com/googleapis/java-common-protos/commit/e6da4bb3ba18fa39eae1fbe04c65b866097e5801))
+* update dependency com.google.protobuf:protobuf-java to v3.18.1 ([#238](https://www.github.com/googleapis/java-common-protos/issues/238)) ([92ec21a](https://www.github.com/googleapis/java-common-protos/commit/92ec21ae83951a6b05da343c5f4bf3e8b9942b6d))
+* update dependency io.grpc:grpc-bom to v1.41.0 and com.google.guava:guava to v31 ([#244](https://www.github.com/googleapis/java-common-protos/issues/244)) ([f0c638a](https://www.github.com/googleapis/java-common-protos/commit/f0c638a178e8ee02883f6570110f614f154f4814))
+
 ### [2.5.1](https://www.github.com/googleapis/java-common-protos/compare/v2.5.0...v2.5.1) (2021-09-24)
 
 
