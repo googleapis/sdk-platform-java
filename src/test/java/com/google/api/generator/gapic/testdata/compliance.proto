@@ -16,7 +16,6 @@ syntax = "proto3";
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
-import "google/cloud/extended_operations.proto";
 
 package google.showcase.v1beta1;
 

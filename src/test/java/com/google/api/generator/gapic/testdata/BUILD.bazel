@@ -50,6 +50,7 @@ proto_library(
         "echo.proto",
         "identity.proto",
         "testing.proto",
+        "datastream.proto",
     ],
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",

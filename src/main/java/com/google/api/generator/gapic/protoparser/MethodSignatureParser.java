@@ -206,7 +206,17 @@ public class MethodSignatureParser {
               resourceNames,
               patternsToResourceNames);
       outputArgResourceNames.addAll(resourceNameArgs);
-      typeToField.put(TypeNode.STRING, field);
+      if (resourceNameArgs.size() == 1) {
+        typeToField.put(
+            TypeNode.STRING,
+            field
+                .toBuilder()
+                .setResourceReference(
+                    ResourceReference.withType(resourceNameArgs.get(0).resourceTypeString()))
+                .build());
+      } else {
+        typeToField.put(TypeNode.STRING, field);
+      }
       typeToField.putAll(
           resourceNameArgs.stream()
               .collect(

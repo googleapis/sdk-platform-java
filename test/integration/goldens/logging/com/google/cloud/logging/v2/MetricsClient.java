@@ -423,7 +423,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String parent = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
+   *   String parent = ProjectName.of("[PROJECT]").toString();
    *   LogMetric metric = LogMetric.newBuilder().build();
    *   LogMetric response = metricsClient.createLogMetric(parent, metric);
    * }

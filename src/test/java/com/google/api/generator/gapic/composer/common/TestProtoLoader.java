@@ -28,6 +28,7 @@ import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.bookshop.v1beta1.BookshopProto;
+import com.google.cloud.datastream.v1alpha1.CloudDatastreamServiceProto;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -169,6 +170,27 @@ public class TestProtoLoader {
         .setTransport(transport)
         .build();
   }
+
+	public GapicContext parseDatastream() {
+		FileDescriptor fileDescriptor = CloudDatastreamServiceProto.getDescriptor();
+		ServiceDescriptor datastreamService = fileDescriptor.getServices().get(0);
+		assertEquals(datastreamService.getName(), "Datastream");
+
+		Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+		Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+		Set<ResourceName> outputResourceNames = new HashSet<>();
+		List<Service> services =
+				Parser.parseService(
+						fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+		return GapicContext.builder()
+				.setMessages(messageTypes)
+				.setResourceNames(resourceNames)
+				.setServices(services)
+				.setHelperResourceNames(outputResourceNames)
+				.setTransport(transport)
+				.build();
+	}
 
   public GapicContext parseShowcaseTesting() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();

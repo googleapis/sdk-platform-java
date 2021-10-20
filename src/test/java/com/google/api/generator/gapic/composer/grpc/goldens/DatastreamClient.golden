@@ -1,0 +1,372 @@
+package com.google.cloud.datastream.v1alpha1;
+
+import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutures;
+import com.google.api.core.BetaApi;
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.paging.AbstractFixedSizeCollection;
+import com.google.api.gax.paging.AbstractPage;
+import com.google.api.gax.paging.AbstractPagedListResponse;
+import com.google.api.gax.rpc.PageContext;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.datastream.v1alpha1.stub.DatastreamStub;
+import com.google.cloud.datastream.v1alpha1.stub.DatastreamStubSettings;
+import com.google.common.util.concurrent.MoreExecutors;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * This class provides the ability to make remote calls to the backing service through method calls
+ * that map to API methods. Sample code to get started:
+ *
+ * <pre>{@code
+ * try (DatastreamClient datastreamClient = DatastreamClient.create()) {
+ *   PrivateConnectionName parent =
+ *       PrivateConnectionName.of("[PROJECT]", "[LOCATION]", "[PRIVATE_CONNECTION]");
+ *   for (Route element : datastreamClient.listRoutes(parent).iterateAll()) {
+ *     // doThingsWith(element);
+ *   }
+ * }
+ * }</pre>
+ *
+ * <p>Note: close() needs to be called on the DatastreamClient object to clean up resources such as
+ * threads. In the example above, try-with-resources is used, which automatically calls close().
+ *
+ * <p>The surface of this class includes several types of Java methods for each of the API's
+ * methods:
+ *
+ * <ol>
+ *   <li>A "flattened" method. With this type of method, the fields of the request type have been
+ *       converted into function parameters. It may be the case that not all fields are available as
+ *       parameters, and not every API method will have a flattened method entry point.
+ *   <li>A "request object" method. This type of method only takes one parameter, a request object,
+ *       which must be constructed before the call. Not every API method will have a request object
+ *       method.
+ *   <li>A "callable" method. This type of method takes no parameters and returns an immutable API
+ *       callable object, which can be used to initiate calls to the service.
+ * </ol>
+ *
+ * <p>See the individual methods for example code.
+ *
+ * <p>Many parameters require resource names to be formatted in a particular way. To assist with
+ * these names, this class includes a format method for each type of name, and additionally a parse
+ * method to extract the individual identifiers contained within names that are returned.
+ *
+ * <p>This class can be customized by passing in a custom instance of DatastreamSettings to
+ * create(). For example:
+ *
+ * <p>To customize credentials:
+ *
+ * <pre>{@code
+ * DatastreamSettings datastreamSettings =
+ *     DatastreamSettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *         .build();
+ * DatastreamClient datastreamClient = DatastreamClient.create(datastreamSettings);
+ * }</pre>
+ *
+ * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * DatastreamSettings datastreamSettings =
+ *     DatastreamSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * DatastreamClient datastreamClient = DatastreamClient.create(datastreamSettings);
+ * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
+ */
+@BetaApi
+@Generated("by gapic-generator-java")
+public class DatastreamClient implements BackgroundResource {
+  private final DatastreamSettings settings;
+  private final DatastreamStub stub;
+
+  /** Constructs an instance of DatastreamClient with default settings. */
+  public static final DatastreamClient create() throws IOException {
+    return create(DatastreamSettings.newBuilder().build());
+  }
+
+  /**
+   * Constructs an instance of DatastreamClient, using the given settings. The channels are created
+   * based on the settings passed in, or defaults for any settings that are not set.
+   */
+  public static final DatastreamClient create(DatastreamSettings settings) throws IOException {
+    return new DatastreamClient(settings);
+  }
+
+  /**
+   * Constructs an instance of DatastreamClient, using the given stub for making calls. This is for
+   * advanced usage - prefer using create(DatastreamSettings).
+   */
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  public static final DatastreamClient create(DatastreamStub stub) {
+    return new DatastreamClient(stub);
+  }
+
+  /**
+   * Constructs an instance of DatastreamClient, using the given settings. This is protected so that
+   * it is easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   */
+  protected DatastreamClient(DatastreamSettings settings) throws IOException {
+    this.settings = settings;
+    this.stub = ((DatastreamStubSettings) settings.getStubSettings()).createStub();
+  }
+
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  protected DatastreamClient(DatastreamStub stub) {
+    this.settings = null;
+    this.stub = stub;
+  }
+
+  public final DatastreamSettings getSettings() {
+    return settings;
+  }
+
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  public DatastreamStub getStub() {
+    return stub;
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (DatastreamClient datastreamClient = DatastreamClient.create()) {
+   *   PrivateConnectionName parent =
+   *       PrivateConnectionName.of("[PROJECT]", "[LOCATION]", "[PRIVATE_CONNECTION]");
+   *   for (Route element : datastreamClient.listRoutes(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListRoutesPagedResponse listRoutes(PrivateConnectionName parent) {
+    ListRoutesRequest request =
+        ListRoutesRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
+    return listRoutes(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (DatastreamClient datastreamClient = DatastreamClient.create()) {
+   *   String parent =
+   *       PrivateConnectionName.of("[PROJECT]", "[LOCATION]", "[PRIVATE_CONNECTION]").toString();
+   *   for (Route element : datastreamClient.listRoutes(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListRoutesPagedResponse listRoutes(String parent) {
+    ListRoutesRequest request = ListRoutesRequest.newBuilder().setParent(parent).build();
+    return listRoutes(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (DatastreamClient datastreamClient = DatastreamClient.create()) {
+   *   ListRoutesRequest request =
+   *       ListRoutesRequest.newBuilder()
+   *           .setParent(
+   *               RouteName.of("[PROJECT]", "[LOCATION]", "[PRIVATE_CONNECTION]", "[ROUTE]")
+   *                   .toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
+   *   for (Route element : datastreamClient.listRoutes(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListRoutesPagedResponse listRoutes(ListRoutesRequest request) {
+    return listRoutesPagedCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (DatastreamClient datastreamClient = DatastreamClient.create()) {
+   *   ListRoutesRequest request =
+   *       ListRoutesRequest.newBuilder()
+   *           .setParent(
+   *               RouteName.of("[PROJECT]", "[LOCATION]", "[PRIVATE_CONNECTION]", "[ROUTE]")
+   *                   .toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
+   *   ApiFuture<Route> future = datastreamClient.listRoutesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (Route element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListRoutesRequest, ListRoutesPagedResponse> listRoutesPagedCallable() {
+    return stub.listRoutesPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (DatastreamClient datastreamClient = DatastreamClient.create()) {
+   *   ListRoutesRequest request =
+   *       ListRoutesRequest.newBuilder()
+   *           .setParent(
+   *               RouteName.of("[PROJECT]", "[LOCATION]", "[PRIVATE_CONNECTION]", "[ROUTE]")
+   *                   .toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
+   *   while (true) {
+   *     ListRoutesResponse response = datastreamClient.listRoutesCallable().call(request);
+   *     for (Route element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListRoutesRequest, ListRoutesResponse> listRoutesCallable() {
+    return stub.listRoutesCallable();
+  }
+
+  @Override
+  public final void close() {
+    stub.close();
+  }
+
+  @Override
+  public void shutdown() {
+    stub.shutdown();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return stub.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return stub.isTerminated();
+  }
+
+  @Override
+  public void shutdownNow() {
+    stub.shutdownNow();
+  }
+
+  @Override
+  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
+    return stub.awaitTermination(duration, unit);
+  }
+
+  public static class ListRoutesPagedResponse
+      extends AbstractPagedListResponse<
+          ListRoutesRequest,
+          ListRoutesResponse,
+          Route,
+          ListRoutesPage,
+          ListRoutesFixedSizeCollection> {
+
+    public static ApiFuture<ListRoutesPagedResponse> createAsync(
+        PageContext<ListRoutesRequest, ListRoutesResponse, Route> context,
+        ApiFuture<ListRoutesResponse> futureResponse) {
+      ApiFuture<ListRoutesPage> futurePage =
+          ListRoutesPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage, input -> new ListRoutesPagedResponse(input), MoreExecutors.directExecutor());
+    }
+
+    private ListRoutesPagedResponse(ListRoutesPage page) {
+      super(page, ListRoutesFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class ListRoutesPage
+      extends AbstractPage<ListRoutesRequest, ListRoutesResponse, Route, ListRoutesPage> {
+
+    private ListRoutesPage(
+        PageContext<ListRoutesRequest, ListRoutesResponse, Route> context,
+        ListRoutesResponse response) {
+      super(context, response);
+    }
+
+    private static ListRoutesPage createEmptyPage() {
+      return new ListRoutesPage(null, null);
+    }
+
+    @Override
+    protected ListRoutesPage createPage(
+        PageContext<ListRoutesRequest, ListRoutesResponse, Route> context,
+        ListRoutesResponse response) {
+      return new ListRoutesPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<ListRoutesPage> createPageAsync(
+        PageContext<ListRoutesRequest, ListRoutesResponse, Route> context,
+        ApiFuture<ListRoutesResponse> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class ListRoutesFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          ListRoutesRequest,
+          ListRoutesResponse,
+          Route,
+          ListRoutesPage,
+          ListRoutesFixedSizeCollection> {
+
+    private ListRoutesFixedSizeCollection(List<ListRoutesPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static ListRoutesFixedSizeCollection createEmptyCollection() {
+      return new ListRoutesFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected ListRoutesFixedSizeCollection createCollection(
+        List<ListRoutesPage> pages, int collectionSize) {
+      return new ListRoutesFixedSizeCollection(pages, collectionSize);
+    }
+  }
+}
