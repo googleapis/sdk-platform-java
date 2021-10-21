@@ -55,9 +55,8 @@ public class GrpcServiceStubClassComposerTest {
   @Test
   public void generateGrpcServiceStubClass_httpBindings() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseTesting();
-    Service testingProtoService = context.services().get(0);
-    GapicClass clazz =
-        GrpcServiceStubClassComposer.instance().generate(context, testingProtoService);
+    Service service = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
