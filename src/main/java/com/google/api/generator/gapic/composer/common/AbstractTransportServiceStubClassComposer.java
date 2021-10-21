@@ -813,8 +813,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               clientContextVarExpr);
     }
 
+    String methodName = JavaStyle.toUpperCamelCase(javaStyleMethodName);
     Optional<String> callableCreatorMethodName =
-        getCallableCreatorMethodName(context, service, callableVarExpr.type(), javaStyleMethodName);
+        getCallableCreatorMethodName(context, service, callableVarExpr.type(), methodName);
 
     Expr initExpr;
     if (callableCreatorMethodName.isPresent()) {
@@ -839,12 +840,11 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       GapicContext context,
       Service service,
       TypeNode callableVarExprType,
-      String javaStyleServiceMethodName) {
+      String serviceMethodName) {
     GapicServiceConfig serviceConfig = context.serviceConfig();
     if (serviceConfig != null
         && serviceConfig.hasBatchingSetting(
-            service.protoPakkage(), service.name(), javaStyleServiceMethodName)) {
-      if (true) throw new UnsupportedOperationException();
+            service.protoPakkage(), service.name(), serviceMethodName)) {
       return Optional.of("createBatchingCallable");
     }
     // Special handling for pagination methods.
