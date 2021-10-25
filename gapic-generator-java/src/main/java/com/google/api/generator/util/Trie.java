@@ -24,7 +24,7 @@ import java.util.function.Function;
  * A common-prefix trie. T represents the type of each "char" in a word (which is a T-typed list).
  */
 public class Trie<T> {
-  private class Node<U> {
+  private static class Node<U> {
     final U chr;
     // Maintain insertion order to enable deterministic test output.
     Map<U, Node<U>> children = new LinkedHashMap<>();
@@ -39,7 +39,7 @@ public class Trie<T> {
     }
   }
 
-  private Node<T> root;
+  private final Node<T> root;
 
   public Trie() {
     root = new Node<>();
