@@ -153,8 +153,10 @@ public class Composer {
         s -> {
           if (context.transport() == Transport.REST) {
             // REST transport tests do not use mock services.
-          } else if (context.transport() == Transport.GRPC
-              || context.transport() == Transport.GRPC_REST) {
+          } else if (context.transport() == Transport.GRPC) {
+            clazzes.add(MockServiceClassComposer.instance().generate(context, s));
+            clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
+          } else if (context.transport() == Transport.GRPC_REST) {
             clazzes.add(MockServiceClassComposer.instance().generate(context, s));
             clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
           }
