@@ -30,7 +30,6 @@ public class Generator {
     List<GapicClass> clazzes = Composer.composeServiceClasses(context);
     GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
     String outputFilename = "temp-codegen.srcjar";
-    CodeGeneratorResponse response = Writer.write(context, clazzes, packageInfo, outputFilename);
-    return response;
+    return Writer.write(context, clazzes, packageInfo, outputFilename);
   }
 }
