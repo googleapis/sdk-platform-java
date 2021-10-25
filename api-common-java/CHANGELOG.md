@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://www.github.com/googleapis/api-common-java/compare/v2.0.5...v2.1.0) (2021-10-20)
+
+
+### Features
+
+* next release from main branch is 2.1.0 ([#308](https://www.github.com/googleapis/api-common-java/issues/308)) ([3965b13](https://www.github.com/googleapis/api-common-java/commit/3965b13ea832cefe4aa58f4f2ecfd0423686c0f9))
+
 ### [2.0.5](https://www.github.com/googleapis/api-common-java/compare/v2.0.4...v2.0.5) (2021-10-08)
 
 
