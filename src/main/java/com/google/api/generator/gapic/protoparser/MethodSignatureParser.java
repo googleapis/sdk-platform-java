@@ -197,7 +197,7 @@ public class MethodSignatureParser {
         return typeToField;
       }
 
-      // Parse the resource name tyeps.
+      // Parse the resource name types.
       List<ResourceName> resourceNameArgs =
           ResourceReferenceParser.parseResourceNames(
               field.resourceReference(),
@@ -206,7 +206,8 @@ public class MethodSignatureParser {
               resourceNames,
               patternsToResourceNames);
       outputArgResourceNames.addAll(resourceNameArgs);
-      if (resourceNameArgs.size() == 1) {
+      // For flattened methods, use the first candidate resource reference.
+      if (resourceNameArgs.size() >= 1) {
         typeToField.put(
             TypeNode.STRING,
             field

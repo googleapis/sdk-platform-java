@@ -881,7 +881,11 @@ public class Parser {
     // with monolith-gnerated libraries.
     String pagedFieldName = null;
 
-    if (inputMessage.fieldMap().containsKey("page_token")
+    if (inputMessage != null
+        && inputMessage.fieldMap() != null
+        && inputMessage.fieldMap().containsKey("page_token")
+        && outputMessage != null
+        && outputMessage.fieldMap() != null
         && outputMessage.fieldMap().containsKey("next_page_token")) {
       // List of potential field names representing page size.
       // page_size gets priority over max_results if both are present

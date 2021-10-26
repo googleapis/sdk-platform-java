@@ -329,9 +329,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent =
-   *       LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *           .toString();
+   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
    *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -1146,7 +1144,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   String parent = ProjectName.of("[PROJECT]").toString();
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -1496,7 +1494,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   String parent = ProjectName.of("[PROJECT]").toString();
    *   LogSink sink = LogSink.newBuilder().build();
    *   LogSink response = configClient.createSink(parent, sink);
    * }
@@ -2027,8 +2025,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent =
-   *       LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   String parent = ProjectName.of("[PROJECT]").toString();
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -2374,8 +2371,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent =
-   *       LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   String parent = ProjectName.of("[PROJECT]").toString();
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
    *   LogExclusion response = configClient.createExclusion(parent, exclusion);
    * }

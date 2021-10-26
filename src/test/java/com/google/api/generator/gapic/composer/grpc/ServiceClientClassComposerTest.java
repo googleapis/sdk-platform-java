@@ -81,14 +81,14 @@ public class ServiceClientClassComposerTest {
 
   @Test
   public void generateServiceClasses_childTypeParentInJavadoc() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseDatastream();
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseMessaging();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "DatastreamClient.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "DatastreamClient.golden");
+    Utils.saveCodegenToFile(this.getClass(), "MessagingClient.golden", visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "MessagingClient.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
