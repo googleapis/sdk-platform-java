@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
@@ -96,7 +97,6 @@ public abstract class GapicContext {
     public Builder setHelperResourceNames(Set<ResourceName> helperResourceNames) {
       return setHelperResourceNames(
           helperResourceNames.stream()
-              .map(r -> r)
               .collect(Collectors.toMap(r -> r.resourceTypeString(), r -> r)));
     }
 
@@ -110,6 +110,16 @@ public abstract class GapicContext {
 
     public abstract Builder setTransport(Transport transport);
 
-    public abstract GapicContext build();
+    abstract ImmutableMap<String, ResourceName> resourceNames();
+
+    abstract ImmutableMap<String, ResourceName> helperResourceNames();
+
+    abstract GapicContext autoBuild();
+
+    public GapicContext build() {
+      setResourceNames(new TreeMap<>(resourceNames()));
+      setHelperResourceNames(new TreeMap<>(helperResourceNames()));
+      return autoBuild();
+    }
   }
 }
