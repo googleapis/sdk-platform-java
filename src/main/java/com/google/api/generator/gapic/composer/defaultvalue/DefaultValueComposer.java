@@ -37,6 +37,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
+import com.google.api.generator.gapic.utils.ResourceReferenceUtils;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
@@ -187,17 +188,18 @@ public class DefaultValueComposer {
 
   private static Optional<ResourceName> findParentResource(
       ResourceName childResource, List<ResourceName> resourceNames) {
-    for (ResourceName parent : resourceNames) {
-      for (String parentPattern : parent.patterns()) {
-        String[] parentPatternParts = parentPattern.split("/");
-        for (String childPattern : childResource.patterns()) {
-          String[] childPatternParts = childPattern.split("/");
-          if (parentPattern.length() < childPattern.length()
-              && childPattern.startsWith(parentPattern)
-              && childPatternParts.length - parentPatternParts.length == 2) {
-            return Optional.of(parent);
-          }
-        }
+    Map<String, ResourceName> patternToResourceName = new HashMap<>();
+
+    for (ResourceName resourceName : resourceNames) {
+      for (String parentPattern : resourceName.patterns()) {
+        patternToResourceName.put(parentPattern, resourceName);
+      }
+    }
+
+    for (String childPattern : childResource.patterns()) {
+      Optional<String> parentPattern = ResourceReferenceUtils.parseParentPattern(childPattern);
+      if (parentPattern.isPresent() && patternToResourceName.containsKey(parentPattern.get())) {
+        return Optional.of(patternToResourceName.get(parentPattern.get()));
       }
     }
 
