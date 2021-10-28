@@ -1533,7 +1533,7 @@ public class KeyManagementServiceClientTest {
             .build();
     mockKeyManagementService.addResponse(expectedResponse);
 
-    ResourceName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+    ResourceName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
     ByteString plaintext = ByteString.EMPTY;
 
     EncryptResponse actualResponse = client.encrypt(name, plaintext);
@@ -1557,7 +1557,7 @@ public class KeyManagementServiceClientTest {
     mockKeyManagementService.addException(exception);
 
     try {
-      ResourceName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+      ResourceName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
       ByteString plaintext = ByteString.EMPTY;
       client.encrypt(name, plaintext);
       Assert.fail("No exception raised");
@@ -2221,7 +2221,9 @@ public class KeyManagementServiceClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+            .setResource(
+                CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+                    .toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -2248,7 +2250,9 @@ public class KeyManagementServiceClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+              .setResource(
+                  CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+                      .toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -2367,7 +2371,9 @@ public class KeyManagementServiceClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+            .setResource(
+                CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+                    .toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -2394,7 +2400,9 @@ public class KeyManagementServiceClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+              .setResource(
+                  CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+                      .toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
