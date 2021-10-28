@@ -360,9 +360,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListBucketsRequest request =
    *       ListBucketsRequest.newBuilder()
-   *           .setParent(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -389,9 +387,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListBucketsRequest request =
    *       ListBucketsRequest.newBuilder()
-   *           .setParent(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -418,9 +414,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListBucketsRequest request =
    *       ListBucketsRequest.newBuilder()
-   *           .setParent(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -503,9 +497,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateBucketRequest request =
    *       CreateBucketRequest.newBuilder()
-   *           .setParent(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
    *           .setBucketId("bucketId-1603305307")
    *           .setBucket(LogBucket.newBuilder().build())
    *           .build();
@@ -531,9 +523,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateBucketRequest request =
    *       CreateBucketRequest.newBuilder()
-   *           .setParent(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
    *           .setBucketId("bucketId-1603305307")
    *           .setBucket(LogBucket.newBuilder().build())
    *           .build();
@@ -1144,7 +1134,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
+   *   String parent = BillingAccountName.of("[BILLING_ACCOUNT]").toString();
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -1171,7 +1161,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListSinksRequest request =
    *       ListSinksRequest.newBuilder()
-   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -1198,7 +1188,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListSinksRequest request =
    *       ListSinksRequest.newBuilder()
-   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -1224,7 +1214,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListSinksRequest request =
    *       ListSinksRequest.newBuilder()
-   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -1494,7 +1484,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
+   *   String parent = BillingAccountName.of("[BILLING_ACCOUNT]").toString();
    *   LogSink sink = LogSink.newBuilder().build();
    *   LogSink response = configClient.createSink(parent, sink);
    * }
@@ -1527,7 +1517,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateSinkRequest request =
    *       CreateSinkRequest.newBuilder()
-   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setSink(LogSink.newBuilder().build())
    *           .setUniqueWriterIdentity(true)
    *           .build();
@@ -1555,7 +1545,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateSinkRequest request =
    *       CreateSinkRequest.newBuilder()
-   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setSink(LogSink.newBuilder().build())
    *           .setUniqueWriterIdentity(true)
    *           .build();
@@ -2025,7 +2015,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
+   *   String parent = BillingAccountName.of("[BILLING_ACCOUNT]").toString();
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -2052,8 +2042,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListExclusionsRequest request =
    *       ListExclusionsRequest.newBuilder()
-   *           .setParent(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -2080,8 +2069,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListExclusionsRequest request =
    *       ListExclusionsRequest.newBuilder()
-   *           .setParent(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -2109,8 +2097,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListExclusionsRequest request =
    *       ListExclusionsRequest.newBuilder()
-   *           .setParent(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setPageToken("pageToken873572522")
    *           .setPageSize(883849137)
    *           .build();
@@ -2371,7 +2358,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
+   *   String parent = BillingAccountName.of("[BILLING_ACCOUNT]").toString();
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
    *   LogExclusion response = configClient.createExclusion(parent, exclusion);
    * }
@@ -2402,8 +2389,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateExclusionRequest request =
    *       CreateExclusionRequest.newBuilder()
-   *           .setParent(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setExclusion(LogExclusion.newBuilder().build())
    *           .build();
    *   LogExclusion response = configClient.createExclusion(request);
@@ -2428,8 +2414,7 @@ public class ConfigClient implements BackgroundResource {
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateExclusionRequest request =
    *       CreateExclusionRequest.newBuilder()
-   *           .setParent(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setParent(BillingAccountName.of("[BILLING_ACCOUNT]").toString())
    *           .setExclusion(LogExclusion.newBuilder().build())
    *           .build();
    *   ApiFuture<LogExclusion> future = configClient.createExclusionCallable().futureCall(request);

@@ -248,7 +248,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   CreateSchemaRequest request =
    *       CreateSchemaRequest.newBuilder()
-   *           .setParent(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
    *           .setSchema(Schema.newBuilder().build())
    *           .setSchemaId("schemaId-697673060")
    *           .build();
@@ -273,7 +273,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   CreateSchemaRequest request =
    *       CreateSchemaRequest.newBuilder()
-   *           .setParent(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
    *           .setSchema(Schema.newBuilder().build())
    *           .setSchemaId("schemaId-697673060")
    *           .build();

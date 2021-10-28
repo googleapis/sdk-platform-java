@@ -48,6 +48,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DefaultValueComposer {
@@ -76,6 +77,7 @@ public class DefaultValueComposer {
       Expr defValue =
           createDefaultValue(
               resourceName,
+              methodArg.field().resourceReference().isChildType(),
               resourceNames.values().stream().collect(Collectors.toList()),
               methodArg.field().name());
 
@@ -175,16 +177,44 @@ public class DefaultValueComposer {
   }
 
   public static Expr createDefaultValue(
-      ResourceName resourceName, List<ResourceName> resnames, String fieldOrMessageName) {
-    return createDefaultValueResourceHelper(resourceName, resnames, fieldOrMessageName, true);
+      ResourceName resourceName,
+      boolean isChildType,
+      List<ResourceName> resnames,
+      String fieldOrMessageName) {
+    return createDefaultValueResourceHelper(
+        resourceName, isChildType, resnames, fieldOrMessageName, true);
+  }
+
+  private static Optional<ResourceName> findParentResource(
+      ResourceName childResource, List<ResourceName> resourceNames) {
+    for (ResourceName parent : resourceNames) {
+      for (String parentPattern : parent.patterns()) {
+        String[] parentPatternParts = parentPattern.split("/");
+        for (String childPattern : childResource.patterns()) {
+          String[] childPatternParts = childPattern.split("/");
+          if (parentPattern.length() < childPattern.length()
+              && childPattern.startsWith(parentPattern)
+              && childPatternParts.length - parentPatternParts.length == 2) {
+            return Optional.of(parent);
+          }
+        }
+      }
+    }
+
+    return Optional.empty();
   }
 
   @VisibleForTesting
   static Expr createDefaultValueResourceHelper(
       ResourceName resourceName,
+      boolean isChildType,
       List<ResourceName> resnames,
       String fieldOrMessageName,
       boolean allowAnonResourceNameClass) {
+
+    if (isChildType) {
+      resourceName = findParentResource(resourceName, resnames).orElse(resourceName);
+    }
 
     boolean hasOnePattern = resourceName.patterns().size() == 1;
     if (resourceName.isOnlyWildcard()) {
@@ -195,7 +225,7 @@ public class DefaultValueComposer {
           continue;
         }
         unexaminedResnames.remove(resname);
-        return createDefaultValue(resname, unexaminedResnames, fieldOrMessageName);
+        return createDefaultValue(resname, false, unexaminedResnames, fieldOrMessageName);
       }
 
       if (unexaminedResnames.isEmpty()) {
@@ -283,6 +313,7 @@ public class DefaultValueComposer {
         defaultExpr =
             createDefaultValueResourceHelper(
                 resourceNames.get(field.resourceReference().resourceTypeString()),
+                field.resourceReference().isChildType(),
                 resourceNames.values().stream().collect(Collectors.toList()),
                 message.name(),
                 /* allowAnonResourceNameClass = */ false);

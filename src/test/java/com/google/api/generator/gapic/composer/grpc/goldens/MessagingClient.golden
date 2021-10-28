@@ -832,9 +832,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   CreateBlurbRequest request =
    *       CreateBlurbRequest.newBuilder()
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setBlurb(Blurb.newBuilder().build())
    *           .build();
    *   Blurb response = messagingClient.createBlurb(request);
@@ -856,9 +854,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   CreateBlurbRequest request =
    *       CreateBlurbRequest.newBuilder()
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setBlurb(Blurb.newBuilder().build())
    *           .build();
    *   ApiFuture<Blurb> future = messagingClient.createBlurbCallable().futureCall(request);
@@ -1151,9 +1147,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ListBlurbsRequest request =
    *       ListBlurbsRequest.newBuilder()
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1178,9 +1172,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ListBlurbsRequest request =
    *       ListBlurbsRequest.newBuilder()
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1204,9 +1196,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ListBlurbsRequest request =
    *       ListBlurbsRequest.newBuilder()
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1258,9 +1248,7 @@ public class MessagingClient implements BackgroundResource {
    *   SearchBlurbsRequest request =
    *       SearchBlurbsRequest.newBuilder()
    *           .setQuery("query107944136")
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1285,9 +1273,7 @@ public class MessagingClient implements BackgroundResource {
    *   SearchBlurbsRequest request =
    *       SearchBlurbsRequest.newBuilder()
    *           .setQuery("query107944136")
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1312,9 +1298,7 @@ public class MessagingClient implements BackgroundResource {
    *   SearchBlurbsRequest request =
    *       SearchBlurbsRequest.newBuilder()
    *           .setQuery("query107944136")
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1335,11 +1319,7 @@ public class MessagingClient implements BackgroundResource {
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   StreamBlurbsRequest request =
-   *       StreamBlurbsRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
-   *           .build();
+   *       StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
    *   ServerStream<StreamBlurbsResponse> stream =
    *       messagingClient.streamBlurbsCallable().call(request);
    *   for (StreamBlurbsResponse response : stream) {
@@ -1380,9 +1360,7 @@ public class MessagingClient implements BackgroundResource {
    *       messagingClient.sendBlurbs().clientStreamingCall(responseObserver);
    *   CreateBlurbRequest request =
    *       CreateBlurbRequest.newBuilder()
-   *           .setParent(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setBlurb(Blurb.newBuilder().build())
    *           .build();
    *   requestObserver.onNext(request);
