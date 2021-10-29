@@ -74,7 +74,7 @@ public class MethodSignatureParser {
       for (String argumentName : stringSig.split(METHOD_SIGNATURE_DELIMITER)) {
         // For resource names, this will be empty.
         List<Field> argumentFieldPathAcc = new ArrayList<>();
-        // There should be more than one type returned only when we encounter a reousrce name.
+        // There should be more than one type returned only when we encounter a resource name.
         Map<TypeNode, Field> argumentTypes =
             parseTypeFromArgumentName(
                 argumentName,
