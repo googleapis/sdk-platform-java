@@ -17,9 +17,11 @@ package com.google.api.generator.gapic.utils;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class ResourceReferenceUtils {
+public final class ResourceReferenceUtils {
 
   private static final String SLASH = "/";
+
+  private ResourceReferenceUtils() {}
 
   public static Optional<String> parseParentPattern(String pattern) {
     String[] tokens = pattern.split(SLASH);
