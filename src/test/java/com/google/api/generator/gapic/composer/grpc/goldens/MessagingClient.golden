@@ -483,26 +483,20 @@ public class MessagingClient implements BackgroundResource {
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ProfileName parent = ProfileName.of("[USER]");
-   *   UserName user = UserName.of("[USER]");
    *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, user, image);
+   *   Blurb response = messagingClient.createBlurb(parent, image);
    * }
    * }</pre>
    *
    * @param parent
-   * @param user
    * @param image
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Blurb createBlurb(ProfileName parent, UserName user, ByteString image) {
+  public final Blurb createBlurb(ProfileName parent, ByteString image) {
     CreateBlurbRequest request =
         CreateBlurbRequest.newBuilder()
             .setParent(parent == null ? null : parent.toString())
-            .setBlurb(
-                Blurb.newBuilder()
-                    .setUser(user == null ? null : user.toString())
-                    .setImage(image)
-                    .build())
+            .setBlurb(Blurb.newBuilder().setImage(image).build())
             .build();
     return createBlurb(request);
   }
@@ -514,80 +508,20 @@ public class MessagingClient implements BackgroundResource {
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ProfileName parent = ProfileName.of("[USER]");
-   *   UserName user = UserName.of("[USER]");
    *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, user, text);
+   *   Blurb response = messagingClient.createBlurb(parent, text);
    * }
    * }</pre>
    *
    * @param parent
-   * @param user
    * @param text
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Blurb createBlurb(ProfileName parent, UserName user, String text) {
+  public final Blurb createBlurb(ProfileName parent, String text) {
     CreateBlurbRequest request =
         CreateBlurbRequest.newBuilder()
             .setParent(parent == null ? null : parent.toString())
-            .setBlurb(
-                Blurb.newBuilder()
-                    .setUser(user == null ? null : user.toString())
-                    .setText(text)
-                    .build())
-            .build();
-    return createBlurb(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ProfileName parent = ProfileName.of("[USER]");
-   *   String user = UserName.of("[USER]").toString();
-   *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, user, image);
-   * }
-   * }</pre>
-   *
-   * @param parent
-   * @param user
-   * @param image
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Blurb createBlurb(ProfileName parent, String user, ByteString image) {
-    CreateBlurbRequest request =
-        CreateBlurbRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
-            .setBlurb(Blurb.newBuilder().setUser(user).setImage(image).build())
-            .build();
-    return createBlurb(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ProfileName parent = ProfileName.of("[USER]");
-   *   String user = UserName.of("[USER]").toString();
-   *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, user, text);
-   * }
-   * }</pre>
-   *
-   * @param parent
-   * @param user
-   * @param text
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Blurb createBlurb(ProfileName parent, String user, String text) {
-    CreateBlurbRequest request =
-        CreateBlurbRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
-            .setBlurb(Blurb.newBuilder().setUser(user).setText(text).build())
+            .setBlurb(Blurb.newBuilder().setText(text).build())
             .build();
     return createBlurb(request);
   }
@@ -599,26 +533,20 @@ public class MessagingClient implements BackgroundResource {
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   RoomName parent = RoomName.of("[ROOM]");
-   *   UserName user = UserName.of("[USER]");
    *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, user, image);
+   *   Blurb response = messagingClient.createBlurb(parent, image);
    * }
    * }</pre>
    *
    * @param parent
-   * @param user
    * @param image
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Blurb createBlurb(RoomName parent, UserName user, ByteString image) {
+  public final Blurb createBlurb(RoomName parent, ByteString image) {
     CreateBlurbRequest request =
         CreateBlurbRequest.newBuilder()
             .setParent(parent == null ? null : parent.toString())
-            .setBlurb(
-                Blurb.newBuilder()
-                    .setUser(user == null ? null : user.toString())
-                    .setImage(image)
-                    .build())
+            .setBlurb(Blurb.newBuilder().setImage(image).build())
             .build();
     return createBlurb(request);
   }
@@ -630,26 +558,20 @@ public class MessagingClient implements BackgroundResource {
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   RoomName parent = RoomName.of("[ROOM]");
-   *   UserName user = UserName.of("[USER]");
    *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, user, text);
+   *   Blurb response = messagingClient.createBlurb(parent, text);
    * }
    * }</pre>
    *
    * @param parent
-   * @param user
    * @param text
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Blurb createBlurb(RoomName parent, UserName user, String text) {
+  public final Blurb createBlurb(RoomName parent, String text) {
     CreateBlurbRequest request =
         CreateBlurbRequest.newBuilder()
             .setParent(parent == null ? null : parent.toString())
-            .setBlurb(
-                Blurb.newBuilder()
-                    .setUser(user == null ? null : user.toString())
-                    .setText(text)
-                    .build())
+            .setBlurb(Blurb.newBuilder().setText(text).build())
             .build();
     return createBlurb(request);
   }
@@ -660,23 +582,21 @@ public class MessagingClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName parent = RoomName.of("[ROOM]");
-   *   String user = UserName.of("[USER]").toString();
+   *   String parent = ProfileName.of("[USER]").toString();
    *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, user, image);
+   *   Blurb response = messagingClient.createBlurb(parent, image);
    * }
    * }</pre>
    *
    * @param parent
-   * @param user
    * @param image
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Blurb createBlurb(RoomName parent, String user, ByteString image) {
+  public final Blurb createBlurb(String parent, ByteString image) {
     CreateBlurbRequest request =
         CreateBlurbRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
-            .setBlurb(Blurb.newBuilder().setUser(user).setImage(image).build())
+            .setParent(parent)
+            .setBlurb(Blurb.newBuilder().setImage(image).build())
             .build();
     return createBlurb(request);
   }
@@ -687,139 +607,21 @@ public class MessagingClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName parent = RoomName.of("[ROOM]");
-   *   String user = UserName.of("[USER]").toString();
+   *   String parent = ProfileName.of("[USER]").toString();
    *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, user, text);
+   *   Blurb response = messagingClient.createBlurb(parent, text);
    * }
    * }</pre>
    *
    * @param parent
-   * @param user
    * @param text
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Blurb createBlurb(RoomName parent, String user, String text) {
-    CreateBlurbRequest request =
-        CreateBlurbRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
-            .setBlurb(Blurb.newBuilder().setUser(user).setText(text).build())
-            .build();
-    return createBlurb(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   UserName user = UserName.of("[USER]");
-   *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, user, image);
-   * }
-   * }</pre>
-   *
-   * @param parent
-   * @param user
-   * @param image
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Blurb createBlurb(String parent, UserName user, ByteString image) {
+  public final Blurb createBlurb(String parent, String text) {
     CreateBlurbRequest request =
         CreateBlurbRequest.newBuilder()
             .setParent(parent)
-            .setBlurb(
-                Blurb.newBuilder()
-                    .setUser(user == null ? null : user.toString())
-                    .setImage(image)
-                    .build())
-            .build();
-    return createBlurb(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   UserName user = UserName.of("[USER]");
-   *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, user, text);
-   * }
-   * }</pre>
-   *
-   * @param parent
-   * @param user
-   * @param text
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Blurb createBlurb(String parent, UserName user, String text) {
-    CreateBlurbRequest request =
-        CreateBlurbRequest.newBuilder()
-            .setParent(parent)
-            .setBlurb(
-                Blurb.newBuilder()
-                    .setUser(user == null ? null : user.toString())
-                    .setText(text)
-                    .build())
-            .build();
-    return createBlurb(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   String user = UserName.of("[USER]").toString();
-   *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, user, image);
-   * }
-   * }</pre>
-   *
-   * @param parent
-   * @param user
-   * @param image
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Blurb createBlurb(String parent, String user, ByteString image) {
-    CreateBlurbRequest request =
-        CreateBlurbRequest.newBuilder()
-            .setParent(parent)
-            .setBlurb(Blurb.newBuilder().setUser(user).setImage(image).build())
-            .build();
-    return createBlurb(request);
-  }
-
-  // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /**
-   * Sample code:
-   *
-   * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   String user = UserName.of("[USER]").toString();
-   *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, user, text);
-   * }
-   * }</pre>
-   *
-   * @param parent
-   * @param user
-   * @param text
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
-   */
-  public final Blurb createBlurb(String parent, String user, String text) {
-    CreateBlurbRequest request =
-        CreateBlurbRequest.newBuilder()
-            .setParent(parent)
-            .setBlurb(Blurb.newBuilder().setUser(user).setText(text).build())
+            .setBlurb(Blurb.newBuilder().setText(text).build())
             .build();
     return createBlurb(request);
   }

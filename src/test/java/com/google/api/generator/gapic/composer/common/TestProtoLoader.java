@@ -179,14 +179,6 @@ public class TestProtoLoader {
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
-
-    FileDescriptor identityFileDescriptor = IdentityOuterClass.getDescriptor();
-    Map<String, ResourceName> identityResourceNames = Parser
-        .parseResourceNames(identityFileDescriptor);
-
-    resourceNames.put("showcase.googleapis.com/User",
-        identityResourceNames.get("showcase.googleapis.com/User"));
-
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(

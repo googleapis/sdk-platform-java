@@ -92,8 +92,8 @@ service Messaging {
         body: "*"
       }
     };
-    option (google.api.method_signature) = "parent,blurb.user,blurb.text";
-    option (google.api.method_signature) = "parent,blurb.user,blurb.image";
+    option (google.api.method_signature) = "parent,blurb.text";
+    option (google.api.method_signature) = "parent,blurb.image";
   }
 
   // Retrieves the Blurb with the given resource name.
@@ -291,12 +291,6 @@ message Blurb {
 
   // The resource name of the chat room.
   string name = 1;
-
-  // The resource name of the blurb's author.
-  string user = 2 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/User",
-    (google.api.field_behavior) = REQUIRED
-  ];
 
   oneof content {
     // The textual content of this blurb.
