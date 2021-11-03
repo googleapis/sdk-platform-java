@@ -20,5 +20,5 @@ If the actual generated Java source files are not identical with the goldens fil
 update the goldens using source files. Run the command below to overwrite the goldens files in `redis` folder.
 
 ```sh
-bazel run //test/integration:redis_goldens_update
+bazel run //test/integration:redis_update
 ```

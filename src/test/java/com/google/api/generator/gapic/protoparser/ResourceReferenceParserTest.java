@@ -15,13 +15,11 @@
 package com.google.api.generator.gapic.protoparser;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.ResourceName;
-import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
@@ -116,49 +114,6 @@ public class ResourceReferenceParserTest {
             new HashMap<String, ResourceName>());
     assertTrue(parentResourceNameOpt.isPresent());
     assertEquals("projects/{project}", parentResourceNameOpt.get().patterns().get(0));
-  }
-
-  @Test
-  public void parseParentPattern_basic() {
-    String parentPattern = "projects/{project}";
-    String pattern = String.format("%s/folders/{folder}", parentPattern);
-    assertEquals(parentPattern, ResourceReferenceParser.parseParentPattern(pattern).get());
-  }
-
-  @Test
-  public void parseParentPattern_wildcard() {
-    Optional<String> parentPatternOpt =
-        ResourceReferenceParser.parseParentPattern(ResourceNameConstants.WILDCARD_PATTERN);
-    assertFalse(parentPatternOpt.isPresent());
-  }
-
-  @Test
-  public void parseParentPattern_deletedTopicLiteral() {
-    Optional<String> parentPatternOpt =
-        ResourceReferenceParser.parseParentPattern(ResourceNameConstants.DELETED_TOPIC_LITERAL);
-    assertFalse(parentPatternOpt.isPresent());
-  }
-
-  @Test
-  public void parseParentPattern_noParents() {
-    Optional<String> parentPatternOpt =
-        ResourceReferenceParser.parseParentPattern("projects/{project}");
-    assertFalse(parentPatternOpt.isPresent());
-  }
-
-  @Test
-  public void parseParentPattern_insufficientPathComponents() {
-    Optional<String> parentPatternOpt =
-        ResourceReferenceParser.parseParentPattern("projects/foobars/{foobar}");
-    assertFalse(parentPatternOpt.isPresent());
-  }
-
-  @Test
-  public void parseParentPattern_lastComponentIsNotAVariable() {
-    Optional<String> parentPatternOpt =
-        ResourceReferenceParser.parseParentPattern("projects/{project}/foobars");
-    assertTrue(parentPatternOpt.isPresent());
-    assertEquals("projects/{project}", parentPatternOpt.get());
   }
 
   @Test
