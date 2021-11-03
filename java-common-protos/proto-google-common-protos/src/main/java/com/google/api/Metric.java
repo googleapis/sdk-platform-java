@@ -302,7 +302,7 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
     com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
         output, internalGetLabels(), LabelsDefaultEntryHolder.defaultEntry, 2);
-    if (!getTypeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, type_);
     }
     unknownFields.writeTo(output);
@@ -324,7 +324,7 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
               .build();
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, labels__);
     }
-    if (!getTypeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, type_);
     }
     size += unknownFields.getSerializedSize();

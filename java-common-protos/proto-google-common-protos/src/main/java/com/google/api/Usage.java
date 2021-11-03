@@ -379,7 +379,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < rules_.size(); i++) {
       output.writeMessage(6, rules_.get(i));
     }
-    if (!getProducerNotificationChannelBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerNotificationChannel_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 7, producerNotificationChannel_);
     }
     unknownFields.writeTo(output);
@@ -402,7 +402,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < rules_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, rules_.get(i));
     }
-    if (!getProducerNotificationChannelBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerNotificationChannel_)) {
       size +=
           com.google.protobuf.GeneratedMessageV3.computeStringSize(7, producerNotificationChannel_);
     }

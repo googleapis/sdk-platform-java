@@ -192,7 +192,7 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getCanonicalScopesBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(canonicalScopes_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, canonicalScopes_);
     }
     unknownFields.writeTo(output);
@@ -204,7 +204,7 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
     if (size != -1) return size;
 
     size = 0;
-    if (!getCanonicalScopesBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(canonicalScopes_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, canonicalScopes_);
     }
     size += unknownFields.getSerializedSize();

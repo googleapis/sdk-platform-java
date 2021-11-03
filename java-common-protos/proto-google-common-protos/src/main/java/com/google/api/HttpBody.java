@@ -38,9 +38,10 @@ package com.google.api;
  *       google.api.HttpBody http_body = 2;
  *     }
  *     service ResourceService {
- *       rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
- *       rpc UpdateResource(google.api.HttpBody) returns
- *       (google.protobuf.Empty);
+ *       rpc GetResource(GetResourceRequest)
+ *         returns (google.api.HttpBody);
+ *       rpc UpdateResource(google.api.HttpBody)
+ *         returns (google.protobuf.Empty);
  *     }
  * Example with streaming methods:
  *     service CaldavService {
@@ -311,7 +312,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getContentTypeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentType_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, contentType_);
     }
     if (!data_.isEmpty()) {
@@ -329,7 +330,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!getContentTypeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentType_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, contentType_);
     }
     if (!data_.isEmpty()) {
@@ -494,9 +495,10 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *       google.api.HttpBody http_body = 2;
    *     }
    *     service ResourceService {
-   *       rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
-   *       rpc UpdateResource(google.api.HttpBody) returns
-   *       (google.protobuf.Empty);
+   *       rpc GetResource(GetResourceRequest)
+   *         returns (google.api.HttpBody);
+   *       rpc UpdateResource(google.api.HttpBody)
+   *         returns (google.protobuf.Empty);
    *     }
    * Example with streaming methods:
    *     service CaldavService {

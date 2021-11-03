@@ -223,7 +223,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getCurrencyCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(currencyCode_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, currencyCode_);
     }
     if (units_ != 0L) {
@@ -241,7 +241,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!getCurrencyCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(currencyCode_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, currencyCode_);
     }
     if (units_ != 0L) {

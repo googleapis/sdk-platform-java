@@ -250,7 +250,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < stackEntries_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, stackEntries_.getRaw(i));
     }
-    if (!getDetailBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(detail_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, detail_);
     }
     unknownFields.writeTo(output);
@@ -270,7 +270,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       size += dataSize;
       size += 1 * getStackEntriesList().size();
     }
-    if (!getDetailBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(detail_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, detail_);
     }
     size += unknownFields.getSerializedSize();

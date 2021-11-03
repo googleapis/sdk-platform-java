@@ -487,13 +487,13 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getCallerIpBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerIp_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, callerIp_);
     }
-    if (!getCallerSuppliedUserAgentBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerSuppliedUserAgent_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, callerSuppliedUserAgent_);
     }
-    if (!getCallerNetworkBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerNetwork_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, callerNetwork_);
     }
     if (requestAttributes_ != null) {
@@ -511,13 +511,13 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     if (size != -1) return size;
 
     size = 0;
-    if (!getCallerIpBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerIp_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, callerIp_);
     }
-    if (!getCallerSuppliedUserAgentBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerSuppliedUserAgent_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, callerSuppliedUserAgent_);
     }
-    if (!getCallerNetworkBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerNetwork_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, callerNetwork_);
     }
     if (requestAttributes_ != null) {

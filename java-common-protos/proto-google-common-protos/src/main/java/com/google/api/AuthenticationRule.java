@@ -349,7 +349,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getSelectorBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
     }
     if (oauth_ != null) {
@@ -370,7 +370,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     if (size != -1) return size;
 
     size = 0;
-    if (!getSelectorBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
     }
     if (oauth_ != null) {
