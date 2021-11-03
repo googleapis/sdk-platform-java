@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "08b5c8545ed6f29a11ae4d3f061df47f40234bd1"
+        "sha": "fe2eae8c4d902c190c6e24bd02a41dc916f36db4"
       }
     },
     {
@@ -19,7 +19,7 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "a4be3384ccb92364795d981f2863f6986fcee620"
+        "sha": "d45942be8066ad57bd0509f4a16e1fac78ecc50f"
       }
     }
   ],
@@ -46,7 +46,6 @@
     ".kokoro/common.sh",
     ".kokoro/continuous/common.cfg",
     ".kokoro/continuous/java8.cfg",
-    ".kokoro/dependencies.sh",
     ".kokoro/nightly/common.cfg",
     ".kokoro/nightly/integration.cfg",
     ".kokoro/nightly/java11.cfg",
@@ -59,6 +58,7 @@
     ".kokoro/presubmit/clirr.cfg",
     ".kokoro/presubmit/common.cfg",
     ".kokoro/presubmit/dependencies.cfg",
+    ".kokoro/presubmit/graalvm-native.cfg",
     ".kokoro/presubmit/integration.cfg",
     ".kokoro/presubmit/java11.cfg",
     ".kokoro/presubmit/java7.cfg",
