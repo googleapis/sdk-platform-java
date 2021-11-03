@@ -17,7 +17,7 @@ package com.google.api.generator.gapic.protoparser;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.api.generator.gapic.utils.ResourceNameConstants;
+import com.google.api.generator.gapic.utils.ResourceReferenceUtils;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -108,7 +108,7 @@ public class ResourceReferenceParser {
       String resourceTypeString,
       @Nullable String description,
       Map<String, ResourceName> patternsToResourceNames) {
-    Optional<String> parentPatternOpt = parseParentPattern(pattern);
+    Optional<String> parentPatternOpt = ResourceReferenceUtils.parseParentPattern(pattern);
     if (!parentPatternOpt.isPresent()) {
       return Optional.empty();
     }
@@ -176,31 +176,6 @@ public class ResourceReferenceParser {
     patternsToResourceNames.put(parentPattern, parentResourceName);
 
     return Optional.of(parentResourceName);
-  }
-
-  @VisibleForTesting
-  static Optional<String> parseParentPattern(String pattern) {
-    String[] tokens = pattern.split(SLASH);
-    String lastToken = tokens[tokens.length - 1];
-    if (lastToken.equals(ResourceNameConstants.DELETED_TOPIC_LITERAL)
-        || lastToken.equals(ResourceNameConstants.WILDCARD_PATTERN)) {
-      return Optional.empty();
-    }
-
-    int lastTokenIndex = tokens.length - 2;
-    int minLengthWithParent = 4;
-    // Singleton patterns, e.g. projects/{project}/agent.
-    if (!lastToken.contains("{")) {
-      minLengthWithParent = 3;
-      lastTokenIndex = tokens.length - 1;
-    }
-
-    // No fully-formed parent. Expected: ancestors/{ancestor}/childNodes/{child_node}.
-    if (tokens.length < minLengthWithParent) {
-      return Optional.empty();
-    }
-
-    return Optional.of(String.join(SLASH, Arrays.asList(tokens).subList(0, lastTokenIndex)));
   }
 
   @VisibleForTesting

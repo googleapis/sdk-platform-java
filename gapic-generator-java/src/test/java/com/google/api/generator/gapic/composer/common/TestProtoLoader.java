@@ -37,6 +37,7 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
+import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import google.cloud.CommonResources;
@@ -51,6 +52,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class TestProtoLoader {
+
   private static final TestProtoLoader INSTANCE =
       new TestProtoLoader(Transport.GRPC, "src/test/java/com/google/api/generator/gapic/testdata/");
   private final String testFilesDirectory;
@@ -153,6 +155,27 @@ public class TestProtoLoader {
     FileDescriptor fileDescriptor = IdentityOuterClass.getDescriptor();
     ServiceDescriptor identityService = fileDescriptor.getServices().get(0);
     assertEquals(identityService.getName(), "Identity");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseShowcaseMessaging() {
+    FileDescriptor fileDescriptor = MessagingOuterClass.getDescriptor();
+    ServiceDescriptor messagingService = fileDescriptor.getServices().get(0);
+    assertEquals(messagingService.getName(), "Messaging");
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);

@@ -1293,6 +1293,7 @@ public class ServiceClientSampleCodeComposer {
                 .setExprReferenceExpr(
                     DefaultValueComposer.createDefaultValue(
                         resourceNames.get(arg.field().resourceReference().resourceTypeString()),
+                        arg.field().resourceReference().isChildType(),
                         resourceNameList,
                         arg.field().name()))
                 .setMethodName("toString")
