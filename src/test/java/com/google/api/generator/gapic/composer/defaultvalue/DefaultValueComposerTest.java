@@ -161,6 +161,7 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
+            false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
             "ignored");
     expr.accept(writerVisitor);
@@ -177,6 +178,7 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
+            false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
             "ignored");
     expr.accept(writerVisitor);
@@ -194,6 +196,7 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
+            false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
             "ignored");
     expr.accept(writerVisitor);
@@ -216,6 +219,7 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
+            false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
             "ignored");
     expr.accept(writerVisitor);
@@ -236,6 +240,7 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValueResourceHelper(
             resourceName,
+            false,
             Collections.emptyList(),
             fallbackField,
             /* allowAnonResourceNameClass = */ false);
@@ -257,7 +262,7 @@ public class DefaultValueComposerTest {
     String fallbackField = "foobar";
     Expr expr =
         DefaultValueComposer.createDefaultValue(
-            resourceName, Collections.emptyList(), fallbackField);
+            resourceName, false, Collections.emptyList(), fallbackField);
     expr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(

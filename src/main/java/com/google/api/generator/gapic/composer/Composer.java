@@ -152,7 +152,7 @@ public class Composer {
     services.forEach(
         s -> {
           if (context.transport() == Transport.REST) {
-            // REST transport tests donot not use mock services.
+            // REST transport tests do not use mock services.
           } else if (context.transport() == Transport.GRPC) {
             clazzes.add(MockServiceClassComposer.instance().generate(context, s));
             clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
