@@ -29,11 +29,8 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
-import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.Variable;
-import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -57,7 +54,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceStubClassComposer implements ClassComposer {
-  private static final String DOT = ".";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private final TransportContext transportContext;
@@ -126,7 +122,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
 
     if (service.operationPollingMethod() != null) {
       methods.addAll(createLongRunningClientGetters(typeStore));
-     }
+    }
     methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
     return methods;
@@ -149,8 +145,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return javaMethods;
   }
 
-  private MethodDefinition createOperationCallableGetter(
-      Method method, TypeStore typeStore) {
+  private MethodDefinition createOperationCallableGetter(Method method, TypeStore typeStore) {
     return createCallableGetterHelper(method, typeStore, true, false);
   }
 
@@ -210,7 +205,8 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     return createCallableGetterMethodDefinition(returnType, methodName, annotations, typeStore);
   }
 
-  private List<MethodDefinition> createOperationsStubGetters(TypeStore typeStore, TypeNode operationsStubType) {
+  private List<MethodDefinition> createOperationsStubGetters(
+      TypeStore typeStore, TypeNode operationsStubType) {
     List<MethodDefinition> getters = new ArrayList<>();
 
     Iterator<String> operationStubNameIt =
@@ -220,24 +216,27 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     while (operationStubNameIt.hasNext() && operationStubTypeIt.hasNext()) {
       String methodName =
           String.format("get%s", JavaStyle.toUpperCamelCase(operationStubNameIt.next()));
-      //TODO: refactor this
+      // TODO: refactor this
       TypeNode actualOperationsStubType = operationStubTypeIt.next();
       if (operationsStubType != null) {
         actualOperationsStubType = operationsStubType;
       }
 
-      getters.add(createOperationsStubGetterMethodDefinition(actualOperationsStubType, methodName, typeStore));
+      getters.add(
+          createOperationsStubGetterMethodDefinition(
+              actualOperationsStubType, methodName, typeStore));
     }
 
     return getters;
   }
 
   private List<MethodDefinition> createLongRunningClientGetters(TypeStore typeStore) {
-    return ImmutableList.of(createCallableGetterMethodDefinition(
-        TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)),
-        "longRunningClient",
-        ImmutableList.of(AnnotationNode.withType(typeStore.get("BetaApi"))),
-        typeStore));
+    return ImmutableList.of(
+        createCallableGetterMethodDefinition(
+            TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)),
+            "longRunningClient",
+            ImmutableList.of(AnnotationNode.withType(typeStore.get("BetaApi"))),
+            typeStore));
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethodOverrides() {
@@ -283,7 +282,10 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
   }
 
   protected MethodDefinition createCallableGetterMethodDefinition(
-      TypeNode returnType, String methodName, List<AnnotationNode> annotations, TypeStore typeStore) {
+      TypeNode returnType,
+      String methodName,
+      List<AnnotationNode> annotations,
+      TypeStore typeStore) {
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setAnnotations(annotations)
@@ -313,9 +315,5 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
                         .setMessageExpr(String.format("Not implemented: %s()", methodName))
                         .build())))
         .build();
-  }
-
-  private static String getClientClassName(Service service) {
-    return String.format("%sClient", service.overriddenName());
   }
 }
