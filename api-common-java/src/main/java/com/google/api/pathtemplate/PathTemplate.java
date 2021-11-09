@@ -69,7 +69,7 @@ import javax.annotation.Nullable;
  * <p>
  * Here is an example for a template using simple variables:
  *
- * <pre>
+ * <pre>{@code
  *   PathTemplate template = PathTemplate.create("v1/shelves/{shelf}/books/{book}");
  *   assert template.matches("v2/shelves") == false;
  *   Map&lt;String, String&gt; values = template.match("v1/shelves/s1/books/b1");
@@ -78,22 +78,22 @@ import javax.annotation.Nullable;
  *   expectedValues.put("book", "b1");
  *   assert values.equals(expectedValues);
  *   assert template.instantiate(values).equals("v1/shelves/s1/books/b1");
- * </pre>
+ * }</pre>
  *
  * Templates can use variables which match sub-paths. Example:
  *
- * <pre>
+ * <pre>{@code
  *   PathTemplate template = PathTemplate.create("v1/{name=shelves/*&#47;books/*}"};
  *   assert template.match("v1/shelves/books/b1") == null;
  *   Map&lt;String, String&gt; expectedValues = new HashMap&lt;&gt;();
  *   expectedValues.put("name", "shelves/s1/books/b1");
  *   assert template.match("v1/shelves/s1/books/b1").equals(expectedValues);
- * </pre>
+ * }</pre>
  *
  * Path templates can also be used with only wildcards. Each wildcard is associated with an implicit
  * variable {@code $n}, where n is the zero-based position of the wildcard. Example:
  *
- * <pre>
+ * <pre>{@code
  *   PathTemplate template = PathTemplate.create("shelves/*&#47;books/*"};
  *   assert template.match("shelves/books/b1") == null;
  *   Map&lt;String, String&gt; values = template.match("v1/shelves/s1/books/b1");
@@ -101,14 +101,14 @@ import javax.annotation.Nullable;
  *   expectedValues.put("$0", s1");
  *   expectedValues.put("$1", "b1");
  *   assert values.equals(expectedValues);
- * </pre>
+ * }</pre>
  *
  * Paths input to matching can use URL relative syntax to indicate a host name by prefixing the host
  * name, as in {@code //somewhere.io/some/path}. The host name is matched into the special variable
  * {@link #HOSTNAME_VAR}. Patterns are agnostic about host names, and the same pattern can be used
  * for URL relative syntax and simple path syntax:
  *
- * <pre>
+ * <pre>{@code
  *   PathTemplate template = PathTemplate.create("shelves/*"};
  *   Map&lt;String, String&gt; expectedValues = new HashMap&lt;&gt;();
  *   expectedValues.put(PathTemplate.HOSTNAME_VAR, "//somewhere.io");
@@ -117,7 +117,7 @@ import javax.annotation.Nullable;
  *   expectedValues.clear();
  *   expectedValues.put("$0", s1");
  *   assert template.match("shelves/s1").equals(expectedValues);
- * </pre>
+ * }</pre>
  *
  * For the representation of a <em>resource name</em> see {@link TemplatedResourceName}, which is
  * based on path templates.
@@ -347,10 +347,10 @@ public class PathTemplate {
   /**
    * Returns a path template for the sub-path of the given variable. Example:
    *
-   * <pre>
+   * <pre>{@code
    *   PathTemplate template = PathTemplate.create("v1/{name=shelves/*&#47;books/*}");
    *   assert template.subTemplate("name").toString().equals("shelves/*&#47;books/*");
-   * </pre>
+   * }</pre>
    *
    * The returned template will never have named variables, but only wildcards, which are dealt with
    * in matching and instantiation using '$n'-variables. See the documentation of
@@ -446,7 +446,7 @@ public class PathTemplate {
    * For free wildcards in the template, the matching process creates variables named '$n', where
    * 'n' is the wildcard's position in the template (starting at n=0). For example:
    *
-   * <pre>
+   * <pre>{@code
    *   PathTemplate template = PathTemplate.create("shelves/*&#47;books/*");
    *   Map&lt;String, String&gt; expectedValues = new HashMap&lt;&gt;();
    *   expectedValues.put("$0", "s1");
@@ -459,7 +459,7 @@ public class PathTemplate {
    *   expectedValues.put("$1", "b1");
    *   assert template.validatedMatch("//somewhere.io/shelves/s1/books/b2", "User exception string")
    *              .equals(expectedValues);
-   * </pre>
+   * }</pre>
    *
    * All matched values will be properly unescaped using URL encoding rules (so long as URL encoding
    * has not been disabled by the {@link #createWithoutUrlEncoding} method).
@@ -498,7 +498,7 @@ public class PathTemplate {
    * For free wildcards in the template, the matching process creates variables named '$n', where
    * 'n' is the wildcard's position in the template (starting at n=0). For example:
    *
-   * <pre>
+   * <pre>{@code
    *   PathTemplate template = PathTemplate.create("shelves/*&#47;books/*");
    *   Map&lt;String, String&gt; expectedValues = new HashMap&lt;&gt;();
    *   expectedValues.put("$0", "s1");
@@ -509,7 +509,7 @@ public class PathTemplate {
    *   expectedValues.put("$0", "s1");
    *   expectedValues.put("$1", "b1");
    *   assert template.match("//somewhere.io/shelves/s1/books/b2").equals(expectedValues);
-   * </pre>
+   * }</pre>
    *
    * All matched values will be properly unescaped using URL encoding rules (so long as URL encoding
    * has not been disabled by the {@link #createWithoutUrlEncoding} method).
@@ -523,13 +523,13 @@ public class PathTemplate {
    * Matches the path, where the first segment is interpreted as the host name regardless of whether
    * it starts with '//' or not. Example:
    *
-   * <pre>
+   * <pre>{@code
    *   Map&lt;String, String&gt; expectedValues = new HashMap&lt;&gt;();
    *   expectedValues.put(HOSTNAME_VAR, "//somewhere.io");
    *   expectedValues.put("name", "shelves/s1");
    *   assert template("{name=shelves/*}").matchFromFullName("somewhere.io/shelves/s1")
    *            .equals(expectedValues);
-   * </pre>
+   * }</pre>
    */
   @Nullable
   public Map<String, String> matchFromFullName(String path) {
@@ -721,12 +721,12 @@ public class PathTemplate {
    * Same like {@link #instantiate(Map)} but allows for unbound variables, which are substituted
    * using their original syntax. Example:
    *
-   * <pre>
+   * <pre>{@code
    *   PathTemplate template = PathTemplate.create("v1/shelves/{shelf}/books/{book}");
    *   Map&lt;String, String&gt; partialMap = new HashMap&lt;&gt;();
    *   partialMap.put("shelf", "s1");
    *   assert template.instantiatePartial(partialMap).equals("v1/shelves/s1/books/{book}");
-   * </pre>
+   * }</pre>
    *
    * The result of this call can be used to create a new template.
    */
