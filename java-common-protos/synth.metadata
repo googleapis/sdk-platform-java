@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "fe2eae8c4d902c190c6e24bd02a41dc916f36db4"
+        "sha": "a561b16a28c820e91c7780de8ac2b9c1be49c2bb"
       }
     },
     {
@@ -19,7 +19,7 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "d45942be8066ad57bd0509f4a16e1fac78ecc50f"
+        "sha": "79d7936da1cf04ce1b4ead7d2c10dccccd852caf"
       }
     }
   ],
@@ -375,6 +375,7 @@
     "proto-google-common-protos/src/main/proto/google/api/monitoring.proto",
     "proto-google-common-protos/src/main/proto/google/api/quota.proto",
     "proto-google-common-protos/src/main/proto/google/api/resource.proto",
+    "proto-google-common-protos/src/main/proto/google/api/routing.proto",
     "proto-google-common-protos/src/main/proto/google/api/service.proto",
     "proto-google-common-protos/src/main/proto/google/api/source_info.proto",
     "proto-google-common-protos/src/main/proto/google/api/system_parameter.proto",

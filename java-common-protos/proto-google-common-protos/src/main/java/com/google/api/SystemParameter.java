@@ -293,13 +293,13 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(httpHeader_)) {
+    if (!getHttpHeaderBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, httpHeader_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(urlQueryParameter_)) {
+    if (!getUrlQueryParameterBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, urlQueryParameter_);
     }
     unknownFields.writeTo(output);
@@ -311,13 +311,13 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(httpHeader_)) {
+    if (!getHttpHeaderBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, httpHeader_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(urlQueryParameter_)) {
+    if (!getUrlQueryParameterBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, urlQueryParameter_);
     }
     size += unknownFields.getSerializedSize();

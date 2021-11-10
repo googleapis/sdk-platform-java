@@ -559,22 +559,22 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
+    if (!getPrincipalEmailBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, principalEmail_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authoritySelector_)) {
+    if (!getAuthoritySelectorBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, authoritySelector_);
     }
     if (thirdPartyPrincipal_ != null) {
       output.writeMessage(4, getThirdPartyPrincipal());
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceAccountKeyName_)) {
+    if (!getServiceAccountKeyNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, serviceAccountKeyName_);
     }
     for (int i = 0; i < serviceAccountDelegationInfo_.size(); i++) {
       output.writeMessage(6, serviceAccountDelegationInfo_.get(i));
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
+    if (!getPrincipalSubjectBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 8, principalSubject_);
     }
     unknownFields.writeTo(output);
@@ -586,16 +586,16 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
+    if (!getPrincipalEmailBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, principalEmail_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authoritySelector_)) {
+    if (!getAuthoritySelectorBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, authoritySelector_);
     }
     if (thirdPartyPrincipal_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getThirdPartyPrincipal());
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceAccountKeyName_)) {
+    if (!getServiceAccountKeyNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, serviceAccountKeyName_);
     }
     for (int i = 0; i < serviceAccountDelegationInfo_.size(); i++) {
@@ -603,7 +603,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
           com.google.protobuf.CodedOutputStream.computeMessageSize(
               6, serviceAccountDelegationInfo_.get(i));
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
+    if (!getPrincipalSubjectBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, principalSubject_);
     }
     size += unknownFields.getSerializedSize();

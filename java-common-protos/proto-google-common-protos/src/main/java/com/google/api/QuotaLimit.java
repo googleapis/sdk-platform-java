@@ -710,7 +710,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, description_);
     }
     if (defaultLimit_ != 0L) {
@@ -719,24 +719,24 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     if (maxLimit_ != 0L) {
       output.writeInt64(4, maxLimit_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(duration_)) {
+    if (!getDurationBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, duration_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, name_);
     }
     if (freeTier_ != 0L) {
       output.writeInt64(7, freeTier_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(metric_)) {
+    if (!getMetricBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 8, metric_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(unit_)) {
+    if (!getUnitBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 9, unit_);
     }
     com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
         output, internalGetValues(), ValuesDefaultEntryHolder.defaultEntry, 10);
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
+    if (!getDisplayNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 12, displayName_);
     }
     unknownFields.writeTo(output);
@@ -748,7 +748,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, description_);
     }
     if (defaultLimit_ != 0L) {
@@ -757,19 +757,19 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     if (maxLimit_ != 0L) {
       size += com.google.protobuf.CodedOutputStream.computeInt64Size(4, maxLimit_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(duration_)) {
+    if (!getDurationBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, duration_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, name_);
     }
     if (freeTier_ != 0L) {
       size += com.google.protobuf.CodedOutputStream.computeInt64Size(7, freeTier_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(metric_)) {
+    if (!getMetricBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, metric_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(unit_)) {
+    if (!getUnitBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, unit_);
     }
     for (java.util.Map.Entry<java.lang.String, java.lang.Long> entry :
@@ -782,7 +782,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
               .build();
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(10, values__);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
+    if (!getDisplayNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, displayName_);
     }
     size += unknownFields.getSerializedSize();

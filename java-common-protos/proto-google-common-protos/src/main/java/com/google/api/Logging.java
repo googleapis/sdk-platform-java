@@ -504,7 +504,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       for (int i = 0; i < logs_.size(); i++) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, logs_.getRaw(i));
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(monitoredResource_)) {
+      if (!getMonitoredResourceBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, monitoredResource_);
       }
       unknownFields.writeTo(output);
@@ -524,7 +524,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         size += dataSize;
         size += 1 * getLogsList().size();
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(monitoredResource_)) {
+      if (!getMonitoredResourceBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, monitoredResource_);
       }
       size += unknownFields.getSerializedSize();

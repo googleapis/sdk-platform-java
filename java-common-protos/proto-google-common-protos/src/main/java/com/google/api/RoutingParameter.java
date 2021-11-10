@@ -319,10 +319,10 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(field_)) {
+    if (!getFieldBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, field_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(pathTemplate_)) {
+    if (!getPathTemplateBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, pathTemplate_);
     }
     unknownFields.writeTo(output);
@@ -334,10 +334,10 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(field_)) {
+    if (!getFieldBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, field_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(pathTemplate_)) {
+    if (!getPathTemplateBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, pathTemplate_);
     }
     size += unknownFields.getSerializedSize();

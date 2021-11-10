@@ -373,16 +373,16 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(expression_)) {
+    if (!getExpressionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, expression_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
+    if (!getTitleBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, description_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(location_)) {
+    if (!getLocationBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, location_);
     }
     unknownFields.writeTo(output);
@@ -394,16 +394,16 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(expression_)) {
+    if (!getExpressionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, expression_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
+    if (!getTitleBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, description_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(location_)) {
+    if (!getLocationBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, location_);
     }
     size += unknownFields.getSerializedSize();

@@ -390,7 +390,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     if (inCase_ == 2) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, in_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(valuePrefix_)) {
+    if (!getValuePrefixBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, valuePrefix_);
     }
     unknownFields.writeTo(output);
@@ -408,7 +408,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     if (inCase_ == 2) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, in_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(valuePrefix_)) {
+    if (!getValuePrefixBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, valuePrefix_);
     }
     size += unknownFields.getSerializedSize();

@@ -441,10 +441,10 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
+      if (!getRegionCodeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, regionCode_);
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(number_)) {
+      if (!getNumberBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, number_);
       }
       unknownFields.writeTo(output);
@@ -456,10 +456,10 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       if (size != -1) return size;
 
       size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
+      if (!getRegionCodeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, regionCode_);
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(number_)) {
+      if (!getNumberBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, number_);
       }
       size += unknownFields.getSerializedSize();
@@ -1346,7 +1346,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     if (kindCase_ == 2) {
       output.writeMessage(2, (com.google.type.PhoneNumber.ShortCode) kind_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(extension_)) {
+    if (!getExtensionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, extension_);
     }
     unknownFields.writeTo(output);
@@ -1366,7 +1366,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedOutputStream.computeMessageSize(
               2, (com.google.type.PhoneNumber.ShortCode) kind_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(extension_)) {
+    if (!getExtensionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, extension_);
     }
     size += unknownFields.getSerializedSize();

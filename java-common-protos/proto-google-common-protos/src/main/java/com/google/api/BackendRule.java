@@ -830,10 +830,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
+    if (!getSelectorBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
+    if (!getAddressBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, address_);
     }
     if (deadline_ != 0D) {
@@ -855,7 +855,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (authenticationCase_ == 8) {
       output.writeBool(8, (boolean) ((java.lang.Boolean) authentication_));
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
+    if (!getProtocolBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 9, protocol_);
     }
     unknownFields.writeTo(output);
@@ -867,10 +867,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
+    if (!getSelectorBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
+    if (!getAddressBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, address_);
     }
     if (deadline_ != 0D) {
@@ -894,7 +894,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedOutputStream.computeBoolSize(
               8, (boolean) ((java.lang.Boolean) authentication_));
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
+    if (!getProtocolBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, protocol_);
     }
     size += unknownFields.getSerializedSize();

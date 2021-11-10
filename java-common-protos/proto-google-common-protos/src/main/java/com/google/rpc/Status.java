@@ -293,7 +293,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     if (code_ != 0) {
       output.writeInt32(1, code_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
+    if (!getMessageBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
     }
     for (int i = 0; i < details_.size(); i++) {
@@ -311,7 +311,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     if (code_ != 0) {
       size += com.google.protobuf.CodedOutputStream.computeInt32Size(1, code_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
+    if (!getMessageBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
     }
     for (int i = 0; i < details_.size(); i++) {

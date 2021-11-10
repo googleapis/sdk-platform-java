@@ -444,7 +444,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
+      if (!getPrincipalEmailBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, principalEmail_);
       }
       if (serviceMetadata_ != null) {
@@ -459,7 +459,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       if (size != -1) return size;
 
       size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
+      if (!getPrincipalEmailBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, principalEmail_);
       }
       if (serviceMetadata_ != null) {
@@ -2170,7 +2170,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       output.writeMessage(
           2, (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
+    if (!getPrincipalSubjectBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, principalSubject_);
     }
     unknownFields.writeTo(output);
@@ -2194,7 +2194,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
               2,
               (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
+    if (!getPrincipalSubjectBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, principalSubject_);
     }
     size += unknownFields.getSerializedSize();

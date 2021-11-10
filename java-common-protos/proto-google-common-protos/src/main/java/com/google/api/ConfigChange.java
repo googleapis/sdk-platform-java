@@ -440,13 +440,13 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(element_)) {
+    if (!getElementBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, element_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(oldValue_)) {
+    if (!getOldValueBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, oldValue_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(newValue_)) {
+    if (!getNewValueBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, newValue_);
     }
     if (changeType_ != com.google.api.ChangeType.CHANGE_TYPE_UNSPECIFIED.getNumber()) {
@@ -464,13 +464,13 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(element_)) {
+    if (!getElementBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, element_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(oldValue_)) {
+    if (!getOldValueBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, oldValue_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(newValue_)) {
+    if (!getNewValueBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, newValue_);
     }
     if (changeType_ != com.google.api.ChangeType.CHANGE_TYPE_UNSPECIFIED.getNumber()) {

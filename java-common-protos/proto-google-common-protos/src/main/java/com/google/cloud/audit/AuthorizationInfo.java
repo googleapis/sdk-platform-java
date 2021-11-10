@@ -340,10 +340,10 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resource_)) {
+    if (!getResourceBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, resource_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(permission_)) {
+    if (!getPermissionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, permission_);
     }
     if (granted_ != false) {
@@ -361,10 +361,10 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resource_)) {
+    if (!getResourceBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, resource_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(permission_)) {
+    if (!getPermissionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, permission_);
     }
     if (granted_ != false) {

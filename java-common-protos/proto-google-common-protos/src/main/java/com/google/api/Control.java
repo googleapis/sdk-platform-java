@@ -175,7 +175,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(environment_)) {
+    if (!getEnvironmentBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, environment_);
     }
     unknownFields.writeTo(output);
@@ -187,7 +187,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(environment_)) {
+    if (!getEnvironmentBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, environment_);
     }
     size += unknownFields.getSerializedSize();

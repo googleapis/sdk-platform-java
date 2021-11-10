@@ -252,10 +252,10 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
+    if (!getSelectorBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(restriction_)) {
+    if (!getRestrictionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, restriction_);
     }
     unknownFields.writeTo(output);
@@ -267,10 +267,10 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
+    if (!getSelectorBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(restriction_)) {
+    if (!getRestrictionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, restriction_);
     }
     size += unknownFields.getSerializedSize();

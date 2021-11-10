@@ -373,7 +373,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
     for (int i = 0; i < aliases_.size(); i++) {
@@ -382,7 +382,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     if (allowCors_ != false) {
       output.writeBool(5, allowCors_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(target_)) {
+    if (!getTargetBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 101, target_);
     }
     unknownFields.writeTo(output);
@@ -394,7 +394,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
     {
@@ -408,7 +408,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     if (allowCors_ != false) {
       size += com.google.protobuf.CodedOutputStream.computeBoolSize(5, allowCors_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(target_)) {
+    if (!getTargetBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(101, target_);
     }
     size += unknownFields.getSerializedSize();

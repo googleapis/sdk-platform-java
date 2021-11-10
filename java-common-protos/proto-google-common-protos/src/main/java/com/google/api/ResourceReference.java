@@ -274,10 +274,10 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
+    if (!getTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(childType_)) {
+    if (!getChildTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, childType_);
     }
     unknownFields.writeTo(output);
@@ -289,10 +289,10 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
+    if (!getTypeBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(childType_)) {
+    if (!getChildTypeBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, childType_);
     }
     size += unknownFields.getSerializedSize();

@@ -2749,7 +2749,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
     for (int i = 0; i < labels_.size(); i++) {
@@ -2763,16 +2763,16 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         != com.google.api.MetricDescriptor.ValueType.VALUE_TYPE_UNSPECIFIED.getNumber()) {
       output.writeEnum(4, valueType_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(unit_)) {
+    if (!getUnitBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, unit_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, description_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
+    if (!getDisplayNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 7, displayName_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
+    if (!getTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 8, type_);
     }
     if (metadata_ != null) {
@@ -2794,7 +2794,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
+    if (!getNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
     for (int i = 0; i < labels_.size(); i++) {
@@ -2808,16 +2808,16 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         != com.google.api.MetricDescriptor.ValueType.VALUE_TYPE_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(4, valueType_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(unit_)) {
+    if (!getUnitBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, unit_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, description_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
+    if (!getDisplayNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, displayName_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
+    if (!getTypeBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, type_);
     }
     if (metadata_ != null) {

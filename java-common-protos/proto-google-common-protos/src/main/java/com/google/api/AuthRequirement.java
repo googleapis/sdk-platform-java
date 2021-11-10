@@ -258,10 +258,10 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(providerId_)) {
+    if (!getProviderIdBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, providerId_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(audiences_)) {
+    if (!getAudiencesBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, audiences_);
     }
     unknownFields.writeTo(output);
@@ -273,10 +273,10 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(providerId_)) {
+    if (!getProviderIdBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, providerId_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(audiences_)) {
+    if (!getAudiencesBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, audiences_);
     }
     size += unknownFields.getSerializedSize();

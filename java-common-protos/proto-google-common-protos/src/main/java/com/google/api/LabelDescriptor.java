@@ -429,13 +429,13 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(key_)) {
+    if (!getKeyBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
     }
     if (valueType_ != com.google.api.LabelDescriptor.ValueType.STRING.getNumber()) {
       output.writeEnum(2, valueType_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, description_);
     }
     unknownFields.writeTo(output);
@@ -447,13 +447,13 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(key_)) {
+    if (!getKeyBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
     }
     if (valueType_ != com.google.api.LabelDescriptor.ValueType.STRING.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, valueType_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
+    if (!getDescriptionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, description_);
     }
     size += unknownFields.getSerializedSize();
