@@ -218,25 +218,20 @@ public class DefaultValueComposer {
       resourceName = findParentResource(resourceName, resnames).orElse(resourceName);
     }
 
-    boolean hasOnePattern = resourceName.patterns().size() == 1;
     if (resourceName.isOnlyWildcard()) {
       List<ResourceName> unexaminedResnames = new ArrayList<>(resnames);
       for (ResourceName resname : resnames) {
-        if (resname.isOnlyWildcard()) {
-          unexaminedResnames.remove(resname);
-          continue;
-        }
         unexaminedResnames.remove(resname);
-        return createDefaultValue(resname, false, unexaminedResnames, fieldOrMessageName);
+        if (!resname.isOnlyWildcard()) {
+          return createDefaultValue(resname, false, unexaminedResnames, fieldOrMessageName);
+        }
       }
 
-      if (unexaminedResnames.isEmpty()) {
-        return allowAnonResourceNameClass
-            ? createAnonymousResourceNameClass(fieldOrMessageName)
-            : ValueExpr.withValue(
-                StringObjectValue.withValue(
-                    String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
-      }
+      return allowAnonResourceNameClass
+          ? createAnonymousResourceNameClass(fieldOrMessageName)
+          : ValueExpr.withValue(
+              StringObjectValue.withValue(
+                  String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
     }
 
     // The cost tradeoffs of new ctors versus distinct() don't really matter here, since this list
@@ -261,6 +256,7 @@ public class DefaultValueComposer {
       }
     }
 
+    boolean hasOnePattern = resourceName.patterns().size() == 1;
     if (!hasOnePattern) {
       ofMethodName =
           String.format(
