@@ -67,7 +67,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -534,7 +533,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       if (!protoMethod.isOperationPollingMethod()) {
         // TODO: Change to ordered map
         Map<String, String> requestFields = inputOperationMessage.operationRequestFields();
-        List<String> fieldAnnotationNames = new ArrayList<String>(requestFields.keySet());
+        List<String> fieldAnnotationNames = new ArrayList<>(requestFields.keySet());
         Collections.sort(fieldAnnotationNames);
         for (String fieldName : fieldAnnotationNames) {
           createBody.add(appendField(opNameVarExpr, requestVarExpr, requestFields.get(fieldName)));
@@ -644,7 +643,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     Message inputOperationMessage =
         messageTypes.get(protoMethod.inputType().reference().fullName());
 
-    List<Statement> createBody = new ArrayList<Statement>(1);
+    List<Statement> createBody = new ArrayList<>(1);
 
     // Generate input variables for create
     VariableExpr compoundOperationIdVarExpr =
@@ -699,11 +698,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setMethodName("newBuilder")
             .build();
     BiMap<String, String> responseFieldsMap = inputOperationMessage.operationResponseFields();
-    List<String> responseFieldAnnotationNames = new ArrayList<String>(responseFieldsMap.keySet());
+    List<String> responseFieldAnnotationNames = new ArrayList<>(responseFieldsMap.keySet());
     Collections.sort(responseFieldAnnotationNames);
     Set<String> responseFieldsNames = responseFieldsMap.inverse().keySet();
     Set<String> allFieldsNames = inputOperationMessage.fieldMap().keySet();
-    ArrayList<String> nonResponseFieldsNames = new ArrayList<String>();
+    ArrayList<String> nonResponseFieldsNames = new ArrayList<>();
     for (String fieldName : allFieldsNames) {
       if (!responseFieldsNames.contains(fieldName)) {
         nonResponseFieldsNames.add(fieldName);
@@ -1090,28 +1089,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setName("longRunningClient")
             .setType(TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)))
             .build());
-  }
-
-  protected Optional<String> getCallableCreatorMethodName(TypeNode callableVarExprType) {
-    final String typeName = callableVarExprType.reference().name();
-    String streamName = "Unary";
-
-    // Special handling for pagination methods.
-    if (callableVarExprType.reference().generics().size() == 2
-        && callableVarExprType.reference().generics().get(1).name().endsWith("PagedResponse")) {
-      streamName = "Paged";
-    } else {
-      if (typeName.startsWith("Client")) {
-        return Optional.empty(); // not supported in REST transport
-      } else if (typeName.startsWith("Server")) {
-        return Optional.empty(); // not supported in REST transport (for now)
-      } else if (typeName.startsWith("Bidi")) {
-        return Optional.empty(); // not supported in REST transport
-      } else if (typeName.startsWith("Operation")) {
-        streamName = "Operation";
-      }
-    }
-    return Optional.of(String.format("create%sCallable", streamName));
   }
 
   @Override
