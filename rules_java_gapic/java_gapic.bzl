@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@rules_gapic//:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
+load("@rules_gapic//:gapic.bzl", "proto_custom_library")
 
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
@@ -129,7 +129,6 @@ def _java_gapic_srcjar(
         # Can be used to provide a java_library with a customized generator,
         # like the one which dumps descriptor to a file for future debugging.
         java_generator_name = "java_gapic",
-        output_suffix = ".srcjar",
         **kwargs):
     file_args_dict = {}
 
@@ -146,7 +145,6 @@ def _java_gapic_srcjar(
     if service_yaml:
         file_args_dict[service_yaml] = "api-service-config"
 
-    output_suffix = ".srcjar"
     opt_args = []
 
     if transport:
@@ -164,7 +162,7 @@ def _java_gapic_srcjar(
         plugin_file_args = {},
         opt_file_args = file_args_dict,
         output_type = java_generator_name,
-        output_suffix = output_suffix,
+        output_suffix = ".srcjar",
         opt_args = opt_args,
         **kwargs
     )
