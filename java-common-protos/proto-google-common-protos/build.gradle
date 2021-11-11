@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.google.protobuf:protobuf-java:3.18.1'
+  compile 'com.google.protobuf:protobuf-java:3.19.1'
 }
 
 sourceSets {
