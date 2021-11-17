@@ -1903,10 +1903,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
-    if (!getTitleBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
     }
     for (int i = 0; i < apis_.size(); i++) {
@@ -1948,7 +1948,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (control_ != null) {
       output.writeMessage(21, getControl());
     }
-    if (!getProducerProjectIdBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerProjectId_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 22, producerProjectId_);
     }
     for (int i = 0; i < logs_.size(); i++) {
@@ -1972,7 +1972,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (systemParameters_ != null) {
       output.writeMessage(29, getSystemParameters());
     }
-    if (!getIdBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 33, id_);
     }
     if (sourceInfo_ != null) {
@@ -1987,10 +1987,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!getNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
-    if (!getTitleBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
     }
     for (int i = 0; i < apis_.size(); i++) {
@@ -2032,7 +2032,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (control_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(21, getControl());
     }
-    if (!getProducerProjectIdBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerProjectId_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(22, producerProjectId_);
     }
     for (int i = 0; i < logs_.size(); i++) {
@@ -2057,7 +2057,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (systemParameters_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(29, getSystemParameters());
     }
-    if (!getIdBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(33, id_);
     }
     if (sourceInfo_ != null) {

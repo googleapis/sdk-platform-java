@@ -612,19 +612,19 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getIdBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
     }
-    if (!getIssuerBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(issuer_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, issuer_);
     }
-    if (!getJwksUriBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(jwksUri_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, jwksUri_);
     }
-    if (!getAudiencesBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(audiences_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, audiences_);
     }
-    if (!getAuthorizationUrlBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authorizationUrl_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, authorizationUrl_);
     }
     for (int i = 0; i < jwtLocations_.size(); i++) {
@@ -639,19 +639,19 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!getIdBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
     }
-    if (!getIssuerBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(issuer_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, issuer_);
     }
-    if (!getJwksUriBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(jwksUri_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, jwksUri_);
     }
-    if (!getAudiencesBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(audiences_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, audiences_);
     }
-    if (!getAuthorizationUrlBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authorizationUrl_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, authorizationUrl_);
     }
     for (int i = 0; i < jwtLocations_.size(); i++) {

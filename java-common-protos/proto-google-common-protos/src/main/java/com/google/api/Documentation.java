@@ -594,22 +594,22 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getSummaryBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(summary_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, summary_);
     }
-    if (!getOverviewBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(overview_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, overview_);
     }
     for (int i = 0; i < rules_.size(); i++) {
       output.writeMessage(3, rules_.get(i));
     }
-    if (!getDocumentationRootUrlBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(documentationRootUrl_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, documentationRootUrl_);
     }
     for (int i = 0; i < pages_.size(); i++) {
       output.writeMessage(5, pages_.get(i));
     }
-    if (!getServiceRootUrlBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceRootUrl_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, serviceRootUrl_);
     }
     unknownFields.writeTo(output);
@@ -621,22 +621,22 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!getSummaryBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(summary_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, summary_);
     }
-    if (!getOverviewBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(overview_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, overview_);
     }
     for (int i = 0; i < rules_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, rules_.get(i));
     }
-    if (!getDocumentationRootUrlBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(documentationRootUrl_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, documentationRootUrl_);
     }
     for (int i = 0; i < pages_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, pages_.get(i));
     }
-    if (!getServiceRootUrlBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceRootUrl_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, serviceRootUrl_);
     }
     size += unknownFields.getSerializedSize();

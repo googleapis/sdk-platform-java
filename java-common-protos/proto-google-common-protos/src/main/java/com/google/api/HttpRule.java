@@ -1140,7 +1140,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!getSelectorBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
     }
     if (patternCase_ == 2) {
@@ -1158,7 +1158,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     if (patternCase_ == 6) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, pattern_);
     }
-    if (!getBodyBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(body_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 7, body_);
     }
     if (patternCase_ == 8) {
@@ -1167,7 +1167,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < additionalBindings_.size(); i++) {
       output.writeMessage(11, additionalBindings_.get(i));
     }
-    if (!getResponseBodyBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(responseBody_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 12, responseBody_);
     }
     unknownFields.writeTo(output);
@@ -1179,7 +1179,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (!getSelectorBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
     }
     if (patternCase_ == 2) {
@@ -1197,7 +1197,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     if (patternCase_ == 6) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, pattern_);
     }
-    if (!getBodyBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(body_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, body_);
     }
     if (patternCase_ == 8) {
@@ -1209,7 +1209,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       size +=
           com.google.protobuf.CodedOutputStream.computeMessageSize(11, additionalBindings_.get(i));
     }
-    if (!getResponseBodyBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(responseBody_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, responseBody_);
     }
     size += unknownFields.getSerializedSize();

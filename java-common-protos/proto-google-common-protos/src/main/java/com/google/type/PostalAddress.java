@@ -903,25 +903,25 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     if (revision_ != 0) {
       output.writeInt32(1, revision_);
     }
-    if (!getRegionCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, regionCode_);
     }
-    if (!getLanguageCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(languageCode_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, languageCode_);
     }
-    if (!getPostalCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(postalCode_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, postalCode_);
     }
-    if (!getSortingCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sortingCode_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, sortingCode_);
     }
-    if (!getAdministrativeAreaBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(administrativeArea_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, administrativeArea_);
     }
-    if (!getLocalityBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(locality_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 7, locality_);
     }
-    if (!getSublocalityBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sublocality_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 8, sublocality_);
     }
     for (int i = 0; i < addressLines_.size(); i++) {
@@ -930,7 +930,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < recipients_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 10, recipients_.getRaw(i));
     }
-    if (!getOrganizationBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(organization_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 11, organization_);
     }
     unknownFields.writeTo(output);
@@ -945,25 +945,25 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     if (revision_ != 0) {
       size += com.google.protobuf.CodedOutputStream.computeInt32Size(1, revision_);
     }
-    if (!getRegionCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, regionCode_);
     }
-    if (!getLanguageCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(languageCode_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, languageCode_);
     }
-    if (!getPostalCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(postalCode_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, postalCode_);
     }
-    if (!getSortingCodeBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sortingCode_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, sortingCode_);
     }
-    if (!getAdministrativeAreaBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(administrativeArea_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, administrativeArea_);
     }
-    if (!getLocalityBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(locality_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, locality_);
     }
-    if (!getSublocalityBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sublocality_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, sublocality_);
     }
     {
@@ -982,7 +982,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       size += dataSize;
       size += 1 * getRecipientsList().size();
     }
-    if (!getOrganizationBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(organization_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, organization_);
     }
     size += unknownFields.getSerializedSize();

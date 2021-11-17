@@ -1050,16 +1050,16 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (requestMetadata_ != null) {
       output.writeMessage(4, getRequestMetadata());
     }
-    if (!getServiceNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceName_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 7, serviceName_);
     }
-    if (!getMethodNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(methodName_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 8, methodName_);
     }
     for (int i = 0; i < authorizationInfo_.size(); i++) {
       output.writeMessage(9, authorizationInfo_.get(i));
     }
-    if (!getResourceNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resourceName_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 11, resourceName_);
     }
     if (numResponseItems_ != 0L) {
@@ -1101,17 +1101,17 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (requestMetadata_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getRequestMetadata());
     }
-    if (!getServiceNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceName_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, serviceName_);
     }
-    if (!getMethodNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(methodName_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, methodName_);
     }
     for (int i = 0; i < authorizationInfo_.size(); i++) {
       size +=
           com.google.protobuf.CodedOutputStream.computeMessageSize(9, authorizationInfo_.get(i));
     }
-    if (!getResourceNameBytes().isEmpty()) {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resourceName_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, resourceName_);
     }
     if (numResponseItems_ != 0L) {
