@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "a5dd0ab11989e6e3577f938f42f429203a545b92"
+        "sha": "607b1666178627065579d8471f41213d59d7e5d1"
       }
     },
     {
@@ -19,7 +19,7 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "42a3786737c17ece39924d7025f3be481812da53"
+        "sha": "7a7c48f96e90d1cdc3ab0cc8293279fdcb10fd36"
       }
     }
   ],
