@@ -84,11 +84,11 @@ import org.threeten.bp.Duration;
  *
  * public class PublisherSettings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     publisherSettings();
  *   }
  *
- *   public static void publisherSettings() {
+ *   public static void publisherSettings() throws Exception {
  *     PublisherStubSettings.Builder publisherSettingsBuilder = PublisherStubSettings.newBuilder();
  *     publisherSettingsBuilder
  *         .createTopicSettings()

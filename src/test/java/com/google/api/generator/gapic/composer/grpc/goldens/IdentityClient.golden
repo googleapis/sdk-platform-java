@@ -28,11 +28,11 @@ import javax.annotation.Generated;
  *
  * public class IdentityClientCreateUser {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     identityClientCreateUser();
  *   }
  *
- *   public static void identityClientCreateUser() {
+ *   public static void identityClientCreateUser() throws Exception {
  *     try (IdentityClient identityClient = IdentityClient.create()) {
  *       String parent = UserName.of("[USER]").toString();
  *       String displayName = "displayName1714148973";
@@ -76,13 +76,13 @@ import javax.annotation.Generated;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
  *
- * public class IdentityClientcreate {
+ * public class IdentityClientCreate {
  *
- *   public static void main(String[] args) {
- *     identityClientcreate();
+ *   public static void main(String[] args) throws Exception {
+ *     identityClientCreate();
  *   }
  *
- *   public static void identityClientcreate() {
+ *   public static void identityClientCreate() throws Exception {
  *     IdentitySettings identitySettings =
  *         IdentitySettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -99,11 +99,11 @@ import javax.annotation.Generated;
  *
  * public class IdentityClientClassHeaderEndpoint {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     identityClientClassHeaderEndpoint();
  *   }
  *
- *   public static void identityClientClassHeaderEndpoint() {
+ *   public static void identityClientClassHeaderEndpoint() throws Exception {
  *     IdentitySettings identitySettings =
  *         IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
  *     IdentityClient identityClient = IdentityClient.create(identitySettings);
@@ -174,11 +174,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientCreateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientCreateUser();
    *   }
    *
-   *   public static void identityClientCreateUser() {
+   *   public static void identityClientCreateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       String parent = UserName.of("[USER]").toString();
    *       String displayName = "displayName1714148973";
@@ -212,11 +212,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientCreateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientCreateUser();
    *   }
    *
-   *   public static void identityClientCreateUser() {
+   *   public static void identityClientCreateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       String parent = UserName.of("[USER]").toString();
    *       String displayName = "displayName1714148973";
@@ -275,11 +275,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientCreateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientCreateUser();
    *   }
    *
-   *   public static void identityClientCreateUser() {
+   *   public static void identityClientCreateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       String parent = UserName.of("[USER]").toString();
    *       String displayName = "displayName1714148973";
@@ -371,11 +371,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientCreateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientCreateUser();
    *   }
    *
-   *   public static void identityClientCreateUser() {
+   *   public static void identityClientCreateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       CreateUserRequest request =
    *           CreateUserRequest.newBuilder()
@@ -406,11 +406,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientCreateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientCreateUser();
    *   }
    *
-   *   public static void identityClientCreateUser() {
+   *   public static void identityClientCreateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       CreateUserRequest request =
    *           CreateUserRequest.newBuilder()
@@ -438,11 +438,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientGetUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientGetUser();
    *   }
    *
-   *   public static void identityClientGetUser() {
+   *   public static void identityClientGetUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       UserName name = UserName.of("[USER]");
    *       User response = identityClient.getUser(name);
@@ -469,11 +469,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientGetUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientGetUser();
    *   }
    *
-   *   public static void identityClientGetUser() {
+   *   public static void identityClientGetUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       String name = UserName.of("[USER]").toString();
    *       User response = identityClient.getUser(name);
@@ -499,11 +499,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientGetUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientGetUser();
    *   }
    *
-   *   public static void identityClientGetUser() {
+   *   public static void identityClientGetUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       GetUserRequest request =
    *           GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -531,11 +531,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientGetUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientGetUser();
    *   }
    *
-   *   public static void identityClientGetUser() {
+   *   public static void identityClientGetUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       GetUserRequest request =
    *           GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -560,11 +560,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientUpdateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientUpdateUser();
    *   }
    *
-   *   public static void identityClientUpdateUser() {
+   *   public static void identityClientUpdateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       UpdateUserRequest request =
    *           UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
@@ -592,11 +592,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientUpdateUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientUpdateUser();
    *   }
    *
-   *   public static void identityClientUpdateUser() {
+   *   public static void identityClientUpdateUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       UpdateUserRequest request =
    *           UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
@@ -623,11 +623,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientDeleteUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientDeleteUser();
    *   }
    *
-   *   public static void identityClientDeleteUser() {
+   *   public static void identityClientDeleteUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       UserName name = UserName.of("[USER]");
    *       identityClient.deleteUser(name);
@@ -656,11 +656,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientDeleteUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientDeleteUser();
    *   }
    *
-   *   public static void identityClientDeleteUser() {
+   *   public static void identityClientDeleteUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       String name = UserName.of("[USER]").toString();
    *       identityClient.deleteUser(name);
@@ -688,11 +688,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientDeleteUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientDeleteUser();
    *   }
    *
-   *   public static void identityClientDeleteUser() {
+   *   public static void identityClientDeleteUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       DeleteUserRequest request =
    *           DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -721,11 +721,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientDeleteUser {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientDeleteUser();
    *   }
    *
-   *   public static void identityClientDeleteUser() {
+   *   public static void identityClientDeleteUser() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       DeleteUserRequest request =
    *           DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -750,11 +750,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientListUsers {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientListUsers();
    *   }
    *
-   *   public static void identityClientListUsers() {
+   *   public static void identityClientListUsers() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       ListUsersRequest request =
    *           ListUsersRequest.newBuilder()
@@ -787,11 +787,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientListUsers {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientListUsers();
    *   }
    *
-   *   public static void identityClientListUsers() {
+   *   public static void identityClientListUsers() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       ListUsersRequest request =
    *           ListUsersRequest.newBuilder()
@@ -823,11 +823,11 @@ public class IdentityClient implements BackgroundResource {
    *
    * public class IdentityClientListUsers {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     identityClientListUsers();
    *   }
    *
-   *   public static void identityClientListUsers() {
+   *   public static void identityClientListUsers() throws Exception {
    *     try (IdentityClient identityClient = IdentityClient.create()) {
    *       ListUsersRequest request =
    *           ListUsersRequest.newBuilder()

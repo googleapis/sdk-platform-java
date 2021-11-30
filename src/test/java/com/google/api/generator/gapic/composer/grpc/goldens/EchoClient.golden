@@ -38,11 +38,11 @@ import javax.annotation.Generated;
  *
  * public class EchoClientEcho {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     echoClientEcho();
  *   }
  *
- *   public static void echoClientEcho() {
+ *   public static void echoClientEcho() throws Exception {
  *     try (EchoClient echoClient = EchoClient.create()) {
  *       EchoResponse response = echoClient.echo();
  *     }
@@ -83,13 +83,13 @@ import javax.annotation.Generated;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
  *
- * public class EchoClientcreate {
+ * public class EchoClientCreate {
  *
- *   public static void main(String[] args) {
- *     echoClientcreate();
+ *   public static void main(String[] args) throws Exception {
+ *     echoClientCreate();
  *   }
  *
- *   public static void echoClientcreate() {
+ *   public static void echoClientCreate() throws Exception {
  *     EchoSettings echoSettings =
  *         EchoSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -106,11 +106,11 @@ import javax.annotation.Generated;
  *
  * public class EchoClientClassHeaderEndpoint {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     echoClientClassHeaderEndpoint();
  *   }
  *
- *   public static void echoClientClassHeaderEndpoint() {
+ *   public static void echoClientClassHeaderEndpoint() throws Exception {
  *     EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     EchoClient echoClient = EchoClient.create(echoSettings);
  *   }
@@ -191,11 +191,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       EchoResponse response = echoClient.echo();
    *     }
@@ -222,11 +222,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
    *       EchoResponse response = echoClient.echo(parent);
@@ -255,11 +255,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       Status error = Status.newBuilder().build();
    *       EchoResponse response = echoClient.echo(error);
@@ -285,11 +285,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
    *       EchoResponse response = echoClient.echo(name);
@@ -316,11 +316,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       String content = "content951530617";
    *       EchoResponse response = echoClient.echo(content);
@@ -346,11 +346,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       String name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
    *       EchoResponse response = echoClient.echo(name);
@@ -376,11 +376,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       String parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
    *       EchoResponse response = echoClient.echo(parent);
@@ -406,11 +406,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       String content = "content951530617";
    *       Severity severity = Severity.forNumber(0);
@@ -439,11 +439,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       EchoRequest request =
    *           EchoRequest.newBuilder()
@@ -476,11 +476,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientEcho {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientEcho();
    *   }
    *
-   *   public static void echoClientEcho() {
+   *   public static void echoClientEcho() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       EchoRequest request =
    *           EchoRequest.newBuilder()
@@ -512,11 +512,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientExpand();
    *   }
    *
-   *   public static void echoClientExpand() {
+   *   public static void echoClientExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       ExpandRequest request =
    *           ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
@@ -544,11 +544,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientCollect {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientCollect();
    *   }
    *
-   *   public static void echoClientCollect() {
+   *   public static void echoClientCollect() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       ApiStreamObserver<EchoRequest> responseObserver =
    *           new ApiStreamObserver<EchoRequest>() {
@@ -597,11 +597,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientChat {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientChat();
    *   }
    *
-   *   public static void echoClientChat() {
+   *   public static void echoClientChat() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
    *       EchoRequest request =
@@ -635,11 +635,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientChatAgain {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientChatAgain();
    *   }
    *
-   *   public static void echoClientChatAgain() {
+   *   public static void echoClientChatAgain() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatAgainCallable().call();
    *       EchoRequest request =
@@ -671,11 +671,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientPagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientPagedExpand();
    *   }
    *
-   *   public static void echoClientPagedExpand() {
+   *   public static void echoClientPagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       PagedExpandRequest request =
    *           PagedExpandRequest.newBuilder()
@@ -709,11 +709,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientPagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientPagedExpand();
    *   }
    *
-   *   public static void echoClientPagedExpand() {
+   *   public static void echoClientPagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       PagedExpandRequest request =
    *           PagedExpandRequest.newBuilder()
@@ -747,11 +747,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientPagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientPagedExpand();
    *   }
    *
-   *   public static void echoClientPagedExpand() {
+   *   public static void echoClientPagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       PagedExpandRequest request =
    *           PagedExpandRequest.newBuilder()
@@ -789,11 +789,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientSimplePagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientSimplePagedExpand();
    *   }
    *
-   *   public static void echoClientSimplePagedExpand() {
+   *   public static void echoClientSimplePagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
    *         // doThingsWith(element);
@@ -820,11 +820,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientSimplePagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientSimplePagedExpand();
    *   }
    *
-   *   public static void echoClientSimplePagedExpand() {
+   *   public static void echoClientSimplePagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       PagedExpandRequest request =
    *           PagedExpandRequest.newBuilder()
@@ -858,11 +858,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientSimplePagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientSimplePagedExpand();
    *   }
    *
-   *   public static void echoClientSimplePagedExpand() {
+   *   public static void echoClientSimplePagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       PagedExpandRequest request =
    *           PagedExpandRequest.newBuilder()
@@ -897,11 +897,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientSimplePagedExpand {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientSimplePagedExpand();
    *   }
    *
-   *   public static void echoClientSimplePagedExpand() {
+   *   public static void echoClientSimplePagedExpand() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       PagedExpandRequest request =
    *           PagedExpandRequest.newBuilder()
@@ -941,11 +941,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientWait {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientWait();
    *   }
    *
-   *   public static void echoClientWait() {
+   *   public static void echoClientWait() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       Duration ttl = Duration.newBuilder().build();
    *       WaitResponse response = echoClient.waitAsync(ttl).get();
@@ -973,11 +973,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientWait {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientWait();
    *   }
    *
-   *   public static void echoClientWait() {
+   *   public static void echoClientWait() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       Timestamp endTime = Timestamp.newBuilder().build();
    *       WaitResponse response = echoClient.waitAsync(endTime).get();
@@ -1003,11 +1003,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientWait {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientWait();
    *   }
    *
-   *   public static void echoClientWait() {
+   *   public static void echoClientWait() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       WaitRequest request = WaitRequest.newBuilder().build();
    *       WaitResponse response = echoClient.waitAsync(request).get();
@@ -1034,11 +1034,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientWait {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientWait();
    *   }
    *
-   *   public static void echoClientWait() {
+   *   public static void echoClientWait() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       WaitRequest request = WaitRequest.newBuilder().build();
    *       OperationFuture<WaitResponse, WaitMetadata> future =
@@ -1066,11 +1066,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientWait {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientWait();
    *   }
    *
-   *   public static void echoClientWait() {
+   *   public static void echoClientWait() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       WaitRequest request = WaitRequest.newBuilder().build();
    *       ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
@@ -1094,11 +1094,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientBlock {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientBlock();
    *   }
    *
-   *   public static void echoClientBlock() {
+   *   public static void echoClientBlock() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       BlockRequest request = BlockRequest.newBuilder().build();
    *       BlockResponse response = echoClient.block(request);
@@ -1125,11 +1125,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientBlock {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientBlock();
    *   }
    *
-   *   public static void echoClientBlock() {
+   *   public static void echoClientBlock() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       BlockRequest request = BlockRequest.newBuilder().build();
    *       ApiFuture<BlockResponse> future = echoClient.blockCallable().futureCall(request);
@@ -1153,11 +1153,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientCollideName {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientCollideName();
    *   }
    *
-   *   public static void echoClientCollideName() {
+   *   public static void echoClientCollideName() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       EchoRequest request =
    *           EchoRequest.newBuilder()
@@ -1190,11 +1190,11 @@ public class EchoClient implements BackgroundResource {
    *
    * public class EchoClientCollideName {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     echoClientCollideName();
    *   }
    *
-   *   public static void echoClientCollideName() {
+   *   public static void echoClientCollideName() throws Exception {
    *     try (EchoClient echoClient = EchoClient.create()) {
    *       EchoRequest request =
    *           EchoRequest.newBuilder()

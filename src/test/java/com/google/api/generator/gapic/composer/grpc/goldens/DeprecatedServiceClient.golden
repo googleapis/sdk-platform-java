@@ -22,11 +22,11 @@ import javax.annotation.Generated;
  *
  * public class DeprecatedServiceClientFastFibonacci {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     deprecatedServiceClientFastFibonacci();
  *   }
  *
- *   public static void deprecatedServiceClientFastFibonacci() {
+ *   public static void deprecatedServiceClientFastFibonacci() throws Exception {
  *     try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
  *       FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
  *       deprecatedServiceClient.fastFibonacci(request);
@@ -69,13 +69,13 @@ import javax.annotation.Generated;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
  *
- * public class DeprecatedServiceClientcreate {
+ * public class DeprecatedServiceClientCreate {
  *
- *   public static void main(String[] args) {
- *     deprecatedServiceClientcreate();
+ *   public static void main(String[] args) throws Exception {
+ *     deprecatedServiceClientCreate();
  *   }
  *
- *   public static void deprecatedServiceClientcreate() {
+ *   public static void deprecatedServiceClientCreate() throws Exception {
  *     DeprecatedServiceSettings deprecatedServiceSettings =
  *         DeprecatedServiceSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -93,11 +93,11 @@ import javax.annotation.Generated;
  *
  * public class DeprecatedServiceClientClassHeaderEndpoint {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     deprecatedServiceClientClassHeaderEndpoint();
  *   }
  *
- *   public static void deprecatedServiceClientClassHeaderEndpoint() {
+ *   public static void deprecatedServiceClientClassHeaderEndpoint() throws Exception {
  *     DeprecatedServiceSettings deprecatedServiceSettings =
  *         DeprecatedServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     DeprecatedServiceClient deprecatedServiceClient =
@@ -175,11 +175,11 @@ public class DeprecatedServiceClient implements BackgroundResource {
    *
    * public class DeprecatedServiceClientFastFibonacci {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     deprecatedServiceClientFastFibonacci();
    *   }
    *
-   *   public static void deprecatedServiceClientFastFibonacci() {
+   *   public static void deprecatedServiceClientFastFibonacci() throws Exception {
    *     try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *       FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *       deprecatedServiceClient.fastFibonacci(request);
@@ -207,11 +207,11 @@ public class DeprecatedServiceClient implements BackgroundResource {
    *
    * public class DeprecatedServiceClientFastFibonacci {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     deprecatedServiceClientFastFibonacci();
    *   }
    *
-   *   public static void deprecatedServiceClientFastFibonacci() {
+   *   public static void deprecatedServiceClientFastFibonacci() throws Exception {
    *     try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *       FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *       ApiFuture<Empty> future = deprecatedServiceClient.fastFibonacciCallable().futureCall(request);
@@ -237,11 +237,11 @@ public class DeprecatedServiceClient implements BackgroundResource {
    *
    * public class DeprecatedServiceClientSlowFibonacci {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     deprecatedServiceClientSlowFibonacci();
    *   }
    *
-   *   public static void deprecatedServiceClientSlowFibonacci() {
+   *   public static void deprecatedServiceClientSlowFibonacci() throws Exception {
    *     try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *       FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *       deprecatedServiceClient.slowFibonacci(request);
@@ -271,11 +271,11 @@ public class DeprecatedServiceClient implements BackgroundResource {
    *
    * public class DeprecatedServiceClientSlowFibonacci {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     deprecatedServiceClientSlowFibonacci();
    *   }
    *
-   *   public static void deprecatedServiceClientSlowFibonacci() {
+   *   public static void deprecatedServiceClientSlowFibonacci() throws Exception {
    *     try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *       FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *       ApiFuture<Empty> future = deprecatedServiceClient.slowFibonacciCallable().futureCall(request);

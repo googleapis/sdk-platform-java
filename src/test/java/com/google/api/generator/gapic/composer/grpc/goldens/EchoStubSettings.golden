@@ -76,11 +76,11 @@ import org.threeten.bp.Duration;
  *
  * public class EchoSettings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     echoSettings();
  *   }
  *
- *   public static void echoSettings() {
+ *   public static void echoSettings() throws Exception {
  *     EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();
  *     echoSettingsBuilder
  *         .echoSettings()

@@ -40,11 +40,11 @@ import javax.annotation.Generated;
  *
  * public class ComplianceSettings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     complianceSettings();
  *   }
  *
- *   public static void complianceSettings() {
+ *   public static void complianceSettings() throws Exception {
  *     ComplianceSettings.Builder complianceSettingsBuilder = ComplianceSettings.newBuilder();
  *     complianceSettingsBuilder
  *         .repeatDataBodySettings()

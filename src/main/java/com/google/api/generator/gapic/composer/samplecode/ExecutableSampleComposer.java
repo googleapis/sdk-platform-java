@@ -19,12 +19,12 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ExecutableSampleComposer {
-    // TODO: exceptions
     public static String createExecutableSample(ExecutableSample executableSample){
         return SampleCodeWriter.write(
                 composeExecutableSample(executableSample.samplePackageName, executableSample.sampleMethodName,
@@ -102,6 +102,7 @@ public class ExecutableSampleComposer {
                         .setVariable(Variable.builder().setType(TypeNode.STRING_ARRAY).setName("args").build())
                         .setIsDecl(true)
                         .build())
+                .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
                 .setBody(mainBody)
                 .build();
     }
@@ -114,6 +115,7 @@ public class ExecutableSampleComposer {
                 .setReturnType(TypeNode.VOID)
                 .setName(sampleMethodName)
                 .setArguments(sampleMethodArgs)
+                .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
                 .setBody(sampleMethodBody)
                 .build();
     }

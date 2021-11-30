@@ -50,11 +50,11 @@ import org.threeten.bp.Duration;
  *
  * public class DeprecatedServiceSettings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     deprecatedServiceSettings();
  *   }
  *
- *   public static void deprecatedServiceSettings() {
+ *   public static void deprecatedServiceSettings() throws Exception {
  *     DeprecatedServiceStubSettings.Builder deprecatedServiceSettingsBuilder =
  *         DeprecatedServiceStubSettings.newBuilder();
  *     deprecatedServiceSettingsBuilder

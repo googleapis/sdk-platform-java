@@ -49,11 +49,11 @@ import javax.annotation.Generated;
  *
  * public class ComplianceSettings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     complianceSettings();
  *   }
  *
- *   public static void complianceSettings() {
+ *   public static void complianceSettings() throws Exception {
  *     ComplianceStubSettings.Builder complianceSettingsBuilder = ComplianceStubSettings.newBuilder();
  *     complianceSettingsBuilder
  *         .repeatDataBodySettings()

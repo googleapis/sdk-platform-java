@@ -23,11 +23,11 @@ import javax.annotation.Generated;
  *
  * public class BookshopClientGetBook {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     bookshopClientGetBook();
  *   }
  *
- *   public static void bookshopClientGetBook() {
+ *   public static void bookshopClientGetBook() throws Exception {
  *     try (BookshopClient bookshopClient = BookshopClient.create()) {
  *       int booksCount = 1618425911;
  *       List<Book> books = new ArrayList<>();
@@ -70,13 +70,13 @@ import javax.annotation.Generated;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
  *
- * public class BookshopClientcreate {
+ * public class BookshopClientCreate {
  *
- *   public static void main(String[] args) {
- *     bookshopClientcreate();
+ *   public static void main(String[] args) throws Exception {
+ *     bookshopClientCreate();
  *   }
  *
- *   public static void bookshopClientcreate() {
+ *   public static void bookshopClientCreate() throws Exception {
  *     BookshopSettings bookshopSettings =
  *         BookshopSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -93,11 +93,11 @@ import javax.annotation.Generated;
  *
  * public class BookshopClientClassHeaderEndpoint {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     bookshopClientClassHeaderEndpoint();
  *   }
  *
- *   public static void bookshopClientClassHeaderEndpoint() {
+ *   public static void bookshopClientClassHeaderEndpoint() throws Exception {
  *     BookshopSettings bookshopSettings =
  *         BookshopSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
@@ -171,11 +171,11 @@ public class BookshopClient implements BackgroundResource {
    *
    * public class BookshopClientGetBook {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     bookshopClientGetBook();
    *   }
    *
-   *   public static void bookshopClientGetBook() {
+   *   public static void bookshopClientGetBook() throws Exception {
    *     try (BookshopClient bookshopClient = BookshopClient.create()) {
    *       int booksCount = 1618425911;
    *       List<Book> books = new ArrayList<>();
@@ -207,11 +207,11 @@ public class BookshopClient implements BackgroundResource {
    *
    * public class BookshopClientGetBook {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     bookshopClientGetBook();
    *   }
    *
-   *   public static void bookshopClientGetBook() {
+   *   public static void bookshopClientGetBook() throws Exception {
    *     try (BookshopClient bookshopClient = BookshopClient.create()) {
    *       String booksList = "booksList2-1119589686";
    *       List<Book> books = new ArrayList<>();
@@ -242,11 +242,11 @@ public class BookshopClient implements BackgroundResource {
    *
    * public class BookshopClientGetBook {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     bookshopClientGetBook();
    *   }
    *
-   *   public static void bookshopClientGetBook() {
+   *   public static void bookshopClientGetBook() throws Exception {
    *     try (BookshopClient bookshopClient = BookshopClient.create()) {
    *       GetBookRequest request =
    *           GetBookRequest.newBuilder()
@@ -279,11 +279,11 @@ public class BookshopClient implements BackgroundResource {
    *
    * public class BookshopClientGetBook {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     bookshopClientGetBook();
    *   }
    *
-   *   public static void bookshopClientGetBook() {
+   *   public static void bookshopClientGetBook() throws Exception {
    *     try (BookshopClient bookshopClient = BookshopClient.create()) {
    *       GetBookRequest request =
    *           GetBookRequest.newBuilder()

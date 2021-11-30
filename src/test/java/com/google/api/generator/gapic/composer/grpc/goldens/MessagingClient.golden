@@ -36,11 +36,11 @@ import javax.annotation.Generated;
  *
  * public class MessagingClientCreateRoom {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     messagingClientCreateRoom();
  *   }
  *
- *   public static void messagingClientCreateRoom() {
+ *   public static void messagingClientCreateRoom() throws Exception {
  *     try (MessagingClient messagingClient = MessagingClient.create()) {
  *       String displayName = "displayName1714148973";
  *       String description = "description-1724546052";
@@ -83,13 +83,13 @@ import javax.annotation.Generated;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
  *
- * public class MessagingClientcreate {
+ * public class MessagingClientCreate {
  *
- *   public static void main(String[] args) {
- *     messagingClientcreate();
+ *   public static void main(String[] args) throws Exception {
+ *     messagingClientCreate();
  *   }
  *
- *   public static void messagingClientcreate() {
+ *   public static void messagingClientCreate() throws Exception {
  *     MessagingSettings messagingSettings =
  *         MessagingSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -106,11 +106,11 @@ import javax.annotation.Generated;
  *
  * public class MessagingClientClassHeaderEndpoint {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     messagingClientClassHeaderEndpoint();
  *   }
  *
- *   public static void messagingClientClassHeaderEndpoint() {
+ *   public static void messagingClientClassHeaderEndpoint() throws Exception {
  *     MessagingSettings messagingSettings =
  *         MessagingSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     MessagingClient messagingClient = MessagingClient.create(messagingSettings);
@@ -192,11 +192,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateRoom();
    *   }
    *
-   *   public static void messagingClientCreateRoom() {
+   *   public static void messagingClientCreateRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String displayName = "displayName1714148973";
    *       String description = "description-1724546052";
@@ -228,11 +228,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateRoom();
    *   }
    *
-   *   public static void messagingClientCreateRoom() {
+   *   public static void messagingClientCreateRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       CreateRoomRequest request =
    *           CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
@@ -260,11 +260,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateRoom();
    *   }
    *
-   *   public static void messagingClientCreateRoom() {
+   *   public static void messagingClientCreateRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       CreateRoomRequest request =
    *           CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
@@ -289,11 +289,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetRoom();
    *   }
    *
-   *   public static void messagingClientGetRoom() {
+   *   public static void messagingClientGetRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       RoomName name = RoomName.of("[ROOM]");
    *       Room response = messagingClient.getRoom(name);
@@ -320,11 +320,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetRoom();
    *   }
    *
-   *   public static void messagingClientGetRoom() {
+   *   public static void messagingClientGetRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String name = RoomName.of("[ROOM]").toString();
    *       Room response = messagingClient.getRoom(name);
@@ -350,11 +350,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetRoom();
    *   }
    *
-   *   public static void messagingClientGetRoom() {
+   *   public static void messagingClientGetRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       GetRoomRequest request =
    *           GetRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
@@ -382,11 +382,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetRoom();
    *   }
    *
-   *   public static void messagingClientGetRoom() {
+   *   public static void messagingClientGetRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       GetRoomRequest request =
    *           GetRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
@@ -411,11 +411,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientUpdateRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientUpdateRoom();
    *   }
    *
-   *   public static void messagingClientUpdateRoom() {
+   *   public static void messagingClientUpdateRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       UpdateRoomRequest request =
    *           UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
@@ -443,11 +443,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientUpdateRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientUpdateRoom();
    *   }
    *
-   *   public static void messagingClientUpdateRoom() {
+   *   public static void messagingClientUpdateRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       UpdateRoomRequest request =
    *           UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
@@ -474,11 +474,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteRoom();
    *   }
    *
-   *   public static void messagingClientDeleteRoom() {
+   *   public static void messagingClientDeleteRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       RoomName name = RoomName.of("[ROOM]");
    *       messagingClient.deleteRoom(name);
@@ -507,11 +507,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteRoom();
    *   }
    *
-   *   public static void messagingClientDeleteRoom() {
+   *   public static void messagingClientDeleteRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String name = RoomName.of("[ROOM]").toString();
    *       messagingClient.deleteRoom(name);
@@ -539,11 +539,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteRoom();
    *   }
    *
-   *   public static void messagingClientDeleteRoom() {
+   *   public static void messagingClientDeleteRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       DeleteRoomRequest request =
    *           DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
@@ -572,11 +572,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteRoom {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteRoom();
    *   }
    *
-   *   public static void messagingClientDeleteRoom() {
+   *   public static void messagingClientDeleteRoom() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       DeleteRoomRequest request =
    *           DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
@@ -601,11 +601,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListRooms {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListRooms();
    *   }
    *
-   *   public static void messagingClientListRooms() {
+   *   public static void messagingClientListRooms() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ListRoomsRequest request =
    *           ListRoomsRequest.newBuilder()
@@ -638,11 +638,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListRooms {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListRooms();
    *   }
    *
-   *   public static void messagingClientListRooms() {
+   *   public static void messagingClientListRooms() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ListRoomsRequest request =
    *           ListRoomsRequest.newBuilder()
@@ -674,11 +674,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListRooms {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListRooms();
    *   }
    *
-   *   public static void messagingClientListRooms() {
+   *   public static void messagingClientListRooms() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ListRoomsRequest request =
    *           ListRoomsRequest.newBuilder()
@@ -717,11 +717,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ProfileName parent = ProfileName.of("[USER]");
    *       ByteString image = ByteString.EMPTY;
@@ -753,11 +753,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ProfileName parent = ProfileName.of("[USER]");
    *       String text = "text3556653";
@@ -791,11 +791,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       RoomName parent = RoomName.of("[ROOM]");
    *       ByteString image = ByteString.EMPTY;
@@ -827,11 +827,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       RoomName parent = RoomName.of("[ROOM]");
    *       String text = "text3556653";
@@ -865,11 +865,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String parent = ProfileName.of("[USER]").toString();
    *       ByteString image = ByteString.EMPTY;
@@ -901,11 +901,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String parent = ProfileName.of("[USER]").toString();
    *       String text = "text3556653";
@@ -937,11 +937,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       CreateBlurbRequest request =
    *           CreateBlurbRequest.newBuilder()
@@ -972,11 +972,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientCreateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientCreateBlurb();
    *   }
    *
-   *   public static void messagingClientCreateBlurb() {
+   *   public static void messagingClientCreateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       CreateBlurbRequest request =
    *           CreateBlurbRequest.newBuilder()
@@ -1004,11 +1004,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetBlurb();
    *   }
    *
-   *   public static void messagingClientGetBlurb() {
+   *   public static void messagingClientGetBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
    *       Blurb response = messagingClient.getBlurb(name);
@@ -1035,11 +1035,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetBlurb();
    *   }
    *
-   *   public static void messagingClientGetBlurb() {
+   *   public static void messagingClientGetBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String name =
    *           BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]").toString();
@@ -1066,11 +1066,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetBlurb();
    *   }
    *
-   *   public static void messagingClientGetBlurb() {
+   *   public static void messagingClientGetBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       GetBlurbRequest request =
    *           GetBlurbRequest.newBuilder()
@@ -1102,11 +1102,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientGetBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientGetBlurb();
    *   }
    *
-   *   public static void messagingClientGetBlurb() {
+   *   public static void messagingClientGetBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       GetBlurbRequest request =
    *           GetBlurbRequest.newBuilder()
@@ -1135,11 +1135,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientUpdateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientUpdateBlurb();
    *   }
    *
-   *   public static void messagingClientUpdateBlurb() {
+   *   public static void messagingClientUpdateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       UpdateBlurbRequest request =
    *           UpdateBlurbRequest.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
@@ -1167,11 +1167,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientUpdateBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientUpdateBlurb();
    *   }
    *
-   *   public static void messagingClientUpdateBlurb() {
+   *   public static void messagingClientUpdateBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       UpdateBlurbRequest request =
    *           UpdateBlurbRequest.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
@@ -1198,11 +1198,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteBlurb();
    *   }
    *
-   *   public static void messagingClientDeleteBlurb() {
+   *   public static void messagingClientDeleteBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
    *       messagingClient.deleteBlurb(name);
@@ -1231,11 +1231,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteBlurb();
    *   }
    *
-   *   public static void messagingClientDeleteBlurb() {
+   *   public static void messagingClientDeleteBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String name =
    *           BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]").toString();
@@ -1264,11 +1264,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteBlurb();
    *   }
    *
-   *   public static void messagingClientDeleteBlurb() {
+   *   public static void messagingClientDeleteBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       DeleteBlurbRequest request =
    *           DeleteBlurbRequest.newBuilder()
@@ -1301,11 +1301,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientDeleteBlurb {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientDeleteBlurb();
    *   }
    *
-   *   public static void messagingClientDeleteBlurb() {
+   *   public static void messagingClientDeleteBlurb() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       DeleteBlurbRequest request =
    *           DeleteBlurbRequest.newBuilder()
@@ -1334,11 +1334,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListBlurbs();
    *   }
    *
-   *   public static void messagingClientListBlurbs() {
+   *   public static void messagingClientListBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ProfileName parent = ProfileName.of("[USER]");
    *       for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
@@ -1367,11 +1367,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListBlurbs();
    *   }
    *
-   *   public static void messagingClientListBlurbs() {
+   *   public static void messagingClientListBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       RoomName parent = RoomName.of("[ROOM]");
    *       for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
@@ -1400,11 +1400,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListBlurbs();
    *   }
    *
-   *   public static void messagingClientListBlurbs() {
+   *   public static void messagingClientListBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String parent = ProfileName.of("[USER]").toString();
    *       for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
@@ -1432,11 +1432,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListBlurbs();
    *   }
    *
-   *   public static void messagingClientListBlurbs() {
+   *   public static void messagingClientListBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ListBlurbsRequest request =
    *           ListBlurbsRequest.newBuilder()
@@ -1470,11 +1470,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListBlurbs();
    *   }
    *
-   *   public static void messagingClientListBlurbs() {
+   *   public static void messagingClientListBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ListBlurbsRequest request =
    *           ListBlurbsRequest.newBuilder()
@@ -1507,11 +1507,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientListBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientListBlurbs();
    *   }
    *
-   *   public static void messagingClientListBlurbs() {
+   *   public static void messagingClientListBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ListBlurbsRequest request =
    *           ListBlurbsRequest.newBuilder()
@@ -1549,11 +1549,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientSearchBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientSearchBlurbs();
    *   }
    *
-   *   public static void messagingClientSearchBlurbs() {
+   *   public static void messagingClientSearchBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       String query = "query107944136";
    *       SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(query).get();
@@ -1580,11 +1580,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientSearchBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientSearchBlurbs();
    *   }
    *
-   *   public static void messagingClientSearchBlurbs() {
+   *   public static void messagingClientSearchBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       SearchBlurbsRequest request =
    *           SearchBlurbsRequest.newBuilder()
@@ -1618,11 +1618,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientSearchBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientSearchBlurbs();
    *   }
    *
-   *   public static void messagingClientSearchBlurbs() {
+   *   public static void messagingClientSearchBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       SearchBlurbsRequest request =
    *           SearchBlurbsRequest.newBuilder()
@@ -1657,11 +1657,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientSearchBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientSearchBlurbs();
    *   }
    *
-   *   public static void messagingClientSearchBlurbs() {
+   *   public static void messagingClientSearchBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       SearchBlurbsRequest request =
    *           SearchBlurbsRequest.newBuilder()
@@ -1693,11 +1693,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientStreamBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientStreamBlurbs();
    *   }
    *
-   *   public static void messagingClientStreamBlurbs() {
+   *   public static void messagingClientStreamBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       StreamBlurbsRequest request =
    *           StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
@@ -1727,11 +1727,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientSendBlurbs {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientSendBlurbs();
    *   }
    *
-   *   public static void messagingClientSendBlurbs() {
+   *   public static void messagingClientSendBlurbs() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       ApiStreamObserver<CreateBlurbRequest> responseObserver =
    *           new ApiStreamObserver<CreateBlurbRequest>() {
@@ -1779,11 +1779,11 @@ public class MessagingClient implements BackgroundResource {
    *
    * public class MessagingClientConnect {
    *
-   *   public static void main(String[] args) {
+   *   public static void main(String[] args) throws Exception {
    *     messagingClientConnect();
    *   }
    *
-   *   public static void messagingClientConnect() {
+   *   public static void messagingClientConnect() throws Exception {
    *     try (MessagingClient messagingClient = MessagingClient.create()) {
    *       BidiStream<ConnectRequest, StreamBlurbsResponse> bidiStream =
    *           messagingClient.connectCallable().call();

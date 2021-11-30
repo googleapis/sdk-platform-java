@@ -48,11 +48,11 @@ import javax.annotation.Generated;
  *
  * public class EchoSettings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     echoSettings();
  *   }
  *
- *   public static void echoSettings() {
+ *   public static void echoSettings() throws Exception {
  *     EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
  *     echoSettingsBuilder
  *         .echoSettings()

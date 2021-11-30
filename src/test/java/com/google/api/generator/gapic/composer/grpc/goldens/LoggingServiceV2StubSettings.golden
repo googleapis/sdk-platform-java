@@ -83,11 +83,11 @@ import org.threeten.bp.Duration;
  *
  * public class LoggingServiceV2Settings {
  *
- *   public static void main(String[] args) {
+ *   public static void main(String[] args) throws Exception {
  *     loggingServiceV2Settings();
  *   }
  *
- *   public static void loggingServiceV2Settings() {
+ *   public static void loggingServiceV2Settings() throws Exception {
  *     LoggingServiceV2StubSettings.Builder loggingServiceV2SettingsBuilder =
  *         LoggingServiceV2StubSettings.newBuilder();
  *     loggingServiceV2SettingsBuilder
