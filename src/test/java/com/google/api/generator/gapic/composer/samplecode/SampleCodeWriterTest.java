@@ -14,31 +14,31 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import static junit.framework.TestCase.assertEquals;
-
 import com.google.api.gax.rpc.ClientSettings;
-import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.ConcreteReference;
-import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.PrimitiveValue;
-import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.engine.ast.TryCatchStatement;
-import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
-import com.google.api.generator.engine.ast.Variable;
-import com.google.api.generator.engine.ast.VariableExpr;
-import java.util.Arrays;
+import com.google.api.generator.engine.ast.*;
+import com.google.api.generator.testutils.LineFormatter;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
+
+import static junit.framework.TestCase.assertEquals;
+
 public class SampleCodeWriterTest {
-  @Test
-  public void writeSampleCode_statements() {
+  private static String packageName;
+  private static MethodInvocationExpr methodInvocationExpr;
+  private static AssignmentExpr assignmentExpr;
+  private static Statement sampleStatement;
+  private static ClassDefinition classDefinition;
+  private static String className;
+
+  @BeforeClass
+  public static void setup() {
     TypeNode settingType =
         TypeNode.withReference(ConcreteReference.withClazz(ClientSettings.class));
     Variable aVar = Variable.builder().setName("clientSettings").setType(settingType).build();
     VariableExpr aVarExpr = VariableExpr.withVariable(aVar);
-    MethodInvocationExpr aValueExpr =
+    methodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
                 MethodInvocationExpr.builder()
@@ -48,18 +48,47 @@ public class SampleCodeWriterTest {
             .setReturnType(settingType)
             .setMethodName("build")
             .build();
-    AssignmentExpr assignmentExpr =
+    assignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(aVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(aValueExpr)
+            .setValueExpr(methodInvocationExpr)
             .build();
-    Statement sampleStatement =
+    sampleStatement =
         TryCatchStatement.builder()
             .setTryResourceExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN))
             .setTryBody(
                 Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
             .setIsSampleCode(true)
             .build();
+
+    MethodDefinition methdod =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(TypeNode.VOID)
+            .setName("main")
+            .setArguments(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.STRING_ARRAY).setName("args").build())
+                    .setIsDecl(true)
+                    .build())
+            .setBody(Arrays.asList(sampleStatement))
+            .build();
+
+    packageName = "com.google.example";
+    className = "SampleClassName";
+    classDefinition =
+        ClassDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setPackageString(packageName)
+            .setName(className)
+            .setMethods(Arrays.asList(methdod))
+            .build();
+  }
+
+  @Test
+  public void writeSampleCode_statements() {
     String result = SampleCodeWriter.write(ExprStatement.withExpr(assignmentExpr), sampleStatement);
     String expected =
         "ClientSettings clientSettings = ClientSettings.newBuilder().build();\n"
@@ -69,7 +98,34 @@ public class SampleCodeWriterTest {
     assertEquals(expected, result);
   }
 
-  private AssignmentExpr createAssignmentExpr(String varName, String varValue, TypeNode type) {
+  @Test
+  public void writeSampleCode_methodInvocation() {
+    String result = SampleCodeWriter.write(methodInvocationExpr);
+    String expected = "ClientSettings.newBuilder().build()";
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void writeSampleCode_classDefinition() {
+    String result = SampleCodeWriter.write(classDefinition);
+    String expected =
+        LineFormatter.lines(
+            "package " + packageName + ";\n",
+            "\n",
+            "public class " + className + " {\n",
+            "\n",
+            "  public static void main(String[] args) {\n",
+            "    try (boolean aBool = false) {\n",
+            "      int x = 3;\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
+
+    assertEquals(expected, result);
+  }
+
+  private static AssignmentExpr createAssignmentExpr(
+      String varName, String varValue, TypeNode type) {
     Variable variable = Variable.builder().setName(varName).setType(type).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();

@@ -18,28 +18,29 @@ import com.google.api.generator.engine.ast.*;
 import com.google.api.generator.gapic.utils.JavaStyle;
 
 public class SampleUtil {
-    static MethodInvocationExpr systemOutPrint(String content){
-        VaporReference out = VaporReference.builder()
-                .setSupertypeReference(ConcreteReference.withClazz(System.class))
-                .setEnclosingClassNames("System").setName("out").setPakkage("java.lang").build();
-        return MethodInvocationExpr.builder()
-                .setStaticReferenceType(TypeNode.withReference(out))
-                .setMethodName("println")
-                .setArguments(ValueExpr.withValue(StringObjectValue.withValue(content)))
-                .build();
-    }
-    static MethodInvocationExpr systemOutPrint(VariableExpr variableExpr){
-        VaporReference out = VaporReference.builder()
-                .setSupertypeReference(ConcreteReference.withClazz(System.class))
-                .setEnclosingClassNames("System").setName("out").setPakkage("java.lang").build();
-        return MethodInvocationExpr.builder()
-                .setStaticReferenceType(TypeNode.withReference(out))
-                .setMethodName("println")
-                .setArguments(variableExpr.toBuilder().setIsDecl(false).build())
-                .build();
+    public static String composeSampleMethodName(String clientName, String methodName){
+        if (clientName.equals("") || methodName.equals("")) {
+            throw new IllegalArgumentException("clientName and methodName must exist");
+        }
+        return JavaStyle.toLowerCamelCase(clientName + JavaStyle.toUpperCamelCase(methodName));
     }
 
-    static String composeSampleMethodName(String clientName, String methodName){
-        return JavaStyle.toLowerCamelCase(clientName + methodName);
+    public static MethodInvocationExpr systemOutPrint(String content){
+        return composeSystemOutPrint(ValueExpr.withValue(StringObjectValue.withValue(content)));
+    }
+
+    public static MethodInvocationExpr systemOutPrint(VariableExpr variableExpr){
+        return composeSystemOutPrint(variableExpr.toBuilder().setIsDecl(false).build());
+    }
+
+    static MethodInvocationExpr composeSystemOutPrint(Expr content){
+        VaporReference out = VaporReference.builder()
+                .setSupertypeReference(ConcreteReference.withClazz(System.class))
+                .setEnclosingClassNames("System").setName("out").setPakkage("java.lang").build();
+        return MethodInvocationExpr.builder()
+                .setStaticReferenceType(TypeNode.withReference(out))
+                .setMethodName("println")
+                .setArguments(content)
+                .build();
     }
 }

@@ -8,6 +8,7 @@ TESTS = [
     "ServiceClientSampleCodeComposerTest",
     "SettingsSampleCodeComposerTest",
     "ExecutableSampleComposerTest",
+    "SampleUtilTest",
 ]
 
 filegroup(
