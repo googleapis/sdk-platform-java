@@ -32,10 +32,21 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (MessagingClient messagingClient = MessagingClient.create()) {
- *   String displayName = "displayName1714148973";
- *   String description = "description-1724546052";
- *   Room response = messagingClient.createRoom(displayName, description);
+ * package com.google.showcase.v1beta1;
+ *
+ * public class MessagingClientCreateRoom {
+ *
+ *   public static void main(String[] args) {
+ *     messagingClientCreateRoom();
+ *   }
+ *
+ *   public static void messagingClientCreateRoom() {
+ *     try (MessagingClient messagingClient = MessagingClient.create()) {
+ *       String displayName = "displayName1714148973";
+ *       String description = "description-1724546052";
+ *       Room response = messagingClient.createRoom(displayName, description);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -68,19 +79,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * MessagingSettings messagingSettings =
- *     MessagingSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * MessagingClient messagingClient = MessagingClient.create(messagingSettings);
+ * package com.google.showcase.v1beta1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class MessagingClientcreate {
+ *
+ *   public static void main(String[] args) {
+ *     messagingClientcreate();
+ *   }
+ *
+ *   public static void messagingClientcreate() {
+ *     MessagingSettings messagingSettings =
+ *         MessagingSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     MessagingClient messagingClient = MessagingClient.create(messagingSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * MessagingSettings messagingSettings =
- *     MessagingSettings.newBuilder().setEndpoint(myEndpoint).build();
- * MessagingClient messagingClient = MessagingClient.create(messagingSettings);
+ * package com.google.showcase.v1beta1;
+ *
+ * public class MessagingClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) {
+ *     messagingClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void messagingClientClassHeaderEndpoint() {
+ *     MessagingSettings messagingSettings =
+ *         MessagingSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     MessagingClient messagingClient = MessagingClient.create(messagingSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -153,10 +188,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String displayName = "displayName1714148973";
-   *   String description = "description-1724546052";
-   *   Room response = messagingClient.createRoom(displayName, description);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientCreateRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateRoom();
+   *   }
+   *
+   *   public static void messagingClientCreateRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String displayName = "displayName1714148973";
+   *       String description = "description-1724546052";
+   *       Room response = messagingClient.createRoom(displayName, description);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -178,10 +224,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   CreateRoomRequest request =
-   *       CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
-   *   Room response = messagingClient.createRoom(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientCreateRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateRoom();
+   *   }
+   *
+   *   public static void messagingClientCreateRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       CreateRoomRequest request =
+   *           CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
+   *       Room response = messagingClient.createRoom(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -197,12 +254,25 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   CreateRoomRequest request =
-   *       CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
-   *   ApiFuture<Room> future = messagingClient.createRoomCallable().futureCall(request);
-   *   // Do something.
-   *   Room response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientCreateRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateRoom();
+   *   }
+   *
+   *   public static void messagingClientCreateRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       CreateRoomRequest request =
+   *           CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
+   *       ApiFuture<Room> future = messagingClient.createRoomCallable().futureCall(request);
+   *       // Do something.
+   *       Room response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -215,9 +285,20 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName name = RoomName.of("[ROOM]");
-   *   Room response = messagingClient.getRoom(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientGetRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetRoom();
+   *   }
+   *
+   *   public static void messagingClientGetRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       RoomName name = RoomName.of("[ROOM]");
+   *       Room response = messagingClient.getRoom(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -235,9 +316,20 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String name = RoomName.of("[ROOM]").toString();
-   *   Room response = messagingClient.getRoom(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientGetRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetRoom();
+   *   }
+   *
+   *   public static void messagingClientGetRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String name = RoomName.of("[ROOM]").toString();
+   *       Room response = messagingClient.getRoom(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -254,10 +346,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   GetRoomRequest request =
-   *       GetRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
-   *   Room response = messagingClient.getRoom(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientGetRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetRoom();
+   *   }
+   *
+   *   public static void messagingClientGetRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       GetRoomRequest request =
+   *           GetRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
+   *       Room response = messagingClient.getRoom(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -273,12 +376,25 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   GetRoomRequest request =
-   *       GetRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
-   *   ApiFuture<Room> future = messagingClient.getRoomCallable().futureCall(request);
-   *   // Do something.
-   *   Room response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientGetRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetRoom();
+   *   }
+   *
+   *   public static void messagingClientGetRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       GetRoomRequest request =
+   *           GetRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
+   *       ApiFuture<Room> future = messagingClient.getRoomCallable().futureCall(request);
+   *       // Do something.
+   *       Room response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -291,10 +407,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   UpdateRoomRequest request =
-   *       UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
-   *   Room response = messagingClient.updateRoom(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientUpdateRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientUpdateRoom();
+   *   }
+   *
+   *   public static void messagingClientUpdateRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       UpdateRoomRequest request =
+   *           UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
+   *       Room response = messagingClient.updateRoom(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -310,12 +437,25 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   UpdateRoomRequest request =
-   *       UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
-   *   ApiFuture<Room> future = messagingClient.updateRoomCallable().futureCall(request);
-   *   // Do something.
-   *   Room response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientUpdateRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientUpdateRoom();
+   *   }
+   *
+   *   public static void messagingClientUpdateRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       UpdateRoomRequest request =
+   *           UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
+   *       ApiFuture<Room> future = messagingClient.updateRoomCallable().futureCall(request);
+   *       // Do something.
+   *       Room response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -328,9 +468,22 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName name = RoomName.of("[ROOM]");
-   *   messagingClient.deleteRoom(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteRoom();
+   *   }
+   *
+   *   public static void messagingClientDeleteRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       RoomName name = RoomName.of("[ROOM]");
+   *       messagingClient.deleteRoom(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -348,9 +501,22 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String name = RoomName.of("[ROOM]").toString();
-   *   messagingClient.deleteRoom(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteRoom();
+   *   }
+   *
+   *   public static void messagingClientDeleteRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String name = RoomName.of("[ROOM]").toString();
+   *       messagingClient.deleteRoom(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -367,10 +533,23 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   DeleteRoomRequest request =
-   *       DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
-   *   messagingClient.deleteRoom(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteRoom();
+   *   }
+   *
+   *   public static void messagingClientDeleteRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       DeleteRoomRequest request =
+   *           DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
+   *       messagingClient.deleteRoom(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -386,12 +565,26 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   DeleteRoomRequest request =
-   *       DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
-   *   ApiFuture<Empty> future = messagingClient.deleteRoomCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteRoom {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteRoom();
+   *   }
+   *
+   *   public static void messagingClientDeleteRoom() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       DeleteRoomRequest request =
+   *           DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
+   *       ApiFuture<Empty> future = messagingClient.deleteRoomCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -404,14 +597,25 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ListRoomsRequest request =
-   *       ListRoomsRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Room element : messagingClient.listRooms(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientListRooms {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListRooms();
+   *   }
+   *
+   *   public static void messagingClientListRooms() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ListRoomsRequest request =
+   *           ListRoomsRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Room element : messagingClient.listRooms(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -428,16 +632,29 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ListRoomsRequest request =
-   *       ListRoomsRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Room> future = messagingClient.listRoomsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Room element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientListRooms {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListRooms();
+   *   }
+   *
+   *   public static void messagingClientListRooms() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ListRoomsRequest request =
+   *           ListRoomsRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Room> future = messagingClient.listRoomsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Room element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -451,22 +668,35 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ListRoomsRequest request =
-   *       ListRoomsRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListRoomsResponse response = messagingClient.listRoomsCallable().call(request);
-   *     for (Room element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class MessagingClientListRooms {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListRooms();
+   *   }
+   *
+   *   public static void messagingClientListRooms() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ListRoomsRequest request =
+   *           ListRoomsRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListRoomsResponse response = messagingClient.listRoomsCallable().call(request);
+   *         for (Room element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -481,10 +711,23 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ProfileName parent = ProfileName.of("[USER]");
-   *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, image);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ProfileName parent = ProfileName.of("[USER]");
+   *       ByteString image = ByteString.EMPTY;
+   *       Blurb response = messagingClient.createBlurb(parent, image);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -506,10 +749,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ProfileName parent = ProfileName.of("[USER]");
-   *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, text);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ProfileName parent = ProfileName.of("[USER]");
+   *       String text = "text3556653";
+   *       Blurb response = messagingClient.createBlurb(parent, text);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -531,10 +785,23 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName parent = RoomName.of("[ROOM]");
-   *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, image);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       RoomName parent = RoomName.of("[ROOM]");
+   *       ByteString image = ByteString.EMPTY;
+   *       Blurb response = messagingClient.createBlurb(parent, image);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -556,10 +823,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName parent = RoomName.of("[ROOM]");
-   *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, text);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       RoomName parent = RoomName.of("[ROOM]");
+   *       String text = "text3556653";
+   *       Blurb response = messagingClient.createBlurb(parent, text);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -581,10 +859,23 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   ByteString image = ByteString.EMPTY;
-   *   Blurb response = messagingClient.createBlurb(parent, image);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String parent = ProfileName.of("[USER]").toString();
+   *       ByteString image = ByteString.EMPTY;
+   *       Blurb response = messagingClient.createBlurb(parent, image);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -606,10 +897,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   String text = "text3556653";
-   *   Blurb response = messagingClient.createBlurb(parent, text);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String parent = ProfileName.of("[USER]").toString();
+   *       String text = "text3556653";
+   *       Blurb response = messagingClient.createBlurb(parent, text);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -631,13 +933,24 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   CreateBlurbRequest request =
-   *       CreateBlurbRequest.newBuilder()
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setBlurb(Blurb.newBuilder().build())
-   *           .build();
-   *   Blurb response = messagingClient.createBlurb(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       CreateBlurbRequest request =
+   *           CreateBlurbRequest.newBuilder()
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setBlurb(Blurb.newBuilder().build())
+   *               .build();
+   *       Blurb response = messagingClient.createBlurb(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -653,15 +966,28 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   CreateBlurbRequest request =
-   *       CreateBlurbRequest.newBuilder()
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setBlurb(Blurb.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Blurb> future = messagingClient.createBlurbCallable().futureCall(request);
-   *   // Do something.
-   *   Blurb response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientCreateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientCreateBlurb();
+   *   }
+   *
+   *   public static void messagingClientCreateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       CreateBlurbRequest request =
+   *           CreateBlurbRequest.newBuilder()
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setBlurb(Blurb.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Blurb> future = messagingClient.createBlurbCallable().futureCall(request);
+   *       // Do something.
+   *       Blurb response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -674,9 +1000,20 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
-   *   Blurb response = messagingClient.getBlurb(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientGetBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetBlurb();
+   *   }
+   *
+   *   public static void messagingClientGetBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
+   *       Blurb response = messagingClient.getBlurb(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -694,10 +1031,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String name =
-   *       BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]").toString();
-   *   Blurb response = messagingClient.getBlurb(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientGetBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetBlurb();
+   *   }
+   *
+   *   public static void messagingClientGetBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String name =
+   *           BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]").toString();
+   *       Blurb response = messagingClient.getBlurb(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -714,14 +1062,25 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   GetBlurbRequest request =
-   *       GetBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
-   *           .build();
-   *   Blurb response = messagingClient.getBlurb(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientGetBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetBlurb();
+   *   }
+   *
+   *   public static void messagingClientGetBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       GetBlurbRequest request =
+   *           GetBlurbRequest.newBuilder()
+   *               .setName(
+   *                   BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
+   *                       .toString())
+   *               .build();
+   *       Blurb response = messagingClient.getBlurb(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -737,16 +1096,29 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   GetBlurbRequest request =
-   *       GetBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<Blurb> future = messagingClient.getBlurbCallable().futureCall(request);
-   *   // Do something.
-   *   Blurb response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientGetBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientGetBlurb();
+   *   }
+   *
+   *   public static void messagingClientGetBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       GetBlurbRequest request =
+   *           GetBlurbRequest.newBuilder()
+   *               .setName(
+   *                   BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<Blurb> future = messagingClient.getBlurbCallable().futureCall(request);
+   *       // Do something.
+   *       Blurb response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -759,10 +1131,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   UpdateBlurbRequest request =
-   *       UpdateBlurbRequest.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
-   *   Blurb response = messagingClient.updateBlurb(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientUpdateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientUpdateBlurb();
+   *   }
+   *
+   *   public static void messagingClientUpdateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       UpdateBlurbRequest request =
+   *           UpdateBlurbRequest.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
+   *       Blurb response = messagingClient.updateBlurb(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -778,12 +1161,25 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   UpdateBlurbRequest request =
-   *       UpdateBlurbRequest.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
-   *   ApiFuture<Blurb> future = messagingClient.updateBlurbCallable().futureCall(request);
-   *   // Do something.
-   *   Blurb response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientUpdateBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientUpdateBlurb();
+   *   }
+   *
+   *   public static void messagingClientUpdateBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       UpdateBlurbRequest request =
+   *           UpdateBlurbRequest.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
+   *       ApiFuture<Blurb> future = messagingClient.updateBlurbCallable().futureCall(request);
+   *       // Do something.
+   *       Blurb response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -796,9 +1192,22 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
-   *   messagingClient.deleteBlurb(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteBlurb();
+   *   }
+   *
+   *   public static void messagingClientDeleteBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
+   *       messagingClient.deleteBlurb(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -816,10 +1225,23 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String name =
-   *       BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]").toString();
-   *   messagingClient.deleteBlurb(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteBlurb();
+   *   }
+   *
+   *   public static void messagingClientDeleteBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String name =
+   *           BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]").toString();
+   *       messagingClient.deleteBlurb(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -836,14 +1258,27 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   DeleteBlurbRequest request =
-   *       DeleteBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
-   *           .build();
-   *   messagingClient.deleteBlurb(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteBlurb();
+   *   }
+   *
+   *   public static void messagingClientDeleteBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       DeleteBlurbRequest request =
+   *           DeleteBlurbRequest.newBuilder()
+   *               .setName(
+   *                   BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
+   *                       .toString())
+   *               .build();
+   *       messagingClient.deleteBlurb(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -859,16 +1294,30 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   DeleteBlurbRequest request =
-   *       DeleteBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<Empty> future = messagingClient.deleteBlurbCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   *
+   * public class MessagingClientDeleteBlurb {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientDeleteBlurb();
+   *   }
+   *
+   *   public static void messagingClientDeleteBlurb() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       DeleteBlurbRequest request =
+   *           DeleteBlurbRequest.newBuilder()
+   *               .setName(
+   *                   BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<Empty> future = messagingClient.deleteBlurbCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -881,10 +1330,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ProfileName parent = ProfileName.of("[USER]");
-   *   for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientListBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListBlurbs();
+   *   }
+   *
+   *   public static void messagingClientListBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ProfileName parent = ProfileName.of("[USER]");
+   *       for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -903,10 +1363,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   RoomName parent = RoomName.of("[ROOM]");
-   *   for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientListBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListBlurbs();
+   *   }
+   *
+   *   public static void messagingClientListBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       RoomName parent = RoomName.of("[ROOM]");
+   *       for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -925,10 +1396,21 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String parent = ProfileName.of("[USER]").toString();
-   *   for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientListBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListBlurbs();
+   *   }
+   *
+   *   public static void messagingClientListBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String parent = ProfileName.of("[USER]").toString();
+   *       for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -946,15 +1428,26 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ListBlurbsRequest request =
-   *       ListBlurbsRequest.newBuilder()
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Blurb element : messagingClient.listBlurbs(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientListBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListBlurbs();
+   *   }
+   *
+   *   public static void messagingClientListBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ListBlurbsRequest request =
+   *           ListBlurbsRequest.newBuilder()
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Blurb element : messagingClient.listBlurbs(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -971,17 +1464,30 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ListBlurbsRequest request =
-   *       ListBlurbsRequest.newBuilder()
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Blurb> future = messagingClient.listBlurbsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Blurb element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class MessagingClientListBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListBlurbs();
+   *   }
+   *
+   *   public static void messagingClientListBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ListBlurbsRequest request =
+   *           ListBlurbsRequest.newBuilder()
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Blurb> future = messagingClient.listBlurbsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Blurb element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -995,23 +1501,36 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ListBlurbsRequest request =
-   *       ListBlurbsRequest.newBuilder()
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListBlurbsResponse response = messagingClient.listBlurbsCallable().call(request);
-   *     for (Blurb element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class MessagingClientListBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientListBlurbs();
+   *   }
+   *
+   *   public static void messagingClientListBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ListBlurbsRequest request =
+   *           ListBlurbsRequest.newBuilder()
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListBlurbsResponse response = messagingClient.listBlurbsCallable().call(request);
+   *         for (Blurb element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -1026,9 +1545,20 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   String query = "query107944136";
-   *   SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(query).get();
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientSearchBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientSearchBlurbs();
+   *   }
+   *
+   *   public static void messagingClientSearchBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       String query = "query107944136";
+   *       SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(query).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1046,15 +1576,26 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   SearchBlurbsRequest request =
-   *       SearchBlurbsRequest.newBuilder()
-   *           .setQuery("query107944136")
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(request).get();
+   * package com.google.showcase.v1beta1;
+   *
+   * public class MessagingClientSearchBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientSearchBlurbs();
+   *   }
+   *
+   *   public static void messagingClientSearchBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       SearchBlurbsRequest request =
+   *           SearchBlurbsRequest.newBuilder()
+   *               .setQuery("query107944136")
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1071,18 +1612,31 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   SearchBlurbsRequest request =
-   *       SearchBlurbsRequest.newBuilder()
-   *           .setQuery("query107944136")
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   OperationFuture<SearchBlurbsResponse, SearchBlurbsMetadata> future =
-   *       messagingClient.searchBlurbsOperationCallable().futureCall(request);
-   *   // Do something.
-   *   SearchBlurbsResponse response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   *
+   * public class MessagingClientSearchBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientSearchBlurbs();
+   *   }
+   *
+   *   public static void messagingClientSearchBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       SearchBlurbsRequest request =
+   *           SearchBlurbsRequest.newBuilder()
+   *               .setQuery("query107944136")
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       OperationFuture<SearchBlurbsResponse, SearchBlurbsMetadata> future =
+   *           messagingClient.searchBlurbsOperationCallable().futureCall(request);
+   *       // Do something.
+   *       SearchBlurbsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1096,17 +1650,31 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   SearchBlurbsRequest request =
-   *       SearchBlurbsRequest.newBuilder()
-   *           .setQuery("query107944136")
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Operation> future = messagingClient.searchBlurbsCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class MessagingClientSearchBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientSearchBlurbs();
+   *   }
+   *
+   *   public static void messagingClientSearchBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       SearchBlurbsRequest request =
+   *           SearchBlurbsRequest.newBuilder()
+   *               .setQuery("query107944136")
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Operation> future = messagingClient.searchBlurbsCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1119,13 +1687,26 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   StreamBlurbsRequest request =
-   *       StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
-   *   ServerStream<StreamBlurbsResponse> stream =
-   *       messagingClient.streamBlurbsCallable().call(request);
-   *   for (StreamBlurbsResponse response : stream) {
-   *     // Do something when a response is received.
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.rpc.ServerStream;
+   *
+   * public class MessagingClientStreamBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientStreamBlurbs();
+   *   }
+   *
+   *   public static void messagingClientStreamBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       StreamBlurbsRequest request =
+   *           StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
+   *       ServerStream<StreamBlurbsResponse> stream =
+   *           messagingClient.streamBlurbsCallable().call(request);
+   *       for (StreamBlurbsResponse response : stream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1140,32 +1721,45 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   ApiStreamObserver<CreateBlurbRequest> responseObserver =
-   *       new ApiStreamObserver<CreateBlurbRequest>() {
-   *         {@literal @}Override
-   *         public void onNext(SendBlurbsResponse response) {
-   *           // Do something when a response is received.
-   *         }
+   * package com.google.showcase.v1beta1;
    *
-   *         {@literal @}Override
-   *         public void onError(Throwable t) {
-   *           // Add error-handling
-   *         }
+   * import com.google.api.gax.rpc.ApiStreamObserver;
    *
-   *         {@literal @}Override
-   *         public void onCompleted() {
-   *           // Do something when complete.
-   *         }
-   *       };
-   *   ApiStreamObserver<CreateBlurbRequest> requestObserver =
-   *       messagingClient.sendBlurbs().clientStreamingCall(responseObserver);
-   *   CreateBlurbRequest request =
-   *       CreateBlurbRequest.newBuilder()
-   *           .setParent(ProfileName.of("[USER]").toString())
-   *           .setBlurb(Blurb.newBuilder().build())
-   *           .build();
-   *   requestObserver.onNext(request);
+   * public class MessagingClientSendBlurbs {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientSendBlurbs();
+   *   }
+   *
+   *   public static void messagingClientSendBlurbs() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       ApiStreamObserver<CreateBlurbRequest> responseObserver =
+   *           new ApiStreamObserver<CreateBlurbRequest>() {
+   *             {@literal @}Override
+   *             public void onNext(SendBlurbsResponse response) {
+   *               // Do something when a response is received.
+   *             }
+   *
+   *             {@literal @}Override
+   *             public void onError(Throwable t) {
+   *               // Add error-handling
+   *             }
+   *
+   *             {@literal @}Override
+   *             public void onCompleted() {
+   *               // Do something when complete.
+   *             }
+   *           };
+   *       ApiStreamObserver<CreateBlurbRequest> requestObserver =
+   *           messagingClient.sendBlurbs().clientStreamingCall(responseObserver);
+   *       CreateBlurbRequest request =
+   *           CreateBlurbRequest.newBuilder()
+   *               .setParent(ProfileName.of("[USER]").toString())
+   *               .setBlurb(Blurb.newBuilder().build())
+   *               .build();
+   *       requestObserver.onNext(request);
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1179,13 +1773,26 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   BidiStream<ConnectRequest, StreamBlurbsResponse> bidiStream =
-   *       messagingClient.connectCallable().call();
-   *   ConnectRequest request = ConnectRequest.newBuilder().build();
-   *   bidiStream.send(request);
-   *   for (StreamBlurbsResponse response : bidiStream) {
-   *     // Do something when a response is received.
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.rpc.BidiStream;
+   *
+   * public class MessagingClientConnect {
+   *
+   *   public static void main(String[] args) {
+   *     messagingClientConnect();
+   *   }
+   *
+   *   public static void messagingClientConnect() {
+   *     try (MessagingClient messagingClient = MessagingClient.create()) {
+   *       BidiStream<ConnectRequest, StreamBlurbsResponse> bidiStream =
+   *           messagingClient.connectCallable().call();
+   *       ConnectRequest request = ConnectRequest.newBuilder().build();
+   *       bidiStream.send(request);
+   *       for (StreamBlurbsResponse response : bidiStream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>

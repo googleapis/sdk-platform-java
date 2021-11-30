@@ -34,8 +34,19 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (EchoClient echoClient = EchoClient.create()) {
- *   EchoResponse response = echoClient.echo();
+ * package com.google.showcase.v1beta1;
+ *
+ * public class EchoClientEcho {
+ *
+ *   public static void main(String[] args) {
+ *     echoClientEcho();
+ *   }
+ *
+ *   public static void echoClientEcho() {
+ *     try (EchoClient echoClient = EchoClient.create()) {
+ *       EchoResponse response = echoClient.echo();
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -68,18 +79,42 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * EchoSettings echoSettings =
- *     EchoSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * EchoClient echoClient = EchoClient.create(echoSettings);
+ * package com.google.showcase.v1beta1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class EchoClientcreate {
+ *
+ *   public static void main(String[] args) {
+ *     echoClientcreate();
+ *   }
+ *
+ *   public static void echoClientcreate() {
+ *     EchoSettings echoSettings =
+ *         EchoSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     EchoClient echoClient = EchoClient.create(echoSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
- * EchoClient echoClient = EchoClient.create(echoSettings);
+ * package com.google.showcase.v1beta1;
+ *
+ * public class EchoClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) {
+ *     echoClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void echoClientClassHeaderEndpoint() {
+ *     EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     EchoClient echoClient = EchoClient.create(echoSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -152,8 +187,19 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   EchoResponse response = echoClient.echo();
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       EchoResponse response = echoClient.echo();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -170,9 +216,22 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
-   *   EchoResponse response = echoClient.echo(parent);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.resourcenames.ResourceName;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *       EchoResponse response = echoClient.echo(parent);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -190,9 +249,22 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   Status error = Status.newBuilder().build();
-   *   EchoResponse response = echoClient.echo(error);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.rpc.Status;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       Status error = Status.newBuilder().build();
+   *       EchoResponse response = echoClient.echo(error);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -209,9 +281,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
-   *   EchoResponse response = echoClient.echo(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *       EchoResponse response = echoClient.echo(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -229,9 +312,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   String content = "content951530617";
-   *   EchoResponse response = echoClient.echo(content);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       String content = "content951530617";
+   *       EchoResponse response = echoClient.echo(content);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -248,9 +342,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   String name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
-   *   EchoResponse response = echoClient.echo(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       String name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
+   *       EchoResponse response = echoClient.echo(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -267,9 +372,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   String parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
-   *   EchoResponse response = echoClient.echo(parent);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       String parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
+   *       EchoResponse response = echoClient.echo(parent);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -286,10 +402,21 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   String content = "content951530617";
-   *   Severity severity = Severity.forNumber(0);
-   *   EchoResponse response = echoClient.echo(content, severity);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       String content = "content951530617";
+   *       Severity severity = Severity.forNumber(0);
+   *       EchoResponse response = echoClient.echo(content, severity);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -308,15 +435,26 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   EchoResponse response = echoClient.echo(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       EchoResponse response = echoClient.echo(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -332,17 +470,30 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
-   *   // Do something.
-   *   EchoResponse response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class EchoClientEcho {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientEcho();
+   *   }
+   *
+   *   public static void echoClientEcho() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
+   *       // Do something.
+   *       EchoResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -355,12 +506,25 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   ExpandRequest request =
-   *       ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
-   *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
-   *   for (EchoResponse response : stream) {
-   *     // Do something when a response is received.
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.rpc.ServerStream;
+   *
+   * public class EchoClientExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientExpand();
+   *   }
+   *
+   *   public static void echoClientExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       ExpandRequest request =
+   *           ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+   *       ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
+   *       for (EchoResponse response : stream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -374,34 +538,47 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   ApiStreamObserver<EchoRequest> responseObserver =
-   *       new ApiStreamObserver<EchoRequest>() {
-   *         {@literal @}Override
-   *         public void onNext(EchoResponse response) {
-   *           // Do something when a response is received.
-   *         }
+   * package com.google.showcase.v1beta1;
    *
-   *         {@literal @}Override
-   *         public void onError(Throwable t) {
-   *           // Add error-handling
-   *         }
+   * import com.google.api.gax.rpc.ApiStreamObserver;
    *
-   *         {@literal @}Override
-   *         public void onCompleted() {
-   *           // Do something when complete.
-   *         }
-   *       };
-   *   ApiStreamObserver<EchoRequest> requestObserver =
-   *       echoClient.collect().clientStreamingCall(responseObserver);
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   requestObserver.onNext(request);
+   * public class EchoClientCollect {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientCollect();
+   *   }
+   *
+   *   public static void echoClientCollect() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       ApiStreamObserver<EchoRequest> responseObserver =
+   *           new ApiStreamObserver<EchoRequest>() {
+   *             {@literal @}Override
+   *             public void onNext(EchoResponse response) {
+   *               // Do something when a response is received.
+   *             }
+   *
+   *             {@literal @}Override
+   *             public void onError(Throwable t) {
+   *               // Add error-handling
+   *             }
+   *
+   *             {@literal @}Override
+   *             public void onCompleted() {
+   *               // Do something when complete.
+   *             }
+   *           };
+   *       ApiStreamObserver<EchoRequest> requestObserver =
+   *           echoClient.collect().clientStreamingCall(responseObserver);
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       requestObserver.onNext(request);
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -414,18 +591,31 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   bidiStream.send(request);
-   *   for (EchoResponse response : bidiStream) {
-   *     // Do something when a response is received.
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.rpc.BidiStream;
+   *
+   * public class EchoClientChat {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientChat();
+   *   }
+   *
+   *   public static void echoClientChat() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       bidiStream.send(request);
+   *       for (EchoResponse response : bidiStream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -439,18 +629,31 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatAgainCallable().call();
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   bidiStream.send(request);
-   *   for (EchoResponse response : bidiStream) {
-   *     // Do something when a response is received.
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.rpc.BidiStream;
+   *
+   * public class EchoClientChatAgain {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientChatAgain();
+   *   }
+   *
+   *   public static void echoClientChatAgain() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatAgainCallable().call();
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       bidiStream.send(request);
+   *       for (EchoResponse response : bidiStream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -464,15 +667,26 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   PagedExpandRequest request =
-   *       PagedExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientPagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientPagedExpand();
+   *   }
+   *
+   *   public static void echoClientPagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       PagedExpandRequest request =
+   *           PagedExpandRequest.newBuilder()
+   *               .setContent("content951530617")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -489,17 +703,30 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   PagedExpandRequest request =
-   *       PagedExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (EchoResponse element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class EchoClientPagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientPagedExpand();
+   *   }
+   *
+   *   public static void echoClientPagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       PagedExpandRequest request =
+   *           PagedExpandRequest.newBuilder()
+   *               .setContent("content951530617")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (EchoResponse element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -514,23 +741,36 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   PagedExpandRequest request =
-   *       PagedExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);
-   *     for (EchoResponse element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class EchoClientPagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientPagedExpand();
+   *   }
+   *
+   *   public static void echoClientPagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       PagedExpandRequest request =
+   *           PagedExpandRequest.newBuilder()
+   *               .setContent("content951530617")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);
+   *         for (EchoResponse element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -545,9 +785,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientSimplePagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientSimplePagedExpand();
+   *   }
+   *
+   *   public static void echoClientSimplePagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -565,15 +816,26 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   PagedExpandRequest request =
-   *       PagedExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (EchoResponse element : echoClient.simplePagedExpand(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientSimplePagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientSimplePagedExpand();
+   *   }
+   *
+   *   public static void echoClientSimplePagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       PagedExpandRequest request =
+   *           PagedExpandRequest.newBuilder()
+   *               .setContent("content951530617")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (EchoResponse element : echoClient.simplePagedExpand(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -590,18 +852,31 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   PagedExpandRequest request =
-   *       PagedExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<EchoResponse> future =
-   *       echoClient.simplePagedExpandPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (EchoResponse element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class EchoClientSimplePagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientSimplePagedExpand();
+   *   }
+   *
+   *   public static void echoClientSimplePagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       PagedExpandRequest request =
+   *           PagedExpandRequest.newBuilder()
+   *               .setContent("content951530617")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<EchoResponse> future =
+   *           echoClient.simplePagedExpandPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (EchoResponse element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -616,23 +891,36 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   PagedExpandRequest request =
-   *       PagedExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     PagedExpandResponse response = echoClient.simplePagedExpandCallable().call(request);
-   *     for (EchoResponse element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class EchoClientSimplePagedExpand {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientSimplePagedExpand();
+   *   }
+   *
+   *   public static void echoClientSimplePagedExpand() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       PagedExpandRequest request =
+   *           PagedExpandRequest.newBuilder()
+   *               .setContent("content951530617")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         PagedExpandResponse response = echoClient.simplePagedExpandCallable().call(request);
+   *         for (EchoResponse element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -647,9 +935,22 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   Duration ttl = Duration.newBuilder().build();
-   *   WaitResponse response = echoClient.waitAsync(ttl).get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Duration;
+   *
+   * public class EchoClientWait {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientWait();
+   *   }
+   *
+   *   public static void echoClientWait() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       Duration ttl = Duration.newBuilder().build();
+   *       WaitResponse response = echoClient.waitAsync(ttl).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -666,9 +967,22 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   Timestamp endTime = Timestamp.newBuilder().build();
-   *   WaitResponse response = echoClient.waitAsync(endTime).get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Timestamp;
+   *
+   * public class EchoClientWait {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientWait();
+   *   }
+   *
+   *   public static void echoClientWait() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       Timestamp endTime = Timestamp.newBuilder().build();
+   *       WaitResponse response = echoClient.waitAsync(endTime).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -685,9 +999,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   WaitRequest request = WaitRequest.newBuilder().build();
-   *   WaitResponse response = echoClient.waitAsync(request).get();
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientWait {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientWait();
+   *   }
+   *
+   *   public static void echoClientWait() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       WaitRequest request = WaitRequest.newBuilder().build();
+   *       WaitResponse response = echoClient.waitAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -703,12 +1028,25 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   WaitRequest request = WaitRequest.newBuilder().build();
-   *   OperationFuture<WaitResponse, WaitMetadata> future =
-   *       echoClient.waitOperationCallable().futureCall(request);
-   *   // Do something.
-   *   WaitResponse response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   *
+   * public class EchoClientWait {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientWait();
+   *   }
+   *
+   *   public static void echoClientWait() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       WaitRequest request = WaitRequest.newBuilder().build();
+   *       OperationFuture<WaitResponse, WaitMetadata> future =
+   *           echoClient.waitOperationCallable().futureCall(request);
+   *       // Do something.
+   *       WaitResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -721,11 +1059,25 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   WaitRequest request = WaitRequest.newBuilder().build();
-   *   ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class EchoClientWait {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientWait();
+   *   }
+   *
+   *   public static void echoClientWait() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       WaitRequest request = WaitRequest.newBuilder().build();
+   *       ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -738,9 +1090,20 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   BlockRequest request = BlockRequest.newBuilder().build();
-   *   BlockResponse response = echoClient.block(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientBlock {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientBlock();
+   *   }
+   *
+   *   public static void echoClientBlock() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       BlockRequest request = BlockRequest.newBuilder().build();
+   *       BlockResponse response = echoClient.block(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -756,11 +1119,24 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   BlockRequest request = BlockRequest.newBuilder().build();
-   *   ApiFuture<BlockResponse> future = echoClient.blockCallable().futureCall(request);
-   *   // Do something.
-   *   BlockResponse response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class EchoClientBlock {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientBlock();
+   *   }
+   *
+   *   public static void echoClientBlock() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       BlockRequest request = BlockRequest.newBuilder().build();
+   *       ApiFuture<BlockResponse> future = echoClient.blockCallable().futureCall(request);
+   *       // Do something.
+   *       BlockResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -773,15 +1149,26 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   Object response = echoClient.collideName(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class EchoClientCollideName {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientCollideName();
+   *   }
+   *
+   *   public static void echoClientCollideName() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       Object response = echoClient.collideName(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -797,17 +1184,30 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (EchoClient echoClient = EchoClient.create()) {
-   *   EchoRequest request =
-   *       EchoRequest.newBuilder()
-   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Object> future = echoClient.collideNameCallable().futureCall(request);
-   *   // Do something.
-   *   Object response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class EchoClientCollideName {
+   *
+   *   public static void main(String[] args) {
+   *     echoClientCollideName();
+   *   }
+   *
+   *   public static void echoClientCollideName() {
+   *     try (EchoClient echoClient = EchoClient.create()) {
+   *       EchoRequest request =
+   *           EchoRequest.newBuilder()
+   *               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *               .setSeverity(Severity.forNumber(0))
+   *               .setFoobar(Foobar.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Object> future = echoClient.collideNameCallable().futureCall(request);
+   *       // Do something.
+   *       Object response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

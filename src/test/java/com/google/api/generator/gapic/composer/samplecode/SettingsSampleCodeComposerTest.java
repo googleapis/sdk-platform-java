@@ -32,7 +32,8 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        SettingsSampleCodeComposer.composeSampleCode(Optional.empty(), "EchoSettings", classType);
+        ExecutableSampleComposer.createExecutableSample(SettingsSampleCodeComposer
+                .composeSampleCode(Optional.empty(), "EchoSettings", classType));
     assertEquals(results, Optional.empty());
   }
 
@@ -44,23 +45,36 @@ public class SettingsSampleCodeComposerTest {
                 .setName("EchoSettings")
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
-    Optional<String> results =
-        SettingsSampleCodeComposer.composeSampleCode(
-            Optional.of("Echo"), "EchoSettings", classType);
+    Optional<String> results = ExecutableSampleComposer.createExecutableSample(
+            SettingsSampleCodeComposer.composeSampleCode(
+                    Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
-            "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
-            "echoSettingsBuilder\n",
-            "    .echoSettings()\n",
-            "    .setRetrySettings(\n",
-            "        echoSettingsBuilder\n",
-            "            .echoSettings()\n",
-            "            .getRetrySettings()\n",
-            "            .toBuilder()\n",
-            "            .setTotalTimeout(Duration.ofSeconds(30))\n",
-            "            .build());\n",
-            "EchoSettings echoSettings = echoSettingsBuilder.build();");
-    assertEquals(results.get(), expected);
+          "package com.google.showcase.v1beta1;\n",
+          "\n",
+          "import java.time.Duration;\n",
+          "\n",
+          "public class EchoSettings {\n",
+          "\n",
+          "  public static void main(String[] args) {\n",
+          "    echoSettings();\n",
+          "  }\n",
+          "\n",
+          "  public static void echoSettings() {\n",
+          "    EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
+          "    echoSettingsBuilder\n",
+          "        .echoSettings()\n",
+          "        .setRetrySettings(\n",
+          "            echoSettingsBuilder\n",
+          "                .echoSettings()\n",
+          "                .getRetrySettings()\n",
+          "                .toBuilder()\n",
+          "                .setTotalTimeout(Duration.ofSeconds(30))\n",
+          "                .build());\n",
+          "    EchoSettings echoSettings = echoSettingsBuilder.build();\n",
+          "  }\n",
+          "}\n");
+    assertEquals(expected, results.get());
   }
 
   @Test
@@ -72,21 +86,34 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        SettingsSampleCodeComposer.composeSampleCode(
-            Optional.of("Echo"), "EchoSettings", classType);
+        ExecutableSampleComposer.createExecutableSample(SettingsSampleCodeComposer.composeSampleCode(
+            Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
-            "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
-            "echoSettingsBuilder\n",
-            "    .echoSettings()\n",
-            "    .setRetrySettings(\n",
-            "        echoSettingsBuilder\n",
-            "            .echoSettings()\n",
-            "            .getRetrySettings()\n",
-            "            .toBuilder()\n",
-            "            .setTotalTimeout(Duration.ofSeconds(30))\n",
-            "            .build());\n",
-            "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
-    assertEquals(results.get(), expected);
+          "package com.google.showcase.v1beta1;\n",
+          "\n",
+          "import java.time.Duration;\n",
+          "\n",
+          "public class EchoSettings {\n",
+          "\n",
+          "  public static void main(String[] args) {\n",
+          "    echoSettings();\n",
+          "  }\n",
+          "\n",
+          "  public static void echoSettings() {\n",
+          "    EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
+          "    echoSettingsBuilder\n",
+          "        .echoSettings()\n",
+          "        .setRetrySettings(\n",
+          "            echoSettingsBuilder\n",
+          "                .echoSettings()\n",
+          "                .getRetrySettings()\n",
+          "                .toBuilder()\n",
+          "                .setTotalTimeout(Duration.ofSeconds(30))\n",
+          "                .build());\n",
+          "    EchoStubSettings echoSettings = echoSettingsBuilder.build();\n",
+          "  }\n",
+          "}\n");
+    assertEquals(expected, results.get());
   }
 }

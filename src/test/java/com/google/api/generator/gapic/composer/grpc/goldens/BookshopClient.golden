@@ -16,10 +16,24 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (BookshopClient bookshopClient = BookshopClient.create()) {
- *   int booksCount = 1618425911;
- *   List<Book> books = new ArrayList<>();
- *   Book response = bookshopClient.getBook(booksCount, books);
+ * package com.google.bookshop.v1beta1;
+ *
+ * import java.util.ArrayList;
+ * import java.util.List;
+ *
+ * public class BookshopClientGetBook {
+ *
+ *   public static void main(String[] args) {
+ *     bookshopClientGetBook();
+ *   }
+ *
+ *   public static void bookshopClientGetBook() {
+ *     try (BookshopClient bookshopClient = BookshopClient.create()) {
+ *       int booksCount = 1618425911;
+ *       List<Book> books = new ArrayList<>();
+ *       Book response = bookshopClient.getBook(booksCount, books);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -52,19 +66,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * BookshopSettings bookshopSettings =
- *     BookshopSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
+ * package com.google.bookshop.v1beta1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class BookshopClientcreate {
+ *
+ *   public static void main(String[] args) {
+ *     bookshopClientcreate();
+ *   }
+ *
+ *   public static void bookshopClientcreate() {
+ *     BookshopSettings bookshopSettings =
+ *         BookshopSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * BookshopSettings bookshopSettings =
- *     BookshopSettings.newBuilder().setEndpoint(myEndpoint).build();
- * BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
+ * package com.google.bookshop.v1beta1;
+ *
+ * public class BookshopClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) {
+ *     bookshopClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void bookshopClientClassHeaderEndpoint() {
+ *     BookshopSettings bookshopSettings =
+ *         BookshopSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -126,10 +164,24 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (BookshopClient bookshopClient = BookshopClient.create()) {
-   *   int booksCount = 1618425911;
-   *   List<Book> books = new ArrayList<>();
-   *   Book response = bookshopClient.getBook(booksCount, books);
+   * package com.google.bookshop.v1beta1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class BookshopClientGetBook {
+   *
+   *   public static void main(String[] args) {
+   *     bookshopClientGetBook();
+   *   }
+   *
+   *   public static void bookshopClientGetBook() {
+   *     try (BookshopClient bookshopClient = BookshopClient.create()) {
+   *       int booksCount = 1618425911;
+   *       List<Book> books = new ArrayList<>();
+   *       Book response = bookshopClient.getBook(booksCount, books);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -148,10 +200,24 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (BookshopClient bookshopClient = BookshopClient.create()) {
-   *   String booksList = "booksList2-1119589686";
-   *   List<Book> books = new ArrayList<>();
-   *   Book response = bookshopClient.getBook(booksList, books);
+   * package com.google.bookshop.v1beta1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class BookshopClientGetBook {
+   *
+   *   public static void main(String[] args) {
+   *     bookshopClientGetBook();
+   *   }
+   *
+   *   public static void bookshopClientGetBook() {
+   *     try (BookshopClient bookshopClient = BookshopClient.create()) {
+   *       String booksList = "booksList2-1119589686";
+   *       List<Book> books = new ArrayList<>();
+   *       Book response = bookshopClient.getBook(booksList, books);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -170,14 +236,27 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (BookshopClient bookshopClient = BookshopClient.create()) {
-   *   GetBookRequest request =
-   *       GetBookRequest.newBuilder()
-   *           .setBooksCount1(1618425911)
-   *           .setBooksList2("booksList2-1119589686")
-   *           .addAllBooks3(new ArrayList<Book>())
-   *           .build();
-   *   Book response = bookshopClient.getBook(request);
+   * package com.google.bookshop.v1beta1;
+   *
+   * import java.util.ArrayList;
+   *
+   * public class BookshopClientGetBook {
+   *
+   *   public static void main(String[] args) {
+   *     bookshopClientGetBook();
+   *   }
+   *
+   *   public static void bookshopClientGetBook() {
+   *     try (BookshopClient bookshopClient = BookshopClient.create()) {
+   *       GetBookRequest request =
+   *           GetBookRequest.newBuilder()
+   *               .setBooksCount1(1618425911)
+   *               .setBooksList2("booksList2-1119589686")
+   *               .addAllBooks3(new ArrayList<Book>())
+   *               .build();
+   *       Book response = bookshopClient.getBook(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -193,16 +272,30 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (BookshopClient bookshopClient = BookshopClient.create()) {
-   *   GetBookRequest request =
-   *       GetBookRequest.newBuilder()
-   *           .setBooksCount1(1618425911)
-   *           .setBooksList2("booksList2-1119589686")
-   *           .addAllBooks3(new ArrayList<Book>())
-   *           .build();
-   *   ApiFuture<Book> future = bookshopClient.getBookCallable().futureCall(request);
-   *   // Do something.
-   *   Book response = future.get();
+   * package com.google.bookshop.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.ArrayList;
+   *
+   * public class BookshopClientGetBook {
+   *
+   *   public static void main(String[] args) {
+   *     bookshopClientGetBook();
+   *   }
+   *
+   *   public static void bookshopClientGetBook() {
+   *     try (BookshopClient bookshopClient = BookshopClient.create()) {
+   *       GetBookRequest request =
+   *           GetBookRequest.newBuilder()
+   *               .setBooksCount1(1618425911)
+   *               .setBooksList2("booksList2-1119589686")
+   *               .addAllBooks3(new ArrayList<Book>())
+   *               .build();
+   *       ApiFuture<Book> future = bookshopClient.getBookCallable().futureCall(request);
+   *       // Do something.
+   *       Book response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

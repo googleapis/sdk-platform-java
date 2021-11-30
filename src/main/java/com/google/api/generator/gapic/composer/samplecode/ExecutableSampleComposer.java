@@ -6,21 +6,36 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ExecutableSampleComposer {
-    public static String createExecutableSample(String samplePackageName, String sampleMethodName,
-                                                List<AssignmentExpr> sampleVariableAssignments,
-                                                List<Statement> sampleBody, List<VariableExpr> sampleMethodArgs){
-        return SampleCodeWriter.write(composeExecutableSample(samplePackageName, sampleMethodName,
-                sampleVariableAssignments, sampleBody, sampleMethodArgs));
+    // TODO: exceptions
+    public static String createExecutableSample(ExecutableSample executableSample){
+        return SampleCodeWriter.write(
+                composeExecutableSample(executableSample.samplePackageName, executableSample.sampleMethodName,
+                        executableSample.sampleVariableAssignments, executableSample.sampleBody));
+    }
+
+    public static Optional<String> createExecutableSample(Optional<ExecutableSample> executableSample){
+        if (executableSample.isPresent()) {
+            ExecutableSample sample = executableSample.get();
+          return Optional.of(SampleCodeWriter.write(
+              composeExecutableSample(
+                      sample.samplePackageName,
+                      sample.sampleMethodName,
+                      sample.sampleVariableAssignments,
+                      sample.sampleBody)));
+        }
+        return Optional.empty();
     }
 
     static ClassDefinition composeExecutableSample(String samplePackageName, String sampleMethodName,
                                                    List<AssignmentExpr> sampleVariableAssignments,
-                                                   List<Statement> sampleBody, List<VariableExpr> sampleMethodArgs){
+                                                   List<Statement> sampleBody){
 
         String sampleClassName = JavaStyle.toUpperCamelCase(sampleMethodName);
+        List<VariableExpr> sampleMethodArgs = composeSampleMethodArgs(sampleVariableAssignments);
         MethodDefinition mainMethod = composeMainMethod(composeMainBody(
                 sampleVariableAssignments, composeInvokeMethodStatement(sampleMethodName, sampleMethodArgs)));
         MethodDefinition sampleMethod = composeSampleMethod(sampleMethodName, sampleMethodArgs, sampleBody);
@@ -29,6 +44,12 @@ public class ExecutableSampleComposer {
                 sampleClassName,
                 mainMethod,
                 sampleMethod);
+    }
+
+    static List<VariableExpr> composeSampleMethodArgs(List<AssignmentExpr> sampleVariableAssignments){
+        return sampleVariableAssignments.stream()
+                .map(v -> v.variableExpr().toBuilder().setIsDecl(true).build())
+                .collect(Collectors.toList());
     }
 
     static Statement composeInvokeMethodStatement(String sampleMethodName, List<VariableExpr> sampleMethodArgs){
@@ -40,7 +61,6 @@ public class ExecutableSampleComposer {
     }
 
     static List<Statement> composeMainBody(List<AssignmentExpr> sampleVariableAssignments, Statement invokeMethod){
-
         List<ExprStatement> setVariables = sampleVariableAssignments.stream()
                 .map(var -> ExprStatement.withExpr(var)).collect(Collectors.toList());
         List<Statement> body = new ArrayList<>(setVariables);

@@ -35,18 +35,31 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of fastFibonacci to 30 seconds:
  *
  * <pre>{@code
- * DeprecatedServiceSettings.Builder deprecatedServiceSettingsBuilder =
- *     DeprecatedServiceSettings.newBuilder();
- * deprecatedServiceSettingsBuilder
- *     .fastFibonacciSettings()
- *     .setRetrySettings(
- *         deprecatedServiceSettingsBuilder
- *             .fastFibonacciSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * DeprecatedServiceSettings deprecatedServiceSettings = deprecatedServiceSettingsBuilder.build();
+ * package com.google.testdata.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class DeprecatedServiceSettings {
+ *
+ *   public static void main(String[] args) {
+ *     deprecatedServiceSettings();
+ *   }
+ *
+ *   public static void deprecatedServiceSettings() {
+ *     DeprecatedServiceSettings.Builder deprecatedServiceSettingsBuilder =
+ *         DeprecatedServiceSettings.newBuilder();
+ *     deprecatedServiceSettingsBuilder
+ *         .fastFibonacciSettings()
+ *         .setRetrySettings(
+ *             deprecatedServiceSettingsBuilder
+ *                 .fastFibonacciSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     DeprecatedServiceSettings deprecatedServiceSettings = deprecatedServiceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  *
  * @deprecated This class is deprecated and will be removed in the next major version update.

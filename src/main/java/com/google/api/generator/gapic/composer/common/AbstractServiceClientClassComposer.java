@@ -55,6 +55,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
+import com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -98,6 +99,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
+
+import static com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer.createExecutableSample;
 
 public abstract class AbstractServiceClientClassComposer implements ClassComposer {
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
@@ -192,11 +195,11 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
             service, clientType, resourceNames, messageTypes);
     String credentialsSampleCode =
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
-            clientType, settingsType);
+        createExecutableSample(ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            clientType, settingsType));
     String endpointSampleCode =
-        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
-            clientType, settingsType);
+        createExecutableSample(ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+            clientType, settingsType));
     return ServiceClientCommentComposer.createClassHeaderComments(
         service, classMethodSampleCode, credentialsSampleCode, endpointSampleCode);
   }
@@ -697,8 +700,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
       Optional<String> methodSampleCode =
           Optional.of(
-              ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                  method, typeStore.get(clientName), signature, resourceNames, messageTypes));
+              createExecutableSample(ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                  method, typeStore.get(clientName), signature, resourceNames, messageTypes)));
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
@@ -777,8 +780,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     Optional<String> defaultMethodSampleCode =
         Optional.of(
-            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-                method, typeStore.get(clientName), resourceNames, messageTypes));
+            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, typeStore.get(clientName), resourceNames, messageTypes)));
 
     MethodInvocationExpr callableMethodExpr =
         MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
@@ -900,36 +903,36 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCodeOpt =
           Optional.of(
-              ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                  createExecutableSample(ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
-                  messageTypes));
+                  messageTypes)));
     } else if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
       sampleCodeOpt =
           Optional.of(
-              ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+              createExecutableSample(ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
-                  messageTypes));
+                  messageTypes)));
     } else if (callableMethodKind.equals(CallableMethodKind.REGULAR)) {
       if (method.stream().equals(Stream.NONE)) {
         sampleCodeOpt =
             Optional.of(
-                ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                createExecutableSample(ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
                     method,
                     typeStore.get(ClassNames.getServiceClientClassName(service)),
                     resourceNames,
-                    messageTypes));
+                    messageTypes)));
       } else {
         sampleCodeOpt =
             Optional.of(
-                ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                    createExecutableSample(ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
                     method,
                     typeStore.get(ClassNames.getServiceClientClassName(service)),
                     resourceNames,
-                    messageTypes));
+                    messageTypes)));
       }
     }
 

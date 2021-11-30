@@ -79,6 +79,8 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
+import com.google.api.generator.gapic.composer.samplecode.ExecutableSample;
+import com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -390,8 +392,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
     Optional<String> sampleCodeOpt =
-        SettingsSampleCodeComposer.composeSampleCode(
-            methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+            ExecutableSampleComposer.createExecutableSample(SettingsSampleCodeComposer.composeSampleCode(
+            methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType));
 
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceStubClassName(service),

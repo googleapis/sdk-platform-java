@@ -27,14 +27,17 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.google.api.generator.gapic.composer.samplecode.SampleUtil.composeSampleMethodName;
+
 public final class SettingsSampleCodeComposer {
 
-  public static Optional<String> composeSampleCode(
+  public static Optional<ExecutableSample> composeSampleCode(
       Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
     if (!methodNameOpt.isPresent()) {
       return Optional.empty();
@@ -113,13 +116,15 @@ public final class SettingsSampleCodeComposer {
             .setArguments(retrySettingsArgExpr)
             .build();
 
+    String name = JavaStyle.toLowerCamelCase(settingsClassName);
+    String packageName = classType.reference().pakkage();
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(classType)
-                .setName(JavaStyle.toLowerCamelCase(settingsClassName))
+                .setName(name)
                 .build());
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
@@ -132,7 +137,7 @@ public final class SettingsSampleCodeComposer {
                     .build())
             .build();
 
-    List<Statement> statements =
+    List<Statement> sampleBody =
         Arrays.asList(
                 initLocalSettingsExpr,
                 settingBuilderMethodInvocationExpr,
@@ -140,6 +145,9 @@ public final class SettingsSampleCodeComposer {
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-    return Optional.of(SampleCodeWriter.write(statements));
+
+
+
+    return Optional.of(new ExecutableSample(packageName, name, new ArrayList<>(), sampleBody));
   }
 }

@@ -42,17 +42,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of echo to 30 seconds:
  *
  * <pre>{@code
- * EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
- * echoSettingsBuilder
- *     .echoSettings()
- *     .setRetrySettings(
- *         echoSettingsBuilder
- *             .echoSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * EchoSettings echoSettings = echoSettingsBuilder.build();
+ * package com.google.showcase.v1beta1;
+ *
+ * import java.time.Duration;
+ *
+ * public class EchoSettings {
+ *
+ *   public static void main(String[] args) {
+ *     echoSettings();
+ *   }
+ *
+ *   public static void echoSettings() {
+ *     EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
+ *     echoSettingsBuilder
+ *         .echoSettings()
+ *         .setRetrySettings(
+ *             echoSettingsBuilder
+ *                 .echoSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     EchoSettings echoSettings = echoSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @BetaApi

@@ -43,17 +43,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of repeatDataBody to 30 seconds:
  *
  * <pre>{@code
- * ComplianceStubSettings.Builder complianceSettingsBuilder = ComplianceStubSettings.newBuilder();
- * complianceSettingsBuilder
- *     .repeatDataBodySettings()
- *     .setRetrySettings(
- *         complianceSettingsBuilder
- *             .repeatDataBodySettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * ComplianceStubSettings complianceSettings = complianceSettingsBuilder.build();
+ * package com.google.showcase.v1beta1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class ComplianceSettings {
+ *
+ *   public static void main(String[] args) {
+ *     complianceSettings();
+ *   }
+ *
+ *   public static void complianceSettings() {
+ *     ComplianceStubSettings.Builder complianceSettingsBuilder = ComplianceStubSettings.newBuilder();
+ *     complianceSettingsBuilder
+ *         .repeatDataBodySettings()
+ *         .setRetrySettings(
+ *             complianceSettingsBuilder
+ *                 .repeatDataBodySettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     ComplianceStubSettings complianceSettings = complianceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @BetaApi

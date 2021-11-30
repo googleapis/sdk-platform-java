@@ -1,6 +1,7 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.*;
+import com.google.api.generator.gapic.utils.JavaStyle;
 
 public class SampleUtil {
     static MethodInvocationExpr systemOutPrint(String content){
@@ -22,5 +23,9 @@ public class SampleUtil {
                 .setMethodName("println")
                 .setArguments(variableExpr.toBuilder().setIsDecl(false).build())
                 .build();
+    }
+
+    static String composeSampleMethodName(String clientName, String methodName){
+        return JavaStyle.toLowerCamelCase(clientName + methodName);
     }
 }

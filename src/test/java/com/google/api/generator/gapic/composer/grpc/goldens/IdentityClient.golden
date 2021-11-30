@@ -24,11 +24,22 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (IdentityClient identityClient = IdentityClient.create()) {
- *   String parent = UserName.of("[USER]").toString();
- *   String displayName = "displayName1714148973";
- *   String email = "email96619420";
- *   User response = identityClient.createUser(parent, displayName, email);
+ * package com.google.showcase.v1beta1;
+ *
+ * public class IdentityClientCreateUser {
+ *
+ *   public static void main(String[] args) {
+ *     identityClientCreateUser();
+ *   }
+ *
+ *   public static void identityClientCreateUser() {
+ *     try (IdentityClient identityClient = IdentityClient.create()) {
+ *       String parent = UserName.of("[USER]").toString();
+ *       String displayName = "displayName1714148973";
+ *       String email = "email96619420";
+ *       User response = identityClient.createUser(parent, displayName, email);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -61,19 +72,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * IdentitySettings identitySettings =
- *     IdentitySettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * IdentityClient identityClient = IdentityClient.create(identitySettings);
+ * package com.google.showcase.v1beta1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class IdentityClientcreate {
+ *
+ *   public static void main(String[] args) {
+ *     identityClientcreate();
+ *   }
+ *
+ *   public static void identityClientcreate() {
+ *     IdentitySettings identitySettings =
+ *         IdentitySettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     IdentityClient identityClient = IdentityClient.create(identitySettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * IdentitySettings identitySettings =
- *     IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
- * IdentityClient identityClient = IdentityClient.create(identitySettings);
+ * package com.google.showcase.v1beta1;
+ *
+ * public class IdentityClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) {
+ *     identityClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void identityClientClassHeaderEndpoint() {
+ *     IdentitySettings identitySettings =
+ *         IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     IdentityClient identityClient = IdentityClient.create(identitySettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -135,11 +170,22 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = UserName.of("[USER]").toString();
-   *   String displayName = "displayName1714148973";
-   *   String email = "email96619420";
-   *   User response = identityClient.createUser(parent, displayName, email);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientCreateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientCreateUser();
+   *   }
+   *
+   *   public static void identityClientCreateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       String parent = UserName.of("[USER]").toString();
+   *       String displayName = "displayName1714148973";
+   *       String email = "email96619420";
+   *       User response = identityClient.createUser(parent, displayName, email);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -162,17 +208,28 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = UserName.of("[USER]").toString();
-   *   String displayName = "displayName1714148973";
-   *   String email = "email96619420";
-   *   int age = 96511;
-   *   String nickname = "nickname70690926";
-   *   boolean enableNotifications = true;
-   *   double heightFeet = -1032737338;
-   *   User response =
-   *       identityClient.createUser(
-   *           parent, displayName, email, age, nickname, enableNotifications, heightFeet);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientCreateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientCreateUser();
+   *   }
+   *
+   *   public static void identityClientCreateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       String parent = UserName.of("[USER]").toString();
+   *       String displayName = "displayName1714148973";
+   *       String email = "email96619420";
+   *       int age = 96511;
+   *       String nickname = "nickname70690926";
+   *       boolean enableNotifications = true;
+   *       double heightFeet = -1032737338;
+   *       User response =
+   *           identityClient.createUser(
+   *               parent, displayName, email, age, nickname, enableNotifications, heightFeet);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -214,29 +271,40 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = UserName.of("[USER]").toString();
-   *   String displayName = "displayName1714148973";
-   *   String email = "email96619420";
-   *   String hobbyName = "hobbyName882586493";
-   *   String songName = "songName1535136064";
-   *   int weeklyFrequency = 1572999966;
-   *   String companyName = "companyName-508582744";
-   *   String title = "title110371416";
-   *   String subject = "subject-1867885268";
-   *   String artistName = "artistName629723762";
-   *   User response =
-   *       identityClient.createUser(
-   *           parent,
-   *           displayName,
-   *           email,
-   *           hobbyName,
-   *           songName,
-   *           weeklyFrequency,
-   *           companyName,
-   *           title,
-   *           subject,
-   *           artistName);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientCreateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientCreateUser();
+   *   }
+   *
+   *   public static void identityClientCreateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       String parent = UserName.of("[USER]").toString();
+   *       String displayName = "displayName1714148973";
+   *       String email = "email96619420";
+   *       String hobbyName = "hobbyName882586493";
+   *       String songName = "songName1535136064";
+   *       int weeklyFrequency = 1572999966;
+   *       String companyName = "companyName-508582744";
+   *       String title = "title110371416";
+   *       String subject = "subject-1867885268";
+   *       String artistName = "artistName629723762";
+   *       User response =
+   *           identityClient.createUser(
+   *               parent,
+   *               displayName,
+   *               email,
+   *               hobbyName,
+   *               songName,
+   *               weeklyFrequency,
+   *               companyName,
+   *               title,
+   *               subject,
+   *               artistName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -299,13 +367,24 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   CreateUserRequest request =
-   *       CreateUserRequest.newBuilder()
-   *           .setParent(UserName.of("[USER]").toString())
-   *           .setUser(User.newBuilder().build())
-   *           .build();
-   *   User response = identityClient.createUser(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientCreateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientCreateUser();
+   *   }
+   *
+   *   public static void identityClientCreateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       CreateUserRequest request =
+   *           CreateUserRequest.newBuilder()
+   *               .setParent(UserName.of("[USER]").toString())
+   *               .setUser(User.newBuilder().build())
+   *               .build();
+   *       User response = identityClient.createUser(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -321,15 +400,28 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   CreateUserRequest request =
-   *       CreateUserRequest.newBuilder()
-   *           .setParent(UserName.of("[USER]").toString())
-   *           .setUser(User.newBuilder().build())
-   *           .build();
-   *   ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
-   *   // Do something.
-   *   User response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class IdentityClientCreateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientCreateUser();
+   *   }
+   *
+   *   public static void identityClientCreateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       CreateUserRequest request =
+   *           CreateUserRequest.newBuilder()
+   *               .setParent(UserName.of("[USER]").toString())
+   *               .setUser(User.newBuilder().build())
+   *               .build();
+   *       ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
+   *       // Do something.
+   *       User response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -342,9 +434,20 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   UserName name = UserName.of("[USER]");
-   *   User response = identityClient.getUser(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientGetUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientGetUser();
+   *   }
+   *
+   *   public static void identityClientGetUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       UserName name = UserName.of("[USER]");
+   *       User response = identityClient.getUser(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -362,9 +465,20 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String name = UserName.of("[USER]").toString();
-   *   User response = identityClient.getUser(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientGetUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientGetUser();
+   *   }
+   *
+   *   public static void identityClientGetUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       String name = UserName.of("[USER]").toString();
+   *       User response = identityClient.getUser(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -381,10 +495,21 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   GetUserRequest request =
-   *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
-   *   User response = identityClient.getUser(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientGetUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientGetUser();
+   *   }
+   *
+   *   public static void identityClientGetUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       GetUserRequest request =
+   *           GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+   *       User response = identityClient.getUser(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -400,12 +525,25 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   GetUserRequest request =
-   *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
-   *   ApiFuture<User> future = identityClient.getUserCallable().futureCall(request);
-   *   // Do something.
-   *   User response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class IdentityClientGetUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientGetUser();
+   *   }
+   *
+   *   public static void identityClientGetUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       GetUserRequest request =
+   *           GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+   *       ApiFuture<User> future = identityClient.getUserCallable().futureCall(request);
+   *       // Do something.
+   *       User response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -418,10 +556,21 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   UpdateUserRequest request =
-   *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
-   *   User response = identityClient.updateUser(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientUpdateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientUpdateUser();
+   *   }
+   *
+   *   public static void identityClientUpdateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       UpdateUserRequest request =
+   *           UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
+   *       User response = identityClient.updateUser(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -437,12 +586,25 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   UpdateUserRequest request =
-   *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
-   *   ApiFuture<User> future = identityClient.updateUserCallable().futureCall(request);
-   *   // Do something.
-   *   User response = future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class IdentityClientUpdateUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientUpdateUser();
+   *   }
+   *
+   *   public static void identityClientUpdateUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       UpdateUserRequest request =
+   *           UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
+   *       ApiFuture<User> future = identityClient.updateUserCallable().futureCall(request);
+   *       // Do something.
+   *       User response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -455,9 +617,22 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   UserName name = UserName.of("[USER]");
-   *   identityClient.deleteUser(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class IdentityClientDeleteUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientDeleteUser();
+   *   }
+   *
+   *   public static void identityClientDeleteUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       UserName name = UserName.of("[USER]");
+   *       identityClient.deleteUser(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -475,9 +650,22 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String name = UserName.of("[USER]").toString();
-   *   identityClient.deleteUser(name);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class IdentityClientDeleteUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientDeleteUser();
+   *   }
+   *
+   *   public static void identityClientDeleteUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       String name = UserName.of("[USER]").toString();
+   *       identityClient.deleteUser(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -494,10 +682,23 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   DeleteUserRequest request =
-   *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
-   *   identityClient.deleteUser(request);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class IdentityClientDeleteUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientDeleteUser();
+   *   }
+   *
+   *   public static void identityClientDeleteUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       DeleteUserRequest request =
+   *           DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+   *       identityClient.deleteUser(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -513,12 +714,26 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   DeleteUserRequest request =
-   *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
-   *   ApiFuture<Empty> future = identityClient.deleteUserCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   *
+   * public class IdentityClientDeleteUser {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientDeleteUser();
+   *   }
+   *
+   *   public static void identityClientDeleteUser() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       DeleteUserRequest request =
+   *           DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+   *       ApiFuture<Empty> future = identityClient.deleteUserCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -531,14 +746,25 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   ListUsersRequest request =
-   *       ListUsersRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (User element : identityClient.listUsers(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * public class IdentityClientListUsers {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientListUsers();
+   *   }
+   *
+   *   public static void identityClientListUsers() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       ListUsersRequest request =
+   *           ListUsersRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (User element : identityClient.listUsers(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -555,16 +781,29 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   ListUsersRequest request =
-   *       ListUsersRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<User> future = identityClient.listUsersPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (User element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class IdentityClientListUsers {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientListUsers();
+   *   }
+   *
+   *   public static void identityClientListUsers() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       ListUsersRequest request =
+   *           ListUsersRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<User> future = identityClient.listUsersPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (User element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -578,22 +817,35 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   ListUsersRequest request =
-   *       ListUsersRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListUsersResponse response = identityClient.listUsersCallable().call(request);
-   *     for (User element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.showcase.v1beta1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class IdentityClientListUsers {
+   *
+   *   public static void main(String[] args) {
+   *     identityClientListUsers();
+   *   }
+   *
+   *   public static void identityClientListUsers() {
+   *     try (IdentityClient identityClient = IdentityClient.create()) {
+   *       ListUsersRequest request =
+   *           ListUsersRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListUsersResponse response = identityClient.listUsersCallable().call(request);
+   *         for (User element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }

@@ -44,19 +44,32 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of fastFibonacci to 30 seconds:
  *
  * <pre>{@code
- * DeprecatedServiceStubSettings.Builder deprecatedServiceSettingsBuilder =
- *     DeprecatedServiceStubSettings.newBuilder();
- * deprecatedServiceSettingsBuilder
- *     .fastFibonacciSettings()
- *     .setRetrySettings(
- *         deprecatedServiceSettingsBuilder
- *             .fastFibonacciSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * DeprecatedServiceStubSettings deprecatedServiceSettings =
- *     deprecatedServiceSettingsBuilder.build();
+ * package com.google.testdata.v1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class DeprecatedServiceSettings {
+ *
+ *   public static void main(String[] args) {
+ *     deprecatedServiceSettings();
+ *   }
+ *
+ *   public static void deprecatedServiceSettings() {
+ *     DeprecatedServiceStubSettings.Builder deprecatedServiceSettingsBuilder =
+ *         DeprecatedServiceStubSettings.newBuilder();
+ *     deprecatedServiceSettingsBuilder
+ *         .fastFibonacciSettings()
+ *         .setRetrySettings(
+ *             deprecatedServiceSettingsBuilder
+ *                 .fastFibonacciSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     DeprecatedServiceStubSettings deprecatedServiceSettings =
+ *         deprecatedServiceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  *
  * @deprecated This class is deprecated and will be removed in the next major version update.
