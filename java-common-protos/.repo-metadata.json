@@ -10,5 +10,7 @@
   "language": "java",
   "repo": "googleapis/java-common-protos",
   "repo_short": "java-common-protos",
-  "distribution_name": "com.google.api.grpc:proto-google-common-protos"
+  "distribution_name": "com.google.api.grpc:proto-google-common-protos",
+  "excluded_dependencies": "proto-google-common-protos,grpc-google-common-protos,proto-google-common-protos-parent",
+  "excluded_poms": "proto-google-common-protos-bom,proto-google-common-protos"
 }

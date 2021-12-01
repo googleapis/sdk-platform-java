@@ -2,3 +2,4 @@
 # module:released-version:current-version
 
 proto-google-common-protos:2.6.0:2.6.1-SNAPSHOT
+grpc-google-common-protos:2.6.0:2.6.1-SNAPSHOT
