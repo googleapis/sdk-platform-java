@@ -71,20 +71,20 @@ public class ServiceClientSampleCodeComposerTest {
             echoProtoService, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientEcho {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientEcho();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientEcho() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      EchoResponse response = echoClient.echo();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientEcho {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientEcho();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientEcho() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      EchoResponse response = echoClient.echo();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -164,23 +164,23 @@ public class ServiceClientSampleCodeComposerTest {
             service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.protobuf.Duration;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      Duration ttl = Duration.newBuilder().build();\n",
-          "      WaitResponse response = echoClient.waitAsync(ttl).get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.protobuf.Duration;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      Duration ttl = Duration.newBuilder().build();\n",
+            "      WaitResponse response = echoClient.waitAsync(ttl).get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -230,27 +230,27 @@ public class ServiceClientSampleCodeComposerTest {
             service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientEcho {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientEcho();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientEcho() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      EchoRequest request =\n",
-          "          EchoRequest.newBuilder()\n",
-          "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setSeverity(Severity.forNumber(0))\n",
-          "              .setFoobar(Foobar.newBuilder().build())\n",
-          "              .build();\n",
-          "      EchoResponse response = echoClient.echo(request);\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientEcho {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientEcho();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientEcho() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      EchoRequest request =\n",
+            "          EchoRequest.newBuilder()\n",
+            "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setSeverity(Severity.forNumber(0))\n",
+            "              .setFoobar(Foobar.newBuilder().build())\n",
+            "              .build();\n",
+            "      EchoResponse response = echoClient.echo(request);\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -300,27 +300,27 @@ public class ServiceClientSampleCodeComposerTest {
             service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.gax.rpc.ServerStream;\n",
-          "\n",
-          "public class EchoClientExpand {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientExpand();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientExpand() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      ExpandRequest request =\n",
-          "          ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
-          "      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
-          "      for (EchoResponse response : stream) {\n",
-          "        // Do something when a response is received.\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.gax.rpc.ServerStream;\n",
+            "\n",
+            "public class EchoClientExpand {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientExpand();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientExpand() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      ExpandRequest request =\n",
+            "          ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
+            "      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
+            "      for (EchoResponse response : stream) {\n",
+            "        // Do something when a response is received.\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -339,28 +339,29 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-         createExecutableSample(ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
-            clientType, settingsType));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+                clientType, settingsType));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.gax.core.FixedCredentialsProvider;\n",
-          "\n",
-          "public class EchoClientCreate {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientCreate();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientCreate() throws Exception {\n",
-          "    EchoSettings echoSettings =\n",
-          "        EchoSettings.newBuilder()\n",
-          "            .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))\n",
-          "            .build();\n",
-          "    EchoClient echoClient = EchoClient.create(echoSettings);\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.gax.core.FixedCredentialsProvider;\n",
+            "\n",
+            "public class EchoClientCreate {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientCreate();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientCreate() throws Exception {\n",
+            "    EchoSettings echoSettings =\n",
+            "        EchoSettings.newBuilder()\n",
+            "            .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))\n",
+            "            .build();\n",
+            "    EchoClient echoClient = EchoClient.create(echoSettings);\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -379,23 +380,24 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
-            clientType, settingsType));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+                clientType, settingsType));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientClassHeaderEndpoint {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientClassHeaderEndpoint();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientClassHeaderEndpoint() throws Exception {\n",
-          "    EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();\n",
-          "    EchoClient echoClient = EchoClient.create(echoSettings);\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientClassHeaderEndpoint {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientClassHeaderEndpoint();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientClassHeaderEndpoint() throws Exception {\n",
+            "    EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();\n",
+            "    EchoClient echoClient = EchoClient.create(echoSettings);\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1105,31 +1107,32 @@ public class ServiceClientSampleCodeComposerTest {
     messageTypes.put("com.google.showcase.v1beta1.ListContentResponse", listContentResponseMessage);
 
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import java.util.ArrayList;\n",
-          "import java.util.List;\n",
-          "\n",
-          "public class EchoClientListContent {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientListContent();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientListContent() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      List<String> resourceName = new ArrayList<>();\n",
-          "      String filter = \"filter-1274492040\";\n",
-          "      for (Content element : echoClient.listContent(resourceName, filter).iterateAll()) {\n",
-          "        // doThingsWith(element);\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import java.util.ArrayList;\n",
+            "import java.util.List;\n",
+            "\n",
+            "public class EchoClientListContent {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientListContent();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientListContent() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      List<String> resourceName = new ArrayList<>();\n",
+            "      String filter = \"filter-1274492040\";\n",
+            "      for (Content element : echoClient.listContent(resourceName, filter).iterateAll()) {\n",
+            "        // doThingsWith(element);\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1191,26 +1194,27 @@ public class ServiceClientSampleCodeComposerTest {
     messageTypes.put("com.google.showcase.v1beta1.ListContentResponse", listContentResponseMessage);
 
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientListContent {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientListContent();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientListContent() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      for (Content element : echoClient.listContent().iterateAll()) {\n",
-          "        // doThingsWith(element);\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientListContent {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientListContent();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientListContent() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      for (Content element : echoClient.listContent().iterateAll()) {\n",
+            "        // doThingsWith(element);\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1362,24 +1366,25 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
 
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, Collections.emptyList(), resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, Collections.emptyList(), resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitResponse response = echoClient.waitAsync().get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitResponse response = echoClient.waitAsync().get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1446,27 +1451,28 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
 
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.protobuf.Duration;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      Duration ttl = Duration.newBuilder().build();\n",
-          "      WaitResponse response = echoClient.waitAsync(ttl).get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.protobuf.Duration;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      Duration ttl = Duration.newBuilder().build();\n",
+            "      WaitResponse response = echoClient.waitAsync(ttl).get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1530,28 +1536,29 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
 
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.protobuf.Duration;\n",
-          "import com.google.protobuf.Empty;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      Duration ttl = Duration.newBuilder().build();\n",
-          "      echoClient.waitAsync(ttl).get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.protobuf.Duration;\n",
+            "import com.google.protobuf.Empty;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      Duration ttl = Duration.newBuilder().build();\n",
+            "      echoClient.waitAsync(ttl).get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1588,32 +1595,33 @@ public class ServiceClientSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientPagedExpand {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientPagedExpand();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientPagedExpand() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      PagedExpandRequest request =\n",
-          "          PagedExpandRequest.newBuilder()\n",
-          "              .setContent(\"content951530617\")\n",
-          "              .setPageSize(883849137)\n",
-          "              .setPageToken(\"pageToken873572522\")\n",
-          "              .build();\n",
-          "      for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {\n",
-          "        // doThingsWith(element);\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientPagedExpand {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientPagedExpand();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientPagedExpand() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      PagedExpandRequest request =\n",
+            "          PagedExpandRequest.newBuilder()\n",
+            "              .setContent(\"content951530617\")\n",
+            "              .setPageSize(883849137)\n",
+            "              .setPageToken(\"pageToken873572522\")\n",
+            "              .build();\n",
+            "      for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {\n",
+            "        // doThingsWith(element);\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1698,27 +1706,28 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.protobuf.Empty;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitRequest request = WaitRequest.newBuilder().build();\n",
-          "      echoClient.waitAsync(request).get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.protobuf.Empty;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "      echoClient.waitAsync(request).get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1768,25 +1777,26 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitRequest request = WaitRequest.newBuilder().build();\n",
-          "      WaitResponse response = echoClient.waitAsync(request).get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "      WaitResponse response = echoClient.waitAsync(request).get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1818,33 +1828,34 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Collections.emptyList())
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.protobuf.Empty;\n",
-          "\n",
-          "public class EchoClientEcho {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientEcho();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientEcho() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      EchoRequest request =\n",
-          "          EchoRequest.newBuilder()\n",
-          "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setSeverity(Severity.forNumber(0))\n",
-          "              .setFoobar(Foobar.newBuilder().build())\n",
-          "              .build();\n",
-          "      echoClient.echo(request);\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.protobuf.Empty;\n",
+            "\n",
+            "public class EchoClientEcho {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientEcho();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientEcho() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      EchoRequest request =\n",
+            "          EchoRequest.newBuilder()\n",
+            "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setSeverity(Severity.forNumber(0))\n",
+            "              .setFoobar(Foobar.newBuilder().build())\n",
+            "              .build();\n",
+            "      echoClient.echo(request);\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1879,31 +1890,32 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Collections.emptyList())
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "public class EchoClientEcho {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientEcho();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientEcho() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      EchoRequest request =\n",
-          "          EchoRequest.newBuilder()\n",
-          "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setSeverity(Severity.forNumber(0))\n",
-          "              .setFoobar(Foobar.newBuilder().build())\n",
-          "              .build();\n",
-          "      EchoResponse response = echoClient.echo(request);\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "public class EchoClientEcho {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientEcho();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientEcho() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      EchoRequest request =\n",
+            "          EchoRequest.newBuilder()\n",
+            "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setSeverity(Severity.forNumber(0))\n",
+            "              .setFoobar(Foobar.newBuilder().build())\n",
+            "              .build();\n",
+            "      EchoResponse response = echoClient.echo(request);\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -1953,30 +1965,31 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.gax.longrunning.OperationFuture;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitRequest request = WaitRequest.newBuilder().build();\n",
-          "      OperationFuture<WaitResponse, WaitMetadata> future =\n",
-          "          echoClient.waitOperationCallable().futureCall(request);\n",
-          "      // Do something.\n",
-          "      WaitResponse response = future.get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.gax.longrunning.OperationFuture;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "      OperationFuture<WaitResponse, WaitMetadata> future =\n",
+            "          echoClient.waitOperationCallable().futureCall(request);\n",
+            "      // Do something.\n",
+            "      WaitResponse response = future.get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2022,31 +2035,32 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.gax.longrunning.OperationFuture;\n",
-          "import com.google.protobuf.Empty;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitRequest request = WaitRequest.newBuilder().build();\n",
-          "      OperationFuture<Empty, WaitMetadata> future =\n",
-          "          echoClient.waitOperationCallable().futureCall(request);\n",
-          "      // Do something.\n",
-          "      future.get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.gax.longrunning.OperationFuture;\n",
+            "import com.google.protobuf.Empty;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "      OperationFuture<Empty, WaitMetadata> future =\n",
+            "          echoClient.waitOperationCallable().futureCall(request);\n",
+            "      // Do something.\n",
+            "      future.get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2082,36 +2096,37 @@ public class ServiceClientSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.core.ApiFuture;\n",
-          "\n",
-          "public class EchoClientPagedExpand {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientPagedExpand();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientPagedExpand() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      PagedExpandRequest request =\n",
-          "          PagedExpandRequest.newBuilder()\n",
-          "              .setContent(\"content951530617\")\n",
-          "              .setPageSize(883849137)\n",
-          "              .setPageToken(\"pageToken873572522\")\n",
-          "              .build();\n",
-          "      ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);\n",
-          "      // Do something.\n",
-          "      for (EchoResponse element : future.get().iterateAll()) {\n",
-          "        // doThingsWith(element);\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.core.ApiFuture;\n",
+            "\n",
+            "public class EchoClientPagedExpand {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientPagedExpand();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientPagedExpand() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      PagedExpandRequest request =\n",
+            "          PagedExpandRequest.newBuilder()\n",
+            "              .setContent(\"content951530617\")\n",
+            "              .setPageSize(883849137)\n",
+            "              .setPageToken(\"pageToken873572522\")\n",
+            "              .build();\n",
+            "      ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);\n",
+            "      // Do something.\n",
+            "      for (EchoResponse element : future.get().iterateAll()) {\n",
+            "        // doThingsWith(element);\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2272,31 +2287,32 @@ public class ServiceClientSampleCodeComposerTest {
             .setStream(Stream.SERVER)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.gax.rpc.ServerStream;\n",
-          "\n",
-          "public class EchoClientExpand {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientExpand();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientExpand() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      ExpandRequest request =\n",
-          "          ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
-          "      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
-          "      for (EchoResponse response : stream) {\n",
-          "        // Do something when a response is received.\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.gax.rpc.ServerStream;\n",
+            "\n",
+            "public class EchoClientExpand {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientExpand();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientExpand() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      ExpandRequest request =\n",
+            "          ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
+            "      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
+            "      for (EchoResponse response : stream) {\n",
+            "        // Do something when a response is received.\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2368,37 +2384,38 @@ public class ServiceClientSampleCodeComposerTest {
             .setStream(Stream.BIDI)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.gax.rpc.BidiStream;\n",
-          "\n",
-          "public class EchoClientChat {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientChat();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientChat() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();\n",
-          "      EchoRequest request =\n",
-          "          EchoRequest.newBuilder()\n",
-          "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setSeverity(Severity.forNumber(0))\n",
-          "              .setFoobar(Foobar.newBuilder().build())\n",
-          "              .build();\n",
-          "      bidiStream.send(request);\n",
-          "      for (EchoResponse response : bidiStream) {\n",
-          "        // Do something when a response is received.\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.gax.rpc.BidiStream;\n",
+            "\n",
+            "public class EchoClientChat {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientChat();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientChat() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();\n",
+            "      EchoRequest request =\n",
+            "          EchoRequest.newBuilder()\n",
+            "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setSeverity(Severity.forNumber(0))\n",
+            "              .setFoobar(Foobar.newBuilder().build())\n",
+            "              .build();\n",
+            "      bidiStream.send(request);\n",
+            "      for (EchoResponse response : bidiStream) {\n",
+            "        // Do something when a response is received.\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2470,8 +2487,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setStream(Stream.CLIENT)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "package com.google.showcase.v1beta1;\n",
@@ -2583,35 +2601,36 @@ public class ServiceClientSampleCodeComposerTest {
     Method method =
         Method.builder().setName("Echo").setInputType(inputType).setOutputType(outputType).build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.core.ApiFuture;\n",
-          "\n",
-          "public class EchoClientEcho {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientEcho();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientEcho() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      EchoRequest request =\n",
-          "          EchoRequest.newBuilder()\n",
-          "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-          "              .setSeverity(Severity.forNumber(0))\n",
-          "              .setFoobar(Foobar.newBuilder().build())\n",
-          "              .build();\n",
-          "      ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);\n",
-          "      // Do something.\n",
-          "      EchoResponse response = future.get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.core.ApiFuture;\n",
+            "\n",
+            "public class EchoClientEcho {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientEcho();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientEcho() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      EchoRequest request =\n",
+            "          EchoRequest.newBuilder()\n",
+            "              .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "              .setSeverity(Severity.forNumber(0))\n",
+            "              .setFoobar(Foobar.newBuilder().build())\n",
+            "              .build();\n",
+            "      ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);\n",
+            "      // Do something.\n",
+            "      EchoResponse response = future.get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2660,30 +2679,31 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.core.ApiFuture;\n",
-          "import com.google.longrunning.Operation;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitRequest request = WaitRequest.newBuilder().build();\n",
-          "      ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);\n",
-          "      // Do something.\n",
-          "      Operation response = future.get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.core.ApiFuture;\n",
+            "import com.google.longrunning.Operation;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "      ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);\n",
+            "      // Do something.\n",
+            "      Operation response = future.get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2729,30 +2749,31 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.api.core.ApiFuture;\n",
-          "import com.google.longrunning.Operation;\n",
-          "\n",
-          "public class EchoClientWait {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientWait();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientWait() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      WaitRequest request = WaitRequest.newBuilder().build();\n",
-          "      ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);\n",
-          "      // Do something.\n",
-          "      future.get();\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.api.core.ApiFuture;\n",
+            "import com.google.longrunning.Operation;\n",
+            "\n",
+            "public class EchoClientWait {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientWait();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientWait() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "      ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);\n",
+            "      // Do something.\n",
+            "      future.get();\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 
@@ -2788,43 +2809,44 @@ public class ServiceClientSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-            createExecutableSample(ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        createExecutableSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-          "package com.google.showcase.v1beta1;\n",
-          "\n",
-          "import com.google.common.base.Strings;\n",
-          "\n",
-          "public class EchoClientPagedExpand {\n",
-          "\n",
-          "  public static void main(String[] args) throws Exception {\n",
-          "    echoClientPagedExpand();\n",
-          "  }\n",
-          "\n",
-          "  public static void echoClientPagedExpand() throws Exception {\n",
-          "    try (EchoClient echoClient = EchoClient.create()) {\n",
-          "      PagedExpandRequest request =\n",
-          "          PagedExpandRequest.newBuilder()\n",
-          "              .setContent(\"content951530617\")\n",
-          "              .setPageSize(883849137)\n",
-          "              .setPageToken(\"pageToken873572522\")\n",
-          "              .build();\n",
-          "      while (true) {\n",
-          "        PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);\n",
-          "        for (EchoResponse element : response.getResponsesList()) {\n",
-          "          // doThingsWith(element);\n",
-          "        }\n",
-          "        String nextPageToken = response.getNextPageToken();\n",
-          "        if (!Strings.isNullOrEmpty(nextPageToken)) {\n",
-          "          request = request.toBuilder().setPageToken(nextPageToken).build();\n",
-          "        } else {\n",
-          "          break;\n",
-          "        }\n",
-          "      }\n",
-          "    }\n",
-          "  }\n",
-          "}\n");
+            "package com.google.showcase.v1beta1;\n",
+            "\n",
+            "import com.google.common.base.Strings;\n",
+            "\n",
+            "public class EchoClientPagedExpand {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientPagedExpand();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientPagedExpand() throws Exception {\n",
+            "    try (EchoClient echoClient = EchoClient.create()) {\n",
+            "      PagedExpandRequest request =\n",
+            "          PagedExpandRequest.newBuilder()\n",
+            "              .setContent(\"content951530617\")\n",
+            "              .setPageSize(883849137)\n",
+            "              .setPageToken(\"pageToken873572522\")\n",
+            "              .build();\n",
+            "      while (true) {\n",
+            "        PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);\n",
+            "        for (EchoResponse element : response.getResponsesList()) {\n",
+            "          // doThingsWith(element);\n",
+            "        }\n",
+            "        String nextPageToken = response.getNextPageToken();\n",
+            "        if (!Strings.isNullOrEmpty(nextPageToken)) {\n",
+            "          request = request.toBuilder().setPageToken(nextPageToken).build();\n",
+            "        } else {\n",
+            "          break;\n",
+            "        }\n",
+            "      }\n",
+            "    }\n",
+            "  }\n",
+            "}\n");
     assertEquals(expected, results);
   }
 

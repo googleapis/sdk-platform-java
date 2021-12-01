@@ -14,6 +14,9 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
+import static com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer.createExecutableSample;
+import static com.google.api.generator.gapic.composer.samplecode.SampleUtil.composeSampleMethodName;
+
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.longrunning.OperationFuture;
@@ -63,9 +66,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer.createExecutableSample;
-import static com.google.api.generator.gapic.composer.samplecode.SampleUtil.composeSampleMethodName;
-
 public class ServiceClientSampleCodeComposer {
 
   public static String composeClassHeaderMethodSampleCode(
@@ -82,14 +82,17 @@ public class ServiceClientSampleCodeComposer {
             .orElse(service.methods().get(0));
     if (method.stream() == Stream.NONE) {
       if (method.methodSignatures().isEmpty()) {
-        return createExecutableSample(composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes));
+        return createExecutableSample(
+            composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
       }
-      return createExecutableSample(composeRpcMethodHeaderSampleCode(
-          method, clientType, method.methodSignatures().get(0), resourceNames, messageTypes));
+      return createExecutableSample(
+          composeRpcMethodHeaderSampleCode(
+              method, clientType, method.methodSignatures().get(0), resourceNames, messageTypes));
     }
-    return createExecutableSample(composeStreamCallableMethodHeaderSampleCode(
-        method, clientType, resourceNames, messageTypes));
+    return createExecutableSample(
+        composeStreamCallableMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes));
   }
 
   public static ExecutableSample composeClassHeaderCredentialsSampleCode(
@@ -102,10 +105,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     TypeNode myCredentialsType =
         TypeNode.withReference(
-            VaporReference.builder()
-                .setName("myCredentials")
-                .setPakkage(packageName)
-                .build());
+            VaporReference.builder().setName("myCredentials").setPakkage(packageName).build());
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(settingsName).setType(settingsType).build());
@@ -160,15 +160,12 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(createMethodExpr)
             .build();
 
-    List<Statement> sampleBody = Arrays.asList(
-            ExprStatement.withExpr(initSettingsVarExpr),
-            ExprStatement.withExpr(initClientVarExpr));
+    List<Statement> sampleBody =
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, "create"),
-            new ArrayList<>(),
-            sampleBody);
+        packageName, composeSampleMethodName(clientName, "create"), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeClassHeaderEndpointSampleCode(
@@ -180,10 +177,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     TypeNode myEndpointType =
         TypeNode.withReference(
-            VaporReference.builder()
-                .setName("myEndpoint")
-                .setPakkage(packageName)
-                .build());
+            VaporReference.builder().setName("myEndpoint").setPakkage(packageName).build());
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(settingsName).setType(settingsType).build());
@@ -231,15 +225,15 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(createMethodExpr)
             .build();
 
-    List<Statement> sampleBody = Arrays.asList(
-            ExprStatement.withExpr(initSettingsVarExpr),
-            ExprStatement.withExpr(initClientVarExpr));
+    List<Statement> sampleBody =
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, "ClassHeaderEndpoint"),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, "ClassHeaderEndpoint"),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   public static ExecutableSample composeRpcMethodHeaderSampleCode(
@@ -251,10 +245,7 @@ public class ServiceClientSampleCodeComposer {
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName(clientName)
-                .setType(clientType)
-                .build());
+            Variable.builder().setName(clientName).setType(clientType).build());
 
     // Assign method's arguments variable with the default values.
     List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
@@ -282,17 +273,19 @@ public class ServiceClientSampleCodeComposer {
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
-    List<Statement> sampleBody = Arrays.asList(TryCatchStatement.builder()
-            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> sampleBody =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
     String packageName = clientType.reference().pakkage();
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, method.name()),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, method.name()),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   public static ExecutableSample composeRpcDefaultMethodHeaderSampleCode(
@@ -304,10 +297,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName(clientName)
-                .setType(clientType)
-                .build());
+            Variable.builder().setName(clientName).setType(clientType).build());
 
     // Create request variable expression and assign with its default value.
     VariableExpr requestVarExpr =
@@ -346,17 +336,19 @@ public class ServiceClientSampleCodeComposer {
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
-    List<Statement> sampleBody = Arrays.asList(TryCatchStatement.builder()
-            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> sampleBody =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, method.name()),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, method.name()),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   // Compose sample code for the method where it is CallableMethodKind.LRO.
@@ -369,10 +361,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName(clientName)
-                .setType(clientType)
-                .build());
+            Variable.builder().setName(clientName).setType(clientType).build());
     // Assign method's request variable with the default value.
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
@@ -465,17 +454,19 @@ public class ServiceClientSampleCodeComposer {
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     bodyExprs.clear();
 
-    List<Statement> sampleBody = Arrays.asList(TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(bodyStatements)
-        .setIsSampleCode(true)
-        .build());
+    List<Statement> sampleBody =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, method.name()),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, method.name()),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   // Compose sample code for the method where it is CallableMethodKind.PAGED.
@@ -488,10 +479,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName(clientName)
-                .setType(clientType)
-                .build());
+            Variable.builder().setName(clientName).setType(clientType).build());
     // Assign method's request variable with the default value.
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
@@ -591,17 +579,19 @@ public class ServiceClientSampleCodeComposer {
             .build();
     bodyStatements.add(repeatedResponseForStatement);
 
-    List<Statement> sampleBody = Arrays.asList(TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(bodyStatements)
-        .setIsSampleCode(true)
-        .build());
+    List<Statement> sampleBody =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, method.name()),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, method.name()),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   // Compose sample code for the method where it is CallableMethodKind.REGULAR.
@@ -614,10 +604,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName(clientName)
-                .setType(clientType)
-                .build());
+            Variable.builder().setName(clientName).setType(clientType).build());
 
     // Assign method's request variable with the default value.
     VariableExpr requestVarExpr =
@@ -648,17 +635,19 @@ public class ServiceClientSampleCodeComposer {
           composeUnaryOrLroCallableBodyStatements(method, clientVarExpr, requestVarExpr));
     }
 
-    List<Statement> sampleBody = Arrays.asList(TryCatchStatement.builder()
-            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> sampleBody =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, method.name()),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, method.name()),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   public static ExecutableSample composeStreamCallableMethodHeaderSampleCode(
@@ -670,10 +659,7 @@ public class ServiceClientSampleCodeComposer {
     String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName(clientName)
-                .setType(clientType)
-                .build());
+            Variable.builder().setName(clientName).setType(clientType).build());
     // Assign method's request variable with the default value.
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
@@ -704,17 +690,19 @@ public class ServiceClientSampleCodeComposer {
           composeStreamClientBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     }
 
-    List<Statement> sampleBody = Arrays.asList(TryCatchStatement.builder()
-            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> sampleBody =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
 
     return new ExecutableSample(
-            packageName,
-            composeSampleMethodName(clientName, method.name()),
-            new ArrayList<>(),
-            sampleBody);
+        packageName,
+        composeSampleMethodName(clientName, method.name()),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   private static List<Statement> composeUnaryRpcMethodBodyStatements(

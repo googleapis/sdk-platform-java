@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.google.api.generator.gapic.composer.samplecode.SampleUtil.composeSampleMethodName;
-
 public final class SettingsSampleCodeComposer {
 
   public static Optional<ExecutableSample> composeSampleCode(
@@ -121,11 +119,7 @@ public final class SettingsSampleCodeComposer {
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setType(classType)
-                .setName(name)
-                .build());
+        VariableExpr.withVariable(Variable.builder().setType(classType).setName(name).build());
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
@@ -145,8 +139,6 @@ public final class SettingsSampleCodeComposer {
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-
-
 
     return Optional.of(new ExecutableSample(packageName, name, new ArrayList<>(), sampleBody));
   }

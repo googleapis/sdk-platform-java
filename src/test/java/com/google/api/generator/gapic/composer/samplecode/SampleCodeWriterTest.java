@@ -14,15 +14,14 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
+import static junit.framework.TestCase.assertEquals;
+
 import com.google.api.gax.rpc.ClientSettings;
 import com.google.api.generator.engine.ast.*;
 import com.google.api.generator.testutils.LineFormatter;
+import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.Arrays;
-
-import static junit.framework.TestCase.assertEquals;
 
 public class SampleCodeWriterTest {
   private static String packageName;
