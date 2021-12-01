@@ -65,8 +65,6 @@ load("//:repositories.bzl", "gapic_generator_java_repositories")
 gapic_generator_java_repositories()
 
 # protobuf
-load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
-
 RULES_JVM_EXTERNAL_TAG = "4.2"
 RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
 
@@ -76,6 +74,8 @@ http_archive(
     sha256 = RULES_JVM_EXTERNAL_SHA,
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
 )
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
