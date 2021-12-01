@@ -39,7 +39,11 @@
  * <p>Sample for KeyManagementServiceClient:
  *
  * <pre>{@code
- * package com.google.cloud.kms.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+ * import com.google.cloud.kms.v1.KeyRing;
+ * import com.google.cloud.kms.v1.KeyRingName;
  *
  * public class KeyManagementServiceClientGetKeyRing {
  *

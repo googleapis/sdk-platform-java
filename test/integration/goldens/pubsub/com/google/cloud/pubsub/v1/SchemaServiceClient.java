@@ -59,8 +59,9 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.SchemaServiceClient;
  * import com.google.pubsub.v1.ProjectName;
  * import com.google.pubsub.v1.Schema;
  *
@@ -110,9 +111,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.pubsub.v1.SchemaServiceClient;
+ * import com.google.cloud.pubsub.v1.SchemaServiceSettings;
+ * import com.google.cloud.pubsub.v1.myCredentials;
  *
  * public class SchemaServiceClientCreate {
  *
@@ -133,7 +137,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.pubsub.v1.SchemaServiceClient;
+ * import com.google.cloud.pubsub.v1.SchemaServiceSettings;
+ * import com.google.cloud.pubsub.v1.myEndpoint;
  *
  * public class SchemaServiceClientClassHeaderEndpoint {
  *
@@ -211,8 +219,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    *
@@ -261,8 +270,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    *
@@ -311,8 +321,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.CreateSchemaRequest;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
@@ -351,9 +362,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.CreateSchemaRequest;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
@@ -391,8 +403,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.SchemaName;
    *
@@ -428,8 +441,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.SchemaName;
    *
@@ -464,8 +478,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.GetSchemaRequest;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.SchemaName;
@@ -504,9 +519,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.GetSchemaRequest;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.SchemaName;
@@ -544,8 +560,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    *
@@ -585,8 +602,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    *
@@ -623,8 +641,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ListSchemasRequest;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
@@ -667,9 +686,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ListSchemasRequest;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
@@ -712,8 +732,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.common.base.Strings;
    * import com.google.pubsub.v1.ListSchemasRequest;
    * import com.google.pubsub.v1.ListSchemasResponse;
@@ -764,8 +785,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.SchemaName;
    *
@@ -801,8 +823,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.SchemaName;
    *
@@ -837,8 +860,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.DeleteSchemaRequest;
    * import com.google.pubsub.v1.SchemaName;
@@ -875,9 +899,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.DeleteSchemaRequest;
    * import com.google.pubsub.v1.SchemaName;
@@ -913,8 +938,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.ValidateSchemaResponse;
@@ -956,8 +982,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.ValidateSchemaResponse;
@@ -996,8 +1023,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.ValidateSchemaRequest;
@@ -1036,9 +1064,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Schema;
    * import com.google.pubsub.v1.ValidateSchemaRequest;
@@ -1078,8 +1107,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.pubsub.v1.Encoding;
    * import com.google.pubsub.v1.ProjectName;
@@ -1120,9 +1150,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.pubsub.v1.Encoding;
    * import com.google.pubsub.v1.ProjectName;
@@ -1166,8 +1197,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.iam.v1.Policy;
    * import com.google.iam.v1.SetIamPolicyRequest;
    * import com.google.pubsub.v1.ProjectName;
@@ -1207,9 +1239,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.iam.v1.Policy;
    * import com.google.iam.v1.SetIamPolicyRequest;
    * import com.google.pubsub.v1.ProjectName;
@@ -1247,8 +1280,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.iam.v1.GetIamPolicyRequest;
    * import com.google.iam.v1.GetPolicyOptions;
    * import com.google.iam.v1.Policy;
@@ -1288,9 +1322,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.iam.v1.GetIamPolicyRequest;
    * import com.google.iam.v1.GetPolicyOptions;
    * import com.google.iam.v1.Policy;
@@ -1333,8 +1368,9 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.iam.v1.TestIamPermissionsRequest;
    * import com.google.iam.v1.TestIamPermissionsResponse;
    * import com.google.pubsub.v1.ProjectName;
@@ -1378,9 +1414,10 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.SchemaServiceClient;
    * import com.google.iam.v1.TestIamPermissionsRequest;
    * import com.google.iam.v1.TestIamPermissionsResponse;
    * import com.google.pubsub.v1.ProjectName;

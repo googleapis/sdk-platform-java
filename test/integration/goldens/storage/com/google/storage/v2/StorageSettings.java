@@ -52,8 +52,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of startResumableWrite to 30 seconds:
  *
  * <pre>{@code
- * package com.google.storage.v2;
+ * package com.google.example;
  *
+ * import com.google.storage.v2.StorageSettings;
  * import java.time.Duration;
  *
  * public class StorageSettings {

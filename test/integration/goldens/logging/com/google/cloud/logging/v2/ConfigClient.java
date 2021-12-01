@@ -85,8 +85,9 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.ConfigClient;
  * import com.google.logging.v2.GetBucketRequest;
  * import com.google.logging.v2.LogBucket;
  * import com.google.logging.v2.LogBucketName;
@@ -140,9 +141,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.logging.v2.ConfigClient;
+ * import com.google.cloud.logging.v2.ConfigSettings;
+ * import com.google.cloud.logging.v2.myCredentials;
  *
  * public class ConfigClientCreate {
  *
@@ -163,7 +167,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
+ *
+ * import com.google.cloud.logging.v2.ConfigClient;
+ * import com.google.cloud.logging.v2.ConfigSettings;
+ * import com.google.cloud.logging.v2.myEndpoint;
  *
  * public class ConfigClientClassHeaderEndpoint {
  *
@@ -238,8 +246,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.BillingAccountLocationName;
    * import com.google.logging.v2.LogBucket;
    *
@@ -285,8 +294,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.FolderLocationName;
    * import com.google.logging.v2.LogBucket;
    *
@@ -331,8 +341,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LocationName;
    * import com.google.logging.v2.LogBucket;
    *
@@ -377,8 +388,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogBucket;
    * import com.google.logging.v2.OrganizationLocationName;
    *
@@ -423,8 +435,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LocationName;
    * import com.google.logging.v2.LogBucket;
    *
@@ -466,8 +479,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListBucketsRequest;
    * import com.google.logging.v2.LocationName;
    * import com.google.logging.v2.LogBucket;
@@ -508,9 +522,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListBucketsRequest;
    * import com.google.logging.v2.LocationName;
    * import com.google.logging.v2.LogBucket;
@@ -551,8 +566,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListBucketsRequest;
    * import com.google.logging.v2.ListBucketsResponse;
@@ -601,8 +617,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetBucketRequest;
    * import com.google.logging.v2.LogBucket;
    * import com.google.logging.v2.LogBucketName;
@@ -641,9 +658,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetBucketRequest;
    * import com.google.logging.v2.LogBucket;
    * import com.google.logging.v2.LogBucketName;
@@ -682,8 +700,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateBucketRequest;
    * import com.google.logging.v2.LocationName;
    * import com.google.logging.v2.LogBucket;
@@ -723,9 +742,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateBucketRequest;
    * import com.google.logging.v2.LocationName;
    * import com.google.logging.v2.LogBucket;
@@ -772,8 +792,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogBucket;
    * import com.google.logging.v2.LogBucketName;
    * import com.google.logging.v2.UpdateBucketRequest;
@@ -824,9 +845,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogBucket;
    * import com.google.logging.v2.LogBucketName;
    * import com.google.logging.v2.UpdateBucketRequest;
@@ -868,8 +890,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteBucketRequest;
    * import com.google.logging.v2.LogBucketName;
    * import com.google.protobuf.Empty;
@@ -909,9 +932,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteBucketRequest;
    * import com.google.logging.v2.LogBucketName;
    * import com.google.protobuf.Empty;
@@ -950,8 +974,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogBucketName;
    * import com.google.logging.v2.UndeleteBucketRequest;
    * import com.google.protobuf.Empty;
@@ -991,9 +1016,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogBucketName;
    * import com.google.logging.v2.UndeleteBucketRequest;
    * import com.google.protobuf.Empty;
@@ -1031,8 +1057,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogView;
    *
    * public class ConfigClientListViews {
@@ -1068,8 +1095,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListViewsRequest;
    * import com.google.logging.v2.LogView;
    *
@@ -1109,9 +1137,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListViewsRequest;
    * import com.google.logging.v2.LogView;
    *
@@ -1150,8 +1179,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListViewsRequest;
    * import com.google.logging.v2.ListViewsResponse;
@@ -1199,8 +1229,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetViewRequest;
    * import com.google.logging.v2.LogView;
    * import com.google.logging.v2.LogViewName;
@@ -1240,9 +1271,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetViewRequest;
    * import com.google.logging.v2.LogView;
    * import com.google.logging.v2.LogViewName;
@@ -1281,8 +1313,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateViewRequest;
    * import com.google.logging.v2.LogView;
    *
@@ -1320,9 +1353,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateViewRequest;
    * import com.google.logging.v2.LogView;
    *
@@ -1360,8 +1394,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogView;
    * import com.google.logging.v2.UpdateViewRequest;
    * import com.google.protobuf.FieldMask;
@@ -1401,9 +1436,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogView;
    * import com.google.logging.v2.UpdateViewRequest;
    * import com.google.protobuf.FieldMask;
@@ -1441,8 +1477,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteViewRequest;
    * import com.google.logging.v2.LogViewName;
    * import com.google.protobuf.Empty;
@@ -1482,9 +1519,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteViewRequest;
    * import com.google.logging.v2.LogViewName;
    * import com.google.protobuf.Empty;
@@ -1523,8 +1561,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.BillingAccountName;
    * import com.google.logging.v2.LogSink;
    *
@@ -1563,8 +1602,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.FolderName;
    * import com.google.logging.v2.LogSink;
    *
@@ -1603,8 +1643,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.OrganizationName;
    *
@@ -1643,8 +1684,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
    *
@@ -1683,8 +1725,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
    *
@@ -1722,8 +1765,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListSinksRequest;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
@@ -1764,9 +1808,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListSinksRequest;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
@@ -1806,8 +1851,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListSinksRequest;
    * import com.google.logging.v2.ListSinksResponse;
@@ -1856,8 +1902,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    *
@@ -1899,8 +1946,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    *
@@ -1939,8 +1987,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetSinkRequest;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
@@ -1977,9 +2026,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetSinkRequest;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
@@ -2018,8 +2068,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.BillingAccountName;
    * import com.google.logging.v2.LogSink;
    *
@@ -2066,8 +2117,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.FolderName;
    * import com.google.logging.v2.LogSink;
    *
@@ -2114,8 +2166,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.OrganizationName;
    *
@@ -2162,8 +2215,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
    *
@@ -2210,8 +2264,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
    *
@@ -2255,8 +2310,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateSinkRequest;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
@@ -2298,9 +2354,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateSinkRequest;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.ProjectName;
@@ -2342,8 +2399,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    *
@@ -2394,8 +2452,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    *
@@ -2443,8 +2502,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.protobuf.FieldMask;
@@ -2507,8 +2567,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.protobuf.FieldMask;
@@ -2571,8 +2632,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.logging.v2.UpdateSinkRequest;
@@ -2617,9 +2679,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSink;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.logging.v2.UpdateSinkRequest;
@@ -2660,8 +2723,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.protobuf.Empty;
    *
@@ -2705,8 +2769,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.protobuf.Empty;
    *
@@ -2747,8 +2812,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteSinkRequest;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.protobuf.Empty;
@@ -2786,9 +2852,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteSinkRequest;
    * import com.google.logging.v2.LogSinkName;
    * import com.google.protobuf.Empty;
@@ -2824,8 +2891,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.BillingAccountName;
    * import com.google.logging.v2.LogExclusion;
    *
@@ -2866,8 +2934,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.FolderName;
    * import com.google.logging.v2.LogExclusion;
    *
@@ -2908,8 +2977,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.OrganizationName;
    *
@@ -2950,8 +3020,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
    *
@@ -2992,8 +3063,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
    *
@@ -3031,8 +3103,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListExclusionsRequest;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
@@ -3073,9 +3146,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.ListExclusionsRequest;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
@@ -3117,8 +3191,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListExclusionsRequest;
    * import com.google.logging.v2.ListExclusionsResponse;
@@ -3168,8 +3243,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
    *
@@ -3209,8 +3285,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
    *
@@ -3249,8 +3326,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetExclusionRequest;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
@@ -3288,9 +3366,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.GetExclusionRequest;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
@@ -3328,8 +3407,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.BillingAccountName;
    * import com.google.logging.v2.LogExclusion;
    *
@@ -3374,8 +3454,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.FolderName;
    * import com.google.logging.v2.LogExclusion;
    *
@@ -3420,8 +3501,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.OrganizationName;
    *
@@ -3466,8 +3548,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
    *
@@ -3512,8 +3595,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
    *
@@ -3555,8 +3639,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateExclusionRequest;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
@@ -3595,9 +3680,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CreateExclusionRequest;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.ProjectName;
@@ -3634,8 +3720,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.protobuf.FieldMask;
@@ -3691,8 +3778,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.protobuf.FieldMask;
@@ -3748,8 +3836,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.logging.v2.UpdateExclusionRequest;
@@ -3790,9 +3879,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusion;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.logging.v2.UpdateExclusionRequest;
@@ -3832,8 +3922,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.protobuf.Empty;
    *
@@ -3873,8 +3964,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.protobuf.Empty;
    *
@@ -3913,8 +4005,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteExclusionRequest;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.protobuf.Empty;
@@ -3952,9 +4045,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.DeleteExclusionRequest;
    * import com.google.logging.v2.LogExclusionName;
    * import com.google.protobuf.Empty;
@@ -3997,8 +4091,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CmekSettings;
    * import com.google.logging.v2.CmekSettingsName;
    * import com.google.logging.v2.GetCmekSettingsRequest;
@@ -4041,9 +4136,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CmekSettings;
    * import com.google.logging.v2.CmekSettingsName;
    * import com.google.logging.v2.GetCmekSettingsRequest;
@@ -4090,8 +4186,9 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CmekSettings;
    * import com.google.logging.v2.UpdateCmekSettingsRequest;
    * import com.google.protobuf.FieldMask;
@@ -4141,9 +4238,10 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.ConfigClient;
    * import com.google.logging.v2.CmekSettings;
    * import com.google.logging.v2.UpdateCmekSettingsRequest;
    * import com.google.protobuf.FieldMask;

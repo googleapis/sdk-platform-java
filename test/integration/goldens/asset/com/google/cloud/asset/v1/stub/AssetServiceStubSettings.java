@@ -102,8 +102,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.asset.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.asset.v1.stub.AssetServiceStubSettings;
  * import java.time.Duration;
  *
  * public class AssetServiceSettings {

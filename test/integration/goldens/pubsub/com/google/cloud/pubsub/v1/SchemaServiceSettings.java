@@ -69,8 +69,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of createSchema to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.SchemaServiceSettings;
  * import java.time.Duration;
  *
  * public class SchemaServiceSettings {

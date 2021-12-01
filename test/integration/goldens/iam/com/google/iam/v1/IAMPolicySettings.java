@@ -50,8 +50,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of setIamPolicy to 30 seconds:
  *
  * <pre>{@code
- * package com.google.iam.v1;
+ * package com.google.example;
  *
+ * import com.google.iam.v1.IAMPolicySettings;
  * import java.time.Duration;
  *
  * public class IAMPolicySettings {

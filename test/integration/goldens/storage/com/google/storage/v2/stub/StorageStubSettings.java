@@ -68,8 +68,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of startResumableWrite to 30 seconds:
  *
  * <pre>{@code
- * package com.google.storage.v2.stub;
+ * package com.google.example;
  *
+ * import com.google.storage.v2.stub.StorageStubSettings;
  * import java.time.Duration;
  *
  * public class StorageSettings {

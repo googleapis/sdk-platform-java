@@ -115,7 +115,6 @@ public final class SettingsSampleCodeComposer {
             .build();
 
     String name = JavaStyle.toLowerCamelCase(settingsClassName);
-    String packageName = classType.reference().pakkage();
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
@@ -140,6 +139,6 @@ public final class SettingsSampleCodeComposer {
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
 
-    return Optional.of(new ExecutableSample(packageName, name, new ArrayList<>(), sampleBody));
+    return Optional.of(new ExecutableSample(name, new ArrayList<>(), sampleBody));
   }
 }

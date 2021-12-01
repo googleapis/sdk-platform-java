@@ -24,7 +24,14 @@
  * <p>Sample for StorageClient:
  *
  * <pre>{@code
- * package com.google.storage.v2;
+ * package com.google.example;
+ *
+ * import com.google.storage.v2.CommonObjectRequestParams;
+ * import com.google.storage.v2.CommonRequestParams;
+ * import com.google.storage.v2.StartResumableWriteRequest;
+ * import com.google.storage.v2.StartResumableWriteResponse;
+ * import com.google.storage.v2.StorageClient;
+ * import com.google.storage.v2.WriteObjectSpec;
  *
  * public class StorageClientStartResumableWrite {
  *

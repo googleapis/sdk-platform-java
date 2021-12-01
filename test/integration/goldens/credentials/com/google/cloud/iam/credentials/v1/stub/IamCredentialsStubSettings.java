@@ -67,8 +67,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of generateAccessToken to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.iam.credentials.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.iam.credentials.v1.stub.IamCredentialsStubSettings;
  * import java.time.Duration;
  *
  * public class IamCredentialsSettings {

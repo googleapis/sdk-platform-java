@@ -51,8 +51,9 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.MetricsClient;
  * import com.google.logging.v2.LogMetric;
  * import com.google.logging.v2.LogMetricName;
  *
@@ -100,9 +101,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.logging.v2.MetricsClient;
+ * import com.google.cloud.logging.v2.MetricsSettings;
+ * import com.google.cloud.logging.v2.myCredentials;
  *
  * public class MetricsClientCreate {
  *
@@ -123,7 +127,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
+ *
+ * import com.google.cloud.logging.v2.MetricsClient;
+ * import com.google.cloud.logging.v2.MetricsSettings;
+ * import com.google.cloud.logging.v2.myEndpoint;
  *
  * public class MetricsClientClassHeaderEndpoint {
  *
@@ -198,8 +206,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
    *
@@ -239,8 +248,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
    *
@@ -277,8 +287,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.ListLogMetricsRequest;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
@@ -319,9 +330,10 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.ListLogMetricsRequest;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
@@ -362,8 +374,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListLogMetricsRequest;
    * import com.google.logging.v2.ListLogMetricsResponse;
@@ -413,8 +426,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
    *
@@ -452,8 +466,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
    *
@@ -489,8 +504,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.GetLogMetricRequest;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
@@ -527,9 +543,10 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.GetLogMetricRequest;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
@@ -565,8 +582,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
    *
@@ -609,8 +627,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
    *
@@ -650,8 +669,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.CreateLogMetricRequest;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
@@ -689,9 +709,10 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.CreateLogMetricRequest;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.ProjectName;
@@ -728,8 +749,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
    *
@@ -773,8 +795,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
    *
@@ -815,8 +838,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
    * import com.google.logging.v2.UpdateLogMetricRequest;
@@ -854,9 +878,10 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetric;
    * import com.google.logging.v2.LogMetricName;
    * import com.google.logging.v2.UpdateLogMetricRequest;
@@ -893,8 +918,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetricName;
    * import com.google.protobuf.Empty;
    *
@@ -932,8 +958,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.LogMetricName;
    * import com.google.protobuf.Empty;
    *
@@ -969,8 +996,9 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.DeleteLogMetricRequest;
    * import com.google.logging.v2.LogMetricName;
    * import com.google.protobuf.Empty;
@@ -1007,9 +1035,10 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.MetricsClient;
    * import com.google.logging.v2.DeleteLogMetricRequest;
    * import com.google.logging.v2.LogMetricName;
    * import com.google.protobuf.Empty;

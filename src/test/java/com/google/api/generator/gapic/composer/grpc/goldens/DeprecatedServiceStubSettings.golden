@@ -44,8 +44,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of fastFibonacci to 30 seconds:
  *
  * <pre>{@code
- * package com.google.testdata.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.testdata.v1.stub.DeprecatedServiceStubSettings;
  * import java.time.Duration;
  *
  * public class DeprecatedServiceSettings {

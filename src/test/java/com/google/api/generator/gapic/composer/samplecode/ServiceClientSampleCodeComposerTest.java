@@ -71,7 +71,10 @@ public class ServiceClientSampleCodeComposerTest {
             echoProtoService, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
             "\n",
             "public class EchoClientEcho {\n",
             "\n",
@@ -164,9 +167,11 @@ public class ServiceClientSampleCodeComposerTest {
             service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.protobuf.Duration;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitResponse;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -230,7 +235,14 @@ public class ServiceClientSampleCodeComposerTest {
             service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoRequest;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.Foobar;\n",
+            "import com.google.showcase.v1beta1.FoobarName;\n",
+            "import com.google.showcase.v1beta1.Severity;\n",
             "\n",
             "public class EchoClientEcho {\n",
             "\n",
@@ -300,9 +312,12 @@ public class ServiceClientSampleCodeComposerTest {
             service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.rpc.ServerStream;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.ExpandRequest;\n",
             "\n",
             "public class EchoClientExpand {\n",
             "\n",
@@ -344,9 +359,12 @@ public class ServiceClientSampleCodeComposerTest {
                 clientType, settingsType));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.core.FixedCredentialsProvider;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoSettings;\n",
+            "import com.google.showcase.v1beta1.myCredentials;\n",
             "\n",
             "public class EchoClientCreate {\n",
             "\n",
@@ -385,7 +403,11 @@ public class ServiceClientSampleCodeComposerTest {
                 clientType, settingsType));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoSettings;\n",
+            "import com.google.showcase.v1beta1.myEndpoint;\n",
             "\n",
             "public class EchoClientClassHeaderEndpoint {\n",
             "\n",
@@ -1112,8 +1134,10 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
+            "import com.google.showcase.v1beta1.Content;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
             "import java.util.ArrayList;\n",
             "import java.util.List;\n",
             "\n",
@@ -1199,7 +1223,10 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.Content;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
             "\n",
             "public class EchoClientListContent {\n",
             "\n",
@@ -1371,7 +1398,10 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, Collections.emptyList(), resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitResponse;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -1456,9 +1486,11 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.protobuf.Duration;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitResponse;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -1541,10 +1573,11 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.protobuf.Duration;\n",
             "import com.google.protobuf.Empty;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -1600,7 +1633,11 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.PagedExpandRequest;\n",
             "\n",
             "public class EchoClientPagedExpand {\n",
             "\n",
@@ -1711,9 +1748,11 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.protobuf.Empty;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitRequest;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -1782,7 +1821,11 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitRequest;\n",
+            "import com.google.showcase.v1beta1.WaitResponse;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -1833,9 +1876,14 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.protobuf.Empty;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoRequest;\n",
+            "import com.google.showcase.v1beta1.Foobar;\n",
+            "import com.google.showcase.v1beta1.FoobarName;\n",
+            "import com.google.showcase.v1beta1.Severity;\n",
             "\n",
             "public class EchoClientEcho {\n",
             "\n",
@@ -1895,7 +1943,14 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
+            "\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoRequest;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.Foobar;\n",
+            "import com.google.showcase.v1beta1.FoobarName;\n",
+            "import com.google.showcase.v1beta1.Severity;\n",
             "\n",
             "public class EchoClientEcho {\n",
             "\n",
@@ -1970,9 +2025,13 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.longrunning.OperationFuture;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitMetadata;\n",
+            "import com.google.showcase.v1beta1.WaitRequest;\n",
+            "import com.google.showcase.v1beta1.WaitResponse;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -2040,10 +2099,13 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.longrunning.OperationFuture;\n",
             "import com.google.protobuf.Empty;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitMetadata;\n",
+            "import com.google.showcase.v1beta1.WaitRequest;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -2101,9 +2163,12 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.core.ApiFuture;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.PagedExpandRequest;\n",
             "\n",
             "public class EchoClientPagedExpand {\n",
             "\n",
@@ -2292,9 +2357,12 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.rpc.ServerStream;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.ExpandRequest;\n",
             "\n",
             "public class EchoClientExpand {\n",
             "\n",
@@ -2389,9 +2457,15 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.rpc.BidiStream;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoRequest;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.Foobar;\n",
+            "import com.google.showcase.v1beta1.FoobarName;\n",
+            "import com.google.showcase.v1beta1.Severity;\n",
             "\n",
             "public class EchoClientChat {\n",
             "\n",
@@ -2492,9 +2566,15 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.gax.rpc.ApiStreamObserver;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoRequest;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.Foobar;\n",
+            "import com.google.showcase.v1beta1.FoobarName;\n",
+            "import com.google.showcase.v1beta1.Severity;\n",
             "\n",
             "public class EchoClientCollect {\n",
             "\n",
@@ -2606,9 +2686,15 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.core.ApiFuture;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoRequest;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.Foobar;\n",
+            "import com.google.showcase.v1beta1.FoobarName;\n",
+            "import com.google.showcase.v1beta1.Severity;\n",
             "\n",
             "public class EchoClientEcho {\n",
             "\n",
@@ -2684,10 +2770,12 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.core.ApiFuture;\n",
             "import com.google.longrunning.Operation;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitRequest;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -2754,10 +2842,12 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.api.core.ApiFuture;\n",
             "import com.google.longrunning.Operation;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.WaitRequest;\n",
             "\n",
             "public class EchoClientWait {\n",
             "\n",
@@ -2814,9 +2904,13 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
             "import com.google.common.base.Strings;\n",
+            "import com.google.showcase.v1beta1.EchoClient;\n",
+            "import com.google.showcase.v1beta1.EchoResponse;\n",
+            "import com.google.showcase.v1beta1.PagedExpandRequest;\n",
+            "import com.google.showcase.v1beta1.PagedExpandResponse;\n",
             "\n",
             "public class EchoClientPagedExpand {\n",
             "\n",

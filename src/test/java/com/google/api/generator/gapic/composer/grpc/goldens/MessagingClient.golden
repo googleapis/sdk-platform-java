@@ -32,7 +32,10 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.showcase.v1beta1.MessagingClient;
+ * import com.google.showcase.v1beta1.Room;
  *
  * public class MessagingClientCreateRoom {
  *
@@ -79,9 +82,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.showcase.v1beta1.MessagingClient;
+ * import com.google.showcase.v1beta1.MessagingSettings;
+ * import com.google.showcase.v1beta1.myCredentials;
  *
  * public class MessagingClientCreate {
  *
@@ -102,7 +108,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.showcase.v1beta1.MessagingClient;
+ * import com.google.showcase.v1beta1.MessagingSettings;
+ * import com.google.showcase.v1beta1.myEndpoint;
  *
  * public class MessagingClientClassHeaderEndpoint {
  *
@@ -188,7 +198,10 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
    *
    * public class MessagingClientCreateRoom {
    *
@@ -224,7 +237,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.CreateRoomRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
    *
    * public class MessagingClientCreateRoom {
    *
@@ -254,9 +271,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.CreateRoomRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
    *
    * public class MessagingClientCreateRoom {
    *
@@ -285,7 +305,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientGetRoom {
    *
@@ -316,7 +340,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientGetRoom {
    *
@@ -346,7 +374,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.GetRoomRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientGetRoom {
    *
@@ -376,9 +409,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.GetRoomRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientGetRoom {
    *
@@ -407,7 +444,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
+   * import com.google.showcase.v1beta1.UpdateRoomRequest;
    *
    * public class MessagingClientUpdateRoom {
    *
@@ -437,9 +478,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
+   * import com.google.showcase.v1beta1.UpdateRoomRequest;
    *
    * public class MessagingClientUpdateRoom {
    *
@@ -468,9 +512,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientDeleteRoom {
    *
@@ -501,9 +547,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientDeleteRoom {
    *
@@ -533,9 +581,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.DeleteRoomRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientDeleteRoom {
    *
@@ -565,10 +616,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.DeleteRoomRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientDeleteRoom {
    *
@@ -597,7 +651,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.ListRoomsRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
    *
    * public class MessagingClientListRooms {
    *
@@ -632,9 +690,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.ListRoomsRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
    *
    * public class MessagingClientListRooms {
    *
@@ -668,9 +729,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.common.base.Strings;
+   * import com.google.showcase.v1beta1.ListRoomsRequest;
+   * import com.google.showcase.v1beta1.ListRoomsResponse;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.Room;
    *
    * public class MessagingClientListRooms {
    *
@@ -711,9 +776,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.ByteString;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -749,7 +817,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -785,9 +857,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.ByteString;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -823,7 +898,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -859,9 +938,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.ByteString;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -897,7 +979,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -933,7 +1019,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.CreateBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -966,9 +1057,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.CreateBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientCreateBlurb {
    *
@@ -1000,7 +1095,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientGetBlurb {
    *
@@ -1031,7 +1130,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientGetBlurb {
    *
@@ -1062,7 +1165,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.GetBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientGetBlurb {
    *
@@ -1096,9 +1204,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.GetBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientGetBlurb {
    *
@@ -1131,7 +1243,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.UpdateBlurbRequest;
    *
    * public class MessagingClientUpdateBlurb {
    *
@@ -1161,9 +1277,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.UpdateBlurbRequest;
    *
    * public class MessagingClientUpdateBlurb {
    *
@@ -1192,9 +1311,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientDeleteBlurb {
    *
@@ -1225,9 +1346,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientDeleteBlurb {
    *
@@ -1258,9 +1381,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.DeleteBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientDeleteBlurb {
    *
@@ -1294,10 +1420,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.BlurbName;
+   * import com.google.showcase.v1beta1.DeleteBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
    *
    * public class MessagingClientDeleteBlurb {
    *
@@ -1330,7 +1459,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientListBlurbs {
    *
@@ -1363,7 +1496,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.RoomName;
    *
    * public class MessagingClientListBlurbs {
    *
@@ -1396,7 +1533,11 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientListBlurbs {
    *
@@ -1428,7 +1569,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.ListBlurbsRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientListBlurbs {
    *
@@ -1464,9 +1610,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.ListBlurbsRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientListBlurbs {
    *
@@ -1501,9 +1651,14 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.common.base.Strings;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.ListBlurbsRequest;
+   * import com.google.showcase.v1beta1.ListBlurbsResponse;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
    *
    * public class MessagingClientListBlurbs {
    *
@@ -1545,7 +1700,10 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.SearchBlurbsResponse;
    *
    * public class MessagingClientSearchBlurbs {
    *
@@ -1576,7 +1734,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
+   * import com.google.showcase.v1beta1.SearchBlurbsRequest;
+   * import com.google.showcase.v1beta1.SearchBlurbsResponse;
    *
    * public class MessagingClientSearchBlurbs {
    *
@@ -1612,9 +1775,14 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
+   * import com.google.showcase.v1beta1.SearchBlurbsMetadata;
+   * import com.google.showcase.v1beta1.SearchBlurbsRequest;
+   * import com.google.showcase.v1beta1.SearchBlurbsResponse;
    *
    * public class MessagingClientSearchBlurbs {
    *
@@ -1650,10 +1818,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
    * import com.google.longrunning.Operation;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
+   * import com.google.showcase.v1beta1.SearchBlurbsRequest;
    *
    * public class MessagingClientSearchBlurbs {
    *
@@ -1687,9 +1858,13 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.ServerStream;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
+   * import com.google.showcase.v1beta1.StreamBlurbsRequest;
+   * import com.google.showcase.v1beta1.StreamBlurbsResponse;
    *
    * public class MessagingClientStreamBlurbs {
    *
@@ -1721,9 +1896,14 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.ApiStreamObserver;
+   * import com.google.showcase.v1beta1.Blurb;
+   * import com.google.showcase.v1beta1.CreateBlurbRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.ProfileName;
+   * import com.google.showcase.v1beta1.SendBlurbsResponse;
    *
    * public class MessagingClientSendBlurbs {
    *
@@ -1773,9 +1953,12 @@ public class MessagingClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.BidiStream;
+   * import com.google.showcase.v1beta1.ConnectRequest;
+   * import com.google.showcase.v1beta1.MessagingClient;
+   * import com.google.showcase.v1beta1.StreamBlurbsResponse;
    *
    * public class MessagingClientConnect {
    *

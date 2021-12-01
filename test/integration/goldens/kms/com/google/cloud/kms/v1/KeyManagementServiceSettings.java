@@ -65,8 +65,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getKeyRing to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.kms.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.kms.v1.KeyManagementServiceSettings;
  * import java.time.Duration;
  *
  * public class KeyManagementServiceSettings {

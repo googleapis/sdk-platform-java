@@ -63,8 +63,9 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.LoggingClient;
  * import com.google.logging.v2.LogName;
  * import com.google.protobuf.Empty;
  *
@@ -112,9 +113,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.logging.v2.LoggingClient;
+ * import com.google.cloud.logging.v2.LoggingSettings;
+ * import com.google.cloud.logging.v2.myCredentials;
  *
  * public class LoggingClientCreate {
  *
@@ -135,7 +139,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
+ *
+ * import com.google.cloud.logging.v2.LoggingClient;
+ * import com.google.cloud.logging.v2.LoggingSettings;
+ * import com.google.cloud.logging.v2.myEndpoint;
  *
  * public class LoggingClientClassHeaderEndpoint {
  *
@@ -212,8 +220,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogName;
    * import com.google.protobuf.Empty;
    *
@@ -257,8 +266,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogName;
    * import com.google.protobuf.Empty;
    *
@@ -299,8 +309,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.DeleteLogRequest;
    * import com.google.logging.v2.LogName;
    * import com.google.protobuf.Empty;
@@ -339,9 +350,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.DeleteLogRequest;
    * import com.google.logging.v2.LogName;
    * import com.google.protobuf.Empty;
@@ -380,9 +392,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResource;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogEntry;
    * import com.google.logging.v2.LogName;
    * import com.google.logging.v2.WriteLogEntriesResponse;
@@ -475,9 +488,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResource;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogEntry;
    * import com.google.logging.v2.LogName;
    * import com.google.logging.v2.WriteLogEntriesResponse;
@@ -570,9 +584,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResource;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogEntry;
    * import com.google.logging.v2.LogName;
    * import com.google.logging.v2.WriteLogEntriesRequest;
@@ -620,10 +635,11 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResource;
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogEntry;
    * import com.google.logging.v2.LogName;
    * import com.google.logging.v2.WriteLogEntriesRequest;
@@ -671,8 +687,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.LogEntry;
    * import java.util.ArrayList;
    * import java.util.List;
@@ -740,8 +757,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ListLogEntriesRequest;
    * import com.google.logging.v2.LogEntry;
    * import java.util.ArrayList;
@@ -786,9 +804,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ListLogEntriesRequest;
    * import com.google.logging.v2.LogEntry;
    * import java.util.ArrayList;
@@ -833,8 +852,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListLogEntriesRequest;
    * import com.google.logging.v2.ListLogEntriesResponse;
@@ -886,9 +906,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResourceDescriptor;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
    *
    * public class LoggingClientListMonitoredResourceDescriptors {
@@ -928,10 +949,11 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResourceDescriptor;
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
    *
    * public class LoggingClientListMonitoredResourceDescriptors {
@@ -971,9 +993,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.MonitoredResourceDescriptor;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
    * import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
@@ -1023,8 +1046,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.BillingAccountName;
    *
    * public class LoggingClientListLogs {
@@ -1063,8 +1087,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.FolderName;
    *
    * public class LoggingClientListLogs {
@@ -1103,8 +1128,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.OrganizationName;
    *
    * public class LoggingClientListLogs {
@@ -1143,8 +1169,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ProjectName;
    *
    * public class LoggingClientListLogs {
@@ -1183,8 +1210,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ProjectName;
    *
    * public class LoggingClientListLogs {
@@ -1222,8 +1250,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ListLogsRequest;
    * import com.google.logging.v2.ProjectName;
    * import java.util.ArrayList;
@@ -1266,9 +1295,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.ListLogsRequest;
    * import com.google.logging.v2.ProjectName;
    * import java.util.ArrayList;
@@ -1310,8 +1340,9 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.common.base.Strings;
    * import com.google.logging.v2.ListLogsRequest;
    * import com.google.logging.v2.ListLogsResponse;
@@ -1362,9 +1393,10 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.logging.v2;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.BidiStream;
+   * import com.google.cloud.logging.v2.LoggingClient;
    * import com.google.logging.v2.TailLogEntriesRequest;
    * import com.google.logging.v2.TailLogEntriesResponse;
    * import com.google.protobuf.Duration;

@@ -46,8 +46,10 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.compute.v1.AddressesClient;
+ * import com.google.cloud.compute.v1.AddressesScopedList;
  * import java.util.Map;
  *
  * public class AddressesClientAggregatedList {
@@ -97,9 +99,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.compute.v1.AddressesClient;
+ * import com.google.cloud.compute.v1.AddressesSettings;
+ * import com.google.cloud.compute.v1.myCredentials;
  *
  * public class AddressesClientCreate {
  *
@@ -120,7 +125,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.compute.v1.AddressesClient;
+ * import com.google.cloud.compute.v1.AddressesSettings;
+ * import com.google.cloud.compute.v1.myEndpoint;
  *
  * public class AddressesClientClassHeaderEndpoint {
  *
@@ -196,8 +205,10 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.AddressesScopedList;
    * import java.util.Map;
    *
    * public class AddressesClientAggregatedList {
@@ -234,8 +245,11 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.AddressesScopedList;
+   * import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
    * import java.util.Map;
    *
    * public class AddressesClientAggregatedList {
@@ -278,9 +292,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.AddressesScopedList;
+   * import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
    * import java.util.Map;
    *
    * public class AddressesClientAggregatedList {
@@ -323,8 +340,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.compute.v1.AddressAggregatedList;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.AddressesScopedList;
+   * import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
    * import com.google.common.base.Strings;
    * import java.util.Map;
    *
@@ -374,7 +395,10 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.Operation;
    *
    * public class AddressesClientDelete {
    *
@@ -416,7 +440,11 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.DeleteAddressRequest;
+   * import com.google.cloud.compute.v1.Operation;
    *
    * public class AddressesClientDelete {
    *
@@ -455,9 +483,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.DeleteAddressRequest;
+   * import com.google.cloud.compute.v1.Operation;
    *
    * public class AddressesClientDelete {
    *
@@ -495,9 +526,11 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.DeleteAddressRequest;
    * import com.google.longrunning.Operation;
    *
    * public class AddressesClientDelete {
@@ -534,7 +567,11 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.Operation;
    *
    * public class AddressesClientInsert {
    *
@@ -576,7 +613,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.InsertAddressRequest;
+   * import com.google.cloud.compute.v1.Operation;
    *
    * public class AddressesClientInsert {
    *
@@ -615,9 +657,13 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.InsertAddressRequest;
+   * import com.google.cloud.compute.v1.Operation;
    *
    * public class AddressesClientInsert {
    *
@@ -655,9 +701,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.InsertAddressRequest;
    * import com.google.longrunning.Operation;
    *
    * public class AddressesClientInsert {
@@ -694,7 +743,10 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
    *
    * public class AddressesClientList {
    *
@@ -743,7 +795,11 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.ListAddressesRequest;
    *
    * public class AddressesClientList {
    *
@@ -784,9 +840,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.ListAddressesRequest;
    *
    * public class AddressesClientList {
    *
@@ -826,8 +885,12 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.compute.v1.Address;
+   * import com.google.cloud.compute.v1.AddressList;
+   * import com.google.cloud.compute.v1.AddressesClient;
+   * import com.google.cloud.compute.v1.ListAddressesRequest;
    * import com.google.common.base.Strings;
    *
    * public class AddressesClientList {

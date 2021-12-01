@@ -102,10 +102,12 @@ public class ServiceClientSampleCodeComposer {
     // EchoSettings.newBuilder().setCredentialsProvider(FixedCredentialsProvider.create("myCredentials")).build();
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     TypeNode myCredentialsType =
         TypeNode.withReference(
-            VaporReference.builder().setName("myCredentials").setPakkage(packageName).build());
+            VaporReference.builder()
+                .setName("myCredentials")
+                .setPakkage(clientType.reference().pakkage())
+                .build());
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(settingsName).setType(settingsType).build());
@@ -165,7 +167,7 @@ public class ServiceClientSampleCodeComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-        packageName, composeSampleMethodName(clientName, "create"), new ArrayList<>(), sampleBody);
+        composeSampleMethodName(clientName, "create"), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeClassHeaderEndpointSampleCode(
@@ -174,10 +176,12 @@ public class ServiceClientSampleCodeComposer {
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     TypeNode myEndpointType =
         TypeNode.withReference(
-            VaporReference.builder().setName("myEndpoint").setPakkage(packageName).build());
+            VaporReference.builder()
+                .setName("myEndpoint")
+                .setPakkage(clientType.reference().pakkage())
+                .build());
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(settingsName).setType(settingsType).build());
@@ -230,10 +234,7 @@ public class ServiceClientSampleCodeComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, "ClassHeaderEndpoint"),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, "ClassHeaderEndpoint"), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeRpcMethodHeaderSampleCode(
@@ -280,12 +281,8 @@ public class ServiceClientSampleCodeComposer {
                 .setTryBody(bodyStatements)
                 .setIsSampleCode(true)
                 .build());
-    String packageName = clientType.reference().pakkage();
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, method.name()),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, method.name()), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeRpcDefaultMethodHeaderSampleCode(
@@ -294,7 +291,6 @@ public class ServiceClientSampleCodeComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(clientName).setType(clientType).build());
@@ -345,10 +341,7 @@ public class ServiceClientSampleCodeComposer {
                 .build());
 
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, method.name()),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, method.name()), new ArrayList<>(), sampleBody);
   }
 
   // Compose sample code for the method where it is CallableMethodKind.LRO.
@@ -358,7 +351,6 @@ public class ServiceClientSampleCodeComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(clientName).setType(clientType).build());
@@ -463,10 +455,7 @@ public class ServiceClientSampleCodeComposer {
                 .build());
 
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, method.name()),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, method.name()), new ArrayList<>(), sampleBody);
   }
 
   // Compose sample code for the method where it is CallableMethodKind.PAGED.
@@ -476,7 +465,6 @@ public class ServiceClientSampleCodeComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(clientName).setType(clientType).build());
@@ -588,10 +576,7 @@ public class ServiceClientSampleCodeComposer {
                 .build());
 
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, method.name()),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, method.name()), new ArrayList<>(), sampleBody);
   }
 
   // Compose sample code for the method where it is CallableMethodKind.REGULAR.
@@ -601,7 +586,6 @@ public class ServiceClientSampleCodeComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(clientName).setType(clientType).build());
@@ -644,10 +628,7 @@ public class ServiceClientSampleCodeComposer {
                 .build());
 
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, method.name()),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, method.name()), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeStreamCallableMethodHeaderSampleCode(
@@ -656,7 +637,6 @@ public class ServiceClientSampleCodeComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
-    String packageName = clientType.reference().pakkage();
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName(clientName).setType(clientType).build());
@@ -699,10 +679,7 @@ public class ServiceClientSampleCodeComposer {
                 .build());
 
     return new ExecutableSample(
-        packageName,
-        composeSampleMethodName(clientName, method.name()),
-        new ArrayList<>(),
-        sampleBody);
+        composeSampleMethodName(clientName, method.name()), new ArrayList<>(), sampleBody);
   }
 
   private static List<Statement> composeUnaryRpcMethodBodyStatements(

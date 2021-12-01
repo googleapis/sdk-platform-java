@@ -34,7 +34,10 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.showcase.v1beta1.EchoClient;
+ * import com.google.showcase.v1beta1.EchoResponse;
  *
  * public class EchoClientEcho {
  *
@@ -79,9 +82,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.showcase.v1beta1.EchoClient;
+ * import com.google.showcase.v1beta1.EchoSettings;
+ * import com.google.showcase.v1beta1.myCredentials;
  *
  * public class EchoClientCreate {
  *
@@ -102,7 +108,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.showcase.v1beta1.EchoClient;
+ * import com.google.showcase.v1beta1.EchoSettings;
+ * import com.google.showcase.v1beta1.myEndpoint;
  *
  * public class EchoClientClassHeaderEndpoint {
  *
@@ -187,7 +197,10 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
    *
    * public class EchoClientEcho {
    *
@@ -216,9 +229,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.resourcenames.ResourceName;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.FoobarName;
    *
    * public class EchoClientEcho {
    *
@@ -249,9 +265,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.rpc.Status;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
    *
    * public class EchoClientEcho {
    *
@@ -281,7 +299,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.FoobarName;
    *
    * public class EchoClientEcho {
    *
@@ -312,7 +334,10 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
    *
    * public class EchoClientEcho {
    *
@@ -342,7 +367,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.FoobarName;
    *
    * public class EchoClientEcho {
    *
@@ -372,7 +401,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.FoobarName;
    *
    * public class EchoClientEcho {
    *
@@ -402,7 +435,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientEcho {
    *
@@ -435,7 +472,14 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientEcho {
    *
@@ -470,9 +514,15 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientEcho {
    *
@@ -506,9 +556,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.ServerStream;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.ExpandRequest;
    *
    * public class EchoClientExpand {
    *
@@ -538,9 +591,15 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.ApiStreamObserver;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientCollect {
    *
@@ -591,9 +650,15 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.BidiStream;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientChat {
    *
@@ -629,9 +694,15 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.BidiStream;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientChatAgain {
    *
@@ -667,7 +738,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.PagedExpandRequest;
    *
    * public class EchoClientPagedExpand {
    *
@@ -703,9 +778,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.PagedExpandRequest;
    *
    * public class EchoClientPagedExpand {
    *
@@ -741,9 +819,13 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.common.base.Strings;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.PagedExpandRequest;
+   * import com.google.showcase.v1beta1.PagedExpandResponse;
    *
    * public class EchoClientPagedExpand {
    *
@@ -785,7 +867,10 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
    *
    * public class EchoClientSimplePagedExpand {
    *
@@ -816,7 +901,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.PagedExpandRequest;
    *
    * public class EchoClientSimplePagedExpand {
    *
@@ -852,9 +941,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.PagedExpandRequest;
    *
    * public class EchoClientSimplePagedExpand {
    *
@@ -891,9 +983,13 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.common.base.Strings;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoResponse;
+   * import com.google.showcase.v1beta1.PagedExpandRequest;
+   * import com.google.showcase.v1beta1.PagedExpandResponse;
    *
    * public class EchoClientSimplePagedExpand {
    *
@@ -935,9 +1031,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Duration;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.WaitResponse;
    *
    * public class EchoClientWait {
    *
@@ -967,9 +1065,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Timestamp;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.WaitResponse;
    *
    * public class EchoClientWait {
    *
@@ -999,7 +1099,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.WaitRequest;
+   * import com.google.showcase.v1beta1.WaitResponse;
    *
    * public class EchoClientWait {
    *
@@ -1028,9 +1132,13 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.WaitMetadata;
+   * import com.google.showcase.v1beta1.WaitRequest;
+   * import com.google.showcase.v1beta1.WaitResponse;
    *
    * public class EchoClientWait {
    *
@@ -1059,10 +1167,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
    * import com.google.longrunning.Operation;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.WaitRequest;
    *
    * public class EchoClientWait {
    *
@@ -1090,7 +1200,11 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.BlockRequest;
+   * import com.google.showcase.v1beta1.BlockResponse;
+   * import com.google.showcase.v1beta1.EchoClient;
    *
    * public class EchoClientBlock {
    *
@@ -1119,9 +1233,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.BlockRequest;
+   * import com.google.showcase.v1beta1.BlockResponse;
+   * import com.google.showcase.v1beta1.EchoClient;
    *
    * public class EchoClientBlock {
    *
@@ -1149,7 +1266,14 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Object;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientCollideName {
    *
@@ -1184,9 +1308,15 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.EchoClient;
+   * import com.google.showcase.v1beta1.EchoRequest;
+   * import com.google.showcase.v1beta1.Foobar;
+   * import com.google.showcase.v1beta1.FoobarName;
+   * import com.google.showcase.v1beta1.Object;
+   * import com.google.showcase.v1beta1.Severity;
    *
    * public class EchoClientCollideName {
    *

@@ -54,7 +54,11 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.iam.v1;
+ * package com.google.example;
+ *
+ * import com.google.iam.v1.IAMPolicyClient;
+ * import com.google.iam.v1.Policy;
+ * import com.google.iam.v1.SetIamPolicyRequest;
  *
  * public class IAMPolicyClientSetIamPolicy {
  *
@@ -104,9 +108,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.iam.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.iam.v1.IAMPolicyClient;
+ * import com.google.iam.v1.IAMPolicySettings;
+ * import com.google.iam.v1.myCredentials;
  *
  * public class IAMPolicyClientCreate {
  *
@@ -127,7 +134,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.iam.v1;
+ * package com.google.example;
+ *
+ * import com.google.iam.v1.IAMPolicyClient;
+ * import com.google.iam.v1.IAMPolicySettings;
+ * import com.google.iam.v1.myEndpoint;
  *
  * public class IAMPolicyClientClassHeaderEndpoint {
  *
@@ -203,7 +214,11 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.iam.v1;
+   * package com.google.example;
+   *
+   * import com.google.iam.v1.IAMPolicyClient;
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
    *
    * public class IAMPolicyClientSetIamPolicy {
    *
@@ -238,9 +253,12 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.iam.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.IAMPolicyClient;
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
    *
    * public class IAMPolicyClientSetIamPolicy {
    *
@@ -275,7 +293,12 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.iam.v1;
+   * package com.google.example;
+   *
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.IAMPolicyClient;
+   * import com.google.iam.v1.Policy;
    *
    * public class IAMPolicyClientGetIamPolicy {
    *
@@ -311,9 +334,13 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.iam.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.IAMPolicyClient;
+   * import com.google.iam.v1.Policy;
    *
    * public class IAMPolicyClientGetIamPolicy {
    *
@@ -352,8 +379,11 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.iam.v1;
+   * package com.google.example;
    *
+   * import com.google.iam.v1.IAMPolicyClient;
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
    * import java.util.ArrayList;
    *
    * public class IAMPolicyClientTestIamPermissions {
@@ -394,9 +424,12 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.iam.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.IAMPolicyClient;
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
    * import java.util.ArrayList;
    *
    * public class IAMPolicyClientTestIamPermissions {

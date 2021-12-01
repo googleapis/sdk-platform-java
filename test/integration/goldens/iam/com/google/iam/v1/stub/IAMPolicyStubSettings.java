@@ -63,8 +63,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of setIamPolicy to 30 seconds:
  *
  * <pre>{@code
- * package com.google.iam.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.iam.v1.stub.IAMPolicyStubSettings;
  * import java.time.Duration;
  *
  * public class IAMPolicySettings {

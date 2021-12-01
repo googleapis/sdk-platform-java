@@ -71,8 +71,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of createShelf to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.example.library.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.example.library.v1.LibraryServiceSettings;
  * import java.time.Duration;
  *
  * public class LibraryServiceSettings {

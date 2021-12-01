@@ -52,8 +52,9 @@ public class SettingsSampleCodeComposerTest {
                 Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
+            "import com.google.showcase.v1beta1.EchoSettings;\n",
             "import java.time.Duration;\n",
             "\n",
             "public class EchoSettings {\n",
@@ -93,8 +94,9 @@ public class SettingsSampleCodeComposerTest {
                 Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
-            "package com.google.showcase.v1beta1;\n",
+            "package com.google.example;\n",
             "\n",
+            "import com.google.showcase.v1beta1.EchoStubSettings;\n",
             "import java.time.Duration;\n",
             "\n",
             "public class EchoSettings {\n",

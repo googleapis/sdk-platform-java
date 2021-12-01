@@ -61,8 +61,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of get to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.compute.v1.stub.RegionOperationsStubSettings;
  * import java.time.Duration;
  *
  * public class RegionOperationsSettings {

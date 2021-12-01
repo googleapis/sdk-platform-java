@@ -31,8 +31,9 @@
  * <p>Sample for LibraryServiceClient:
  *
  * <pre>{@code
- * package com.google.cloud.example.library.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.example.library.v1.LibraryServiceClient;
  * import com.google.example.library.v1.Shelf;
  *
  * public class LibraryServiceClientCreateShelf {

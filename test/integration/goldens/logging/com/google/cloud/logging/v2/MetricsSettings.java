@@ -61,8 +61,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getLogMetric to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.MetricsSettings;
  * import java.time.Duration;
  *
  * public class MetricsSettings {

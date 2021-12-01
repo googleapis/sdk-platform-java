@@ -24,8 +24,9 @@
  * <p>Sample for LoggingClient:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.LoggingClient;
  * import com.google.logging.v2.LogName;
  * import com.google.protobuf.Empty;
  *
@@ -51,8 +52,9 @@
  * <p>Sample for ConfigClient:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.ConfigClient;
  * import com.google.logging.v2.GetBucketRequest;
  * import com.google.logging.v2.LogBucket;
  * import com.google.logging.v2.LogBucketName;
@@ -84,8 +86,9 @@
  * <p>Sample for MetricsClient:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.MetricsClient;
  * import com.google.logging.v2.LogMetric;
  * import com.google.logging.v2.LogMetricName;
  *

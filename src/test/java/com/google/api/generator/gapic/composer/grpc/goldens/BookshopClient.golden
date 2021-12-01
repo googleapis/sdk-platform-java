@@ -16,8 +16,10 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.bookshop.v1beta1;
+ * package com.google.example;
  *
+ * import com.google.bookshop.v1beta1.Book;
+ * import com.google.bookshop.v1beta1.BookshopClient;
  * import java.util.ArrayList;
  * import java.util.List;
  *
@@ -66,9 +68,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.bookshop.v1beta1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.bookshop.v1beta1.BookshopClient;
+ * import com.google.bookshop.v1beta1.BookshopSettings;
+ * import com.google.bookshop.v1beta1.myCredentials;
  *
  * public class BookshopClientCreate {
  *
@@ -89,7 +94,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.bookshop.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.bookshop.v1beta1.BookshopClient;
+ * import com.google.bookshop.v1beta1.BookshopSettings;
+ * import com.google.bookshop.v1beta1.myEndpoint;
  *
  * public class BookshopClientClassHeaderEndpoint {
  *
@@ -164,8 +173,10 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.bookshop.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.bookshop.v1beta1.Book;
+   * import com.google.bookshop.v1beta1.BookshopClient;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -200,8 +211,10 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.bookshop.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.bookshop.v1beta1.Book;
+   * import com.google.bookshop.v1beta1.BookshopClient;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -236,8 +249,11 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.bookshop.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.bookshop.v1beta1.Book;
+   * import com.google.bookshop.v1beta1.BookshopClient;
+   * import com.google.bookshop.v1beta1.GetBookRequest;
    * import java.util.ArrayList;
    *
    * public class BookshopClientGetBook {
@@ -272,9 +288,12 @@ public class BookshopClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.bookshop.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.bookshop.v1beta1.Book;
+   * import com.google.bookshop.v1beta1.BookshopClient;
+   * import com.google.bookshop.v1beta1.GetBookRequest;
    * import java.util.ArrayList;
    *
    * public class BookshopClientGetBook {

@@ -85,8 +85,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of getInstance to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.redis.v1beta1.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.redis.v1beta1.stub.CloudRedisStubSettings;
  * import java.time.Duration;
  *
  * public class CloudRedisSettings {

@@ -43,8 +43,11 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.iam.credentials.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+ * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
  * import com.google.protobuf.Duration;
  * import java.util.ArrayList;
  * import java.util.List;
@@ -97,9 +100,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.iam.credentials.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
+ * import com.google.cloud.iam.credentials.v1.myCredentials;
  *
  * public class IamCredentialsClientCreate {
  *
@@ -120,7 +126,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.iam.credentials.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
+ * import com.google.cloud.iam.credentials.v1.myEndpoint;
  *
  * public class IamCredentialsClientClassHeaderEndpoint {
  *
@@ -198,8 +208,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import com.google.protobuf.Duration;
    * import java.util.ArrayList;
    * import java.util.List;
@@ -262,8 +275,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import com.google.protobuf.Duration;
    * import java.util.ArrayList;
    * import java.util.List;
@@ -326,8 +342,12 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
+   * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import com.google.protobuf.Duration;
    * import java.util.ArrayList;
    *
@@ -366,9 +386,13 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
+   * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import com.google.protobuf.Duration;
    * import java.util.ArrayList;
    *
@@ -408,8 +432,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -469,8 +496,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -530,8 +560,12 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.GenerateIdTokenRequest;
+   * import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import java.util.ArrayList;
    *
    * public class IamCredentialsClientGenerateIdToken {
@@ -569,9 +603,13 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.iam.credentials.v1.GenerateIdTokenRequest;
+   * import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
    * import java.util.ArrayList;
    *
    * public class IamCredentialsClientGenerateIdToken {
@@ -610,8 +648,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignBlobResponse;
    * import com.google.protobuf.ByteString;
    * import java.util.ArrayList;
    * import java.util.List;
@@ -666,8 +707,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignBlobResponse;
    * import com.google.protobuf.ByteString;
    * import java.util.ArrayList;
    * import java.util.List;
@@ -721,8 +765,12 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignBlobRequest;
+   * import com.google.cloud.iam.credentials.v1.SignBlobResponse;
    * import com.google.protobuf.ByteString;
    * import java.util.ArrayList;
    *
@@ -760,9 +808,13 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignBlobRequest;
+   * import com.google.cloud.iam.credentials.v1.SignBlobResponse;
    * import com.google.protobuf.ByteString;
    * import java.util.ArrayList;
    *
@@ -800,8 +852,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignJwtResponse;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -855,8 +910,11 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignJwtResponse;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -909,8 +967,12 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignJwtRequest;
+   * import com.google.cloud.iam.credentials.v1.SignJwtResponse;
    * import java.util.ArrayList;
    *
    * public class IamCredentialsClientSignJwt {
@@ -947,9 +1009,13 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.iam.credentials.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+   * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
+   * import com.google.cloud.iam.credentials.v1.SignJwtRequest;
+   * import com.google.cloud.iam.credentials.v1.SignJwtResponse;
    * import java.util.ArrayList;
    *
    * public class IamCredentialsClientSignJwt {

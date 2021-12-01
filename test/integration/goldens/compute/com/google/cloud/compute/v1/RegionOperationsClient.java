@@ -33,7 +33,10 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.compute.v1.Operation;
+ * import com.google.cloud.compute.v1.RegionOperationsClient;
  *
  * public class RegionOperationsClientGet {
  *
@@ -82,9 +85,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.compute.v1.RegionOperationsClient;
+ * import com.google.cloud.compute.v1.RegionOperationsSettings;
+ * import com.google.cloud.compute.v1.myCredentials;
  *
  * public class RegionOperationsClientCreate {
  *
@@ -106,7 +112,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.compute.v1.RegionOperationsClient;
+ * import com.google.cloud.compute.v1.RegionOperationsSettings;
+ * import com.google.cloud.compute.v1.myEndpoint;
  *
  * public class RegionOperationsClientClassHeaderEndpoint {
  *
@@ -185,7 +195,10 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Operation;
+   * import com.google.cloud.compute.v1.RegionOperationsClient;
    *
    * public class RegionOperationsClientGet {
    *
@@ -226,7 +239,11 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.GetRegionOperationRequest;
+   * import com.google.cloud.compute.v1.Operation;
+   * import com.google.cloud.compute.v1.RegionOperationsClient;
    *
    * public class RegionOperationsClientGet {
    *
@@ -262,9 +279,12 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.compute.v1.GetRegionOperationRequest;
+   * import com.google.cloud.compute.v1.Operation;
+   * import com.google.cloud.compute.v1.RegionOperationsClient;
    *
    * public class RegionOperationsClientGet {
    *
@@ -308,7 +328,10 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Operation;
+   * import com.google.cloud.compute.v1.RegionOperationsClient;
    *
    * public class RegionOperationsClientWait {
    *
@@ -358,7 +381,11 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.compute.v1.Operation;
+   * import com.google.cloud.compute.v1.RegionOperationsClient;
+   * import com.google.cloud.compute.v1.WaitRegionOperationRequest;
    *
    * public class RegionOperationsClientWait {
    *
@@ -403,9 +430,12 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.compute.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.compute.v1.Operation;
+   * import com.google.cloud.compute.v1.RegionOperationsClient;
+   * import com.google.cloud.compute.v1.WaitRegionOperationRequest;
    *
    * public class RegionOperationsClientWait {
    *

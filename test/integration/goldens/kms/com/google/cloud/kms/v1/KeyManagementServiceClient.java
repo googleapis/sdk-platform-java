@@ -65,7 +65,11 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.kms.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+ * import com.google.cloud.kms.v1.KeyRing;
+ * import com.google.cloud.kms.v1.KeyRingName;
  *
  * public class KeyManagementServiceClientGetKeyRing {
  *
@@ -113,9 +117,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.kms.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+ * import com.google.cloud.kms.v1.KeyManagementServiceSettings;
+ * import com.google.cloud.kms.v1.myCredentials;
  *
  * public class KeyManagementServiceClientCreate {
  *
@@ -137,7 +144,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.kms.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+ * import com.google.cloud.kms.v1.KeyManagementServiceSettings;
+ * import com.google.cloud.kms.v1.myEndpoint;
  *
  * public class KeyManagementServiceClientClassHeaderEndpoint {
  *
@@ -216,7 +227,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientListKeyRings {
    *
@@ -255,7 +270,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientListKeyRings {
    *
@@ -291,7 +310,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.ListKeyRingsRequest;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientListKeyRings {
    *
@@ -332,9 +356,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.ListKeyRingsRequest;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientListKeyRings {
    *
@@ -376,8 +404,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.ListKeyRingsRequest;
+   * import com.google.cloud.kms.v1.ListKeyRingsResponse;
+   * import com.google.cloud.kms.v1.LocationName;
    * import com.google.common.base.Strings;
    *
    * public class KeyManagementServiceClientListKeyRings {
@@ -426,7 +459,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientListCryptoKeys {
    *
@@ -465,7 +502,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientListCryptoKeys {
    *
@@ -501,7 +542,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
+   * import com.google.cloud.kms.v1.ListCryptoKeysRequest;
    *
    * public class KeyManagementServiceClientListCryptoKeys {
    *
@@ -542,9 +588,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
+   * import com.google.cloud.kms.v1.ListCryptoKeysRequest;
    *
    * public class KeyManagementServiceClientListCryptoKeys {
    *
@@ -586,8 +636,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
+   * import com.google.cloud.kms.v1.ListCryptoKeysRequest;
+   * import com.google.cloud.kms.v1.ListCryptoKeysResponse;
    * import com.google.common.base.Strings;
    *
    * public class KeyManagementServiceClientListCryptoKeys {
@@ -637,7 +692,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientListCryptoKeyVersions {
    *
@@ -678,7 +737,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientListCryptoKeyVersions {
    *
@@ -717,7 +780,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.ListCryptoKeyVersionsRequest;
    *
    * public class KeyManagementServiceClientListCryptoKeyVersions {
    *
@@ -762,9 +830,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.ListCryptoKeyVersionsRequest;
    *
    * public class KeyManagementServiceClientListCryptoKeyVersions {
    *
@@ -808,8 +880,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.ListCryptoKeyVersionsRequest;
+   * import com.google.cloud.kms.v1.ListCryptoKeyVersionsResponse;
    * import com.google.common.base.Strings;
    *
    * public class KeyManagementServiceClientListCryptoKeyVersions {
@@ -861,7 +938,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientListImportJobs {
    *
@@ -900,7 +981,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientListImportJobs {
    *
@@ -936,7 +1021,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
+   * import com.google.cloud.kms.v1.ListImportJobsRequest;
    *
    * public class KeyManagementServiceClientListImportJobs {
    *
@@ -977,9 +1067,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
+   * import com.google.cloud.kms.v1.ListImportJobsRequest;
    *
    * public class KeyManagementServiceClientListImportJobs {
    *
@@ -1021,8 +1115,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
+   * import com.google.cloud.kms.v1.ListImportJobsRequest;
+   * import com.google.cloud.kms.v1.ListImportJobsResponse;
    * import com.google.common.base.Strings;
    *
    * public class KeyManagementServiceClientListImportJobs {
@@ -1072,7 +1171,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientGetKeyRing {
    *
@@ -1107,7 +1210,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientGetKeyRing {
    *
@@ -1141,7 +1248,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.GetKeyRingRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientGetKeyRing {
    *
@@ -1176,9 +1288,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.GetKeyRingRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientGetKeyRing {
    *
@@ -1215,7 +1331,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKey {
    *
@@ -1253,7 +1373,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKey {
    *
@@ -1290,7 +1414,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.GetCryptoKeyRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKey {
    *
@@ -1329,9 +1458,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.GetCryptoKeyRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKey {
    *
@@ -1368,7 +1501,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKeyVersion {
    *
@@ -1407,7 +1544,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKeyVersion {
    *
@@ -1445,7 +1586,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.GetCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKeyVersion {
    *
@@ -1487,9 +1633,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.GetCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetCryptoKeyVersion {
    *
@@ -1535,7 +1685,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.PublicKey;
    *
    * public class KeyManagementServiceClientGetPublicKey {
    *
@@ -1575,7 +1729,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.PublicKey;
    *
    * public class KeyManagementServiceClientGetPublicKey {
    *
@@ -1615,7 +1773,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.GetPublicKeyRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.PublicKey;
    *
    * public class KeyManagementServiceClientGetPublicKey {
    *
@@ -1660,9 +1823,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.GetPublicKeyRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.PublicKey;
    *
    * public class KeyManagementServiceClientGetPublicKey {
    *
@@ -1704,7 +1871,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.ImportJobName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetImportJob {
    *
@@ -1740,7 +1911,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.ImportJobName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetImportJob {
    *
@@ -1775,7 +1950,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.GetImportJobRequest;
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.ImportJobName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetImportJob {
    *
@@ -1812,9 +1992,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.GetImportJobRequest;
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.ImportJobName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientGetImportJob {
    *
@@ -1851,7 +2035,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientCreateKeyRing {
    *
@@ -1895,7 +2083,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientCreateKeyRing {
    *
@@ -1939,7 +2131,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CreateKeyRingRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientCreateKeyRing {
    *
@@ -1976,9 +2173,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CreateKeyRingRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRing;
+   * import com.google.cloud.kms.v1.LocationName;
    *
    * public class KeyManagementServiceClientCreateKeyRing {
    *
@@ -2020,7 +2221,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateCryptoKey {
    *
@@ -2072,7 +2277,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateCryptoKey {
    *
@@ -2123,7 +2332,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CreateCryptoKeyRequest;
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateCryptoKey {
    *
@@ -2166,9 +2380,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CreateCryptoKeyRequest;
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateCryptoKey {
    *
@@ -2211,7 +2429,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientCreateCryptoKeyVersion {
    *
@@ -2261,7 +2483,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientCreateCryptoKeyVersion {
    *
@@ -2311,7 +2537,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CreateCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientCreateCryptoKeyVersion {
    *
@@ -2354,9 +2585,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CreateCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientCreateCryptoKeyVersion {
    *
@@ -2400,7 +2635,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.ImportCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientImportCryptoKeyVersion {
    *
@@ -2443,9 +2683,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.ImportCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientImportCryptoKeyVersion {
    *
@@ -2487,7 +2731,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateImportJob {
    *
@@ -2538,7 +2786,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateImportJob {
    *
@@ -2588,7 +2840,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CreateImportJobRequest;
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateImportJob {
    *
@@ -2628,9 +2885,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CreateImportJobRequest;
+   * import com.google.cloud.kms.v1.ImportJob;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.KeyRingName;
    *
    * public class KeyManagementServiceClientCreateImportJob {
    *
@@ -2667,8 +2928,10 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.FieldMask;
    *
    * public class KeyManagementServiceClientUpdateCryptoKey {
@@ -2708,8 +2971,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.UpdateCryptoKeyRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class KeyManagementServiceClientUpdateCryptoKey {
@@ -2746,9 +3012,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.UpdateCryptoKeyRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class KeyManagementServiceClientUpdateCryptoKey {
@@ -2793,8 +3062,10 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.FieldMask;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyVersion {
@@ -2845,8 +3116,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.UpdateCryptoKeyVersionRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyVersion {
@@ -2891,9 +3165,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.UpdateCryptoKeyVersionRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyVersion {
@@ -2934,9 +3211,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.resourcenames.ResourceName;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.EncryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    *
    * public class KeyManagementServiceClientEncrypt {
@@ -2988,8 +3268,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.EncryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    *
    * public class KeyManagementServiceClientEncrypt {
@@ -3039,8 +3322,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.EncryptRequest;
+   * import com.google.cloud.kms.v1.EncryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.protobuf.Int64Value;
    *
@@ -3086,9 +3373,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.EncryptRequest;
+   * import com.google.cloud.kms.v1.EncryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.protobuf.Int64Value;
    *
@@ -3134,8 +3425,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.DecryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    *
    * public class KeyManagementServiceClientDecrypt {
@@ -3181,8 +3475,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.DecryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    *
    * public class KeyManagementServiceClientDecrypt {
@@ -3225,8 +3522,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.DecryptRequest;
+   * import com.google.cloud.kms.v1.DecryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.protobuf.Int64Value;
    *
@@ -3272,9 +3573,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.DecryptRequest;
+   * import com.google.cloud.kms.v1.DecryptResponse;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.protobuf.Int64Value;
    *
@@ -3320,7 +3625,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.AsymmetricSignResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.Digest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientAsymmetricSign {
    *
@@ -3367,7 +3677,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.AsymmetricSignResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.Digest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientAsymmetricSign {
    *
@@ -3412,8 +3727,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.AsymmetricSignRequest;
+   * import com.google.cloud.kms.v1.AsymmetricSignResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.Digest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.Int64Value;
    *
    * public class KeyManagementServiceClientAsymmetricSign {
@@ -3461,9 +3781,14 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.AsymmetricSignRequest;
+   * import com.google.cloud.kms.v1.AsymmetricSignResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.Digest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.Int64Value;
    *
    * public class KeyManagementServiceClientAsymmetricSign {
@@ -3512,8 +3837,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    *
    * public class KeyManagementServiceClientAsymmetricDecrypt {
@@ -3562,8 +3890,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    *
    * public class KeyManagementServiceClientAsymmetricDecrypt {
@@ -3609,8 +3940,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.AsymmetricDecryptRequest;
+   * import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.protobuf.Int64Value;
    *
@@ -3659,9 +3994,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.AsymmetricDecryptRequest;
+   * import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.protobuf.ByteString;
    * import com.google.protobuf.Int64Value;
    *
@@ -3711,7 +4050,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
    *
@@ -3758,7 +4101,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
    *
@@ -3804,7 +4151,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
    *
@@ -3846,9 +4198,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKey;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest;
    *
    * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
    *
@@ -3900,7 +4256,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
    *
@@ -3952,7 +4312,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
    *
@@ -4003,7 +4367,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.DestroyCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
    *
@@ -4058,9 +4427,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.DestroyCryptoKeyVersionRequest;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
    *
@@ -4110,7 +4483,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
    *
@@ -4156,7 +4533,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    *
    * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
    *
@@ -4201,7 +4582,12 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.RestoreCryptoKeyVersionRequest;
    *
    * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
    *
@@ -4250,9 +4636,13 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyVersion;
+   * import com.google.cloud.kms.v1.CryptoKeyVersionName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
+   * import com.google.cloud.kms.v1.RestoreCryptoKeyVersionRequest;
    *
    * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
    *
@@ -4296,8 +4686,10 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.iam.v1.GetIamPolicyRequest;
    * import com.google.iam.v1.GetPolicyOptions;
    * import com.google.iam.v1.Policy;
@@ -4339,9 +4731,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.iam.v1.GetIamPolicyRequest;
    * import com.google.iam.v1.GetPolicyOptions;
    * import com.google.iam.v1.Policy;
@@ -4382,8 +4776,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.cloud.location.ListLocationsRequest;
    * import com.google.cloud.location.Location;
    *
@@ -4425,9 +4820,10 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.cloud.location.ListLocationsRequest;
    * import com.google.cloud.location.Location;
    *
@@ -4470,8 +4866,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.cloud.location.ListLocationsRequest;
    * import com.google.cloud.location.ListLocationsResponse;
    * import com.google.cloud.location.Location;
@@ -4522,8 +4919,9 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.cloud.location.GetLocationRequest;
    * import com.google.cloud.location.Location;
    *
@@ -4557,9 +4955,10 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.cloud.location.GetLocationRequest;
    * import com.google.cloud.location.Location;
    *
@@ -4594,8 +4993,10 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.iam.v1.TestIamPermissionsRequest;
    * import com.google.iam.v1.TestIamPermissionsResponse;
    * import java.util.ArrayList;
@@ -4637,9 +5038,11 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.kms.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.kms.v1.CryptoKeyName;
+   * import com.google.cloud.kms.v1.KeyManagementServiceClient;
    * import com.google.iam.v1.TestIamPermissionsRequest;
    * import com.google.iam.v1.TestIamPermissionsResponse;
    * import java.util.ArrayList;

@@ -45,7 +45,11 @@
  * <p>Sample for IAMPolicyClient:
  *
  * <pre>{@code
- * package com.google.iam.v1;
+ * package com.google.example;
+ *
+ * import com.google.iam.v1.IAMPolicyClient;
+ * import com.google.iam.v1.Policy;
+ * import com.google.iam.v1.SetIamPolicyRequest;
  *
  * public class IAMPolicyClientSetIamPolicy {
  *

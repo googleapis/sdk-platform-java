@@ -93,8 +93,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of deleteLog to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.logging.v2.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.logging.v2.stub.LoggingServiceV2StubSettings;
  * import java.time.Duration;
  *
  * public class LoggingSettings {

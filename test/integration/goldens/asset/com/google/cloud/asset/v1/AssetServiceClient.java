@@ -47,8 +47,14 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.asset.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.asset.v1.AssetServiceClient;
+ * import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
+ * import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
+ * import com.google.cloud.asset.v1.ContentType;
+ * import com.google.cloud.asset.v1.FeedName;
+ * import com.google.cloud.asset.v1.TimeWindow;
  * import java.util.ArrayList;
  *
  * public class AssetServiceClientBatchGetAssetsHistory {
@@ -102,9 +108,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.asset.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.asset.v1.AssetServiceClient;
+ * import com.google.cloud.asset.v1.AssetServiceSettings;
+ * import com.google.cloud.asset.v1.myCredentials;
  *
  * public class AssetServiceClientCreate {
  *
@@ -125,7 +134,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.asset.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.asset.v1.AssetServiceClient;
+ * import com.google.cloud.asset.v1.AssetServiceSettings;
+ * import com.google.cloud.asset.v1.myEndpoint;
  *
  * public class AssetServiceClientClassHeaderEndpoint {
  *
@@ -220,8 +233,14 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.ExportAssetsRequest;
+   * import com.google.cloud.asset.v1.ExportAssetsResponse;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.OutputConfig;
    * import com.google.protobuf.Timestamp;
    * import java.util.ArrayList;
    *
@@ -270,9 +289,15 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.ExportAssetsRequest;
+   * import com.google.cloud.asset.v1.ExportAssetsResponse;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.OutputConfig;
    * import com.google.protobuf.Timestamp;
    * import java.util.ArrayList;
    *
@@ -321,9 +346,14 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.ExportAssetsRequest;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.OutputConfig;
    * import com.google.longrunning.Operation;
    * import com.google.protobuf.Timestamp;
    * import java.util.ArrayList;
@@ -364,9 +394,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.resourcenames.ResourceName;
+   * import com.google.cloud.asset.v1.Asset;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.FeedName;
    *
    * public class AssetServiceClientListAssets {
    *
@@ -404,7 +437,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.Asset;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.FeedName;
    *
    * public class AssetServiceClientListAssets {
    *
@@ -441,8 +478,13 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.Asset;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.ListAssetsRequest;
    * import com.google.protobuf.Timestamp;
    * import java.util.ArrayList;
    *
@@ -486,9 +528,14 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.Asset;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.ListAssetsRequest;
    * import com.google.protobuf.Timestamp;
    * import java.util.ArrayList;
    *
@@ -531,8 +578,14 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.Asset;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.ListAssetsRequest;
+   * import com.google.cloud.asset.v1.ListAssetsResponse;
    * import com.google.common.base.Strings;
    * import com.google.protobuf.Timestamp;
    * import java.util.ArrayList;
@@ -587,8 +640,14 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
+   * import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.TimeWindow;
    * import java.util.ArrayList;
    *
    * public class AssetServiceClientBatchGetAssetsHistory {
@@ -632,9 +691,15 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
+   * import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
+   * import com.google.cloud.asset.v1.ContentType;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.TimeWindow;
    * import java.util.ArrayList;
    *
    * public class AssetServiceClientBatchGetAssetsHistory {
@@ -674,7 +739,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
    *
    * public class AssetServiceClientCreateFeed {
    *
@@ -709,7 +777,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.CreateFeedRequest;
+   * import com.google.cloud.asset.v1.Feed;
    *
    * public class AssetServiceClientCreateFeed {
    *
@@ -745,9 +817,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.CreateFeedRequest;
+   * import com.google.cloud.asset.v1.Feed;
    *
    * public class AssetServiceClientCreateFeed {
    *
@@ -782,7 +857,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
+   * import com.google.cloud.asset.v1.FeedName;
    *
    * public class AssetServiceClientGetFeed {
    *
@@ -817,7 +896,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
+   * import com.google.cloud.asset.v1.FeedName;
    *
    * public class AssetServiceClientGetFeed {
    *
@@ -851,7 +934,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.GetFeedRequest;
    *
    * public class AssetServiceClientGetFeed {
    *
@@ -885,9 +973,13 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
+   * import com.google.cloud.asset.v1.FeedName;
+   * import com.google.cloud.asset.v1.GetFeedRequest;
    *
    * public class AssetServiceClientGetFeed {
    *
@@ -920,7 +1012,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ListFeedsResponse;
    *
    * public class AssetServiceClientListFeeds {
    *
@@ -954,7 +1049,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ListFeedsRequest;
+   * import com.google.cloud.asset.v1.ListFeedsResponse;
    *
    * public class AssetServiceClientListFeeds {
    *
@@ -986,9 +1085,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ListFeedsRequest;
+   * import com.google.cloud.asset.v1.ListFeedsResponse;
    *
    * public class AssetServiceClientListFeeds {
    *
@@ -1020,7 +1122,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
    *
    * public class AssetServiceClientUpdateFeed {
    *
@@ -1054,8 +1159,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
+   * import com.google.cloud.asset.v1.UpdateFeedRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class AssetServiceClientUpdateFeed {
@@ -1091,9 +1199,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.Feed;
+   * import com.google.cloud.asset.v1.UpdateFeedRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class AssetServiceClientUpdateFeed {
@@ -1128,8 +1239,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.FeedName;
    * import com.google.protobuf.Empty;
    *
    * public class AssetServiceClientDeleteFeed {
@@ -1165,8 +1278,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.FeedName;
    * import com.google.protobuf.Empty;
    *
    * public class AssetServiceClientDeleteFeed {
@@ -1201,8 +1316,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.DeleteFeedRequest;
+   * import com.google.cloud.asset.v1.FeedName;
    * import com.google.protobuf.Empty;
    *
    * public class AssetServiceClientDeleteFeed {
@@ -1237,9 +1355,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.DeleteFeedRequest;
+   * import com.google.cloud.asset.v1.FeedName;
    * import com.google.protobuf.Empty;
    *
    * public class AssetServiceClientDeleteFeed {
@@ -1275,8 +1396,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ResourceSearchResult;
    * import java.util.ArrayList;
    * import java.util.List;
    *
@@ -1383,8 +1506,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ResourceSearchResult;
+   * import com.google.cloud.asset.v1.SearchAllResourcesRequest;
    * import com.google.protobuf.FieldMask;
    * import java.util.ArrayList;
    *
@@ -1432,9 +1558,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ResourceSearchResult;
+   * import com.google.cloud.asset.v1.SearchAllResourcesRequest;
    * import com.google.protobuf.FieldMask;
    * import java.util.ArrayList;
    *
@@ -1481,8 +1610,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.ResourceSearchResult;
+   * import com.google.cloud.asset.v1.SearchAllResourcesRequest;
+   * import com.google.cloud.asset.v1.SearchAllResourcesResponse;
    * import com.google.common.base.Strings;
    * import com.google.protobuf.FieldMask;
    * import java.util.ArrayList;
@@ -1537,7 +1670,10 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicySearchResult;
    *
    * public class AssetServiceClientSearchAllIamPolicies {
    *
@@ -1624,8 +1760,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicySearchResult;
+   * import com.google.cloud.asset.v1.SearchAllIamPoliciesRequest;
    * import java.util.ArrayList;
    *
    * public class AssetServiceClientSearchAllIamPolicies {
@@ -1671,9 +1810,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicySearchResult;
+   * import com.google.cloud.asset.v1.SearchAllIamPoliciesRequest;
    * import java.util.ArrayList;
    *
    * public class AssetServiceClientSearchAllIamPolicies {
@@ -1718,8 +1860,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicySearchResult;
+   * import com.google.cloud.asset.v1.SearchAllIamPoliciesRequest;
+   * import com.google.cloud.asset.v1.SearchAllIamPoliciesResponse;
    * import com.google.common.base.Strings;
    * import java.util.ArrayList;
    *
@@ -1770,8 +1916,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyRequest;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyResponse;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisQuery;
    * import com.google.protobuf.Duration;
    *
    * public class AssetServiceClientAnalyzeIamPolicy {
@@ -1807,9 +1957,13 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyRequest;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyResponse;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisQuery;
    * import com.google.protobuf.Duration;
    *
    * public class AssetServiceClientAnalyzeIamPolicy {
@@ -1853,7 +2007,13 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisOutputConfig;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisQuery;
    *
    * public class AssetServiceClientAnalyzeIamPolicyLongrunning {
    *
@@ -1898,9 +2058,15 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningMetadata;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisOutputConfig;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisQuery;
    *
    * public class AssetServiceClientAnalyzeIamPolicyLongrunning {
    *
@@ -1947,9 +2113,13 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisOutputConfig;
+   * import com.google.cloud.asset.v1.IamPolicyAnalysisQuery;
    * import com.google.longrunning.Operation;
    *
    * public class AssetServiceClientAnalyzeIamPolicyLongrunning {
@@ -1989,7 +2159,11 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.asset.v1.AnalyzeMoveRequest;
+   * import com.google.cloud.asset.v1.AnalyzeMoveResponse;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
    *
    * public class AssetServiceClientAnalyzeMove {
    *
@@ -2027,9 +2201,12 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.asset.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.asset.v1.AnalyzeMoveRequest;
+   * import com.google.cloud.asset.v1.AnalyzeMoveResponse;
+   * import com.google.cloud.asset.v1.AssetServiceClient;
    *
    * public class AssetServiceClientAnalyzeMove {
    *

@@ -65,8 +65,9 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.TopicAdminClient;
  * import com.google.pubsub.v1.Topic;
  * import com.google.pubsub.v1.TopicName;
  *
@@ -114,9 +115,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.pubsub.v1.TopicAdminClient;
+ * import com.google.cloud.pubsub.v1.TopicAdminSettings;
+ * import com.google.cloud.pubsub.v1.myCredentials;
  *
  * public class TopicAdminClientCreate {
  *
@@ -137,7 +141,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.pubsub.v1.TopicAdminClient;
+ * import com.google.cloud.pubsub.v1.TopicAdminSettings;
+ * import com.google.cloud.pubsub.v1.myEndpoint;
  *
  * public class TopicAdminClientClassHeaderEndpoint {
  *
@@ -214,8 +222,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -254,8 +263,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -294,8 +304,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.Duration;
    * import com.google.pubsub.v1.MessageStoragePolicy;
    * import com.google.pubsub.v1.SchemaSettings;
@@ -342,9 +353,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.Duration;
    * import com.google.pubsub.v1.MessageStoragePolicy;
    * import com.google.pubsub.v1.SchemaSettings;
@@ -389,8 +401,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.FieldMask;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.UpdateTopicRequest;
@@ -428,9 +441,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.FieldMask;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.UpdateTopicRequest;
@@ -467,8 +481,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.PublishResponse;
    * import com.google.pubsub.v1.PubsubMessage;
    * import com.google.pubsub.v1.TopicName;
@@ -512,8 +527,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.PublishResponse;
    * import com.google.pubsub.v1.PubsubMessage;
    * import com.google.pubsub.v1.TopicName;
@@ -554,8 +570,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.PublishRequest;
    * import com.google.pubsub.v1.PublishResponse;
    * import com.google.pubsub.v1.PubsubMessage;
@@ -595,9 +612,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.PublishRequest;
    * import com.google.pubsub.v1.PublishResponse;
    * import com.google.pubsub.v1.PubsubMessage;
@@ -636,8 +654,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -673,8 +692,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -709,8 +729,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.GetTopicRequest;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.TopicName;
@@ -747,9 +768,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.GetTopicRequest;
    * import com.google.pubsub.v1.Topic;
    * import com.google.pubsub.v1.TopicName;
@@ -785,8 +807,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Topic;
    *
@@ -826,8 +849,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Topic;
    *
@@ -864,8 +888,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ListTopicsRequest;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Topic;
@@ -906,9 +931,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ListTopicsRequest;
    * import com.google.pubsub.v1.ProjectName;
    * import com.google.pubsub.v1.Topic;
@@ -948,8 +974,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.common.base.Strings;
    * import com.google.pubsub.v1.ListTopicsRequest;
    * import com.google.pubsub.v1.ListTopicsResponse;
@@ -998,8 +1025,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.TopicName;
    *
    * public class TopicAdminClientListTopicSubscriptions {
@@ -1038,8 +1066,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.TopicName;
    *
    * public class TopicAdminClientListTopicSubscriptions {
@@ -1076,8 +1105,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -1118,9 +1148,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -1161,8 +1192,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.common.base.Strings;
    * import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
    * import com.google.pubsub.v1.ListTopicSubscriptionsResponse;
@@ -1215,8 +1247,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.TopicName;
    *
    * public class TopicAdminClientListTopicSnapshots {
@@ -1258,8 +1291,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.TopicName;
    *
    * public class TopicAdminClientListTopicSnapshots {
@@ -1299,8 +1333,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ListTopicSnapshotsRequest;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -1344,9 +1379,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.ListTopicSnapshotsRequest;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -1390,8 +1426,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.common.base.Strings;
    * import com.google.pubsub.v1.ListTopicSnapshotsRequest;
    * import com.google.pubsub.v1.ListTopicSnapshotsResponse;
@@ -1444,8 +1481,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -1484,8 +1522,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.TopicName;
    *
@@ -1523,8 +1562,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.DeleteTopicRequest;
    * import com.google.pubsub.v1.TopicName;
@@ -1564,9 +1604,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.protobuf.Empty;
    * import com.google.pubsub.v1.DeleteTopicRequest;
    * import com.google.pubsub.v1.TopicName;
@@ -1604,8 +1645,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.DetachSubscriptionRequest;
    * import com.google.pubsub.v1.DetachSubscriptionResponse;
    * import com.google.pubsub.v1.SubscriptionName;
@@ -1644,9 +1686,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.pubsub.v1.DetachSubscriptionRequest;
    * import com.google.pubsub.v1.DetachSubscriptionResponse;
    * import com.google.pubsub.v1.SubscriptionName;
@@ -1686,8 +1729,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.iam.v1.Policy;
    * import com.google.iam.v1.SetIamPolicyRequest;
    * import com.google.pubsub.v1.ProjectName;
@@ -1727,9 +1771,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.iam.v1.Policy;
    * import com.google.iam.v1.SetIamPolicyRequest;
    * import com.google.pubsub.v1.ProjectName;
@@ -1767,8 +1812,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.iam.v1.GetIamPolicyRequest;
    * import com.google.iam.v1.GetPolicyOptions;
    * import com.google.iam.v1.Policy;
@@ -1808,9 +1854,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.iam.v1.GetIamPolicyRequest;
    * import com.google.iam.v1.GetPolicyOptions;
    * import com.google.iam.v1.Policy;
@@ -1853,8 +1900,9 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.iam.v1.TestIamPermissionsRequest;
    * import com.google.iam.v1.TestIamPermissionsResponse;
    * import com.google.pubsub.v1.ProjectName;
@@ -1898,9 +1946,10 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.pubsub.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.pubsub.v1.TopicAdminClient;
    * import com.google.iam.v1.TestIamPermissionsRequest;
    * import com.google.iam.v1.TestIamPermissionsResponse;
    * import com.google.pubsub.v1.ProjectName;

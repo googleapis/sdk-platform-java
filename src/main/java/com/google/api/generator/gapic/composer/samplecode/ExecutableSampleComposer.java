@@ -27,7 +27,6 @@ public class ExecutableSampleComposer {
   public static String createExecutableSample(ExecutableSample executableSample) {
     return SampleCodeWriter.write(
         composeExecutableSample(
-            executableSample.samplePackageName,
             executableSample.sampleMethodName,
             executableSample.sampleVariableAssignments,
             executableSample.sampleBody));
@@ -40,16 +39,12 @@ public class ExecutableSampleComposer {
       return Optional.of(
           SampleCodeWriter.write(
               composeExecutableSample(
-                  sample.samplePackageName,
-                  sample.sampleMethodName,
-                  sample.sampleVariableAssignments,
-                  sample.sampleBody)));
+                  sample.sampleMethodName, sample.sampleVariableAssignments, sample.sampleBody)));
     }
     return Optional.empty();
   }
 
   static ClassDefinition composeExecutableSample(
-      String samplePackageName,
       String sampleMethodName,
       List<AssignmentExpr> sampleVariableAssignments,
       List<Statement> sampleBody) {
@@ -63,7 +58,7 @@ public class ExecutableSampleComposer {
                 composeInvokeMethodStatement(sampleMethodName, sampleMethodArgs)));
     MethodDefinition sampleMethod =
         composeSampleMethod(sampleMethodName, sampleMethodArgs, sampleBody);
-    return composeSampleClass(samplePackageName, sampleClassName, mainMethod, sampleMethod);
+    return composeSampleClass(sampleClassName, mainMethod, sampleMethod);
   }
 
   static List<VariableExpr> composeSampleMethodArgs(
@@ -98,13 +93,10 @@ public class ExecutableSampleComposer {
   }
 
   static ClassDefinition composeSampleClass(
-      String samplePackageName,
-      String sampleClassName,
-      MethodDefinition mainMethod,
-      MethodDefinition sampleMethod) {
+      String sampleClassName, MethodDefinition mainMethod, MethodDefinition sampleMethod) {
     return ClassDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
-        .setPackageString(samplePackageName)
+        .setPackageString("com.google.example")
         .setName(sampleClassName)
         .setMethods(ImmutableList.of(mainMethod, sampleMethod))
         .build();

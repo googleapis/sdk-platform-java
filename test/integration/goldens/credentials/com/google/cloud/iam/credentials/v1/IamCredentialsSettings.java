@@ -51,8 +51,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of generateAccessToken to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.iam.credentials.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
  * import java.time.Duration;
  *
  * public class IamCredentialsSettings {

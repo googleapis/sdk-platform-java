@@ -83,8 +83,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of createSubscription to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
  * import java.time.Duration;
  *
  * public class SubscriptionAdminSettings {

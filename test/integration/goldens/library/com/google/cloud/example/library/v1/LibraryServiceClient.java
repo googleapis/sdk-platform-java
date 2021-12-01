@@ -67,8 +67,9 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.example.library.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.example.library.v1.LibraryServiceClient;
  * import com.google.example.library.v1.Shelf;
  *
  * public class LibraryServiceClientCreateShelf {
@@ -115,9 +116,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.example.library.v1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.example.library.v1.LibraryServiceClient;
+ * import com.google.cloud.example.library.v1.LibraryServiceSettings;
+ * import com.google.cloud.example.library.v1.myCredentials;
  *
  * public class LibraryServiceClientCreate {
  *
@@ -138,7 +142,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.example.library.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.example.library.v1.LibraryServiceClient;
+ * import com.google.cloud.example.library.v1.LibraryServiceSettings;
+ * import com.google.cloud.example.library.v1.myEndpoint;
  *
  * public class LibraryServiceClientClassHeaderEndpoint {
  *
@@ -216,8 +224,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    *
    * public class LibraryServiceClientCreateShelf {
@@ -250,8 +259,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.CreateShelfRequest;
    * import com.google.example.library.v1.Shelf;
    *
@@ -285,9 +295,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.CreateShelfRequest;
    * import com.google.example.library.v1.Shelf;
    *
@@ -320,8 +331,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -356,8 +368,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -391,8 +404,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.GetShelfRequest;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
@@ -427,9 +441,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.GetShelfRequest;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
@@ -464,8 +479,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.ListShelvesRequest;
    * import com.google.example.library.v1.Shelf;
    *
@@ -505,9 +521,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.ListShelvesRequest;
    * import com.google.example.library.v1.Shelf;
    *
@@ -547,8 +564,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.common.base.Strings;
    * import com.google.example.library.v1.ListShelvesRequest;
    * import com.google.example.library.v1.ListShelvesResponse;
@@ -595,8 +613,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.ShelfName;
    * import com.google.protobuf.Empty;
    *
@@ -631,8 +650,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.ShelfName;
    * import com.google.protobuf.Empty;
    *
@@ -666,8 +686,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.DeleteShelfRequest;
    * import com.google.example.library.v1.ShelfName;
    * import com.google.protobuf.Empty;
@@ -702,9 +723,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.DeleteShelfRequest;
    * import com.google.example.library.v1.ShelfName;
    * import com.google.protobuf.Empty;
@@ -743,8 +765,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -789,8 +812,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -835,8 +859,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -881,8 +906,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -924,8 +950,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.MergeShelvesRequest;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
@@ -968,9 +995,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.MergeShelvesRequest;
    * import com.google.example.library.v1.Shelf;
    * import com.google.example.library.v1.ShelfName;
@@ -1007,8 +1035,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -1048,8 +1077,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -1086,8 +1116,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.CreateBookRequest;
    * import com.google.example.library.v1.ShelfName;
@@ -1125,9 +1156,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.CreateBookRequest;
    * import com.google.example.library.v1.ShelfName;
@@ -1164,8 +1196,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    *
@@ -1200,8 +1233,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    *
@@ -1235,8 +1269,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.GetBookRequest;
@@ -1271,9 +1306,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.GetBookRequest;
@@ -1309,8 +1345,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -1349,8 +1386,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ShelfName;
    *
@@ -1388,8 +1426,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ListBooksRequest;
    * import com.google.example.library.v1.ShelfName;
@@ -1432,9 +1471,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ListBooksRequest;
    * import com.google.example.library.v1.ShelfName;
@@ -1476,8 +1516,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.common.base.Strings;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.ListBooksRequest;
@@ -1526,8 +1567,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.BookName;
    * import com.google.protobuf.Empty;
    *
@@ -1562,8 +1604,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.BookName;
    * import com.google.protobuf.Empty;
    *
@@ -1597,8 +1640,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.DeleteBookRequest;
    * import com.google.protobuf.Empty;
@@ -1635,9 +1679,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.DeleteBookRequest;
    * import com.google.protobuf.Empty;
@@ -1674,8 +1719,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.protobuf.FieldMask;
    *
@@ -1713,8 +1759,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.UpdateBookRequest;
    * import com.google.protobuf.FieldMask;
@@ -1753,9 +1800,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.UpdateBookRequest;
    * import com.google.protobuf.FieldMask;
@@ -1793,8 +1841,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.ShelfName;
@@ -1836,8 +1885,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.ShelfName;
@@ -1879,8 +1929,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.ShelfName;
@@ -1922,8 +1973,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.ShelfName;
@@ -1962,8 +2014,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.MoveBookRequest;
@@ -2003,9 +2056,10 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.example.library.v1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.example.library.v1.LibraryServiceClient;
    * import com.google.example.library.v1.Book;
    * import com.google.example.library.v1.BookName;
    * import com.google.example.library.v1.MoveBookRequest;

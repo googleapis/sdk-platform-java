@@ -43,7 +43,11 @@
  * <p>Sample for CloudRedisClient:
  *
  * <pre>{@code
- * package com.google.cloud.redis.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+ * import com.google.cloud.redis.v1beta1.Instance;
+ * import com.google.cloud.redis.v1beta1.InstanceName;
  *
  * public class CloudRedisClientGetInstance {
  *

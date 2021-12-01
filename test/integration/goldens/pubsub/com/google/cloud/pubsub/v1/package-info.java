@@ -27,8 +27,9 @@
  * <p>Sample for TopicAdminClient:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.TopicAdminClient;
  * import com.google.pubsub.v1.Topic;
  * import com.google.pubsub.v1.TopicName;
  *
@@ -56,8 +57,9 @@
  * <p>Sample for SubscriptionAdminClient:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
  * import com.google.pubsub.v1.PushConfig;
  * import com.google.pubsub.v1.Subscription;
  * import com.google.pubsub.v1.SubscriptionName;
@@ -89,8 +91,9 @@
  * <p>Sample for SchemaServiceClient:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.SchemaServiceClient;
  * import com.google.pubsub.v1.ProjectName;
  * import com.google.pubsub.v1.Schema;
  *

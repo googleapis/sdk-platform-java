@@ -24,7 +24,11 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.showcase.v1beta1.IdentityClient;
+ * import com.google.showcase.v1beta1.User;
+ * import com.google.showcase.v1beta1.UserName;
  *
  * public class IdentityClientCreateUser {
  *
@@ -72,9 +76,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.showcase.v1beta1.IdentityClient;
+ * import com.google.showcase.v1beta1.IdentitySettings;
+ * import com.google.showcase.v1beta1.myCredentials;
  *
  * public class IdentityClientCreate {
  *
@@ -95,7 +102,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.showcase.v1beta1.IdentityClient;
+ * import com.google.showcase.v1beta1.IdentitySettings;
+ * import com.google.showcase.v1beta1.myEndpoint;
  *
  * public class IdentityClientClassHeaderEndpoint {
  *
@@ -170,7 +181,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientCreateUser {
    *
@@ -208,7 +223,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientCreateUser {
    *
@@ -271,7 +290,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientCreateUser {
    *
@@ -367,7 +390,12 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.CreateUserRequest;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientCreateUser {
    *
@@ -400,9 +428,13 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.CreateUserRequest;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientCreateUser {
    *
@@ -434,7 +466,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientGetUser {
    *
@@ -465,7 +501,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientGetUser {
    *
@@ -495,7 +535,12 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.GetUserRequest;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientGetUser {
    *
@@ -525,9 +570,13 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.GetUserRequest;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.User;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientGetUser {
    *
@@ -556,7 +605,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.UpdateUserRequest;
+   * import com.google.showcase.v1beta1.User;
    *
    * public class IdentityClientUpdateUser {
    *
@@ -586,9 +639,12 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.UpdateUserRequest;
+   * import com.google.showcase.v1beta1.User;
    *
    * public class IdentityClientUpdateUser {
    *
@@ -617,9 +673,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientDeleteUser {
    *
@@ -650,9 +708,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientDeleteUser {
    *
@@ -682,9 +742,12 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.DeleteUserRequest;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientDeleteUser {
    *
@@ -714,10 +777,13 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
    * import com.google.protobuf.Empty;
+   * import com.google.showcase.v1beta1.DeleteUserRequest;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.UserName;
    *
    * public class IdentityClientDeleteUser {
    *
@@ -746,7 +812,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.ListUsersRequest;
+   * import com.google.showcase.v1beta1.User;
    *
    * public class IdentityClientListUsers {
    *
@@ -781,9 +851,12 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.ListUsersRequest;
+   * import com.google.showcase.v1beta1.User;
    *
    * public class IdentityClientListUsers {
    *
@@ -817,9 +890,13 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
-   * package com.google.showcase.v1beta1;
+   * package com.google.example;
    *
    * import com.google.common.base.Strings;
+   * import com.google.showcase.v1beta1.IdentityClient;
+   * import com.google.showcase.v1beta1.ListUsersRequest;
+   * import com.google.showcase.v1beta1.ListUsersResponse;
+   * import com.google.showcase.v1beta1.User;
    *
    * public class IdentityClientListUsers {
    *

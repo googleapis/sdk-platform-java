@@ -55,8 +55,9 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of aggregatedList to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.compute.v1.AddressesSettings;
  * import java.time.Duration;
  *
  * public class AddressesSettings {

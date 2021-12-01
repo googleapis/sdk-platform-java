@@ -85,8 +85,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of createShelf to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.example.library.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.example.library.v1.stub.LibraryServiceStubSettings;
  * import java.time.Duration;
  *
  * public class LibraryServiceSettings {

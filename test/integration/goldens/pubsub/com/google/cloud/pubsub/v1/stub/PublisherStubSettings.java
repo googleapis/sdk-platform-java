@@ -99,8 +99,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
  *
  * <pre>{@code
- * package com.google.cloud.pubsub.v1.stub;
+ * package com.google.example;
  *
+ * import com.google.cloud.pubsub.v1.stub.PublisherStubSettings;
  * import java.time.Duration;
  *
  * public class TopicAdminSettings {

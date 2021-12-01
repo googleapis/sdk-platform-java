@@ -24,8 +24,14 @@
  * <p>Sample for AssetServiceClient:
  *
  * <pre>{@code
- * package com.google.cloud.asset.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.asset.v1.AssetServiceClient;
+ * import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
+ * import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
+ * import com.google.cloud.asset.v1.ContentType;
+ * import com.google.cloud.asset.v1.FeedName;
+ * import com.google.cloud.asset.v1.TimeWindow;
  * import java.util.ArrayList;
  *
  * public class AssetServiceClientBatchGetAssetsHistory {

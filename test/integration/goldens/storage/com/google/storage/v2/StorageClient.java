@@ -35,7 +35,14 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.storage.v2;
+ * package com.google.example;
+ *
+ * import com.google.storage.v2.CommonObjectRequestParams;
+ * import com.google.storage.v2.CommonRequestParams;
+ * import com.google.storage.v2.StartResumableWriteRequest;
+ * import com.google.storage.v2.StartResumableWriteResponse;
+ * import com.google.storage.v2.StorageClient;
+ * import com.google.storage.v2.WriteObjectSpec;
  *
  * public class StorageClientStartResumableWrite {
  *
@@ -86,9 +93,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.storage.v2;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.storage.v2.StorageClient;
+ * import com.google.storage.v2.StorageSettings;
+ * import com.google.storage.v2.myCredentials;
  *
  * public class StorageClientCreate {
  *
@@ -109,7 +119,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.storage.v2;
+ * package com.google.example;
+ *
+ * import com.google.storage.v2.StorageClient;
+ * import com.google.storage.v2.StorageSettings;
+ * import com.google.storage.v2.myEndpoint;
  *
  * public class StorageClientClassHeaderEndpoint {
  *
@@ -184,10 +198,15 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.ServerStream;
    * import com.google.protobuf.FieldMask;
+   * import com.google.storage.v2.CommonObjectRequestParams;
+   * import com.google.storage.v2.CommonRequestParams;
+   * import com.google.storage.v2.ReadObjectRequest;
+   * import com.google.storage.v2.ReadObjectResponse;
+   * import com.google.storage.v2.StorageClient;
    *
    * public class StorageClientReadObject {
    *
@@ -251,9 +270,15 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
    *
    * import com.google.api.gax.rpc.ApiStreamObserver;
+   * import com.google.storage.v2.CommonObjectRequestParams;
+   * import com.google.storage.v2.CommonRequestParams;
+   * import com.google.storage.v2.ObjectChecksums;
+   * import com.google.storage.v2.StorageClient;
+   * import com.google.storage.v2.WriteObjectRequest;
+   * import com.google.storage.v2.WriteObjectResponse;
    *
    * public class StorageClientWriteObject {
    *
@@ -309,7 +334,14 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
+   *
+   * import com.google.storage.v2.CommonObjectRequestParams;
+   * import com.google.storage.v2.CommonRequestParams;
+   * import com.google.storage.v2.StartResumableWriteRequest;
+   * import com.google.storage.v2.StartResumableWriteResponse;
+   * import com.google.storage.v2.StorageClient;
+   * import com.google.storage.v2.WriteObjectSpec;
    *
    * public class StorageClientStartResumableWrite {
    *
@@ -346,9 +378,15 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.storage.v2.CommonObjectRequestParams;
+   * import com.google.storage.v2.CommonRequestParams;
+   * import com.google.storage.v2.StartResumableWriteRequest;
+   * import com.google.storage.v2.StartResumableWriteResponse;
+   * import com.google.storage.v2.StorageClient;
+   * import com.google.storage.v2.WriteObjectSpec;
    *
    * public class StorageClientStartResumableWrite {
    *
@@ -395,7 +433,10 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
+   *
+   * import com.google.storage.v2.QueryWriteStatusResponse;
+   * import com.google.storage.v2.StorageClient;
    *
    * public class StorageClientQueryWriteStatus {
    *
@@ -439,7 +480,13 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
+   *
+   * import com.google.storage.v2.CommonObjectRequestParams;
+   * import com.google.storage.v2.CommonRequestParams;
+   * import com.google.storage.v2.QueryWriteStatusRequest;
+   * import com.google.storage.v2.QueryWriteStatusResponse;
+   * import com.google.storage.v2.StorageClient;
    *
    * public class StorageClientQueryWriteStatus {
    *
@@ -485,9 +532,14 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.storage.v2;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.storage.v2.CommonObjectRequestParams;
+   * import com.google.storage.v2.CommonRequestParams;
+   * import com.google.storage.v2.QueryWriteStatusRequest;
+   * import com.google.storage.v2.QueryWriteStatusResponse;
+   * import com.google.storage.v2.StorageClient;
    *
    * public class StorageClientQueryWriteStatus {
    *

@@ -31,8 +31,11 @@
  * <p>Sample for IamCredentialsClient:
  *
  * <pre>{@code
- * package com.google.cloud.iam.credentials.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
+ * import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+ * import com.google.cloud.iam.credentials.v1.ServiceAccountName;
  * import com.google.protobuf.Duration;
  * import java.util.ArrayList;
  * import java.util.List;

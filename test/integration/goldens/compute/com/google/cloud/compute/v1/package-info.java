@@ -26,8 +26,10 @@
  * <p>Sample for AddressesClient:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
  *
+ * import com.google.cloud.compute.v1.AddressesClient;
+ * import com.google.cloud.compute.v1.AddressesScopedList;
  * import java.util.Map;
  *
  * public class AddressesClientAggregatedList {
@@ -55,7 +57,10 @@
  * <p>Sample for RegionOperationsClient:
  *
  * <pre>{@code
- * package com.google.cloud.compute.v1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.compute.v1.Operation;
+ * import com.google.cloud.compute.v1.RegionOperationsClient;
  *
  * public class RegionOperationsClientGet {
  *

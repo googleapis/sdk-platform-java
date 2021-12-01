@@ -67,7 +67,11 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * package com.google.cloud.redis.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+ * import com.google.cloud.redis.v1beta1.Instance;
+ * import com.google.cloud.redis.v1beta1.InstanceName;
  *
  * public class CloudRedisClientGetInstance {
  *
@@ -113,9 +117,12 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * package com.google.cloud.redis.v1beta1;
+ * package com.google.example;
  *
  * import com.google.api.gax.core.FixedCredentialsProvider;
+ * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+ * import com.google.cloud.redis.v1beta1.CloudRedisSettings;
+ * import com.google.cloud.redis.v1beta1.myCredentials;
  *
  * public class CloudRedisClientCreate {
  *
@@ -136,7 +143,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * package com.google.cloud.redis.v1beta1;
+ * package com.google.example;
+ *
+ * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+ * import com.google.cloud.redis.v1beta1.CloudRedisSettings;
+ * import com.google.cloud.redis.v1beta1.myEndpoint;
  *
  * public class CloudRedisClientClassHeaderEndpoint {
  *
@@ -234,7 +245,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientListInstances {
    *
@@ -282,7 +297,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientListInstances {
    *
@@ -327,7 +346,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.ListInstancesRequest;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientListInstances {
    *
@@ -375,9 +399,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.ListInstancesRequest;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientListInstances {
    *
@@ -426,8 +454,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.ListInstancesRequest;
+   * import com.google.cloud.redis.v1beta1.ListInstancesResponse;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    * import com.google.common.base.Strings;
    *
    * public class CloudRedisClientListInstances {
@@ -472,7 +505,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientGetInstance {
    *
@@ -507,7 +544,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientGetInstance {
    *
@@ -541,7 +582,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.GetInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientGetInstance {
    *
@@ -575,9 +621,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.GetInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientGetInstance {
    *
@@ -621,7 +671,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientCreateInstance {
    *
@@ -684,7 +738,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientCreateInstance {
    *
@@ -747,7 +805,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    *
    * public class CloudRedisClientCreateInstance {
    *
@@ -794,9 +857,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    * import com.google.protobuf.Any;
    *
    * public class CloudRedisClientCreateInstance {
@@ -845,9 +912,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.LocationName;
    * import com.google.longrunning.Operation;
    *
    * public class CloudRedisClientCreateInstance {
@@ -887,8 +958,10 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
    * import com.google.protobuf.FieldMask;
    *
    * public class CloudRedisClientUpdateInstance {
@@ -932,8 +1005,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
    * import com.google.protobuf.FieldMask;
    *
    * public class CloudRedisClientUpdateInstance {
@@ -973,9 +1049,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
    * import com.google.protobuf.Any;
    * import com.google.protobuf.FieldMask;
    *
@@ -1017,9 +1096,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
    * import com.google.longrunning.Operation;
    * import com.google.protobuf.FieldMask;
    *
@@ -1055,7 +1137,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientUpgradeInstance {
    *
@@ -1096,7 +1182,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientUpgradeInstance {
    *
@@ -1134,7 +1224,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
+   * import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
    *
    * public class CloudRedisClientUpgradeInstance {
    *
@@ -1169,9 +1264,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
+   * import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
    * import com.google.protobuf.Any;
    *
    * public class CloudRedisClientUpgradeInstance {
@@ -1208,9 +1307,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
+   * import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
    * import com.google.longrunning.Operation;
    *
    * public class CloudRedisClientUpgradeInstance {
@@ -1251,7 +1353,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.InputConfig;
+   * import com.google.cloud.redis.v1beta1.Instance;
    *
    * public class CloudRedisClientImportInstance {
    *
@@ -1295,7 +1401,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InputConfig;
+   * import com.google.cloud.redis.v1beta1.Instance;
    *
    * public class CloudRedisClientImportInstance {
    *
@@ -1336,9 +1447,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InputConfig;
+   * import com.google.cloud.redis.v1beta1.Instance;
    * import com.google.protobuf.Any;
    *
    * public class CloudRedisClientImportInstance {
@@ -1381,9 +1496,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InputConfig;
    * import com.google.longrunning.Operation;
    *
    * public class CloudRedisClientImportInstance {
@@ -1423,7 +1541,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.OutputConfig;
    *
    * public class CloudRedisClientExportInstance {
    *
@@ -1466,7 +1588,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.OutputConfig;
    *
    * public class CloudRedisClientExportInstance {
    *
@@ -1506,9 +1633,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.OutputConfig;
    * import com.google.protobuf.Any;
    *
    * public class CloudRedisClientExportInstance {
@@ -1550,9 +1681,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.OutputConfig;
    * import com.google.longrunning.Operation;
    *
    * public class CloudRedisClientExportInstance {
@@ -1588,7 +1722,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientFailoverInstance {
    *
@@ -1632,7 +1771,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientFailoverInstance {
    *
@@ -1676,7 +1820,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
+   *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    *
    * public class CloudRedisClientFailoverInstance {
    *
@@ -1712,9 +1861,13 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.Instance;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.protobuf.Any;
    *
    * public class CloudRedisClientFailoverInstance {
@@ -1751,9 +1904,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.longrunning.Operation;
    *
    * public class CloudRedisClientFailoverInstance {
@@ -1787,8 +1943,10 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.protobuf.Empty;
    *
    * public class CloudRedisClientDeleteInstance {
@@ -1824,8 +1982,10 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.protobuf.Empty;
    *
    * public class CloudRedisClientDeleteInstance {
@@ -1860,8 +2020,11 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.protobuf.Empty;
    *
    * public class CloudRedisClientDeleteInstance {
@@ -1896,9 +2059,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.protobuf.Any;
    * import com.google.protobuf.Empty;
    *
@@ -1935,9 +2101,12 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * package com.google.cloud.redis.v1beta1;
+   * package com.google.example;
    *
    * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.redis.v1beta1.CloudRedisClient;
+   * import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
+   * import com.google.cloud.redis.v1beta1.InstanceName;
    * import com.google.longrunning.Operation;
    *
    * public class CloudRedisClientDeleteInstance {

@@ -26,11 +26,10 @@ public class ExecutableSampleComposerTest {
 
   @Test
   public void createExecutableSampleEmptySample() {
-    String packageName = "com.google.example";
     String sampleMethodName = "echoClientWait";
 
     ExecutableSample executableSample =
-        new ExecutableSample(packageName, sampleMethodName, new ArrayList<>(), new ArrayList<>());
+        new ExecutableSample(sampleMethodName, new ArrayList<>(), new ArrayList<>());
     String sampleResult = ExecutableSampleComposer.createExecutableSample(executableSample);
 
     String expected =
@@ -51,13 +50,11 @@ public class ExecutableSampleComposerTest {
 
   @Test
   public void createExecutableSampleMethodArgsNoVar() {
-    String packageName = "com.google.example";
     String sampleMethodName = "echoClientWait";
     Statement sampleBody =
         ExprStatement.withExpr(SampleUtil.systemOutPrint("Testing " + sampleMethodName));
     ExecutableSample executableSample =
-        new ExecutableSample(
-            packageName, sampleMethodName, new ArrayList<>(), ImmutableList.of(sampleBody));
+        new ExecutableSample(sampleMethodName, new ArrayList<>(), ImmutableList.of(sampleBody));
 
     String sampleResult = ExecutableSampleComposer.createExecutableSample(executableSample);
     String expected =
@@ -80,7 +77,6 @@ public class ExecutableSampleComposerTest {
 
   @Test
   public void createExecutableSampleMethod() {
-    String packageName = "com.google.example";
     String sampleMethodName = "echoClientWait";
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -96,10 +92,7 @@ public class ExecutableSampleComposerTest {
     Statement sampleBody = ExprStatement.withExpr(SampleUtil.systemOutPrint(variableExpr));
     ExecutableSample executableSample =
         new ExecutableSample(
-            packageName,
-            sampleMethodName,
-            ImmutableList.of(varAssignment),
-            ImmutableList.of(sampleBody));
+            sampleMethodName, ImmutableList.of(varAssignment), ImmutableList.of(sampleBody));
 
     String sampleResult = ExecutableSampleComposer.createExecutableSample(executableSample);
     String expected =
@@ -123,7 +116,6 @@ public class ExecutableSampleComposerTest {
 
   @Test
   public void createExecutableSampleMethodMultipleStatements() {
-    String packageName = "com.google.example";
     String sampleMethodName = "echoClientWait";
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -152,7 +144,6 @@ public class ExecutableSampleComposerTest {
     Statement bodyStatement2 = ExprStatement.withExpr(SampleUtil.systemOutPrint(variableExpr2));
     ExecutableSample executableSample =
         new ExecutableSample(
-            packageName,
             sampleMethodName,
             ImmutableList.of(varAssignment, varAssignment2),
             ImmutableList.of(bodyStatement, bodyStatement2));

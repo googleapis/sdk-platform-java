@@ -70,8 +70,9 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of echo to 30 seconds:
  *
  * <pre>{@code
- * package com.google.showcase.v1beta1.stub;
+ * package com.google.example;
  *
+ * import com.google.showcase.v1beta1.stub.EchoStubSettings;
  * import java.time.Duration;
  *
  * public class EchoSettings {
