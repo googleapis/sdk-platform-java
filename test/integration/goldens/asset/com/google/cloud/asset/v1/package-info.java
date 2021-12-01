@@ -24,16 +24,29 @@
  * <p>Sample for AssetServiceClient:
  *
  * <pre>{@code
- * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
- *   BatchGetAssetsHistoryRequest request =
- *       BatchGetAssetsHistoryRequest.newBuilder()
- *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
- *           .addAllAssetNames(new ArrayList<String>())
- *           .setContentType(ContentType.forNumber(0))
- *           .setReadTimeWindow(TimeWindow.newBuilder().build())
- *           .addAllRelationshipTypes(new ArrayList<String>())
- *           .build();
- *   BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+ * package com.google.cloud.asset.v1;
+ *
+ * import java.util.ArrayList;
+ *
+ * public class AssetServiceClientBatchGetAssetsHistory {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     assetServiceClientBatchGetAssetsHistory();
+ *   }
+ *
+ *   public static void assetServiceClientBatchGetAssetsHistory() throws Exception {
+ *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+ *       BatchGetAssetsHistoryRequest request =
+ *           BatchGetAssetsHistoryRequest.newBuilder()
+ *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+ *               .addAllAssetNames(new ArrayList<String>())
+ *               .setContentType(ContentType.forNumber(0))
+ *               .setReadTimeWindow(TimeWindow.newBuilder().build())
+ *               .addAllRelationshipTypes(new ArrayList<String>())
+ *               .build();
+ *       BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+ *     }
+ *   }
  * }
  * }</pre>
  */

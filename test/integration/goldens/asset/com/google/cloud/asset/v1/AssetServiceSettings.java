@@ -58,17 +58,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
  *
  * <pre>{@code
- * AssetServiceSettings.Builder assetServiceSettingsBuilder = AssetServiceSettings.newBuilder();
- * assetServiceSettingsBuilder
- *     .batchGetAssetsHistorySettings()
- *     .setRetrySettings(
- *         assetServiceSettingsBuilder
- *             .batchGetAssetsHistorySettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
+ * package com.google.cloud.asset.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class AssetServiceSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     assetServiceSettings();
+ *   }
+ *
+ *   public static void assetServiceSettings() throws Exception {
+ *     AssetServiceSettings.Builder assetServiceSettingsBuilder = AssetServiceSettings.newBuilder();
+ *     assetServiceSettingsBuilder
+ *         .batchGetAssetsHistorySettings()
+ *         .setRetrySettings(
+ *             assetServiceSettingsBuilder
+ *                 .batchGetAssetsHistorySettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

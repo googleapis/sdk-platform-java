@@ -67,18 +67,31 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of generateAccessToken to 30 seconds:
  *
  * <pre>{@code
- * IamCredentialsStubSettings.Builder iamCredentialsSettingsBuilder =
- *     IamCredentialsStubSettings.newBuilder();
- * iamCredentialsSettingsBuilder
- *     .generateAccessTokenSettings()
- *     .setRetrySettings(
- *         iamCredentialsSettingsBuilder
- *             .generateAccessTokenSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * IamCredentialsStubSettings iamCredentialsSettings = iamCredentialsSettingsBuilder.build();
+ * package com.google.cloud.iam.credentials.v1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class IamCredentialsSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iamCredentialsSettings();
+ *   }
+ *
+ *   public static void iamCredentialsSettings() throws Exception {
+ *     IamCredentialsStubSettings.Builder iamCredentialsSettingsBuilder =
+ *         IamCredentialsStubSettings.newBuilder();
+ *     iamCredentialsSettingsBuilder
+ *         .generateAccessTokenSettings()
+ *         .setRetrySettings(
+ *             iamCredentialsSettingsBuilder
+ *                 .generateAccessTokenSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     IamCredentialsStubSettings iamCredentialsSettings = iamCredentialsSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

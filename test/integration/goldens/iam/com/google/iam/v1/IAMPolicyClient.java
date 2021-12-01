@@ -54,13 +54,24 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
- *   SetIamPolicyRequest request =
- *       SetIamPolicyRequest.newBuilder()
- *           .setResource("SetIamPolicyRequest1223629066".toString())
- *           .setPolicy(Policy.newBuilder().build())
- *           .build();
- *   Policy response = iAMPolicyClient.setIamPolicy(request);
+ * package com.google.iam.v1;
+ *
+ * public class IAMPolicyClientSetIamPolicy {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iAMPolicyClientSetIamPolicy();
+ *   }
+ *
+ *   public static void iAMPolicyClientSetIamPolicy() throws Exception {
+ *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+ *       SetIamPolicyRequest request =
+ *           SetIamPolicyRequest.newBuilder()
+ *               .setResource("SetIamPolicyRequest1223629066".toString())
+ *               .setPolicy(Policy.newBuilder().build())
+ *               .build();
+ *       Policy response = iAMPolicyClient.setIamPolicy(request);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -93,19 +104,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * IAMPolicySettings iAMPolicySettings =
- *     IAMPolicySettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
+ * package com.google.iam.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class IAMPolicyClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iAMPolicyClientCreate();
+ *   }
+ *
+ *   public static void iAMPolicyClientCreate() throws Exception {
+ *     IAMPolicySettings iAMPolicySettings =
+ *         IAMPolicySettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * IAMPolicySettings iAMPolicySettings =
- *     IAMPolicySettings.newBuilder().setEndpoint(myEndpoint).build();
- * IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
+ * package com.google.iam.v1;
+ *
+ * public class IAMPolicyClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iAMPolicyClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void iAMPolicyClientClassHeaderEndpoint() throws Exception {
+ *     IAMPolicySettings iAMPolicySettings =
+ *         IAMPolicySettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -168,13 +203,24 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource("SetIamPolicyRequest1223629066".toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   Policy response = iAMPolicyClient.setIamPolicy(request);
+   * package com.google.iam.v1;
+   *
+   * public class IAMPolicyClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iAMPolicyClientSetIamPolicy();
+   *   }
+   *
+   *   public static void iAMPolicyClientSetIamPolicy() throws Exception {
+   *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource("SetIamPolicyRequest1223629066".toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       Policy response = iAMPolicyClient.setIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -192,15 +238,28 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource("SetIamPolicyRequest1223629066".toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = iAMPolicyClient.setIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.iam.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class IAMPolicyClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iAMPolicyClientSetIamPolicy();
+   *   }
+   *
+   *   public static void iAMPolicyClientSetIamPolicy() throws Exception {
+   *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource("SetIamPolicyRequest1223629066".toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = iAMPolicyClient.setIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -216,13 +275,24 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource("GetIamPolicyRequest-1527610370".toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   Policy response = iAMPolicyClient.getIamPolicy(request);
+   * package com.google.iam.v1;
+   *
+   * public class IAMPolicyClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iAMPolicyClientGetIamPolicy();
+   *   }
+   *
+   *   public static void iAMPolicyClientGetIamPolicy() throws Exception {
+   *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource("GetIamPolicyRequest-1527610370".toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       Policy response = iAMPolicyClient.getIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -241,15 +311,28 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource("GetIamPolicyRequest-1527610370".toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = iAMPolicyClient.getIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.iam.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class IAMPolicyClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iAMPolicyClientGetIamPolicy();
+   *   }
+   *
+   *   public static void iAMPolicyClientGetIamPolicy() throws Exception {
+   *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource("GetIamPolicyRequest-1527610370".toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = iAMPolicyClient.getIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -269,13 +352,26 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource("TestIamPermissionsRequest942398222".toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   TestIamPermissionsResponse response = iAMPolicyClient.testIamPermissions(request);
+   * package com.google.iam.v1;
+   *
+   * import java.util.ArrayList;
+   *
+   * public class IAMPolicyClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iAMPolicyClientTestIamPermissions();
+   *   }
+   *
+   *   public static void iAMPolicyClientTestIamPermissions() throws Exception {
+   *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource("TestIamPermissionsRequest942398222".toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       TestIamPermissionsResponse response = iAMPolicyClient.testIamPermissions(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -298,16 +394,30 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource("TestIamPermissionsRequest942398222".toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<TestIamPermissionsResponse> future =
-   *       iAMPolicyClient.testIamPermissionsCallable().futureCall(request);
-   *   // Do something.
-   *   TestIamPermissionsResponse response = future.get();
+   * package com.google.iam.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.ArrayList;
+   *
+   * public class IAMPolicyClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iAMPolicyClientTestIamPermissions();
+   *   }
+   *
+   *   public static void iAMPolicyClientTestIamPermissions() throws Exception {
+   *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource("TestIamPermissionsRequest942398222".toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<TestIamPermissionsResponse> future =
+   *           iAMPolicyClient.testIamPermissionsCallable().futureCall(request);
+   *       // Do something.
+   *       TestIamPermissionsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

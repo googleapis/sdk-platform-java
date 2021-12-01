@@ -68,17 +68,30 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of startResumableWrite to 30 seconds:
  *
  * <pre>{@code
- * StorageStubSettings.Builder storageSettingsBuilder = StorageStubSettings.newBuilder();
- * storageSettingsBuilder
- *     .startResumableWriteSettings()
- *     .setRetrySettings(
- *         storageSettingsBuilder
- *             .startResumableWriteSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * StorageStubSettings storageSettings = storageSettingsBuilder.build();
+ * package com.google.storage.v2.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class StorageSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     storageSettings();
+ *   }
+ *
+ *   public static void storageSettings() throws Exception {
+ *     StorageStubSettings.Builder storageSettingsBuilder = StorageStubSettings.newBuilder();
+ *     storageSettingsBuilder
+ *         .startResumableWriteSettings()
+ *         .setRetrySettings(
+ *             storageSettingsBuilder
+ *                 .startResumableWriteSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     StorageStubSettings storageSettings = storageSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

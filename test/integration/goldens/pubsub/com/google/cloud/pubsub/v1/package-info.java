@@ -27,9 +27,23 @@
  * <p>Sample for TopicAdminClient:
  *
  * <pre>{@code
- * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
- *   TopicName name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
- *   Topic response = topicAdminClient.createTopic(name);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.pubsub.v1.Topic;
+ * import com.google.pubsub.v1.TopicName;
+ *
+ * public class TopicAdminClientCreateTopic {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     topicAdminClientCreateTopic();
+ *   }
+ *
+ *   public static void topicAdminClientCreateTopic() throws Exception {
+ *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+ *       TopicName name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+ *       Topic response = topicAdminClient.createTopic(name);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -42,13 +56,29 @@
  * <p>Sample for SubscriptionAdminClient:
  *
  * <pre>{@code
- * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
- *   SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
- *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
- *   PushConfig pushConfig = PushConfig.newBuilder().build();
- *   int ackDeadlineSeconds = 2135351438;
- *   Subscription response =
- *       subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.pubsub.v1.PushConfig;
+ * import com.google.pubsub.v1.Subscription;
+ * import com.google.pubsub.v1.SubscriptionName;
+ * import com.google.pubsub.v1.TopicName;
+ *
+ * public class SubscriptionAdminClientCreateSubscription {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     subscriptionAdminClientCreateSubscription();
+ *   }
+ *
+ *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+ *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+ *       SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+ *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+ *       PushConfig pushConfig = PushConfig.newBuilder().build();
+ *       int ackDeadlineSeconds = 2135351438;
+ *       Subscription response =
+ *           subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -59,11 +89,25 @@
  * <p>Sample for SchemaServiceClient:
  *
  * <pre>{@code
- * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
- *   ProjectName parent = ProjectName.of("[PROJECT]");
- *   Schema schema = Schema.newBuilder().build();
- *   String schemaId = "schemaId-697673060";
- *   Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.pubsub.v1.ProjectName;
+ * import com.google.pubsub.v1.Schema;
+ *
+ * public class SchemaServiceClientCreateSchema {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     schemaServiceClientCreateSchema();
+ *   }
+ *
+ *   public static void schemaServiceClientCreateSchema() throws Exception {
+ *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+ *       ProjectName parent = ProjectName.of("[PROJECT]");
+ *       Schema schema = Schema.newBuilder().build();
+ *       String schemaId = "schemaId-697673060";
+ *       Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+ *     }
+ *   }
  * }
  * }</pre>
  */

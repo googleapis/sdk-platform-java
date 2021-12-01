@@ -45,13 +45,24 @@
  * <p>Sample for IAMPolicyClient:
  *
  * <pre>{@code
- * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
- *   SetIamPolicyRequest request =
- *       SetIamPolicyRequest.newBuilder()
- *           .setResource("resource-341064690")
- *           .setPolicy(Policy.newBuilder().build())
- *           .build();
- *   Policy response = iAMPolicyClient.setIamPolicy(request);
+ * package com.google.iam.v1;
+ *
+ * public class IAMPolicyClientSetIamPolicy {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iAMPolicyClientSetIamPolicy();
+ *   }
+ *
+ *   public static void iAMPolicyClientSetIamPolicy() throws Exception {
+ *     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
+ *       SetIamPolicyRequest request =
+ *           SetIamPolicyRequest.newBuilder()
+ *               .setResource("resource-341064690")
+ *               .setPolicy(Policy.newBuilder().build())
+ *               .build();
+ *       Policy response = iAMPolicyClient.setIamPolicy(request);
+ *     }
+ *   }
  * }
  * }</pre>
  */

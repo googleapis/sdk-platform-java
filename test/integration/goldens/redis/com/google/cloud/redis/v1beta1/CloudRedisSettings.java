@@ -57,17 +57,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getInstance to 30 seconds:
  *
  * <pre>{@code
- * CloudRedisSettings.Builder cloudRedisSettingsBuilder = CloudRedisSettings.newBuilder();
- * cloudRedisSettingsBuilder
- *     .getInstanceSettings()
- *     .setRetrySettings(
- *         cloudRedisSettingsBuilder
- *             .getInstanceSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
+ * package com.google.cloud.redis.v1beta1;
+ *
+ * import java.time.Duration;
+ *
+ * public class CloudRedisSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     cloudRedisSettings();
+ *   }
+ *
+ *   public static void cloudRedisSettings() throws Exception {
+ *     CloudRedisSettings.Builder cloudRedisSettingsBuilder = CloudRedisSettings.newBuilder();
+ *     cloudRedisSettingsBuilder
+ *         .getInstanceSettings()
+ *         .setRetrySettings(
+ *             cloudRedisSettingsBuilder
+ *                 .getInstanceSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @BetaApi

@@ -33,11 +33,22 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
- *   String project = "project-309310695";
- *   String region = "region-934795532";
- *   String operation = "operation1662702951";
- *   Operation response = regionOperationsClient.get(project, region, operation);
+ * package com.google.cloud.compute.v1;
+ *
+ * public class RegionOperationsClientGet {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     regionOperationsClientGet();
+ *   }
+ *
+ *   public static void regionOperationsClientGet() throws Exception {
+ *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+ *       String project = "project-309310695";
+ *       String region = "region-934795532";
+ *       String operation = "operation1662702951";
+ *       Operation response = regionOperationsClient.get(project, region, operation);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -71,21 +82,45 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * RegionOperationsSettings regionOperationsSettings =
- *     RegionOperationsSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * RegionOperationsClient regionOperationsClient =
- *     RegionOperationsClient.create(regionOperationsSettings);
+ * package com.google.cloud.compute.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class RegionOperationsClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     regionOperationsClientCreate();
+ *   }
+ *
+ *   public static void regionOperationsClientCreate() throws Exception {
+ *     RegionOperationsSettings regionOperationsSettings =
+ *         RegionOperationsSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     RegionOperationsClient regionOperationsClient =
+ *         RegionOperationsClient.create(regionOperationsSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * RegionOperationsSettings regionOperationsSettings =
- *     RegionOperationsSettings.newBuilder().setEndpoint(myEndpoint).build();
- * RegionOperationsClient regionOperationsClient =
- *     RegionOperationsClient.create(regionOperationsSettings);
+ * package com.google.cloud.compute.v1;
+ *
+ * public class RegionOperationsClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     regionOperationsClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void regionOperationsClientClassHeaderEndpoint() throws Exception {
+ *     RegionOperationsSettings regionOperationsSettings =
+ *         RegionOperationsSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     RegionOperationsClient regionOperationsClient =
+ *         RegionOperationsClient.create(regionOperationsSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -150,11 +185,22 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
-   *   String project = "project-309310695";
-   *   String region = "region-934795532";
-   *   String operation = "operation1662702951";
-   *   Operation response = regionOperationsClient.get(project, region, operation);
+   * package com.google.cloud.compute.v1;
+   *
+   * public class RegionOperationsClientGet {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     regionOperationsClientGet();
+   *   }
+   *
+   *   public static void regionOperationsClientGet() throws Exception {
+   *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *       String project = "project-309310695";
+   *       String region = "region-934795532";
+   *       String operation = "operation1662702951";
+   *       Operation response = regionOperationsClient.get(project, region, operation);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -180,14 +226,25 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
-   *   GetRegionOperationRequest request =
-   *       GetRegionOperationRequest.newBuilder()
-   *           .setOperation("operation1662702951")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   Operation response = regionOperationsClient.get(request);
+   * package com.google.cloud.compute.v1;
+   *
+   * public class RegionOperationsClientGet {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     regionOperationsClientGet();
+   *   }
+   *
+   *   public static void regionOperationsClientGet() throws Exception {
+   *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *       GetRegionOperationRequest request =
+   *           GetRegionOperationRequest.newBuilder()
+   *               .setOperation("operation1662702951")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       Operation response = regionOperationsClient.get(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -205,16 +262,29 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
-   *   GetRegionOperationRequest request =
-   *       GetRegionOperationRequest.newBuilder()
-   *           .setOperation("operation1662702951")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   ApiFuture<Operation> future = regionOperationsClient.getCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class RegionOperationsClientGet {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     regionOperationsClientGet();
+   *   }
+   *
+   *   public static void regionOperationsClientGet() throws Exception {
+   *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *       GetRegionOperationRequest request =
+   *           GetRegionOperationRequest.newBuilder()
+   *               .setOperation("operation1662702951")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       ApiFuture<Operation> future = regionOperationsClient.getCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -238,11 +308,22 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
-   *   String project = "project-309310695";
-   *   String region = "region-934795532";
-   *   String operation = "operation1662702951";
-   *   Operation response = regionOperationsClient.wait(project, region, operation);
+   * package com.google.cloud.compute.v1;
+   *
+   * public class RegionOperationsClientWait {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     regionOperationsClientWait();
+   *   }
+   *
+   *   public static void regionOperationsClientWait() throws Exception {
+   *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *       String project = "project-309310695";
+   *       String region = "region-934795532";
+   *       String operation = "operation1662702951";
+   *       Operation response = regionOperationsClient.wait(project, region, operation);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -277,14 +358,25 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
-   *   WaitRegionOperationRequest request =
-   *       WaitRegionOperationRequest.newBuilder()
-   *           .setOperation("operation1662702951")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   Operation response = regionOperationsClient.wait(request);
+   * package com.google.cloud.compute.v1;
+   *
+   * public class RegionOperationsClientWait {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     regionOperationsClientWait();
+   *   }
+   *
+   *   public static void regionOperationsClientWait() throws Exception {
+   *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *       WaitRegionOperationRequest request =
+   *           WaitRegionOperationRequest.newBuilder()
+   *               .setOperation("operation1662702951")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       Operation response = regionOperationsClient.wait(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -311,16 +403,29 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
-   *   WaitRegionOperationRequest request =
-   *       WaitRegionOperationRequest.newBuilder()
-   *           .setOperation("operation1662702951")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   ApiFuture<Operation> future = regionOperationsClient.waitCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class RegionOperationsClientWait {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     regionOperationsClientWait();
+   *   }
+   *
+   *   public static void regionOperationsClientWait() throws Exception {
+   *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+   *       WaitRegionOperationRequest request =
+   *           WaitRegionOperationRequest.newBuilder()
+   *               .setOperation("operation1662702951")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       ApiFuture<Operation> future = regionOperationsClient.waitCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

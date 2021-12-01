@@ -97,18 +97,31 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of createSubscription to 30 seconds:
  *
  * <pre>{@code
- * SubscriberStubSettings.Builder subscriptionAdminSettingsBuilder =
- *     SubscriberStubSettings.newBuilder();
- * subscriptionAdminSettingsBuilder
- *     .createSubscriptionSettings()
- *     .setRetrySettings(
- *         subscriptionAdminSettingsBuilder
- *             .createSubscriptionSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * SubscriberStubSettings subscriptionAdminSettings = subscriptionAdminSettingsBuilder.build();
+ * package com.google.cloud.pubsub.v1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class SubscriptionAdminSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     subscriptionAdminSettings();
+ *   }
+ *
+ *   public static void subscriptionAdminSettings() throws Exception {
+ *     SubscriberStubSettings.Builder subscriptionAdminSettingsBuilder =
+ *         SubscriberStubSettings.newBuilder();
+ *     subscriptionAdminSettingsBuilder
+ *         .createSubscriptionSettings()
+ *         .setRetrySettings(
+ *             subscriptionAdminSettingsBuilder
+ *                 .createSubscriptionSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     SubscriberStubSettings subscriptionAdminSettings = subscriptionAdminSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

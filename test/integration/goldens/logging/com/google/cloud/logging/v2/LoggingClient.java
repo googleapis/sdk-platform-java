@@ -63,9 +63,23 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (LoggingClient loggingClient = LoggingClient.create()) {
- *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
- *   loggingClient.deleteLog(logName);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.logging.v2.LogName;
+ * import com.google.protobuf.Empty;
+ *
+ * public class LoggingClientDeleteLog {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     loggingClientDeleteLog();
+ *   }
+ *
+ *   public static void loggingClientDeleteLog() throws Exception {
+ *     try (LoggingClient loggingClient = LoggingClient.create()) {
+ *       LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+ *       loggingClient.deleteLog(logName);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -98,18 +112,42 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * LoggingSettings loggingSettings =
- *     LoggingSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * LoggingClient loggingClient = LoggingClient.create(loggingSettings);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class LoggingClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     loggingClientCreate();
+ *   }
+ *
+ *   public static void loggingClientCreate() throws Exception {
+ *     LoggingSettings loggingSettings =
+ *         LoggingSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     LoggingClient loggingClient = LoggingClient.create(loggingSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * LoggingSettings loggingSettings = LoggingSettings.newBuilder().setEndpoint(myEndpoint).build();
- * LoggingClient loggingClient = LoggingClient.create(loggingSettings);
+ * package com.google.cloud.logging.v2;
+ *
+ * public class LoggingClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     loggingClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void loggingClientClassHeaderEndpoint() throws Exception {
+ *     LoggingSettings loggingSettings = LoggingSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     LoggingClient loggingClient = LoggingClient.create(loggingSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -174,9 +212,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
-   *   loggingClient.deleteLog(logName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class LoggingClientDeleteLog {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientDeleteLog();
+   *   }
+   *
+   *   public static void loggingClientDeleteLog() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *       loggingClient.deleteLog(logName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -205,9 +257,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   String logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
-   *   loggingClient.deleteLog(logName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class LoggingClientDeleteLog {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientDeleteLog();
+   *   }
+   *
+   *   public static void loggingClientDeleteLog() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       String logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
+   *       loggingClient.deleteLog(logName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -233,12 +299,27 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   DeleteLogRequest request =
-   *       DeleteLogRequest.newBuilder()
-   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
-   *           .build();
-   *   loggingClient.deleteLog(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.DeleteLogRequest;
+   * import com.google.logging.v2.LogName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class LoggingClientDeleteLog {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientDeleteLog();
+   *   }
+   *
+   *   public static void loggingClientDeleteLog() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       DeleteLogRequest request =
+   *           DeleteLogRequest.newBuilder()
+   *               .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *               .build();
+   *       loggingClient.deleteLog(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -258,14 +339,30 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   DeleteLogRequest request =
-   *       DeleteLogRequest.newBuilder()
-   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = loggingClient.deleteLogCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.DeleteLogRequest;
+   * import com.google.logging.v2.LogName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class LoggingClientDeleteLog {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientDeleteLog();
+   *   }
+   *
+   *   public static void loggingClientDeleteLog() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       DeleteLogRequest request =
+   *           DeleteLogRequest.newBuilder()
+   *               .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = loggingClient.deleteLogCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -283,13 +380,33 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
-   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
-   *   Map<String, String> labels = new HashMap<>();
-   *   List<LogEntry> entries = new ArrayList<>();
-   *   WriteLogEntriesResponse response =
-   *       loggingClient.writeLogEntries(logName, resource, labels, entries);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResource;
+   * import com.google.logging.v2.LogEntry;
+   * import com.google.logging.v2.LogName;
+   * import com.google.logging.v2.WriteLogEntriesResponse;
+   * import java.util.ArrayList;
+   * import java.util.HashMap;
+   * import java.util.List;
+   * import java.util.Map;
+   *
+   * public class LoggingClientWriteLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientWriteLogEntries();
+   *   }
+   *
+   *   public static void loggingClientWriteLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *       MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *       Map<String, String> labels = new HashMap<>();
+   *       List<LogEntry> entries = new ArrayList<>();
+   *       WriteLogEntriesResponse response =
+   *           loggingClient.writeLogEntries(logName, resource, labels, entries);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -358,13 +475,33 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   String logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
-   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
-   *   Map<String, String> labels = new HashMap<>();
-   *   List<LogEntry> entries = new ArrayList<>();
-   *   WriteLogEntriesResponse response =
-   *       loggingClient.writeLogEntries(logName, resource, labels, entries);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResource;
+   * import com.google.logging.v2.LogEntry;
+   * import com.google.logging.v2.LogName;
+   * import com.google.logging.v2.WriteLogEntriesResponse;
+   * import java.util.ArrayList;
+   * import java.util.HashMap;
+   * import java.util.List;
+   * import java.util.Map;
+   *
+   * public class LoggingClientWriteLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientWriteLogEntries();
+   *   }
+   *
+   *   public static void loggingClientWriteLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       String logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
+   *       MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *       Map<String, String> labels = new HashMap<>();
+   *       List<LogEntry> entries = new ArrayList<>();
+   *       WriteLogEntriesResponse response =
+   *           loggingClient.writeLogEntries(logName, resource, labels, entries);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -433,17 +570,36 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   WriteLogEntriesRequest request =
-   *       WriteLogEntriesRequest.newBuilder()
-   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
-   *           .setResource(MonitoredResource.newBuilder().build())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .addAllEntries(new ArrayList<LogEntry>())
-   *           .setPartialSuccess(true)
-   *           .setDryRun(true)
-   *           .build();
-   *   WriteLogEntriesResponse response = loggingClient.writeLogEntries(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResource;
+   * import com.google.logging.v2.LogEntry;
+   * import com.google.logging.v2.LogName;
+   * import com.google.logging.v2.WriteLogEntriesRequest;
+   * import com.google.logging.v2.WriteLogEntriesResponse;
+   * import java.util.ArrayList;
+   * import java.util.HashMap;
+   *
+   * public class LoggingClientWriteLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientWriteLogEntries();
+   *   }
+   *
+   *   public static void loggingClientWriteLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       WriteLogEntriesRequest request =
+   *           WriteLogEntriesRequest.newBuilder()
+   *               .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *               .setResource(MonitoredResource.newBuilder().build())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .addAllEntries(new ArrayList<LogEntry>())
+   *               .setPartialSuccess(true)
+   *               .setDryRun(true)
+   *               .build();
+   *       WriteLogEntriesResponse response = loggingClient.writeLogEntries(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -464,20 +620,40 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   WriteLogEntriesRequest request =
-   *       WriteLogEntriesRequest.newBuilder()
-   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
-   *           .setResource(MonitoredResource.newBuilder().build())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .addAllEntries(new ArrayList<LogEntry>())
-   *           .setPartialSuccess(true)
-   *           .setDryRun(true)
-   *           .build();
-   *   ApiFuture<WriteLogEntriesResponse> future =
-   *       loggingClient.writeLogEntriesCallable().futureCall(request);
-   *   // Do something.
-   *   WriteLogEntriesResponse response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResource;
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogEntry;
+   * import com.google.logging.v2.LogName;
+   * import com.google.logging.v2.WriteLogEntriesRequest;
+   * import com.google.logging.v2.WriteLogEntriesResponse;
+   * import java.util.ArrayList;
+   * import java.util.HashMap;
+   *
+   * public class LoggingClientWriteLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientWriteLogEntries();
+   *   }
+   *
+   *   public static void loggingClientWriteLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       WriteLogEntriesRequest request =
+   *           WriteLogEntriesRequest.newBuilder()
+   *               .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *               .setResource(MonitoredResource.newBuilder().build())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .addAllEntries(new ArrayList<LogEntry>())
+   *               .setPartialSuccess(true)
+   *               .setDryRun(true)
+   *               .build();
+   *       ApiFuture<WriteLogEntriesResponse> future =
+   *           loggingClient.writeLogEntriesCallable().futureCall(request);
+   *       // Do something.
+   *       WriteLogEntriesResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -495,13 +671,28 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   List<String> resourceNames = new ArrayList<>();
-   *   String filter = "filter-1274492040";
-   *   String orderBy = "orderBy-1207110587";
-   *   for (LogEntry element :
-   *       loggingClient.listLogEntries(resourceNames, filter, orderBy).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogEntry;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class LoggingClientListLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogEntries();
+   *   }
+   *
+   *   public static void loggingClientListLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       List<String> resourceNames = new ArrayList<>();
+   *       String filter = "filter-1274492040";
+   *       String orderBy = "orderBy-1207110587";
+   *       for (LogEntry element :
+   *           loggingClient.listLogEntries(resourceNames, filter, orderBy).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -549,17 +740,32 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListLogEntriesRequest request =
-   *       ListLogEntriesRequest.newBuilder()
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (LogEntry element : loggingClient.listLogEntries(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListLogEntriesRequest;
+   * import com.google.logging.v2.LogEntry;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientListLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogEntries();
+   *   }
+   *
+   *   public static void loggingClientListLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListLogEntriesRequest request =
+   *           ListLogEntriesRequest.newBuilder()
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (LogEntry element : loggingClient.listLogEntries(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -580,19 +786,35 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListLogEntriesRequest request =
-   *       ListLogEntriesRequest.newBuilder()
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<LogEntry> future = loggingClient.listLogEntriesPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (LogEntry element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListLogEntriesRequest;
+   * import com.google.logging.v2.LogEntry;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientListLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogEntries();
+   *   }
+   *
+   *   public static void loggingClientListLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListLogEntriesRequest request =
+   *           ListLogEntriesRequest.newBuilder()
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<LogEntry> future = loggingClient.listLogEntriesPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (LogEntry element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -611,25 +833,42 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListLogEntriesRequest request =
-   *       ListLogEntriesRequest.newBuilder()
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListLogEntriesResponse response = loggingClient.listLogEntriesCallable().call(request);
-   *     for (LogEntry element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListLogEntriesRequest;
+   * import com.google.logging.v2.ListLogEntriesResponse;
+   * import com.google.logging.v2.LogEntry;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientListLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogEntries();
+   *   }
+   *
+   *   public static void loggingClientListLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListLogEntriesRequest request =
+   *           ListLogEntriesRequest.newBuilder()
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListLogEntriesResponse response = loggingClient.listLogEntriesCallable().call(request);
+   *         for (LogEntry element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -647,15 +886,29 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListMonitoredResourceDescriptorsRequest request =
-   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (MonitoredResourceDescriptor element :
-   *       loggingClient.listMonitoredResourceDescriptors(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResourceDescriptor;
+   * import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
+   *
+   * public class LoggingClientListMonitoredResourceDescriptors {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListMonitoredResourceDescriptors();
+   *   }
+   *
+   *   public static void loggingClientListMonitoredResourceDescriptors() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListMonitoredResourceDescriptorsRequest request =
+   *           ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (MonitoredResourceDescriptor element :
+   *           loggingClient.listMonitoredResourceDescriptors(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -675,17 +928,32 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListMonitoredResourceDescriptorsRequest request =
-   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<MonitoredResourceDescriptor> future =
-   *       loggingClient.listMonitoredResourceDescriptorsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (MonitoredResourceDescriptor element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResourceDescriptor;
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
+   *
+   * public class LoggingClientListMonitoredResourceDescriptors {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListMonitoredResourceDescriptors();
+   *   }
+   *
+   *   public static void loggingClientListMonitoredResourceDescriptors() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListMonitoredResourceDescriptorsRequest request =
+   *           ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<MonitoredResourceDescriptor> future =
+   *           loggingClient.listMonitoredResourceDescriptorsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (MonitoredResourceDescriptor element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -703,23 +971,39 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListMonitoredResourceDescriptorsRequest request =
-   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListMonitoredResourceDescriptorsResponse response =
-   *         loggingClient.listMonitoredResourceDescriptorsCallable().call(request);
-   *     for (MonitoredResourceDescriptor element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.MonitoredResourceDescriptor;
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
+   * import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
+   *
+   * public class LoggingClientListMonitoredResourceDescriptors {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListMonitoredResourceDescriptors();
+   *   }
+   *
+   *   public static void loggingClientListMonitoredResourceDescriptors() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListMonitoredResourceDescriptorsRequest request =
+   *           ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListMonitoredResourceDescriptorsResponse response =
+   *             loggingClient.listMonitoredResourceDescriptorsCallable().call(request);
+   *         for (MonitoredResourceDescriptor element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -739,10 +1023,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
-   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.BillingAccountName;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *       for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -766,10 +1063,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
-   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.FolderName;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       FolderName parent = FolderName.of("[FOLDER]");
+   *       for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -793,10 +1103,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
-   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.OrganizationName;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *       for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -820,10 +1143,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -847,10 +1183,23 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -873,16 +1222,31 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListLogsRequest request =
-   *       ListLogsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .build();
-   *   for (String element : loggingClient.listLogs(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListLogsRequest;
+   * import com.google.logging.v2.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListLogsRequest request =
+   *           ListLogsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .build();
+   *       for (String element : loggingClient.listLogs(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -902,18 +1266,34 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListLogsRequest request =
-   *       ListLogsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<String> future = loggingClient.listLogsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (String element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListLogsRequest;
+   * import com.google.logging.v2.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListLogsRequest request =
+   *           ListLogsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<String> future = loggingClient.listLogsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (String element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -930,24 +1310,41 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   ListLogsRequest request =
-   *       ListLogsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .build();
-   *   while (true) {
-   *     ListLogsResponse response = loggingClient.listLogsCallable().call(request);
-   *     for (String element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListLogsRequest;
+   * import com.google.logging.v2.ListLogsResponse;
+   * import com.google.logging.v2.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientListLogs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientListLogs();
+   *   }
+   *
+   *   public static void loggingClientListLogs() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       ListLogsRequest request =
+   *           ListLogsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .build();
+   *       while (true) {
+   *         ListLogsResponse response = loggingClient.listLogsCallable().call(request);
+   *         for (String element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -965,18 +1362,35 @@ public class LoggingClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   BidiStream<TailLogEntriesRequest, TailLogEntriesResponse> bidiStream =
-   *       loggingClient.tailLogEntriesCallable().call();
-   *   TailLogEntriesRequest request =
-   *       TailLogEntriesRequest.newBuilder()
-   *           .addAllResourceNames(new ArrayList<String>())
-   *           .setFilter("filter-1274492040")
-   *           .setBufferWindow(Duration.newBuilder().build())
-   *           .build();
-   *   bidiStream.send(request);
-   *   for (TailLogEntriesResponse response : bidiStream) {
-   *     // Do something when a response is received.
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.gax.rpc.BidiStream;
+   * import com.google.logging.v2.TailLogEntriesRequest;
+   * import com.google.logging.v2.TailLogEntriesResponse;
+   * import com.google.protobuf.Duration;
+   * import java.util.ArrayList;
+   *
+   * public class LoggingClientTailLogEntries {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     loggingClientTailLogEntries();
+   *   }
+   *
+   *   public static void loggingClientTailLogEntries() throws Exception {
+   *     try (LoggingClient loggingClient = LoggingClient.create()) {
+   *       BidiStream<TailLogEntriesRequest, TailLogEntriesResponse> bidiStream =
+   *           loggingClient.tailLogEntriesCallable().call();
+   *       TailLogEntriesRequest request =
+   *           TailLogEntriesRequest.newBuilder()
+   *               .addAllResourceNames(new ArrayList<String>())
+   *               .setFilter("filter-1274492040")
+   *               .setBufferWindow(Duration.newBuilder().build())
+   *               .build();
+   *       bidiStream.send(request);
+   *       for (TailLogEntriesResponse response : bidiStream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>

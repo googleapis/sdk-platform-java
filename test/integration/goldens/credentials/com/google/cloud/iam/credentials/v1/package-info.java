@@ -31,13 +31,28 @@
  * <p>Sample for IamCredentialsClient:
  *
  * <pre>{@code
- * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
- *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
- *   List<String> delegates = new ArrayList<>();
- *   List<String> scope = new ArrayList<>();
- *   Duration lifetime = Duration.newBuilder().build();
- *   GenerateAccessTokenResponse response =
- *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+ * package com.google.cloud.iam.credentials.v1;
+ *
+ * import com.google.protobuf.Duration;
+ * import java.util.ArrayList;
+ * import java.util.List;
+ *
+ * public class IamCredentialsClientGenerateAccessToken {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iamCredentialsClientGenerateAccessToken();
+ *   }
+ *
+ *   public static void iamCredentialsClientGenerateAccessToken() throws Exception {
+ *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+ *       ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+ *       List<String> delegates = new ArrayList<>();
+ *       List<String> scope = new ArrayList<>();
+ *       Duration lifetime = Duration.newBuilder().build();
+ *       GenerateAccessTokenResponse response =
+ *           iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+ *     }
+ *   }
  * }
  * }</pre>
  */

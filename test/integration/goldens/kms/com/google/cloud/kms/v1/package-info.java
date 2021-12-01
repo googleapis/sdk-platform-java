@@ -39,10 +39,21 @@
  * <p>Sample for KeyManagementServiceClient:
  *
  * <pre>{@code
- * try (KeyManagementServiceClient keyManagementServiceClient =
- *     KeyManagementServiceClient.create()) {
- *   KeyRingName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
- *   KeyRing response = keyManagementServiceClient.getKeyRing(name);
+ * package com.google.cloud.kms.v1;
+ *
+ * public class KeyManagementServiceClientGetKeyRing {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     keyManagementServiceClientGetKeyRing();
+ *   }
+ *
+ *   public static void keyManagementServiceClientGetKeyRing() throws Exception {
+ *     try (KeyManagementServiceClient keyManagementServiceClient =
+ *         KeyManagementServiceClient.create()) {
+ *       KeyRingName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+ *       KeyRing response = keyManagementServiceClient.getKeyRing(name);
+ *     }
+ *   }
  * }
  * }</pre>
  */

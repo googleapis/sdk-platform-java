@@ -35,14 +35,25 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (StorageClient storageClient = StorageClient.create()) {
- *   StartResumableWriteRequest request =
- *       StartResumableWriteRequest.newBuilder()
- *           .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
- *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
- *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
- *           .build();
- *   StartResumableWriteResponse response = storageClient.startResumableWrite(request);
+ * package com.google.storage.v2;
+ *
+ * public class StorageClientStartResumableWrite {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     storageClientStartResumableWrite();
+ *   }
+ *
+ *   public static void storageClientStartResumableWrite() throws Exception {
+ *     try (StorageClient storageClient = StorageClient.create()) {
+ *       StartResumableWriteRequest request =
+ *           StartResumableWriteRequest.newBuilder()
+ *               .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
+ *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+ *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+ *               .build();
+ *       StartResumableWriteResponse response = storageClient.startResumableWrite(request);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -75,18 +86,42 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * StorageSettings storageSettings =
- *     StorageSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * StorageClient storageClient = StorageClient.create(storageSettings);
+ * package com.google.storage.v2;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class StorageClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     storageClientCreate();
+ *   }
+ *
+ *   public static void storageClientCreate() throws Exception {
+ *     StorageSettings storageSettings =
+ *         StorageSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     StorageClient storageClient = StorageClient.create(storageSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * StorageSettings storageSettings = StorageSettings.newBuilder().setEndpoint(myEndpoint).build();
- * StorageClient storageClient = StorageClient.create(storageSettings);
+ * package com.google.storage.v2;
+ *
+ * public class StorageClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     storageClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void storageClientClassHeaderEndpoint() throws Exception {
+ *     StorageSettings storageSettings = StorageSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     StorageClient storageClient = StorageClient.create(storageSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -149,25 +184,39 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   ReadObjectRequest request =
-   *       ReadObjectRequest.newBuilder()
-   *           .setBucket("bucket-1378203158")
-   *           .setObject("object-1023368385")
-   *           .setGeneration(305703192)
-   *           .setReadOffset(-715377828)
-   *           .setReadLimit(-164298798)
-   *           .setIfGenerationMatch(-1086241088)
-   *           .setIfGenerationNotMatch(1475720404)
-   *           .setIfMetagenerationMatch(1043427781)
-   *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
-   *           .setReadMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ServerStream<ReadObjectResponse> stream = storageClient.readObjectCallable().call(request);
-   *   for (ReadObjectResponse response : stream) {
-   *     // Do something when a response is received.
+   * package com.google.storage.v2;
+   *
+   * import com.google.api.gax.rpc.ServerStream;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class StorageClientReadObject {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientReadObject();
+   *   }
+   *
+   *   public static void storageClientReadObject() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       ReadObjectRequest request =
+   *           ReadObjectRequest.newBuilder()
+   *               .setBucket("bucket-1378203158")
+   *               .setObject("object-1023368385")
+   *               .setGeneration(305703192)
+   *               .setReadOffset(-715377828)
+   *               .setReadLimit(-164298798)
+   *               .setIfGenerationMatch(-1086241088)
+   *               .setIfGenerationNotMatch(1475720404)
+   *               .setIfMetagenerationMatch(1043427781)
+   *               .setIfMetagenerationNotMatch(1025430873)
+   *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+   *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *               .setReadMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ServerStream<ReadObjectResponse> stream = storageClient.readObjectCallable().call(request);
+   *       for (ReadObjectResponse response : stream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -202,35 +251,48 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   ApiStreamObserver<WriteObjectRequest> responseObserver =
-   *       new ApiStreamObserver<WriteObjectRequest>() {
-   *         {@literal @}Override
-   *         public void onNext(WriteObjectResponse response) {
-   *           // Do something when a response is received.
-   *         }
+   * package com.google.storage.v2;
    *
-   *         {@literal @}Override
-   *         public void onError(Throwable t) {
-   *           // Add error-handling
-   *         }
+   * import com.google.api.gax.rpc.ApiStreamObserver;
    *
-   *         {@literal @}Override
-   *         public void onCompleted() {
-   *           // Do something when complete.
-   *         }
-   *       };
-   *   ApiStreamObserver<WriteObjectRequest> requestObserver =
-   *       storageClient.writeObject().clientStreamingCall(responseObserver);
-   *   WriteObjectRequest request =
-   *       WriteObjectRequest.newBuilder()
-   *           .setWriteOffset(-1559543565)
-   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
-   *           .setFinishWrite(true)
-   *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
-   *           .build();
-   *   requestObserver.onNext(request);
+   * public class StorageClientWriteObject {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientWriteObject();
+   *   }
+   *
+   *   public static void storageClientWriteObject() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       ApiStreamObserver<WriteObjectRequest> responseObserver =
+   *           new ApiStreamObserver<WriteObjectRequest>() {
+   *             {@literal @}Override
+   *             public void onNext(WriteObjectResponse response) {
+   *               // Do something when a response is received.
+   *             }
+   *
+   *             {@literal @}Override
+   *             public void onError(Throwable t) {
+   *               // Add error-handling
+   *             }
+   *
+   *             {@literal @}Override
+   *             public void onCompleted() {
+   *               // Do something when complete.
+   *             }
+   *           };
+   *       ApiStreamObserver<WriteObjectRequest> requestObserver =
+   *           storageClient.writeObject().clientStreamingCall(responseObserver);
+   *       WriteObjectRequest request =
+   *           WriteObjectRequest.newBuilder()
+   *               .setWriteOffset(-1559543565)
+   *               .setObjectChecksums(ObjectChecksums.newBuilder().build())
+   *               .setFinishWrite(true)
+   *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+   *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *               .build();
+   *       requestObserver.onNext(request);
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -247,14 +309,25 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   StartResumableWriteRequest request =
-   *       StartResumableWriteRequest.newBuilder()
-   *           .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
-   *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
-   *           .build();
-   *   StartResumableWriteResponse response = storageClient.startResumableWrite(request);
+   * package com.google.storage.v2;
+   *
+   * public class StorageClientStartResumableWrite {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientStartResumableWrite();
+   *   }
+   *
+   *   public static void storageClientStartResumableWrite() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       StartResumableWriteRequest request =
+   *           StartResumableWriteRequest.newBuilder()
+   *               .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
+   *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+   *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *               .build();
+   *       StartResumableWriteResponse response = storageClient.startResumableWrite(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -273,17 +346,30 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   StartResumableWriteRequest request =
-   *       StartResumableWriteRequest.newBuilder()
-   *           .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
-   *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
-   *           .build();
-   *   ApiFuture<StartResumableWriteResponse> future =
-   *       storageClient.startResumableWriteCallable().futureCall(request);
-   *   // Do something.
-   *   StartResumableWriteResponse response = future.get();
+   * package com.google.storage.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class StorageClientStartResumableWrite {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientStartResumableWrite();
+   *   }
+   *
+   *   public static void storageClientStartResumableWrite() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       StartResumableWriteRequest request =
+   *           StartResumableWriteRequest.newBuilder()
+   *               .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
+   *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+   *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *               .build();
+   *       ApiFuture<StartResumableWriteResponse> future =
+   *           storageClient.startResumableWriteCallable().futureCall(request);
+   *       // Do something.
+   *       StartResumableWriteResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -309,9 +395,20 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   String uploadId = "uploadId1563990780";
-   *   QueryWriteStatusResponse response = storageClient.queryWriteStatus(uploadId);
+   * package com.google.storage.v2;
+   *
+   * public class StorageClientQueryWriteStatus {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientQueryWriteStatus();
+   *   }
+   *
+   *   public static void storageClientQueryWriteStatus() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       String uploadId = "uploadId1563990780";
+   *       QueryWriteStatusResponse response = storageClient.queryWriteStatus(uploadId);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -342,14 +439,25 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   QueryWriteStatusRequest request =
-   *       QueryWriteStatusRequest.newBuilder()
-   *           .setUploadId("uploadId1563990780")
-   *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
-   *           .build();
-   *   QueryWriteStatusResponse response = storageClient.queryWriteStatus(request);
+   * package com.google.storage.v2;
+   *
+   * public class StorageClientQueryWriteStatus {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientQueryWriteStatus();
+   *   }
+   *
+   *   public static void storageClientQueryWriteStatus() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       QueryWriteStatusRequest request =
+   *           QueryWriteStatusRequest.newBuilder()
+   *               .setUploadId("uploadId1563990780")
+   *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+   *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *               .build();
+   *       QueryWriteStatusResponse response = storageClient.queryWriteStatus(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -377,17 +485,30 @@ public class StorageClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (StorageClient storageClient = StorageClient.create()) {
-   *   QueryWriteStatusRequest request =
-   *       QueryWriteStatusRequest.newBuilder()
-   *           .setUploadId("uploadId1563990780")
-   *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
-   *           .build();
-   *   ApiFuture<QueryWriteStatusResponse> future =
-   *       storageClient.queryWriteStatusCallable().futureCall(request);
-   *   // Do something.
-   *   QueryWriteStatusResponse response = future.get();
+   * package com.google.storage.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class StorageClientQueryWriteStatus {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     storageClientQueryWriteStatus();
+   *   }
+   *
+   *   public static void storageClientQueryWriteStatus() throws Exception {
+   *     try (StorageClient storageClient = StorageClient.create()) {
+   *       QueryWriteStatusRequest request =
+   *           QueryWriteStatusRequest.newBuilder()
+   *               .setUploadId("uploadId1563990780")
+   *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+   *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *               .build();
+   *       ApiFuture<QueryWriteStatusResponse> future =
+   *           storageClient.queryWriteStatusCallable().futureCall(request);
+   *       // Do something.
+   *       QueryWriteStatusResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

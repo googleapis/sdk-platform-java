@@ -31,9 +31,22 @@
  * <p>Sample for LibraryServiceClient:
  *
  * <pre>{@code
- * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
- *   Shelf shelf = Shelf.newBuilder().build();
- *   Shelf response = libraryServiceClient.createShelf(shelf);
+ * package com.google.cloud.example.library.v1;
+ *
+ * import com.google.example.library.v1.Shelf;
+ *
+ * public class LibraryServiceClientCreateShelf {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     libraryServiceClientCreateShelf();
+ *   }
+ *
+ *   public static void libraryServiceClientCreateShelf() throws Exception {
+ *     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+ *       Shelf shelf = Shelf.newBuilder().build();
+ *       Shelf response = libraryServiceClient.createShelf(shelf);
+ *     }
+ *   }
  * }
  * }</pre>
  */

@@ -24,14 +24,25 @@
  * <p>Sample for StorageClient:
  *
  * <pre>{@code
- * try (StorageClient storageClient = StorageClient.create()) {
- *   StartResumableWriteRequest request =
- *       StartResumableWriteRequest.newBuilder()
- *           .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
- *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
- *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
- *           .build();
- *   StartResumableWriteResponse response = storageClient.startResumableWrite(request);
+ * package com.google.storage.v2;
+ *
+ * public class StorageClientStartResumableWrite {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     storageClientStartResumableWrite();
+ *   }
+ *
+ *   public static void storageClientStartResumableWrite() throws Exception {
+ *     try (StorageClient storageClient = StorageClient.create()) {
+ *       StartResumableWriteRequest request =
+ *           StartResumableWriteRequest.newBuilder()
+ *               .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
+ *               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
+ *               .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+ *               .build();
+ *       StartResumableWriteResponse response = storageClient.startResumableWrite(request);
+ *     }
+ *   }
  * }
  * }</pre>
  */

@@ -26,11 +26,24 @@
  * <p>Sample for AddressesClient:
  *
  * <pre>{@code
- * try (AddressesClient addressesClient = AddressesClient.create()) {
- *   String project = "project-309310695";
- *   for (Map.Entry<String, AddressesScopedList> element :
- *       addressesClient.aggregatedList(project).iterateAll()) {
- *     // doThingsWith(element);
+ * package com.google.cloud.compute.v1;
+ *
+ * import java.util.Map;
+ *
+ * public class AddressesClientAggregatedList {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     addressesClientAggregatedList();
+ *   }
+ *
+ *   public static void addressesClientAggregatedList() throws Exception {
+ *     try (AddressesClient addressesClient = AddressesClient.create()) {
+ *       String project = "project-309310695";
+ *       for (Map.Entry<String, AddressesScopedList> element :
+ *           addressesClient.aggregatedList(project).iterateAll()) {
+ *         // doThingsWith(element);
+ *       }
+ *     }
  *   }
  * }
  * }</pre>
@@ -42,11 +55,22 @@
  * <p>Sample for RegionOperationsClient:
  *
  * <pre>{@code
- * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
- *   String project = "project-309310695";
- *   String region = "region-934795532";
- *   String operation = "operation1662702951";
- *   Operation response = regionOperationsClient.get(project, region, operation);
+ * package com.google.cloud.compute.v1;
+ *
+ * public class RegionOperationsClientGet {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     regionOperationsClientGet();
+ *   }
+ *
+ *   public static void regionOperationsClientGet() throws Exception {
+ *     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
+ *       String project = "project-309310695";
+ *       String region = "region-934795532";
+ *       String operation = "operation1662702951";
+ *       Operation response = regionOperationsClient.get(project, region, operation);
+ *     }
+ *   }
  * }
  * }</pre>
  */

@@ -99,17 +99,30 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
  *
  * <pre>{@code
- * PublisherStubSettings.Builder topicAdminSettingsBuilder = PublisherStubSettings.newBuilder();
- * topicAdminSettingsBuilder
- *     .createTopicSettings()
- *     .setRetrySettings(
- *         topicAdminSettingsBuilder
- *             .createTopicSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
+ * package com.google.cloud.pubsub.v1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class TopicAdminSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     topicAdminSettings();
+ *   }
+ *
+ *   public static void topicAdminSettings() throws Exception {
+ *     PublisherStubSettings.Builder topicAdminSettingsBuilder = PublisherStubSettings.newBuilder();
+ *     topicAdminSettingsBuilder
+ *         .createTopicSettings()
+ *         .setRetrySettings(
+ *             topicAdminSettingsBuilder
+ *                 .createTopicSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

@@ -83,17 +83,30 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of aggregatedList to 30 seconds:
  *
  * <pre>{@code
- * AddressesStubSettings.Builder addressesSettingsBuilder = AddressesStubSettings.newBuilder();
- * addressesSettingsBuilder
- *     .aggregatedListSettings()
- *     .setRetrySettings(
- *         addressesSettingsBuilder
- *             .aggregatedListSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * AddressesStubSettings addressesSettings = addressesSettingsBuilder.build();
+ * package com.google.cloud.compute.v1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class AddressesSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     addressesSettings();
+ *   }
+ *
+ *   public static void addressesSettings() throws Exception {
+ *     AddressesStubSettings.Builder addressesSettingsBuilder = AddressesStubSettings.newBuilder();
+ *     addressesSettingsBuilder
+ *         .aggregatedListSettings()
+ *         .setRetrySettings(
+ *             addressesSettingsBuilder
+ *                 .aggregatedListSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     AddressesStubSettings addressesSettings = addressesSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

@@ -85,14 +85,29 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (ConfigClient configClient = ConfigClient.create()) {
- *   GetBucketRequest request =
- *       GetBucketRequest.newBuilder()
- *           .setName(
- *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
- *                   .toString())
- *           .build();
- *   LogBucket response = configClient.getBucket(request);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.logging.v2.GetBucketRequest;
+ * import com.google.logging.v2.LogBucket;
+ * import com.google.logging.v2.LogBucketName;
+ *
+ * public class ConfigClientGetBucket {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     configClientGetBucket();
+ *   }
+ *
+ *   public static void configClientGetBucket() throws Exception {
+ *     try (ConfigClient configClient = ConfigClient.create()) {
+ *       GetBucketRequest request =
+ *           GetBucketRequest.newBuilder()
+ *               .setName(
+ *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+ *                       .toString())
+ *               .build();
+ *       LogBucket response = configClient.getBucket(request);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -125,18 +140,42 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * ConfigSettings configSettings =
- *     ConfigSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * ConfigClient configClient = ConfigClient.create(configSettings);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class ConfigClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     configClientCreate();
+ *   }
+ *
+ *   public static void configClientCreate() throws Exception {
+ *     ConfigSettings configSettings =
+ *         ConfigSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     ConfigClient configClient = ConfigClient.create(configSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
- * ConfigClient configClient = ConfigClient.create(configSettings);
+ * package com.google.cloud.logging.v2;
+ *
+ * public class ConfigClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     configClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void configClientClassHeaderEndpoint() throws Exception {
+ *     ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     ConfigClient configClient = ConfigClient.create(configSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -199,11 +238,25 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   BillingAccountLocationName parent =
-   *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
-   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.BillingAccountLocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       BillingAccountLocationName parent =
+   *           BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
+   *       for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -232,10 +285,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   FolderLocationName parent = FolderLocationName.of("[FOLDER]", "[LOCATION]");
-   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.FolderLocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       FolderLocationName parent = FolderLocationName.of("[FOLDER]", "[LOCATION]");
+   *       for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -264,10 +331,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *       for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -296,10 +377,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   OrganizationLocationName parent = OrganizationLocationName.of("[ORGANIZATION]", "[LOCATION]");
-   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogBucket;
+   * import com.google.logging.v2.OrganizationLocationName;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       OrganizationLocationName parent = OrganizationLocationName.of("[ORGANIZATION]", "[LOCATION]");
+   *       for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -328,10 +423,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
-   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
+   *       for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -357,15 +466,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListBucketsRequest request =
-   *       ListBucketsRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   for (LogBucket element : configClient.listBuckets(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListBucketsRequest;
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListBucketsRequest request =
+   *           ListBucketsRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       for (LogBucket element : configClient.listBuckets(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -384,17 +508,33 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListBucketsRequest request =
-   *       ListBucketsRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   ApiFuture<LogBucket> future = configClient.listBucketsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (LogBucket element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListBucketsRequest;
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListBucketsRequest request =
+   *           ListBucketsRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       ApiFuture<LogBucket> future = configClient.listBucketsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (LogBucket element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -411,23 +551,40 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListBucketsRequest request =
-   *       ListBucketsRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   while (true) {
-   *     ListBucketsResponse response = configClient.listBucketsCallable().call(request);
-   *     for (LogBucket element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListBucketsRequest;
+   * import com.google.logging.v2.ListBucketsResponse;
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientListBuckets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListBuckets();
+   *   }
+   *
+   *   public static void configClientListBuckets() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListBucketsRequest request =
+   *           ListBucketsRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       while (true) {
+   *         ListBucketsResponse response = configClient.listBucketsCallable().call(request);
+   *         for (LogBucket element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -444,14 +601,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetBucketRequest request =
-   *       GetBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .build();
-   *   LogBucket response = configClient.getBucket(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.GetBucketRequest;
+   * import com.google.logging.v2.LogBucket;
+   * import com.google.logging.v2.LogBucketName;
+   *
+   * public class ConfigClientGetBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetBucket();
+   *   }
+   *
+   *   public static void configClientGetBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetBucketRequest request =
+   *           GetBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .build();
+   *       LogBucket response = configClient.getBucket(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -469,16 +641,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetBucketRequest request =
-   *       GetBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<LogBucket> future = configClient.getBucketCallable().futureCall(request);
-   *   // Do something.
-   *   LogBucket response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.GetBucketRequest;
+   * import com.google.logging.v2.LogBucket;
+   * import com.google.logging.v2.LogBucketName;
+   *
+   * public class ConfigClientGetBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetBucket();
+   *   }
+   *
+   *   public static void configClientGetBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetBucketRequest request =
+   *           GetBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<LogBucket> future = configClient.getBucketCallable().futureCall(request);
+   *       // Do something.
+   *       LogBucket response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -494,14 +682,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateBucketRequest request =
-   *       CreateBucketRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setBucketId("bucketId-1603305307")
-   *           .setBucket(LogBucket.newBuilder().build())
-   *           .build();
-   *   LogBucket response = configClient.createBucket(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CreateBucketRequest;
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientCreateBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateBucket();
+   *   }
+   *
+   *   public static void configClientCreateBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateBucketRequest request =
+   *           CreateBucketRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setBucketId("bucketId-1603305307")
+   *               .setBucket(LogBucket.newBuilder().build())
+   *               .build();
+   *       LogBucket response = configClient.createBucket(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -520,16 +723,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateBucketRequest request =
-   *       CreateBucketRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setBucketId("bucketId-1603305307")
-   *           .setBucket(LogBucket.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogBucket> future = configClient.createBucketCallable().futureCall(request);
-   *   // Do something.
-   *   LogBucket response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CreateBucketRequest;
+   * import com.google.logging.v2.LocationName;
+   * import com.google.logging.v2.LogBucket;
+   *
+   * public class ConfigClientCreateBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateBucket();
+   *   }
+   *
+   *   public static void configClientCreateBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateBucketRequest request =
+   *           CreateBucketRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setBucketId("bucketId-1603305307")
+   *               .setBucket(LogBucket.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogBucket> future = configClient.createBucketCallable().futureCall(request);
+   *       // Do something.
+   *       LogBucket response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -553,16 +772,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateBucketRequest request =
-   *       UpdateBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .setBucket(LogBucket.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   LogBucket response = configClient.updateBucket(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogBucket;
+   * import com.google.logging.v2.LogBucketName;
+   * import com.google.logging.v2.UpdateBucketRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateBucket();
+   *   }
+   *
+   *   public static void configClientUpdateBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateBucketRequest request =
+   *           UpdateBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .setBucket(LogBucket.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       LogBucket response = configClient.updateBucket(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -589,18 +824,35 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateBucketRequest request =
-   *       UpdateBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .setBucket(LogBucket.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogBucket> future = configClient.updateBucketCallable().futureCall(request);
-   *   // Do something.
-   *   LogBucket response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogBucket;
+   * import com.google.logging.v2.LogBucketName;
+   * import com.google.logging.v2.UpdateBucketRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateBucket();
+   *   }
+   *
+   *   public static void configClientUpdateBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateBucketRequest request =
+   *           UpdateBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .setBucket(LogBucket.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogBucket> future = configClient.updateBucketCallable().futureCall(request);
+   *       // Do something.
+   *       LogBucket response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -616,14 +868,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteBucketRequest request =
-   *       DeleteBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .build();
-   *   configClient.deleteBucket(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.DeleteBucketRequest;
+   * import com.google.logging.v2.LogBucketName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteBucket();
+   *   }
+   *
+   *   public static void configClientDeleteBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteBucketRequest request =
+   *           DeleteBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .build();
+   *       configClient.deleteBucket(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -642,16 +909,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteBucketRequest request =
-   *       DeleteBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<Empty> future = configClient.deleteBucketCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.DeleteBucketRequest;
+   * import com.google.logging.v2.LogBucketName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteBucket();
+   *   }
+   *
+   *   public static void configClientDeleteBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteBucketRequest request =
+   *           DeleteBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<Empty> future = configClient.deleteBucketCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -667,14 +950,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UndeleteBucketRequest request =
-   *       UndeleteBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .build();
-   *   configClient.undeleteBucket(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogBucketName;
+   * import com.google.logging.v2.UndeleteBucketRequest;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientUndeleteBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUndeleteBucket();
+   *   }
+   *
+   *   public static void configClientUndeleteBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UndeleteBucketRequest request =
+   *           UndeleteBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .build();
+   *       configClient.undeleteBucket(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -693,16 +991,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UndeleteBucketRequest request =
-   *       UndeleteBucketRequest.newBuilder()
-   *           .setName(
-   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<Empty> future = configClient.undeleteBucketCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogBucketName;
+   * import com.google.logging.v2.UndeleteBucketRequest;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientUndeleteBucket {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUndeleteBucket();
+   *   }
+   *
+   *   public static void configClientUndeleteBucket() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UndeleteBucketRequest request =
+   *           UndeleteBucketRequest.newBuilder()
+   *               .setName(
+   *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<Empty> future = configClient.undeleteBucketCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -717,10 +1031,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = "parent-995424086";
-   *   for (LogView element : configClient.listViews(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogView;
+   *
+   * public class ConfigClientListViews {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListViews();
+   *   }
+   *
+   *   public static void configClientListViews() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String parent = "parent-995424086";
+   *       for (LogView element : configClient.listViews(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -741,15 +1068,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListViewsRequest request =
-   *       ListViewsRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   for (LogView element : configClient.listViews(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListViewsRequest;
+   * import com.google.logging.v2.LogView;
+   *
+   * public class ConfigClientListViews {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListViews();
+   *   }
+   *
+   *   public static void configClientListViews() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListViewsRequest request =
+   *           ListViewsRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       for (LogView element : configClient.listViews(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -768,17 +1109,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListViewsRequest request =
-   *       ListViewsRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   ApiFuture<LogView> future = configClient.listViewsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (LogView element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListViewsRequest;
+   * import com.google.logging.v2.LogView;
+   *
+   * public class ConfigClientListViews {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListViews();
+   *   }
+   *
+   *   public static void configClientListViews() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListViewsRequest request =
+   *           ListViewsRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       ApiFuture<LogView> future = configClient.listViewsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (LogView element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -794,23 +1150,39 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListViewsRequest request =
-   *       ListViewsRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   while (true) {
-   *     ListViewsResponse response = configClient.listViewsCallable().call(request);
-   *     for (LogView element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListViewsRequest;
+   * import com.google.logging.v2.ListViewsResponse;
+   * import com.google.logging.v2.LogView;
+   *
+   * public class ConfigClientListViews {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListViews();
+   *   }
+   *
+   *   public static void configClientListViews() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListViewsRequest request =
+   *           ListViewsRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       while (true) {
+   *         ListViewsResponse response = configClient.listViewsCallable().call(request);
+   *         for (LogView element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -827,15 +1199,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetViewRequest request =
-   *       GetViewRequest.newBuilder()
-   *           .setName(
-   *               LogViewName.ofProjectLocationBucketViewName(
-   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
-   *                   .toString())
-   *           .build();
-   *   LogView response = configClient.getView(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.GetViewRequest;
+   * import com.google.logging.v2.LogView;
+   * import com.google.logging.v2.LogViewName;
+   *
+   * public class ConfigClientGetView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetView();
+   *   }
+   *
+   *   public static void configClientGetView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetViewRequest request =
+   *           GetViewRequest.newBuilder()
+   *               .setName(
+   *                   LogViewName.ofProjectLocationBucketViewName(
+   *                           "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                       .toString())
+   *               .build();
+   *       LogView response = configClient.getView(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -853,17 +1240,33 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetViewRequest request =
-   *       GetViewRequest.newBuilder()
-   *           .setName(
-   *               LogViewName.ofProjectLocationBucketViewName(
-   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<LogView> future = configClient.getViewCallable().futureCall(request);
-   *   // Do something.
-   *   LogView response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.GetViewRequest;
+   * import com.google.logging.v2.LogView;
+   * import com.google.logging.v2.LogViewName;
+   *
+   * public class ConfigClientGetView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetView();
+   *   }
+   *
+   *   public static void configClientGetView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetViewRequest request =
+   *           GetViewRequest.newBuilder()
+   *               .setName(
+   *                   LogViewName.ofProjectLocationBucketViewName(
+   *                           "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<LogView> future = configClient.getViewCallable().futureCall(request);
+   *       // Do something.
+   *       LogView response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -878,14 +1281,28 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateViewRequest request =
-   *       CreateViewRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setViewId("viewId-816632160")
-   *           .setView(LogView.newBuilder().build())
-   *           .build();
-   *   LogView response = configClient.createView(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CreateViewRequest;
+   * import com.google.logging.v2.LogView;
+   *
+   * public class ConfigClientCreateView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateView();
+   *   }
+   *
+   *   public static void configClientCreateView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateViewRequest request =
+   *           CreateViewRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setViewId("viewId-816632160")
+   *               .setView(LogView.newBuilder().build())
+   *               .build();
+   *       LogView response = configClient.createView(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -903,16 +1320,31 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateViewRequest request =
-   *       CreateViewRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setViewId("viewId-816632160")
-   *           .setView(LogView.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogView> future = configClient.createViewCallable().futureCall(request);
-   *   // Do something.
-   *   LogView response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CreateViewRequest;
+   * import com.google.logging.v2.LogView;
+   *
+   * public class ConfigClientCreateView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateView();
+   *   }
+   *
+   *   public static void configClientCreateView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateViewRequest request =
+   *           CreateViewRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setViewId("viewId-816632160")
+   *               .setView(LogView.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogView> future = configClient.createViewCallable().futureCall(request);
+   *       // Do something.
+   *       LogView response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -928,14 +1360,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateViewRequest request =
-   *       UpdateViewRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setView(LogView.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   LogView response = configClient.updateView(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogView;
+   * import com.google.logging.v2.UpdateViewRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateView();
+   *   }
+   *
+   *   public static void configClientUpdateView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateViewRequest request =
+   *           UpdateViewRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setView(LogView.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       LogView response = configClient.updateView(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -954,16 +1401,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateViewRequest request =
-   *       UpdateViewRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setView(LogView.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogView> future = configClient.updateViewCallable().futureCall(request);
-   *   // Do something.
-   *   LogView response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogView;
+   * import com.google.logging.v2.UpdateViewRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateView();
+   *   }
+   *
+   *   public static void configClientUpdateView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateViewRequest request =
+   *           UpdateViewRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setView(LogView.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogView> future = configClient.updateViewCallable().futureCall(request);
+   *       // Do something.
+   *       LogView response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -978,15 +1441,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteViewRequest request =
-   *       DeleteViewRequest.newBuilder()
-   *           .setName(
-   *               LogViewName.ofProjectLocationBucketViewName(
-   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
-   *                   .toString())
-   *           .build();
-   *   configClient.deleteView(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.DeleteViewRequest;
+   * import com.google.logging.v2.LogViewName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteView();
+   *   }
+   *
+   *   public static void configClientDeleteView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteViewRequest request =
+   *           DeleteViewRequest.newBuilder()
+   *               .setName(
+   *                   LogViewName.ofProjectLocationBucketViewName(
+   *                           "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                       .toString())
+   *               .build();
+   *       configClient.deleteView(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1004,17 +1482,33 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteViewRequest request =
-   *       DeleteViewRequest.newBuilder()
-   *           .setName(
-   *               LogViewName.ofProjectLocationBucketViewName(
-   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<Empty> future = configClient.deleteViewCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.DeleteViewRequest;
+   * import com.google.logging.v2.LogViewName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteView {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteView();
+   *   }
+   *
+   *   public static void configClientDeleteView() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteViewRequest request =
+   *           DeleteViewRequest.newBuilder()
+   *               .setName(
+   *                   LogViewName.ofProjectLocationBucketViewName(
+   *                           "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<Empty> future = configClient.deleteViewCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1029,10 +1523,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
-   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.BillingAccountName;
+   * import com.google.logging.v2.LogSink;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1055,10 +1563,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
-   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.FolderName;
+   * import com.google.logging.v2.LogSink;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       FolderName parent = FolderName.of("[FOLDER]");
+   *       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1081,10 +1603,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
-   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.OrganizationName;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1107,10 +1643,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1133,10 +1683,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1158,15 +1722,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListSinksRequest request =
-   *       ListSinksRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   for (LogSink element : configClient.listSinks(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListSinksRequest;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListSinksRequest request =
+   *           ListSinksRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       for (LogSink element : configClient.listSinks(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1185,17 +1764,33 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListSinksRequest request =
-   *       ListSinksRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   ApiFuture<LogSink> future = configClient.listSinksPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (LogSink element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListSinksRequest;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListSinksRequest request =
+   *           ListSinksRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       ApiFuture<LogSink> future = configClient.listSinksPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (LogSink element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1211,23 +1806,40 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListSinksRequest request =
-   *       ListSinksRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   while (true) {
-   *     ListSinksResponse response = configClient.listSinksCallable().call(request);
-   *     for (LogSink element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListSinksRequest;
+   * import com.google.logging.v2.ListSinksResponse;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListSinks {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListSinks();
+   *   }
+   *
+   *   public static void configClientListSinks() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListSinksRequest request =
+   *           ListSinksRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       while (true) {
+   *         ListSinksResponse response = configClient.listSinksCallable().call(request);
+   *         for (LogSink element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -1244,9 +1856,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
-   *   LogSink response = configClient.getSink(sinkName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   *
+   * public class ConfigClientGetSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetSink();
+   *   }
+   *
+   *   public static void configClientGetSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *       LogSink response = configClient.getSink(sinkName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1273,9 +1899,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
-   *   LogSink response = configClient.getSink(sinkName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   *
+   * public class ConfigClientGetSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetSink();
+   *   }
+   *
+   *   public static void configClientGetSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *       LogSink response = configClient.getSink(sinkName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1299,12 +1939,27 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetSinkRequest request =
-   *       GetSinkRequest.newBuilder()
-   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
-   *           .build();
-   *   LogSink response = configClient.getSink(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.GetSinkRequest;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   *
+   * public class ConfigClientGetSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetSink();
+   *   }
+   *
+   *   public static void configClientGetSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetSinkRequest request =
+   *           GetSinkRequest.newBuilder()
+   *               .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *               .build();
+   *       LogSink response = configClient.getSink(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1322,14 +1977,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetSinkRequest request =
-   *       GetSinkRequest.newBuilder()
-   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
-   *           .build();
-   *   ApiFuture<LogSink> future = configClient.getSinkCallable().futureCall(request);
-   *   // Do something.
-   *   LogSink response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.GetSinkRequest;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   *
+   * public class ConfigClientGetSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetSink();
+   *   }
+   *
+   *   public static void configClientGetSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetSinkRequest request =
+   *           GetSinkRequest.newBuilder()
+   *               .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *               .build();
+   *       ApiFuture<LogSink> future = configClient.getSinkCallable().futureCall(request);
+   *       // Do something.
+   *       LogSink response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1347,10 +2018,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.createSink(parent, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.BillingAccountName;
+   * import com.google.logging.v2.LogSink;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.createSink(parent, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1381,10 +2066,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.createSink(parent, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.FolderName;
+   * import com.google.logging.v2.LogSink;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       FolderName parent = FolderName.of("[FOLDER]");
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.createSink(parent, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1415,10 +2114,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.createSink(parent, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.OrganizationName;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.createSink(parent, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1449,10 +2162,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.createSink(parent, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.createSink(parent, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1483,10 +2210,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.createSink(parent, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.createSink(parent, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1514,14 +2255,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateSinkRequest request =
-   *       CreateSinkRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setSink(LogSink.newBuilder().build())
-   *           .setUniqueWriterIdentity(true)
-   *           .build();
-   *   LogSink response = configClient.createSink(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CreateSinkRequest;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateSinkRequest request =
+   *           CreateSinkRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setSink(LogSink.newBuilder().build())
+   *               .setUniqueWriterIdentity(true)
+   *               .build();
+   *       LogSink response = configClient.createSink(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1542,16 +2298,32 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateSinkRequest request =
-   *       CreateSinkRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setSink(LogSink.newBuilder().build())
-   *           .setUniqueWriterIdentity(true)
-   *           .build();
-   *   ApiFuture<LogSink> future = configClient.createSinkCallable().futureCall(request);
-   *   // Do something.
-   *   LogSink response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CreateSinkRequest;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateSink();
+   *   }
+   *
+   *   public static void configClientCreateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateSinkRequest request =
+   *           CreateSinkRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setSink(LogSink.newBuilder().build())
+   *               .setUniqueWriterIdentity(true)
+   *               .build();
+   *       ApiFuture<LogSink> future = configClient.createSinkCallable().futureCall(request);
+   *       // Do something.
+   *       LogSink response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1570,10 +2342,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.updateSink(sinkName, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   *
+   * public class ConfigClientUpdateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateSink();
+   *   }
+   *
+   *   public static void configClientUpdateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.updateSink(sinkName, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1608,10 +2394,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.updateSink(sinkName, sink);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   *
+   * public class ConfigClientUpdateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateSink();
+   *   }
+   *
+   *   public static void configClientUpdateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       LogSink response = configClient.updateSink(sinkName, sink);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1643,11 +2443,26 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateSink();
+   *   }
+   *
+   *   public static void configClientUpdateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1692,11 +2507,26 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
-   *   LogSink sink = LogSink.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateSink();
+   *   }
+   *
+   *   public static void configClientUpdateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *       LogSink sink = LogSink.newBuilder().build();
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1741,15 +2571,31 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateSinkRequest request =
-   *       UpdateSinkRequest.newBuilder()
-   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
-   *           .setSink(LogSink.newBuilder().build())
-   *           .setUniqueWriterIdentity(true)
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   LogSink response = configClient.updateSink(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.logging.v2.UpdateSinkRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateSink();
+   *   }
+   *
+   *   public static void configClientUpdateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateSinkRequest request =
+   *           UpdateSinkRequest.newBuilder()
+   *               .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *               .setSink(LogSink.newBuilder().build())
+   *               .setUniqueWriterIdentity(true)
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       LogSink response = configClient.updateSink(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1771,17 +2617,34 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateSinkRequest request =
-   *       UpdateSinkRequest.newBuilder()
-   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
-   *           .setSink(LogSink.newBuilder().build())
-   *           .setUniqueWriterIdentity(true)
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogSink> future = configClient.updateSinkCallable().futureCall(request);
-   *   // Do something.
-   *   LogSink response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogSink;
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.logging.v2.UpdateSinkRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateSink();
+   *   }
+   *
+   *   public static void configClientUpdateSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateSinkRequest request =
+   *           UpdateSinkRequest.newBuilder()
+   *               .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *               .setSink(LogSink.newBuilder().build())
+   *               .setUniqueWriterIdentity(true)
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogSink> future = configClient.updateSinkCallable().futureCall(request);
+   *       // Do something.
+   *       LogSink response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1797,9 +2660,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
-   *   configClient.deleteSink(sinkName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteSink();
+   *   }
+   *
+   *   public static void configClientDeleteSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *       configClient.deleteSink(sinkName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1828,9 +2705,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
-   *   configClient.deleteSink(sinkName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteSink();
+   *   }
+   *
+   *   public static void configClientDeleteSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *       configClient.deleteSink(sinkName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1856,12 +2747,27 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteSinkRequest request =
-   *       DeleteSinkRequest.newBuilder()
-   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
-   *           .build();
-   *   configClient.deleteSink(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.DeleteSinkRequest;
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteSink();
+   *   }
+   *
+   *   public static void configClientDeleteSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteSinkRequest request =
+   *           DeleteSinkRequest.newBuilder()
+   *               .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *               .build();
+   *       configClient.deleteSink(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1880,14 +2786,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteSinkRequest request =
-   *       DeleteSinkRequest.newBuilder()
-   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = configClient.deleteSinkCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.DeleteSinkRequest;
+   * import com.google.logging.v2.LogSinkName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteSink {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteSink();
+   *   }
+   *
+   *   public static void configClientDeleteSink() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteSinkRequest request =
+   *           DeleteSinkRequest.newBuilder()
+   *               .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = configClient.deleteSinkCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1902,10 +2824,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
-   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.BillingAccountName;
+   * import com.google.logging.v2.LogExclusion;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1930,10 +2866,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
-   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.FolderName;
+   * import com.google.logging.v2.LogExclusion;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       FolderName parent = FolderName.of("[FOLDER]");
+   *       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1958,10 +2908,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
-   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.OrganizationName;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1986,10 +2950,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -2014,10 +2992,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -2039,15 +3031,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListExclusionsRequest request =
-   *       ListExclusionsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   for (LogExclusion element : configClient.listExclusions(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListExclusionsRequest;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListExclusionsRequest request =
+   *           ListExclusionsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       for (LogExclusion element : configClient.listExclusions(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -2066,18 +3073,34 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListExclusionsRequest request =
-   *       ListExclusionsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   ApiFuture<LogExclusion> future =
-   *       configClient.listExclusionsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (LogExclusion element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListExclusionsRequest;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListExclusionsRequest request =
+   *           ListExclusionsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       ApiFuture<LogExclusion> future =
+   *           configClient.listExclusionsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (LogExclusion element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -2094,23 +3117,40 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ListExclusionsRequest request =
-   *       ListExclusionsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   while (true) {
-   *     ListExclusionsResponse response = configClient.listExclusionsCallable().call(request);
-   *     for (LogExclusion element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListExclusionsRequest;
+   * import com.google.logging.v2.ListExclusionsResponse;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientListExclusions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientListExclusions();
+   *   }
+   *
+   *   public static void configClientListExclusions() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ListExclusionsRequest request =
+   *           ListExclusionsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       while (true) {
+   *         ListExclusionsResponse response = configClient.listExclusionsCallable().call(request);
+   *         for (LogExclusion element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -2128,9 +3168,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
-   *   LogExclusion response = configClient.getExclusion(name);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   *
+   * public class ConfigClientGetExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetExclusion();
+   *   }
+   *
+   *   public static void configClientGetExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *       LogExclusion response = configClient.getExclusion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2155,9 +3209,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
-   *   LogExclusion response = configClient.getExclusion(name);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   *
+   * public class ConfigClientGetExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetExclusion();
+   *   }
+   *
+   *   public static void configClientGetExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *       LogExclusion response = configClient.getExclusion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2181,13 +3249,28 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetExclusionRequest request =
-   *       GetExclusionRequest.newBuilder()
-   *           .setName(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
-   *           .build();
-   *   LogExclusion response = configClient.getExclusion(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.GetExclusionRequest;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   *
+   * public class ConfigClientGetExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetExclusion();
+   *   }
+   *
+   *   public static void configClientGetExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetExclusionRequest request =
+   *           GetExclusionRequest.newBuilder()
+   *               .setName(
+   *                   LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *               .build();
+   *       LogExclusion response = configClient.getExclusion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2205,15 +3288,31 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetExclusionRequest request =
-   *       GetExclusionRequest.newBuilder()
-   *           .setName(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
-   *           .build();
-   *   ApiFuture<LogExclusion> future = configClient.getExclusionCallable().futureCall(request);
-   *   // Do something.
-   *   LogExclusion response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.GetExclusionRequest;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   *
+   * public class ConfigClientGetExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetExclusion();
+   *   }
+   *
+   *   public static void configClientGetExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetExclusionRequest request =
+   *           GetExclusionRequest.newBuilder()
+   *               .setName(
+   *                   LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *               .build();
+   *       ApiFuture<LogExclusion> future = configClient.getExclusionCallable().futureCall(request);
+   *       // Do something.
+   *       LogExclusion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2229,10 +3328,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.BillingAccountName;
+   * import com.google.logging.v2.LogExclusion;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       LogExclusion response = configClient.createExclusion(parent, exclusion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2261,10 +3374,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.FolderName;
+   * import com.google.logging.v2.LogExclusion;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       FolderName parent = FolderName.of("[FOLDER]");
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       LogExclusion response = configClient.createExclusion(parent, exclusion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2293,10 +3420,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.OrganizationName;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       LogExclusion response = configClient.createExclusion(parent, exclusion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2325,10 +3466,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       LogExclusion response = configClient.createExclusion(parent, exclusion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2357,10 +3512,24 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       LogExclusion response = configClient.createExclusion(parent, exclusion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2386,13 +3555,28 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateExclusionRequest request =
-   *       CreateExclusionRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setExclusion(LogExclusion.newBuilder().build())
-   *           .build();
-   *   LogExclusion response = configClient.createExclusion(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CreateExclusionRequest;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateExclusionRequest request =
+   *           CreateExclusionRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setExclusion(LogExclusion.newBuilder().build())
+   *               .build();
+   *       LogExclusion response = configClient.createExclusion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2411,15 +3595,31 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   CreateExclusionRequest request =
-   *       CreateExclusionRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setExclusion(LogExclusion.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogExclusion> future = configClient.createExclusionCallable().futureCall(request);
-   *   // Do something.
-   *   LogExclusion response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CreateExclusionRequest;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class ConfigClientCreateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientCreateExclusion();
+   *   }
+   *
+   *   public static void configClientCreateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       CreateExclusionRequest request =
+   *           CreateExclusionRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setExclusion(LogExclusion.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogExclusion> future = configClient.createExclusionCallable().futureCall(request);
+   *       // Do something.
+   *       LogExclusion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2434,11 +3634,26 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateExclusion();
+   *   }
+   *
+   *   public static void configClientUpdateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2476,11 +3691,26 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
-   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateExclusion();
+   *   }
+   *
+   *   public static void configClientUpdateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *       LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2518,15 +3748,31 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateExclusionRequest request =
-   *       UpdateExclusionRequest.newBuilder()
-   *           .setName(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
-   *           .setExclusion(LogExclusion.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   LogExclusion response = configClient.updateExclusion(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.logging.v2.UpdateExclusionRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateExclusion();
+   *   }
+   *
+   *   public static void configClientUpdateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateExclusionRequest request =
+   *           UpdateExclusionRequest.newBuilder()
+   *               .setName(
+   *                   LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *               .setExclusion(LogExclusion.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       LogExclusion response = configClient.updateExclusion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2544,17 +3790,34 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateExclusionRequest request =
-   *       UpdateExclusionRequest.newBuilder()
-   *           .setName(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
-   *           .setExclusion(LogExclusion.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogExclusion> future = configClient.updateExclusionCallable().futureCall(request);
-   *   // Do something.
-   *   LogExclusion response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogExclusion;
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.logging.v2.UpdateExclusionRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateExclusion();
+   *   }
+   *
+   *   public static void configClientUpdateExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateExclusionRequest request =
+   *           UpdateExclusionRequest.newBuilder()
+   *               .setName(
+   *                   LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *               .setExclusion(LogExclusion.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogExclusion> future = configClient.updateExclusionCallable().futureCall(request);
+   *       // Do something.
+   *       LogExclusion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2569,9 +3832,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
-   *   configClient.deleteExclusion(name);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteExclusion();
+   *   }
+   *
+   *   public static void configClientDeleteExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *       configClient.deleteExclusion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2596,9 +3873,23 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
-   *   configClient.deleteExclusion(name);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteExclusion();
+   *   }
+   *
+   *   public static void configClientDeleteExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *       configClient.deleteExclusion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2622,13 +3913,28 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteExclusionRequest request =
-   *       DeleteExclusionRequest.newBuilder()
-   *           .setName(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
-   *           .build();
-   *   configClient.deleteExclusion(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.DeleteExclusionRequest;
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteExclusion();
+   *   }
+   *
+   *   public static void configClientDeleteExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteExclusionRequest request =
+   *           DeleteExclusionRequest.newBuilder()
+   *               .setName(
+   *                   LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *               .build();
+   *       configClient.deleteExclusion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2646,15 +3952,31 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   DeleteExclusionRequest request =
-   *       DeleteExclusionRequest.newBuilder()
-   *           .setName(
-   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = configClient.deleteExclusionCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.DeleteExclusionRequest;
+   * import com.google.logging.v2.LogExclusionName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class ConfigClientDeleteExclusion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientDeleteExclusion();
+   *   }
+   *
+   *   public static void configClientDeleteExclusion() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       DeleteExclusionRequest request =
+   *           DeleteExclusionRequest.newBuilder()
+   *               .setName(
+   *                   LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = configClient.deleteExclusionCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2675,12 +3997,27 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetCmekSettingsRequest request =
-   *       GetCmekSettingsRequest.newBuilder()
-   *           .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
-   *           .build();
-   *   CmekSettings response = configClient.getCmekSettings(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CmekSettings;
+   * import com.google.logging.v2.CmekSettingsName;
+   * import com.google.logging.v2.GetCmekSettingsRequest;
+   *
+   * public class ConfigClientGetCmekSettings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetCmekSettings();
+   *   }
+   *
+   *   public static void configClientGetCmekSettings() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetCmekSettingsRequest request =
+   *           GetCmekSettingsRequest.newBuilder()
+   *               .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+   *               .build();
+   *       CmekSettings response = configClient.getCmekSettings(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2704,14 +4041,30 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetCmekSettingsRequest request =
-   *       GetCmekSettingsRequest.newBuilder()
-   *           .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
-   *           .build();
-   *   ApiFuture<CmekSettings> future = configClient.getCmekSettingsCallable().futureCall(request);
-   *   // Do something.
-   *   CmekSettings response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CmekSettings;
+   * import com.google.logging.v2.CmekSettingsName;
+   * import com.google.logging.v2.GetCmekSettingsRequest;
+   *
+   * public class ConfigClientGetCmekSettings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientGetCmekSettings();
+   *   }
+   *
+   *   public static void configClientGetCmekSettings() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       GetCmekSettingsRequest request =
+   *           GetCmekSettingsRequest.newBuilder()
+   *               .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+   *               .build();
+   *       ApiFuture<CmekSettings> future = configClient.getCmekSettingsCallable().futureCall(request);
+   *       // Do something.
+   *       CmekSettings response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2737,14 +4090,29 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateCmekSettingsRequest request =
-   *       UpdateCmekSettingsRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setCmekSettings(CmekSettings.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   CmekSettings response = configClient.updateCmekSettings(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CmekSettings;
+   * import com.google.logging.v2.UpdateCmekSettingsRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateCmekSettings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateCmekSettings();
+   *   }
+   *
+   *   public static void configClientUpdateCmekSettings() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateCmekSettingsRequest request =
+   *           UpdateCmekSettingsRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setCmekSettings(CmekSettings.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       CmekSettings response = configClient.updateCmekSettings(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2773,17 +4141,33 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (ConfigClient configClient = ConfigClient.create()) {
-   *   UpdateCmekSettingsRequest request =
-   *       UpdateCmekSettingsRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setCmekSettings(CmekSettings.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<CmekSettings> future =
-   *       configClient.updateCmekSettingsCallable().futureCall(request);
-   *   // Do something.
-   *   CmekSettings response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CmekSettings;
+   * import com.google.logging.v2.UpdateCmekSettingsRequest;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class ConfigClientUpdateCmekSettings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     configClientUpdateCmekSettings();
+   *   }
+   *
+   *   public static void configClientUpdateCmekSettings() throws Exception {
+   *     try (ConfigClient configClient = ConfigClient.create()) {
+   *       UpdateCmekSettingsRequest request =
+   *           UpdateCmekSettingsRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setCmekSettings(CmekSettings.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<CmekSettings> future =
+   *           configClient.updateCmekSettingsCallable().futureCall(request);
+   *       // Do something.
+   *       CmekSettings response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

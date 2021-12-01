@@ -77,13 +77,29 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
- *   SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
- *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
- *   PushConfig pushConfig = PushConfig.newBuilder().build();
- *   int ackDeadlineSeconds = 2135351438;
- *   Subscription response =
- *       subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.pubsub.v1.PushConfig;
+ * import com.google.pubsub.v1.Subscription;
+ * import com.google.pubsub.v1.SubscriptionName;
+ * import com.google.pubsub.v1.TopicName;
+ *
+ * public class SubscriptionAdminClientCreateSubscription {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     subscriptionAdminClientCreateSubscription();
+ *   }
+ *
+ *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+ *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+ *       SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+ *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+ *       PushConfig pushConfig = PushConfig.newBuilder().build();
+ *       int ackDeadlineSeconds = 2135351438;
+ *       Subscription response =
+ *           subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -117,21 +133,45 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * SubscriptionAdminSettings subscriptionAdminSettings =
- *     SubscriptionAdminSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * SubscriptionAdminClient subscriptionAdminClient =
- *     SubscriptionAdminClient.create(subscriptionAdminSettings);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class SubscriptionAdminClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     subscriptionAdminClientCreate();
+ *   }
+ *
+ *   public static void subscriptionAdminClientCreate() throws Exception {
+ *     SubscriptionAdminSettings subscriptionAdminSettings =
+ *         SubscriptionAdminSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     SubscriptionAdminClient subscriptionAdminClient =
+ *         SubscriptionAdminClient.create(subscriptionAdminSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * SubscriptionAdminSettings subscriptionAdminSettings =
- *     SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
- * SubscriptionAdminClient subscriptionAdminClient =
- *     SubscriptionAdminClient.create(subscriptionAdminSettings);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * public class SubscriptionAdminClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     subscriptionAdminClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void subscriptionAdminClientClassHeaderEndpoint() throws Exception {
+ *     SubscriptionAdminSettings subscriptionAdminSettings =
+ *         SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     SubscriptionAdminClient subscriptionAdminClient =
+ *         SubscriptionAdminClient.create(subscriptionAdminSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -205,13 +245,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   PushConfig pushConfig = PushConfig.newBuilder().build();
-   *   int ackDeadlineSeconds = 2135351438;
-   *   Subscription response =
-   *       subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class SubscriptionAdminClientCreateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       PushConfig pushConfig = PushConfig.newBuilder().build();
+   *       int ackDeadlineSeconds = 2135351438;
+   *       Subscription response =
+   *           subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -271,13 +327,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   PushConfig pushConfig = PushConfig.newBuilder().build();
-   *   int ackDeadlineSeconds = 2135351438;
-   *   Subscription response =
-   *       subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class SubscriptionAdminClientCreateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       PushConfig pushConfig = PushConfig.newBuilder().build();
+   *       int ackDeadlineSeconds = 2135351438;
+   *       Subscription response =
+   *           subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -337,13 +409,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   PushConfig pushConfig = PushConfig.newBuilder().build();
-   *   int ackDeadlineSeconds = 2135351438;
-   *   Subscription response =
-   *       subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class SubscriptionAdminClientCreateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       PushConfig pushConfig = PushConfig.newBuilder().build();
+   *       int ackDeadlineSeconds = 2135351438;
+   *       Subscription response =
+   *           subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -403,13 +491,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   PushConfig pushConfig = PushConfig.newBuilder().build();
-   *   int ackDeadlineSeconds = 2135351438;
-   *   Subscription response =
-   *       subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class SubscriptionAdminClientCreateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String name = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       PushConfig pushConfig = PushConfig.newBuilder().build();
+   *       int ackDeadlineSeconds = 2135351438;
+   *       Subscription response =
+   *           subscriptionAdminClient.createSubscription(name, topic, pushConfig, ackDeadlineSeconds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -469,25 +573,46 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   Subscription request =
-   *       Subscription.newBuilder()
-   *           .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPushConfig(PushConfig.newBuilder().build())
-   *           .setAckDeadlineSeconds(2135351438)
-   *           .setRetainAckedMessages(true)
-   *           .setMessageRetentionDuration(Duration.newBuilder().build())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .setEnableMessageOrdering(true)
-   *           .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
-   *           .setFilter("filter-1274492040")
-   *           .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
-   *           .setRetryPolicy(RetryPolicy.newBuilder().build())
-   *           .setDetached(true)
-   *           .setTopicMessageRetentionDuration(Duration.newBuilder().build())
-   *           .build();
-   *   Subscription response = subscriptionAdminClient.createSubscription(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Duration;
+   * import com.google.pubsub.v1.DeadLetterPolicy;
+   * import com.google.pubsub.v1.ExpirationPolicy;
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.RetryPolicy;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.HashMap;
+   *
+   * public class SubscriptionAdminClientCreateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       Subscription request =
+   *           Subscription.newBuilder()
+   *               .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPushConfig(PushConfig.newBuilder().build())
+   *               .setAckDeadlineSeconds(2135351438)
+   *               .setRetainAckedMessages(true)
+   *               .setMessageRetentionDuration(Duration.newBuilder().build())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .setEnableMessageOrdering(true)
+   *               .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
+   *               .setFilter("filter-1274492040")
+   *               .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
+   *               .setRetryPolicy(RetryPolicy.newBuilder().build())
+   *               .setDetached(true)
+   *               .setTopicMessageRetentionDuration(Duration.newBuilder().build())
+   *               .build();
+   *       Subscription response = subscriptionAdminClient.createSubscription(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -514,28 +639,50 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   Subscription request =
-   *       Subscription.newBuilder()
-   *           .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPushConfig(PushConfig.newBuilder().build())
-   *           .setAckDeadlineSeconds(2135351438)
-   *           .setRetainAckedMessages(true)
-   *           .setMessageRetentionDuration(Duration.newBuilder().build())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .setEnableMessageOrdering(true)
-   *           .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
-   *           .setFilter("filter-1274492040")
-   *           .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
-   *           .setRetryPolicy(RetryPolicy.newBuilder().build())
-   *           .setDetached(true)
-   *           .setTopicMessageRetentionDuration(Duration.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Subscription> future =
-   *       subscriptionAdminClient.createSubscriptionCallable().futureCall(request);
-   *   // Do something.
-   *   Subscription response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Duration;
+   * import com.google.pubsub.v1.DeadLetterPolicy;
+   * import com.google.pubsub.v1.ExpirationPolicy;
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.RetryPolicy;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.HashMap;
+   *
+   * public class SubscriptionAdminClientCreateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       Subscription request =
+   *           Subscription.newBuilder()
+   *               .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPushConfig(PushConfig.newBuilder().build())
+   *               .setAckDeadlineSeconds(2135351438)
+   *               .setRetainAckedMessages(true)
+   *               .setMessageRetentionDuration(Duration.newBuilder().build())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .setEnableMessageOrdering(true)
+   *               .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
+   *               .setFilter("filter-1274492040")
+   *               .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
+   *               .setRetryPolicy(RetryPolicy.newBuilder().build())
+   *               .setDetached(true)
+   *               .setTopicMessageRetentionDuration(Duration.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Subscription> future =
+   *           subscriptionAdminClient.createSubscriptionCallable().futureCall(request);
+   *       // Do something.
+   *       Subscription response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -550,9 +697,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   Subscription response = subscriptionAdminClient.getSubscription(subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientGetSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       Subscription response = subscriptionAdminClient.getSubscription(subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -575,9 +736,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   Subscription response = subscriptionAdminClient.getSubscription(subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientGetSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       Subscription response = subscriptionAdminClient.getSubscription(subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -598,12 +773,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   GetSubscriptionRequest request =
-   *       GetSubscriptionRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   Subscription response = subscriptionAdminClient.getSubscription(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.GetSubscriptionRequest;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientGetSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       GetSubscriptionRequest request =
+   *           GetSubscriptionRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       Subscription response = subscriptionAdminClient.getSubscription(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -621,15 +811,31 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   GetSubscriptionRequest request =
-   *       GetSubscriptionRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   ApiFuture<Subscription> future =
-   *       subscriptionAdminClient.getSubscriptionCallable().futureCall(request);
-   *   // Do something.
-   *   Subscription response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.GetSubscriptionRequest;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientGetSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       GetSubscriptionRequest request =
+   *           GetSubscriptionRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       ApiFuture<Subscription> future =
+   *           subscriptionAdminClient.getSubscriptionCallable().futureCall(request);
+   *       // Do something.
+   *       Subscription response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -645,13 +851,28 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   UpdateSubscriptionRequest request =
-   *       UpdateSubscriptionRequest.newBuilder()
-   *           .setSubscription(Subscription.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   Subscription response = subscriptionAdminClient.updateSubscription(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.UpdateSubscriptionRequest;
+   *
+   * public class SubscriptionAdminClientUpdateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientUpdateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientUpdateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       UpdateSubscriptionRequest request =
+   *           UpdateSubscriptionRequest.newBuilder()
+   *               .setSubscription(Subscription.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       Subscription response = subscriptionAdminClient.updateSubscription(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -670,16 +891,32 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   UpdateSubscriptionRequest request =
-   *       UpdateSubscriptionRequest.newBuilder()
-   *           .setSubscription(Subscription.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Subscription> future =
-   *       subscriptionAdminClient.updateSubscriptionCallable().futureCall(request);
-   *   // Do something.
-   *   Subscription response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   * import com.google.pubsub.v1.Subscription;
+   * import com.google.pubsub.v1.UpdateSubscriptionRequest;
+   *
+   * public class SubscriptionAdminClientUpdateSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientUpdateSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientUpdateSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       UpdateSubscriptionRequest request =
+   *           UpdateSubscriptionRequest.newBuilder()
+   *               .setSubscription(Subscription.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Subscription> future =
+   *           subscriptionAdminClient.updateSubscriptionCallable().futureCall(request);
+   *       // Do something.
+   *       Subscription response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -694,10 +931,24 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ProjectName project = ProjectName.of("[PROJECT]");
-   *   for (Subscription element : subscriptionAdminClient.listSubscriptions(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Subscription;
+   *
+   * public class SubscriptionAdminClientListSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSubscriptions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSubscriptions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ProjectName project = ProjectName.of("[PROJECT]");
+   *       for (Subscription element : subscriptionAdminClient.listSubscriptions(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -721,10 +972,24 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String project = ProjectName.of("[PROJECT]").toString();
-   *   for (Subscription element : subscriptionAdminClient.listSubscriptions(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Subscription;
+   *
+   * public class SubscriptionAdminClientListSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSubscriptions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSubscriptions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String project = ProjectName.of("[PROJECT]").toString();
+   *       for (Subscription element : subscriptionAdminClient.listSubscriptions(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -746,15 +1011,30 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ListSubscriptionsRequest request =
-   *       ListSubscriptionsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Subscription element : subscriptionAdminClient.listSubscriptions(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ListSubscriptionsRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Subscription;
+   *
+   * public class SubscriptionAdminClientListSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSubscriptions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSubscriptions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ListSubscriptionsRequest request =
+   *           ListSubscriptionsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Subscription element : subscriptionAdminClient.listSubscriptions(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -773,18 +1053,34 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ListSubscriptionsRequest request =
-   *       ListSubscriptionsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Subscription> future =
-   *       subscriptionAdminClient.listSubscriptionsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Subscription element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ListSubscriptionsRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Subscription;
+   *
+   * public class SubscriptionAdminClientListSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSubscriptions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSubscriptions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ListSubscriptionsRequest request =
+   *           ListSubscriptionsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Subscription> future =
+   *           subscriptionAdminClient.listSubscriptionsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Subscription element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -801,24 +1097,41 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ListSubscriptionsRequest request =
-   *       ListSubscriptionsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListSubscriptionsResponse response =
-   *         subscriptionAdminClient.listSubscriptionsCallable().call(request);
-   *     for (Subscription element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.pubsub.v1.ListSubscriptionsRequest;
+   * import com.google.pubsub.v1.ListSubscriptionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Subscription;
+   *
+   * public class SubscriptionAdminClientListSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSubscriptions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSubscriptions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ListSubscriptionsRequest request =
+   *           ListSubscriptionsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListSubscriptionsResponse response =
+   *             subscriptionAdminClient.listSubscriptionsCallable().call(request);
+   *         for (Subscription element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -839,9 +1152,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   subscriptionAdminClient.deleteSubscription(subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientDeleteSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       subscriptionAdminClient.deleteSubscription(subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -867,9 +1194,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   subscriptionAdminClient.deleteSubscription(subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientDeleteSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       subscriptionAdminClient.deleteSubscription(subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -893,12 +1234,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   DeleteSubscriptionRequest request =
-   *       DeleteSubscriptionRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   subscriptionAdminClient.deleteSubscription(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteSubscriptionRequest;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientDeleteSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       DeleteSubscriptionRequest request =
+   *           DeleteSubscriptionRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       subscriptionAdminClient.deleteSubscription(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -919,15 +1275,31 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   DeleteSubscriptionRequest request =
-   *       DeleteSubscriptionRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future =
-   *       subscriptionAdminClient.deleteSubscriptionCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteSubscriptionRequest;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientDeleteSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSubscription();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSubscription() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       DeleteSubscriptionRequest request =
+   *           DeleteSubscriptionRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future =
+   *           subscriptionAdminClient.deleteSubscriptionCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -945,11 +1317,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   List<String> ackIds = new ArrayList<>();
-   *   int ackDeadlineSeconds = 2135351438;
-   *   subscriptionAdminClient.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class SubscriptionAdminClientModifyAckDeadline {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyAckDeadline();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyAckDeadline() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       List<String> ackIds = new ArrayList<>();
+   *       int ackDeadlineSeconds = 2135351438;
+   *       subscriptionAdminClient.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -986,11 +1374,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   List<String> ackIds = new ArrayList<>();
-   *   int ackDeadlineSeconds = 2135351438;
-   *   subscriptionAdminClient.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class SubscriptionAdminClientModifyAckDeadline {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyAckDeadline();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyAckDeadline() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       List<String> ackIds = new ArrayList<>();
+   *       int ackDeadlineSeconds = 2135351438;
+   *       subscriptionAdminClient.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1027,14 +1431,30 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ModifyAckDeadlineRequest request =
-   *       ModifyAckDeadlineRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .addAllAckIds(new ArrayList<String>())
-   *           .setAckDeadlineSeconds(2135351438)
-   *           .build();
-   *   subscriptionAdminClient.modifyAckDeadline(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.ModifyAckDeadlineRequest;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientModifyAckDeadline {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyAckDeadline();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyAckDeadline() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ModifyAckDeadlineRequest request =
+   *           ModifyAckDeadlineRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .addAllAckIds(new ArrayList<String>())
+   *               .setAckDeadlineSeconds(2135351438)
+   *               .build();
+   *       subscriptionAdminClient.modifyAckDeadline(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1055,17 +1475,34 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ModifyAckDeadlineRequest request =
-   *       ModifyAckDeadlineRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .addAllAckIds(new ArrayList<String>())
-   *           .setAckDeadlineSeconds(2135351438)
-   *           .build();
-   *   ApiFuture<Empty> future =
-   *       subscriptionAdminClient.modifyAckDeadlineCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.ModifyAckDeadlineRequest;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientModifyAckDeadline {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyAckDeadline();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyAckDeadline() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ModifyAckDeadlineRequest request =
+   *           ModifyAckDeadlineRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .addAllAckIds(new ArrayList<String>())
+   *               .setAckDeadlineSeconds(2135351438)
+   *               .build();
+   *       ApiFuture<Empty> future =
+   *           subscriptionAdminClient.modifyAckDeadlineCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1084,10 +1521,26 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   List<String> ackIds = new ArrayList<>();
-   *   subscriptionAdminClient.acknowledge(subscription, ackIds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class SubscriptionAdminClientAcknowledge {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientAcknowledge();
+   *   }
+   *
+   *   public static void subscriptionAdminClientAcknowledge() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       List<String> ackIds = new ArrayList<>();
+   *       subscriptionAdminClient.acknowledge(subscription, ackIds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1117,10 +1570,26 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   List<String> ackIds = new ArrayList<>();
-   *   subscriptionAdminClient.acknowledge(subscription, ackIds);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class SubscriptionAdminClientAcknowledge {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientAcknowledge();
+   *   }
+   *
+   *   public static void subscriptionAdminClientAcknowledge() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       List<String> ackIds = new ArrayList<>();
+   *       subscriptionAdminClient.acknowledge(subscription, ackIds);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1147,13 +1616,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   AcknowledgeRequest request =
-   *       AcknowledgeRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .addAllAckIds(new ArrayList<String>())
-   *           .build();
-   *   subscriptionAdminClient.acknowledge(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.AcknowledgeRequest;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientAcknowledge {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientAcknowledge();
+   *   }
+   *
+   *   public static void subscriptionAdminClientAcknowledge() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       AcknowledgeRequest request =
+   *           AcknowledgeRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .addAllAckIds(new ArrayList<String>())
+   *               .build();
+   *       subscriptionAdminClient.acknowledge(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1175,15 +1660,32 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   AcknowledgeRequest request =
-   *       AcknowledgeRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .addAllAckIds(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<Empty> future = subscriptionAdminClient.acknowledgeCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.AcknowledgeRequest;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientAcknowledge {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientAcknowledge();
+   *   }
+   *
+   *   public static void subscriptionAdminClientAcknowledge() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       AcknowledgeRequest request =
+   *           AcknowledgeRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .addAllAckIds(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<Empty> future = subscriptionAdminClient.acknowledgeCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1199,10 +1701,24 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   int maxMessages = 496131527;
-   *   PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       int maxMessages = 496131527;
+   *       PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1229,10 +1745,24 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   int maxMessages = 496131527;
-   *   PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       int maxMessages = 496131527;
+   *       PullResponse response = subscriptionAdminClient.pull(subscription, maxMessages);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1256,12 +1786,26 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   boolean returnImmediately = true;
-   *   int maxMessages = 496131527;
-   *   PullResponse response =
-   *       subscriptionAdminClient.pull(subscription, returnImmediately, maxMessages);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       boolean returnImmediately = true;
+   *       int maxMessages = 496131527;
+   *       PullResponse response =
+   *           subscriptionAdminClient.pull(subscription, returnImmediately, maxMessages);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1296,12 +1840,26 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   boolean returnImmediately = true;
-   *   int maxMessages = 496131527;
-   *   PullResponse response =
-   *       subscriptionAdminClient.pull(subscription, returnImmediately, maxMessages);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       boolean returnImmediately = true;
+   *       int maxMessages = 496131527;
+   *       PullResponse response =
+   *           subscriptionAdminClient.pull(subscription, returnImmediately, maxMessages);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1335,14 +1893,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   PullRequest request =
-   *       PullRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .setReturnImmediately(true)
-   *           .setMaxMessages(496131527)
-   *           .build();
-   *   PullResponse response = subscriptionAdminClient.pull(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PullRequest;
+   * import com.google.pubsub.v1.PullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       PullRequest request =
+   *           PullRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .setReturnImmediately(true)
+   *               .setMaxMessages(496131527)
+   *               .build();
+   *       PullResponse response = subscriptionAdminClient.pull(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1361,16 +1934,32 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   PullRequest request =
-   *       PullRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .setReturnImmediately(true)
-   *           .setMaxMessages(496131527)
-   *           .build();
-   *   ApiFuture<PullResponse> future = subscriptionAdminClient.pullCallable().futureCall(request);
-   *   // Do something.
-   *   PullResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.PullRequest;
+   * import com.google.pubsub.v1.PullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       PullRequest request =
+   *           PullRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .setReturnImmediately(true)
+   *               .setMaxMessages(496131527)
+   *               .build();
+   *       ApiFuture<PullResponse> future = subscriptionAdminClient.pullCallable().futureCall(request);
+   *       // Do something.
+   *       PullResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1390,23 +1979,40 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   BidiStream<StreamingPullRequest, StreamingPullResponse> bidiStream =
-   *       subscriptionAdminClient.streamingPullCallable().call();
-   *   StreamingPullRequest request =
-   *       StreamingPullRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .addAllAckIds(new ArrayList<String>())
-   *           .addAllModifyDeadlineSeconds(new ArrayList<Integer>())
-   *           .addAllModifyDeadlineAckIds(new ArrayList<String>())
-   *           .setStreamAckDeadlineSeconds(1875467245)
-   *           .setClientId("clientId908408390")
-   *           .setMaxOutstandingMessages(-1315266996)
-   *           .setMaxOutstandingBytes(-2103098517)
-   *           .build();
-   *   bidiStream.send(request);
-   *   for (StreamingPullResponse response : bidiStream) {
-   *     // Do something when a response is received.
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.gax.rpc.BidiStream;
+   * import com.google.pubsub.v1.StreamingPullRequest;
+   * import com.google.pubsub.v1.StreamingPullResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientStreamingPull {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientStreamingPull();
+   *   }
+   *
+   *   public static void subscriptionAdminClientStreamingPull() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       BidiStream<StreamingPullRequest, StreamingPullResponse> bidiStream =
+   *           subscriptionAdminClient.streamingPullCallable().call();
+   *       StreamingPullRequest request =
+   *           StreamingPullRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .addAllAckIds(new ArrayList<String>())
+   *               .addAllModifyDeadlineSeconds(new ArrayList<Integer>())
+   *               .addAllModifyDeadlineAckIds(new ArrayList<String>())
+   *               .setStreamAckDeadlineSeconds(1875467245)
+   *               .setClientId("clientId908408390")
+   *               .setMaxOutstandingMessages(-1315266996)
+   *               .setMaxOutstandingBytes(-2103098517)
+   *               .build();
+   *       bidiStream.send(request);
+   *       for (StreamingPullResponse response : bidiStream) {
+   *         // Do something when a response is received.
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1428,10 +2034,25 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   PushConfig pushConfig = PushConfig.newBuilder().build();
-   *   subscriptionAdminClient.modifyPushConfig(subscription, pushConfig);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientModifyPushConfig {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyPushConfig();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyPushConfig() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       PushConfig pushConfig = PushConfig.newBuilder().build();
+   *       subscriptionAdminClient.modifyPushConfig(subscription, pushConfig);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1464,10 +2085,25 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   PushConfig pushConfig = PushConfig.newBuilder().build();
-   *   subscriptionAdminClient.modifyPushConfig(subscription, pushConfig);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientModifyPushConfig {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyPushConfig();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyPushConfig() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       PushConfig pushConfig = PushConfig.newBuilder().build();
+   *       subscriptionAdminClient.modifyPushConfig(subscription, pushConfig);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1500,13 +2136,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ModifyPushConfigRequest request =
-   *       ModifyPushConfigRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .setPushConfig(PushConfig.newBuilder().build())
-   *           .build();
-   *   subscriptionAdminClient.modifyPushConfig(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.ModifyPushConfigRequest;
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientModifyPushConfig {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyPushConfig();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyPushConfig() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ModifyPushConfigRequest request =
+   *           ModifyPushConfigRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .setPushConfig(PushConfig.newBuilder().build())
+   *               .build();
+   *       subscriptionAdminClient.modifyPushConfig(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1529,16 +2181,33 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ModifyPushConfigRequest request =
-   *       ModifyPushConfigRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .setPushConfig(PushConfig.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Empty> future =
-   *       subscriptionAdminClient.modifyPushConfigCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.ModifyPushConfigRequest;
+   * import com.google.pubsub.v1.PushConfig;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientModifyPushConfig {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientModifyPushConfig();
+   *   }
+   *
+   *   public static void subscriptionAdminClientModifyPushConfig() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ModifyPushConfigRequest request =
+   *           ModifyPushConfigRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .setPushConfig(PushConfig.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Empty> future =
+   *           subscriptionAdminClient.modifyPushConfigCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1556,9 +2225,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SnapshotName snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
-   *   Snapshot response = subscriptionAdminClient.getSnapshot(snapshot);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientGetSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SnapshotName snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
+   *       Snapshot response = subscriptionAdminClient.getSnapshot(snapshot);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1584,9 +2267,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
-   *   Snapshot response = subscriptionAdminClient.getSnapshot(snapshot);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientGetSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
+   *       Snapshot response = subscriptionAdminClient.getSnapshot(snapshot);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1609,12 +2306,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   GetSnapshotRequest request =
-   *       GetSnapshotRequest.newBuilder()
-   *           .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-   *           .build();
-   *   Snapshot response = subscriptionAdminClient.getSnapshot(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.GetSnapshotRequest;
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientGetSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       GetSnapshotRequest request =
+   *           GetSnapshotRequest.newBuilder()
+   *               .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *               .build();
+   *       Snapshot response = subscriptionAdminClient.getSnapshot(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1635,15 +2347,31 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   GetSnapshotRequest request =
-   *       GetSnapshotRequest.newBuilder()
-   *           .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-   *           .build();
-   *   ApiFuture<Snapshot> future =
-   *       subscriptionAdminClient.getSnapshotCallable().futureCall(request);
-   *   // Do something.
-   *   Snapshot response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.GetSnapshotRequest;
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientGetSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       GetSnapshotRequest request =
+   *           GetSnapshotRequest.newBuilder()
+   *               .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *               .build();
+   *       ApiFuture<Snapshot> future =
+   *           subscriptionAdminClient.getSnapshotCallable().futureCall(request);
+   *       // Do something.
+   *       Snapshot response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1661,10 +2389,24 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ProjectName project = ProjectName.of("[PROJECT]");
-   *   for (Snapshot element : subscriptionAdminClient.listSnapshots(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Snapshot;
+   *
+   * public class SubscriptionAdminClientListSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSnapshots();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSnapshots() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ProjectName project = ProjectName.of("[PROJECT]");
+   *       for (Snapshot element : subscriptionAdminClient.listSnapshots(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1691,10 +2433,24 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String project = ProjectName.of("[PROJECT]").toString();
-   *   for (Snapshot element : subscriptionAdminClient.listSnapshots(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Snapshot;
+   *
+   * public class SubscriptionAdminClientListSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSnapshots();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSnapshots() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String project = ProjectName.of("[PROJECT]").toString();
+   *       for (Snapshot element : subscriptionAdminClient.listSnapshots(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1718,15 +2474,30 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ListSnapshotsRequest request =
-   *       ListSnapshotsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Snapshot element : subscriptionAdminClient.listSnapshots(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ListSnapshotsRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Snapshot;
+   *
+   * public class SubscriptionAdminClientListSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSnapshots();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSnapshots() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ListSnapshotsRequest request =
+   *           ListSnapshotsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Snapshot element : subscriptionAdminClient.listSnapshots(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1748,18 +2519,34 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ListSnapshotsRequest request =
-   *       ListSnapshotsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Snapshot> future =
-   *       subscriptionAdminClient.listSnapshotsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Snapshot element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ListSnapshotsRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Snapshot;
+   *
+   * public class SubscriptionAdminClientListSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSnapshots();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSnapshots() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ListSnapshotsRequest request =
+   *           ListSnapshotsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Snapshot> future =
+   *           subscriptionAdminClient.listSnapshotsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Snapshot element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1779,24 +2566,41 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   ListSnapshotsRequest request =
-   *       ListSnapshotsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListSnapshotsResponse response =
-   *         subscriptionAdminClient.listSnapshotsCallable().call(request);
-   *     for (Snapshot element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.pubsub.v1.ListSnapshotsRequest;
+   * import com.google.pubsub.v1.ListSnapshotsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Snapshot;
+   *
+   * public class SubscriptionAdminClientListSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientListSnapshots();
+   *   }
+   *
+   *   public static void subscriptionAdminClientListSnapshots() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       ListSnapshotsRequest request =
+   *           ListSnapshotsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListSnapshotsResponse response =
+   *             subscriptionAdminClient.listSnapshotsCallable().call(request);
+   *         for (Snapshot element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -1824,10 +2628,25 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SnapshotName name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientCreateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SnapshotName name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1872,10 +2691,25 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SnapshotName name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientCreateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SnapshotName name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1920,10 +2754,25 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
-   *   SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
-   *   Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientCreateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
+   *       SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
+   *       Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1968,10 +2817,25 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
-   *   String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
-   *   Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientCreateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String name = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
+   *       String subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString();
+   *       Snapshot response = subscriptionAdminClient.createSnapshot(name, subscription);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2013,14 +2877,31 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   CreateSnapshotRequest request =
-   *       CreateSnapshotRequest.newBuilder()
-   *           .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .build();
-   *   Snapshot response = subscriptionAdminClient.createSnapshot(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.CreateSnapshotRequest;
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.HashMap;
+   *
+   * public class SubscriptionAdminClientCreateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       CreateSnapshotRequest request =
+   *           CreateSnapshotRequest.newBuilder()
+   *               .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .build();
+   *       Snapshot response = subscriptionAdminClient.createSnapshot(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2049,17 +2930,35 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   CreateSnapshotRequest request =
-   *       CreateSnapshotRequest.newBuilder()
-   *           .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .build();
-   *   ApiFuture<Snapshot> future =
-   *       subscriptionAdminClient.createSnapshotCallable().futureCall(request);
-   *   // Do something.
-   *   Snapshot response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.CreateSnapshotRequest;
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.SnapshotName;
+   * import com.google.pubsub.v1.SubscriptionName;
+   * import java.util.HashMap;
+   *
+   * public class SubscriptionAdminClientCreateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientCreateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientCreateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       CreateSnapshotRequest request =
+   *           CreateSnapshotRequest.newBuilder()
+   *               .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .build();
+   *       ApiFuture<Snapshot> future =
+   *           subscriptionAdminClient.createSnapshotCallable().futureCall(request);
+   *       // Do something.
+   *       Snapshot response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2077,13 +2976,28 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   UpdateSnapshotRequest request =
-   *       UpdateSnapshotRequest.newBuilder()
-   *           .setSnapshot(Snapshot.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   Snapshot response = subscriptionAdminClient.updateSnapshot(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.UpdateSnapshotRequest;
+   *
+   * public class SubscriptionAdminClientUpdateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientUpdateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientUpdateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       UpdateSnapshotRequest request =
+   *           UpdateSnapshotRequest.newBuilder()
+   *               .setSnapshot(Snapshot.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       Snapshot response = subscriptionAdminClient.updateSnapshot(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2104,16 +3018,32 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   UpdateSnapshotRequest request =
-   *       UpdateSnapshotRequest.newBuilder()
-   *           .setSnapshot(Snapshot.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Snapshot> future =
-   *       subscriptionAdminClient.updateSnapshotCallable().futureCall(request);
-   *   // Do something.
-   *   Snapshot response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   * import com.google.pubsub.v1.Snapshot;
+   * import com.google.pubsub.v1.UpdateSnapshotRequest;
+   *
+   * public class SubscriptionAdminClientUpdateSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientUpdateSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientUpdateSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       UpdateSnapshotRequest request =
+   *           UpdateSnapshotRequest.newBuilder()
+   *               .setSnapshot(Snapshot.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Snapshot> future =
+   *           subscriptionAdminClient.updateSnapshotCallable().futureCall(request);
+   *       // Do something.
+   *       Snapshot response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2134,9 +3064,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SnapshotName snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
-   *   subscriptionAdminClient.deleteSnapshot(snapshot);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientDeleteSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SnapshotName snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
+   *       subscriptionAdminClient.deleteSnapshot(snapshot);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2165,9 +3109,23 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   String snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
-   *   subscriptionAdminClient.deleteSnapshot(snapshot);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientDeleteSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       String snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString();
+   *       subscriptionAdminClient.deleteSnapshot(snapshot);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2194,12 +3152,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   DeleteSnapshotRequest request =
-   *       DeleteSnapshotRequest.newBuilder()
-   *           .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-   *           .build();
-   *   subscriptionAdminClient.deleteSnapshot(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteSnapshotRequest;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientDeleteSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       DeleteSnapshotRequest request =
+   *           DeleteSnapshotRequest.newBuilder()
+   *               .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *               .build();
+   *       subscriptionAdminClient.deleteSnapshot(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2223,15 +3196,31 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   DeleteSnapshotRequest request =
-   *       DeleteSnapshotRequest.newBuilder()
-   *           .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future =
-   *       subscriptionAdminClient.deleteSnapshotCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteSnapshotRequest;
+   * import com.google.pubsub.v1.SnapshotName;
+   *
+   * public class SubscriptionAdminClientDeleteSnapshot {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientDeleteSnapshot();
+   *   }
+   *
+   *   public static void subscriptionAdminClientDeleteSnapshot() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       DeleteSnapshotRequest request =
+   *           DeleteSnapshotRequest.newBuilder()
+   *               .setSnapshot(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future =
+   *           subscriptionAdminClient.deleteSnapshotCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2251,12 +3240,27 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SeekRequest request =
-   *       SeekRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   SeekResponse response = subscriptionAdminClient.seek(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.SeekRequest;
+   * import com.google.pubsub.v1.SeekResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientSeek {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientSeek();
+   *   }
+   *
+   *   public static void subscriptionAdminClientSeek() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SeekRequest request =
+   *           SeekRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       SeekResponse response = subscriptionAdminClient.seek(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2279,14 +3283,30 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SeekRequest request =
-   *       SeekRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   ApiFuture<SeekResponse> future = subscriptionAdminClient.seekCallable().futureCall(request);
-   *   // Do something.
-   *   SeekResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.SeekRequest;
+   * import com.google.pubsub.v1.SeekResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class SubscriptionAdminClientSeek {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientSeek();
+   *   }
+   *
+   *   public static void subscriptionAdminClientSeek() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SeekRequest request =
+   *           SeekRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       ApiFuture<SeekResponse> future = subscriptionAdminClient.seekCallable().futureCall(request);
+   *       // Do something.
+   *       SeekResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2303,13 +3323,28 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   Policy response = subscriptionAdminClient.setIamPolicy(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SubscriptionAdminClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientSetIamPolicy();
+   *   }
+   *
+   *   public static void subscriptionAdminClientSetIamPolicy() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       Policy response = subscriptionAdminClient.setIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2329,15 +3364,31 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = subscriptionAdminClient.setIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SubscriptionAdminClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientSetIamPolicy();
+   *   }
+   *
+   *   public static void subscriptionAdminClientSetIamPolicy() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = subscriptionAdminClient.setIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2353,13 +3404,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   Policy response = subscriptionAdminClient.getIamPolicy(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SubscriptionAdminClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetIamPolicy();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetIamPolicy() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       Policy response = subscriptionAdminClient.getIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2378,15 +3445,32 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = subscriptionAdminClient.getIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SubscriptionAdminClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientGetIamPolicy();
+   *   }
+   *
+   *   public static void subscriptionAdminClientGetIamPolicy() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = subscriptionAdminClient.getIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2406,13 +3490,29 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   TestIamPermissionsResponse response = subscriptionAdminClient.testIamPermissions(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientTestIamPermissions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientTestIamPermissions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       TestIamPermissionsResponse response = subscriptionAdminClient.testIamPermissions(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2435,16 +3535,33 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<TestIamPermissionsResponse> future =
-   *       subscriptionAdminClient.testIamPermissionsCallable().futureCall(request);
-   *   // Do something.
-   *   TestIamPermissionsResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class SubscriptionAdminClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     subscriptionAdminClientTestIamPermissions();
+   *   }
+   *
+   *   public static void subscriptionAdminClientTestIamPermissions() throws Exception {
+   *     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<TestIamPermissionsResponse> future =
+   *           subscriptionAdminClient.testIamPermissionsCallable().futureCall(request);
+   *       // Do something.
+   *       TestIamPermissionsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

@@ -51,9 +51,23 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (MetricsClient metricsClient = MetricsClient.create()) {
- *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
- *   LogMetric response = metricsClient.getLogMetric(metricName);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.logging.v2.LogMetric;
+ * import com.google.logging.v2.LogMetricName;
+ *
+ * public class MetricsClientGetLogMetric {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     metricsClientGetLogMetric();
+ *   }
+ *
+ *   public static void metricsClientGetLogMetric() throws Exception {
+ *     try (MetricsClient metricsClient = MetricsClient.create()) {
+ *       LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
+ *       LogMetric response = metricsClient.getLogMetric(metricName);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -86,18 +100,42 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * MetricsSettings metricsSettings =
- *     MetricsSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * MetricsClient metricsClient = MetricsClient.create(metricsSettings);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class MetricsClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     metricsClientCreate();
+ *   }
+ *
+ *   public static void metricsClientCreate() throws Exception {
+ *     MetricsSettings metricsSettings =
+ *         MetricsSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * MetricsSettings metricsSettings = MetricsSettings.newBuilder().setEndpoint(myEndpoint).build();
- * MetricsClient metricsClient = MetricsClient.create(metricsSettings);
+ * package com.google.cloud.logging.v2;
+ *
+ * public class MetricsClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     metricsClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void metricsClientClassHeaderEndpoint() throws Exception {
+ *     MetricsSettings metricsSettings = MetricsSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -160,10 +198,24 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientListLogMetrics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientListLogMetrics();
+   *   }
+   *
+   *   public static void metricsClientListLogMetrics() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -187,10 +239,24 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientListLogMetrics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientListLogMetrics();
+   *   }
+   *
+   *   public static void metricsClientListLogMetrics() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -211,15 +277,30 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   ListLogMetricsRequest request =
-   *       ListLogMetricsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   for (LogMetric element : metricsClient.listLogMetrics(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.ListLogMetricsRequest;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientListLogMetrics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientListLogMetrics();
+   *   }
+   *
+   *   public static void metricsClientListLogMetrics() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       ListLogMetricsRequest request =
+   *           ListLogMetricsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       for (LogMetric element : metricsClient.listLogMetrics(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -238,17 +319,33 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   ListLogMetricsRequest request =
-   *       ListLogMetricsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   ApiFuture<LogMetric> future = metricsClient.listLogMetricsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (LogMetric element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.ListLogMetricsRequest;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientListLogMetrics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientListLogMetrics();
+   *   }
+   *
+   *   public static void metricsClientListLogMetrics() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       ListLogMetricsRequest request =
+   *           ListLogMetricsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       ApiFuture<LogMetric> future = metricsClient.listLogMetricsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (LogMetric element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -265,23 +362,40 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   ListLogMetricsRequest request =
-   *       ListLogMetricsRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setPageToken("pageToken873572522")
-   *           .setPageSize(883849137)
-   *           .build();
-   *   while (true) {
-   *     ListLogMetricsResponse response = metricsClient.listLogMetricsCallable().call(request);
-   *     for (LogMetric element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.logging.v2.ListLogMetricsRequest;
+   * import com.google.logging.v2.ListLogMetricsResponse;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientListLogMetrics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientListLogMetrics();
+   *   }
+   *
+   *   public static void metricsClientListLogMetrics() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       ListLogMetricsRequest request =
+   *           ListLogMetricsRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setPageToken("pageToken873572522")
+   *               .setPageSize(883849137)
+   *               .build();
+   *       while (true) {
+   *         ListLogMetricsResponse response = metricsClient.listLogMetricsCallable().call(request);
+   *         for (LogMetric element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -299,9 +413,23 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
-   *   LogMetric response = metricsClient.getLogMetric(metricName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   *
+   * public class MetricsClientGetLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientGetLogMetric();
+   *   }
+   *
+   *   public static void metricsClientGetLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *       LogMetric response = metricsClient.getLogMetric(metricName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -324,9 +452,23 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
-   *   LogMetric response = metricsClient.getLogMetric(metricName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   *
+   * public class MetricsClientGetLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientGetLogMetric();
+   *   }
+   *
+   *   public static void metricsClientGetLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
+   *       LogMetric response = metricsClient.getLogMetric(metricName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -347,12 +489,27 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   GetLogMetricRequest request =
-   *       GetLogMetricRequest.newBuilder()
-   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
-   *           .build();
-   *   LogMetric response = metricsClient.getLogMetric(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.GetLogMetricRequest;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   *
+   * public class MetricsClientGetLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientGetLogMetric();
+   *   }
+   *
+   *   public static void metricsClientGetLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       GetLogMetricRequest request =
+   *           GetLogMetricRequest.newBuilder()
+   *               .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *               .build();
+   *       LogMetric response = metricsClient.getLogMetric(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -370,14 +527,30 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   GetLogMetricRequest request =
-   *       GetLogMetricRequest.newBuilder()
-   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
-   *           .build();
-   *   ApiFuture<LogMetric> future = metricsClient.getLogMetricCallable().futureCall(request);
-   *   // Do something.
-   *   LogMetric response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.GetLogMetricRequest;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   *
+   * public class MetricsClientGetLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientGetLogMetric();
+   *   }
+   *
+   *   public static void metricsClientGetLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       GetLogMetricRequest request =
+   *           GetLogMetricRequest.newBuilder()
+   *               .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *               .build();
+   *       ApiFuture<LogMetric> future = metricsClient.getLogMetricCallable().futureCall(request);
+   *       // Do something.
+   *       LogMetric response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -392,10 +565,24 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.createLogMetric(parent, metric);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientCreateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientCreateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientCreateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       LogMetric metric = LogMetric.newBuilder().build();
+   *       LogMetric response = metricsClient.createLogMetric(parent, metric);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -422,10 +609,24 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.createLogMetric(parent, metric);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientCreateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientCreateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientCreateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       LogMetric metric = LogMetric.newBuilder().build();
+   *       LogMetric response = metricsClient.createLogMetric(parent, metric);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -449,13 +650,28 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   CreateLogMetricRequest request =
-   *       CreateLogMetricRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setMetric(LogMetric.newBuilder().build())
-   *           .build();
-   *   LogMetric response = metricsClient.createLogMetric(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.CreateLogMetricRequest;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientCreateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientCreateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientCreateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       CreateLogMetricRequest request =
+   *           CreateLogMetricRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setMetric(LogMetric.newBuilder().build())
+   *               .build();
+   *       LogMetric response = metricsClient.createLogMetric(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -473,15 +689,31 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   CreateLogMetricRequest request =
-   *       CreateLogMetricRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setMetric(LogMetric.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogMetric> future = metricsClient.createLogMetricCallable().futureCall(request);
-   *   // Do something.
-   *   LogMetric response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.CreateLogMetricRequest;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.ProjectName;
+   *
+   * public class MetricsClientCreateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientCreateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientCreateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       CreateLogMetricRequest request =
+   *           CreateLogMetricRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setMetric(LogMetric.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogMetric> future = metricsClient.createLogMetricCallable().futureCall(request);
+   *       // Do something.
+   *       LogMetric response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -496,10 +728,24 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
-   *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.updateLogMetric(metricName, metric);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   *
+   * public class MetricsClientUpdateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientUpdateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientUpdateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *       LogMetric metric = LogMetric.newBuilder().build();
+   *       LogMetric response = metricsClient.updateLogMetric(metricName, metric);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -527,10 +773,24 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
-   *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.updateLogMetric(metricName, metric);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   *
+   * public class MetricsClientUpdateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientUpdateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientUpdateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
+   *       LogMetric metric = LogMetric.newBuilder().build();
+   *       LogMetric response = metricsClient.updateLogMetric(metricName, metric);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -555,13 +815,28 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   UpdateLogMetricRequest request =
-   *       UpdateLogMetricRequest.newBuilder()
-   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
-   *           .setMetric(LogMetric.newBuilder().build())
-   *           .build();
-   *   LogMetric response = metricsClient.updateLogMetric(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   * import com.google.logging.v2.UpdateLogMetricRequest;
+   *
+   * public class MetricsClientUpdateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientUpdateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientUpdateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       UpdateLogMetricRequest request =
+   *           UpdateLogMetricRequest.newBuilder()
+   *               .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *               .setMetric(LogMetric.newBuilder().build())
+   *               .build();
+   *       LogMetric response = metricsClient.updateLogMetric(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -579,15 +854,31 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   UpdateLogMetricRequest request =
-   *       UpdateLogMetricRequest.newBuilder()
-   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
-   *           .setMetric(LogMetric.newBuilder().build())
-   *           .build();
-   *   ApiFuture<LogMetric> future = metricsClient.updateLogMetricCallable().futureCall(request);
-   *   // Do something.
-   *   LogMetric response = future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.LogMetric;
+   * import com.google.logging.v2.LogMetricName;
+   * import com.google.logging.v2.UpdateLogMetricRequest;
+   *
+   * public class MetricsClientUpdateLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientUpdateLogMetric();
+   *   }
+   *
+   *   public static void metricsClientUpdateLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       UpdateLogMetricRequest request =
+   *           UpdateLogMetricRequest.newBuilder()
+   *               .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *               .setMetric(LogMetric.newBuilder().build())
+   *               .build();
+   *       ApiFuture<LogMetric> future = metricsClient.updateLogMetricCallable().futureCall(request);
+   *       // Do something.
+   *       LogMetric response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -602,9 +893,23 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
-   *   metricsClient.deleteLogMetric(metricName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetricName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class MetricsClientDeleteLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientDeleteLogMetric();
+   *   }
+   *
+   *   public static void metricsClientDeleteLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *       metricsClient.deleteLogMetric(metricName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -627,9 +932,23 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
-   *   metricsClient.deleteLogMetric(metricName);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.LogMetricName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class MetricsClientDeleteLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientDeleteLogMetric();
+   *   }
+   *
+   *   public static void metricsClientDeleteLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
+   *       metricsClient.deleteLogMetric(metricName);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -650,12 +969,27 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   DeleteLogMetricRequest request =
-   *       DeleteLogMetricRequest.newBuilder()
-   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
-   *           .build();
-   *   metricsClient.deleteLogMetric(request);
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.logging.v2.DeleteLogMetricRequest;
+   * import com.google.logging.v2.LogMetricName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class MetricsClientDeleteLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientDeleteLogMetric();
+   *   }
+   *
+   *   public static void metricsClientDeleteLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       DeleteLogMetricRequest request =
+   *           DeleteLogMetricRequest.newBuilder()
+   *               .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *               .build();
+   *       metricsClient.deleteLogMetric(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -673,14 +1007,30 @@ public class MetricsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   DeleteLogMetricRequest request =
-   *       DeleteLogMetricRequest.newBuilder()
-   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = metricsClient.deleteLogMetricCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.logging.v2;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.logging.v2.DeleteLogMetricRequest;
+   * import com.google.logging.v2.LogMetricName;
+   * import com.google.protobuf.Empty;
+   *
+   * public class MetricsClientDeleteLogMetric {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     metricsClientDeleteLogMetric();
+   *   }
+   *
+   *   public static void metricsClientDeleteLogMetric() throws Exception {
+   *     try (MetricsClient metricsClient = MetricsClient.create()) {
+   *       DeleteLogMetricRequest request =
+   *           DeleteLogMetricRequest.newBuilder()
+   *               .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = metricsClient.deleteLogMetricCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

@@ -61,17 +61,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getLogMetric to 30 seconds:
  *
  * <pre>{@code
- * MetricsSettings.Builder metricsSettingsBuilder = MetricsSettings.newBuilder();
- * metricsSettingsBuilder
- *     .getLogMetricSettings()
- *     .setRetrySettings(
- *         metricsSettingsBuilder
- *             .getLogMetricSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * MetricsSettings metricsSettings = metricsSettingsBuilder.build();
+ * package com.google.cloud.logging.v2;
+ *
+ * import java.time.Duration;
+ *
+ * public class MetricsSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     metricsSettings();
+ *   }
+ *
+ *   public static void metricsSettings() throws Exception {
+ *     MetricsSettings.Builder metricsSettingsBuilder = MetricsSettings.newBuilder();
+ *     metricsSettingsBuilder
+ *         .getLogMetricSettings()
+ *         .setRetrySettings(
+ *             metricsSettingsBuilder
+ *                 .getLogMetricSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     MetricsSettings metricsSettings = metricsSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

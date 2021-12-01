@@ -52,17 +52,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of startResumableWrite to 30 seconds:
  *
  * <pre>{@code
- * StorageSettings.Builder storageSettingsBuilder = StorageSettings.newBuilder();
- * storageSettingsBuilder
- *     .startResumableWriteSettings()
- *     .setRetrySettings(
- *         storageSettingsBuilder
- *             .startResumableWriteSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * StorageSettings storageSettings = storageSettingsBuilder.build();
+ * package com.google.storage.v2;
+ *
+ * import java.time.Duration;
+ *
+ * public class StorageSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     storageSettings();
+ *   }
+ *
+ *   public static void storageSettings() throws Exception {
+ *     StorageSettings.Builder storageSettingsBuilder = StorageSettings.newBuilder();
+ *     storageSettingsBuilder
+ *         .startResumableWriteSettings()
+ *         .setRetrySettings(
+ *             storageSettingsBuilder
+ *                 .startResumableWriteSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     StorageSettings storageSettings = storageSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

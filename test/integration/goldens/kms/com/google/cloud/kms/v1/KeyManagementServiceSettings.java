@@ -65,19 +65,32 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getKeyRing to 30 seconds:
  *
  * <pre>{@code
- * KeyManagementServiceSettings.Builder keyManagementServiceSettingsBuilder =
- *     KeyManagementServiceSettings.newBuilder();
- * keyManagementServiceSettingsBuilder
- *     .getKeyRingSettings()
- *     .setRetrySettings(
- *         keyManagementServiceSettingsBuilder
- *             .getKeyRingSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * KeyManagementServiceSettings keyManagementServiceSettings =
- *     keyManagementServiceSettingsBuilder.build();
+ * package com.google.cloud.kms.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class KeyManagementServiceSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     keyManagementServiceSettings();
+ *   }
+ *
+ *   public static void keyManagementServiceSettings() throws Exception {
+ *     KeyManagementServiceSettings.Builder keyManagementServiceSettingsBuilder =
+ *         KeyManagementServiceSettings.newBuilder();
+ *     keyManagementServiceSettingsBuilder
+ *         .getKeyRingSettings()
+ *         .setRetrySettings(
+ *             keyManagementServiceSettingsBuilder
+ *                 .getKeyRingSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     KeyManagementServiceSettings keyManagementServiceSettings =
+ *         keyManagementServiceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

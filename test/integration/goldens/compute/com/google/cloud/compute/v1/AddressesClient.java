@@ -46,11 +46,24 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (AddressesClient addressesClient = AddressesClient.create()) {
- *   String project = "project-309310695";
- *   for (Map.Entry<String, AddressesScopedList> element :
- *       addressesClient.aggregatedList(project).iterateAll()) {
- *     // doThingsWith(element);
+ * package com.google.cloud.compute.v1;
+ *
+ * import java.util.Map;
+ *
+ * public class AddressesClientAggregatedList {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     addressesClientAggregatedList();
+ *   }
+ *
+ *   public static void addressesClientAggregatedList() throws Exception {
+ *     try (AddressesClient addressesClient = AddressesClient.create()) {
+ *       String project = "project-309310695";
+ *       for (Map.Entry<String, AddressesScopedList> element :
+ *           addressesClient.aggregatedList(project).iterateAll()) {
+ *         // doThingsWith(element);
+ *       }
+ *     }
  *   }
  * }
  * }</pre>
@@ -84,19 +97,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * AddressesSettings addressesSettings =
- *     AddressesSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * AddressesClient addressesClient = AddressesClient.create(addressesSettings);
+ * package com.google.cloud.compute.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class AddressesClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     addressesClientCreate();
+ *   }
+ *
+ *   public static void addressesClientCreate() throws Exception {
+ *     AddressesSettings addressesSettings =
+ *         AddressesSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     AddressesClient addressesClient = AddressesClient.create(addressesSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * AddressesSettings addressesSettings =
- *     AddressesSettings.newBuilder().setEndpoint(myEndpoint).build();
- * AddressesClient addressesClient = AddressesClient.create(addressesSettings);
+ * package com.google.cloud.compute.v1;
+ *
+ * public class AddressesClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     addressesClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void addressesClientClassHeaderEndpoint() throws Exception {
+ *     AddressesSettings addressesSettings =
+ *         AddressesSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     AddressesClient addressesClient = AddressesClient.create(addressesSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -159,11 +196,24 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   String project = "project-309310695";
-   *   for (Map.Entry<String, AddressesScopedList> element :
-   *       addressesClient.aggregatedList(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.compute.v1;
+   *
+   * import java.util.Map;
+   *
+   * public class AddressesClientAggregatedList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientAggregatedList();
+   *   }
+   *
+   *   public static void addressesClientAggregatedList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       String project = "project-309310695";
+   *       for (Map.Entry<String, AddressesScopedList> element :
+   *           addressesClient.aggregatedList(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -184,19 +234,32 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   AggregatedListAddressesRequest request =
-   *       AggregatedListAddressesRequest.newBuilder()
-   *           .setFilter("filter-1274492040")
-   *           .setIncludeAllScopes(true)
-   *           .setMaxResults(1128457243)
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageToken("pageToken873572522")
-   *           .setProject("project-309310695")
-   *           .build();
-   *   for (Map.Entry<String, AddressesScopedList> element :
-   *       addressesClient.aggregatedList(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.compute.v1;
+   *
+   * import java.util.Map;
+   *
+   * public class AddressesClientAggregatedList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientAggregatedList();
+   *   }
+   *
+   *   public static void addressesClientAggregatedList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       AggregatedListAddressesRequest request =
+   *           AggregatedListAddressesRequest.newBuilder()
+   *               .setFilter("filter-1274492040")
+   *               .setIncludeAllScopes(true)
+   *               .setMaxResults(1128457243)
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageToken("pageToken873572522")
+   *               .setProject("project-309310695")
+   *               .build();
+   *       for (Map.Entry<String, AddressesScopedList> element :
+   *           addressesClient.aggregatedList(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -215,21 +278,35 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   AggregatedListAddressesRequest request =
-   *       AggregatedListAddressesRequest.newBuilder()
-   *           .setFilter("filter-1274492040")
-   *           .setIncludeAllScopes(true)
-   *           .setMaxResults(1128457243)
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageToken("pageToken873572522")
-   *           .setProject("project-309310695")
-   *           .build();
-   *   ApiFuture<Map.Entry<String, AddressesScopedList>> future =
-   *       addressesClient.aggregatedListPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Map.Entry<String, AddressesScopedList> element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.Map;
+   *
+   * public class AddressesClientAggregatedList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientAggregatedList();
+   *   }
+   *
+   *   public static void addressesClientAggregatedList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       AggregatedListAddressesRequest request =
+   *           AggregatedListAddressesRequest.newBuilder()
+   *               .setFilter("filter-1274492040")
+   *               .setIncludeAllScopes(true)
+   *               .setMaxResults(1128457243)
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageToken("pageToken873572522")
+   *               .setProject("project-309310695")
+   *               .build();
+   *       ApiFuture<Map.Entry<String, AddressesScopedList>> future =
+   *           addressesClient.aggregatedListPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Map.Entry<String, AddressesScopedList> element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -246,26 +323,40 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   AggregatedListAddressesRequest request =
-   *       AggregatedListAddressesRequest.newBuilder()
-   *           .setFilter("filter-1274492040")
-   *           .setIncludeAllScopes(true)
-   *           .setMaxResults(1128457243)
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageToken("pageToken873572522")
-   *           .setProject("project-309310695")
-   *           .build();
-   *   while (true) {
-   *     AddressAggregatedList response = addressesClient.aggregatedListCallable().call(request);
-   *     for (Map.Entry<String, AddressesScopedList> element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import java.util.Map;
+   *
+   * public class AddressesClientAggregatedList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientAggregatedList();
+   *   }
+   *
+   *   public static void addressesClientAggregatedList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       AggregatedListAddressesRequest request =
+   *           AggregatedListAddressesRequest.newBuilder()
+   *               .setFilter("filter-1274492040")
+   *               .setIncludeAllScopes(true)
+   *               .setMaxResults(1128457243)
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageToken("pageToken873572522")
+   *               .setProject("project-309310695")
+   *               .build();
+   *       while (true) {
+   *         AddressAggregatedList response = addressesClient.aggregatedListCallable().call(request);
+   *         for (Map.Entry<String, AddressesScopedList> element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -283,11 +374,22 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   String project = "project-309310695";
-   *   String region = "region-934795532";
-   *   String address = "address-1147692044";
-   *   Operation response = addressesClient.deleteAsync(project, region, address).get();
+   * package com.google.cloud.compute.v1;
+   *
+   * public class AddressesClientDelete {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientDelete();
+   *   }
+   *
+   *   public static void addressesClientDelete() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       String project = "project-309310695";
+   *       String region = "region-934795532";
+   *       String address = "address-1147692044";
+   *       Operation response = addressesClient.deleteAsync(project, region, address).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -314,15 +416,26 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   DeleteAddressRequest request =
-   *       DeleteAddressRequest.newBuilder()
-   *           .setAddress("address-1147692044")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .setRequestId("requestId693933066")
-   *           .build();
-   *   Operation response = addressesClient.deleteAsync(request).get();
+   * package com.google.cloud.compute.v1;
+   *
+   * public class AddressesClientDelete {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientDelete();
+   *   }
+   *
+   *   public static void addressesClientDelete() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       DeleteAddressRequest request =
+   *           DeleteAddressRequest.newBuilder()
+   *               .setAddress("address-1147692044")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .setRequestId("requestId693933066")
+   *               .build();
+   *       Operation response = addressesClient.deleteAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -342,18 +455,31 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   DeleteAddressRequest request =
-   *       DeleteAddressRequest.newBuilder()
-   *           .setAddress("address-1147692044")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .setRequestId("requestId693933066")
-   *           .build();
-   *   OperationFuture<Operation, Operation> future =
-   *       addressesClient.deleteOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   *
+   * public class AddressesClientDelete {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientDelete();
+   *   }
+   *
+   *   public static void addressesClientDelete() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       DeleteAddressRequest request =
+   *           DeleteAddressRequest.newBuilder()
+   *               .setAddress("address-1147692044")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .setRequestId("requestId693933066")
+   *               .build();
+   *       OperationFuture<Operation, Operation> future =
+   *           addressesClient.deleteOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -369,17 +495,31 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   DeleteAddressRequest request =
-   *       DeleteAddressRequest.newBuilder()
-   *           .setAddress("address-1147692044")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .setRequestId("requestId693933066")
-   *           .build();
-   *   ApiFuture<Operation> future = addressesClient.deleteCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class AddressesClientDelete {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientDelete();
+   *   }
+   *
+   *   public static void addressesClientDelete() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       DeleteAddressRequest request =
+   *           DeleteAddressRequest.newBuilder()
+   *               .setAddress("address-1147692044")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .setRequestId("requestId693933066")
+   *               .build();
+   *       ApiFuture<Operation> future = addressesClient.deleteCallable().futureCall(request);
+   *       // Do something.
+   *       com.google.cloud.compute.v1.Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -394,11 +534,22 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   String project = "project-309310695";
-   *   String region = "region-934795532";
-   *   Address addressResource = Address.newBuilder().build();
-   *   Operation response = addressesClient.insertAsync(project, region, addressResource).get();
+   * package com.google.cloud.compute.v1;
+   *
+   * public class AddressesClientInsert {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientInsert();
+   *   }
+   *
+   *   public static void addressesClientInsert() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       String project = "project-309310695";
+   *       String region = "region-934795532";
+   *       Address addressResource = Address.newBuilder().build();
+   *       Operation response = addressesClient.insertAsync(project, region, addressResource).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -425,15 +576,26 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   InsertAddressRequest request =
-   *       InsertAddressRequest.newBuilder()
-   *           .setAddressResource(Address.newBuilder().build())
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .setRequestId("requestId693933066")
-   *           .build();
-   *   Operation response = addressesClient.insertAsync(request).get();
+   * package com.google.cloud.compute.v1;
+   *
+   * public class AddressesClientInsert {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientInsert();
+   *   }
+   *
+   *   public static void addressesClientInsert() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       InsertAddressRequest request =
+   *           InsertAddressRequest.newBuilder()
+   *               .setAddressResource(Address.newBuilder().build())
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .setRequestId("requestId693933066")
+   *               .build();
+   *       Operation response = addressesClient.insertAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -453,18 +615,31 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   InsertAddressRequest request =
-   *       InsertAddressRequest.newBuilder()
-   *           .setAddressResource(Address.newBuilder().build())
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .setRequestId("requestId693933066")
-   *           .build();
-   *   OperationFuture<Operation, Operation> future =
-   *       addressesClient.insertOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   *
+   * public class AddressesClientInsert {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientInsert();
+   *   }
+   *
+   *   public static void addressesClientInsert() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       InsertAddressRequest request =
+   *           InsertAddressRequest.newBuilder()
+   *               .setAddressResource(Address.newBuilder().build())
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .setRequestId("requestId693933066")
+   *               .build();
+   *       OperationFuture<Operation, Operation> future =
+   *           addressesClient.insertOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -480,17 +655,31 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   InsertAddressRequest request =
-   *       InsertAddressRequest.newBuilder()
-   *           .setAddressResource(Address.newBuilder().build())
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .setRequestId("requestId693933066")
-   *           .build();
-   *   ApiFuture<Operation> future = addressesClient.insertCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class AddressesClientInsert {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientInsert();
+   *   }
+   *
+   *   public static void addressesClientInsert() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       InsertAddressRequest request =
+   *           InsertAddressRequest.newBuilder()
+   *               .setAddressResource(Address.newBuilder().build())
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .setRequestId("requestId693933066")
+   *               .build();
+   *       ApiFuture<Operation> future = addressesClient.insertCallable().futureCall(request);
+   *       // Do something.
+   *       com.google.cloud.compute.v1.Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -505,12 +694,23 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   String project = "project-309310695";
-   *   String region = "region-934795532";
-   *   String orderBy = "orderBy-1207110587";
-   *   for (Address element : addressesClient.list(project, region, orderBy).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.compute.v1;
+   *
+   * public class AddressesClientList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientList();
+   *   }
+   *
+   *   public static void addressesClientList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       String project = "project-309310695";
+   *       String region = "region-934795532";
+   *       String orderBy = "orderBy-1207110587";
+   *       for (Address element : addressesClient.list(project, region, orderBy).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -543,18 +743,29 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   ListAddressesRequest request =
-   *       ListAddressesRequest.newBuilder()
-   *           .setFilter("filter-1274492040")
-   *           .setMaxResults(1128457243)
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageToken("pageToken873572522")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   for (Address element : addressesClient.list(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.compute.v1;
+   *
+   * public class AddressesClientList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientList();
+   *   }
+   *
+   *   public static void addressesClientList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       ListAddressesRequest request =
+   *           ListAddressesRequest.newBuilder()
+   *               .setFilter("filter-1274492040")
+   *               .setMaxResults(1128457243)
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageToken("pageToken873572522")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       for (Address element : addressesClient.list(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -573,20 +784,33 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   ListAddressesRequest request =
-   *       ListAddressesRequest.newBuilder()
-   *           .setFilter("filter-1274492040")
-   *           .setMaxResults(1128457243)
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageToken("pageToken873572522")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   ApiFuture<Address> future = addressesClient.listPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Address element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class AddressesClientList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientList();
+   *   }
+   *
+   *   public static void addressesClientList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       ListAddressesRequest request =
+   *           ListAddressesRequest.newBuilder()
+   *               .setFilter("filter-1274492040")
+   *               .setMaxResults(1128457243)
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageToken("pageToken873572522")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       ApiFuture<Address> future = addressesClient.listPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Address element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -602,26 +826,39 @@ public class AddressesClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AddressesClient addressesClient = AddressesClient.create()) {
-   *   ListAddressesRequest request =
-   *       ListAddressesRequest.newBuilder()
-   *           .setFilter("filter-1274492040")
-   *           .setMaxResults(1128457243)
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setPageToken("pageToken873572522")
-   *           .setProject("project-309310695")
-   *           .setRegion("region-934795532")
-   *           .build();
-   *   while (true) {
-   *     AddressList response = addressesClient.listCallable().call(request);
-   *     for (Address element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.compute.v1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class AddressesClientList {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     addressesClientList();
+   *   }
+   *
+   *   public static void addressesClientList() throws Exception {
+   *     try (AddressesClient addressesClient = AddressesClient.create()) {
+   *       ListAddressesRequest request =
+   *           ListAddressesRequest.newBuilder()
+   *               .setFilter("filter-1274492040")
+   *               .setMaxResults(1128457243)
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setPageToken("pageToken873572522")
+   *               .setProject("project-309310695")
+   *               .setRegion("region-934795532")
+   *               .build();
+   *       while (true) {
+   *         AddressList response = addressesClient.listCallable().call(request);
+   *         for (Address element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }

@@ -82,18 +82,31 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of createSchema to 30 seconds:
  *
  * <pre>{@code
- * SchemaServiceStubSettings.Builder schemaServiceSettingsBuilder =
- *     SchemaServiceStubSettings.newBuilder();
- * schemaServiceSettingsBuilder
- *     .createSchemaSettings()
- *     .setRetrySettings(
- *         schemaServiceSettingsBuilder
- *             .createSchemaSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * SchemaServiceStubSettings schemaServiceSettings = schemaServiceSettingsBuilder.build();
+ * package com.google.cloud.pubsub.v1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class SchemaServiceSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     schemaServiceSettings();
+ *   }
+ *
+ *   public static void schemaServiceSettings() throws Exception {
+ *     SchemaServiceStubSettings.Builder schemaServiceSettingsBuilder =
+ *         SchemaServiceStubSettings.newBuilder();
+ *     schemaServiceSettingsBuilder
+ *         .createSchemaSettings()
+ *         .setRetrySettings(
+ *             schemaServiceSettingsBuilder
+ *                 .createSchemaSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     SchemaServiceStubSettings schemaServiceSettings = schemaServiceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

@@ -65,9 +65,23 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
- *   TopicName name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
- *   Topic response = topicAdminClient.createTopic(name);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.pubsub.v1.Topic;
+ * import com.google.pubsub.v1.TopicName;
+ *
+ * public class TopicAdminClientCreateTopic {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     topicAdminClientCreateTopic();
+ *   }
+ *
+ *   public static void topicAdminClientCreateTopic() throws Exception {
+ *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+ *       TopicName name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+ *       Topic response = topicAdminClient.createTopic(name);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -100,19 +114,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * TopicAdminSettings topicAdminSettings =
- *     TopicAdminSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class TopicAdminClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     topicAdminClientCreate();
+ *   }
+ *
+ *   public static void topicAdminClientCreate() throws Exception {
+ *     TopicAdminSettings topicAdminSettings =
+ *         TopicAdminSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * TopicAdminSettings topicAdminSettings =
- *     TopicAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
- * TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * public class TopicAdminClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     topicAdminClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void topicAdminClientClassHeaderEndpoint() throws Exception {
+ *     TopicAdminSettings topicAdminSettings =
+ *         TopicAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -176,9 +214,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TopicName name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   Topic response = topicAdminClient.createTopic(name);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientCreateTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientCreateTopic();
+   *   }
+   *
+   *   public static void topicAdminClientCreateTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TopicName name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       Topic response = topicAdminClient.createTopic(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -202,9 +254,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   Topic response = topicAdminClient.createTopic(name);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientCreateTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientCreateTopic();
+   *   }
+   *
+   *   public static void topicAdminClientCreateTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String name = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       Topic response = topicAdminClient.createTopic(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -228,18 +294,36 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   Topic request =
-   *       Topic.newBuilder()
-   *           .setName(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .setMessageStoragePolicy(MessageStoragePolicy.newBuilder().build())
-   *           .setKmsKeyName("kmsKeyName412586233")
-   *           .setSchemaSettings(SchemaSettings.newBuilder().build())
-   *           .setSatisfiesPzs(true)
-   *           .setMessageRetentionDuration(Duration.newBuilder().build())
-   *           .build();
-   *   Topic response = topicAdminClient.createTopic(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Duration;
+   * import com.google.pubsub.v1.MessageStoragePolicy;
+   * import com.google.pubsub.v1.SchemaSettings;
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.HashMap;
+   *
+   * public class TopicAdminClientCreateTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientCreateTopic();
+   *   }
+   *
+   *   public static void topicAdminClientCreateTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       Topic request =
+   *           Topic.newBuilder()
+   *               .setName(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .setMessageStoragePolicy(MessageStoragePolicy.newBuilder().build())
+   *               .setKmsKeyName("kmsKeyName412586233")
+   *               .setSchemaSettings(SchemaSettings.newBuilder().build())
+   *               .setSatisfiesPzs(true)
+   *               .setMessageRetentionDuration(Duration.newBuilder().build())
+   *               .build();
+   *       Topic response = topicAdminClient.createTopic(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -258,20 +342,39 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   Topic request =
-   *       Topic.newBuilder()
-   *           .setName(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .putAllLabels(new HashMap<String, String>())
-   *           .setMessageStoragePolicy(MessageStoragePolicy.newBuilder().build())
-   *           .setKmsKeyName("kmsKeyName412586233")
-   *           .setSchemaSettings(SchemaSettings.newBuilder().build())
-   *           .setSatisfiesPzs(true)
-   *           .setMessageRetentionDuration(Duration.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Topic> future = topicAdminClient.createTopicCallable().futureCall(request);
-   *   // Do something.
-   *   Topic response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Duration;
+   * import com.google.pubsub.v1.MessageStoragePolicy;
+   * import com.google.pubsub.v1.SchemaSettings;
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.HashMap;
+   *
+   * public class TopicAdminClientCreateTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientCreateTopic();
+   *   }
+   *
+   *   public static void topicAdminClientCreateTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       Topic request =
+   *           Topic.newBuilder()
+   *               .setName(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .putAllLabels(new HashMap<String, String>())
+   *               .setMessageStoragePolicy(MessageStoragePolicy.newBuilder().build())
+   *               .setKmsKeyName("kmsKeyName412586233")
+   *               .setSchemaSettings(SchemaSettings.newBuilder().build())
+   *               .setSatisfiesPzs(true)
+   *               .setMessageRetentionDuration(Duration.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Topic> future = topicAdminClient.createTopicCallable().futureCall(request);
+   *       // Do something.
+   *       Topic response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -286,13 +389,28 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   UpdateTopicRequest request =
-   *       UpdateTopicRequest.newBuilder()
-   *           .setTopic(Topic.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   Topic response = topicAdminClient.updateTopic(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.UpdateTopicRequest;
+   *
+   * public class TopicAdminClientUpdateTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientUpdateTopic();
+   *   }
+   *
+   *   public static void topicAdminClientUpdateTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       UpdateTopicRequest request =
+   *           UpdateTopicRequest.newBuilder()
+   *               .setTopic(Topic.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       Topic response = topicAdminClient.updateTopic(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -310,15 +428,31 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   UpdateTopicRequest request =
-   *       UpdateTopicRequest.newBuilder()
-   *           .setTopic(Topic.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Topic> future = topicAdminClient.updateTopicCallable().futureCall(request);
-   *   // Do something.
-   *   Topic response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.UpdateTopicRequest;
+   *
+   * public class TopicAdminClientUpdateTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientUpdateTopic();
+   *   }
+   *
+   *   public static void topicAdminClientUpdateTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       UpdateTopicRequest request =
+   *           UpdateTopicRequest.newBuilder()
+   *               .setTopic(Topic.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Topic> future = topicAdminClient.updateTopicCallable().futureCall(request);
+   *       // Do something.
+   *       Topic response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -333,10 +467,27 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   List<PubsubMessage> messages = new ArrayList<>();
-   *   PublishResponse response = topicAdminClient.publish(topic, messages);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PublishResponse;
+   * import com.google.pubsub.v1.PubsubMessage;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class TopicAdminClientPublish {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientPublish();
+   *   }
+   *
+   *   public static void topicAdminClientPublish() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       List<PubsubMessage> messages = new ArrayList<>();
+   *       PublishResponse response = topicAdminClient.publish(topic, messages);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -361,10 +512,27 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   List<PubsubMessage> messages = new ArrayList<>();
-   *   PublishResponse response = topicAdminClient.publish(topic, messages);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PublishResponse;
+   * import com.google.pubsub.v1.PubsubMessage;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class TopicAdminClientPublish {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientPublish();
+   *   }
+   *
+   *   public static void topicAdminClientPublish() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       List<PubsubMessage> messages = new ArrayList<>();
+   *       PublishResponse response = topicAdminClient.publish(topic, messages);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -386,13 +554,30 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   PublishRequest request =
-   *       PublishRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .addAllMessages(new ArrayList<PubsubMessage>())
-   *           .build();
-   *   PublishResponse response = topicAdminClient.publish(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.PublishRequest;
+   * import com.google.pubsub.v1.PublishResponse;
+   * import com.google.pubsub.v1.PubsubMessage;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.ArrayList;
+   *
+   * public class TopicAdminClientPublish {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientPublish();
+   *   }
+   *
+   *   public static void topicAdminClientPublish() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       PublishRequest request =
+   *           PublishRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .addAllMessages(new ArrayList<PubsubMessage>())
+   *               .build();
+   *       PublishResponse response = topicAdminClient.publish(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -410,15 +595,33 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   PublishRequest request =
-   *       PublishRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .addAllMessages(new ArrayList<PubsubMessage>())
-   *           .build();
-   *   ApiFuture<PublishResponse> future = topicAdminClient.publishCallable().futureCall(request);
-   *   // Do something.
-   *   PublishResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.PublishRequest;
+   * import com.google.pubsub.v1.PublishResponse;
+   * import com.google.pubsub.v1.PubsubMessage;
+   * import com.google.pubsub.v1.TopicName;
+   * import java.util.ArrayList;
+   *
+   * public class TopicAdminClientPublish {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientPublish();
+   *   }
+   *
+   *   public static void topicAdminClientPublish() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       PublishRequest request =
+   *           PublishRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .addAllMessages(new ArrayList<PubsubMessage>())
+   *               .build();
+   *       ApiFuture<PublishResponse> future = topicAdminClient.publishCallable().futureCall(request);
+   *       // Do something.
+   *       PublishResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -433,9 +636,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   Topic response = topicAdminClient.getTopic(topic);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientGetTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientGetTopic();
+   *   }
+   *
+   *   public static void topicAdminClientGetTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       Topic response = topicAdminClient.getTopic(topic);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -456,9 +673,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   Topic response = topicAdminClient.getTopic(topic);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientGetTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientGetTopic();
+   *   }
+   *
+   *   public static void topicAdminClientGetTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       Topic response = topicAdminClient.getTopic(topic);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -478,12 +709,27 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   GetTopicRequest request =
-   *       GetTopicRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .build();
-   *   Topic response = topicAdminClient.getTopic(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.GetTopicRequest;
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientGetTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientGetTopic();
+   *   }
+   *
+   *   public static void topicAdminClientGetTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       GetTopicRequest request =
+   *           GetTopicRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .build();
+   *       Topic response = topicAdminClient.getTopic(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -501,14 +747,30 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   GetTopicRequest request =
-   *       GetTopicRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .build();
-   *   ApiFuture<Topic> future = topicAdminClient.getTopicCallable().futureCall(request);
-   *   // Do something.
-   *   Topic response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.GetTopicRequest;
+   * import com.google.pubsub.v1.Topic;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientGetTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientGetTopic();
+   *   }
+   *
+   *   public static void topicAdminClientGetTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       GetTopicRequest request =
+   *           GetTopicRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .build();
+   *       ApiFuture<Topic> future = topicAdminClient.getTopicCallable().futureCall(request);
+   *       // Do something.
+   *       Topic response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -523,10 +785,24 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ProjectName project = ProjectName.of("[PROJECT]");
-   *   for (Topic element : topicAdminClient.listTopics(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Topic;
+   *
+   * public class TopicAdminClientListTopics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopics();
+   *   }
+   *
+   *   public static void topicAdminClientListTopics() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ProjectName project = ProjectName.of("[PROJECT]");
+   *       for (Topic element : topicAdminClient.listTopics(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -550,10 +826,24 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String project = ProjectName.of("[PROJECT]").toString();
-   *   for (Topic element : topicAdminClient.listTopics(project).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Topic;
+   *
+   * public class TopicAdminClientListTopics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopics();
+   *   }
+   *
+   *   public static void topicAdminClientListTopics() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String project = ProjectName.of("[PROJECT]").toString();
+   *       for (Topic element : topicAdminClient.listTopics(project).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -574,15 +864,30 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicsRequest request =
-   *       ListTopicsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Topic element : topicAdminClient.listTopics(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ListTopicsRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Topic;
+   *
+   * public class TopicAdminClientListTopics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopics();
+   *   }
+   *
+   *   public static void topicAdminClientListTopics() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicsRequest request =
+   *           ListTopicsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Topic element : topicAdminClient.listTopics(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -601,17 +906,33 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicsRequest request =
-   *       ListTopicsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Topic> future = topicAdminClient.listTopicsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Topic element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ListTopicsRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Topic;
+   *
+   * public class TopicAdminClientListTopics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopics();
+   *   }
+   *
+   *   public static void topicAdminClientListTopics() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicsRequest request =
+   *           ListTopicsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Topic> future = topicAdminClient.listTopicsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Topic element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -627,23 +948,40 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicsRequest request =
-   *       ListTopicsRequest.newBuilder()
-   *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListTopicsResponse response = topicAdminClient.listTopicsCallable().call(request);
-   *     for (Topic element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.pubsub.v1.ListTopicsRequest;
+   * import com.google.pubsub.v1.ListTopicsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Topic;
+   *
+   * public class TopicAdminClientListTopics {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopics();
+   *   }
+   *
+   *   public static void topicAdminClientListTopics() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicsRequest request =
+   *           ListTopicsRequest.newBuilder()
+   *               .setProject(ProjectName.of("[PROJECT]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListTopicsResponse response = topicAdminClient.listTopicsCallable().call(request);
+   *         for (Topic element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -660,10 +998,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   for (String element : topicAdminClient.listTopicSubscriptions(topic).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSubscriptions();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSubscriptions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       for (String element : topicAdminClient.listTopicSubscriptions(topic).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -687,10 +1038,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   for (String element : topicAdminClient.listTopicSubscriptions(topic).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSubscriptions();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSubscriptions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       for (String element : topicAdminClient.listTopicSubscriptions(topic).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -712,15 +1076,29 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicSubscriptionsRequest request =
-   *       ListTopicSubscriptionsRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (String element : topicAdminClient.listTopicSubscriptions(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSubscriptions();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSubscriptions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicSubscriptionsRequest request =
+   *           ListTopicSubscriptionsRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (String element : topicAdminClient.listTopicSubscriptions(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -740,18 +1118,33 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicSubscriptionsRequest request =
-   *       ListTopicSubscriptionsRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<String> future =
-   *       topicAdminClient.listTopicSubscriptionsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (String element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSubscriptions();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSubscriptions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicSubscriptionsRequest request =
+   *           ListTopicSubscriptionsRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<String> future =
+   *           topicAdminClient.listTopicSubscriptionsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (String element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -768,24 +1161,40 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicSubscriptionsRequest request =
-   *       ListTopicSubscriptionsRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListTopicSubscriptionsResponse response =
-   *         topicAdminClient.listTopicSubscriptionsCallable().call(request);
-   *     for (String element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
+   * import com.google.pubsub.v1.ListTopicSubscriptionsResponse;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSubscriptions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSubscriptions();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSubscriptions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicSubscriptionsRequest request =
+   *           ListTopicSubscriptionsRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListTopicSubscriptionsResponse response =
+   *             topicAdminClient.listTopicSubscriptionsCallable().call(request);
+   *         for (String element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -806,10 +1215,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   for (String element : topicAdminClient.listTopicSnapshots(topic).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSnapshots();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSnapshots() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       for (String element : topicAdminClient.listTopicSnapshots(topic).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -836,10 +1258,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   for (String element : topicAdminClient.listTopicSnapshots(topic).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSnapshots();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSnapshots() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       for (String element : topicAdminClient.listTopicSnapshots(topic).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -864,15 +1299,29 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicSnapshotsRequest request =
-   *       ListTopicSnapshotsRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (String element : topicAdminClient.listTopicSnapshots(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ListTopicSnapshotsRequest;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSnapshots();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSnapshots() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicSnapshotsRequest request =
+   *           ListTopicSnapshotsRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (String element : topicAdminClient.listTopicSnapshots(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -895,18 +1344,33 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicSnapshotsRequest request =
-   *       ListTopicSnapshotsRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<String> future =
-   *       topicAdminClient.listTopicSnapshotsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (String element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ListTopicSnapshotsRequest;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSnapshots();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSnapshots() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicSnapshotsRequest request =
+   *           ListTopicSnapshotsRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<String> future =
+   *           topicAdminClient.listTopicSnapshotsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (String element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -926,24 +1390,40 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   ListTopicSnapshotsRequest request =
-   *       ListTopicSnapshotsRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListTopicSnapshotsResponse response =
-   *         topicAdminClient.listTopicSnapshotsCallable().call(request);
-   *     for (String element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.pubsub.v1.ListTopicSnapshotsRequest;
+   * import com.google.pubsub.v1.ListTopicSnapshotsResponse;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientListTopicSnapshots {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientListTopicSnapshots();
+   *   }
+   *
+   *   public static void topicAdminClientListTopicSnapshots() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       ListTopicSnapshotsRequest request =
+   *           ListTopicSnapshotsRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListTopicSnapshotsResponse response =
+   *             topicAdminClient.listTopicSnapshotsCallable().call(request);
+   *         for (String element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -964,9 +1444,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
-   *   topicAdminClient.deleteTopic(topic);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientDeleteTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientDeleteTopic();
+   *   }
+   *
+   *   public static void topicAdminClientDeleteTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TopicName topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]");
+   *       topicAdminClient.deleteTopic(topic);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -990,9 +1484,23 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
-   *   topicAdminClient.deleteTopic(topic);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientDeleteTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientDeleteTopic();
+   *   }
+   *
+   *   public static void topicAdminClientDeleteTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
+   *       topicAdminClient.deleteTopic(topic);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1015,12 +1523,27 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   DeleteTopicRequest request =
-   *       DeleteTopicRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .build();
-   *   topicAdminClient.deleteTopic(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteTopicRequest;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientDeleteTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientDeleteTopic();
+   *   }
+   *
+   *   public static void topicAdminClientDeleteTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       DeleteTopicRequest request =
+   *           DeleteTopicRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .build();
+   *       topicAdminClient.deleteTopic(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1041,14 +1564,30 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   DeleteTopicRequest request =
-   *       DeleteTopicRequest.newBuilder()
-   *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = topicAdminClient.deleteTopicCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteTopicRequest;
+   * import com.google.pubsub.v1.TopicName;
+   *
+   * public class TopicAdminClientDeleteTopic {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientDeleteTopic();
+   *   }
+   *
+   *   public static void topicAdminClientDeleteTopic() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       DeleteTopicRequest request =
+   *           DeleteTopicRequest.newBuilder()
+   *               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = topicAdminClient.deleteTopicCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1065,12 +1604,27 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   DetachSubscriptionRequest request =
-   *       DetachSubscriptionRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   DetachSubscriptionResponse response = topicAdminClient.detachSubscription(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.DetachSubscriptionRequest;
+   * import com.google.pubsub.v1.DetachSubscriptionResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class TopicAdminClientDetachSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientDetachSubscription();
+   *   }
+   *
+   *   public static void topicAdminClientDetachSubscription() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       DetachSubscriptionRequest request =
+   *           DetachSubscriptionRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       DetachSubscriptionResponse response = topicAdminClient.detachSubscription(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1090,15 +1644,31 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   DetachSubscriptionRequest request =
-   *       DetachSubscriptionRequest.newBuilder()
-   *           .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
-   *           .build();
-   *   ApiFuture<DetachSubscriptionResponse> future =
-   *       topicAdminClient.detachSubscriptionCallable().futureCall(request);
-   *   // Do something.
-   *   DetachSubscriptionResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.DetachSubscriptionRequest;
+   * import com.google.pubsub.v1.DetachSubscriptionResponse;
+   * import com.google.pubsub.v1.SubscriptionName;
+   *
+   * public class TopicAdminClientDetachSubscription {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientDetachSubscription();
+   *   }
+   *
+   *   public static void topicAdminClientDetachSubscription() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       DetachSubscriptionRequest request =
+   *           DetachSubscriptionRequest.newBuilder()
+   *               .setSubscription(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+   *               .build();
+   *       ApiFuture<DetachSubscriptionResponse> future =
+   *           topicAdminClient.detachSubscriptionCallable().futureCall(request);
+   *       // Do something.
+   *       DetachSubscriptionResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1116,13 +1686,28 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   Policy response = topicAdminClient.setIamPolicy(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class TopicAdminClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientSetIamPolicy();
+   *   }
+   *
+   *   public static void topicAdminClientSetIamPolicy() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       Policy response = topicAdminClient.setIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1142,15 +1727,31 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class TopicAdminClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientSetIamPolicy();
+   *   }
+   *
+   *   public static void topicAdminClientSetIamPolicy() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1166,13 +1767,29 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   Policy response = topicAdminClient.getIamPolicy(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class TopicAdminClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientGetIamPolicy();
+   *   }
+   *
+   *   public static void topicAdminClientGetIamPolicy() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       Policy response = topicAdminClient.getIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1191,15 +1808,32 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = topicAdminClient.getIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class TopicAdminClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientGetIamPolicy();
+   *   }
+   *
+   *   public static void topicAdminClientGetIamPolicy() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = topicAdminClient.getIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1219,13 +1853,29 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   TestIamPermissionsResponse response = topicAdminClient.testIamPermissions(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class TopicAdminClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientTestIamPermissions();
+   *   }
+   *
+   *   public static void topicAdminClientTestIamPermissions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       TestIamPermissionsResponse response = topicAdminClient.testIamPermissions(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1248,16 +1898,33 @@ public class TopicAdminClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<TestIamPermissionsResponse> future =
-   *       topicAdminClient.testIamPermissionsCallable().futureCall(request);
-   *   // Do something.
-   *   TestIamPermissionsResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class TopicAdminClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     topicAdminClientTestIamPermissions();
+   *   }
+   *
+   *   public static void topicAdminClientTestIamPermissions() throws Exception {
+   *     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<TestIamPermissionsResponse> future =
+   *           topicAdminClient.testIamPermissionsCallable().futureCall(request);
+   *       // Do something.
+   *       TestIamPermissionsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

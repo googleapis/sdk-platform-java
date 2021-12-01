@@ -55,17 +55,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of aggregatedList to 30 seconds:
  *
  * <pre>{@code
- * AddressesSettings.Builder addressesSettingsBuilder = AddressesSettings.newBuilder();
- * addressesSettingsBuilder
- *     .aggregatedListSettings()
- *     .setRetrySettings(
- *         addressesSettingsBuilder
- *             .aggregatedListSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * AddressesSettings addressesSettings = addressesSettingsBuilder.build();
+ * package com.google.cloud.compute.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class AddressesSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     addressesSettings();
+ *   }
+ *
+ *   public static void addressesSettings() throws Exception {
+ *     AddressesSettings.Builder addressesSettingsBuilder = AddressesSettings.newBuilder();
+ *     addressesSettingsBuilder
+ *         .aggregatedListSettings()
+ *         .setRetrySettings(
+ *             addressesSettingsBuilder
+ *                 .aggregatedListSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     AddressesSettings addressesSettings = addressesSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

@@ -59,11 +59,25 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
- *   ProjectName parent = ProjectName.of("[PROJECT]");
- *   Schema schema = Schema.newBuilder().build();
- *   String schemaId = "schemaId-697673060";
- *   Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.pubsub.v1.ProjectName;
+ * import com.google.pubsub.v1.Schema;
+ *
+ * public class SchemaServiceClientCreateSchema {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     schemaServiceClientCreateSchema();
+ *   }
+ *
+ *   public static void schemaServiceClientCreateSchema() throws Exception {
+ *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+ *       ProjectName parent = ProjectName.of("[PROJECT]");
+ *       Schema schema = Schema.newBuilder().build();
+ *       String schemaId = "schemaId-697673060";
+ *       Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -96,19 +110,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * SchemaServiceSettings schemaServiceSettings =
- *     SchemaServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class SchemaServiceClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     schemaServiceClientCreate();
+ *   }
+ *
+ *   public static void schemaServiceClientCreate() throws Exception {
+ *     SchemaServiceSettings schemaServiceSettings =
+ *         SchemaServiceSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * SchemaServiceSettings schemaServiceSettings =
- *     SchemaServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
- * SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
+ * package com.google.cloud.pubsub.v1;
+ *
+ * public class SchemaServiceClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     schemaServiceClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void schemaServiceClientClassHeaderEndpoint() throws Exception {
+ *     SchemaServiceSettings schemaServiceSettings =
+ *         SchemaServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -173,11 +211,25 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   Schema schema = Schema.newBuilder().build();
-   *   String schemaId = "schemaId-697673060";
-   *   Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   *
+   * public class SchemaServiceClientCreateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientCreateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientCreateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       Schema schema = Schema.newBuilder().build();
+   *       String schemaId = "schemaId-697673060";
+   *       Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -209,11 +261,25 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   Schema schema = Schema.newBuilder().build();
-   *   String schemaId = "schemaId-697673060";
-   *   Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   *
+   * public class SchemaServiceClientCreateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientCreateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientCreateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       Schema schema = Schema.newBuilder().build();
+   *       String schemaId = "schemaId-697673060";
+   *       Schema response = schemaServiceClient.createSchema(parent, schema, schemaId);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -245,14 +311,29 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   CreateSchemaRequest request =
-   *       CreateSchemaRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setSchema(Schema.newBuilder().build())
-   *           .setSchemaId("schemaId-697673060")
-   *           .build();
-   *   Schema response = schemaServiceClient.createSchema(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.CreateSchemaRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   *
+   * public class SchemaServiceClientCreateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientCreateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientCreateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       CreateSchemaRequest request =
+   *           CreateSchemaRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setSchema(Schema.newBuilder().build())
+   *               .setSchemaId("schemaId-697673060")
+   *               .build();
+   *       Schema response = schemaServiceClient.createSchema(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -270,16 +351,32 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   CreateSchemaRequest request =
-   *       CreateSchemaRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setSchema(Schema.newBuilder().build())
-   *           .setSchemaId("schemaId-697673060")
-   *           .build();
-   *   ApiFuture<Schema> future = schemaServiceClient.createSchemaCallable().futureCall(request);
-   *   // Do something.
-   *   Schema response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.CreateSchemaRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   *
+   * public class SchemaServiceClientCreateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientCreateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientCreateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       CreateSchemaRequest request =
+   *           CreateSchemaRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setSchema(Schema.newBuilder().build())
+   *               .setSchemaId("schemaId-697673060")
+   *               .build();
+   *       ApiFuture<Schema> future = schemaServiceClient.createSchemaCallable().futureCall(request);
+   *       // Do something.
+   *       Schema response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -294,9 +391,23 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   SchemaName name = SchemaName.of("[PROJECT]", "[SCHEMA]");
-   *   Schema response = schemaServiceClient.getSchema(name);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaName;
+   *
+   * public class SchemaServiceClientGetSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientGetSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientGetSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       SchemaName name = SchemaName.of("[PROJECT]", "[SCHEMA]");
+   *       Schema response = schemaServiceClient.getSchema(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -317,9 +428,23 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   String name = SchemaName.of("[PROJECT]", "[SCHEMA]").toString();
-   *   Schema response = schemaServiceClient.getSchema(name);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaName;
+   *
+   * public class SchemaServiceClientGetSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientGetSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientGetSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       String name = SchemaName.of("[PROJECT]", "[SCHEMA]").toString();
+   *       Schema response = schemaServiceClient.getSchema(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -339,13 +464,29 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   GetSchemaRequest request =
-   *       GetSchemaRequest.newBuilder()
-   *           .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
-   *           .setView(SchemaView.forNumber(0))
-   *           .build();
-   *   Schema response = schemaServiceClient.getSchema(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.GetSchemaRequest;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaName;
+   * import com.google.pubsub.v1.SchemaView;
+   *
+   * public class SchemaServiceClientGetSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientGetSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientGetSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       GetSchemaRequest request =
+   *           GetSchemaRequest.newBuilder()
+   *               .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+   *               .setView(SchemaView.forNumber(0))
+   *               .build();
+   *       Schema response = schemaServiceClient.getSchema(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -363,15 +504,32 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   GetSchemaRequest request =
-   *       GetSchemaRequest.newBuilder()
-   *           .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
-   *           .setView(SchemaView.forNumber(0))
-   *           .build();
-   *   ApiFuture<Schema> future = schemaServiceClient.getSchemaCallable().futureCall(request);
-   *   // Do something.
-   *   Schema response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.GetSchemaRequest;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaName;
+   * import com.google.pubsub.v1.SchemaView;
+   *
+   * public class SchemaServiceClientGetSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientGetSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientGetSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       GetSchemaRequest request =
+   *           GetSchemaRequest.newBuilder()
+   *               .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+   *               .setView(SchemaView.forNumber(0))
+   *               .build();
+   *       ApiFuture<Schema> future = schemaServiceClient.getSchemaCallable().futureCall(request);
+   *       // Do something.
+   *       Schema response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -386,10 +544,24 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   for (Schema element : schemaServiceClient.listSchemas(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   *
+   * public class SchemaServiceClientListSchemas {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientListSchemas();
+   *   }
+   *
+   *   public static void schemaServiceClientListSchemas() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       for (Schema element : schemaServiceClient.listSchemas(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -413,10 +585,24 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   for (Schema element : schemaServiceClient.listSchemas(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   *
+   * public class SchemaServiceClientListSchemas {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientListSchemas();
+   *   }
+   *
+   *   public static void schemaServiceClientListSchemas() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       for (Schema element : schemaServiceClient.listSchemas(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -437,16 +623,32 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ListSchemasRequest request =
-   *       ListSchemasRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setView(SchemaView.forNumber(0))
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Schema element : schemaServiceClient.listSchemas(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ListSchemasRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaView;
+   *
+   * public class SchemaServiceClientListSchemas {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientListSchemas();
+   *   }
+   *
+   *   public static void schemaServiceClientListSchemas() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ListSchemasRequest request =
+   *           ListSchemasRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setView(SchemaView.forNumber(0))
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Schema element : schemaServiceClient.listSchemas(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -465,18 +667,35 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ListSchemasRequest request =
-   *       ListSchemasRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setView(SchemaView.forNumber(0))
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Schema> future = schemaServiceClient.listSchemasPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Schema element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ListSchemasRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaView;
+   *
+   * public class SchemaServiceClientListSchemas {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientListSchemas();
+   *   }
+   *
+   *   public static void schemaServiceClientListSchemas() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ListSchemasRequest request =
+   *           ListSchemasRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setView(SchemaView.forNumber(0))
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Schema> future = schemaServiceClient.listSchemasPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Schema element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -493,24 +712,42 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ListSchemasRequest request =
-   *       ListSchemasRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setView(SchemaView.forNumber(0))
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListSchemasResponse response = schemaServiceClient.listSchemasCallable().call(request);
-   *     for (Schema element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.pubsub.v1.ListSchemasRequest;
+   * import com.google.pubsub.v1.ListSchemasResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.SchemaView;
+   *
+   * public class SchemaServiceClientListSchemas {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientListSchemas();
+   *   }
+   *
+   *   public static void schemaServiceClientListSchemas() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ListSchemasRequest request =
+   *           ListSchemasRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setView(SchemaView.forNumber(0))
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListSchemasResponse response = schemaServiceClient.listSchemasCallable().call(request);
+   *         for (Schema element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -527,9 +764,23 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   SchemaName name = SchemaName.of("[PROJECT]", "[SCHEMA]");
-   *   schemaServiceClient.deleteSchema(name);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SchemaName;
+   *
+   * public class SchemaServiceClientDeleteSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientDeleteSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientDeleteSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       SchemaName name = SchemaName.of("[PROJECT]", "[SCHEMA]");
+   *       schemaServiceClient.deleteSchema(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -550,9 +801,23 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   String name = SchemaName.of("[PROJECT]", "[SCHEMA]").toString();
-   *   schemaServiceClient.deleteSchema(name);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.SchemaName;
+   *
+   * public class SchemaServiceClientDeleteSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientDeleteSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientDeleteSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       String name = SchemaName.of("[PROJECT]", "[SCHEMA]").toString();
+   *       schemaServiceClient.deleteSchema(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -572,12 +837,27 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   DeleteSchemaRequest request =
-   *       DeleteSchemaRequest.newBuilder()
-   *           .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
-   *           .build();
-   *   schemaServiceClient.deleteSchema(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteSchemaRequest;
+   * import com.google.pubsub.v1.SchemaName;
+   *
+   * public class SchemaServiceClientDeleteSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientDeleteSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientDeleteSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       DeleteSchemaRequest request =
+   *           DeleteSchemaRequest.newBuilder()
+   *               .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+   *               .build();
+   *       schemaServiceClient.deleteSchema(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -595,14 +875,30 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   DeleteSchemaRequest request =
-   *       DeleteSchemaRequest.newBuilder()
-   *           .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = schemaServiceClient.deleteSchemaCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   * import com.google.pubsub.v1.DeleteSchemaRequest;
+   * import com.google.pubsub.v1.SchemaName;
+   *
+   * public class SchemaServiceClientDeleteSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientDeleteSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientDeleteSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       DeleteSchemaRequest request =
+   *           DeleteSchemaRequest.newBuilder()
+   *               .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = schemaServiceClient.deleteSchemaCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -617,10 +913,25 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
-   *   Schema schema = Schema.newBuilder().build();
-   *   ValidateSchemaResponse response = schemaServiceClient.validateSchema(parent, schema);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.ValidateSchemaResponse;
+   *
+   * public class SchemaServiceClientValidateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientValidateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientValidateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ProjectName parent = ProjectName.of("[PROJECT]");
+   *       Schema schema = Schema.newBuilder().build();
+   *       ValidateSchemaResponse response = schemaServiceClient.validateSchema(parent, schema);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -645,10 +956,25 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   String parent = ProjectName.of("[PROJECT]").toString();
-   *   Schema schema = Schema.newBuilder().build();
-   *   ValidateSchemaResponse response = schemaServiceClient.validateSchema(parent, schema);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.ValidateSchemaResponse;
+   *
+   * public class SchemaServiceClientValidateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientValidateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientValidateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       String parent = ProjectName.of("[PROJECT]").toString();
+   *       Schema schema = Schema.newBuilder().build();
+   *       ValidateSchemaResponse response = schemaServiceClient.validateSchema(parent, schema);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -670,13 +996,29 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ValidateSchemaRequest request =
-   *       ValidateSchemaRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setSchema(Schema.newBuilder().build())
-   *           .build();
-   *   ValidateSchemaResponse response = schemaServiceClient.validateSchema(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.ValidateSchemaRequest;
+   * import com.google.pubsub.v1.ValidateSchemaResponse;
+   *
+   * public class SchemaServiceClientValidateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientValidateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientValidateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ValidateSchemaRequest request =
+   *           ValidateSchemaRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setSchema(Schema.newBuilder().build())
+   *               .build();
+   *       ValidateSchemaResponse response = schemaServiceClient.validateSchema(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -694,16 +1036,33 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ValidateSchemaRequest request =
-   *       ValidateSchemaRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setSchema(Schema.newBuilder().build())
-   *           .build();
-   *   ApiFuture<ValidateSchemaResponse> future =
-   *       schemaServiceClient.validateSchemaCallable().futureCall(request);
-   *   // Do something.
-   *   ValidateSchemaResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.Schema;
+   * import com.google.pubsub.v1.ValidateSchemaRequest;
+   * import com.google.pubsub.v1.ValidateSchemaResponse;
+   *
+   * public class SchemaServiceClientValidateSchema {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientValidateSchema();
+   *   }
+   *
+   *   public static void schemaServiceClientValidateSchema() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ValidateSchemaRequest request =
+   *           ValidateSchemaRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setSchema(Schema.newBuilder().build())
+   *               .build();
+   *       ApiFuture<ValidateSchemaResponse> future =
+   *           schemaServiceClient.validateSchemaCallable().futureCall(request);
+   *       // Do something.
+   *       ValidateSchemaResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -719,14 +1078,31 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ValidateMessageRequest request =
-   *       ValidateMessageRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setMessage(ByteString.EMPTY)
-   *           .setEncoding(Encoding.forNumber(0))
-   *           .build();
-   *   ValidateMessageResponse response = schemaServiceClient.validateMessage(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import com.google.pubsub.v1.Encoding;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.ValidateMessageRequest;
+   * import com.google.pubsub.v1.ValidateMessageResponse;
+   *
+   * public class SchemaServiceClientValidateMessage {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientValidateMessage();
+   *   }
+   *
+   *   public static void schemaServiceClientValidateMessage() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ValidateMessageRequest request =
+   *           ValidateMessageRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setMessage(ByteString.EMPTY)
+   *               .setEncoding(Encoding.forNumber(0))
+   *               .build();
+   *       ValidateMessageResponse response = schemaServiceClient.validateMessage(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -744,17 +1120,35 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   ValidateMessageRequest request =
-   *       ValidateMessageRequest.newBuilder()
-   *           .setParent(ProjectName.of("[PROJECT]").toString())
-   *           .setMessage(ByteString.EMPTY)
-   *           .setEncoding(Encoding.forNumber(0))
-   *           .build();
-   *   ApiFuture<ValidateMessageResponse> future =
-   *       schemaServiceClient.validateMessageCallable().futureCall(request);
-   *   // Do something.
-   *   ValidateMessageResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.ByteString;
+   * import com.google.pubsub.v1.Encoding;
+   * import com.google.pubsub.v1.ProjectName;
+   * import com.google.pubsub.v1.ValidateMessageRequest;
+   * import com.google.pubsub.v1.ValidateMessageResponse;
+   *
+   * public class SchemaServiceClientValidateMessage {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientValidateMessage();
+   *   }
+   *
+   *   public static void schemaServiceClientValidateMessage() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       ValidateMessageRequest request =
+   *           ValidateMessageRequest.newBuilder()
+   *               .setParent(ProjectName.of("[PROJECT]").toString())
+   *               .setMessage(ByteString.EMPTY)
+   *               .setEncoding(Encoding.forNumber(0))
+   *               .build();
+   *       ApiFuture<ValidateMessageResponse> future =
+   *           schemaServiceClient.validateMessageCallable().futureCall(request);
+   *       // Do something.
+   *       ValidateMessageResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -772,13 +1166,28 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   Policy response = schemaServiceClient.setIamPolicy(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SchemaServiceClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientSetIamPolicy();
+   *   }
+   *
+   *   public static void schemaServiceClientSetIamPolicy() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       Policy response = schemaServiceClient.setIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -798,15 +1207,31 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   SetIamPolicyRequest request =
-   *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setPolicy(Policy.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = schemaServiceClient.setIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.Policy;
+   * import com.google.iam.v1.SetIamPolicyRequest;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SchemaServiceClientSetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientSetIamPolicy();
+   *   }
+   *
+   *   public static void schemaServiceClientSetIamPolicy() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       SetIamPolicyRequest request =
+   *           SetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setPolicy(Policy.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = schemaServiceClient.setIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -822,13 +1247,29 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   Policy response = schemaServiceClient.getIamPolicy(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SchemaServiceClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientGetIamPolicy();
+   *   }
+   *
+   *   public static void schemaServiceClientGetIamPolicy() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       Policy response = schemaServiceClient.getIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -847,15 +1288,32 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future = schemaServiceClient.getIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   * import com.google.pubsub.v1.ProjectName;
+   *
+   * public class SchemaServiceClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientGetIamPolicy();
+   *   }
+   *
+   *   public static void schemaServiceClientGetIamPolicy() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future = schemaServiceClient.getIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -875,13 +1333,29 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   TestIamPermissionsResponse response = schemaServiceClient.testIamPermissions(request);
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class SchemaServiceClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientTestIamPermissions();
+   *   }
+   *
+   *   public static void schemaServiceClientTestIamPermissions() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       TestIamPermissionsResponse response = schemaServiceClient.testIamPermissions(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -904,16 +1378,33 @@ public class SchemaServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<TestIamPermissionsResponse> future =
-   *       schemaServiceClient.testIamPermissionsCallable().futureCall(request);
-   *   // Do something.
-   *   TestIamPermissionsResponse response = future.get();
+   * package com.google.cloud.pubsub.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import com.google.pubsub.v1.ProjectName;
+   * import java.util.ArrayList;
+   *
+   * public class SchemaServiceClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     schemaServiceClientTestIamPermissions();
+   *   }
+   *
+   *   public static void schemaServiceClientTestIamPermissions() throws Exception {
+   *     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(ProjectName.of("[PROJECT]").toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<TestIamPermissionsResponse> future =
+   *           schemaServiceClient.testIamPermissionsCallable().futureCall(request);
+   *       // Do something.
+   *       TestIamPermissionsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

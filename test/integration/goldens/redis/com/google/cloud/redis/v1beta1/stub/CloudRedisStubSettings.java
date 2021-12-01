@@ -85,17 +85,30 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of getInstance to 30 seconds:
  *
  * <pre>{@code
- * CloudRedisStubSettings.Builder cloudRedisSettingsBuilder = CloudRedisStubSettings.newBuilder();
- * cloudRedisSettingsBuilder
- *     .getInstanceSettings()
- *     .setRetrySettings(
- *         cloudRedisSettingsBuilder
- *             .getInstanceSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * CloudRedisStubSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
+ * package com.google.cloud.redis.v1beta1.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class CloudRedisSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     cloudRedisSettings();
+ *   }
+ *
+ *   public static void cloudRedisSettings() throws Exception {
+ *     CloudRedisStubSettings.Builder cloudRedisSettingsBuilder = CloudRedisStubSettings.newBuilder();
+ *     cloudRedisSettingsBuilder
+ *         .getInstanceSettings()
+ *         .setRetrySettings(
+ *             cloudRedisSettingsBuilder
+ *                 .getInstanceSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     CloudRedisStubSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @BetaApi

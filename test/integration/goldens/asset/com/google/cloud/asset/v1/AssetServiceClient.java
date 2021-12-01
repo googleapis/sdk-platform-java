@@ -47,16 +47,29 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
- *   BatchGetAssetsHistoryRequest request =
- *       BatchGetAssetsHistoryRequest.newBuilder()
- *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
- *           .addAllAssetNames(new ArrayList<String>())
- *           .setContentType(ContentType.forNumber(0))
- *           .setReadTimeWindow(TimeWindow.newBuilder().build())
- *           .addAllRelationshipTypes(new ArrayList<String>())
- *           .build();
- *   BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+ * package com.google.cloud.asset.v1;
+ *
+ * import java.util.ArrayList;
+ *
+ * public class AssetServiceClientBatchGetAssetsHistory {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     assetServiceClientBatchGetAssetsHistory();
+ *   }
+ *
+ *   public static void assetServiceClientBatchGetAssetsHistory() throws Exception {
+ *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+ *       BatchGetAssetsHistoryRequest request =
+ *           BatchGetAssetsHistoryRequest.newBuilder()
+ *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+ *               .addAllAssetNames(new ArrayList<String>())
+ *               .setContentType(ContentType.forNumber(0))
+ *               .setReadTimeWindow(TimeWindow.newBuilder().build())
+ *               .addAllRelationshipTypes(new ArrayList<String>())
+ *               .build();
+ *       BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -89,19 +102,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * AssetServiceSettings assetServiceSettings =
- *     AssetServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ * package com.google.cloud.asset.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class AssetServiceClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     assetServiceClientCreate();
+ *   }
+ *
+ *   public static void assetServiceClientCreate() throws Exception {
+ *     AssetServiceSettings assetServiceSettings =
+ *         AssetServiceSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * AssetServiceSettings assetServiceSettings =
- *     AssetServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
- * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ * package com.google.cloud.asset.v1;
+ *
+ * public class AssetServiceClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     assetServiceClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void assetServiceClientClassHeaderEndpoint() throws Exception {
+ *     AssetServiceSettings assetServiceSettings =
+ *         AssetServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -183,17 +220,31 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ExportAssetsRequest request =
-   *       ExportAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .setReadTime(Timestamp.newBuilder().build())
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setOutputConfig(OutputConfig.newBuilder().build())
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   ExportAssetsResponse response = assetServiceClient.exportAssetsAsync(request).get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.Timestamp;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientExportAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientExportAssets();
+   *   }
+   *
+   *   public static void assetServiceClientExportAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ExportAssetsRequest request =
+   *           ExportAssetsRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .setReadTime(Timestamp.newBuilder().build())
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setOutputConfig(OutputConfig.newBuilder().build())
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       ExportAssetsResponse response = assetServiceClient.exportAssetsAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -219,20 +270,35 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ExportAssetsRequest request =
-   *       ExportAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .setReadTime(Timestamp.newBuilder().build())
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setOutputConfig(OutputConfig.newBuilder().build())
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   OperationFuture<ExportAssetsResponse, ExportAssetsRequest> future =
-   *       assetServiceClient.exportAssetsOperationCallable().futureCall(request);
-   *   // Do something.
-   *   ExportAssetsResponse response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Timestamp;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientExportAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientExportAssets();
+   *   }
+   *
+   *   public static void assetServiceClientExportAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ExportAssetsRequest request =
+   *           ExportAssetsRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .setReadTime(Timestamp.newBuilder().build())
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setOutputConfig(OutputConfig.newBuilder().build())
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       OperationFuture<ExportAssetsResponse, ExportAssetsRequest> future =
+   *           assetServiceClient.exportAssetsOperationCallable().futureCall(request);
+   *       // Do something.
+   *       ExportAssetsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -255,19 +321,35 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ExportAssetsRequest request =
-   *       ExportAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .setReadTime(Timestamp.newBuilder().build())
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setOutputConfig(OutputConfig.newBuilder().build())
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<Operation> future = assetServiceClient.exportAssetsCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   * import com.google.protobuf.Timestamp;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientExportAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientExportAssets();
+   *   }
+   *
+   *   public static void assetServiceClientExportAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ExportAssetsRequest request =
+   *           ExportAssetsRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .setReadTime(Timestamp.newBuilder().build())
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setOutputConfig(OutputConfig.newBuilder().build())
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<Operation> future = assetServiceClient.exportAssetsCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -282,10 +364,23 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ResourceName parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.resourcenames.ResourceName;
+   *
+   * public class AssetServiceClientListAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListAssets();
+   *   }
+   *
+   *   public static void assetServiceClientListAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ResourceName parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *       for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -309,10 +404,21 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
-   *   for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientListAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListAssets();
+   *   }
+   *
+   *   public static void assetServiceClientListAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
+   *       for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -335,19 +441,33 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ListAssetsRequest request =
-   *       ListAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .setReadTime(Timestamp.newBuilder().build())
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   for (Asset element : assetServiceClient.listAssets(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.Timestamp;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientListAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListAssets();
+   *   }
+   *
+   *   public static void assetServiceClientListAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ListAssetsRequest request =
+   *           ListAssetsRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .setReadTime(Timestamp.newBuilder().build())
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       for (Asset element : assetServiceClient.listAssets(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -366,21 +486,36 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ListAssetsRequest request =
-   *       ListAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .setReadTime(Timestamp.newBuilder().build())
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<Asset> future = assetServiceClient.listAssetsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Asset element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Timestamp;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientListAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListAssets();
+   *   }
+   *
+   *   public static void assetServiceClientListAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ListAssetsRequest request =
+   *           ListAssetsRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .setReadTime(Timestamp.newBuilder().build())
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<Asset> future = assetServiceClient.listAssetsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Asset element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -396,27 +531,42 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ListAssetsRequest request =
-   *       ListAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .setReadTime(Timestamp.newBuilder().build())
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   while (true) {
-   *     ListAssetsResponse response = assetServiceClient.listAssetsCallable().call(request);
-   *     for (Asset element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.protobuf.Timestamp;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientListAssets {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListAssets();
+   *   }
+   *
+   *   public static void assetServiceClientListAssets() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ListAssetsRequest request =
+   *           ListAssetsRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .setReadTime(Timestamp.newBuilder().build())
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       while (true) {
+   *         ListAssetsResponse response = assetServiceClient.listAssetsCallable().call(request);
+   *         for (Asset element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -437,16 +587,29 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   BatchGetAssetsHistoryRequest request =
-   *       BatchGetAssetsHistoryRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .addAllAssetNames(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setReadTimeWindow(TimeWindow.newBuilder().build())
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientBatchGetAssetsHistory {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientBatchGetAssetsHistory();
+   *   }
+   *
+   *   public static void assetServiceClientBatchGetAssetsHistory() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       BatchGetAssetsHistoryRequest request =
+   *           BatchGetAssetsHistoryRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .addAllAssetNames(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setReadTimeWindow(TimeWindow.newBuilder().build())
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -469,19 +632,33 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   BatchGetAssetsHistoryRequest request =
-   *       BatchGetAssetsHistoryRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .addAllAssetNames(new ArrayList<String>())
-   *           .setContentType(ContentType.forNumber(0))
-   *           .setReadTimeWindow(TimeWindow.newBuilder().build())
-   *           .addAllRelationshipTypes(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<BatchGetAssetsHistoryResponse> future =
-   *       assetServiceClient.batchGetAssetsHistoryCallable().futureCall(request);
-   *   // Do something.
-   *   BatchGetAssetsHistoryResponse response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientBatchGetAssetsHistory {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientBatchGetAssetsHistory();
+   *   }
+   *
+   *   public static void assetServiceClientBatchGetAssetsHistory() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       BatchGetAssetsHistoryRequest request =
+   *           BatchGetAssetsHistoryRequest.newBuilder()
+   *               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .addAllAssetNames(new ArrayList<String>())
+   *               .setContentType(ContentType.forNumber(0))
+   *               .setReadTimeWindow(TimeWindow.newBuilder().build())
+   *               .addAllRelationshipTypes(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<BatchGetAssetsHistoryResponse> future =
+   *           assetServiceClient.batchGetAssetsHistoryCallable().futureCall(request);
+   *       // Do something.
+   *       BatchGetAssetsHistoryResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -497,9 +674,20 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String parent = "parent-995424086";
-   *   Feed response = assetServiceClient.createFeed(parent);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientCreateFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientCreateFeed();
+   *   }
+   *
+   *   public static void assetServiceClientCreateFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String parent = "parent-995424086";
+   *       Feed response = assetServiceClient.createFeed(parent);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -521,14 +709,25 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   CreateFeedRequest request =
-   *       CreateFeedRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setFeedId("feedId-1278410919")
-   *           .setFeed(Feed.newBuilder().build())
-   *           .build();
-   *   Feed response = assetServiceClient.createFeed(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientCreateFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientCreateFeed();
+   *   }
+   *
+   *   public static void assetServiceClientCreateFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       CreateFeedRequest request =
+   *           CreateFeedRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setFeedId("feedId-1278410919")
+   *               .setFeed(Feed.newBuilder().build())
+   *               .build();
+   *       Feed response = assetServiceClient.createFeed(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -546,16 +745,29 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   CreateFeedRequest request =
-   *       CreateFeedRequest.newBuilder()
-   *           .setParent("parent-995424086")
-   *           .setFeedId("feedId-1278410919")
-   *           .setFeed(Feed.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Feed> future = assetServiceClient.createFeedCallable().futureCall(request);
-   *   // Do something.
-   *   Feed response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class AssetServiceClientCreateFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientCreateFeed();
+   *   }
+   *
+   *   public static void assetServiceClientCreateFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       CreateFeedRequest request =
+   *           CreateFeedRequest.newBuilder()
+   *               .setParent("parent-995424086")
+   *               .setFeedId("feedId-1278410919")
+   *               .setFeed(Feed.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Feed> future = assetServiceClient.createFeedCallable().futureCall(request);
+   *       // Do something.
+   *       Feed response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -570,9 +782,20 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   Feed response = assetServiceClient.getFeed(name);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientGetFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientGetFeed();
+   *   }
+   *
+   *   public static void assetServiceClientGetFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *       Feed response = assetServiceClient.getFeed(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -594,9 +817,20 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
-   *   Feed response = assetServiceClient.getFeed(name);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientGetFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientGetFeed();
+   *   }
+   *
+   *   public static void assetServiceClientGetFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
+   *       Feed response = assetServiceClient.getFeed(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -617,12 +851,23 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   GetFeedRequest request =
-   *       GetFeedRequest.newBuilder()
-   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .build();
-   *   Feed response = assetServiceClient.getFeed(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientGetFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientGetFeed();
+   *   }
+   *
+   *   public static void assetServiceClientGetFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       GetFeedRequest request =
+   *           GetFeedRequest.newBuilder()
+   *               .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .build();
+   *       Feed response = assetServiceClient.getFeed(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -640,14 +885,27 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   GetFeedRequest request =
-   *       GetFeedRequest.newBuilder()
-   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .build();
-   *   ApiFuture<Feed> future = assetServiceClient.getFeedCallable().futureCall(request);
-   *   // Do something.
-   *   Feed response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class AssetServiceClientGetFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientGetFeed();
+   *   }
+   *
+   *   public static void assetServiceClientGetFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       GetFeedRequest request =
+   *           GetFeedRequest.newBuilder()
+   *               .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .build();
+   *       ApiFuture<Feed> future = assetServiceClient.getFeedCallable().futureCall(request);
+   *       // Do something.
+   *       Feed response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -662,9 +920,20 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String parent = "parent-995424086";
-   *   ListFeedsResponse response = assetServiceClient.listFeeds(parent);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientListFeeds {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListFeeds();
+   *   }
+   *
+   *   public static void assetServiceClientListFeeds() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String parent = "parent-995424086";
+   *       ListFeedsResponse response = assetServiceClient.listFeeds(parent);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -685,10 +954,21 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ListFeedsRequest request =
-   *       ListFeedsRequest.newBuilder().setParent("parent-995424086").build();
-   *   ListFeedsResponse response = assetServiceClient.listFeeds(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientListFeeds {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListFeeds();
+   *   }
+   *
+   *   public static void assetServiceClientListFeeds() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ListFeedsRequest request =
+   *           ListFeedsRequest.newBuilder().setParent("parent-995424086").build();
+   *       ListFeedsResponse response = assetServiceClient.listFeeds(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -706,13 +986,26 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ListFeedsRequest request =
-   *       ListFeedsRequest.newBuilder().setParent("parent-995424086").build();
-   *   ApiFuture<ListFeedsResponse> future =
-   *       assetServiceClient.listFeedsCallable().futureCall(request);
-   *   // Do something.
-   *   ListFeedsResponse response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class AssetServiceClientListFeeds {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientListFeeds();
+   *   }
+   *
+   *   public static void assetServiceClientListFeeds() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       ListFeedsRequest request =
+   *           ListFeedsRequest.newBuilder().setParent("parent-995424086").build();
+   *       ApiFuture<ListFeedsResponse> future =
+   *           assetServiceClient.listFeedsCallable().futureCall(request);
+   *       // Do something.
+   *       ListFeedsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -727,9 +1020,20 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   Feed feed = Feed.newBuilder().build();
-   *   Feed response = assetServiceClient.updateFeed(feed);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientUpdateFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientUpdateFeed();
+   *   }
+   *
+   *   public static void assetServiceClientUpdateFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       Feed feed = Feed.newBuilder().build();
+   *       Feed response = assetServiceClient.updateFeed(feed);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -750,13 +1054,26 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   UpdateFeedRequest request =
-   *       UpdateFeedRequest.newBuilder()
-   *           .setFeed(Feed.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   Feed response = assetServiceClient.updateFeed(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class AssetServiceClientUpdateFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientUpdateFeed();
+   *   }
+   *
+   *   public static void assetServiceClientUpdateFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       UpdateFeedRequest request =
+   *           UpdateFeedRequest.newBuilder()
+   *               .setFeed(Feed.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       Feed response = assetServiceClient.updateFeed(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -774,15 +1091,29 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   UpdateFeedRequest request =
-   *       UpdateFeedRequest.newBuilder()
-   *           .setFeed(Feed.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Feed> future = assetServiceClient.updateFeedCallable().futureCall(request);
-   *   // Do something.
-   *   Feed response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class AssetServiceClientUpdateFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientUpdateFeed();
+   *   }
+   *
+   *   public static void assetServiceClientUpdateFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       UpdateFeedRequest request =
+   *           UpdateFeedRequest.newBuilder()
+   *               .setFeed(Feed.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Feed> future = assetServiceClient.updateFeedCallable().futureCall(request);
+   *       // Do something.
+   *       Feed response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -797,9 +1128,22 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   assetServiceClient.deleteFeed(name);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class AssetServiceClientDeleteFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientDeleteFeed();
+   *   }
+   *
+   *   public static void assetServiceClientDeleteFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *       assetServiceClient.deleteFeed(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -821,9 +1165,22 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
-   *   assetServiceClient.deleteFeed(name);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class AssetServiceClientDeleteFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientDeleteFeed();
+   *   }
+   *
+   *   public static void assetServiceClientDeleteFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
+   *       assetServiceClient.deleteFeed(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -844,12 +1201,25 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   DeleteFeedRequest request =
-   *       DeleteFeedRequest.newBuilder()
-   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .build();
-   *   assetServiceClient.deleteFeed(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class AssetServiceClientDeleteFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientDeleteFeed();
+   *   }
+   *
+   *   public static void assetServiceClientDeleteFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       DeleteFeedRequest request =
+   *           DeleteFeedRequest.newBuilder()
+   *               .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .build();
+   *       assetServiceClient.deleteFeed(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -867,14 +1237,28 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   DeleteFeedRequest request =
-   *       DeleteFeedRequest.newBuilder()
-   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-   *           .build();
-   *   ApiFuture<Empty> future = assetServiceClient.deleteFeedCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Empty;
+   *
+   * public class AssetServiceClientDeleteFeed {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientDeleteFeed();
+   *   }
+   *
+   *   public static void assetServiceClientDeleteFeed() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       DeleteFeedRequest request =
+   *           DeleteFeedRequest.newBuilder()
+   *               .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *               .build();
+   *       ApiFuture<Empty> future = assetServiceClient.deleteFeedCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -891,13 +1275,27 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String scope = "scope109264468";
-   *   String query = "query107944136";
-   *   List<String> assetTypes = new ArrayList<>();
-   *   for (ResourceSearchResult element :
-   *       assetServiceClient.searchAllResources(scope, query, assetTypes).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class AssetServiceClientSearchAllResources {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllResources();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllResources() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String scope = "scope109264468";
+   *       String query = "query107944136";
+   *       List<String> assetTypes = new ArrayList<>();
+   *       for (ResourceSearchResult element :
+   *           assetServiceClient.searchAllResources(scope, query, assetTypes).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -985,20 +1383,34 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   SearchAllResourcesRequest request =
-   *       SearchAllResourcesRequest.newBuilder()
-   *           .setScope("scope109264468")
-   *           .setQuery("query107944136")
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setReadMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   for (ResourceSearchResult element :
-   *       assetServiceClient.searchAllResources(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientSearchAllResources {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllResources();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllResources() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       SearchAllResourcesRequest request =
+   *           SearchAllResourcesRequest.newBuilder()
+   *               .setScope("scope109264468")
+   *               .setQuery("query107944136")
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setReadMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       for (ResourceSearchResult element :
+   *           assetServiceClient.searchAllResources(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1020,22 +1432,37 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   SearchAllResourcesRequest request =
-   *       SearchAllResourcesRequest.newBuilder()
-   *           .setScope("scope109264468")
-   *           .setQuery("query107944136")
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setReadMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<ResourceSearchResult> future =
-   *       assetServiceClient.searchAllResourcesPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (ResourceSearchResult element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientSearchAllResources {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllResources();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllResources() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       SearchAllResourcesRequest request =
+   *           SearchAllResourcesRequest.newBuilder()
+   *               .setScope("scope109264468")
+   *               .setQuery("query107944136")
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setReadMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<ResourceSearchResult> future =
+   *           assetServiceClient.searchAllResourcesPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (ResourceSearchResult element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1054,28 +1481,43 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   SearchAllResourcesRequest request =
-   *       SearchAllResourcesRequest.newBuilder()
-   *           .setScope("scope109264468")
-   *           .setQuery("query107944136")
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .setReadMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   while (true) {
-   *     SearchAllResourcesResponse response =
-   *         assetServiceClient.searchAllResourcesCallable().call(request);
-   *     for (ResourceSearchResult element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import com.google.protobuf.FieldMask;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientSearchAllResources {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllResources();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllResources() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       SearchAllResourcesRequest request =
+   *           SearchAllResourcesRequest.newBuilder()
+   *               .setScope("scope109264468")
+   *               .setQuery("query107944136")
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .setReadMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       while (true) {
+   *         SearchAllResourcesResponse response =
+   *             assetServiceClient.searchAllResourcesCallable().call(request);
+   *         for (ResourceSearchResult element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -1095,12 +1537,23 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   String scope = "scope109264468";
-   *   String query = "query107944136";
-   *   for (IamPolicySearchResult element :
-   *       assetServiceClient.searchAllIamPolicies(scope, query).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientSearchAllIamPolicies {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllIamPolicies();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllIamPolicies() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       String scope = "scope109264468";
+   *       String query = "query107944136";
+   *       for (IamPolicySearchResult element :
+   *           assetServiceClient.searchAllIamPolicies(scope, query).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1171,19 +1624,32 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   SearchAllIamPoliciesRequest request =
-   *       SearchAllIamPoliciesRequest.newBuilder()
-   *           .setScope("scope109264468")
-   *           .setQuery("query107944136")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   for (IamPolicySearchResult element :
-   *       assetServiceClient.searchAllIamPolicies(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientSearchAllIamPolicies {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllIamPolicies();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllIamPolicies() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       SearchAllIamPoliciesRequest request =
+   *           SearchAllIamPoliciesRequest.newBuilder()
+   *               .setScope("scope109264468")
+   *               .setQuery("query107944136")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       for (IamPolicySearchResult element :
+   *           assetServiceClient.searchAllIamPolicies(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1205,21 +1671,35 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   SearchAllIamPoliciesRequest request =
-   *       SearchAllIamPoliciesRequest.newBuilder()
-   *           .setScope("scope109264468")
-   *           .setQuery("query107944136")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   ApiFuture<IamPolicySearchResult> future =
-   *       assetServiceClient.searchAllIamPoliciesPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (IamPolicySearchResult element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientSearchAllIamPolicies {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllIamPolicies();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllIamPolicies() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       SearchAllIamPoliciesRequest request =
+   *           SearchAllIamPoliciesRequest.newBuilder()
+   *               .setScope("scope109264468")
+   *               .setQuery("query107944136")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       ApiFuture<IamPolicySearchResult> future =
+   *           assetServiceClient.searchAllIamPoliciesPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (IamPolicySearchResult element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -1238,27 +1718,41 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   SearchAllIamPoliciesRequest request =
-   *       SearchAllIamPoliciesRequest.newBuilder()
-   *           .setScope("scope109264468")
-   *           .setQuery("query107944136")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .addAllAssetTypes(new ArrayList<String>())
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   while (true) {
-   *     SearchAllIamPoliciesResponse response =
-   *         assetServiceClient.searchAllIamPoliciesCallable().call(request);
-   *     for (IamPolicySearchResult element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.common.base.Strings;
+   * import java.util.ArrayList;
+   *
+   * public class AssetServiceClientSearchAllIamPolicies {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientSearchAllIamPolicies();
+   *   }
+   *
+   *   public static void assetServiceClientSearchAllIamPolicies() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       SearchAllIamPoliciesRequest request =
+   *           SearchAllIamPoliciesRequest.newBuilder()
+   *               .setScope("scope109264468")
+   *               .setQuery("query107944136")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .addAllAssetTypes(new ArrayList<String>())
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       while (true) {
+   *         SearchAllIamPoliciesResponse response =
+   *             assetServiceClient.searchAllIamPoliciesCallable().call(request);
+   *         for (IamPolicySearchResult element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -1276,13 +1770,26 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeIamPolicyRequest request =
-   *       AnalyzeIamPolicyRequest.newBuilder()
-   *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
-   *           .setExecutionTimeout(Duration.newBuilder().build())
-   *           .build();
-   *   AnalyzeIamPolicyResponse response = assetServiceClient.analyzeIamPolicy(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.protobuf.Duration;
+   *
+   * public class AssetServiceClientAnalyzeIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeIamPolicy();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeIamPolicy() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeIamPolicyRequest request =
+   *           AnalyzeIamPolicyRequest.newBuilder()
+   *               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *               .setExecutionTimeout(Duration.newBuilder().build())
+   *               .build();
+   *       AnalyzeIamPolicyResponse response = assetServiceClient.analyzeIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1300,16 +1807,30 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeIamPolicyRequest request =
-   *       AnalyzeIamPolicyRequest.newBuilder()
-   *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
-   *           .setExecutionTimeout(Duration.newBuilder().build())
-   *           .build();
-   *   ApiFuture<AnalyzeIamPolicyResponse> future =
-   *       assetServiceClient.analyzeIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   AnalyzeIamPolicyResponse response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Duration;
+   *
+   * public class AssetServiceClientAnalyzeIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeIamPolicy();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeIamPolicy() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeIamPolicyRequest request =
+   *           AnalyzeIamPolicyRequest.newBuilder()
+   *               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *               .setExecutionTimeout(Duration.newBuilder().build())
+   *               .build();
+   *       ApiFuture<AnalyzeIamPolicyResponse> future =
+   *           assetServiceClient.analyzeIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       AnalyzeIamPolicyResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1332,14 +1853,25 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeIamPolicyLongrunningRequest request =
-   *       AnalyzeIamPolicyLongrunningRequest.newBuilder()
-   *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
-   *           .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
-   *           .build();
-   *   AnalyzeIamPolicyLongrunningResponse response =
-   *       assetServiceClient.analyzeIamPolicyLongrunningAsync(request).get();
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientAnalyzeIamPolicyLongrunning {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeIamPolicyLongrunning();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeIamPolicyLongrunning() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeIamPolicyLongrunningRequest request =
+   *           AnalyzeIamPolicyLongrunningRequest.newBuilder()
+   *               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *               .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
+   *               .build();
+   *       AnalyzeIamPolicyLongrunningResponse response =
+   *           assetServiceClient.analyzeIamPolicyLongrunningAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1366,17 +1898,30 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeIamPolicyLongrunningRequest request =
-   *       AnalyzeIamPolicyLongrunningRequest.newBuilder()
-   *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
-   *           .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
-   *           .build();
-   *   OperationFuture<AnalyzeIamPolicyLongrunningResponse, AnalyzeIamPolicyLongrunningMetadata>
-   *       future =
-   *           assetServiceClient.analyzeIamPolicyLongrunningOperationCallable().futureCall(request);
-   *   // Do something.
-   *   AnalyzeIamPolicyLongrunningResponse response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   *
+   * public class AssetServiceClientAnalyzeIamPolicyLongrunning {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeIamPolicyLongrunning();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeIamPolicyLongrunning() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeIamPolicyLongrunningRequest request =
+   *           AnalyzeIamPolicyLongrunningRequest.newBuilder()
+   *               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *               .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
+   *               .build();
+   *       OperationFuture<AnalyzeIamPolicyLongrunningResponse, AnalyzeIamPolicyLongrunningMetadata>
+   *           future =
+   *               assetServiceClient.analyzeIamPolicyLongrunningOperationCallable().futureCall(request);
+   *       // Do something.
+   *       AnalyzeIamPolicyLongrunningResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1402,16 +1947,30 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeIamPolicyLongrunningRequest request =
-   *       AnalyzeIamPolicyLongrunningRequest.newBuilder()
-   *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
-   *           .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Operation> future =
-   *       assetServiceClient.analyzeIamPolicyLongrunningCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class AssetServiceClientAnalyzeIamPolicyLongrunning {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeIamPolicyLongrunning();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeIamPolicyLongrunning() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeIamPolicyLongrunningRequest request =
+   *           AnalyzeIamPolicyLongrunningRequest.newBuilder()
+   *               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *               .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Operation> future =
+   *           assetServiceClient.analyzeIamPolicyLongrunningCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1430,13 +1989,24 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeMoveRequest request =
-   *       AnalyzeMoveRequest.newBuilder()
-   *           .setResource("resource-341064690")
-   *           .setDestinationParent("destinationParent-1733659048")
-   *           .build();
-   *   AnalyzeMoveResponse response = assetServiceClient.analyzeMove(request);
+   * package com.google.cloud.asset.v1;
+   *
+   * public class AssetServiceClientAnalyzeMove {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeMove();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeMove() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeMoveRequest request =
+   *           AnalyzeMoveRequest.newBuilder()
+   *               .setResource("resource-341064690")
+   *               .setDestinationParent("destinationParent-1733659048")
+   *               .build();
+   *       AnalyzeMoveResponse response = assetServiceClient.analyzeMove(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1457,16 +2027,29 @@ public class AssetServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   AnalyzeMoveRequest request =
-   *       AnalyzeMoveRequest.newBuilder()
-   *           .setResource("resource-341064690")
-   *           .setDestinationParent("destinationParent-1733659048")
-   *           .build();
-   *   ApiFuture<AnalyzeMoveResponse> future =
-   *       assetServiceClient.analyzeMoveCallable().futureCall(request);
-   *   // Do something.
-   *   AnalyzeMoveResponse response = future.get();
+   * package com.google.cloud.asset.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class AssetServiceClientAnalyzeMove {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     assetServiceClientAnalyzeMove();
+   *   }
+   *
+   *   public static void assetServiceClientAnalyzeMove() throws Exception {
+   *     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *       AnalyzeMoveRequest request =
+   *           AnalyzeMoveRequest.newBuilder()
+   *               .setResource("resource-341064690")
+   *               .setDestinationParent("destinationParent-1733659048")
+   *               .build();
+   *       ApiFuture<AnalyzeMoveResponse> future =
+   *           assetServiceClient.analyzeMoveCallable().futureCall(request);
+   *       // Do something.
+   *       AnalyzeMoveResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

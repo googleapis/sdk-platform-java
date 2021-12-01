@@ -93,18 +93,31 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of deleteLog to 30 seconds:
  *
  * <pre>{@code
- * LoggingServiceV2StubSettings.Builder loggingSettingsBuilder =
- *     LoggingServiceV2StubSettings.newBuilder();
- * loggingSettingsBuilder
- *     .deleteLogSettings()
- *     .setRetrySettings(
- *         loggingSettingsBuilder
- *             .deleteLogSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * LoggingServiceV2StubSettings loggingSettings = loggingSettingsBuilder.build();
+ * package com.google.cloud.logging.v2.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class LoggingSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     loggingSettings();
+ *   }
+ *
+ *   public static void loggingSettings() throws Exception {
+ *     LoggingServiceV2StubSettings.Builder loggingSettingsBuilder =
+ *         LoggingServiceV2StubSettings.newBuilder();
+ *     loggingSettingsBuilder
+ *         .deleteLogSettings()
+ *         .setRetrySettings(
+ *             loggingSettingsBuilder
+ *                 .deleteLogSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     LoggingServiceV2StubSettings loggingSettings = loggingSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

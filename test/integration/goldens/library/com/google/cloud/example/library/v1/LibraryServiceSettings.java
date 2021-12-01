@@ -71,18 +71,31 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of createShelf to 30 seconds:
  *
  * <pre>{@code
- * LibraryServiceSettings.Builder libraryServiceSettingsBuilder =
- *     LibraryServiceSettings.newBuilder();
- * libraryServiceSettingsBuilder
- *     .createShelfSettings()
- *     .setRetrySettings(
- *         libraryServiceSettingsBuilder
- *             .createShelfSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * LibraryServiceSettings libraryServiceSettings = libraryServiceSettingsBuilder.build();
+ * package com.google.cloud.example.library.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class LibraryServiceSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     libraryServiceSettings();
+ *   }
+ *
+ *   public static void libraryServiceSettings() throws Exception {
+ *     LibraryServiceSettings.Builder libraryServiceSettingsBuilder =
+ *         LibraryServiceSettings.newBuilder();
+ *     libraryServiceSettingsBuilder
+ *         .createShelfSettings()
+ *         .setRetrySettings(
+ *             libraryServiceSettingsBuilder
+ *                 .createShelfSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     LibraryServiceSettings libraryServiceSettings = libraryServiceSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

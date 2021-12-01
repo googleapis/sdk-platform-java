@@ -89,17 +89,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getBucket to 30 seconds:
  *
  * <pre>{@code
- * ConfigSettings.Builder configSettingsBuilder = ConfigSettings.newBuilder();
- * configSettingsBuilder
- *     .getBucketSettings()
- *     .setRetrySettings(
- *         configSettingsBuilder
- *             .getBucketSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * ConfigSettings configSettings = configSettingsBuilder.build();
+ * package com.google.cloud.logging.v2;
+ *
+ * import java.time.Duration;
+ *
+ * public class ConfigSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     configSettings();
+ *   }
+ *
+ *   public static void configSettings() throws Exception {
+ *     ConfigSettings.Builder configSettingsBuilder = ConfigSettings.newBuilder();
+ *     configSettingsBuilder
+ *         .getBucketSettings()
+ *         .setRetrySettings(
+ *             configSettingsBuilder
+ *                 .getBucketSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     ConfigSettings configSettings = configSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

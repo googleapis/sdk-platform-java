@@ -43,9 +43,20 @@
  * <p>Sample for CloudRedisClient:
  *
  * <pre>{@code
- * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
- *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
- *   Instance response = cloudRedisClient.getInstance(name);
+ * package com.google.cloud.redis.v1beta1;
+ *
+ * public class CloudRedisClientGetInstance {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     cloudRedisClientGetInstance();
+ *   }
+ *
+ *   public static void cloudRedisClientGetInstance() throws Exception {
+ *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+ *       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+ *       Instance response = cloudRedisClient.getInstance(name);
+ *     }
+ *   }
  * }
  * }</pre>
  */

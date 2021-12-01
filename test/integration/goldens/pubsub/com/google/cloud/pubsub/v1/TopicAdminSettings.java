@@ -76,17 +76,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
  *
  * <pre>{@code
- * TopicAdminSettings.Builder topicAdminSettingsBuilder = TopicAdminSettings.newBuilder();
- * topicAdminSettingsBuilder
- *     .createTopicSettings()
- *     .setRetrySettings(
- *         topicAdminSettingsBuilder
- *             .createTopicSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * TopicAdminSettings topicAdminSettings = topicAdminSettingsBuilder.build();
+ * package com.google.cloud.pubsub.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class TopicAdminSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     topicAdminSettings();
+ *   }
+ *
+ *   public static void topicAdminSettings() throws Exception {
+ *     TopicAdminSettings.Builder topicAdminSettingsBuilder = TopicAdminSettings.newBuilder();
+ *     topicAdminSettingsBuilder
+ *         .createTopicSettings()
+ *         .setRetrySettings(
+ *             topicAdminSettingsBuilder
+ *                 .createTopicSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     TopicAdminSettings topicAdminSettings = topicAdminSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

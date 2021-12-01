@@ -103,18 +103,31 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of getBucket to 30 seconds:
  *
  * <pre>{@code
- * ConfigServiceV2StubSettings.Builder configSettingsBuilder =
- *     ConfigServiceV2StubSettings.newBuilder();
- * configSettingsBuilder
- *     .getBucketSettings()
- *     .setRetrySettings(
- *         configSettingsBuilder
- *             .getBucketSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * ConfigServiceV2StubSettings configSettings = configSettingsBuilder.build();
+ * package com.google.cloud.logging.v2.stub;
+ *
+ * import java.time.Duration;
+ *
+ * public class ConfigSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     configSettings();
+ *   }
+ *
+ *   public static void configSettings() throws Exception {
+ *     ConfigServiceV2StubSettings.Builder configSettingsBuilder =
+ *         ConfigServiceV2StubSettings.newBuilder();
+ *     configSettingsBuilder
+ *         .getBucketSettings()
+ *         .setRetrySettings(
+ *             configSettingsBuilder
+ *                 .getBucketSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     ConfigServiceV2StubSettings configSettings = configSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

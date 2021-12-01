@@ -69,17 +69,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of deleteLog to 30 seconds:
  *
  * <pre>{@code
- * LoggingSettings.Builder loggingSettingsBuilder = LoggingSettings.newBuilder();
- * loggingSettingsBuilder
- *     .deleteLogSettings()
- *     .setRetrySettings(
- *         loggingSettingsBuilder
- *             .deleteLogSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * LoggingSettings loggingSettings = loggingSettingsBuilder.build();
+ * package com.google.cloud.logging.v2;
+ *
+ * import java.time.Duration;
+ *
+ * public class LoggingSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     loggingSettings();
+ *   }
+ *
+ *   public static void loggingSettings() throws Exception {
+ *     LoggingSettings.Builder loggingSettingsBuilder = LoggingSettings.newBuilder();
+ *     loggingSettingsBuilder
+ *         .deleteLogSettings()
+ *         .setRetrySettings(
+ *             loggingSettingsBuilder
+ *                 .deleteLogSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     LoggingSettings loggingSettings = loggingSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

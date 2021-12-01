@@ -24,9 +24,23 @@
  * <p>Sample for LoggingClient:
  *
  * <pre>{@code
- * try (LoggingClient loggingClient = LoggingClient.create()) {
- *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
- *   loggingClient.deleteLog(logName);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.logging.v2.LogName;
+ * import com.google.protobuf.Empty;
+ *
+ * public class LoggingClientDeleteLog {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     loggingClientDeleteLog();
+ *   }
+ *
+ *   public static void loggingClientDeleteLog() throws Exception {
+ *     try (LoggingClient loggingClient = LoggingClient.create()) {
+ *       LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+ *       loggingClient.deleteLog(logName);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -37,14 +51,29 @@
  * <p>Sample for ConfigClient:
  *
  * <pre>{@code
- * try (ConfigClient configClient = ConfigClient.create()) {
- *   GetBucketRequest request =
- *       GetBucketRequest.newBuilder()
- *           .setName(
- *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
- *                   .toString())
- *           .build();
- *   LogBucket response = configClient.getBucket(request);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.logging.v2.GetBucketRequest;
+ * import com.google.logging.v2.LogBucket;
+ * import com.google.logging.v2.LogBucketName;
+ *
+ * public class ConfigClientGetBucket {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     configClientGetBucket();
+ *   }
+ *
+ *   public static void configClientGetBucket() throws Exception {
+ *     try (ConfigClient configClient = ConfigClient.create()) {
+ *       GetBucketRequest request =
+ *           GetBucketRequest.newBuilder()
+ *               .setName(
+ *                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+ *                       .toString())
+ *               .build();
+ *       LogBucket response = configClient.getBucket(request);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -55,9 +84,23 @@
  * <p>Sample for MetricsClient:
  *
  * <pre>{@code
- * try (MetricsClient metricsClient = MetricsClient.create()) {
- *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
- *   LogMetric response = metricsClient.getLogMetric(metricName);
+ * package com.google.cloud.logging.v2;
+ *
+ * import com.google.logging.v2.LogMetric;
+ * import com.google.logging.v2.LogMetricName;
+ *
+ * public class MetricsClientGetLogMetric {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     metricsClientGetLogMetric();
+ *   }
+ *
+ *   public static void metricsClientGetLogMetric() throws Exception {
+ *     try (MetricsClient metricsClient = MetricsClient.create()) {
+ *       LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
+ *       LogMetric response = metricsClient.getLogMetric(metricName);
+ *     }
+ *   }
  * }
  * }</pre>
  */

@@ -65,10 +65,21 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (KeyManagementServiceClient keyManagementServiceClient =
- *     KeyManagementServiceClient.create()) {
- *   KeyRingName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
- *   KeyRing response = keyManagementServiceClient.getKeyRing(name);
+ * package com.google.cloud.kms.v1;
+ *
+ * public class KeyManagementServiceClientGetKeyRing {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     keyManagementServiceClientGetKeyRing();
+ *   }
+ *
+ *   public static void keyManagementServiceClientGetKeyRing() throws Exception {
+ *     try (KeyManagementServiceClient keyManagementServiceClient =
+ *         KeyManagementServiceClient.create()) {
+ *       KeyRingName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+ *       KeyRing response = keyManagementServiceClient.getKeyRing(name);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -102,21 +113,45 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * KeyManagementServiceSettings keyManagementServiceSettings =
- *     KeyManagementServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * KeyManagementServiceClient keyManagementServiceClient =
- *     KeyManagementServiceClient.create(keyManagementServiceSettings);
+ * package com.google.cloud.kms.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class KeyManagementServiceClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     keyManagementServiceClientCreate();
+ *   }
+ *
+ *   public static void keyManagementServiceClientCreate() throws Exception {
+ *     KeyManagementServiceSettings keyManagementServiceSettings =
+ *         KeyManagementServiceSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     KeyManagementServiceClient keyManagementServiceClient =
+ *         KeyManagementServiceClient.create(keyManagementServiceSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * KeyManagementServiceSettings keyManagementServiceSettings =
- *     KeyManagementServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
- * KeyManagementServiceClient keyManagementServiceClient =
- *     KeyManagementServiceClient.create(keyManagementServiceSettings);
+ * package com.google.cloud.kms.v1;
+ *
+ * public class KeyManagementServiceClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     keyManagementServiceClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void keyManagementServiceClientClassHeaderEndpoint() throws Exception {
+ *     KeyManagementServiceSettings keyManagementServiceSettings =
+ *         KeyManagementServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     KeyManagementServiceClient keyManagementServiceClient =
+ *         KeyManagementServiceClient.create(keyManagementServiceSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -181,11 +216,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (KeyRing element : keyManagementServiceClient.listKeyRings(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListKeyRings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListKeyRings();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListKeyRings() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *       for (KeyRing element : keyManagementServiceClient.listKeyRings(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -209,11 +255,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
-   *   for (KeyRing element : keyManagementServiceClient.listKeyRings(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListKeyRings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListKeyRings();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListKeyRings() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
+   *       for (KeyRing element : keyManagementServiceClient.listKeyRings(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -234,18 +291,29 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListKeyRingsRequest request =
-   *       ListKeyRingsRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   for (KeyRing element : keyManagementServiceClient.listKeyRings(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListKeyRings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListKeyRings();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListKeyRings() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListKeyRingsRequest request =
+   *           ListKeyRingsRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       for (KeyRing element : keyManagementServiceClient.listKeyRings(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -264,21 +332,34 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListKeyRingsRequest request =
-   *       ListKeyRingsRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   ApiFuture<KeyRing> future =
-   *       keyManagementServiceClient.listKeyRingsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (KeyRing element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientListKeyRings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListKeyRings();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListKeyRings() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListKeyRingsRequest request =
+   *           ListKeyRingsRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       ApiFuture<KeyRing> future =
+   *           keyManagementServiceClient.listKeyRingsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (KeyRing element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -295,27 +376,40 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListKeyRingsRequest request =
-   *       ListKeyRingsRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   while (true) {
-   *     ListKeyRingsResponse response =
-   *         keyManagementServiceClient.listKeyRingsCallable().call(request);
-   *     for (KeyRing element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class KeyManagementServiceClientListKeyRings {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListKeyRings();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListKeyRings() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListKeyRingsRequest request =
+   *           ListKeyRingsRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       while (true) {
+   *         ListKeyRingsResponse response =
+   *             keyManagementServiceClient.listKeyRingsCallable().call(request);
+   *         for (KeyRing element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -332,11 +426,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
-   *   for (CryptoKey element : keyManagementServiceClient.listCryptoKeys(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListCryptoKeys {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeys();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeys() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *       for (CryptoKey element : keyManagementServiceClient.listCryptoKeys(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -360,11 +465,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
-   *   for (CryptoKey element : keyManagementServiceClient.listCryptoKeys(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListCryptoKeys {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeys();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeys() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *       for (CryptoKey element : keyManagementServiceClient.listCryptoKeys(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -385,18 +501,29 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListCryptoKeysRequest request =
-   *       ListCryptoKeysRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   for (CryptoKey element : keyManagementServiceClient.listCryptoKeys(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListCryptoKeys {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeys();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeys() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListCryptoKeysRequest request =
+   *           ListCryptoKeysRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       for (CryptoKey element : keyManagementServiceClient.listCryptoKeys(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -415,21 +542,34 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListCryptoKeysRequest request =
-   *       ListCryptoKeysRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   ApiFuture<CryptoKey> future =
-   *       keyManagementServiceClient.listCryptoKeysPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (CryptoKey element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientListCryptoKeys {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeys();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeys() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListCryptoKeysRequest request =
+   *           ListCryptoKeysRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       ApiFuture<CryptoKey> future =
+   *           keyManagementServiceClient.listCryptoKeysPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (CryptoKey element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -446,27 +586,40 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListCryptoKeysRequest request =
-   *       ListCryptoKeysRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   while (true) {
-   *     ListCryptoKeysResponse response =
-   *         keyManagementServiceClient.listCryptoKeysCallable().call(request);
-   *     for (CryptoKey element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class KeyManagementServiceClientListCryptoKeys {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeys();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeys() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListCryptoKeysRequest request =
+   *           ListCryptoKeysRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       while (true) {
+   *         ListCryptoKeysResponse response =
+   *             keyManagementServiceClient.listCryptoKeysCallable().call(request);
+   *         for (CryptoKey element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -484,13 +637,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyName parent =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
-   *   for (CryptoKeyVersion element :
-   *       keyManagementServiceClient.listCryptoKeyVersions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListCryptoKeyVersions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeyVersions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeyVersions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyName parent =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+   *       for (CryptoKeyVersion element :
+   *           keyManagementServiceClient.listCryptoKeyVersions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -514,13 +678,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
-   *   for (CryptoKeyVersion element :
-   *       keyManagementServiceClient.listCryptoKeyVersions(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListCryptoKeyVersions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeyVersions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeyVersions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
+   *       for (CryptoKeyVersion element :
+   *           keyManagementServiceClient.listCryptoKeyVersions(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -542,21 +717,32 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListCryptoKeyVersionsRequest request =
-   *       ListCryptoKeyVersionsRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   for (CryptoKeyVersion element :
-   *       keyManagementServiceClient.listCryptoKeyVersions(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListCryptoKeyVersions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeyVersions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeyVersions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListCryptoKeyVersionsRequest request =
+   *           ListCryptoKeyVersionsRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       for (CryptoKeyVersion element :
+   *           keyManagementServiceClient.listCryptoKeyVersions(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -576,23 +762,36 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListCryptoKeyVersionsRequest request =
-   *       ListCryptoKeyVersionsRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.listCryptoKeyVersionsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (CryptoKeyVersion element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientListCryptoKeyVersions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeyVersions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeyVersions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListCryptoKeyVersionsRequest request =
+   *           ListCryptoKeyVersionsRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.listCryptoKeyVersionsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (CryptoKeyVersion element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -609,29 +808,42 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListCryptoKeyVersionsRequest request =
-   *       ListCryptoKeyVersionsRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   while (true) {
-   *     ListCryptoKeyVersionsResponse response =
-   *         keyManagementServiceClient.listCryptoKeyVersionsCallable().call(request);
-   *     for (CryptoKeyVersion element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class KeyManagementServiceClientListCryptoKeyVersions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListCryptoKeyVersions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListCryptoKeyVersions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListCryptoKeyVersionsRequest request =
+   *           ListCryptoKeyVersionsRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       while (true) {
+   *         ListCryptoKeyVersionsResponse response =
+   *             keyManagementServiceClient.listCryptoKeyVersionsCallable().call(request);
+   *         for (CryptoKeyVersion element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -649,11 +861,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
-   *   for (ImportJob element : keyManagementServiceClient.listImportJobs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListImportJobs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListImportJobs();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListImportJobs() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *       for (ImportJob element : keyManagementServiceClient.listImportJobs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -677,11 +900,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
-   *   for (ImportJob element : keyManagementServiceClient.listImportJobs(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListImportJobs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListImportJobs();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListImportJobs() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *       for (ImportJob element : keyManagementServiceClient.listImportJobs(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -702,18 +936,29 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListImportJobsRequest request =
-   *       ListImportJobsRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   for (ImportJob element : keyManagementServiceClient.listImportJobs(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientListImportJobs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListImportJobs();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListImportJobs() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListImportJobsRequest request =
+   *           ListImportJobsRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       for (ImportJob element : keyManagementServiceClient.listImportJobs(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -732,21 +977,34 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListImportJobsRequest request =
-   *       ListImportJobsRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   ApiFuture<ImportJob> future =
-   *       keyManagementServiceClient.listImportJobsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (ImportJob element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientListImportJobs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListImportJobs();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListImportJobs() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListImportJobsRequest request =
+   *           ListImportJobsRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       ApiFuture<ImportJob> future =
+   *           keyManagementServiceClient.listImportJobsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (ImportJob element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -763,27 +1021,40 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListImportJobsRequest request =
-   *       ListImportJobsRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .setFilter("filter-1274492040")
-   *           .setOrderBy("orderBy-1207110587")
-   *           .build();
-   *   while (true) {
-   *     ListImportJobsResponse response =
-   *         keyManagementServiceClient.listImportJobsCallable().call(request);
-   *     for (ImportJob element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class KeyManagementServiceClientListImportJobs {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListImportJobs();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListImportJobs() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListImportJobsRequest request =
+   *           ListImportJobsRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .setFilter("filter-1274492040")
+   *               .setOrderBy("orderBy-1207110587")
+   *               .build();
+   *       while (true) {
+   *         ListImportJobsResponse response =
+   *             keyManagementServiceClient.listImportJobsCallable().call(request);
+   *         for (ImportJob element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -801,10 +1072,21 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   KeyRingName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
-   *   KeyRing response = keyManagementServiceClient.getKeyRing(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       KeyRingName name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *       KeyRing response = keyManagementServiceClient.getKeyRing(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -825,10 +1107,21 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
-   *   KeyRing response = keyManagementServiceClient.getKeyRing(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *       KeyRing response = keyManagementServiceClient.getKeyRing(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -848,13 +1141,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetKeyRingRequest request =
-   *       GetKeyRingRequest.newBuilder()
-   *           .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .build();
-   *   KeyRing response = keyManagementServiceClient.getKeyRing(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetKeyRingRequest request =
+   *           GetKeyRingRequest.newBuilder()
+   *               .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .build();
+   *       KeyRing response = keyManagementServiceClient.getKeyRing(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -872,16 +1176,29 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetKeyRingRequest request =
-   *       GetKeyRingRequest.newBuilder()
-   *           .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .build();
-   *   ApiFuture<KeyRing> future =
-   *       keyManagementServiceClient.getKeyRingCallable().futureCall(request);
-   *   // Do something.
-   *   KeyRing response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientGetKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetKeyRingRequest request =
+   *           GetKeyRingRequest.newBuilder()
+   *               .setName(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .build();
+   *       ApiFuture<KeyRing> future =
+   *           keyManagementServiceClient.getKeyRingCallable().futureCall(request);
+   *       // Do something.
+   *       KeyRing response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -898,11 +1215,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyName name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
-   *   CryptoKey response = keyManagementServiceClient.getCryptoKey(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyName name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+   *       CryptoKey response = keyManagementServiceClient.getCryptoKey(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -925,11 +1253,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
-   *   CryptoKey response = keyManagementServiceClient.getCryptoKey(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
+   *       CryptoKey response = keyManagementServiceClient.getCryptoKey(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -951,15 +1290,26 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetCryptoKeyRequest request =
-   *       GetCryptoKeyRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .build();
-   *   CryptoKey response = keyManagementServiceClient.getCryptoKey(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetCryptoKeyRequest request =
+   *           GetCryptoKeyRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .build();
+   *       CryptoKey response = keyManagementServiceClient.getCryptoKey(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -979,18 +1329,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetCryptoKeyRequest request =
-   *       GetCryptoKeyRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<CryptoKey> future =
-   *       keyManagementServiceClient.getCryptoKeyCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKey response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientGetCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetCryptoKeyRequest request =
+   *           GetCryptoKeyRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<CryptoKey> future =
+   *           keyManagementServiceClient.getCryptoKeyCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKey response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1005,12 +1368,23 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersionName name =
-   *       CryptoKeyVersionName.of(
-   *           "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
-   *   CryptoKeyVersion response = keyManagementServiceClient.getCryptoKeyVersion(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersionName name =
+   *           CryptoKeyVersionName.of(
+   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
+   *       CryptoKeyVersion response = keyManagementServiceClient.getCryptoKeyVersion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1033,13 +1407,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyVersionName.of(
-   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
-   *           .toString();
-   *   CryptoKeyVersion response = keyManagementServiceClient.getCryptoKeyVersion(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyVersionName.of(
+   *                   "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
+   *               .toString();
+   *       CryptoKeyVersion response = keyManagementServiceClient.getCryptoKeyVersion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1060,20 +1445,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetCryptoKeyVersionRequest request =
-   *       GetCryptoKeyVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   CryptoKeyVersion response = keyManagementServiceClient.getCryptoKeyVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetCryptoKeyVersionRequest request =
+   *           GetCryptoKeyVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       CryptoKeyVersion response = keyManagementServiceClient.getCryptoKeyVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1091,23 +1487,36 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetCryptoKeyVersionRequest request =
-   *       GetCryptoKeyVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.getCryptoKeyVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKeyVersion response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientGetCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetCryptoKeyVersionRequest request =
+   *           GetCryptoKeyVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.getCryptoKeyVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKeyVersion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1126,12 +1535,23 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersionName name =
-   *       CryptoKeyVersionName.of(
-   *           "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
-   *   PublicKey response = keyManagementServiceClient.getPublicKey(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetPublicKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetPublicKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetPublicKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersionName name =
+   *           CryptoKeyVersionName.of(
+   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
+   *       PublicKey response = keyManagementServiceClient.getPublicKey(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1155,13 +1575,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyVersionName.of(
-   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
-   *           .toString();
-   *   PublicKey response = keyManagementServiceClient.getPublicKey(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetPublicKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetPublicKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetPublicKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyVersionName.of(
+   *                   "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
+   *               .toString();
+   *       PublicKey response = keyManagementServiceClient.getPublicKey(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1184,20 +1615,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetPublicKeyRequest request =
-   *       GetPublicKeyRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   PublicKey response = keyManagementServiceClient.getPublicKey(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetPublicKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetPublicKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetPublicKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetPublicKeyRequest request =
+   *           GetPublicKeyRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       PublicKey response = keyManagementServiceClient.getPublicKey(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1218,23 +1660,36 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetPublicKeyRequest request =
-   *       GetPublicKeyRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<PublicKey> future =
-   *       keyManagementServiceClient.getPublicKeyCallable().futureCall(request);
-   *   // Do something.
-   *   PublicKey response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientGetPublicKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetPublicKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetPublicKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetPublicKeyRequest request =
+   *           GetPublicKeyRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<PublicKey> future =
+   *           keyManagementServiceClient.getPublicKeyCallable().futureCall(request);
+   *       // Do something.
+   *       PublicKey response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1249,11 +1704,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ImportJobName name =
-   *       ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]");
-   *   ImportJob response = keyManagementServiceClient.getImportJob(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ImportJobName name =
+   *           ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]");
+   *       ImportJob response = keyManagementServiceClient.getImportJob(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1274,11 +1740,22 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]").toString();
-   *   ImportJob response = keyManagementServiceClient.getImportJob(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]").toString();
+   *       ImportJob response = keyManagementServiceClient.getImportJob(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1298,15 +1775,26 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetImportJobRequest request =
-   *       GetImportJobRequest.newBuilder()
-   *           .setName(
-   *               ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]")
-   *                   .toString())
-   *           .build();
-   *   ImportJob response = keyManagementServiceClient.getImportJob(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientGetImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetImportJobRequest request =
+   *           GetImportJobRequest.newBuilder()
+   *               .setName(
+   *                   ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]")
+   *                       .toString())
+   *               .build();
+   *       ImportJob response = keyManagementServiceClient.getImportJob(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1324,18 +1812,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetImportJobRequest request =
-   *       GetImportJobRequest.newBuilder()
-   *           .setName(
-   *               ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<ImportJob> future =
-   *       keyManagementServiceClient.getImportJobCallable().futureCall(request);
-   *   // Do something.
-   *   ImportJob response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientGetImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetImportJobRequest request =
+   *           GetImportJobRequest.newBuilder()
+   *               .setName(
+   *                   ImportJobName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[IMPORT_JOB]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<ImportJob> future =
+   *           keyManagementServiceClient.getImportJobCallable().futureCall(request);
+   *       // Do something.
+   *       ImportJob response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1350,12 +1851,23 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   String keyRingId = "keyRingId-2027180374";
-   *   KeyRing keyRing = KeyRing.newBuilder().build();
-   *   KeyRing response = keyManagementServiceClient.createKeyRing(parent, keyRingId, keyRing);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *       String keyRingId = "keyRingId-2027180374";
+   *       KeyRing keyRing = KeyRing.newBuilder().build();
+   *       KeyRing response = keyManagementServiceClient.createKeyRing(parent, keyRingId, keyRing);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1383,12 +1895,23 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
-   *   String keyRingId = "keyRingId-2027180374";
-   *   KeyRing keyRing = KeyRing.newBuilder().build();
-   *   KeyRing response = keyManagementServiceClient.createKeyRing(parent, keyRingId, keyRing);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
+   *       String keyRingId = "keyRingId-2027180374";
+   *       KeyRing keyRing = KeyRing.newBuilder().build();
+   *       KeyRing response = keyManagementServiceClient.createKeyRing(parent, keyRingId, keyRing);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1416,15 +1939,26 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateKeyRingRequest request =
-   *       CreateKeyRingRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setKeyRingId("keyRingId-2027180374")
-   *           .setKeyRing(KeyRing.newBuilder().build())
-   *           .build();
-   *   KeyRing response = keyManagementServiceClient.createKeyRing(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateKeyRingRequest request =
+   *           CreateKeyRingRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setKeyRingId("keyRingId-2027180374")
+   *               .setKeyRing(KeyRing.newBuilder().build())
+   *               .build();
+   *       KeyRing response = keyManagementServiceClient.createKeyRing(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1442,18 +1976,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateKeyRingRequest request =
-   *       CreateKeyRingRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setKeyRingId("keyRingId-2027180374")
-   *           .setKeyRing(KeyRing.newBuilder().build())
-   *           .build();
-   *   ApiFuture<KeyRing> future =
-   *       keyManagementServiceClient.createKeyRingCallable().futureCall(request);
-   *   // Do something.
-   *   KeyRing response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientCreateKeyRing {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateKeyRing();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateKeyRing() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateKeyRingRequest request =
+   *           CreateKeyRingRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setKeyRingId("keyRingId-2027180374")
+   *               .setKeyRing(KeyRing.newBuilder().build())
+   *               .build();
+   *       ApiFuture<KeyRing> future =
+   *           keyManagementServiceClient.createKeyRingCallable().futureCall(request);
+   *       // Do something.
+   *       KeyRing response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1473,13 +2020,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
-   *   String cryptoKeyId = "cryptoKeyId-1643185255";
-   *   CryptoKey cryptoKey = CryptoKey.newBuilder().build();
-   *   CryptoKey response =
-   *       keyManagementServiceClient.createCryptoKey(parent, cryptoKeyId, cryptoKey);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *       String cryptoKeyId = "cryptoKeyId-1643185255";
+   *       CryptoKey cryptoKey = CryptoKey.newBuilder().build();
+   *       CryptoKey response =
+   *           keyManagementServiceClient.createCryptoKey(parent, cryptoKeyId, cryptoKey);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1514,13 +2072,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
-   *   String cryptoKeyId = "cryptoKeyId-1643185255";
-   *   CryptoKey cryptoKey = CryptoKey.newBuilder().build();
-   *   CryptoKey response =
-   *       keyManagementServiceClient.createCryptoKey(parent, cryptoKeyId, cryptoKey);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *       String cryptoKeyId = "cryptoKeyId-1643185255";
+   *       CryptoKey cryptoKey = CryptoKey.newBuilder().build();
+   *       CryptoKey response =
+   *           keyManagementServiceClient.createCryptoKey(parent, cryptoKeyId, cryptoKey);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1554,16 +2123,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateCryptoKeyRequest request =
-   *       CreateCryptoKeyRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setCryptoKeyId("cryptoKeyId-1643185255")
-   *           .setCryptoKey(CryptoKey.newBuilder().build())
-   *           .setSkipInitialVersionCreation(true)
-   *           .build();
-   *   CryptoKey response = keyManagementServiceClient.createCryptoKey(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateCryptoKeyRequest request =
+   *           CreateCryptoKeyRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setCryptoKeyId("cryptoKeyId-1643185255")
+   *               .setCryptoKey(CryptoKey.newBuilder().build())
+   *               .setSkipInitialVersionCreation(true)
+   *               .build();
+   *       CryptoKey response = keyManagementServiceClient.createCryptoKey(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1586,19 +2166,32 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateCryptoKeyRequest request =
-   *       CreateCryptoKeyRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setCryptoKeyId("cryptoKeyId-1643185255")
-   *           .setCryptoKey(CryptoKey.newBuilder().build())
-   *           .setSkipInitialVersionCreation(true)
-   *           .build();
-   *   ApiFuture<CryptoKey> future =
-   *       keyManagementServiceClient.createCryptoKeyCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKey response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateCryptoKeyRequest request =
+   *           CreateCryptoKeyRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setCryptoKeyId("cryptoKeyId-1643185255")
+   *               .setCryptoKey(CryptoKey.newBuilder().build())
+   *               .setSkipInitialVersionCreation(true)
+   *               .build();
+   *       ApiFuture<CryptoKey> future =
+   *           keyManagementServiceClient.createCryptoKeyCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKey response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1618,13 +2211,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyName parent =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
-   *   CryptoKeyVersion cryptoKeyVersion = CryptoKeyVersion.newBuilder().build();
-   *   CryptoKeyVersion response =
-   *       keyManagementServiceClient.createCryptoKeyVersion(parent, cryptoKeyVersion);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyName parent =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+   *       CryptoKeyVersion cryptoKeyVersion = CryptoKeyVersion.newBuilder().build();
+   *       CryptoKeyVersion response =
+   *           keyManagementServiceClient.createCryptoKeyVersion(parent, cryptoKeyVersion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1657,13 +2261,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
-   *   CryptoKeyVersion cryptoKeyVersion = CryptoKeyVersion.newBuilder().build();
-   *   CryptoKeyVersion response =
-   *       keyManagementServiceClient.createCryptoKeyVersion(parent, cryptoKeyVersion);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
+   *       CryptoKeyVersion cryptoKeyVersion = CryptoKeyVersion.newBuilder().build();
+   *       CryptoKeyVersion response =
+   *           keyManagementServiceClient.createCryptoKeyVersion(parent, cryptoKeyVersion);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1696,16 +2311,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateCryptoKeyVersionRequest request =
-   *       CreateCryptoKeyVersionRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
-   *           .build();
-   *   CryptoKeyVersion response = keyManagementServiceClient.createCryptoKeyVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateCryptoKeyVersionRequest request =
+   *           CreateCryptoKeyVersionRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
+   *               .build();
+   *       CryptoKeyVersion response = keyManagementServiceClient.createCryptoKeyVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1728,19 +2354,32 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateCryptoKeyVersionRequest request =
-   *       CreateCryptoKeyVersionRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.createCryptoKeyVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKeyVersion response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientCreateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateCryptoKeyVersionRequest request =
+   *           CreateCryptoKeyVersionRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.createCryptoKeyVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKeyVersion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1761,16 +2400,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ImportCryptoKeyVersionRequest request =
-   *       ImportCryptoKeyVersionRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setImportJob("importJob-208547368")
-   *           .build();
-   *   CryptoKeyVersion response = keyManagementServiceClient.importCryptoKeyVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientImportCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientImportCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientImportCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ImportCryptoKeyVersionRequest request =
+   *           ImportCryptoKeyVersionRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setImportJob("importJob-208547368")
+   *               .build();
+   *       CryptoKeyVersion response = keyManagementServiceClient.importCryptoKeyVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1793,19 +2443,32 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ImportCryptoKeyVersionRequest request =
-   *       ImportCryptoKeyVersionRequest.newBuilder()
-   *           .setParent(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setImportJob("importJob-208547368")
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.importCryptoKeyVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKeyVersion response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientImportCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientImportCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientImportCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ImportCryptoKeyVersionRequest request =
+   *           ImportCryptoKeyVersionRequest.newBuilder()
+   *               .setParent(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setImportJob("importJob-208547368")
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.importCryptoKeyVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKeyVersion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1824,13 +2487,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
-   *   String importJobId = "importJobId1449444627";
-   *   ImportJob importJob = ImportJob.newBuilder().build();
-   *   ImportJob response =
-   *       keyManagementServiceClient.createImportJob(parent, importJobId, importJob);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       KeyRingName parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+   *       String importJobId = "importJobId1449444627";
+   *       ImportJob importJob = ImportJob.newBuilder().build();
+   *       ImportJob response =
+   *           keyManagementServiceClient.createImportJob(parent, importJobId, importJob);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1864,13 +2538,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
-   *   String importJobId = "importJobId1449444627";
-   *   ImportJob importJob = ImportJob.newBuilder().build();
-   *   ImportJob response =
-   *       keyManagementServiceClient.createImportJob(parent, importJobId, importJob);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String parent = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString();
+   *       String importJobId = "importJobId1449444627";
+   *       ImportJob importJob = ImportJob.newBuilder().build();
+   *       ImportJob response =
+   *           keyManagementServiceClient.createImportJob(parent, importJobId, importJob);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1903,15 +2588,26 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateImportJobRequest request =
-   *       CreateImportJobRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setImportJobId("importJobId1449444627")
-   *           .setImportJob(ImportJob.newBuilder().build())
-   *           .build();
-   *   ImportJob response = keyManagementServiceClient.createImportJob(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientCreateImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateImportJobRequest request =
+   *           CreateImportJobRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setImportJobId("importJobId1449444627")
+   *               .setImportJob(ImportJob.newBuilder().build())
+   *               .build();
+   *       ImportJob response = keyManagementServiceClient.createImportJob(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1932,18 +2628,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CreateImportJobRequest request =
-   *       CreateImportJobRequest.newBuilder()
-   *           .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
-   *           .setImportJobId("importJobId1449444627")
-   *           .setImportJob(ImportJob.newBuilder().build())
-   *           .build();
-   *   ApiFuture<ImportJob> future =
-   *       keyManagementServiceClient.createImportJobCallable().futureCall(request);
-   *   // Do something.
-   *   ImportJob response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientCreateImportJob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientCreateImportJob();
+   *   }
+   *
+   *   public static void keyManagementServiceClientCreateImportJob() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CreateImportJobRequest request =
+   *           CreateImportJobRequest.newBuilder()
+   *               .setParent(KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]").toString())
+   *               .setImportJobId("importJobId1449444627")
+   *               .setImportJob(ImportJob.newBuilder().build())
+   *               .build();
+   *       ApiFuture<ImportJob> future =
+   *           keyManagementServiceClient.createImportJobCallable().futureCall(request);
+   *       // Do something.
+   *       ImportJob response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1958,11 +2667,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKey cryptoKey = CryptoKey.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   CryptoKey response = keyManagementServiceClient.updateCryptoKey(cryptoKey, updateMask);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKey cryptoKey = CryptoKey.newBuilder().build();
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       CryptoKey response = keyManagementServiceClient.updateCryptoKey(cryptoKey, updateMask);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1986,14 +2708,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   UpdateCryptoKeyRequest request =
-   *       UpdateCryptoKeyRequest.newBuilder()
-   *           .setCryptoKey(CryptoKey.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   CryptoKey response = keyManagementServiceClient.updateCryptoKey(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       UpdateCryptoKeyRequest request =
+   *           UpdateCryptoKeyRequest.newBuilder()
+   *               .setCryptoKey(CryptoKey.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       CryptoKey response = keyManagementServiceClient.updateCryptoKey(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2011,17 +2746,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   UpdateCryptoKeyRequest request =
-   *       UpdateCryptoKeyRequest.newBuilder()
-   *           .setCryptoKey(CryptoKey.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<CryptoKey> future =
-   *       keyManagementServiceClient.updateCryptoKeyCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKey response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKey {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKey();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKey() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       UpdateCryptoKeyRequest request =
+   *           UpdateCryptoKeyRequest.newBuilder()
+   *               .setCryptoKey(CryptoKey.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<CryptoKey> future =
+   *           keyManagementServiceClient.updateCryptoKeyCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKey response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2044,12 +2793,25 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersion cryptoKeyVersion = CryptoKeyVersion.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   CryptoKeyVersion response =
-   *       keyManagementServiceClient.updateCryptoKeyVersion(cryptoKeyVersion, updateMask);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersion cryptoKeyVersion = CryptoKeyVersion.newBuilder().build();
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       CryptoKeyVersion response =
+   *           keyManagementServiceClient.updateCryptoKeyVersion(cryptoKeyVersion, updateMask);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2083,14 +2845,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   UpdateCryptoKeyVersionRequest request =
-   *       UpdateCryptoKeyVersionRequest.newBuilder()
-   *           .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   CryptoKeyVersion response = keyManagementServiceClient.updateCryptoKeyVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       UpdateCryptoKeyVersionRequest request =
+   *           UpdateCryptoKeyVersionRequest.newBuilder()
+   *               .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       CryptoKeyVersion response = keyManagementServiceClient.updateCryptoKeyVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2116,17 +2891,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   UpdateCryptoKeyVersionRequest request =
-   *       UpdateCryptoKeyVersionRequest.newBuilder()
-   *           .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.updateCryptoKeyVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKeyVersion response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       UpdateCryptoKeyVersionRequest request =
+   *           UpdateCryptoKeyVersionRequest.newBuilder()
+   *               .setCryptoKeyVersion(CryptoKeyVersion.newBuilder().build())
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.updateCryptoKeyVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKeyVersion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2145,11 +2934,25 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ResourceName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
-   *   ByteString plaintext = ByteString.EMPTY;
-   *   EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.resourcenames.ResourceName;
+   * import com.google.protobuf.ByteString;
+   *
+   * public class KeyManagementServiceClientEncrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientEncrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientEncrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ResourceName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+   *       ByteString plaintext = ByteString.EMPTY;
+   *       EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2185,12 +2988,25 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
-   *   ByteString plaintext = ByteString.EMPTY;
-   *   EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class KeyManagementServiceClientEncrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientEncrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientEncrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
+   *       ByteString plaintext = ByteString.EMPTY;
+   *       EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2223,19 +3039,33 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   EncryptRequest request =
-   *       EncryptRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setPlaintext(ByteString.EMPTY)
-   *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
-   *           .setPlaintextCrc32C(Int64Value.newBuilder().build())
-   *           .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   EncryptResponse response = keyManagementServiceClient.encrypt(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientEncrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientEncrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientEncrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       EncryptRequest request =
+   *           EncryptRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setPlaintext(ByteString.EMPTY)
+   *               .setAdditionalAuthenticatedData(ByteString.EMPTY)
+   *               .setPlaintextCrc32C(Int64Value.newBuilder().build())
+   *               .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       EncryptResponse response = keyManagementServiceClient.encrypt(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2256,22 +3086,37 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   EncryptRequest request =
-   *       EncryptRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setPlaintext(ByteString.EMPTY)
-   *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
-   *           .setPlaintextCrc32C(Int64Value.newBuilder().build())
-   *           .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   ApiFuture<EncryptResponse> future =
-   *       keyManagementServiceClient.encryptCallable().futureCall(request);
-   *   // Do something.
-   *   EncryptResponse response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.ByteString;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientEncrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientEncrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientEncrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       EncryptRequest request =
+   *           EncryptRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setPlaintext(ByteString.EMPTY)
+   *               .setAdditionalAuthenticatedData(ByteString.EMPTY)
+   *               .setPlaintextCrc32C(Int64Value.newBuilder().build())
+   *               .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       ApiFuture<EncryptResponse> future =
+   *           keyManagementServiceClient.encryptCallable().futureCall(request);
+   *       // Do something.
+   *       EncryptResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2289,12 +3134,25 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyName name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
-   *   ByteString ciphertext = ByteString.EMPTY;
-   *   DecryptResponse response = keyManagementServiceClient.decrypt(name, ciphertext);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class KeyManagementServiceClientDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyName name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+   *       ByteString ciphertext = ByteString.EMPTY;
+   *       DecryptResponse response = keyManagementServiceClient.decrypt(name, ciphertext);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2323,12 +3181,25 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
-   *   ByteString ciphertext = ByteString.EMPTY;
-   *   DecryptResponse response = keyManagementServiceClient.decrypt(name, ciphertext);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class KeyManagementServiceClientDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
+   *       ByteString ciphertext = ByteString.EMPTY;
+   *       DecryptResponse response = keyManagementServiceClient.decrypt(name, ciphertext);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2354,19 +3225,33 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   DecryptRequest request =
-   *       DecryptRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setCiphertext(ByteString.EMPTY)
-   *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
-   *           .setCiphertextCrc32C(Int64Value.newBuilder().build())
-   *           .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   DecryptResponse response = keyManagementServiceClient.decrypt(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       DecryptRequest request =
+   *           DecryptRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setCiphertext(ByteString.EMPTY)
+   *               .setAdditionalAuthenticatedData(ByteString.EMPTY)
+   *               .setCiphertextCrc32C(Int64Value.newBuilder().build())
+   *               .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       DecryptResponse response = keyManagementServiceClient.decrypt(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2387,22 +3272,37 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   DecryptRequest request =
-   *       DecryptRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setCiphertext(ByteString.EMPTY)
-   *           .setAdditionalAuthenticatedData(ByteString.EMPTY)
-   *           .setCiphertextCrc32C(Int64Value.newBuilder().build())
-   *           .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   ApiFuture<DecryptResponse> future =
-   *       keyManagementServiceClient.decryptCallable().futureCall(request);
-   *   // Do something.
-   *   DecryptResponse response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.ByteString;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       DecryptRequest request =
+   *           DecryptRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setCiphertext(ByteString.EMPTY)
+   *               .setAdditionalAuthenticatedData(ByteString.EMPTY)
+   *               .setCiphertextCrc32C(Int64Value.newBuilder().build())
+   *               .setAdditionalAuthenticatedDataCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       ApiFuture<DecryptResponse> future =
+   *           keyManagementServiceClient.decryptCallable().futureCall(request);
+   *       // Do something.
+   *       DecryptResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2420,13 +3320,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersionName name =
-   *       CryptoKeyVersionName.of(
-   *           "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
-   *   Digest digest = Digest.newBuilder().build();
-   *   AsymmetricSignResponse response = keyManagementServiceClient.asymmetricSign(name, digest);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientAsymmetricSign {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricSign();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricSign() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersionName name =
+   *           CryptoKeyVersionName.of(
+   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
+   *       Digest digest = Digest.newBuilder().build();
+   *       AsymmetricSignResponse response = keyManagementServiceClient.asymmetricSign(name, digest);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2456,14 +3367,25 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyVersionName.of(
-   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
-   *           .toString();
-   *   Digest digest = Digest.newBuilder().build();
-   *   AsymmetricSignResponse response = keyManagementServiceClient.asymmetricSign(name, digest);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientAsymmetricSign {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricSign();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricSign() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyVersionName.of(
+   *                   "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
+   *               .toString();
+   *       Digest digest = Digest.newBuilder().build();
+   *       AsymmetricSignResponse response = keyManagementServiceClient.asymmetricSign(name, digest);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2490,22 +3412,35 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   AsymmetricSignRequest request =
-   *       AsymmetricSignRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .setDigest(Digest.newBuilder().build())
-   *           .setDigestCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   AsymmetricSignResponse response = keyManagementServiceClient.asymmetricSign(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientAsymmetricSign {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricSign();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricSign() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       AsymmetricSignRequest request =
+   *           AsymmetricSignRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .setDigest(Digest.newBuilder().build())
+   *               .setDigestCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       AsymmetricSignResponse response = keyManagementServiceClient.asymmetricSign(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2526,25 +3461,39 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   AsymmetricSignRequest request =
-   *       AsymmetricSignRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .setDigest(Digest.newBuilder().build())
-   *           .setDigestCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   ApiFuture<AsymmetricSignResponse> future =
-   *       keyManagementServiceClient.asymmetricSignCallable().futureCall(request);
-   *   // Do something.
-   *   AsymmetricSignResponse response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientAsymmetricSign {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricSign();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricSign() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       AsymmetricSignRequest request =
+   *           AsymmetricSignRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .setDigest(Digest.newBuilder().build())
+   *               .setDigestCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       ApiFuture<AsymmetricSignResponse> future =
+   *           keyManagementServiceClient.asymmetricSignCallable().futureCall(request);
+   *       // Do something.
+   *       AsymmetricSignResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2563,14 +3512,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersionName name =
-   *       CryptoKeyVersionName.of(
-   *           "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
-   *   ByteString ciphertext = ByteString.EMPTY;
-   *   AsymmetricDecryptResponse response =
-   *       keyManagementServiceClient.asymmetricDecrypt(name, ciphertext);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class KeyManagementServiceClientAsymmetricDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersionName name =
+   *           CryptoKeyVersionName.of(
+   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
+   *       ByteString ciphertext = ByteString.EMPTY;
+   *       AsymmetricDecryptResponse response =
+   *           keyManagementServiceClient.asymmetricDecrypt(name, ciphertext);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2600,15 +3562,28 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyVersionName.of(
-   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
-   *           .toString();
-   *   ByteString ciphertext = ByteString.EMPTY;
-   *   AsymmetricDecryptResponse response =
-   *       keyManagementServiceClient.asymmetricDecrypt(name, ciphertext);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   *
+   * public class KeyManagementServiceClientAsymmetricDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyVersionName.of(
+   *                   "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
+   *               .toString();
+   *       ByteString ciphertext = ByteString.EMPTY;
+   *       AsymmetricDecryptResponse response =
+   *           keyManagementServiceClient.asymmetricDecrypt(name, ciphertext);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2634,22 +3609,36 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   AsymmetricDecryptRequest request =
-   *       AsymmetricDecryptRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .setCiphertext(ByteString.EMPTY)
-   *           .setCiphertextCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   AsymmetricDecryptResponse response = keyManagementServiceClient.asymmetricDecrypt(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientAsymmetricDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       AsymmetricDecryptRequest request =
+   *           AsymmetricDecryptRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .setCiphertext(ByteString.EMPTY)
+   *               .setCiphertextCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       AsymmetricDecryptResponse response = keyManagementServiceClient.asymmetricDecrypt(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2670,25 +3659,40 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   AsymmetricDecryptRequest request =
-   *       AsymmetricDecryptRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .setCiphertext(ByteString.EMPTY)
-   *           .setCiphertextCrc32C(Int64Value.newBuilder().build())
-   *           .build();
-   *   ApiFuture<AsymmetricDecryptResponse> future =
-   *       keyManagementServiceClient.asymmetricDecryptCallable().futureCall(request);
-   *   // Do something.
-   *   AsymmetricDecryptResponse response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.ByteString;
+   * import com.google.protobuf.Int64Value;
+   *
+   * public class KeyManagementServiceClientAsymmetricDecrypt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientAsymmetricDecrypt();
+   *   }
+   *
+   *   public static void keyManagementServiceClientAsymmetricDecrypt() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       AsymmetricDecryptRequest request =
+   *           AsymmetricDecryptRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .setCiphertext(ByteString.EMPTY)
+   *               .setCiphertextCrc32C(Int64Value.newBuilder().build())
+   *               .build();
+   *       ApiFuture<AsymmetricDecryptResponse> future =
+   *           keyManagementServiceClient.asymmetricDecryptCallable().futureCall(request);
+   *       // Do something.
+   *       AsymmetricDecryptResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2707,13 +3711,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyName name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
-   *   String cryptoKeyVersionId = "cryptoKeyVersionId987674581";
-   *   CryptoKey response =
-   *       keyManagementServiceClient.updateCryptoKeyPrimaryVersion(name, cryptoKeyVersionId);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyPrimaryVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyPrimaryVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyName name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+   *       String cryptoKeyVersionId = "cryptoKeyVersionId987674581";
+   *       CryptoKey response =
+   *           keyManagementServiceClient.updateCryptoKeyPrimaryVersion(name, cryptoKeyVersionId);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2743,13 +3758,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
-   *   String cryptoKeyVersionId = "cryptoKeyVersionId987674581";
-   *   CryptoKey response =
-   *       keyManagementServiceClient.updateCryptoKeyPrimaryVersion(name, cryptoKeyVersionId);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyPrimaryVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyPrimaryVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]").toString();
+   *       String cryptoKeyVersionId = "cryptoKeyVersionId987674581";
+   *       CryptoKey response =
+   *           keyManagementServiceClient.updateCryptoKeyPrimaryVersion(name, cryptoKeyVersionId);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2778,16 +3804,27 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   UpdateCryptoKeyPrimaryVersionRequest request =
-   *       UpdateCryptoKeyPrimaryVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setCryptoKeyVersionId("cryptoKeyVersionId987674581")
-   *           .build();
-   *   CryptoKey response = keyManagementServiceClient.updateCryptoKeyPrimaryVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyPrimaryVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyPrimaryVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       UpdateCryptoKeyPrimaryVersionRequest request =
+   *           UpdateCryptoKeyPrimaryVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setCryptoKeyVersionId("cryptoKeyVersionId987674581")
+   *               .build();
+   *       CryptoKey response = keyManagementServiceClient.updateCryptoKeyPrimaryVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2809,19 +3846,32 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   UpdateCryptoKeyPrimaryVersionRequest request =
-   *       UpdateCryptoKeyPrimaryVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setCryptoKeyVersionId("cryptoKeyVersionId987674581")
-   *           .build();
-   *   ApiFuture<CryptoKey> future =
-   *       keyManagementServiceClient.updateCryptoKeyPrimaryVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKey response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientUpdateCryptoKeyPrimaryVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientUpdateCryptoKeyPrimaryVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientUpdateCryptoKeyPrimaryVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       UpdateCryptoKeyPrimaryVersionRequest request =
+   *           UpdateCryptoKeyPrimaryVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setCryptoKeyVersionId("cryptoKeyVersionId987674581")
+   *               .build();
+   *       ApiFuture<CryptoKey> future =
+   *           keyManagementServiceClient.updateCryptoKeyPrimaryVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKey response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -2850,12 +3900,23 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersionName name =
-   *       CryptoKeyVersionName.of(
-   *           "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
-   *   CryptoKeyVersion response = keyManagementServiceClient.destroyCryptoKeyVersion(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDestroyCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDestroyCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersionName name =
+   *           CryptoKeyVersionName.of(
+   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
+   *       CryptoKeyVersion response = keyManagementServiceClient.destroyCryptoKeyVersion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2891,13 +3952,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyVersionName.of(
-   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
-   *           .toString();
-   *   CryptoKeyVersion response = keyManagementServiceClient.destroyCryptoKeyVersion(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDestroyCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDestroyCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyVersionName.of(
+   *                   "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
+   *               .toString();
+   *       CryptoKeyVersion response = keyManagementServiceClient.destroyCryptoKeyVersion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2931,20 +4003,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   DestroyCryptoKeyVersionRequest request =
-   *       DestroyCryptoKeyVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   CryptoKeyVersion response = keyManagementServiceClient.destroyCryptoKeyVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDestroyCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDestroyCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       DestroyCryptoKeyVersionRequest request =
+   *           DestroyCryptoKeyVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       CryptoKeyVersion response = keyManagementServiceClient.destroyCryptoKeyVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -2975,23 +4058,36 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   DestroyCryptoKeyVersionRequest request =
-   *       DestroyCryptoKeyVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.destroyCryptoKeyVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKeyVersion response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientDestroyCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientDestroyCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientDestroyCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       DestroyCryptoKeyVersionRequest request =
+   *           DestroyCryptoKeyVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.destroyCryptoKeyVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKeyVersion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -3014,12 +4110,23 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   CryptoKeyVersionName name =
-   *       CryptoKeyVersionName.of(
-   *           "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
-   *   CryptoKeyVersion response = keyManagementServiceClient.restoreCryptoKeyVersion(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientRestoreCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientRestoreCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       CryptoKeyVersionName name =
+   *           CryptoKeyVersionName.of(
+   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]");
+   *       CryptoKeyVersion response = keyManagementServiceClient.restoreCryptoKeyVersion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -3049,13 +4156,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   String name =
-   *       CryptoKeyVersionName.of(
-   *               "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
-   *           .toString();
-   *   CryptoKeyVersion response = keyManagementServiceClient.restoreCryptoKeyVersion(name);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientRestoreCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientRestoreCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       String name =
+   *           CryptoKeyVersionName.of(
+   *                   "[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]", "[CRYPTO_KEY_VERSION]")
+   *               .toString();
+   *       CryptoKeyVersion response = keyManagementServiceClient.restoreCryptoKeyVersion(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -3083,20 +4201,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   RestoreCryptoKeyVersionRequest request =
-   *       RestoreCryptoKeyVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   CryptoKeyVersion response = keyManagementServiceClient.restoreCryptoKeyVersion(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientRestoreCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientRestoreCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       RestoreCryptoKeyVersionRequest request =
+   *           RestoreCryptoKeyVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       CryptoKeyVersion response = keyManagementServiceClient.restoreCryptoKeyVersion(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -3121,23 +4250,36 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   RestoreCryptoKeyVersionRequest request =
-   *       RestoreCryptoKeyVersionRequest.newBuilder()
-   *           .setName(
-   *               CryptoKeyVersionName.of(
-   *                       "[PROJECT]",
-   *                       "[LOCATION]",
-   *                       "[KEY_RING]",
-   *                       "[CRYPTO_KEY]",
-   *                       "[CRYPTO_KEY_VERSION]")
-   *                   .toString())
-   *           .build();
-   *   ApiFuture<CryptoKeyVersion> future =
-   *       keyManagementServiceClient.restoreCryptoKeyVersionCallable().futureCall(request);
-   *   // Do something.
-   *   CryptoKeyVersion response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class KeyManagementServiceClientRestoreCryptoKeyVersion {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientRestoreCryptoKeyVersion();
+   *   }
+   *
+   *   public static void keyManagementServiceClientRestoreCryptoKeyVersion() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       RestoreCryptoKeyVersionRequest request =
+   *           RestoreCryptoKeyVersionRequest.newBuilder()
+   *               .setName(
+   *                   CryptoKeyVersionName.of(
+   *                           "[PROJECT]",
+   *                           "[LOCATION]",
+   *                           "[KEY_RING]",
+   *                           "[CRYPTO_KEY]",
+   *                           "[CRYPTO_KEY_VERSION]")
+   *                       .toString())
+   *               .build();
+   *       ApiFuture<CryptoKeyVersion> future =
+   *           keyManagementServiceClient.restoreCryptoKeyVersionCallable().futureCall(request);
+   *       // Do something.
+   *       CryptoKeyVersion response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -3154,16 +4296,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   Policy response = keyManagementServiceClient.getIamPolicy(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   *
+   * public class KeyManagementServiceClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetIamPolicy();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetIamPolicy() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       Policy response = keyManagementServiceClient.getIamPolicy(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -3182,19 +4339,35 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetIamPolicyRequest request =
-   *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .setOptions(GetPolicyOptions.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Policy> future =
-   *       keyManagementServiceClient.getIamPolicyCallable().futureCall(request);
-   *   // Do something.
-   *   Policy response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.GetIamPolicyRequest;
+   * import com.google.iam.v1.GetPolicyOptions;
+   * import com.google.iam.v1.Policy;
+   *
+   * public class KeyManagementServiceClientGetIamPolicy {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetIamPolicy();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetIamPolicy() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetIamPolicyRequest request =
+   *           GetIamPolicyRequest.newBuilder()
+   *               .setResource(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .setOptions(GetPolicyOptions.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Policy> future =
+   *           keyManagementServiceClient.getIamPolicyCallable().futureCall(request);
+   *       // Do something.
+   *       Policy response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -3209,17 +4382,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListLocationsRequest request =
-   *       ListLocationsRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setFilter("filter-1274492040")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Location element : keyManagementServiceClient.listLocations(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.cloud.location.ListLocationsRequest;
+   * import com.google.cloud.location.Location;
+   *
+   * public class KeyManagementServiceClientListLocations {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListLocations();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListLocations() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListLocationsRequest request =
+   *           ListLocationsRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setFilter("filter-1274492040")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Location element : keyManagementServiceClient.listLocations(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -3238,20 +4425,35 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListLocationsRequest request =
-   *       ListLocationsRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setFilter("filter-1274492040")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Location> future =
-   *       keyManagementServiceClient.listLocationsPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Location element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.location.ListLocationsRequest;
+   * import com.google.cloud.location.Location;
+   *
+   * public class KeyManagementServiceClientListLocations {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListLocations();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListLocations() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListLocationsRequest request =
+   *           ListLocationsRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setFilter("filter-1274492040")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Location> future =
+   *           keyManagementServiceClient.listLocationsPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Location element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -3268,26 +4470,42 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   ListLocationsRequest request =
-   *       ListLocationsRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setFilter("filter-1274492040")
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListLocationsResponse response =
-   *         keyManagementServiceClient.listLocationsCallable().call(request);
-   *     for (Location element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.cloud.location.ListLocationsRequest;
+   * import com.google.cloud.location.ListLocationsResponse;
+   * import com.google.cloud.location.Location;
+   * import com.google.common.base.Strings;
+   *
+   * public class KeyManagementServiceClientListLocations {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientListLocations();
+   *   }
+   *
+   *   public static void keyManagementServiceClientListLocations() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       ListLocationsRequest request =
+   *           ListLocationsRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setFilter("filter-1274492040")
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListLocationsResponse response =
+   *             keyManagementServiceClient.listLocationsCallable().call(request);
+   *         for (Location element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -3304,10 +4522,24 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
-   *   Location response = keyManagementServiceClient.getLocation(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.cloud.location.GetLocationRequest;
+   * import com.google.cloud.location.Location;
+   *
+   * public class KeyManagementServiceClientGetLocation {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetLocation();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetLocation() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
+   *       Location response = keyManagementServiceClient.getLocation(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -3325,13 +4557,28 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
-   *   ApiFuture<Location> future =
-   *       keyManagementServiceClient.getLocationCallable().futureCall(request);
-   *   // Do something.
-   *   Location response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.cloud.location.GetLocationRequest;
+   * import com.google.cloud.location.Location;
+   *
+   * public class KeyManagementServiceClientGetLocation {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientGetLocation();
+   *   }
+   *
+   *   public static void keyManagementServiceClientGetLocation() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
+   *       ApiFuture<Location> future =
+   *           keyManagementServiceClient.getLocationCallable().futureCall(request);
+   *       // Do something.
+   *       Location response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -3347,16 +4594,31 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(request);
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import java.util.ArrayList;
+   *
+   * public class KeyManagementServiceClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientTestIamPermissions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientTestIamPermissions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -3375,19 +4637,35 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (KeyManagementServiceClient keyManagementServiceClient =
-   *     KeyManagementServiceClient.create()) {
-   *   TestIamPermissionsRequest request =
-   *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
-   *                   .toString())
-   *           .addAllPermissions(new ArrayList<String>())
-   *           .build();
-   *   ApiFuture<TestIamPermissionsResponse> future =
-   *       keyManagementServiceClient.testIamPermissionsCallable().futureCall(request);
-   *   // Do something.
-   *   TestIamPermissionsResponse response = future.get();
+   * package com.google.cloud.kms.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.iam.v1.TestIamPermissionsRequest;
+   * import com.google.iam.v1.TestIamPermissionsResponse;
+   * import java.util.ArrayList;
+   *
+   * public class KeyManagementServiceClientTestIamPermissions {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     keyManagementServiceClientTestIamPermissions();
+   *   }
+   *
+   *   public static void keyManagementServiceClientTestIamPermissions() throws Exception {
+   *     try (KeyManagementServiceClient keyManagementServiceClient =
+   *         KeyManagementServiceClient.create()) {
+   *       TestIamPermissionsRequest request =
+   *           TestIamPermissionsRequest.newBuilder()
+   *               .setResource(
+   *                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                       .toString())
+   *               .addAllPermissions(new ArrayList<String>())
+   *               .build();
+   *       ApiFuture<TestIamPermissionsResponse> future =
+   *           keyManagementServiceClient.testIamPermissionsCallable().futureCall(request);
+   *       // Do something.
+   *       TestIamPermissionsResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

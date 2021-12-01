@@ -50,18 +50,31 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of get to 30 seconds:
  *
  * <pre>{@code
- * RegionOperationsSettings.Builder regionOperationsSettingsBuilder =
- *     RegionOperationsSettings.newBuilder();
- * regionOperationsSettingsBuilder
- *     .getSettings()
- *     .setRetrySettings(
- *         regionOperationsSettingsBuilder
- *             .getSettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * RegionOperationsSettings regionOperationsSettings = regionOperationsSettingsBuilder.build();
+ * package com.google.cloud.compute.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class RegionOperationsSettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     regionOperationsSettings();
+ *   }
+ *
+ *   public static void regionOperationsSettings() throws Exception {
+ *     RegionOperationsSettings.Builder regionOperationsSettingsBuilder =
+ *         RegionOperationsSettings.newBuilder();
+ *     regionOperationsSettingsBuilder
+ *         .getSettings()
+ *         .setRetrySettings(
+ *             regionOperationsSettingsBuilder
+ *                 .getSettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     RegionOperationsSettings regionOperationsSettings = regionOperationsSettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")

@@ -67,9 +67,20 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
- *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
- *   Instance response = cloudRedisClient.getInstance(name);
+ * package com.google.cloud.redis.v1beta1;
+ *
+ * public class CloudRedisClientGetInstance {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     cloudRedisClientGetInstance();
+ *   }
+ *
+ *   public static void cloudRedisClientGetInstance() throws Exception {
+ *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+ *       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+ *       Instance response = cloudRedisClient.getInstance(name);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -102,19 +113,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * CloudRedisSettings cloudRedisSettings =
- *     CloudRedisSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ * package com.google.cloud.redis.v1beta1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class CloudRedisClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     cloudRedisClientCreate();
+ *   }
+ *
+ *   public static void cloudRedisClientCreate() throws Exception {
+ *     CloudRedisSettings cloudRedisSettings =
+ *         CloudRedisSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * CloudRedisSettings cloudRedisSettings =
- *     CloudRedisSettings.newBuilder().setEndpoint(myEndpoint).build();
- * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ * package com.google.cloud.redis.v1beta1;
+ *
+ * public class CloudRedisClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     cloudRedisClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void cloudRedisClientClassHeaderEndpoint() throws Exception {
+ *     CloudRedisSettings cloudRedisSettings =
+ *         CloudRedisSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -199,10 +234,21 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientListInstances {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientListInstances();
+   *   }
+   *
+   *   public static void cloudRedisClientListInstances() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *       for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -236,10 +282,21 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
-   *   for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientListInstances {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientListInstances();
+   *   }
+   *
+   *   public static void cloudRedisClientListInstances() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
+   *       for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -270,15 +327,26 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ListInstancesRequest request =
-   *       ListInstancesRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   for (Instance element : cloudRedisClient.listInstances(request).iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientListInstances {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientListInstances();
+   *   }
+   *
+   *   public static void cloudRedisClientListInstances() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ListInstancesRequest request =
+   *           ListInstancesRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       for (Instance element : cloudRedisClient.listInstances(request).iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -307,18 +375,31 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ListInstancesRequest request =
-   *       ListInstancesRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   ApiFuture<Instance> future =
-   *       cloudRedisClient.listInstancesPagedCallable().futureCall(request);
-   *   // Do something.
-   *   for (Instance element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class CloudRedisClientListInstances {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientListInstances();
+   *   }
+   *
+   *   public static void cloudRedisClientListInstances() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ListInstancesRequest request =
+   *           ListInstancesRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       ApiFuture<Instance> future =
+   *           cloudRedisClient.listInstancesPagedCallable().futureCall(request);
+   *       // Do something.
+   *       for (Instance element : future.get().iterateAll()) {
+   *         // doThingsWith(element);
+   *       }
+   *     }
    *   }
    * }
    * }</pre>
@@ -345,23 +426,36 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ListInstancesRequest request =
-   *       ListInstancesRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setPageSize(883849137)
-   *           .setPageToken("pageToken873572522")
-   *           .build();
-   *   while (true) {
-   *     ListInstancesResponse response = cloudRedisClient.listInstancesCallable().call(request);
-   *     for (Instance element : response.getResponsesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.common.base.Strings;
+   *
+   * public class CloudRedisClientListInstances {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientListInstances();
+   *   }
+   *
+   *   public static void cloudRedisClientListInstances() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ListInstancesRequest request =
+   *           ListInstancesRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setPageSize(883849137)
+   *               .setPageToken("pageToken873572522")
+   *               .build();
+   *       while (true) {
+   *         ListInstancesResponse response = cloudRedisClient.listInstancesCallable().call(request);
+   *         for (Instance element : response.getResponsesList()) {
+   *           // doThingsWith(element);
+   *         }
+   *         String nextPageToken = response.getNextPageToken();
+   *         if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *           request = request.toBuilder().setPageToken(nextPageToken).build();
+   *         } else {
+   *           break;
+   *         }
+   *       }
    *     }
    *   }
    * }
@@ -378,9 +472,20 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-   *   Instance response = cloudRedisClient.getInstance(name);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientGetInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientGetInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientGetInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *       Instance response = cloudRedisClient.getInstance(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -402,9 +507,20 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
-   *   Instance response = cloudRedisClient.getInstance(name);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientGetInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientGetInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientGetInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *       Instance response = cloudRedisClient.getInstance(name);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -425,12 +541,23 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   GetInstanceRequest request =
-   *       GetInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   Instance response = cloudRedisClient.getInstance(request);
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientGetInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientGetInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientGetInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       GetInstanceRequest request =
+   *           GetInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       Instance response = cloudRedisClient.getInstance(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -448,14 +575,27 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   GetInstanceRequest request =
-   *       GetInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   ApiFuture<Instance> future = cloudRedisClient.getInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   *
+   * public class CloudRedisClientGetInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientGetInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientGetInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       GetInstanceRequest request =
+   *           GetInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       ApiFuture<Instance> future = cloudRedisClient.getInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -481,11 +621,22 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   String instanceId = "instanceId902024336";
-   *   Instance instance = Instance.newBuilder().build();
-   *   Instance response = cloudRedisClient.createInstanceAsync(parent, instanceId, instance).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientCreateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientCreateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientCreateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *       String instanceId = "instanceId902024336";
+   *       Instance instance = Instance.newBuilder().build();
+   *       Instance response = cloudRedisClient.createInstanceAsync(parent, instanceId, instance).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -533,11 +684,22 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
-   *   String instanceId = "instanceId902024336";
-   *   Instance instance = Instance.newBuilder().build();
-   *   Instance response = cloudRedisClient.createInstanceAsync(parent, instanceId, instance).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientCreateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientCreateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientCreateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
+   *       String instanceId = "instanceId902024336";
+   *       Instance instance = Instance.newBuilder().build();
+   *       Instance response = cloudRedisClient.createInstanceAsync(parent, instanceId, instance).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -585,14 +747,25 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   CreateInstanceRequest request =
-   *       CreateInstanceRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setInstanceId("instanceId902024336")
-   *           .setInstance(Instance.newBuilder().build())
-   *           .build();
-   *   Instance response = cloudRedisClient.createInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientCreateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientCreateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientCreateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       CreateInstanceRequest request =
+   *           CreateInstanceRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setInstanceId("instanceId902024336")
+   *               .setInstance(Instance.newBuilder().build())
+   *               .build();
+   *       Instance response = cloudRedisClient.createInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -621,17 +794,31 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   CreateInstanceRequest request =
-   *       CreateInstanceRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setInstanceId("instanceId902024336")
-   *           .setInstance(Instance.newBuilder().build())
-   *           .build();
-   *   OperationFuture<Instance, Any> future =
-   *       cloudRedisClient.createInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   *
+   * public class CloudRedisClientCreateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientCreateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientCreateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       CreateInstanceRequest request =
+   *           CreateInstanceRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setInstanceId("instanceId902024336")
+   *               .setInstance(Instance.newBuilder().build())
+   *               .build();
+   *       OperationFuture<Instance, Any> future =
+   *           cloudRedisClient.createInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -658,16 +845,30 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   CreateInstanceRequest request =
-   *       CreateInstanceRequest.newBuilder()
-   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
-   *           .setInstanceId("instanceId902024336")
-   *           .setInstance(Instance.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.createInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class CloudRedisClientCreateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientCreateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientCreateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       CreateInstanceRequest request =
+   *           CreateInstanceRequest.newBuilder()
+   *               .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *               .setInstanceId("instanceId902024336")
+   *               .setInstance(Instance.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.createInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -686,10 +887,23 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   Instance instance = Instance.newBuilder().build();
-   *   Instance response = cloudRedisClient.updateInstanceAsync(updateMask, instance).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class CloudRedisClientUpdateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpdateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpdateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       FieldMask updateMask = FieldMask.newBuilder().build();
+   *       Instance instance = Instance.newBuilder().build();
+   *       Instance response = cloudRedisClient.updateInstanceAsync(updateMask, instance).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -718,13 +932,26 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   UpdateInstanceRequest request =
-   *       UpdateInstanceRequest.newBuilder()
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .setInstance(Instance.newBuilder().build())
-   *           .build();
-   *   Instance response = cloudRedisClient.updateInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class CloudRedisClientUpdateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpdateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpdateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       UpdateInstanceRequest request =
+   *           UpdateInstanceRequest.newBuilder()
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .setInstance(Instance.newBuilder().build())
+   *               .build();
+   *       Instance response = cloudRedisClient.updateInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -746,16 +973,31 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   UpdateInstanceRequest request =
-   *       UpdateInstanceRequest.newBuilder()
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .setInstance(Instance.newBuilder().build())
-   *           .build();
-   *   OperationFuture<Instance, Any> future =
-   *       cloudRedisClient.updateInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class CloudRedisClientUpdateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpdateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpdateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       UpdateInstanceRequest request =
+   *           UpdateInstanceRequest.newBuilder()
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .setInstance(Instance.newBuilder().build())
+   *               .build();
+   *       OperationFuture<Instance, Any> future =
+   *           cloudRedisClient.updateInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -775,15 +1017,30 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   UpdateInstanceRequest request =
-   *       UpdateInstanceRequest.newBuilder()
-   *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .setInstance(Instance.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.updateInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   * import com.google.protobuf.FieldMask;
+   *
+   * public class CloudRedisClientUpdateInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpdateInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpdateInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       UpdateInstanceRequest request =
+   *           UpdateInstanceRequest.newBuilder()
+   *               .setUpdateMask(FieldMask.newBuilder().build())
+   *               .setInstance(Instance.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.updateInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -798,10 +1055,21 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-   *   String redisVersion = "redisVersion-1972584739";
-   *   Instance response = cloudRedisClient.upgradeInstanceAsync(name, redisVersion).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientUpgradeInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpgradeInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpgradeInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *       String redisVersion = "redisVersion-1972584739";
+   *       Instance response = cloudRedisClient.upgradeInstanceAsync(name, redisVersion).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -828,10 +1096,21 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
-   *   String redisVersion = "redisVersion-1972584739";
-   *   Instance response = cloudRedisClient.upgradeInstanceAsync(name, redisVersion).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientUpgradeInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpgradeInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpgradeInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *       String redisVersion = "redisVersion-1972584739";
+   *       Instance response = cloudRedisClient.upgradeInstanceAsync(name, redisVersion).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -855,13 +1134,24 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   UpgradeInstanceRequest request =
-   *       UpgradeInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .setRedisVersion("redisVersion-1972584739")
-   *           .build();
-   *   Instance response = cloudRedisClient.upgradeInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientUpgradeInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpgradeInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpgradeInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       UpgradeInstanceRequest request =
+   *           UpgradeInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .setRedisVersion("redisVersion-1972584739")
+   *               .build();
+   *       Instance response = cloudRedisClient.upgradeInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -879,16 +1169,30 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   UpgradeInstanceRequest request =
-   *       UpgradeInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .setRedisVersion("redisVersion-1972584739")
-   *           .build();
-   *   OperationFuture<Instance, Any> future =
-   *       cloudRedisClient.upgradeInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   *
+   * public class CloudRedisClientUpgradeInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpgradeInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpgradeInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       UpgradeInstanceRequest request =
+   *           UpgradeInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .setRedisVersion("redisVersion-1972584739")
+   *               .build();
+   *       OperationFuture<Instance, Any> future =
+   *           cloudRedisClient.upgradeInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -904,15 +1208,29 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   UpgradeInstanceRequest request =
-   *       UpgradeInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .setRedisVersion("redisVersion-1972584739")
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.upgradeInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class CloudRedisClientUpgradeInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientUpgradeInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientUpgradeInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       UpgradeInstanceRequest request =
+   *           UpgradeInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .setRedisVersion("redisVersion-1972584739")
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.upgradeInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -933,10 +1251,21 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = "name3373707";
-   *   InputConfig inputConfig = InputConfig.newBuilder().build();
-   *   Instance response = cloudRedisClient.importInstanceAsync(name, inputConfig).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientImportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientImportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientImportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String name = "name3373707";
+   *       InputConfig inputConfig = InputConfig.newBuilder().build();
+   *       Instance response = cloudRedisClient.importInstanceAsync(name, inputConfig).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -966,13 +1295,24 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ImportInstanceRequest request =
-   *       ImportInstanceRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setInputConfig(InputConfig.newBuilder().build())
-   *           .build();
-   *   Instance response = cloudRedisClient.importInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientImportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientImportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientImportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ImportInstanceRequest request =
+   *           ImportInstanceRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setInputConfig(InputConfig.newBuilder().build())
+   *               .build();
+   *       Instance response = cloudRedisClient.importInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -996,16 +1336,30 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ImportInstanceRequest request =
-   *       ImportInstanceRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setInputConfig(InputConfig.newBuilder().build())
-   *           .build();
-   *   OperationFuture<Instance, Any> future =
-   *       cloudRedisClient.importInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   *
+   * public class CloudRedisClientImportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientImportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientImportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ImportInstanceRequest request =
+   *           ImportInstanceRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setInputConfig(InputConfig.newBuilder().build())
+   *               .build();
+   *       OperationFuture<Instance, Any> future =
+   *           cloudRedisClient.importInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1027,15 +1381,29 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ImportInstanceRequest request =
-   *       ImportInstanceRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setInputConfig(InputConfig.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.importInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class CloudRedisClientImportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientImportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientImportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ImportInstanceRequest request =
+   *           ImportInstanceRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setInputConfig(InputConfig.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.importInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1055,10 +1423,21 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = "name3373707";
-   *   OutputConfig outputConfig = OutputConfig.newBuilder().build();
-   *   Instance response = cloudRedisClient.exportInstanceAsync(name, outputConfig).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientExportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientExportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientExportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String name = "name3373707";
+   *       OutputConfig outputConfig = OutputConfig.newBuilder().build();
+   *       Instance response = cloudRedisClient.exportInstanceAsync(name, outputConfig).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1087,13 +1466,24 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ExportInstanceRequest request =
-   *       ExportInstanceRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOutputConfig(OutputConfig.newBuilder().build())
-   *           .build();
-   *   Instance response = cloudRedisClient.exportInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientExportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientExportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientExportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ExportInstanceRequest request =
+   *           ExportInstanceRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setOutputConfig(OutputConfig.newBuilder().build())
+   *               .build();
+   *       Instance response = cloudRedisClient.exportInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1116,16 +1506,30 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ExportInstanceRequest request =
-   *       ExportInstanceRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOutputConfig(OutputConfig.newBuilder().build())
-   *           .build();
-   *   OperationFuture<Instance, Any> future =
-   *       cloudRedisClient.exportInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   *
+   * public class CloudRedisClientExportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientExportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientExportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ExportInstanceRequest request =
+   *           ExportInstanceRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setOutputConfig(OutputConfig.newBuilder().build())
+   *               .build();
+   *       OperationFuture<Instance, Any> future =
+   *           cloudRedisClient.exportInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1146,15 +1550,29 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   ExportInstanceRequest request =
-   *       ExportInstanceRequest.newBuilder()
-   *           .setName("name3373707")
-   *           .setOutputConfig(OutputConfig.newBuilder().build())
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.exportInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class CloudRedisClientExportInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientExportInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientExportInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       ExportInstanceRequest request =
+   *           ExportInstanceRequest.newBuilder()
+   *               .setName("name3373707")
+   *               .setOutputConfig(OutputConfig.newBuilder().build())
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.exportInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1170,11 +1588,22 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-   *   FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
-   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
-   *   Instance response = cloudRedisClient.failoverInstanceAsync(name, dataProtectionMode).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientFailoverInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientFailoverInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientFailoverInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *       FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
+   *           FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *       Instance response = cloudRedisClient.failoverInstanceAsync(name, dataProtectionMode).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1203,11 +1632,22 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
-   *   FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
-   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
-   *   Instance response = cloudRedisClient.failoverInstanceAsync(name, dataProtectionMode).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientFailoverInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientFailoverInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientFailoverInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *       FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
+   *           FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *       Instance response = cloudRedisClient.failoverInstanceAsync(name, dataProtectionMode).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1236,12 +1676,23 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   FailoverInstanceRequest request =
-   *       FailoverInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   Instance response = cloudRedisClient.failoverInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * public class CloudRedisClientFailoverInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientFailoverInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientFailoverInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       FailoverInstanceRequest request =
+   *           FailoverInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       Instance response = cloudRedisClient.failoverInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1261,15 +1712,29 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   FailoverInstanceRequest request =
-   *       FailoverInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   OperationFuture<Instance, Any> future =
-   *       cloudRedisClient.failoverInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   Instance response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   *
+   * public class CloudRedisClientFailoverInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientFailoverInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientFailoverInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       FailoverInstanceRequest request =
+   *           FailoverInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       OperationFuture<Instance, Any> future =
+   *           cloudRedisClient.failoverInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       Instance response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1286,14 +1751,28 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   FailoverInstanceRequest request =
-   *       FailoverInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.failoverInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   Operation response = future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class CloudRedisClientFailoverInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientFailoverInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientFailoverInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       FailoverInstanceRequest request =
+   *           FailoverInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.failoverInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       Operation response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1308,9 +1787,22 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-   *   cloudRedisClient.deleteInstanceAsync(name).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class CloudRedisClientDeleteInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientDeleteInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientDeleteInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *       cloudRedisClient.deleteInstanceAsync(name).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1332,9 +1824,22 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
-   *   cloudRedisClient.deleteInstanceAsync(name).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class CloudRedisClientDeleteInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientDeleteInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientDeleteInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *       cloudRedisClient.deleteInstanceAsync(name).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1355,12 +1860,25 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   DeleteInstanceRequest request =
-   *       DeleteInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   cloudRedisClient.deleteInstanceAsync(request).get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.protobuf.Empty;
+   *
+   * public class CloudRedisClientDeleteInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientDeleteInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientDeleteInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       DeleteInstanceRequest request =
+   *           DeleteInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       cloudRedisClient.deleteInstanceAsync(request).get();
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -1378,15 +1896,30 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   DeleteInstanceRequest request =
-   *       DeleteInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   OperationFuture<Empty, Any> future =
-   *       cloudRedisClient.deleteInstanceOperationCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.gax.longrunning.OperationFuture;
+   * import com.google.protobuf.Any;
+   * import com.google.protobuf.Empty;
+   *
+   * public class CloudRedisClientDeleteInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientDeleteInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientDeleteInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       DeleteInstanceRequest request =
+   *           DeleteInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       OperationFuture<Empty, Any> future =
+   *           cloudRedisClient.deleteInstanceOperationCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1402,14 +1935,28 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   DeleteInstanceRequest request =
-   *       DeleteInstanceRequest.newBuilder()
-   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-   *           .build();
-   *   ApiFuture<Operation> future = cloudRedisClient.deleteInstanceCallable().futureCall(request);
-   *   // Do something.
-   *   future.get();
+   * package com.google.cloud.redis.v1beta1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.longrunning.Operation;
+   *
+   * public class CloudRedisClientDeleteInstance {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     cloudRedisClientDeleteInstance();
+   *   }
+   *
+   *   public static void cloudRedisClientDeleteInstance() throws Exception {
+   *     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *       DeleteInstanceRequest request =
+   *           DeleteInstanceRequest.newBuilder()
+   *               .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *               .build();
+   *       ApiFuture<Operation> future = cloudRedisClient.deleteInstanceCallable().futureCall(request);
+   *       // Do something.
+   *       future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

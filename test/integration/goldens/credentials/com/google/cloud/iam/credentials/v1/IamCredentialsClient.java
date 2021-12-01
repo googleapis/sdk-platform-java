@@ -43,13 +43,28 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
- *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
- *   List<String> delegates = new ArrayList<>();
- *   List<String> scope = new ArrayList<>();
- *   Duration lifetime = Duration.newBuilder().build();
- *   GenerateAccessTokenResponse response =
- *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+ * package com.google.cloud.iam.credentials.v1;
+ *
+ * import com.google.protobuf.Duration;
+ * import java.util.ArrayList;
+ * import java.util.List;
+ *
+ * public class IamCredentialsClientGenerateAccessToken {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iamCredentialsClientGenerateAccessToken();
+ *   }
+ *
+ *   public static void iamCredentialsClientGenerateAccessToken() throws Exception {
+ *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+ *       ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+ *       List<String> delegates = new ArrayList<>();
+ *       List<String> scope = new ArrayList<>();
+ *       Duration lifetime = Duration.newBuilder().build();
+ *       GenerateAccessTokenResponse response =
+ *           iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+ *     }
+ *   }
  * }
  * }</pre>
  *
@@ -82,19 +97,43 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * IamCredentialsSettings iamCredentialsSettings =
- *     IamCredentialsSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
- *         .build();
- * IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
+ * package com.google.cloud.iam.credentials.v1;
+ *
+ * import com.google.api.gax.core.FixedCredentialsProvider;
+ *
+ * public class IamCredentialsClientCreate {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iamCredentialsClientCreate();
+ *   }
+ *
+ *   public static void iamCredentialsClientCreate() throws Exception {
+ *     IamCredentialsSettings iamCredentialsSettings =
+ *         IamCredentialsSettings.newBuilder()
+ *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *             .build();
+ *     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * IamCredentialsSettings iamCredentialsSettings =
- *     IamCredentialsSettings.newBuilder().setEndpoint(myEndpoint).build();
- * IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
+ * package com.google.cloud.iam.credentials.v1;
+ *
+ * public class IamCredentialsClientClassHeaderEndpoint {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iamCredentialsClientClassHeaderEndpoint();
+ *   }
+ *
+ *   public static void iamCredentialsClientClassHeaderEndpoint() throws Exception {
+ *     IamCredentialsSettings iamCredentialsSettings =
+ *         IamCredentialsSettings.newBuilder().setEndpoint(myEndpoint).build();
+ *     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
+ *   }
+ * }
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
@@ -159,13 +198,28 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
-   *   List<String> delegates = new ArrayList<>();
-   *   List<String> scope = new ArrayList<>();
-   *   Duration lifetime = Duration.newBuilder().build();
-   *   GenerateAccessTokenResponse response =
-   *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.protobuf.Duration;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientGenerateAccessToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateAccessToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateAccessToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *       List<String> delegates = new ArrayList<>();
+   *       List<String> scope = new ArrayList<>();
+   *       Duration lifetime = Duration.newBuilder().build();
+   *       GenerateAccessTokenResponse response =
+   *           iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -208,13 +262,28 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
-   *   List<String> delegates = new ArrayList<>();
-   *   List<String> scope = new ArrayList<>();
-   *   Duration lifetime = Duration.newBuilder().build();
-   *   GenerateAccessTokenResponse response =
-   *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.protobuf.Duration;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientGenerateAccessToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateAccessToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateAccessToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *       List<String> delegates = new ArrayList<>();
+   *       List<String> scope = new ArrayList<>();
+   *       Duration lifetime = Duration.newBuilder().build();
+   *       GenerateAccessTokenResponse response =
+   *           iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -257,15 +326,29 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   GenerateAccessTokenRequest request =
-   *       GenerateAccessTokenRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .addAllScope(new ArrayList<String>())
-   *           .setLifetime(Duration.newBuilder().build())
-   *           .build();
-   *   GenerateAccessTokenResponse response = iamCredentialsClient.generateAccessToken(request);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.protobuf.Duration;
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientGenerateAccessToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateAccessToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateAccessToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       GenerateAccessTokenRequest request =
+   *           GenerateAccessTokenRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .addAllScope(new ArrayList<String>())
+   *               .setLifetime(Duration.newBuilder().build())
+   *               .build();
+   *       GenerateAccessTokenResponse response = iamCredentialsClient.generateAccessToken(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -283,18 +366,33 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   GenerateAccessTokenRequest request =
-   *       GenerateAccessTokenRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .addAllScope(new ArrayList<String>())
-   *           .setLifetime(Duration.newBuilder().build())
-   *           .build();
-   *   ApiFuture<GenerateAccessTokenResponse> future =
-   *       iamCredentialsClient.generateAccessTokenCallable().futureCall(request);
-   *   // Do something.
-   *   GenerateAccessTokenResponse response = future.get();
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.Duration;
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientGenerateAccessToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateAccessToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateAccessToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       GenerateAccessTokenRequest request =
+   *           GenerateAccessTokenRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .addAllScope(new ArrayList<String>())
+   *               .setLifetime(Duration.newBuilder().build())
+   *               .build();
+   *       ApiFuture<GenerateAccessTokenResponse> future =
+   *           iamCredentialsClient.generateAccessTokenCallable().futureCall(request);
+   *       // Do something.
+   *       GenerateAccessTokenResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -310,13 +408,27 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
-   *   List<String> delegates = new ArrayList<>();
-   *   String audience = "audience975628804";
-   *   boolean includeEmail = true;
-   *   GenerateIdTokenResponse response =
-   *       iamCredentialsClient.generateIdToken(name, delegates, audience, includeEmail);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientGenerateIdToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateIdToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateIdToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *       List<String> delegates = new ArrayList<>();
+   *       String audience = "audience975628804";
+   *       boolean includeEmail = true;
+   *       GenerateIdTokenResponse response =
+   *           iamCredentialsClient.generateIdToken(name, delegates, audience, includeEmail);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -357,13 +469,27 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
-   *   List<String> delegates = new ArrayList<>();
-   *   String audience = "audience975628804";
-   *   boolean includeEmail = true;
-   *   GenerateIdTokenResponse response =
-   *       iamCredentialsClient.generateIdToken(name, delegates, audience, includeEmail);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientGenerateIdToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateIdToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateIdToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *       List<String> delegates = new ArrayList<>();
+   *       String audience = "audience975628804";
+   *       boolean includeEmail = true;
+   *       GenerateIdTokenResponse response =
+   *           iamCredentialsClient.generateIdToken(name, delegates, audience, includeEmail);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -404,15 +530,28 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   GenerateIdTokenRequest request =
-   *       GenerateIdTokenRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .setAudience("audience975628804")
-   *           .setIncludeEmail(true)
-   *           .build();
-   *   GenerateIdTokenResponse response = iamCredentialsClient.generateIdToken(request);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientGenerateIdToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateIdToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateIdToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       GenerateIdTokenRequest request =
+   *           GenerateIdTokenRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .setAudience("audience975628804")
+   *               .setIncludeEmail(true)
+   *               .build();
+   *       GenerateIdTokenResponse response = iamCredentialsClient.generateIdToken(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -430,18 +569,32 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   GenerateIdTokenRequest request =
-   *       GenerateIdTokenRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .setAudience("audience975628804")
-   *           .setIncludeEmail(true)
-   *           .build();
-   *   ApiFuture<GenerateIdTokenResponse> future =
-   *       iamCredentialsClient.generateIdTokenCallable().futureCall(request);
-   *   // Do something.
-   *   GenerateIdTokenResponse response = future.get();
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientGenerateIdToken {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientGenerateIdToken();
+   *   }
+   *
+   *   public static void iamCredentialsClientGenerateIdToken() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       GenerateIdTokenRequest request =
+   *           GenerateIdTokenRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .setAudience("audience975628804")
+   *               .setIncludeEmail(true)
+   *               .build();
+   *       ApiFuture<GenerateIdTokenResponse> future =
+   *           iamCredentialsClient.generateIdTokenCallable().futureCall(request);
+   *       // Do something.
+   *       GenerateIdTokenResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -457,11 +610,26 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
-   *   List<String> delegates = new ArrayList<>();
-   *   ByteString payload = ByteString.EMPTY;
-   *   SignBlobResponse response = iamCredentialsClient.signBlob(name, delegates, payload);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientSignBlob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignBlob();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignBlob() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *       List<String> delegates = new ArrayList<>();
+   *       ByteString payload = ByteString.EMPTY;
+   *       SignBlobResponse response = iamCredentialsClient.signBlob(name, delegates, payload);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -498,11 +666,26 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
-   *   List<String> delegates = new ArrayList<>();
-   *   ByteString payload = ByteString.EMPTY;
-   *   SignBlobResponse response = iamCredentialsClient.signBlob(name, delegates, payload);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientSignBlob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignBlob();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignBlob() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *       List<String> delegates = new ArrayList<>();
+   *       ByteString payload = ByteString.EMPTY;
+   *       SignBlobResponse response = iamCredentialsClient.signBlob(name, delegates, payload);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -538,14 +721,28 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   SignBlobRequest request =
-   *       SignBlobRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .setPayload(ByteString.EMPTY)
-   *           .build();
-   *   SignBlobResponse response = iamCredentialsClient.signBlob(request);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.protobuf.ByteString;
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientSignBlob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignBlob();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignBlob() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       SignBlobRequest request =
+   *           SignBlobRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .setPayload(ByteString.EMPTY)
+   *               .build();
+   *       SignBlobResponse response = iamCredentialsClient.signBlob(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -563,17 +760,32 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   SignBlobRequest request =
-   *       SignBlobRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .setPayload(ByteString.EMPTY)
-   *           .build();
-   *   ApiFuture<SignBlobResponse> future =
-   *       iamCredentialsClient.signBlobCallable().futureCall(request);
-   *   // Do something.
-   *   SignBlobResponse response = future.get();
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import com.google.protobuf.ByteString;
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientSignBlob {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignBlob();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignBlob() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       SignBlobRequest request =
+   *           SignBlobRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .setPayload(ByteString.EMPTY)
+   *               .build();
+   *       ApiFuture<SignBlobResponse> future =
+   *           iamCredentialsClient.signBlobCallable().futureCall(request);
+   *       // Do something.
+   *       SignBlobResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -588,11 +800,25 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
-   *   List<String> delegates = new ArrayList<>();
-   *   String payload = "payload-786701938";
-   *   SignJwtResponse response = iamCredentialsClient.signJwt(name, delegates, payload);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientSignJwt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignJwt();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignJwt() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *       List<String> delegates = new ArrayList<>();
+   *       String payload = "payload-786701938";
+   *       SignJwtResponse response = iamCredentialsClient.signJwt(name, delegates, payload);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -629,11 +855,25 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
-   *   List<String> delegates = new ArrayList<>();
-   *   String payload = "payload-786701938";
-   *   SignJwtResponse response = iamCredentialsClient.signJwt(name, delegates, payload);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import java.util.ArrayList;
+   * import java.util.List;
+   *
+   * public class IamCredentialsClientSignJwt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignJwt();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignJwt() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *       List<String> delegates = new ArrayList<>();
+   *       String payload = "payload-786701938";
+   *       SignJwtResponse response = iamCredentialsClient.signJwt(name, delegates, payload);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -669,14 +909,27 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   SignJwtRequest request =
-   *       SignJwtRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .setPayload("payload-786701938")
-   *           .build();
-   *   SignJwtResponse response = iamCredentialsClient.signJwt(request);
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientSignJwt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignJwt();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignJwt() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       SignJwtRequest request =
+   *           SignJwtRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .setPayload("payload-786701938")
+   *               .build();
+   *       SignJwtResponse response = iamCredentialsClient.signJwt(request);
+   *     }
+   *   }
    * }
    * }</pre>
    *
@@ -694,17 +947,31 @@ public class IamCredentialsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
-   *   SignJwtRequest request =
-   *       SignJwtRequest.newBuilder()
-   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
-   *           .addAllDelegates(new ArrayList<String>())
-   *           .setPayload("payload-786701938")
-   *           .build();
-   *   ApiFuture<SignJwtResponse> future =
-   *       iamCredentialsClient.signJwtCallable().futureCall(request);
-   *   // Do something.
-   *   SignJwtResponse response = future.get();
+   * package com.google.cloud.iam.credentials.v1;
+   *
+   * import com.google.api.core.ApiFuture;
+   * import java.util.ArrayList;
+   *
+   * public class IamCredentialsClientSignJwt {
+   *
+   *   public static void main(String[] args) throws Exception {
+   *     iamCredentialsClientSignJwt();
+   *   }
+   *
+   *   public static void iamCredentialsClientSignJwt() throws Exception {
+   *     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *       SignJwtRequest request =
+   *           SignJwtRequest.newBuilder()
+   *               .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *               .addAllDelegates(new ArrayList<String>())
+   *               .setPayload("payload-786701938")
+   *               .build();
+   *       ApiFuture<SignJwtResponse> future =
+   *           iamCredentialsClient.signJwtCallable().futureCall(request);
+   *       // Do something.
+   *       SignJwtResponse response = future.get();
+   *     }
+   *   }
    * }
    * }</pre>
    */

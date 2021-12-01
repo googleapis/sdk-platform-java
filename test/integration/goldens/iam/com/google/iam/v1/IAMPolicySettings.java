@@ -50,17 +50,30 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of setIamPolicy to 30 seconds:
  *
  * <pre>{@code
- * IAMPolicySettings.Builder iAMPolicySettingsBuilder = IAMPolicySettings.newBuilder();
- * iAMPolicySettingsBuilder
- *     .setIamPolicySettings()
- *     .setRetrySettings(
- *         iAMPolicySettingsBuilder
- *             .setIamPolicySettings()
- *             .getRetrySettings()
- *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
- *             .build());
- * IAMPolicySettings iAMPolicySettings = iAMPolicySettingsBuilder.build();
+ * package com.google.iam.v1;
+ *
+ * import java.time.Duration;
+ *
+ * public class IAMPolicySettings {
+ *
+ *   public static void main(String[] args) throws Exception {
+ *     iAMPolicySettings();
+ *   }
+ *
+ *   public static void iAMPolicySettings() throws Exception {
+ *     IAMPolicySettings.Builder iAMPolicySettingsBuilder = IAMPolicySettings.newBuilder();
+ *     iAMPolicySettingsBuilder
+ *         .setIamPolicySettings()
+ *         .setRetrySettings(
+ *             iAMPolicySettingsBuilder
+ *                 .setIamPolicySettings()
+ *                 .getRetrySettings()
+ *                 .toBuilder()
+ *                 .setTotalTimeout(Duration.ofSeconds(30))
+ *                 .build());
+ *     IAMPolicySettings iAMPolicySettings = iAMPolicySettingsBuilder.build();
+ *   }
+ * }
  * }</pre>
  */
 @Generated("by gapic-generator-java")
