@@ -124,13 +124,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.kms.v1.KeyManagementServiceSettings;
  * import com.google.cloud.kms.v1.myCredentials;
  *
- * public class KeyManagementServiceClientCreate {
+ * public class KeyManagementServiceClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     keyManagementServiceClientCreate();
+ *     keyManagementServiceClientSetCredentialsProvider();
  *   }
  *
- *   public static void keyManagementServiceClientCreate() throws Exception {
+ *   public static void keyManagementServiceClientSetCredentialsProvider() throws Exception {
  *     KeyManagementServiceSettings keyManagementServiceSettings =
  *         KeyManagementServiceSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -150,13 +150,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.kms.v1.KeyManagementServiceSettings;
  * import com.google.cloud.kms.v1.myEndpoint;
  *
- * public class KeyManagementServiceClientClassHeaderEndpoint {
+ * public class KeyManagementServiceClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     keyManagementServiceClientClassHeaderEndpoint();
+ *     keyManagementServiceClientSetEndpoint();
  *   }
  *
- *   public static void keyManagementServiceClientClassHeaderEndpoint() throws Exception {
+ *   public static void keyManagementServiceClientSetEndpoint() throws Exception {
  *     KeyManagementServiceSettings keyManagementServiceSettings =
  *         KeyManagementServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     KeyManagementServiceClient keyManagementServiceClient =

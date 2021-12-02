@@ -74,13 +74,13 @@ import javax.annotation.Generated;
  * import com.google.testdata.v1.DeprecatedServiceSettings;
  * import com.google.testdata.v1.myCredentials;
  *
- * public class DeprecatedServiceClientCreate {
+ * public class DeprecatedServiceClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     deprecatedServiceClientCreate();
+ *     deprecatedServiceClientSetCredentialsProvider();
  *   }
  *
- *   public static void deprecatedServiceClientCreate() throws Exception {
+ *   public static void deprecatedServiceClientSetCredentialsProvider() throws Exception {
  *     DeprecatedServiceSettings deprecatedServiceSettings =
  *         DeprecatedServiceSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -100,13 +100,13 @@ import javax.annotation.Generated;
  * import com.google.testdata.v1.DeprecatedServiceSettings;
  * import com.google.testdata.v1.myEndpoint;
  *
- * public class DeprecatedServiceClientClassHeaderEndpoint {
+ * public class DeprecatedServiceClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     deprecatedServiceClientClassHeaderEndpoint();
+ *     deprecatedServiceClientSetEndpoint();
  *   }
  *
- *   public static void deprecatedServiceClientClassHeaderEndpoint() throws Exception {
+ *   public static void deprecatedServiceClientSetEndpoint() throws Exception {
  *     DeprecatedServiceSettings deprecatedServiceSettings =
  *         DeprecatedServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     DeprecatedServiceClient deprecatedServiceClient =

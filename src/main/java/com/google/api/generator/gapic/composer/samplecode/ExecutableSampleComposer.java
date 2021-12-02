@@ -27,19 +27,22 @@ public class ExecutableSampleComposer {
   public static String createExecutableSample(ExecutableSample executableSample) {
     return SampleCodeWriter.write(
         composeExecutableSample(
-            executableSample.sampleMethodName,
-            executableSample.sampleVariableAssignments,
-            executableSample.sampleBody));
+            executableSample.getSampleName(),
+            executableSample.getSampleVariableAssignments(),
+            executableSample.getSampleBody()));
   }
 
   public static Optional<String> createExecutableSample(
       Optional<ExecutableSample> executableSample) {
     if (executableSample.isPresent()) {
       ExecutableSample sample = executableSample.get();
+      String sampleMethodName = JavaStyle.toLowerCamelCase(sample.getSampleName());
       return Optional.of(
           SampleCodeWriter.write(
               composeExecutableSample(
-                  sample.sampleMethodName, sample.sampleVariableAssignments, sample.sampleBody)));
+                  sampleMethodName,
+                  sample.getSampleVariableAssignments(),
+                  sample.getSampleBody())));
     }
     return Optional.empty();
   }
@@ -48,7 +51,6 @@ public class ExecutableSampleComposer {
       String sampleMethodName,
       List<AssignmentExpr> sampleVariableAssignments,
       List<Statement> sampleBody) {
-
     String sampleClassName = JavaStyle.toUpperCamelCase(sampleMethodName);
     List<VariableExpr> sampleMethodArgs = composeSampleMethodArgs(sampleVariableAssignments);
     MethodDefinition mainMethod =

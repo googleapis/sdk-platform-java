@@ -108,13 +108,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.logging.v2.MetricsSettings;
  * import com.google.cloud.logging.v2.myCredentials;
  *
- * public class MetricsClientCreate {
+ * public class MetricsClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     metricsClientCreate();
+ *     metricsClientSetCredentialsProvider();
  *   }
  *
- *   public static void metricsClientCreate() throws Exception {
+ *   public static void metricsClientSetCredentialsProvider() throws Exception {
  *     MetricsSettings metricsSettings =
  *         MetricsSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -133,13 +133,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.logging.v2.MetricsSettings;
  * import com.google.cloud.logging.v2.myEndpoint;
  *
- * public class MetricsClientClassHeaderEndpoint {
+ * public class MetricsClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     metricsClientClassHeaderEndpoint();
+ *     metricsClientSetEndpoint();
  *   }
  *
- *   public static void metricsClientClassHeaderEndpoint() throws Exception {
+ *   public static void metricsClientSetEndpoint() throws Exception {
  *     MetricsSettings metricsSettings = MetricsSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
  *   }

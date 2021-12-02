@@ -122,13 +122,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.pubsub.v1.TopicAdminSettings;
  * import com.google.cloud.pubsub.v1.myCredentials;
  *
- * public class TopicAdminClientCreate {
+ * public class TopicAdminClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     topicAdminClientCreate();
+ *     topicAdminClientSetCredentialsProvider();
  *   }
  *
- *   public static void topicAdminClientCreate() throws Exception {
+ *   public static void topicAdminClientSetCredentialsProvider() throws Exception {
  *     TopicAdminSettings topicAdminSettings =
  *         TopicAdminSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -147,13 +147,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.pubsub.v1.TopicAdminSettings;
  * import com.google.cloud.pubsub.v1.myEndpoint;
  *
- * public class TopicAdminClientClassHeaderEndpoint {
+ * public class TopicAdminClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     topicAdminClientClassHeaderEndpoint();
+ *     topicAdminClientSetEndpoint();
  *   }
  *
- *   public static void topicAdminClientClassHeaderEndpoint() throws Exception {
+ *   public static void topicAdminClientSetEndpoint() throws Exception {
  *     TopicAdminSettings topicAdminSettings =
  *         TopicAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);

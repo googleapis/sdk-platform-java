@@ -100,13 +100,13 @@ import javax.annotation.Generated;
  * import com.google.storage.v2.StorageSettings;
  * import com.google.storage.v2.myCredentials;
  *
- * public class StorageClientCreate {
+ * public class StorageClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     storageClientCreate();
+ *     storageClientSetCredentialsProvider();
  *   }
  *
- *   public static void storageClientCreate() throws Exception {
+ *   public static void storageClientSetCredentialsProvider() throws Exception {
  *     StorageSettings storageSettings =
  *         StorageSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -125,13 +125,13 @@ import javax.annotation.Generated;
  * import com.google.storage.v2.StorageSettings;
  * import com.google.storage.v2.myEndpoint;
  *
- * public class StorageClientClassHeaderEndpoint {
+ * public class StorageClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     storageClientClassHeaderEndpoint();
+ *     storageClientSetEndpoint();
  *   }
  *
- *   public static void storageClientClassHeaderEndpoint() throws Exception {
+ *   public static void storageClientSetEndpoint() throws Exception {
  *     StorageSettings storageSettings = StorageSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     StorageClient storageClient = StorageClient.create(storageSettings);
  *   }

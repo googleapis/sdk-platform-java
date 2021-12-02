@@ -89,13 +89,13 @@ import javax.annotation.Generated;
  * import com.google.showcase.v1beta1.EchoSettings;
  * import com.google.showcase.v1beta1.myCredentials;
  *
- * public class EchoClientCreate {
+ * public class EchoClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     echoClientCreate();
+ *     echoClientSetCredentialsProvider();
  *   }
  *
- *   public static void echoClientCreate() throws Exception {
+ *   public static void echoClientSetCredentialsProvider() throws Exception {
  *     EchoSettings echoSettings =
  *         EchoSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -114,13 +114,13 @@ import javax.annotation.Generated;
  * import com.google.showcase.v1beta1.EchoSettings;
  * import com.google.showcase.v1beta1.myEndpoint;
  *
- * public class EchoClientClassHeaderEndpoint {
+ * public class EchoClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     echoClientClassHeaderEndpoint();
+ *     echoClientSetEndpoint();
  *   }
  *
- *   public static void echoClientClassHeaderEndpoint() throws Exception {
+ *   public static void echoClientSetEndpoint() throws Exception {
  *     EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     EchoClient echoClient = EchoClient.create(echoSettings);
  *   }

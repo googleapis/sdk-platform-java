@@ -115,13 +115,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.asset.v1.AssetServiceSettings;
  * import com.google.cloud.asset.v1.myCredentials;
  *
- * public class AssetServiceClientCreate {
+ * public class AssetServiceClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     assetServiceClientCreate();
+ *     assetServiceClientSetCredentialsProvider();
  *   }
  *
- *   public static void assetServiceClientCreate() throws Exception {
+ *   public static void assetServiceClientSetCredentialsProvider() throws Exception {
  *     AssetServiceSettings assetServiceSettings =
  *         AssetServiceSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -140,13 +140,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.asset.v1.AssetServiceSettings;
  * import com.google.cloud.asset.v1.myEndpoint;
  *
- * public class AssetServiceClientClassHeaderEndpoint {
+ * public class AssetServiceClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     assetServiceClientClassHeaderEndpoint();
+ *     assetServiceClientSetEndpoint();
  *   }
  *
- *   public static void assetServiceClientClassHeaderEndpoint() throws Exception {
+ *   public static void assetServiceClientSetEndpoint() throws Exception {
  *     AssetServiceSettings assetServiceSettings =
  *         AssetServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);

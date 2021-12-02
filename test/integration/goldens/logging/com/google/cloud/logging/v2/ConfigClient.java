@@ -148,13 +148,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.logging.v2.ConfigSettings;
  * import com.google.cloud.logging.v2.myCredentials;
  *
- * public class ConfigClientCreate {
+ * public class ConfigClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     configClientCreate();
+ *     configClientSetCredentialsProvider();
  *   }
  *
- *   public static void configClientCreate() throws Exception {
+ *   public static void configClientSetCredentialsProvider() throws Exception {
  *     ConfigSettings configSettings =
  *         ConfigSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -173,13 +173,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.logging.v2.ConfigSettings;
  * import com.google.cloud.logging.v2.myEndpoint;
  *
- * public class ConfigClientClassHeaderEndpoint {
+ * public class ConfigClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     configClientClassHeaderEndpoint();
+ *     configClientSetEndpoint();
  *   }
  *
- *   public static void configClientClassHeaderEndpoint() throws Exception {
+ *   public static void configClientSetEndpoint() throws Exception {
  *     ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     ConfigClient configClient = ConfigClient.create(configSettings);
  *   }

@@ -124,13 +124,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.redis.v1beta1.CloudRedisSettings;
  * import com.google.cloud.redis.v1beta1.myCredentials;
  *
- * public class CloudRedisClientCreate {
+ * public class CloudRedisClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     cloudRedisClientCreate();
+ *     cloudRedisClientSetCredentialsProvider();
  *   }
  *
- *   public static void cloudRedisClientCreate() throws Exception {
+ *   public static void cloudRedisClientSetCredentialsProvider() throws Exception {
  *     CloudRedisSettings cloudRedisSettings =
  *         CloudRedisSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -149,13 +149,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.redis.v1beta1.CloudRedisSettings;
  * import com.google.cloud.redis.v1beta1.myEndpoint;
  *
- * public class CloudRedisClientClassHeaderEndpoint {
+ * public class CloudRedisClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     cloudRedisClientClassHeaderEndpoint();
+ *     cloudRedisClientSetEndpoint();
  *   }
  *
- *   public static void cloudRedisClientClassHeaderEndpoint() throws Exception {
+ *   public static void cloudRedisClientSetEndpoint() throws Exception {
  *     CloudRedisSettings cloudRedisSettings =
  *         CloudRedisSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);

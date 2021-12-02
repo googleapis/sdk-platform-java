@@ -115,13 +115,13 @@ import javax.annotation.Generated;
  * import com.google.iam.v1.IAMPolicySettings;
  * import com.google.iam.v1.myCredentials;
  *
- * public class IAMPolicyClientCreate {
+ * public class IAMPolicyClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     iAMPolicyClientCreate();
+ *     iAMPolicyClientSetCredentialsProvider();
  *   }
  *
- *   public static void iAMPolicyClientCreate() throws Exception {
+ *   public static void iAMPolicyClientSetCredentialsProvider() throws Exception {
  *     IAMPolicySettings iAMPolicySettings =
  *         IAMPolicySettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -140,13 +140,13 @@ import javax.annotation.Generated;
  * import com.google.iam.v1.IAMPolicySettings;
  * import com.google.iam.v1.myEndpoint;
  *
- * public class IAMPolicyClientClassHeaderEndpoint {
+ * public class IAMPolicyClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     iAMPolicyClientClassHeaderEndpoint();
+ *     iAMPolicyClientSetEndpoint();
  *   }
  *
- *   public static void iAMPolicyClientClassHeaderEndpoint() throws Exception {
+ *   public static void iAMPolicyClientSetEndpoint() throws Exception {
  *     IAMPolicySettings iAMPolicySettings =
  *         IAMPolicySettings.newBuilder().setEndpoint(myEndpoint).build();
  *     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);

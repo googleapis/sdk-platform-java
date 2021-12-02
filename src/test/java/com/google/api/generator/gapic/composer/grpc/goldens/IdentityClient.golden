@@ -83,13 +83,13 @@ import javax.annotation.Generated;
  * import com.google.showcase.v1beta1.IdentitySettings;
  * import com.google.showcase.v1beta1.myCredentials;
  *
- * public class IdentityClientCreate {
+ * public class IdentityClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     identityClientCreate();
+ *     identityClientSetCredentialsProvider();
  *   }
  *
- *   public static void identityClientCreate() throws Exception {
+ *   public static void identityClientSetCredentialsProvider() throws Exception {
  *     IdentitySettings identitySettings =
  *         IdentitySettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -108,13 +108,13 @@ import javax.annotation.Generated;
  * import com.google.showcase.v1beta1.IdentitySettings;
  * import com.google.showcase.v1beta1.myEndpoint;
  *
- * public class IdentityClientClassHeaderEndpoint {
+ * public class IdentityClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     identityClientClassHeaderEndpoint();
+ *     identityClientSetEndpoint();
  *   }
  *
- *   public static void identityClientClassHeaderEndpoint() throws Exception {
+ *   public static void identityClientSetEndpoint() throws Exception {
  *     IdentitySettings identitySettings =
  *         IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
  *     IdentityClient identityClient = IdentityClient.create(identitySettings);

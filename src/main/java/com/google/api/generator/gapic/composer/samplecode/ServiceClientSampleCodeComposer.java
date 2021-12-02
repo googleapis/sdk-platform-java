@@ -167,7 +167,7 @@ public class ServiceClientSampleCodeComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-        composeSampleMethodName(clientName, "create"), new ArrayList<>(), sampleBody);
+        composeSampleMethodName(clientName, "setCredentialsProvider"), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeClassHeaderEndpointSampleCode(
@@ -234,7 +234,7 @@ public class ServiceClientSampleCodeComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-        composeSampleMethodName(clientName, "ClassHeaderEndpoint"), new ArrayList<>(), sampleBody);
+        composeSampleMethodName(clientName, "setEndpoint"), new ArrayList<>(), sampleBody);
   }
 
   public static ExecutableSample composeRpcMethodHeaderSampleCode(

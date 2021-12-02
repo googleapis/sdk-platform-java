@@ -92,13 +92,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.compute.v1.RegionOperationsSettings;
  * import com.google.cloud.compute.v1.myCredentials;
  *
- * public class RegionOperationsClientCreate {
+ * public class RegionOperationsClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     regionOperationsClientCreate();
+ *     regionOperationsClientSetCredentialsProvider();
  *   }
  *
- *   public static void regionOperationsClientCreate() throws Exception {
+ *   public static void regionOperationsClientSetCredentialsProvider() throws Exception {
  *     RegionOperationsSettings regionOperationsSettings =
  *         RegionOperationsSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -118,13 +118,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.compute.v1.RegionOperationsSettings;
  * import com.google.cloud.compute.v1.myEndpoint;
  *
- * public class RegionOperationsClientClassHeaderEndpoint {
+ * public class RegionOperationsClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     regionOperationsClientClassHeaderEndpoint();
+ *     regionOperationsClientSetEndpoint();
  *   }
  *
- *   public static void regionOperationsClientClassHeaderEndpoint() throws Exception {
+ *   public static void regionOperationsClientSetEndpoint() throws Exception {
  *     RegionOperationsSettings regionOperationsSettings =
  *         RegionOperationsSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     RegionOperationsClient regionOperationsClient =

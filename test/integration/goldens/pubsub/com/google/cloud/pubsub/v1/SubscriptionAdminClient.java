@@ -141,13 +141,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
  * import com.google.cloud.pubsub.v1.myCredentials;
  *
- * public class SubscriptionAdminClientCreate {
+ * public class SubscriptionAdminClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     subscriptionAdminClientCreate();
+ *     subscriptionAdminClientSetCredentialsProvider();
  *   }
  *
- *   public static void subscriptionAdminClientCreate() throws Exception {
+ *   public static void subscriptionAdminClientSetCredentialsProvider() throws Exception {
  *     SubscriptionAdminSettings subscriptionAdminSettings =
  *         SubscriptionAdminSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -167,13 +167,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
  * import com.google.cloud.pubsub.v1.myEndpoint;
  *
- * public class SubscriptionAdminClientClassHeaderEndpoint {
+ * public class SubscriptionAdminClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     subscriptionAdminClientClassHeaderEndpoint();
+ *     subscriptionAdminClientSetEndpoint();
  *   }
  *
- *   public static void subscriptionAdminClientClassHeaderEndpoint() throws Exception {
+ *   public static void subscriptionAdminClientSetEndpoint() throws Exception {
  *     SubscriptionAdminSettings subscriptionAdminSettings =
  *         SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     SubscriptionAdminClient subscriptionAdminClient =

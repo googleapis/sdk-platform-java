@@ -89,13 +89,13 @@ import javax.annotation.Generated;
  * import com.google.showcase.v1beta1.MessagingSettings;
  * import com.google.showcase.v1beta1.myCredentials;
  *
- * public class MessagingClientCreate {
+ * public class MessagingClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     messagingClientCreate();
+ *     messagingClientSetCredentialsProvider();
  *   }
  *
- *   public static void messagingClientCreate() throws Exception {
+ *   public static void messagingClientSetCredentialsProvider() throws Exception {
  *     MessagingSettings messagingSettings =
  *         MessagingSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -114,13 +114,13 @@ import javax.annotation.Generated;
  * import com.google.showcase.v1beta1.MessagingSettings;
  * import com.google.showcase.v1beta1.myEndpoint;
  *
- * public class MessagingClientClassHeaderEndpoint {
+ * public class MessagingClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     messagingClientClassHeaderEndpoint();
+ *     messagingClientSetEndpoint();
  *   }
  *
- *   public static void messagingClientClassHeaderEndpoint() throws Exception {
+ *   public static void messagingClientSetEndpoint() throws Exception {
  *     MessagingSettings messagingSettings =
  *         MessagingSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     MessagingClient messagingClient = MessagingClient.create(messagingSettings);

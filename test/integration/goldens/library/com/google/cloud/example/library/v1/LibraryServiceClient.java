@@ -123,13 +123,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.example.library.v1.LibraryServiceSettings;
  * import com.google.cloud.example.library.v1.myCredentials;
  *
- * public class LibraryServiceClientCreate {
+ * public class LibraryServiceClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     libraryServiceClientCreate();
+ *     libraryServiceClientSetCredentialsProvider();
  *   }
  *
- *   public static void libraryServiceClientCreate() throws Exception {
+ *   public static void libraryServiceClientSetCredentialsProvider() throws Exception {
  *     LibraryServiceSettings libraryServiceSettings =
  *         LibraryServiceSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -148,13 +148,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.example.library.v1.LibraryServiceSettings;
  * import com.google.cloud.example.library.v1.myEndpoint;
  *
- * public class LibraryServiceClientClassHeaderEndpoint {
+ * public class LibraryServiceClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     libraryServiceClientClassHeaderEndpoint();
+ *     libraryServiceClientSetEndpoint();
  *   }
  *
- *   public static void libraryServiceClientClassHeaderEndpoint() throws Exception {
+ *   public static void libraryServiceClientSetEndpoint() throws Exception {
  *     LibraryServiceSettings libraryServiceSettings =
  *         LibraryServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);

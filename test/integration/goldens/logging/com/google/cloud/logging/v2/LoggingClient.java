@@ -120,13 +120,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.logging.v2.LoggingSettings;
  * import com.google.cloud.logging.v2.myCredentials;
  *
- * public class LoggingClientCreate {
+ * public class LoggingClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     loggingClientCreate();
+ *     loggingClientSetCredentialsProvider();
  *   }
  *
- *   public static void loggingClientCreate() throws Exception {
+ *   public static void loggingClientSetCredentialsProvider() throws Exception {
  *     LoggingSettings loggingSettings =
  *         LoggingSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -145,13 +145,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.logging.v2.LoggingSettings;
  * import com.google.cloud.logging.v2.myEndpoint;
  *
- * public class LoggingClientClassHeaderEndpoint {
+ * public class LoggingClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     loggingClientClassHeaderEndpoint();
+ *     loggingClientSetEndpoint();
  *   }
  *
- *   public static void loggingClientClassHeaderEndpoint() throws Exception {
+ *   public static void loggingClientSetEndpoint() throws Exception {
  *     LoggingSettings loggingSettings = LoggingSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     LoggingClient loggingClient = LoggingClient.create(loggingSettings);
  *   }

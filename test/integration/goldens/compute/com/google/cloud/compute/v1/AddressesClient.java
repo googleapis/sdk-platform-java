@@ -106,13 +106,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.compute.v1.AddressesSettings;
  * import com.google.cloud.compute.v1.myCredentials;
  *
- * public class AddressesClientCreate {
+ * public class AddressesClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     addressesClientCreate();
+ *     addressesClientSetCredentialsProvider();
  *   }
  *
- *   public static void addressesClientCreate() throws Exception {
+ *   public static void addressesClientSetCredentialsProvider() throws Exception {
  *     AddressesSettings addressesSettings =
  *         AddressesSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -131,13 +131,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.compute.v1.AddressesSettings;
  * import com.google.cloud.compute.v1.myEndpoint;
  *
- * public class AddressesClientClassHeaderEndpoint {
+ * public class AddressesClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     addressesClientClassHeaderEndpoint();
+ *     addressesClientSetEndpoint();
  *   }
  *
- *   public static void addressesClientClassHeaderEndpoint() throws Exception {
+ *   public static void addressesClientSetEndpoint() throws Exception {
  *     AddressesSettings addressesSettings =
  *         AddressesSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     AddressesClient addressesClient = AddressesClient.create(addressesSettings);

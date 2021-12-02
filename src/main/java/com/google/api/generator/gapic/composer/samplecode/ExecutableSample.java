@@ -19,16 +19,28 @@ import com.google.api.generator.engine.ast.Statement;
 import java.util.List;
 
 public class ExecutableSample {
-  final String sampleMethodName;
-  final List<AssignmentExpr> sampleVariableAssignments;
-  final List<Statement> sampleBody;
+  private final String sampleName;
+  private final List<AssignmentExpr> sampleVariableAssignments;
+  private final List<Statement> sampleBody;
 
   public ExecutableSample(
-      String sampleMethodName,
+      String sampleName,
       List<AssignmentExpr> sampleVariableAssignments,
       List<Statement> sampleBody) {
-    this.sampleMethodName = sampleMethodName;
+    this.sampleName = sampleName;
     this.sampleVariableAssignments = sampleVariableAssignments;
     this.sampleBody = sampleBody;
+  }
+
+  public String getSampleName() {
+    return sampleName;
+  }
+
+  public List<AssignmentExpr> getSampleVariableAssignments() {
+    return sampleVariableAssignments;
+  }
+
+  public List<Statement> getSampleBody() {
+    return sampleBody;
   }
 }

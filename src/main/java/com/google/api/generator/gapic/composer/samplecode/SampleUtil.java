@@ -36,7 +36,6 @@ public class SampleUtil {
   static MethodInvocationExpr composeSystemOutPrint(Expr content) {
     VaporReference out =
         VaporReference.builder()
-            .setSupertypeReference(ConcreteReference.withClazz(System.class))
             .setEnclosingClassNames("System")
             .setName("out")
             .setPakkage("java.lang")

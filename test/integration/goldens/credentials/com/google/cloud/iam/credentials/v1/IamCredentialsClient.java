@@ -107,13 +107,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
  * import com.google.cloud.iam.credentials.v1.myCredentials;
  *
- * public class IamCredentialsClientCreate {
+ * public class IamCredentialsClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     iamCredentialsClientCreate();
+ *     iamCredentialsClientSetCredentialsProvider();
  *   }
  *
- *   public static void iamCredentialsClientCreate() throws Exception {
+ *   public static void iamCredentialsClientSetCredentialsProvider() throws Exception {
  *     IamCredentialsSettings iamCredentialsSettings =
  *         IamCredentialsSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -132,13 +132,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
  * import com.google.cloud.iam.credentials.v1.myEndpoint;
  *
- * public class IamCredentialsClientClassHeaderEndpoint {
+ * public class IamCredentialsClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     iamCredentialsClientClassHeaderEndpoint();
+ *     iamCredentialsClientSetEndpoint();
  *   }
  *
- *   public static void iamCredentialsClientClassHeaderEndpoint() throws Exception {
+ *   public static void iamCredentialsClientSetEndpoint() throws Exception {
  *     IamCredentialsSettings iamCredentialsSettings =
  *         IamCredentialsSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);

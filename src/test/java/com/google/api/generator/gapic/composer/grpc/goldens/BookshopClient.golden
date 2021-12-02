@@ -75,13 +75,13 @@ import javax.annotation.Generated;
  * import com.google.bookshop.v1beta1.BookshopSettings;
  * import com.google.bookshop.v1beta1.myCredentials;
  *
- * public class BookshopClientCreate {
+ * public class BookshopClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     bookshopClientCreate();
+ *     bookshopClientSetCredentialsProvider();
  *   }
  *
- *   public static void bookshopClientCreate() throws Exception {
+ *   public static void bookshopClientSetCredentialsProvider() throws Exception {
  *     BookshopSettings bookshopSettings =
  *         BookshopSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -100,13 +100,13 @@ import javax.annotation.Generated;
  * import com.google.bookshop.v1beta1.BookshopSettings;
  * import com.google.bookshop.v1beta1.myEndpoint;
  *
- * public class BookshopClientClassHeaderEndpoint {
+ * public class BookshopClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     bookshopClientClassHeaderEndpoint();
+ *     bookshopClientSetEndpoint();
  *   }
  *
- *   public static void bookshopClientClassHeaderEndpoint() throws Exception {
+ *   public static void bookshopClientSetEndpoint() throws Exception {
  *     BookshopSettings bookshopSettings =
  *         BookshopSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);

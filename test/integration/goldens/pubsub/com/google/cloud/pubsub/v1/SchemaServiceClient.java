@@ -118,13 +118,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.pubsub.v1.SchemaServiceSettings;
  * import com.google.cloud.pubsub.v1.myCredentials;
  *
- * public class SchemaServiceClientCreate {
+ * public class SchemaServiceClientSetCredentialsProvider {
  *
  *   public static void main(String[] args) throws Exception {
- *     schemaServiceClientCreate();
+ *     schemaServiceClientSetCredentialsProvider();
  *   }
  *
- *   public static void schemaServiceClientCreate() throws Exception {
+ *   public static void schemaServiceClientSetCredentialsProvider() throws Exception {
  *     SchemaServiceSettings schemaServiceSettings =
  *         SchemaServiceSettings.newBuilder()
  *             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -143,13 +143,13 @@ import javax.annotation.Generated;
  * import com.google.cloud.pubsub.v1.SchemaServiceSettings;
  * import com.google.cloud.pubsub.v1.myEndpoint;
  *
- * public class SchemaServiceClientClassHeaderEndpoint {
+ * public class SchemaServiceClientSetEndpoint {
  *
  *   public static void main(String[] args) throws Exception {
- *     schemaServiceClientClassHeaderEndpoint();
+ *     schemaServiceClientSetEndpoint();
  *   }
  *
- *   public static void schemaServiceClientClassHeaderEndpoint() throws Exception {
+ *   public static void schemaServiceClientSetEndpoint() throws Exception {
  *     SchemaServiceSettings schemaServiceSettings =
  *         SchemaServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  *     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
