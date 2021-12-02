@@ -167,7 +167,9 @@ public class ServiceClientSampleCodeComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
 
     return new ExecutableSample(
-        composeSampleMethodName(clientName, "setCredentialsProvider"), new ArrayList<>(), sampleBody);
+        composeSampleMethodName(clientName, "setCredentialsProvider"),
+        new ArrayList<>(),
+        sampleBody);
   }
 
   public static ExecutableSample composeClassHeaderEndpointSampleCode(
