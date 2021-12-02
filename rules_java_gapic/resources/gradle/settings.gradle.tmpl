@@ -1,7 +1,5 @@
-include rootDir.listFiles().findAll {
+rootDir.listFiles().findAll {
     it.isDirectory() && !(it =~ ".*/\\..*") && !(it =~ "^\\..*")
-}.collect {
-    it.getName()
-}.<String> toArray(new String[0])
-
-
+}.each {
+    include it.name
+}

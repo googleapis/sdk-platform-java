@@ -1,32 +1,17 @@
-buildscript {
-  repositories {
-    mavenCentral()
-  }
-}
-
-apply plugin: 'java'
-
 description = 'GAPIC library for {{name}}'
 group = 'com.google.cloud'
-version = (findProperty('version') == 'unspecified') ? '0.0.0-SNAPSHOT' : version
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-  mavenCentral()
-  mavenLocal()
-}
+version = (version == 'unspecified') ? '0.0.0-SNAPSHOT' : version
 
 compileJava.options.encoding = 'UTF-8'
 javadoc.options.encoding = 'UTF-8'
 
 dependencies {
-  compile 'com.google.api:gax:{{version.gax}}'
-  testCompile 'com.google.api:gax:{{version.gax}}:testlib'
-  compile 'com.google.api:gax-grpc:{{version.gax_grpc}}'
-  testCompile 'com.google.api:gax-grpc:{{version.gax_grpc}}:testlib'
-  testCompile 'io.grpc:grpc-netty-shaded:{{version.io_grpc}}'
-  testCompile '{{maven.junit_junit}}'
+  implementation 'com.google.api:gax:{{version.gax}}'
+  testImplementation 'com.google.api:gax:{{version.gax}}:testlib'
+  implementation 'com.google.api:gax-grpc:{{version.gax_grpc}}'
+  testImplementation 'com.google.api:gax-grpc:{{version.gax_grpc}}:testlib'
+  testImplementation 'io.grpc:grpc-netty-shaded:{{version.io_grpc}}'
+  testImplementation '{{maven.junit_junit}}'
   {{extra_deps}}
 }
 
@@ -56,6 +41,6 @@ clean {
 task allJars(type: Copy) {
   dependsOn test, jar
   into 'all-jars'
-  // Replace with `from configurations.testRuntime, jar` to include test dependencies
-  from configurations.runtime, jar
+  // Replace with `from configurations.testRuntimeOnly, jar` to include test dependencies
+  from configurations.runtimeOnly, jar
 }
