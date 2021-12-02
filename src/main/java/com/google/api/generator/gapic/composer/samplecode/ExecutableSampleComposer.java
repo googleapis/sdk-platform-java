@@ -24,27 +24,21 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ExecutableSampleComposer {
-  public static String createExecutableSample(ExecutableSample executableSample) {
-    return SampleCodeWriter.write(
-        composeExecutableSample(
-            executableSample.getSampleName(),
-            executableSample.getSampleVariableAssignments(),
-            executableSample.getSampleBody()));
-  }
-
   public static Optional<String> createExecutableSample(
       Optional<ExecutableSample> executableSample) {
     if (executableSample.isPresent()) {
-      ExecutableSample sample = executableSample.get();
-      String sampleMethodName = JavaStyle.toLowerCamelCase(sample.getSampleName());
-      return Optional.of(
-          SampleCodeWriter.write(
-              composeExecutableSample(
-                  sampleMethodName,
-                  sample.getSampleVariableAssignments(),
-                  sample.getSampleBody())));
+      return Optional.of(createExecutableSample(executableSample.get()));
     }
     return Optional.empty();
+  }
+
+  public static String createExecutableSample(ExecutableSample executableSample) {
+    String sampleMethodName = JavaStyle.toLowerCamelCase(executableSample.getSampleName());
+    return SampleCodeWriter.write(
+        composeExecutableSample(
+            sampleMethodName,
+            executableSample.getSampleVariableAssignments(),
+            executableSample.getSampleBody()));
   }
 
   static ClassDefinition composeExecutableSample(
