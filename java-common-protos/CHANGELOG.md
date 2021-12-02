@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.7.0](https://www.github.com/googleapis/java-common-protos/compare/v2.6.0...v2.7.0) (2021-12-01)
+
+
+### Features
+
+* add Location proto ([#270](https://www.github.com/googleapis/java-common-protos/issues/270)) ([2e2c8dd](https://www.github.com/googleapis/java-common-protos/commit/2e2c8dd798524df1d0b81f2e809d38c1dd5f744d))
+* Introduce Native Image testing build script changes ([#249](https://www.github.com/googleapis/java-common-protos/issues/249)) ([c2fa55a](https://www.github.com/googleapis/java-common-protos/commit/c2fa55a07150dc3e80bdc65948b610f851e87b90))
+* next release from main branch is 2.7.0 ([#246](https://www.github.com/googleapis/java-common-protos/issues/246)) ([6a113a3](https://www.github.com/googleapis/java-common-protos/commit/6a113a3afdfee35c4c3af0606bbecc81828c85f0))
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.19.1 ([#251](https://www.github.com/googleapis/java-common-protos/issues/251)) ([a5dd0ab](https://www.github.com/googleapis/java-common-protos/commit/a5dd0ab11989e6e3577f938f42f429203a545b92))
+* update dependency com.google.protobuf:protobuf-java to v3.19.1 ([#250](https://www.github.com/googleapis/java-common-protos/issues/250)) ([044a495](https://www.github.com/googleapis/java-common-protos/commit/044a4959423eca8481f723748dbf1919803ec55d))
+* update dependency io.grpc:grpc-bom to v1.42.0 ([#258](https://www.github.com/googleapis/java-common-protos/issues/258)) ([dfc00e1](https://www.github.com/googleapis/java-common-protos/commit/dfc00e1857c4428255f6e852eacc6cab338bbf1b))
+* update dependency io.grpc:grpc-bom to v1.42.1 ([#264](https://www.github.com/googleapis/java-common-protos/issues/264)) ([68fa087](https://www.github.com/googleapis/java-common-protos/commit/68fa087cafd92bbffd37eee6e3aacbf933886885))
+* update dependency io.grpc:grpc-protobuf to v1.42.0 ([#259](https://www.github.com/googleapis/java-common-protos/issues/259)) ([6df71fa](https://www.github.com/googleapis/java-common-protos/commit/6df71facf9f5bb6c36d70cf85571fdee6648299e))
+* update dependency io.grpc:grpc-protobuf to v1.42.1 ([#265](https://www.github.com/googleapis/java-common-protos/issues/265)) ([671a4cc](https://www.github.com/googleapis/java-common-protos/commit/671a4ccf8c56b1b12a5be7eba504758fa450be3b))
+* update dependency io.grpc:grpc-stub to v1.42.0 ([#260](https://www.github.com/googleapis/java-common-protos/issues/260)) ([b15e723](https://www.github.com/googleapis/java-common-protos/commit/b15e7237e1aac5fe4f925f9300b792d11f1eb41c))
+* update dependency io.grpc:grpc-stub to v1.42.1 ([#266](https://www.github.com/googleapis/java-common-protos/issues/266)) ([3b8a1ba](https://www.github.com/googleapis/java-common-protos/commit/3b8a1ba8444fde34ba59b6843463daab86833e35))
+
 ## [2.6.0](https://www.github.com/googleapis/java-common-protos/compare/v2.5.1...v2.6.0) (2021-10-14)
 
 
