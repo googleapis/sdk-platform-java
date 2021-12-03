@@ -1,16 +1,6 @@
-buildscript {
-  repositories {
-    mavenLocal()
-    maven {
-      url 'https://plugins.gradle.org/m2/'
-    }
-    mavenCentral()
-  }
-}
-
 subprojects {
-  apply plugin: 'java'
-  apply plugin: 'maven'
+  apply plugin: 'java-library'
+  apply plugin: 'maven-publish'
 
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
@@ -23,7 +13,11 @@ subprojects {
   }
 
   repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
+  }
+
+  publishing.publications {
+    library(MavenPublication).from components.java
   }
 }
