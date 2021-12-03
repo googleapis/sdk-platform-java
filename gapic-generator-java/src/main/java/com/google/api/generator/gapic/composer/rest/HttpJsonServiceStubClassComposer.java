@@ -474,7 +474,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private List<Expr> setOperationSnapshotFactoryExpr(
       Method protoMethod, Map<String, Message> messageTypes) {
 
-    // Generate input varibles for create()
+    // Generate input variables for create()
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(protoMethod.inputType()).setName("request").build());
