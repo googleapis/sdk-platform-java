@@ -166,8 +166,8 @@ def _java_gapic_build_configs_pkg_impl(ctx):
 
     substitutions = dict(ctx.attr.static_substitutions)
     substitutions["{{extra_deps}}"] = _construct_extra_deps({
-        "compile": ctx.attr.deps,
-        "testCompile": ctx.attr.test_deps,
+        "implementation": ctx.attr.deps,
+        "testImplementation": ctx.attr.test_deps,
     }, substitutions)
 
     for template in ctx.attr.templates.items():
