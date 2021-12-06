@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.3](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.2...v2.2.3) (2021-12-06)
+
+
+### Bug Fixes
+
+* **deps:** upgrade gax to 2.7.1, protobuf to 3.19.1, grpc to 1.42.1, and truth to 1.1.2, upgrade Bazel in GitHub Actions, and fix build error ([#877](https://www.github.com/googleapis/gapic-generator-java/issues/877)) ([1597707](https://www.github.com/googleapis/gapic-generator-java/commit/1597707e8d525f8abaa058bc0fdcbd3a825032c9))
+
 ### [2.2.2](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.1...v2.2.2) (2021-11-05)
 
 
