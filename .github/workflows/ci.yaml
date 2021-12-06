@@ -7,11 +7,6 @@ name: ci
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: gcr.io/gapic-images/googleapis-bazel:20210105
-    # Dockerfile for this image: https://github.com/googleapis/googleapis-discovery/blob/main/Dockerfile
-    # If you update its version, please also update it below in
-    # 'Cache Bazel files' - unfortunately it cannot accept variables at this
-    # time.
 
     strategy:
       matrix:
@@ -28,7 +23,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/bazel
-          key: ${{ runner.os }}-bazel-20210105-${{ secrets.CACHE_VERSION }}
+          key: ${{ runner.os }}-${{ secrets.CACHE_VERSION }}
 
       - name: Bazel Cache Not Found
         if: steps.cache-bazel.outputs.cache-hit != 'true'

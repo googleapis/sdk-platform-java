@@ -109,7 +109,7 @@ def gapic_generator_java_repositories():
     )
 
     # grpc-proto doesn't have releases, so we use hashes instead.
-    _io_grpc_proto_prefix = "0020624375a8ee4c7dd9b3e513e443b90bc28990"  # Aug. 20, 2020.
+    _io_grpc_proto_prefix = "8e3fec8612bc0708e857950dccadfd5063703e04"  # Nov. 6, 2021.
     _maybe(
         http_archive,
         name = "io_grpc_proto",
