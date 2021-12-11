@@ -31,8 +31,6 @@ for library in s.get_staging_dirs():
     os.remove("owl-bot-staging/v1/proto-google-common-protos/src/main/proto/google/cloud/audit/bigquery_audit_metadata.proto")
   if os.path.exists("owl-bot-staging/v1/proto-google-common-protos/src/main/proto/google/cloud/common_resources.proto"):
     os.remove("owl-bot-staging/v1/proto-google-common-protos/src/main/proto/google/cloud/common_resources.proto")
-  if os.path.exists("owl-bot-staging/v1/proto-google-common-protos/src/main/proto/google/api/routing.proto"):
-    os.remove("owl-bot-staging/v1/proto-google-common-protos/src/main/proto/google/api/routing.proto")
   s.move(library)
 
 s.remove_staging_dirs()
