@@ -307,7 +307,11 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
               .setExprReferenceExpr(paramsVarExpr)
               .setMethodName("put")
               .setArguments(
-                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
+                  ValueExpr.withValue(
+                      StringObjectValue.withValue(
+                          httpBindingFieldBinding.alias() != null
+                              ? httpBindingFieldBinding.alias()
+                              : httpBindingFieldBinding.name())),
                   valueOfExpr)
               .build();
       bodyExprs.add(paramsPutExpr);

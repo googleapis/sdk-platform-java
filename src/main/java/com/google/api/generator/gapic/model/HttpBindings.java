@@ -35,8 +35,10 @@ public abstract class HttpBindings {
 
     public abstract boolean isOptional();
 
-    public static HttpBinding create(String name, boolean isOptional) {
-      return new AutoValue_HttpBindings_HttpBinding(name, isOptional);
+    public abstract String alias();
+
+    public static HttpBinding create(String name, boolean isOptional, String alias) {
+      return new AutoValue_HttpBindings_HttpBinding(name, isOptional, alias);
     }
 
     // Do not forget to keep it in sync with equals() implementation.

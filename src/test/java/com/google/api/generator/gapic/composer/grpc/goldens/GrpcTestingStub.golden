@@ -221,7 +221,7 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
+                  params.put("rename", String.valueOf(request.getName()));
                   return params.build();
                 })
             .build();

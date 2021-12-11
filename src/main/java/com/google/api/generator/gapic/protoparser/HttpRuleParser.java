@@ -17,6 +17,9 @@ package com.google.api.generator.gapic.protoparser;
 import com.google.api.AnnotationsProto;
 import com.google.api.HttpRule;
 import com.google.api.HttpRule.PatternCase;
+import com.google.api.RoutingParameter;
+import com.google.api.RoutingProto;
+import com.google.api.RoutingRule;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
@@ -30,6 +33,7 @@ import com.google.common.collect.Sets;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -47,20 +51,28 @@ public class HttpRuleParser {
 
     HttpRule httpRule = methodOptions.getExtension(AnnotationsProto.http);
 
+    RoutingRule routingRule = null;
+    if (methodOptions.hasExtension(RoutingProto.routing)) {
+      routingRule = methodOptions.getExtension(RoutingProto.routing);
+    }
+
     // Body validation.
     if (!Strings.isNullOrEmpty(httpRule.getBody()) && !httpRule.getBody().equals(ASTERISK)) {
       checkHttpFieldIsValid(httpRule.getBody(), inputMessage, true);
     }
 
-    return parseHttpRuleHelper(httpRule, Optional.of(inputMessage), messageTypes);
+    return parseHttpRuleHelper(httpRule, routingRule, Optional.of(inputMessage), messageTypes);
   }
 
   public static HttpBindings parseHttpRule(HttpRule httpRule) {
-    return parseHttpRuleHelper(httpRule, Optional.empty(), Collections.emptyMap());
+    return parseHttpRuleHelper(httpRule, null, Optional.empty(), Collections.emptyMap());
   }
 
   private static HttpBindings parseHttpRuleHelper(
-      HttpRule httpRule, Optional<Message> inputMessageOpt, Map<String, Message> messageTypes) {
+      HttpRule httpRule,
+      RoutingRule routingRule,
+      Optional<Message> inputMessageOpt,
+      Map<String, Message> messageTypes) {
     // Get pattern.
     String pattern = getHttpVerbPattern(httpRule);
     ImmutableSet.Builder<String> bindingsBuilder = getPatternBindings(pattern);
@@ -94,31 +106,50 @@ public class HttpRuleParser {
           Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bodyBinidngsUnion);
     }
 
+    Map<String, String> fieldToAliasMap = null;
+    if (routingRule != null) {
+      fieldToAliasMap = new HashMap<>();
+      for (RoutingParameter routingParameter : routingRule.getRoutingParametersList()) {
+        Set<String> params = getPatternBindings(routingParameter.getPathTemplate()).build();
+        if (params.size() == 1) {
+          fieldToAliasMap.put(routingParameter.getField(), params.iterator().next());
+        }
+      }
+    }
+
     Message message = inputMessageOpt.orElse(null);
     return HttpBindings.builder()
         .setHttpVerb(HttpBindings.HttpVerb.valueOf(httpRule.getPatternCase().toString()))
         .setPattern(pattern)
         .setPathParameters(
-            validateAndConstructHttpBindings(pathParamNames, message, messageTypes, true))
+            validateAndConstructHttpBindings(
+                pathParamNames, fieldToAliasMap, message, messageTypes, true))
         .setQueryParameters(
-            validateAndConstructHttpBindings(queryParamNames, message, messageTypes, false))
+            validateAndConstructHttpBindings(queryParamNames, null, message, messageTypes, false))
         .setBodyParameters(
-            validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, false))
+            validateAndConstructHttpBindings(bodyParamNames, null, message, messageTypes, false))
         .setIsAsteriskBody(body.equals(ASTERISK))
         .build();
   }
 
   private static Set<HttpBinding> validateAndConstructHttpBindings(
       Set<String> paramNames,
+      Map<String, String> fieldToAliasMap,
       Message inputMessage,
       Map<String, Message> messageTypes,
       boolean isPath) {
+
+    if (fieldToAliasMap != null) {
+      paramNames = fieldToAliasMap.keySet();
+    }
+
     ImmutableSortedSet.Builder<HttpBinding> httpBindings = ImmutableSortedSet.naturalOrder();
     for (String paramName : paramNames) {
       // Handle foo.bar cases by descending into the subfields.
       String[] subFields = paramName.split("\\.");
       if (inputMessage == null) {
-        httpBindings.add(HttpBinding.create(paramName, false));
+        httpBindings.add(
+            HttpBinding.create(paramName, false, getAlias(paramName, fieldToAliasMap)));
         continue;
       }
       Message nestedMessage = inputMessage;
@@ -138,11 +169,21 @@ public class HttpRuleParser {
             checkHttpFieldIsValid(subFieldName, nestedMessage, !isPath);
           }
           Field field = nestedMessage.fieldMap().get(subFieldName);
-          httpBindings.add(HttpBinding.create(paramName, field.isProto3Optional()));
+          httpBindings.add(
+              HttpBinding.create(
+                  paramName, field.isProto3Optional(), getAlias(paramName, fieldToAliasMap)));
         }
       }
     }
     return httpBindings.build();
+  }
+
+  private static String getAlias(String paramName, Map<String, String> fieldToAliasMap) {
+    if (fieldToAliasMap != null && fieldToAliasMap.containsKey(paramName)) {
+      return fieldToAliasMap.get(paramName);
+    } else {
+      return paramName;
+    }
   }
 
   private static String getHttpVerbPattern(HttpRule httpRule) {

@@ -91,4 +91,23 @@ public class HttpRuleParserTest {
     assertThrows(
         IllegalStateException.class, () -> HttpRuleParser.parse(rpcMethod, inputMessage, messages));
   }
+
+  @Test
+  public void parseRoutingAnnotation_alias() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals("Testing", testingService.getName());
+
+    Map<String, Message> messages = Parser.parseMessages(testingFileDescriptor);
+
+    // GetTest method.
+    MethodDescriptor rpcMethod = testingService.getMethods().get(5);
+    Message inputMessage = messages.get("com.google.showcase.v1beta1.GetTestRequest");
+    HttpBindings httpBindings = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
+    assertThat(
+            httpBindings.pathParameters().stream()
+                .map(binding -> binding.name() + " -> " + binding.alias())
+                .collect(Collectors.toList()))
+        .containsExactly("name -> rename");
+  }
 }
