@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import com.google.api.client.util.Preconditions;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -23,6 +22,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.base.Preconditions;
 
 public class SampleUtil {
   public static String composeSampleMethodName(String clientName, String methodName) {
