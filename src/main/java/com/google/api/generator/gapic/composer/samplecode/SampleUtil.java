@@ -14,14 +14,21 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import com.google.api.generator.engine.ast.*;
+import com.google.api.client.util.Preconditions;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.utils.JavaStyle;
 
 public class SampleUtil {
   public static String composeSampleMethodName(String clientName, String methodName) {
-    if (clientName.equals("") || methodName.equals("")) {
-      throw new IllegalArgumentException("clientName and methodName must exist");
-    }
+    Preconditions.checkArgument(
+        !clientName.isEmpty() && !methodName.isEmpty(),
+        "clientName and methodName must not be empty");
     return JavaStyle.toLowerCamelCase(clientName + JavaStyle.toUpperCamelCase(methodName));
   }
 
@@ -33,7 +40,7 @@ public class SampleUtil {
     return composeSystemOutPrint(variableExpr.toBuilder().setIsDecl(false).build());
   }
 
-  static MethodInvocationExpr composeSystemOutPrint(Expr content) {
+  private static MethodInvocationExpr composeSystemOutPrint(Expr content) {
     VaporReference out =
         VaporReference.builder()
             .setEnclosingClassNames("System")

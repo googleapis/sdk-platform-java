@@ -14,7 +14,17 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import com.google.api.generator.engine.ast.*;
+import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
@@ -41,7 +51,7 @@ public class ExecutableSampleComposer {
             executableSample.getSampleBody()));
   }
 
-  static ClassDefinition composeExecutableSample(
+  private static ClassDefinition composeExecutableSample(
       String sampleMethodName,
       List<AssignmentExpr> sampleVariableAssignments,
       List<Statement> sampleBody) {
@@ -57,14 +67,14 @@ public class ExecutableSampleComposer {
     return composeSampleClass(sampleClassName, mainMethod, sampleMethod);
   }
 
-  static List<VariableExpr> composeSampleMethodArgs(
+  private static List<VariableExpr> composeSampleMethodArgs(
       List<AssignmentExpr> sampleVariableAssignments) {
     return sampleVariableAssignments.stream()
         .map(v -> v.variableExpr().toBuilder().setIsDecl(true).build())
         .collect(Collectors.toList());
   }
 
-  static Statement composeInvokeMethodStatement(
+  private static Statement composeInvokeMethodStatement(
       String sampleMethodName, List<VariableExpr> sampleMethodArgs) {
     List<Expr> invokeArgs =
         sampleMethodArgs.stream()
@@ -77,7 +87,7 @@ public class ExecutableSampleComposer {
             .build());
   }
 
-  static List<Statement> composeMainBody(
+  private static List<Statement> composeMainBody(
       List<AssignmentExpr> sampleVariableAssignments, Statement invokeMethod) {
     List<ExprStatement> setVariables =
         sampleVariableAssignments.stream()
@@ -88,7 +98,7 @@ public class ExecutableSampleComposer {
     return body;
   }
 
-  static ClassDefinition composeSampleClass(
+  private static ClassDefinition composeSampleClass(
       String sampleClassName, MethodDefinition mainMethod, MethodDefinition sampleMethod) {
     return ClassDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
@@ -98,7 +108,7 @@ public class ExecutableSampleComposer {
         .build();
   }
 
-  static MethodDefinition composeMainMethod(List<Statement> mainBody) {
+  private static MethodDefinition composeMainMethod(List<Statement> mainBody) {
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
@@ -115,7 +125,7 @@ public class ExecutableSampleComposer {
         .build();
   }
 
-  static MethodDefinition composeSampleMethod(
+  private static MethodDefinition composeSampleMethod(
       String sampleMethodName,
       List<VariableExpr> sampleMethodArgs,
       List<Statement> sampleMethodBody) {

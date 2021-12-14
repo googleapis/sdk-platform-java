@@ -16,7 +16,14 @@ package com.google.api.generator.gapic.composer.samplecode;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.api.generator.engine.ast.*;
+import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
