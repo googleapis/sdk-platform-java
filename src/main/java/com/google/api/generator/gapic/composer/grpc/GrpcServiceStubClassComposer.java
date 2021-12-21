@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
@@ -23,6 +24,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -35,6 +37,7 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.RoutingHeaders.RoutingHeader;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -209,10 +212,19 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .build();
 
     if (method.hasHttpBindings()) {
+      NewObjectExpr newExtractorExpr =
+          NewObjectExpr.builder()
+              .setType(
+                  TypeNode.withReference(
+                      ConcreteReference.withClazz(ExplicitRoutingHeaderExtractor.class)))
+              .setArguments()
+              .build();
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
               .setMethodName("setParamsExtractor")
+              // set custom extractor
+              // .setArguments(newExtractorExpr)
               .setArguments(createRequestParamsExtractorClassInstance(method))
               .build();
     }
@@ -302,12 +314,43 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
               .setArguments(requestBuilderExpr)
               .build();
 
+      // TODO: completely remove this part if routing headers is not null?
+      // Are these params used for anything else other than implicit dynamic routing?
       Expr paramsPutExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(paramsVarExpr)
               .setMethodName("put")
               .setArguments(
                   ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
+                  valueOfExpr)
+              .build();
+      bodyExprs.add(paramsPutExpr);
+    }
+
+    for (RoutingHeader routingHeader : method.routingHeaders().routingHeadersSet()) {
+      MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
+          MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+      // TODO: support nested field
+      String currFieldName = routingHeader.field();
+      String bindingFieldMethodName =
+          String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+      requestFieldGetterExprBuilder =
+          requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
+
+      MethodInvocationExpr requestBuilderExpr = requestFieldGetterExprBuilder.build();
+      Expr valueOfExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(TypeNode.STRING)
+              .setMethodName("valueOf")
+              .setArguments(requestBuilderExpr)
+              .build();
+
+      Expr paramsPutExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(paramsVarExpr)
+              .setMethodName("put")
+              .setArguments(
+                  ValueExpr.withValue(StringObjectValue.withValue(routingHeader.name())),
                   valueOfExpr)
               .build();
       bodyExprs.add(paramsPutExpr);
@@ -334,5 +377,14 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .setReturnExpr(returnExpr)
         .build();
+  }
+
+  class ExplicitRoutingHeaderExtractor implements RequestParamsExtractor {
+
+    @Override
+    public Map<String, String> extract(Object request) {
+      // no way to extract the field value since request type is dynamic
+      return null;
+    }
   }
 }

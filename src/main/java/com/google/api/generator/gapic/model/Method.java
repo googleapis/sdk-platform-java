@@ -62,6 +62,9 @@ public abstract class Method {
   @Nullable
   public abstract HttpBindings httpBindings();
 
+  @Nullable
+  public abstract RoutingHeaders routingHeaders();
+
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
@@ -139,6 +142,8 @@ public abstract class Method {
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
+
+    public abstract Builder setRoutingHeaders(RoutingHeaders routingHeaders);
 
     public abstract Method build();
   }

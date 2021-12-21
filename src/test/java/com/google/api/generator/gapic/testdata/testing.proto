@@ -15,6 +15,7 @@
 syntax = "proto3";
 
 import "google/api/annotations.proto";
+import "google/api/routing.proto";
 import "google/api/client.proto";
 import "google/api/resource.proto";
 import "google/protobuf/empty.proto";
@@ -77,6 +78,12 @@ service Testing {
   rpc GetTest(GetTestRequest) returns (Test) {
     option (google.api.http) = {
       get: "/v1beta1/{name=tests/*}"
+    };
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "name"
+        path_template: "/v1beta1/{rename=tests/*}"
+        }
     };
     option (google.api.method_signature) = "name";
   }
