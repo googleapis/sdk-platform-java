@@ -6,6 +6,7 @@ TESTS = [
     "GapicServiceConfigTest",
     "MethodArgumentTest",
     "MethodTest",
+    "MessageTest",
 ]
 
 filegroup(

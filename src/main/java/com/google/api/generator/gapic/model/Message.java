@@ -18,6 +18,8 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
@@ -32,6 +34,13 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Message {
+
+  static final String EMPTY_FIELD_ERROR_MESSAGE = "Null or empty field name found for message %s";
+  static final String FIELD_DOES_NOT_EXIST_ERROR_MESSAGE =
+      "Expected message %s to contain field %s but none found";
+  static final String MESSAGE_NOT_FOUND_ERROR_MESSAGE =
+      "No containing message found for field %s with type %s";
+
   public abstract String name();
 
   // The fully-qualified proto name, which differs from the Java fully-qualified name.
@@ -78,6 +87,32 @@ public abstract class Message {
 
   public boolean hasResource() {
     return resource() != null;
+  }
+
+  public void validateField(String fieldName, Map<String, Message> messageTypes) {
+    String[] subFields = fieldName.split("\\.");
+    Message nestedMessage = this;
+    for (int i = 0; i < subFields.length; i++) {
+      String subFieldName = subFields[i];
+      if (i < subFields.length - 1) {
+        Field field = nestedMessage.fieldMap().get(subFieldName);
+        nestedMessage = messageTypes.get(field.type().reference().fullName());
+        Preconditions.checkNotNull(
+            nestedMessage,
+            String.format(
+                MESSAGE_NOT_FOUND_ERROR_MESSAGE,
+                field.name(),
+                field.type().reference().simpleName()));
+      } else {
+        Preconditions.checkState(
+            !Strings.isNullOrEmpty(subFieldName),
+            String.format(EMPTY_FIELD_ERROR_MESSAGE, nestedMessage.name()));
+        Preconditions.checkState(
+            nestedMessage.fieldMap().containsKey(subFieldName),
+            String.format(FIELD_DOES_NOT_EXIST_ERROR_MESSAGE, nestedMessage.name(), subFieldName));
+        // TODO: Add type check for String only?
+      }
+    }
   }
 
   /** Returns the first list repeated field in a message, unwrapped from its list type. */

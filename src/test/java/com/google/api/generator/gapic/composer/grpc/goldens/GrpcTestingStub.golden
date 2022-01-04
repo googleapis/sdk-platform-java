@@ -10,6 +10,7 @@ import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.protobuf.Empty;
@@ -187,7 +188,6 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
                   return params.build();
                 })
             .build();
@@ -201,7 +201,6 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
                   return params.build();
                 })
             .build();
@@ -211,7 +210,6 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
                   return params.build();
                 })
             .build();
@@ -221,8 +219,12 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  params.put("rename", String.valueOf(request.getName()));
+                  addParams(params, request.getName(), "rename", "/v1beta1/{rename=tests/*}");
+                  addParams(
+                      params,
+                      request.getTableName(),
+                      "routing_id",
+                      "/v1beta1/{routing_id=tests/*}");
                   return params.build();
                 })
             .build();
@@ -232,7 +234,6 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
                   return params.build();
                 })
             .build();
@@ -242,7 +243,6 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
                   return params.build();
                 })
             .build();
@@ -252,12 +252,6 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("answer", String.valueOf(request.getAnswer()));
-                  params.put("foo", String.valueOf(request.getFoo()));
-                  params.put("name", String.valueOf(request.getName()));
-                  params.put(
-                      "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
-                  params.put("type", String.valueOf(request.getType()));
                   return params.build();
                 })
             .build();
@@ -393,5 +387,17 @@ public class GrpcTestingStub extends TestingStub {
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
     return backgroundResources.awaitTermination(duration, unit);
+  }
+
+  protected void addParams(
+      ImmutableMap.Builder<String, String> params,
+      String fieldValue,
+      String headerKey,
+      String pattern) {
+    PathTemplate pathTemplate = PathTemplate.create(pattern);
+    Map<String, String> matchedValues = pathTemplate.match(fieldValue);
+    if (matchedValues != null) {
+      params.put(headerKey, matchedValues.get(headerKey));
+    }
   }
 }

@@ -51,6 +51,7 @@ proto_library(
         "identity.proto",
         "testing.proto",
         "messaging.proto",
+        "routing_rule_parser_testing.proto",
     ],
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",

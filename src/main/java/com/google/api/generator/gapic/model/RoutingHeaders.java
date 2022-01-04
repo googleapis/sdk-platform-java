@@ -15,16 +15,15 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 @AutoValue
 public abstract class RoutingHeaders {
 
-  public abstract List<RoutingHeader> routingHeadersSet();
+  public abstract ImmutableList<RoutingHeader> routingHeadersList();
 
-  // TODO: change to a builder and expose only add method
-  public static RoutingHeaders create(List<RoutingHeader> routingHeaderList) {
-    return new AutoValue_RoutingHeaders(routingHeaderList);
+  public static Builder builder() {
+    return new AutoValue_RoutingHeaders.Builder().setRoutingHeadersList(ImmutableList.of());
   }
 
   @AutoValue
@@ -39,5 +38,19 @@ public abstract class RoutingHeaders {
     public static RoutingHeaders.RoutingHeader create(String field, String name, String pattern) {
       return new AutoValue_RoutingHeaders_RoutingHeader(field, name, pattern);
     }
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    abstract ImmutableList.Builder<RoutingHeader> routingHeadersListBuilder();
+
+    public final Builder addRoutingHeader(RoutingHeader routingHeader) {
+      routingHeadersListBuilder().add(routingHeader);
+      return this;
+    }
+
+    public abstract Builder setRoutingHeadersList(ImmutableList<RoutingHeader> routingHeadersList);
+
+    public abstract RoutingHeaders build();
   }
 }
