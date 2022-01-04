@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.4](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.3...v2.2.4) (2022-01-04)
+
+
+### Bug Fixes
+
+* add missing dependencies in Gradle for "self-service" library generation ([#884](https://www.github.com/googleapis/gapic-generator-java/issues/884)) ([3adac5e](https://www.github.com/googleapis/gapic-generator-java/commit/3adac5e2898e40a1e5395ab65db037c26a4f7e1b))
+
 ### [2.2.3](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.2...v2.2.3) (2021-12-06)
 
 
