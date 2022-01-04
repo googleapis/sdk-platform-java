@@ -94,6 +94,16 @@ service RoutingRuleParserTesting {
     };
   }
 
+  // Test case for field validation. We already have extensive unit tests for field validation, so only testing one simple case.
+  rpc FieldDoesNotExistTest(FieldDoesNotExistTestRequest) returns (google.protobuf.Empty) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "does_not_exist"
+        path_template: "/v1beta1/{rename=tests/*}"
+      }
+    };
+  }
+
 }
 
 message NoRoutingRuleTestRequest {
@@ -122,6 +132,10 @@ message MultipleRoutingParamsHappyPathTestReqest {
 
 message NestedFieldsHappyPathTestRequest {
   Account account = 1;
+}
+
+message FieldDoesNotExistTestRequest {
+  string name = 1;
 }
 
 message Account {

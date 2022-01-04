@@ -73,10 +73,10 @@ public class MessageTest {
     Message message =
         TEST_MESSAGE_BUILDER.setFieldMap(ImmutableMap.of(subFieldName, subField)).build();
     String fieldName = subFieldName + "." + "size";
-    NullPointerException illegalStateException =
+    NullPointerException nullPointerException =
         assertThrows(
             NullPointerException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
-    assertThat(illegalStateException.getMessage())
+    assertThat(nullPointerException.getMessage())
         .isEqualTo(String.format(MESSAGE_NOT_FOUND_ERROR_MESSAGE, subFieldName, fieldTypeName));
   }
 

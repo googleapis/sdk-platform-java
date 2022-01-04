@@ -40,30 +40,22 @@ public class RoutingRuleParserTest {
 
   @Test
   public void shouldReturnEmptyRoutingHeadersIfMethodHasNoRoutingRules() {
-    MethodDescriptor rpcMethod = TESTING_SERVICE.getMethods().get(0);
-    Message inputMessage = MESSAGES.get("com." + rpcMethod.getInputType().getFullName());
-    RoutingHeaders routingHeaders = RoutingRuleParser.parse(rpcMethod, inputMessage, MESSAGES);
-    assertThat(routingHeaders.routingHeadersList()).isEmpty();
+    RoutingHeaders actual = getRoutingHeaders(0);
+    assertThat(actual.routingHeadersList()).isEmpty();
   }
 
   @Test
   public void shouldSetPathTemplateToWildcardIfNotDefined() {
-    MethodDescriptor rpcMethod = TESTING_SERVICE.getMethods().get(1);
-    Message inputMessage = MESSAGES.get("com." + rpcMethod.getInputType().getFullName());
-    RoutingHeaders routingHeaders = RoutingRuleParser.parse(rpcMethod, inputMessage, MESSAGES);
-    RoutingHeader routingHeader =
+    RoutingHeaders actual = getRoutingHeaders(1);
+    RoutingHeader expected =
         RoutingHeader.create("name", "name", String.format(WILDCARD_PATTERN, "name"));
-    assertThat(routingHeaders.routingHeadersList()).containsExactly(routingHeader);
+    assertThat(actual.routingHeadersList()).containsExactly(expected);
   }
 
   @Test
   public void shouldThrowExceptionIfPathTemplateHasZeroNamedSegment() {
-    MethodDescriptor rpcMethod = TESTING_SERVICE.getMethods().get(2);
-    Message inputMessage = MESSAGES.get("com." + rpcMethod.getInputType().getFullName());
     IllegalArgumentException illegalArgumentException =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> RoutingRuleParser.parse(rpcMethod, inputMessage, MESSAGES));
+        assertThrows(IllegalArgumentException.class, () -> getRoutingHeaders(2));
     assertThat(illegalArgumentException.getMessage())
         .isEqualTo(
             String.format(
@@ -72,16 +64,48 @@ public class RoutingRuleParserTest {
 
   @Test
   public void shouldThrowExceptionIfPathTemplateHasMoreThanOneNamedSegment() {
-    MethodDescriptor rpcMethod = TESTING_SERVICE.getMethods().get(3);
-    Message inputMessage = MESSAGES.get("com." + rpcMethod.getInputType().getFullName());
     IllegalArgumentException illegalArgumentException =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> RoutingRuleParser.parse(rpcMethod, inputMessage, MESSAGES));
+        assertThrows(IllegalArgumentException.class, () -> getRoutingHeaders(3));
     assertThat(illegalArgumentException.getMessage())
         .isEqualTo(
             String.format(
                 PATH_TEMPLATE_WRONG_NUMBER_OF_NAMED_SEGMENT_ERROR_MESSAGE,
                 "/v1beta1/{name=tests/*}/{second_name=*}"));
+  }
+
+  @Test
+  public void shouldParseRoutingRulesWithOneParameter() {
+    RoutingHeaders actual = getRoutingHeaders(4);
+    RoutingHeader expected = RoutingHeader.create("name", "rename", "/v1beta1/{rename=tests/*}");
+    assertThat(actual.routingHeadersList()).containsExactly(expected);
+  }
+
+  @Test
+  public void shouldParseRoutingRulesWithMultipleParameter() {
+    RoutingHeaders actual = getRoutingHeaders(5);
+    RoutingHeader expectedHeader1 =
+        RoutingHeader.create("name", "rename", "/v1beta1/{rename=tests/*}");
+    RoutingHeader expectedHeader2 =
+        RoutingHeader.create("routing_id", "id", "/v1beta1/{id=projects/*}/tables/*");
+    assertThat(actual.routingHeadersList()).containsExactly(expectedHeader1, expectedHeader2);
+  }
+
+  @Test
+  public void shouldParseRoutingRulesWithNestedFields() {
+    RoutingHeaders actual = getRoutingHeaders(6);
+    RoutingHeader expectedHeader1 =
+        RoutingHeader.create("account.name", "rename", "/v1beta1/{rename=tests/*}");
+    assertThat(actual.routingHeadersList()).containsExactly(expectedHeader1);
+  }
+
+  @Test
+  public void shouldThrowExceptionIfFieldValidationFailed() {
+    assertThrows(IllegalStateException.class, () -> getRoutingHeaders(7));
+  }
+
+  private RoutingHeaders getRoutingHeaders(int testingIndex) {
+    MethodDescriptor rpcMethod = TESTING_SERVICE.getMethods().get(testingIndex);
+    Message inputMessage = MESSAGES.get("com." + rpcMethod.getInputType().getFullName());
+    return RoutingRuleParser.parse(rpcMethod, inputMessage, MESSAGES);
   }
 }
