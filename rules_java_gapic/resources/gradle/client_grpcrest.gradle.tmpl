@@ -12,6 +12,8 @@ dependencies {
   testImplementation 'com.google.api:gax-grpc:{{version.gax_grpc}}:testlib'
   implementation 'com.google.api:gax-httpjson:{{version.gax_httpjson}}'
   testImplementation 'com.google.api:gax-httpjson:{{version.gax_httpjson}}:testlib'
+  implementation 'io.grpc:grpc-protobuf:{{version.io_grpc}}'
+  testImplementation 'io.grpc:grpc-stub:{{version.io_grpc}}'
   testImplementation 'io.grpc:grpc-netty-shaded:{{version.io_grpc}}'
   testImplementation '{{maven.junit_junit}}'
   {{extra_deps}}
