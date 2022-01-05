@@ -1,5 +1,22 @@
 # Changelog
 
+### [2.7.1](https://www.github.com/googleapis/java-common-protos/compare/v2.7.0...v2.7.1) (2022-01-05)
+
+
+### Bug Fixes
+
+* **java:** add -ntp flag to native image testing command ([#1299](https://www.github.com/googleapis/java-common-protos/issues/1299)) ([#272](https://www.github.com/googleapis/java-common-protos/issues/272)) ([5683ab6](https://www.github.com/googleapis/java-common-protos/commit/5683ab6b0e59ec252fe1d812ddcf7d682ce55bff))
+* **java:** run Maven in plain console-friendly mode ([#1301](https://www.github.com/googleapis/java-common-protos/issues/1301)) ([#283](https://www.github.com/googleapis/java-common-protos/issues/283)) ([82343cc](https://www.github.com/googleapis/java-common-protos/commit/82343cc4aec4ee8b6ddee0b7febfc1e1aac94b4b))
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.19.2 ([#285](https://www.github.com/googleapis/java-common-protos/issues/285)) ([44bb642](https://www.github.com/googleapis/java-common-protos/commit/44bb6421b74ae78b00f890ec319269a891079c60))
+* update dependency com.google.protobuf:protobuf-java to v3.19.2 ([#286](https://www.github.com/googleapis/java-common-protos/issues/286)) ([b94f86e](https://www.github.com/googleapis/java-common-protos/commit/b94f86e75260fb00c932fc416fff9c2db6bdb4d3))
+* update dependency io.grpc:grpc-bom to v1.43.1 ([#276](https://www.github.com/googleapis/java-common-protos/issues/276)) ([381ec12](https://www.github.com/googleapis/java-common-protos/commit/381ec12454d2179cd46bf290727dce4aace293d6))
+* update dependency io.grpc:grpc-protobuf to v1.43.1 ([#277](https://www.github.com/googleapis/java-common-protos/issues/277)) ([c757b6e](https://www.github.com/googleapis/java-common-protos/commit/c757b6e38ff90e5a669155fcf4256ea2a0f88b00))
+* update dependency io.grpc:grpc-stub to v1.43.1 ([#278](https://www.github.com/googleapis/java-common-protos/issues/278)) ([702448d](https://www.github.com/googleapis/java-common-protos/commit/702448d6c9c5a592ebc96deb240d56a516c45e85))
+
 ## [2.7.0](https://www.github.com/googleapis/java-common-protos/compare/v2.6.0...v2.7.0) (2021-12-01)
 
 
