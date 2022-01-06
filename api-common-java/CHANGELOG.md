@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.1.2](https://www.github.com/googleapis/api-common-java/compare/v2.1.1...v2.1.2) (2022-01-06)
+
+
+### Dependencies
+
+* update dependency com.google.auto.value:auto-value to v1.9 ([#323](https://www.github.com/googleapis/api-common-java/issues/323)) ([d8d7084](https://www.github.com/googleapis/api-common-java/commit/d8d708468f134ad0b39bfd8bccf8d7e08a19e7e1))
+* update dependency com.google.auto.value:auto-value-annotations to v1.9 ([#324](https://www.github.com/googleapis/api-common-java/issues/324)) ([0c920a4](https://www.github.com/googleapis/api-common-java/commit/0c920a4c5e68cc7b0a05297bf01114d4a231c591))
+
 ### [2.1.1](https://www.github.com/googleapis/api-common-java/compare/v2.1.0...v2.1.1) (2021-11-10)
 
 
