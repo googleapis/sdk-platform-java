@@ -46,6 +46,23 @@ jobs:
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
 
+      - name: Gradle Build Tests on Generated Libraries
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          tar zxvf bazel-bin/test/integration/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean check publishToMavenLocal
+          popd
+
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazel --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean check publishToMavenLocal
+          popd
+
       - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
         with:
