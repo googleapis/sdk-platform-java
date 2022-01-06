@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.rpc.internal.RoutingHeaderHelper;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
@@ -35,7 +36,6 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
-import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -43,7 +43,6 @@ import com.google.api.generator.gapic.model.RoutingHeaders.RoutingHeader;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.pathtemplate.PathTemplate;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
@@ -202,7 +201,10 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
 
   @Override
   protected Expr createTransportSettingsInitExpr(
-      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
+      Method method,
+      VariableExpr transportSettingsVarExpr,
+      VariableExpr methodDescriptorVarExpr,
+      List<Statement> classStatements) {
     MethodInvocationExpr callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(getTransportContext().transportCallSettingsType())
@@ -216,12 +218,12 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .setArguments(Arrays.asList(methodDescriptorVarExpr))
             .build();
 
-    if (method.hasHttpBindings()) {
+    if (method.hasHttpBindings() || method.hasRoutingHeaders()) {
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
               .setMethodName("setParamsExtractor")
-              .setArguments(createRequestParamsExtractorClassInstance(method))
+              .setArguments(createRequestParamsExtractorClassInstance(method, classStatements))
               .build();
     }
 
@@ -237,27 +239,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         .build();
   }
 
-  @Override
-  protected List<MethodDefinition> createClassMethods(
-      GapicContext context,
-      Service service,
-      TypeStore typeStore,
-      Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, VariableExpr> callableClassMemberVarExprs,
-      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
-    List<MethodDefinition> classMethods =
-        super.createClassMethods(
-            context,
-            service,
-            typeStore,
-            classMemberVarExprs,
-            callableClassMemberVarExprs,
-            protoMethodNameToDescriptorVarExprs);
-    // TODO: need a way to check do we need to create this method or not, or make it an inner method
-    classMethods.add(createAddParamsMethod());
-    return classMethods;
-  }
-
+  // TODO: remove this method once we finalized the approach, keep it as a reference for now.
   private MethodDefinition createAddParamsMethod() {
     TypeNode paramsVarType =
         TypeNode.withReference(
@@ -408,9 +390,8 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     return String.format("google.iam.v1.IAMPolicy/%s", protoMethod.name());
   }
 
-  private LambdaExpr createRequestParamsExtractorClassInstance(Method method) {
-    Preconditions.checkState(
-        method.hasHttpBindings(), String.format("Method %s has no HTTP binding", method.name()));
+  private LambdaExpr createRequestParamsExtractorClassInstance(
+      Method method, List<Statement> classStatements) {
 
     TypeNode paramsVarType =
         TypeNode.withReference(
@@ -439,52 +420,10 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
 
-    for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
-      // Handle foo.bar cases by descending into the subfields.
-      MethodInvocationExpr requestBuilderExpr =
-          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
+    addRequestParamsForHttpBindings(method, paramsVarExpr, bodyExprs, requestVarExpr);
 
-      Expr valueOfExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(TypeNode.STRING)
-              .setMethodName("valueOf")
-              .setArguments(requestBuilderExpr)
-              .build();
-
-      // Comment out for now. TODO: completely remove this part if routing headers is not null?
-      // Are these params used for anything else other than implicit dynamic routing?
-      // Expr paramsPutExpr =
-      //     MethodInvocationExpr.builder()
-      //         .setExprReferenceExpr(paramsVarExpr)
-      //         .setMethodName("put")
-      //         .setArguments(
-      //
-      // ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
-      //             valueOfExpr)
-      //         .build();
-      // bodyExprs.add(paramsPutExpr);
-    }
-
-    for (RoutingHeader routingHeader : method.routingHeaders().routingHeadersList()) {
-      MethodInvocationExpr requestFieldGetterExpr =
-          createRequestFieldGetterExpr(requestVarExpr, routingHeader.field());
-
-      Expr routingHeaderKeyExpr =
-          ValueExpr.withValue(StringObjectValue.withValue(routingHeader.name()));
-      Expr routingHeaderPatternExpr =
-          ValueExpr.withValue(StringObjectValue.withValue(routingHeader.pattern()));
-      MethodInvocationExpr addParamsMethodExpr =
-          MethodInvocationExpr.builder()
-              .setMethodName("addParams")
-              .setArguments(
-                  paramsVarExpr,
-                  requestFieldGetterExpr,
-                  routingHeaderKeyExpr,
-                  routingHeaderPatternExpr)
-              .build();
-
-      bodyExprs.add(addParamsMethodExpr);
-    }
+    addRequestParamsForRoutingHeders(
+        method, classStatements, paramsVarExpr, bodyExprs, requestVarExpr);
 
     TypeNode returnType =
         TypeNode.withReference(
@@ -509,11 +448,107 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         .build();
   }
 
+  private void addRequestParamsForRoutingHeders(
+      Method method,
+      List<Statement> classStatements,
+      VariableExpr paramsVarExpr,
+      List<Expr> bodyExprs,
+      VariableExpr requestVarExpr) {
+    ImmutableList<RoutingHeader> routingHeaders = method.routingHeaders().routingHeadersList();
+    for (int i = 0; i < routingHeaders.size(); i++) {
+      RoutingHeader routingHeader = routingHeaders.get(i);
+      MethodInvocationExpr requestFieldGetterExpr =
+          createRequestFieldGetterExpr(requestVarExpr, routingHeader.field());
+      Expr routingHeaderKeyExpr =
+          ValueExpr.withValue(StringObjectValue.withValue(routingHeader.name()));
+      // TODO: Create proper snake style upper case name
+      String pathTemplateName =
+          String.format("PATH_TEMPLATE_%s_%s", method.name().toUpperCase(), i);
+      TypeNode pathTemplateType =
+          TypeNode.withReference(ConcreteReference.withClazz(PathTemplate.class));
+      Variable pathTemplateVar =
+          Variable.builder().setType(pathTemplateType).setName(pathTemplateName).build();
+      Expr routingHeaderPatternExpr = VariableExpr.withVariable(pathTemplateVar);
+      VariableExpr pathTemplateVarExpr =
+          VariableExpr.builder()
+              .setVariable(pathTemplateVar)
+              .setIsDecl(true)
+              .setIsStatic(true)
+              .setIsFinal(true)
+              .setScope(ScopeNode.PRIVATE)
+              .build();
+      ValueExpr valueExpr =
+          ValueExpr.withValue(StringObjectValue.withValue(routingHeader.pattern()));
+      Expr pathTemplateExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(pathTemplateVarExpr)
+              .setValueExpr(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(pathTemplateType)
+                      .setMethodName("create")
+                      .setArguments(valueExpr)
+                      .setReturnType(pathTemplateType)
+                      .build())
+              .build();
+      Statement pathTemplateClassVar = ExprStatement.withExpr(pathTemplateExpr);
+      classStatements.add(pathTemplateClassVar);
+      MethodInvocationExpr addParamsMethodExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(
+                  TypeNode.withReference(ConcreteReference.withClazz(RoutingHeaderHelper.class)))
+              .setMethodName("addParams")
+              .setArguments(
+                  paramsVarExpr,
+                  requestFieldGetterExpr,
+                  routingHeaderKeyExpr,
+                  routingHeaderPatternExpr)
+              .build();
+
+      bodyExprs.add(addParamsMethodExpr);
+    }
+  }
+
+  private void addRequestParamsForHttpBindings(
+      Method method,
+      VariableExpr paramsVarExpr,
+      List<Expr> bodyExprs,
+      VariableExpr requestVarExpr) {
+    // TODO: Are these params used for anything else other than implicit dynamic routing?
+    // Can we skip this method if routing headers are configured?
+    if (!method.routingHeaders().routingHeadersList().isEmpty()) {
+      return;
+    }
+    for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
+      // Handle foo.bar cases by descending into the subfields.
+      MethodInvocationExpr requestBuilderExpr =
+          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
+
+      Expr valueOfExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(TypeNode.STRING)
+              .setMethodName("valueOf")
+              .setArguments(requestBuilderExpr)
+              .build();
+
+      Expr paramsPutExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(paramsVarExpr)
+              .setMethodName("put")
+              .setArguments(
+                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
+                  valueOfExpr)
+              .build();
+      bodyExprs.add(paramsPutExpr);
+    }
+  }
+
   private MethodInvocationExpr createRequestFieldGetterExpr(
       VariableExpr requestVarExpr, String fieldName) {
     MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
         MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
     String[] descendantFields = fieldName.split("\\.");
+    // Handle foo.bar cases by descending into the subfields.
+    // e.g. foo.bar -> request.getFoo().getBar()
     for (int i = 0; i < descendantFields.length; i++) {
       String currFieldName = descendantFields[i];
       String bindingFieldMethodName =

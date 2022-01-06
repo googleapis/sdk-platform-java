@@ -197,7 +197,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
 
   @Override
   protected Expr createTransportSettingsInitExpr(
-      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
+      Method method,
+      VariableExpr transportSettingsVarExpr,
+      VariableExpr methodDescriptorVarExpr,
+      List<Statement> classStatements) {
     MethodInvocationExpr callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(

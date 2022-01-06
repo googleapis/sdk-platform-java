@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,11 +19,10 @@ import "google/protobuf/empty.proto";
 
 package google.showcase.v1beta1;
 
-option go_package = "github.com/googleapis/gapic-showcase/server/genproto";
 option java_package = "com.google.showcase.v1beta1";
 option java_multiple_files = true;
 
-// This service is meant to only run for unit testing RoutingRuleParser
+// This service is only meant for unit testing RoutingRuleParser
 service RoutingRuleParserTesting {
 
   // Test case for no routing rule found

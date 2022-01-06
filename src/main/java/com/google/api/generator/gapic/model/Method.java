@@ -83,6 +83,10 @@ public abstract class Method {
     return httpBindings() != null && !httpBindings().pathParameters().isEmpty();
   }
 
+  public boolean hasRoutingHeaders() {
+    return routingHeaders() != null && !routingHeaders().routingHeadersList().isEmpty();
+  }
+
   public boolean isMixin() {
     return mixedInApiName() != null;
   }

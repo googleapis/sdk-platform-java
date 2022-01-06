@@ -85,7 +85,7 @@ service Testing {
         path_template: "/v1beta1/{rename=tests/*}"
         }
       routing_parameters {
-        field: "table_name"
+        field: "routing.name"
         path_template: "/v1beta1/{routing_id=tests/*}"
         }
     };
@@ -281,7 +281,11 @@ message GetTestRequest {
   // The session to be retrieved.
   string name = 1
       [(google.api.resource_reference).type = "showcase.googleapis.com/Test"];
-  string table_name = 2;
+  Routing routing = 2;
+}
+
+message Routing {
+  string name = 1;
 }
 
 message Test {
