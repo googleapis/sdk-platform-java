@@ -14,6 +14,11 @@ dependencies {
   testImplementation 'io.grpc:grpc-stub:{{version.io_grpc}}'
   testImplementation 'io.grpc:grpc-netty-shaded:{{version.io_grpc}}'
   testImplementation '{{maven.junit_junit}}'
+
+  // TODO: remove when dropping Java 8 support.
+  // https://github.com/googleapis/gapic-generator-java/issues/888
+  implementation '{{maven.javax_annotation_javax_annotation_api}}'
+
   {{extra_deps}}
 }
 
