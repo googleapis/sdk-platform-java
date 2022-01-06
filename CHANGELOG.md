@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.4...v2.3.0) (2022-01-06)
+
+
+### Features
+
+* support Java 9+ compilation of generated libs ([#889](https://www.github.com/googleapis/gapic-generator-java/issues/889)) ([83552c4](https://www.github.com/googleapis/gapic-generator-java/commit/83552c45611c5a79533d6872bf8824cc686e480d))
+
 ### [2.2.4](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.3...v2.2.4) (2022-01-04)
 
 
