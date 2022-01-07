@@ -16,14 +16,6 @@ dependencies {
   {{extra_deps}}
 }
 
-sourceSets {
-  main {
-    java {
-      srcDir 'src/main/java'
-    }
-  }
-}
-
 task javadocJar(type: Jar) {
   classifier = 'javadoc'
   from javadoc
