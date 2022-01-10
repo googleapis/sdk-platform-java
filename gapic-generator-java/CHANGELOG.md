@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.3.1](https://www.github.com/googleapis/gapic-generator-java/compare/v2.3.0...v2.3.1) (2022-01-10)
+
+
+### Bug Fixes
+
+* fix Gradle build error for sourcesJar task on generated libs ([#894](https://www.github.com/googleapis/gapic-generator-java/issues/894)) ([1060a1a](https://www.github.com/googleapis/gapic-generator-java/commit/1060a1af874d9be3f89c567635630f5ad6f8e830))
+
 ## [2.3.0](https://www.github.com/googleapis/gapic-generator-java/compare/v2.2.4...v2.3.0) (2022-01-06)
 
 
