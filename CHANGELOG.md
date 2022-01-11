@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/googleapis/gapic-generator-java/compare/v2.3.1...v2.4.0) (2022-01-11)
+
+
+### Features
+
+* add `install` "alias" for local publication ([#897](https://github.com/googleapis/gapic-generator-java/issues/897)) ([662d1ba](https://github.com/googleapis/gapic-generator-java/commit/662d1ba2dab831a7927159b85c196caf28f13cc7))
+
 ### [2.3.1](https://www.github.com/googleapis/gapic-generator-java/compare/v2.3.0...v2.3.1) (2022-01-10)
 
 
