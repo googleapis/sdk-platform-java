@@ -46,7 +46,7 @@ jobs:
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
 
-      - name: Gradle Build Tests on Generated Libraries
+      - name: Gradle Build Generated Storage Client Library
         run: |
           echo "Building Storage lib from generated source..."
           mkdir /tmp/java-storage
@@ -55,6 +55,8 @@ jobs:
           ./gradlew clean build publishToMavenLocal
           popd
 
+      - name: Gradle Build Generated Compute Client Library
+        run: |
           echo "Building Compute lib from generated source..."
           mkdir /tmp/java-compute
           bazel --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
