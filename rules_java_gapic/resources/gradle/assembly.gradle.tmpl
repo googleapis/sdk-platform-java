@@ -20,4 +20,6 @@ subprojects {
   publishing.publications {
     library(MavenPublication).from components.java
   }
+
+  task install(dependsOn: publishToMavenLocal) // create install "alias"
 }

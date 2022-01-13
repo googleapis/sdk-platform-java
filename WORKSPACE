@@ -114,6 +114,6 @@ grpc_java_repositories()
 
 http_archive(
     name = "com_google_disco_to_proto3_converter",
-    strip_prefix = "disco-to-proto3-converter-4b0956884b1aa9b367cf41488b622dc12eb16652",
-    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/4b0956884b1aa9b367cf41488b622dc12eb16652.zip"],
+    strip_prefix = "disco-to-proto3-converter-ce8d8732120cdfb5bf4847c3238b5be8acde87e3",
+    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/ce8d8732120cdfb5bf4847c3238b5be8acde87e3.zip"],
 )
