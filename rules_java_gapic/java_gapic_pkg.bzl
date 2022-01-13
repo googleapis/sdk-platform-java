@@ -166,7 +166,7 @@ def _java_gapic_build_configs_pkg_impl(ctx):
 
     substitutions = dict(ctx.attr.static_substitutions)
     substitutions["{{extra_deps}}"] = _construct_extra_deps({
-        "implementation": ctx.attr.deps,
+        "api": ctx.attr.deps,
         "testImplementation": ctx.attr.test_deps,
     }, substitutions)
 
