@@ -14,8 +14,6 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static com.google.api.generator.gapic.protoparser.RoutingRuleParser.PATH_TEMPLATE_WRONG_NUMBER_OF_NAMED_SEGMENT_ERROR_MESSAGE;
-import static com.google.api.generator.gapic.protoparser.RoutingRuleParser.WILDCARD_PATTERN;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -39,49 +37,49 @@ public class RoutingRuleParserTest {
       TESTING_FILE_DESCRIPTOR.getServices().get(0);
 
   @Test
-  public void shouldReturnEmptyRoutingHeadersIfMethodHasNoRoutingRules() {
+  public void parse_shouldReturnNullRoutingHeadersIfMethodHasNoRoutingRules() {
     RoutingHeaders actual = getRoutingHeaders(0);
-    assertThat(actual.routingHeadersList()).isEmpty();
+    assertThat(actual).isNull();
   }
 
   @Test
-  public void shouldSetPathTemplateToWildcardIfNotDefined() {
+  public void parse_shouldSetPathTemplateToWildcardIfNotDefined() {
     RoutingHeaders actual = getRoutingHeaders(1);
-    RoutingHeader expected =
-        RoutingHeader.create("name", "name", String.format(WILDCARD_PATTERN, "name"));
+    RoutingHeader expected = RoutingHeader.create("name", "name", String.format("{%s=**}", "name"));
     assertThat(actual.routingHeadersList()).containsExactly(expected);
   }
 
   @Test
-  public void shouldThrowExceptionIfPathTemplateHasZeroNamedSegment() {
+  public void parse_shouldThrowExceptionIfPathTemplateHasZeroNamedSegment() {
     IllegalArgumentException illegalArgumentException =
         assertThrows(IllegalArgumentException.class, () -> getRoutingHeaders(2));
     assertThat(illegalArgumentException.getMessage())
         .isEqualTo(
             String.format(
-                PATH_TEMPLATE_WRONG_NUMBER_OF_NAMED_SEGMENT_ERROR_MESSAGE, "/v1beta1/tests/*"));
+                "There needs to be one and only one named segment in path template %s",
+                "/v1beta1/tests/*"));
   }
 
   @Test
-  public void shouldThrowExceptionIfPathTemplateHasMoreThanOneNamedSegment() {
+  public void parse_shouldThrowExceptionIfPathTemplateHasMoreThanOneNamedSegment() {
     IllegalArgumentException illegalArgumentException =
         assertThrows(IllegalArgumentException.class, () -> getRoutingHeaders(3));
     assertThat(illegalArgumentException.getMessage())
         .isEqualTo(
             String.format(
-                PATH_TEMPLATE_WRONG_NUMBER_OF_NAMED_SEGMENT_ERROR_MESSAGE,
+                "There needs to be one and only one named segment in path template %s",
                 "/v1beta1/{name=tests/*}/{second_name=*}"));
   }
 
   @Test
-  public void shouldParseRoutingRulesWithOneParameter() {
+  public void parse_shouldParseRoutingRulesWithOneParameter() {
     RoutingHeaders actual = getRoutingHeaders(4);
     RoutingHeader expected = RoutingHeader.create("name", "rename", "/v1beta1/{rename=tests/*}");
     assertThat(actual.routingHeadersList()).containsExactly(expected);
   }
 
   @Test
-  public void shouldParseRoutingRulesWithMultipleParameter() {
+  public void parse_shouldParseRoutingRulesWithMultipleParameter() {
     RoutingHeaders actual = getRoutingHeaders(5);
     RoutingHeader expectedHeader1 =
         RoutingHeader.create("name", "rename", "/v1beta1/{rename=tests/*}");
@@ -91,7 +89,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void shouldParseRoutingRulesWithNestedFields() {
+  public void parse_shouldParseRoutingRulesWithNestedFields() {
     RoutingHeaders actual = getRoutingHeaders(6);
     RoutingHeader expectedHeader1 =
         RoutingHeader.create("account.name", "rename", "/v1beta1/{rename=tests/*}");
@@ -99,7 +97,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfFieldValidationFailed() {
+  public void parse_shouldThrowExceptionIfFieldValidationFailed() {
     assertThrows(IllegalStateException.class, () -> getRoutingHeaders(7));
   }
 

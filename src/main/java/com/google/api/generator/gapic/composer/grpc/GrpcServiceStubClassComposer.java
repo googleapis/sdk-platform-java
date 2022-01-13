@@ -16,17 +16,15 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
-import com.google.api.gax.rpc.internal.RoutingHeaderHelper;
+import com.google.api.gax.grpc.RoutingHeaderParamsBuilder;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.LambdaExpr;
-import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.RelationalOperationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -239,141 +237,6 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         .build();
   }
 
-  // TODO: remove this method once we finalized the approach, keep it as a reference for now.
-  private MethodDefinition createAddParamsMethod() {
-    TypeNode paramsVarType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ImmutableMap.Builder.class)
-                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
-                .build());
-    VariableExpr paramsVarExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("params").setType(paramsVarType).build())
-            .setIsDecl(true)
-            .build();
-    VariableExpr fieldValueExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("fieldValue").setType(TypeNode.STRING).build())
-            .setIsDecl(true)
-            .build();
-    VariableExpr keyExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("headerKey").setType(TypeNode.STRING).build())
-            .setIsDecl(true)
-            .build();
-    VariableExpr patternExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("pattern").setType(TypeNode.STRING).build())
-            .setIsDecl(true)
-            .build();
-    List<Statement> methodBody = new ArrayList<>();
-    TypeNode pathTemplateType =
-        TypeNode.withReference(ConcreteReference.builder().setClazz(PathTemplate.class).build());
-    VariableExpr pathTemplateVar =
-        VariableExpr.builder()
-            .setVariable(
-                Variable.builder().setName("pathTemplate").setType(pathTemplateType).build())
-            .setIsDecl(true)
-            .build();
-    VariableExpr patternExprNonDecl =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("pattern").setType(TypeNode.STRING).build())
-            .build();
-    Expr pathTemplateExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(pathTemplateVar)
-            .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(pathTemplateType)
-                    .setMethodName("create")
-                    .setArguments(patternExprNonDecl)
-                    .setReturnType(pathTemplateType)
-                    .build())
-            .build();
-    ExprStatement exprStatement1 = ExprStatement.withExpr(pathTemplateExpr);
-    methodBody.add(exprStatement1);
-
-    VariableExpr pathTemplateVarNonDecl =
-        VariableExpr.builder()
-            .setVariable(
-                Variable.builder().setName("pathTemplate").setType(pathTemplateType).build())
-            .build();
-    TypeNode matchedValuesType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(Map.class)
-                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
-                .build());
-    VariableExpr matchedValuesVar =
-        VariableExpr.builder()
-            .setVariable(
-                Variable.builder().setName("matchedValues").setType(matchedValuesType).build())
-            .setIsDecl(true)
-            .build();
-    VariableExpr fieldValueExprNonDecl =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("fieldValue").setType(pathTemplateType).build())
-            .build();
-    Expr matchedValuesExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(matchedValuesVar)
-            .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(pathTemplateVarNonDecl)
-                    .setMethodName("match")
-                    .setArguments(fieldValueExprNonDecl)
-                    .setReturnType(matchedValuesType)
-                    .build())
-            .build();
-    ExprStatement exprStatement2 = ExprStatement.withExpr(matchedValuesExpr);
-    methodBody.add(exprStatement2);
-
-    VariableExpr matchedValuesVarNonDecl =
-        VariableExpr.builder()
-            .setVariable(
-                Variable.builder().setName("matchedValues").setType(matchedValuesType).build())
-            .build();
-    Expr checkMatchedValuesNull =
-        RelationalOperationExpr.notEqualToWithExprs(
-            matchedValuesVarNonDecl, ValueExpr.createNullExpr());
-    VariableExpr paramsVarExprNonDecl =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("params").setType(paramsVarType).build())
-            .build();
-    VariableExpr keyExprNonDecl =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("headerKey").setType(TypeNode.STRING).build())
-            .build();
-    Expr getMatchedValueExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(matchedValuesVarNonDecl)
-            .setMethodName("get")
-            .setArguments(keyExprNonDecl)
-            .build();
-    Expr putParamsExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(paramsVarExprNonDecl)
-            .setMethodName("put")
-            .setArguments(keyExprNonDecl, getMatchedValueExpr)
-            .build();
-    ExprStatement putParamsStatement = ExprStatement.withExpr(putParamsExpr);
-    IfStatement ifStatement =
-        IfStatement.builder()
-            .setConditionExpr(checkMatchedValuesNull)
-            .setBody(ImmutableList.of(putParamsStatement))
-            .build();
-    methodBody.add(ifStatement);
-
-    return MethodDefinition.builder()
-        .setScope(ScopeNode.PROTECTED)
-        .setReturnType(TypeNode.VOID)
-        .setName("addParams")
-        .setBody(methodBody)
-        .setArguments(paramsVarExpr, fieldValueExpr, keyExpr, patternExpr)
-        .build();
-  }
-
   @Override
   protected String getProtoRpcFullMethodName(Service protoService, Method protoMethod) {
     if (protoMethod.isMixin()) {
@@ -392,51 +255,26 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
 
   private LambdaExpr createRequestParamsExtractorClassInstance(
       Method method, List<Statement> classStatements) {
-
-    TypeNode paramsVarType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ImmutableMap.Builder.class)
-                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
-                .build());
-    VariableExpr paramsVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("params").setType(paramsVarType).build());
-
-    Expr paramsAssignExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(paramsVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
-                    .setMethodName("builder")
-                    .setReturnType(paramsVarType)
-                    .build())
-            .build();
     List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(paramsAssignExpr);
-
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-
-    addRequestParamsForHttpBindings(method, paramsVarExpr, bodyExprs, requestVarExpr);
-
-    addRequestParamsForRoutingHeders(
-        method, classStatements, paramsVarExpr, bodyExprs, requestVarExpr);
-
     TypeNode returnType =
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(Map.class)
                 .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
                 .build());
-    Expr returnExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(paramsVarExpr)
-            .setMethodName("build")
-            .setReturnType(returnType)
-            .build();
+    Expr returnExpr;
+    // If the google.api.routing annotation is present(even with empty routing parameters),
+    // the implicit routing headers specified in the google.api.http annotation should not be sent
+    if (method.routingHeaders() == null) {
+      returnExpr = addRequestParamsForHttpBindings(method, bodyExprs, requestVarExpr, returnType);
+    } else {
+      returnExpr =
+          addRequestParamsForRoutingHeaders(
+              method, classStatements, bodyExprs, requestVarExpr, returnType);
+    }
 
     // Overrides extract().
     // https://github.com/googleapis/gax-java/blob/8d45d186e36ae97b789a6f89d80ae5213a773b65/gax/src/main/java/com/google/api/gax/rpc/RequestParamsExtractor.java#L55
@@ -448,17 +286,38 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         .build();
   }
 
-  private void addRequestParamsForRoutingHeders(
+  private Expr addRequestParamsForRoutingHeaders(
       Method method,
       List<Statement> classStatements,
-      VariableExpr paramsVarExpr,
       List<Expr> bodyExprs,
-      VariableExpr requestVarExpr) {
+      VariableExpr requestVarExpr,
+      TypeNode returnType) {
+    TypeNode routingHeadersBuilderType =
+        TypeNode.withReference(
+            ConcreteReference.builder().setClazz(RoutingHeaderParamsBuilder.class).build());
+    VariableExpr routingHeadersBuilderVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("builder").setType(routingHeadersBuilderType).build())
+            .setIsDecl(true)
+            .build();
+    Expr newBuilderExpr = NewObjectExpr.builder().setType(routingHeadersBuilderType).build();
+    Expr newRoutingHeadersAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(routingHeadersBuilderVarExpr)
+            .setValueExpr(newBuilderExpr)
+            .build();
+    bodyExprs.add(newRoutingHeadersAssignExpr);
     ImmutableList<RoutingHeader> routingHeaders = method.routingHeaders().routingHeadersList();
+    VariableExpr routingHeadersBuilderVarNonDeclExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("builder").setType(routingHeadersBuilderType).build())
+            .build();
     for (int i = 0; i < routingHeaders.size(); i++) {
       RoutingHeader routingHeader = routingHeaders.get(i);
       MethodInvocationExpr requestFieldGetterExpr =
-          createRequestFieldGetterExpr(requestVarExpr, routingHeader.field());
+          createRequestFieldGetterExpr(requestVarExpr, routingHeader.fieldName());
       Expr routingHeaderKeyExpr =
           ValueExpr.withValue(StringObjectValue.withValue(routingHeader.name()));
       // TODO: Create proper snake style upper case name
@@ -494,35 +353,48 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
       classStatements.add(pathTemplateClassVar);
       MethodInvocationExpr addParamsMethodExpr =
           MethodInvocationExpr.builder()
-              .setStaticReferenceType(
-                  TypeNode.withReference(ConcreteReference.withClazz(RoutingHeaderHelper.class)))
-              .setMethodName("addParams")
-              .setArguments(
-                  paramsVarExpr,
-                  requestFieldGetterExpr,
-                  routingHeaderKeyExpr,
-                  routingHeaderPatternExpr)
+              .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+              .setMethodName("add")
+              .setArguments(requestFieldGetterExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
               .build();
 
       bodyExprs.add(addParamsMethodExpr);
     }
+
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+        .setMethodName("build")
+        .setReturnType(returnType)
+        .build();
   }
 
-  private void addRequestParamsForHttpBindings(
-      Method method,
-      VariableExpr paramsVarExpr,
-      List<Expr> bodyExprs,
-      VariableExpr requestVarExpr) {
-    // TODO: Are these params used for anything else other than implicit dynamic routing?
-    // Can we skip this method if routing headers are configured?
-    if (!method.routingHeaders().routingHeadersList().isEmpty()) {
-      return;
-    }
+  private Expr addRequestParamsForHttpBindings(
+      Method method, List<Expr> bodyExprs, VariableExpr requestVarExpr, TypeNode returnType) {
+    TypeNode paramsVarType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.Builder.class)
+                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
+                .build());
+    VariableExpr paramsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("params").setType(paramsVarType).build());
+
+    Expr paramsAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(paramsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
+                    .setMethodName("builder")
+                    .setReturnType(paramsVarType)
+                    .build())
+            .build();
+    bodyExprs.add(paramsAssignExpr);
+
     for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
-      // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr requestBuilderExpr =
           createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
-
       Expr valueOfExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(TypeNode.STRING)
@@ -540,6 +412,12 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
               .build();
       bodyExprs.add(paramsPutExpr);
     }
+
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(paramsVarExpr)
+        .setMethodName("build")
+        .setReturnType(returnType)
+        .build();
   }
 
   private MethodInvocationExpr createRequestFieldGetterExpr(

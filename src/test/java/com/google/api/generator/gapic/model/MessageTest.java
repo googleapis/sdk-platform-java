@@ -14,9 +14,6 @@
 
 package com.google.api.generator.gapic.model;
 
-import static com.google.api.generator.gapic.model.Message.EMPTY_FIELD_ERROR_MESSAGE;
-import static com.google.api.generator.gapic.model.Message.FIELD_DOES_NOT_EXIST_ERROR_MESSAGE;
-import static com.google.api.generator.gapic.model.Message.MESSAGE_NOT_FOUND_ERROR_MESSAGE;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -36,28 +33,30 @@ public class MessageTest {
           .setType(TypeNode.OBJECT);
 
   @Test
-  public void shouldThrowExceptionIfFieldNameIsEmpty() {
+  public void validateField_shouldThrowExceptionIfFieldNameIsEmpty() {
     Message message = TEST_MESSAGE_BUILDER.build();
     IllegalStateException illegalStateException =
         assertThrows(
             IllegalStateException.class, () -> message.validateField("", ImmutableMap.of()));
     assertThat(illegalStateException.getMessage())
-        .isEqualTo(String.format(EMPTY_FIELD_ERROR_MESSAGE, MESSAGE_NAME));
+        .isEqualTo(String.format("Null or empty field name found for message %s", MESSAGE_NAME));
   }
 
   @Test
-  public void shouldThrowExceptionIfFieldDoesNotExist() {
+  public void validateField_shouldThrowExceptionIfFieldDoesNotExist() {
     Message message = TEST_MESSAGE_BUILDER.build();
     String fieldName = "doesNotExist";
     IllegalStateException illegalStateException =
         assertThrows(
             IllegalStateException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
     assertThat(illegalStateException.getMessage())
-        .isEqualTo(String.format(FIELD_DOES_NOT_EXIST_ERROR_MESSAGE, MESSAGE_NAME, fieldName));
+        .isEqualTo(
+            String.format(
+                "Expected message %s to contain field %s but none found", MESSAGE_NAME, fieldName));
   }
 
   @Test
-  public void shouldThrowExceptionIfMessageDoesNotExist() {
+  public void validateField_shouldThrowExceptionIfMessageDoesNotExist() {
     String subFieldName = "table";
     String fieldTypeName = "doesNotMatter";
     Field subField =
@@ -77,11 +76,14 @@ public class MessageTest {
         assertThrows(
             NullPointerException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
     assertThat(nullPointerException.getMessage())
-        .isEqualTo(String.format(MESSAGE_NOT_FOUND_ERROR_MESSAGE, subFieldName, fieldTypeName));
+        .isEqualTo(
+            String.format(
+                "No containing message found for field %s with type %s",
+                subFieldName, fieldTypeName));
   }
 
   @Test
-  public void shouldNotThrowExceptionIfFieldExist() {
+  public void validateField_shouldNotThrowExceptionIfFieldExist() {
     String subFieldName = "table";
     String fieldTypeName = "TableFieldType";
     VaporReference fieldType =

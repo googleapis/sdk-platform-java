@@ -8,9 +8,9 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.grpc.RoutingHeaderParamsBuilder;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.rpc.internal.RoutingHeaderHelper;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
@@ -227,15 +227,11 @@ public class GrpcTestingStub extends TestingStub {
             .setMethodDescriptor(getTestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  RoutingHeaderHelper.addParams(
-                      params, request.getName(), "rename", PATH_TEMPLATE_GETTEST_0);
-                  RoutingHeaderHelper.addParams(
-                      params,
-                      request.getRouting().getName(),
-                      "routing_id",
-                      PATH_TEMPLATE_GETTEST_1);
-                  return params.build();
+                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
+                  builder.add(request.getName(), "rename", PATH_TEMPLATE_GETTEST_0);
+                  builder.add(
+                      request.getRouting().getName(), "routing_id", PATH_TEMPLATE_GETTEST_1);
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListTestsRequest, ListTestsResponse> listTestsTransportSettings =

@@ -32,17 +32,13 @@ import java.util.stream.Collectors;
 
 public class RoutingRuleParser {
 
-  static final String WILDCARD_PATTERN = "{%s=**}";
-  static final String PATH_TEMPLATE_WRONG_NUMBER_OF_NAMED_SEGMENT_ERROR_MESSAGE =
-      "There needs to be one and only one named segment in path template %s";
-
   public static RoutingHeaders parse(
       MethodDescriptor protoMethod, Message inputMessage, Map<String, Message> messageTypes) {
     MethodOptions methodOptions = protoMethod.getOptions();
 
     RoutingHeaders.Builder builder = RoutingHeaders.builder();
     if (!methodOptions.hasExtension(RoutingProto.routing)) {
-      return builder.build();
+      return null;
     }
 
     RoutingRule routingRule = methodOptions.getExtension(RoutingProto.routing);
@@ -56,12 +52,14 @@ public class RoutingRuleParser {
       // if specified, the pattern must contain one and only one named segment
       if (Strings.isNullOrEmpty(pathTemplate)) {
         name = field;
-        pathTemplate = String.format(WILDCARD_PATTERN, name);
+        pathTemplate = String.format("{%s=**}", name);
       } else {
         Set<String> params = getPatternBindings(pathTemplate).build();
         Preconditions.checkArgument(
             params.size() == 1,
-            String.format(PATH_TEMPLATE_WRONG_NUMBER_OF_NAMED_SEGMENT_ERROR_MESSAGE, pathTemplate));
+            String.format(
+                "There needs to be one and only one named segment in path template %s",
+                pathTemplate));
         name = params.iterator().next();
       }
 

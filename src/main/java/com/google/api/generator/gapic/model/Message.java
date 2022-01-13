@@ -35,12 +35,6 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Message {
 
-  static final String EMPTY_FIELD_ERROR_MESSAGE = "Null or empty field name found for message %s";
-  static final String FIELD_DOES_NOT_EXIST_ERROR_MESSAGE =
-      "Expected message %s to contain field %s but none found";
-  static final String MESSAGE_NOT_FOUND_ERROR_MESSAGE =
-      "No containing message found for field %s with type %s";
-
   public abstract String name();
 
   // The fully-qualified proto name, which differs from the Java fully-qualified name.
@@ -100,16 +94,17 @@ public abstract class Message {
         Preconditions.checkNotNull(
             nestedMessage,
             String.format(
-                MESSAGE_NOT_FOUND_ERROR_MESSAGE,
-                field.name(),
-                field.type().reference().simpleName()));
+                "No containing message found for field %s with type %s",
+                field.name(), field.type().reference().simpleName()));
       } else {
         Preconditions.checkState(
             !Strings.isNullOrEmpty(subFieldName),
-            String.format(EMPTY_FIELD_ERROR_MESSAGE, nestedMessage.name()));
+            String.format("Null or empty field name found for message %s", nestedMessage.name()));
         Preconditions.checkState(
             nestedMessage.fieldMap().containsKey(subFieldName),
-            String.format(FIELD_DOES_NOT_EXIST_ERROR_MESSAGE, nestedMessage.name(), subFieldName));
+            String.format(
+                "Expected message %s to contain field %s but none found",
+                nestedMessage.name(), subFieldName));
         // TODO: Add type check for String only?
       }
     }
