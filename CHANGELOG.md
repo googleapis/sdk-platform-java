@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.4.1](https://github.com/googleapis/gapic-generator-java/compare/v2.4.0...v2.4.1) (2022-01-14)
+
+
+### Bug Fixes
+
+* expose extra deps transitively to library users ([#899](https://github.com/googleapis/gapic-generator-java/issues/899)) ([8fa2660](https://github.com/googleapis/gapic-generator-java/commit/8fa2660022cf65ebed011165378683173989332b))
+* fix broken Gradle allJars task on generated libs ([#901](https://github.com/googleapis/gapic-generator-java/issues/901)) ([e990105](https://github.com/googleapis/gapic-generator-java/commit/e99010596d85f891a738de71be3b5fb9c857594a))
+
 ## [2.4.0](https://github.com/googleapis/gapic-generator-java/compare/v2.3.1...v2.4.0) (2022-01-11)
 
 
