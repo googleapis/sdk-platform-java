@@ -37,6 +37,6 @@ clean {
 task allJars(type: Copy) {
   dependsOn test, jar
   into 'all-jars'
-  // Replace with `from configurations.testRuntimeOnly, jar` to include test dependencies
-  from configurations.runtimeOnly, jar
+  // Replace with `from configurations.testRuntimeClasspath, jar` to include test dependencies
+  from configurations.runtimeClasspath, jar
 }

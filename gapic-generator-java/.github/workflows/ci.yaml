@@ -52,7 +52,7 @@ jobs:
           mkdir /tmp/java-storage
           tar zxvf bazel-bin/test/integration/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
           pushd /tmp/java-storage/google-cloud-storage-v2-java
-          ./gradlew clean build publishToMavenLocal
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
 
       - name: Gradle Build Generated Compute Client Library
@@ -62,7 +62,7 @@ jobs:
           bazel --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
           tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
           pushd /tmp/java-compute/google-cloud-compute-small-v1-java
-          ./gradlew clean build publishToMavenLocal
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
 
       - uses: actions/upload-artifact@v2
