@@ -41,7 +41,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBody")
               .setHttpMethod(HttpMethods.POST)
-`              .setType(HttpMethods.UNARY)
+              .setType(HttpMethods.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
                       .setPath(
