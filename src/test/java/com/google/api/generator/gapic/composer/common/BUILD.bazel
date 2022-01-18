@@ -29,6 +29,7 @@ TEST_DEPS = [
     "//src/test/java/com/google/api/generator/gapic/testdata:deprecated_service_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:bookshop_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+    "//src/test/java/com/google/api/generator/gapic/testdata:explicit_dynamic_routing_headers_testing_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
     "@com_google_api_api_common//jar",
     "@com_google_api_gax_java//gax",

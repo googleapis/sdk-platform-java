@@ -46,10 +46,10 @@ public class MessageTest {
   public void validateField_shouldThrowExceptionIfFieldDoesNotExist() {
     Message message = TEST_MESSAGE_BUILDER.build();
     String fieldName = "doesNotExist";
-    IllegalStateException illegalStateException =
+    NullPointerException nullPointerException =
         assertThrows(
-            IllegalStateException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
-    assertThat(illegalStateException.getMessage())
+            NullPointerException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
+    assertThat(nullPointerException.getMessage())
         .isEqualTo(
             String.format(
                 "Expected message %s to contain field %s but none found", MESSAGE_NAME, fieldName));

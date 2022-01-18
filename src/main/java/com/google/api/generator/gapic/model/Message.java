@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -84,12 +85,20 @@ public abstract class Message {
   }
 
   public void validateField(String fieldName, Map<String, Message> messageTypes) {
-    String[] subFields = fieldName.split("\\.");
+    List<String> subFields = Splitter.on(".").splitToList(fieldName);
     Message nestedMessage = this;
-    for (int i = 0; i < subFields.length; i++) {
-      String subFieldName = subFields[i];
-      if (i < subFields.length - 1) {
-        Field field = nestedMessage.fieldMap().get(subFieldName);
+    for (int i = 0; i < subFields.size(); i++) {
+      String subFieldName = subFields.get(i);
+      Preconditions.checkState(
+          !Strings.isNullOrEmpty(subFieldName),
+          String.format("Null or empty field name found for message %s", nestedMessage.name()));
+      Field field = nestedMessage.fieldMap().get(subFieldName);
+      Preconditions.checkNotNull(
+          field,
+          String.format(
+              "Expected message %s to contain field %s but none found",
+              nestedMessage.name(), subFieldName));
+      if (i < subFields.size() - 1) {
         nestedMessage = messageTypes.get(field.type().reference().fullName());
         Preconditions.checkNotNull(
             nestedMessage,
@@ -97,15 +106,12 @@ public abstract class Message {
                 "No containing message found for field %s with type %s",
                 field.name(), field.type().reference().simpleName()));
       } else {
+        // TODO: Type check for String or primitive?
         Preconditions.checkState(
-            !Strings.isNullOrEmpty(subFieldName),
-            String.format("Null or empty field name found for message %s", nestedMessage.name()));
-        Preconditions.checkState(
-            nestedMessage.fieldMap().containsKey(subFieldName),
+            !field.isRepeated() && field.type().isProtoPrimitiveType(),
             String.format(
-                "Expected message %s to contain field %s but none found",
-                nestedMessage.name(), subFieldName));
-        // TODO: Add type check for String only?
+                "The type of field %s must be primitive and not repeated.",
+                field.name()));
       }
     }
   }

@@ -15,7 +15,9 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 @AutoValue
 public abstract class RoutingHeaders {
@@ -37,6 +39,10 @@ public abstract class RoutingHeaders {
 
     public static RoutingHeaders.RoutingHeader create(String field, String name, String pattern) {
       return new AutoValue_RoutingHeaders_RoutingHeader(field, name, pattern);
+    }
+
+    public List<String> getDescendantFieldNames() {
+      return Splitter.on(".").splitToList(fieldName());
     }
   }
 

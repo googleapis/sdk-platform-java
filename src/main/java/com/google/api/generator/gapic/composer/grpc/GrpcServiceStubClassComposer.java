@@ -22,9 +22,12 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.LambdaExpr;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -54,7 +57,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
 
@@ -255,7 +257,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
 
   private LambdaExpr createRequestParamsExtractorClassInstance(
       Method method, List<Statement> classStatements) {
-    List<Expr> bodyExprs = new ArrayList<>();
+    List<Statement> bodyStatements = new ArrayList<>();
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
@@ -269,19 +271,19 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     // If the google.api.routing annotation is present(even with empty routing parameters),
     // the implicit routing headers specified in the google.api.http annotation should not be sent
     if (method.routingHeaders() == null) {
-      returnExpr = addRequestParamsForHttpBindings(method, bodyExprs, requestVarExpr, returnType);
+      returnExpr =
+          addRequestParamsForHttpBindings(method, bodyStatements, requestVarExpr, returnType);
     } else {
       returnExpr =
           addRequestParamsForRoutingHeaders(
-              method, classStatements, bodyExprs, requestVarExpr, returnType);
+              method, classStatements, bodyStatements, requestVarExpr, returnType);
     }
 
     // Overrides extract().
     // https://github.com/googleapis/gax-java/blob/8d45d186e36ae97b789a6f89d80ae5213a773b65/gax/src/main/java/com/google/api/gax/rpc/RequestParamsExtractor.java#L55
     return LambdaExpr.builder()
         .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-        .setBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(bodyStatements)
         .setReturnExpr(returnExpr)
         .build();
   }
@@ -289,7 +291,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
   private Expr addRequestParamsForRoutingHeaders(
       Method method,
       List<Statement> classStatements,
-      List<Expr> bodyExprs,
+      List<Statement> bodyStatements,
       VariableExpr requestVarExpr,
       TypeNode returnType) {
     TypeNode routingHeadersBuilderType =
@@ -307,8 +309,8 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .setVariableExpr(routingHeadersBuilderVarExpr)
             .setValueExpr(newBuilderExpr)
             .build();
-    bodyExprs.add(newRoutingHeadersAssignExpr);
-    ImmutableList<RoutingHeader> routingHeaders = method.routingHeaders().routingHeadersList();
+    bodyStatements.add(ExprStatement.withExpr(newRoutingHeadersAssignExpr));
+    List<RoutingHeader> routingHeaders = method.routingHeaders().routingHeadersList();
     VariableExpr routingHeadersBuilderVarNonDeclExpr =
         VariableExpr.builder()
             .setVariable(
@@ -351,14 +353,27 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
               .build();
       Statement pathTemplateClassVar = ExprStatement.withExpr(pathTemplateExpr);
       classStatements.add(pathTemplateClassVar);
+      Expr valueOfExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(TypeNode.STRING)
+              .setMethodName("valueOf")
+              .setArguments(requestFieldGetterExpr)
+              .build();
       MethodInvocationExpr addParamsMethodExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
               .setMethodName("add")
-              .setArguments(requestFieldGetterExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
+              .setArguments(valueOfExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
               .build();
 
-      bodyExprs.add(addParamsMethodExpr);
+      IfStatement ifStatement =
+          IfStatement.builder()
+              .setConditionExpr(
+                  fieldValuesNotNullConditionExpr(
+                      requestVarExpr, routingHeader.getDescendantFieldNames()))
+              .setBody(ImmutableList.of(ExprStatement.withExpr(addParamsMethodExpr)))
+              .build();
+      bodyStatements.add(ifStatement);
     }
 
     return MethodInvocationExpr.builder()
@@ -368,8 +383,43 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         .build();
   }
 
+  private Expr fieldValuesNotNullConditionExpr(
+      VariableExpr requestVarExpr, List<String> fieldNames) {
+    MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
+        MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+    Expr fieldValuesNotNullExpr = null;
+    for (int i = 0; i < fieldNames.size(); i++) {
+      String currFieldName = fieldNames.get(i);
+      String bindingFieldMethodName =
+          String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+      requestFieldGetterExprBuilder =
+          requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
+      // set return type of each method invocation to String just to pass the validation for
+      // RelationalOperationExpr that both side of relational operation needs to be a valid equality
+      // type
+      MethodInvocationExpr requestGetterExpr =
+          requestFieldGetterExprBuilder.setReturnType(TypeNode.STRING).build();
+      Expr currentValueNotNullExpr =
+          RelationalOperationExpr.notEqualToWithExprs(
+              requestGetterExpr, ValueExpr.createNullExpr());
+      if (fieldValuesNotNullExpr == null) {
+        fieldValuesNotNullExpr = currentValueNotNullExpr;
+      } else {
+        fieldValuesNotNullExpr =
+            LogicalOperationExpr.logicalAndWithExprs(
+                fieldValuesNotNullExpr, currentValueNotNullExpr);
+      }
+      requestFieldGetterExprBuilder =
+          MethodInvocationExpr.builder().setExprReferenceExpr(requestGetterExpr);
+    }
+    return fieldValuesNotNullExpr;
+  }
+
   private Expr addRequestParamsForHttpBindings(
-      Method method, List<Expr> bodyExprs, VariableExpr requestVarExpr, TypeNode returnType) {
+      Method method,
+      List<Statement> bodyStatements,
+      VariableExpr requestVarExpr,
+      TypeNode returnType) {
     TypeNode paramsVarType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -390,7 +440,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
                     .setReturnType(paramsVarType)
                     .build())
             .build();
-    bodyExprs.add(paramsAssignExpr);
+    bodyStatements.add(ExprStatement.withExpr(paramsAssignExpr));
 
     for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
       MethodInvocationExpr requestBuilderExpr =
@@ -410,7 +460,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
                   ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
                   valueOfExpr)
               .build();
-      bodyExprs.add(paramsPutExpr);
+      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
     }
 
     return MethodInvocationExpr.builder()

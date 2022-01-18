@@ -17,9 +17,9 @@ syntax = "proto3";
 import "google/api/routing.proto";
 import "google/protobuf/empty.proto";
 
-package google.showcase.v1beta1;
+package google.explicit.dynamic.routing.header;
 
-option java_package = "com.google.showcase.v1beta1";
+option java_package = "com.google.explicit.dynamic.routing.header";
 option java_multiple_files = true;
 
 // This service is only meant for unit testing RoutingRuleParser

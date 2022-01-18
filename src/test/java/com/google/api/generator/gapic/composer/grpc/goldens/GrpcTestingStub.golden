@@ -228,9 +228,16 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  builder.add(request.getName(), "rename", PATH_TEMPLATE_GETTEST_0);
-                  builder.add(
-                      request.getRouting().getName(), "routing_id", PATH_TEMPLATE_GETTEST_1);
+                  if (request.getName() != null) {
+                    builder.add(
+                        String.valueOf(request.getName()), "rename", PATH_TEMPLATE_GETTEST_0);
+                  }
+                  if (request.getRouting() != null && request.getRouting().getName() != null) {
+                    builder.add(
+                        String.valueOf(request.getRouting().getName()),
+                        "routing_id",
+                        PATH_TEMPLATE_GETTEST_1);
+                  }
                   return builder.build();
                 })
             .build();

@@ -20,10 +20,10 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.RoutingHeaders;
 import com.google.api.generator.gapic.model.RoutingHeaders.RoutingHeader;
+import com.google.explicit.dynamic.routing.header.RoutingRuleParserTestingOuterClass;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.showcase.v1beta1.RoutingRuleParserTestingOuterClass;
 import java.util.Map;
 import org.junit.Test;
 
@@ -98,7 +98,7 @@ public class RoutingRuleParserTest {
 
   @Test
   public void parse_shouldThrowExceptionIfFieldValidationFailed() {
-    assertThrows(IllegalStateException.class, () -> getRoutingHeaders(7));
+    assertThrows(Exception.class, () -> getRoutingHeaders(7));
   }
 
   private RoutingHeaders getRoutingHeaders(int testingIndex) {
