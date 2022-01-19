@@ -714,7 +714,7 @@ public class PathTemplateTest {
     PathTemplate template = PathTemplate.create("/v1/{name=operations/**}:cancel");
     String templateInstance = template.instantiate("name", "operations/3373707");
     Truth.assertThat(templateInstance).isEqualTo("v1/operations/3373707:cancel");
-    Truth.assertThat(template.matches(templateInstance));
+    Truth.assertThat(template.matches(templateInstance)).isTrue();
   }
 
   // Other
