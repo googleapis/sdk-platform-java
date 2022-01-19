@@ -1002,7 +1002,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setName(methodType.toString())
             .setType(
                 TypeNode.withReference(
-                    ConcreteReference.builder().setClazz(HttpMethods.class).build()))
+                    ConcreteReference.builder()
+                        .setClazz(ApiMethodDescriptor.MethodType.class)
+                        .build()))
             .build();
     return Collections.singletonList(expr);
   }

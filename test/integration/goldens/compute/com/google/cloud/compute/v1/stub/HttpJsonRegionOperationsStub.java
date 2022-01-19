@@ -63,7 +63,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
           ApiMethodDescriptor.<GetRegionOperationRequest, Operation>newBuilder()
               .setFullMethodName("google.cloud.compute.v1.RegionOperations/Get")
               .setHttpMethod(HttpMethods.GET)
-              .setType(HttpMethods.UNARY)
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<GetRegionOperationRequest>newBuilder()
                       .setPath(
@@ -118,7 +118,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
           ApiMethodDescriptor.<WaitRegionOperationRequest, Operation>newBuilder()
               .setFullMethodName("google.cloud.compute.v1.RegionOperations/Wait")
               .setHttpMethod(HttpMethods.POST)
-              .setType(HttpMethods.UNARY)
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<WaitRegionOperationRequest>newBuilder()
                       .setPath(
