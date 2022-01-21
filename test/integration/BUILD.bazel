@@ -23,9 +23,9 @@ API_GAPIC_TARGETS = {
     # Check that the capital name edge case is handled.
     "credentials": "@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic",
     # Mixin-only special-case API can build on its own.
-    "iam": ":iam_java_gapic",  # Local target: Googleapis' LRO does not have a Java Gapic.
+    "iam": ":iam_java_gapic",  # local target: Googleapis' LRO does not have a Java Gapic.
     # mixins, with an override in the proto file
-    "kms": ":kms_java_gapic",  # Local target: mixins are not rolled out yet.
+    "kms": ":kms_java_gapic",  # local target: mixins are not rolled out yet.
     # Special=case handling for "_deleted-topic_" resource name patterns.
     "pubsub": ":pubsub_java_gapic",
     # Java package remapping in gapic.yaml
