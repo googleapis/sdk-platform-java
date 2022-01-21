@@ -548,7 +548,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Expr expectedResponseValExpr = null;
     if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
       expectedResponseValExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
+          DefaultValueComposer.createSimpleMessageBuilderValue(
               messageTypes.get(methodOutputType.reference().fullName()),
               resourceNames,
               messageTypes);
@@ -556,7 +556,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       // Wrap this in a field so we don't have to split the helper into lots of different methods,
       // or duplicate it for VariableExpr.
       expectedResponseValExpr =
-          DefaultValueComposer.createDefaultValue(
+          DefaultValueComposer.createValue(
               Field.builder()
                   .setType(methodOutputType)
                   .setIsMessage(true)
@@ -581,7 +581,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
           AssignmentExpr.builder()
               .setVariableExpr(resultOperationVarExpr.toBuilder().setIsDecl(true).build())
               .setValueExpr(
-                  DefaultValueComposer.createSimpleOperationBuilderExpr(
+                  DefaultValueComposer.createSimpleOperationBuilderValue(
                       String.format("%sTest", JavaStyle.toLowerCamelCase(method.name())),
                       expectedResponseVarExpr))
               .build());
@@ -607,7 +607,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
     methodExprs.add(
         AssignmentExpr.builder()
@@ -880,7 +880,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
 
     List<Statement> statements = new ArrayList<>();
@@ -1051,12 +1051,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
 
     statements.add(tryCatchBlock);
     return statements;
-  }
-
-  @Override
-  protected Expr createDefaultValue(
-      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
-    return DefaultValueComposer.createDefaultValue(methodArg, resourceNames, false);
   }
 
   @Override

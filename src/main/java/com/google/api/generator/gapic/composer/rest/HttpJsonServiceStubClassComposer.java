@@ -335,7 +335,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 Arrays.asList(
                     ValueExpr.withValue(
                         StringObjectValue.withValue(
-                            protoMethod.httpBindings().patternLowerCamel())),
+                            protoMethod.httpBindings().lowerCamelPattern())),
                     createFieldsExtractorClassInstance(
                         protoMethod,
                         extractorVarType,
