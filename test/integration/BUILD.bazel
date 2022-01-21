@@ -49,10 +49,14 @@ API_GAPIC_TARGETS = {
     "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
 }
 
-[integration_test(
+[sh_test(
     name = lib_name,
-    data = ["//test/integration/goldens/%s:goldens_files" % lib_name],
-    target = API_GAPIC_TARGETS[lib_name],
+    srcs = ["//scripts:diff_gen_and_golden.sh"],
+    args = [lib_name],
+    data = [
+      API_GAPIC_TARGETS[lib_name] + "_srcjar_raw.srcjar",
+      "//test/integration/goldens/%s:goldens_files" % lib_name,
+    ],
 ) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
 [golden_update(
