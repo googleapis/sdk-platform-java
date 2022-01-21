@@ -4,7 +4,6 @@ set -o errexit
 set -o pipefail
 
 API_NAME=$1
-
 RAW_SRCJAR=$( find . -name '*_java_gapic_srcjar_raw.srcjar' )
 
 mkdir unpacked src
