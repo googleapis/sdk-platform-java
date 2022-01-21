@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -o errexit
-set -o pipefail
 
 API_NAME=$1
 RAW_SRCJAR=$( find . -name '*_java_gapic_srcjar_raw.srcjar' )
@@ -11,7 +10,7 @@ cd unpacked
 unzip -q -c "../${RAW_SRCJAR}" temp-codegen.srcjar | jar x
 cp -rf src/main/java/* ../src
 cp -rf src/test/java/* ../src
-[[ -d proto ]] && cp -rf proto/src/main/java/* ../src
+[ -d proto ] && cp -rf proto/src/main/java/* ../src
 cd ..
 
 # Remove unneeded non-Java files, like MANIFEST
