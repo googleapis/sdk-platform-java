@@ -39,7 +39,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceClientTestClassComposer;
-import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -523,12 +522,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     return Collections.emptyList();
-  }
-
-  @Override
-  protected Expr createDefaultValue(
-      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
-    return DefaultValueComposer.createDefaultValue(methodArg, resourceNames, true);
   }
 
   @Override

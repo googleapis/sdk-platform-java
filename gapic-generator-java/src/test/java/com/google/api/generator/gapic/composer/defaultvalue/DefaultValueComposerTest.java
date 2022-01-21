@@ -54,7 +54,7 @@ public class DefaultValueComposerTest {
             .setIsMap(true)
             .setIsRepeated(true)
             .build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("new HashMap<>()", writerVisitor.write());
 
@@ -63,7 +63,7 @@ public class DefaultValueComposerTest {
     // isMap() and isRepeated() will be set by protoc simultaneously, but we check this edge case.
     // for completeness.
     field = Field.builder().setName("foobar").setType(TypeNode.STRING).setIsMap(true).build();
-    expr = DefaultValueComposer.createDefaultValue(field);
+    expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("\"foobar-1268878963\"", writerVisitor.write());
   }
@@ -74,7 +74,7 @@ public class DefaultValueComposerTest {
     // isRepeated rather than type().
     Field field =
         Field.builder().setName("foobar").setType(TypeNode.STRING).setIsRepeated(true).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("new ArrayList<>()", writerVisitor.write());
   }
@@ -85,7 +85,7 @@ public class DefaultValueComposerTest {
     // isEnum() rather than type().
     Field field =
         Field.builder().setName("foobar").setType(TypeNode.STRING).setIsEnum(true).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("String.forNumber(0)", writerVisitor.write());
   }
@@ -96,7 +96,7 @@ public class DefaultValueComposerTest {
     // isMessage() rather than type().
     Field field =
         Field.builder().setName("foobar").setType(TypeNode.STRING).setIsMessage(true).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("String.newBuilder().build()", writerVisitor.write());
   }
@@ -104,7 +104,7 @@ public class DefaultValueComposerTest {
   @Test
   public void defaultValue_stringField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.STRING).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("\"foobar-1268878963\"", writerVisitor.write());
 
@@ -112,7 +112,7 @@ public class DefaultValueComposerTest {
 
     // Original name is very clearly in lower_camel_case.
     field = Field.builder().setName("foo_bar_baz").setType(TypeNode.STRING).build();
-    expr = DefaultValueComposer.createDefaultValue(field);
+    expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("\"fooBarBaz-2082080914\"", writerVisitor.write());
   }
@@ -120,13 +120,13 @@ public class DefaultValueComposerTest {
   @Test
   public void defaultValue_numericField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.INT).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("-1268878963", writerVisitor.write());
 
     writerVisitor.clear();
     field = Field.builder().setName("foobar").setType(TypeNode.DOUBLE).build();
-    expr = DefaultValueComposer.createDefaultValue(field);
+    expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("-1268878963", writerVisitor.write());
   }
@@ -134,7 +134,7 @@ public class DefaultValueComposerTest {
   @Test
   public void defaultValue_booleanField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.BOOLEAN).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("true", writerVisitor.write());
   }
@@ -146,7 +146,7 @@ public class DefaultValueComposerTest {
             .setName("foobar")
             .setType(TypeNode.withReference(ConcreteReference.withClazz(ByteString.class)))
             .build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
     assertEquals("ByteString.EMPTY", writerVisitor.write());
   }
@@ -159,7 +159,7 @@ public class DefaultValueComposerTest {
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudbilling.googleapis.com/BillingAccount");
     Expr expr =
-        DefaultValueComposer.createDefaultValue(
+        DefaultValueComposer.createResourceHelperValue(
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
@@ -176,7 +176,7 @@ public class DefaultValueComposerTest {
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Folder");
     Expr expr =
-        DefaultValueComposer.createDefaultValue(
+        DefaultValueComposer.createResourceHelperValue(
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
@@ -194,7 +194,7 @@ public class DefaultValueComposerTest {
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
     Expr expr =
-        DefaultValueComposer.createDefaultValue(
+        DefaultValueComposer.createResourceHelperValue(
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
@@ -217,7 +217,7 @@ public class DefaultValueComposerTest {
     typeStringsToResourceNames.clear();
     typeStringsToResourceNames.put(topicResourceName.resourceTypeString(), topicResourceName);
     Expr expr =
-        DefaultValueComposer.createDefaultValue(
+        DefaultValueComposer.createResourceHelperValue(
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
@@ -238,7 +238,7 @@ public class DefaultValueComposerTest {
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
     String fallbackField = "foobar";
     Expr expr =
-        DefaultValueComposer.createDefaultValueResourceHelper(
+        DefaultValueComposer.createResourceHelperValue(
             resourceName,
             false,
             Collections.emptyList(),
@@ -261,7 +261,7 @@ public class DefaultValueComposerTest {
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
     String fallbackField = "foobar";
     Expr expr =
-        DefaultValueComposer.createDefaultValue(
+        DefaultValueComposer.createResourceHelperValue(
             resourceName, false, Collections.emptyList(), fallbackField);
     expr.accept(writerVisitor);
     String expected =
@@ -291,7 +291,7 @@ public class DefaultValueComposerTest {
         Parser.parseResourceNames(echoFileDescriptor);
     Message message = messageTypes.get("com.google.showcase.v1beta1.Foobar");
     Expr expr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             message, typeStringsToResourceNames, messageTypes);
     expr.accept(writerVisitor);
     assertEquals(
@@ -308,7 +308,7 @@ public class DefaultValueComposerTest {
         Parser.parseResourceNames(echoFileDescriptor);
     Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
     Expr expr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             message, typeStringsToResourceNames, messageTypes);
     expr.accept(writerVisitor);
     assertEquals(
@@ -328,7 +328,7 @@ public class DefaultValueComposerTest {
         Parser.parseResourceNames(echoFileDescriptor);
     Message message = messageTypes.get("com.google.showcase.v1beta1.PagedExpandResponse");
     Expr expr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             message, typeStringsToResourceNames, messageTypes);
     expr.accept(writerVisitor);
     assertEquals(
@@ -345,7 +345,7 @@ public class DefaultValueComposerTest {
         Parser.parseResourceNames(echoFileDescriptor);
     Message message = messageTypes.get("com.google.showcase.v1beta1.WaitRequest");
     Expr expr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             message, typeStringsToResourceNames, messageTypes);
     expr.accept(writerVisitor);
     assertEquals("WaitRequest.newBuilder().build()", writerVisitor.write());
@@ -353,7 +353,7 @@ public class DefaultValueComposerTest {
 
   @Test
   public void createAnonymousResourceNameClass() {
-    Expr expr = DefaultValueComposer.createAnonymousResourceNameClass("resource");
+    Expr expr = DefaultValueComposer.createAnonymousResourceNameClassValue("resource");
     expr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(
