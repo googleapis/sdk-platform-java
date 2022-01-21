@@ -9,11 +9,7 @@ load(
     "java_gapic_assembly_gradle_pkg",
 )
 load("@rules_gapic//:gapic.bzl", "proto_library_with_info")
-load(
-    "//:rules_bazel/java/integration_test.bzl",
-    "golden_update",
-    "integration_test",
-)
+load("//:rules_bazel/java/integration_test.bzl", "golden_update")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 package(default_visibility = ["//visibility:public"])
