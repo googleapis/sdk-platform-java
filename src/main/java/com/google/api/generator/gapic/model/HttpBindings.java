@@ -17,7 +17,10 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class HttpBindings {
@@ -33,10 +36,16 @@ public abstract class HttpBindings {
   public abstract static class HttpBinding implements Comparable<HttpBinding> {
     public abstract String name();
 
+    abstract String lowerCamelName();
+
     public abstract boolean isOptional();
 
-    public static HttpBinding create(String name, boolean isOptional) {
-      return new AutoValue_HttpBindings_HttpBinding(name, isOptional);
+    @Nullable
+    public abstract String valuePattern();
+
+    public static HttpBinding create(String name, boolean isOptional, String valuePattern) {
+      return new AutoValue_HttpBindings_HttpBinding(
+          name, JavaStyle.toLowerCamelCase(name), isOptional, valuePattern);
     }
 
     // Do not forget to keep it in sync with equals() implementation.
@@ -71,7 +80,7 @@ public abstract class HttpBindings {
   // For example:
   //   in .proto file: "/global/instanceTemplates/{instance_template=*}"
   //   in .java file:  "/global/instanceTemplates/{instanceTemplate=*}"
-  public String patternLowerCamel() {
+  public String lowerCamelPattern() {
     String lowerCamelPattern = pattern();
     for (HttpBinding pathParam : pathParameters()) {
       lowerCamelPattern =
@@ -79,6 +88,14 @@ public abstract class HttpBindings {
               "\\{" + pathParam.name(), "{" + JavaStyle.toLowerCamelCase(pathParam.name()));
     }
     return lowerCamelPattern;
+  }
+
+  public Map<String, String> getPathParametersValuePatterns() {
+    Map<String, String> valuePatterns = new HashMap<>();
+    for (HttpBinding pathParameter : pathParameters()) {
+      valuePatterns.put(pathParameter.lowerCamelName(), pathParameter.valuePattern());
+    }
+    return valuePatterns;
   }
 
   @AutoValue.Builder
