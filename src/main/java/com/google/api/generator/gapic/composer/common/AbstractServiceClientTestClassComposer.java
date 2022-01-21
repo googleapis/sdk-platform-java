@@ -470,16 +470,16 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               .setValueExpr(valExpr)
               .build());
     } else {
+      Map<String, String> valuePatterns = Collections.emptyMap();
+      if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
+        valuePatterns = method.httpBindings().getPathParametersValuePatterns();
+      }
       for (MethodArgument methodArg : methodSignature) {
         String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
-        Map<String, String> valuePatterns = Collections.emptyMap();
-        if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
-          valuePatterns = method.httpBindings().getPathParametersValuePatterns();
-        }
         Expr valExpr =
             DefaultValueComposer.createMethodArgValue(
                 methodArg, resourceNames, messageTypes, valuePatterns);
@@ -777,17 +777,16 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               .setValueExpr(valExpr)
               .build());
     } else {
+      Map<String, String> valuePatterns = Collections.emptyMap();
+      if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
+        valuePatterns = method.httpBindings().getPathParametersValuePatterns();
+      }
       for (MethodArgument methodArg : methodSignature) {
         String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
-        Map<String, String> valuePatterns = Collections.emptyMap();
-        if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
-          valuePatterns = method.httpBindings().getPathParametersValuePatterns();
-        }
-
         Expr valExpr =
             DefaultValueComposer.createMethodArgValue(
                 methodArg, resourceNames, messageTypes, valuePatterns);

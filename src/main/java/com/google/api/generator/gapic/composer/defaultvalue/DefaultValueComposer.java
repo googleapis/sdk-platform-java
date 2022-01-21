@@ -600,8 +600,7 @@ public class DefaultValueComposer {
 
     final String suffix = "-" + (Math.abs((fieldName + pattern).hashCode()) % 10000);
 
-    String value = pattern;
-    value = value.replace("**", "*");
+    String value = pattern.replace("**", "*");
 
     String prevTempl = null;
     while (!value.equals(prevTempl)) {
@@ -609,7 +608,6 @@ public class DefaultValueComposer {
       value = REPLACER_PATTERN.matcher(value).replaceFirst("$1$2$1" + suffix);
     }
 
-    value = value.replace("*", fieldName + suffix);
-    return value;
+    return value.replace("*", fieldName + suffix);
   }
 }
