@@ -81,6 +81,8 @@ public abstract class TransportContext {
 
   public abstract List<String> operationsClientNames();
 
+  public abstract boolean useValuePatterns();
+
   protected static TypeNode classToType(Class<?> clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }
@@ -139,6 +141,8 @@ public abstract class TransportContext {
     public abstract Builder setOperationsClientTypes(List<TypeNode> operationsClientTypes);
 
     public abstract Builder setOperationsClientNames(List<String> operationsClientNames);
+
+    public abstract Builder setUseValuePatterns(boolean useValuePatterns);
 
     public abstract TransportContext build();
   }

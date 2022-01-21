@@ -50,19 +50,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DefaultValueComposer {
-  private static TypeNode OPERATION_TYPE =
+  private static final TypeNode OPERATION_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
-  private static TypeNode ANY_TYPE = TypeNode.withReference(ConcreteReference.withClazz(Any.class));
+  private static final TypeNode ANY_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(Any.class));
 
-  public static Expr createDefaultValue(
+  private static final Pattern REPLACER_PATTERN = Pattern.compile("(\\w*)(\\w/|-\\d+/)\\*");
+
+  public static Expr createMethodArgValue(
       MethodArgument methodArg,
       Map<String, ResourceName> resourceNames,
-      boolean forceResourceNameInitializer) {
-    if (methodArg.isResourceNameHelper()
-        || (forceResourceNameInitializer && methodArg.field().hasResourceReference())) {
+      Map<String, Message> messageTypes,
+      Map<String, String> valuePatterns) {
+    if (methodArg.isResourceNameHelper()) {
       Preconditions.checkState(
           methodArg.field().hasResourceReference(),
           String.format(
@@ -76,7 +80,7 @@ public class DefaultValueComposer {
               "No resource name found for reference %s",
               methodArg.field().resourceReference().resourceTypeString()));
       Expr defValue =
-          createDefaultValue(
+          createResourceHelperValue(
               resourceName,
               methodArg.field().resourceReference().isChildType(),
               resourceNames.values().stream().collect(Collectors.toList()),
@@ -94,26 +98,31 @@ public class DefaultValueComposer {
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {
-      return createDefaultValue(methodArg.field());
+      return createValue(methodArg.field(), false, resourceNames, messageTypes, valuePatterns);
     }
 
-    return createDefaultValue(
-        Field.builder().setName(methodArg.name()).setType(methodArg.type()).build());
+    return createValue(Field.builder().setName(methodArg.name()).setType(methodArg.type()).build());
   }
 
-  public static Expr createDefaultValue(Field f) {
-    return createDefaultValue(f, false);
+  public static Expr createValue(Field field) {
+    return createValue(
+        field, false, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
   }
 
-  static Expr createDefaultValue(Field f, boolean useExplicitInitTypeInGenerics) {
-    if (f.isRepeated()) {
+  public static Expr createValue(
+      Field field,
+      boolean useExplicitInitTypeInGenerics,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      Map<String, String> valuePatterns) {
+    if (field.isRepeated()) {
       ConcreteReference.Builder refBuilder =
-          ConcreteReference.builder().setClazz(f.isMap() ? HashMap.class : ArrayList.class);
+          ConcreteReference.builder().setClazz(field.isMap() ? HashMap.class : ArrayList.class);
       if (useExplicitInitTypeInGenerics) {
-        if (f.isMap()) {
-          refBuilder = refBuilder.setGenerics(f.type().reference().generics().subList(0, 2));
+        if (field.isMap()) {
+          refBuilder = refBuilder.setGenerics(field.type().reference().generics().subList(0, 2));
         } else {
-          refBuilder = refBuilder.setGenerics(f.type().reference().generics().get(0));
+          refBuilder = refBuilder.setGenerics(field.type().reference().generics().get(0));
         }
       }
 
@@ -121,51 +130,68 @@ public class DefaultValueComposer {
       return NewObjectExpr.builder().setType(newType).setIsGeneric(true).build();
     }
 
-    if (f.isEnum()) {
+    if (field.isEnum()) {
       return MethodInvocationExpr.builder()
-          .setStaticReferenceType(f.type())
+          .setStaticReferenceType(field.type())
           .setMethodName("forNumber")
           .setArguments(
               ValueExpr.withValue(
                   PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build()))
-          .setReturnType(f.type())
+          .setReturnType(field.type())
           .build();
     }
 
-    if (f.isMessage()) {
+    if (field.isMessage()) {
+      String nestedFieldName = field.name();
+      Map<String, String> nestedValuePatterns = new HashMap<>();
+      for (Map.Entry<String, String> entry : valuePatterns.entrySet()) {
+        if (entry.getKey().startsWith(nestedFieldName + '.')) {
+          nestedValuePatterns.put(
+              entry.getKey().substring(nestedFieldName.length() + 1), entry.getValue());
+        }
+      }
+
+      if (!nestedValuePatterns.isEmpty()) {
+        Message nestedMessage = messageTypes.get(field.type().reference().fullName());
+        if (nestedMessage != null) {
+          return createSimpleMessageBuilderValue(
+              nestedMessage, resourceNames, messageTypes, nestedValuePatterns);
+        }
+      }
+
       MethodInvocationExpr newBuilderExpr =
           MethodInvocationExpr.builder()
-              .setStaticReferenceType(f.type())
+              .setStaticReferenceType(field.type())
               .setMethodName("newBuilder")
               .build();
       return MethodInvocationExpr.builder()
           .setExprReferenceExpr(newBuilderExpr)
           .setMethodName("build")
-          .setReturnType(f.type())
+          .setReturnType(field.type())
           .build();
     }
 
-    if (f.type().equals(TypeNode.STRING)) {
-      String javaFieldName = JavaStyle.toLowerCamelCase(f.name());
+    if (field.type().equals(TypeNode.STRING)) {
+      String javaFieldName = JavaStyle.toLowerCamelCase(field.name());
       return ValueExpr.withValue(
           StringObjectValue.withValue(
-              String.format("%s%s", javaFieldName, javaFieldName.hashCode())));
+              constructValueMatchingPattern(javaFieldName, valuePatterns.get(javaFieldName))));
     }
 
-    if (TypeNode.isNumericType(f.type())) {
+    if (TypeNode.isNumericType(field.type())) {
       return ValueExpr.withValue(
           PrimitiveValue.builder()
-              .setType(f.type())
-              .setValue(String.format("%s", f.name().hashCode()))
+              .setType(field.type())
+              .setValue(String.format("%s", field.name().hashCode()))
               .build());
     }
 
-    if (f.type().equals(TypeNode.BOOLEAN)) {
+    if (field.type().equals(TypeNode.BOOLEAN)) {
       return ValueExpr.withValue(
-          PrimitiveValue.builder().setType(f.type()).setValue("true").build());
+          PrimitiveValue.builder().setType(field.type()).setValue("true").build());
     }
 
-    if (f.type().equals(TypeNode.BYTESTRING)) {
+    if (field.type().equals(TypeNode.BYTESTRING)) {
       return VariableExpr.builder()
           .setStaticReferenceType(TypeNode.BYTESTRING)
           .setVariable(Variable.builder().setName("EMPTY").setType(TypeNode.BYTESTRING).build())
@@ -174,16 +200,16 @@ public class DefaultValueComposer {
 
     throw new UnsupportedOperationException(
         String.format(
-            "Default value for field %s with type %s not implemented yet.", f.name(), f.type()));
+            "Default value for field %s with type %s not implemented yet.",
+            field.name(), field.type()));
   }
 
-  public static Expr createDefaultValue(
+  public static Expr createResourceHelperValue(
       ResourceName resourceName,
       boolean isChildType,
       List<ResourceName> resnames,
       String fieldOrMessageName) {
-    return createDefaultValueResourceHelper(
-        resourceName, isChildType, resnames, fieldOrMessageName, true);
+    return createResourceHelperValue(resourceName, isChildType, resnames, fieldOrMessageName, true);
   }
 
   private static Optional<ResourceName> findParentResource(
@@ -207,7 +233,7 @@ public class DefaultValueComposer {
   }
 
   @VisibleForTesting
-  static Expr createDefaultValueResourceHelper(
+  static Expr createResourceHelperValue(
       ResourceName resourceName,
       boolean isChildType,
       List<ResourceName> resnames,
@@ -223,12 +249,12 @@ public class DefaultValueComposer {
       for (ResourceName resname : resnames) {
         unexaminedResnames.remove(resname);
         if (!resname.isOnlyWildcard()) {
-          return createDefaultValue(resname, false, unexaminedResnames, fieldOrMessageName);
+          return createResourceHelperValue(resname, false, unexaminedResnames, fieldOrMessageName);
         }
       }
 
       return allowAnonResourceNameClass
-          ? createAnonymousResourceNameClass(fieldOrMessageName)
+          ? createAnonymousResourceNameClassValue(fieldOrMessageName)
           : ValueExpr.withValue(
               StringObjectValue.withValue(
                   String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
@@ -284,8 +310,17 @@ public class DefaultValueComposer {
         .build();
   }
 
-  public static Expr createSimpleMessageBuilderExpr(
+  public static Expr createSimpleMessageBuilderValue(
       Message message, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
+    return createSimpleMessageBuilderValue(
+        message, resourceNames, messageTypes, Collections.emptyMap());
+  }
+
+  public static Expr createSimpleMessageBuilderValue(
+      Message message,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      Map<String, String> valuePatterns) {
     MethodInvocationExpr builderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(message.type())
@@ -309,7 +344,7 @@ public class DefaultValueComposer {
       if (field.hasResourceReference()
           && resourceNames.get(field.resourceReference().resourceTypeString()) != null) {
         defaultExpr =
-            createDefaultValueResourceHelper(
+            createResourceHelperValue(
                 resourceNames.get(field.resourceReference().resourceTypeString()),
                 field.resourceReference().isChildType(),
                 resourceNames.values().stream().collect(Collectors.toList()),
@@ -348,7 +383,7 @@ public class DefaultValueComposer {
         }
 
         if (defaultExpr == null) {
-          defaultExpr = createDefaultValue(field, true);
+          defaultExpr = createValue(field, true, resourceNames, messageTypes, valuePatterns);
         }
       }
       builderExpr =
@@ -367,7 +402,7 @@ public class DefaultValueComposer {
         .build();
   }
 
-  public static Expr createSimpleOperationBuilderExpr(String name, VariableExpr responseExpr) {
+  public static Expr createSimpleOperationBuilderValue(String name, VariableExpr responseExpr) {
     Expr operationExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(OPERATION_TYPE)
@@ -405,7 +440,7 @@ public class DefaultValueComposer {
         .build();
   }
 
-  public static Expr createSimplePagedResponse(
+  public static Expr createSimplePagedResponseValue(
       TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr, boolean isMap) {
     // Code for paginated maps:
     // AggregatedMessageList.newBuilder()
@@ -471,7 +506,7 @@ public class DefaultValueComposer {
   }
 
   @VisibleForTesting
-  static AnonymousClassExpr createAnonymousResourceNameClass(String fieldOrMessageName) {
+  static AnonymousClassExpr createAnonymousResourceNameClassValue(String fieldOrMessageName) {
     TypeNode stringMapType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -556,5 +591,25 @@ public class DefaultValueComposer {
                 ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class)))
         .setMethods(Arrays.asList(getFieldValuesMapMethod, getFieldValueMethod))
         .build();
+  }
+
+  private static String constructValueMatchingPattern(String fieldName, String pattern) {
+    if (pattern == null || pattern.isEmpty()) {
+      return fieldName + fieldName.hashCode();
+    }
+
+    final String suffix = "-" + (Math.abs((fieldName + pattern).hashCode()) % 10000);
+
+    String value = pattern;
+    value = value.replace("**", "*");
+
+    String prevTempl = null;
+    while (!value.equals(prevTempl)) {
+      prevTempl = value;
+      value = REPLACER_PATTERN.matcher(value).replaceFirst("$1$2$1" + suffix);
+    }
+
+    value = value.replace("*", fieldName + suffix);
+    return value;
   }
 }

@@ -89,6 +89,7 @@ public class MethodSignatureParser {
         String actualArgumentName =
             dotLastIndex < 0 ? argumentName : argumentName.substring(dotLastIndex + 1);
         argumentNames.add(actualArgumentName);
+
         argumentNameToOverloads.put(
             actualArgumentName,
             argumentTypes.entrySet().stream()

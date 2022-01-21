@@ -30,13 +30,18 @@ import com.google.common.collect.Sets;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
+  private static final Pattern TEMPLATE_VALS_PATTERN =
+      Pattern.compile("\\{(?<var>[\\w.]*)=(?<template>[^}]+)}");
 
   public static HttpBindings parse(
       MethodDescriptor protoMethod, Message inputMessage, Map<String, Message> messageTypes) {
@@ -72,6 +77,7 @@ public class HttpRuleParser {
     }
 
     Set<String> pathParamNames = bindingsBuilder.build();
+    Map<String, String> patternSampleValues = constructPathValuePatterns(pattern);
 
     // TODO: support nested message fields bindings
     String body = httpRule.getBody();
@@ -99,11 +105,12 @@ public class HttpRuleParser {
         .setHttpVerb(HttpBindings.HttpVerb.valueOf(httpRule.getPatternCase().toString()))
         .setPattern(pattern)
         .setPathParameters(
-            validateAndConstructHttpBindings(pathParamNames, message, messageTypes, true))
+            validateAndConstructHttpBindings(
+                pathParamNames, message, messageTypes, patternSampleValues))
         .setQueryParameters(
-            validateAndConstructHttpBindings(queryParamNames, message, messageTypes, false))
+            validateAndConstructHttpBindings(queryParamNames, message, messageTypes, null))
         .setBodyParameters(
-            validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, false))
+            validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, null))
         .setIsAsteriskBody(body.equals(ASTERISK))
         .build();
   }
@@ -112,13 +119,16 @@ public class HttpRuleParser {
       Set<String> paramNames,
       Message inputMessage,
       Map<String, Message> messageTypes,
-      boolean isPath) {
+      Map<String, String> patternSampleValues) {
     ImmutableSortedSet.Builder<HttpBinding> httpBindings = ImmutableSortedSet.naturalOrder();
+
     for (String paramName : paramNames) {
       // Handle foo.bar cases by descending into the subfields.
+      String patternSampleValue =
+          patternSampleValues != null ? patternSampleValues.get(paramName) : null;
       String[] subFields = paramName.split("\\.");
       if (inputMessage == null) {
-        httpBindings.add(HttpBinding.create(paramName, false));
+        httpBindings.add(HttpBinding.create(paramName, false, patternSampleValue));
         continue;
       }
       Message nestedMessage = inputMessage;
@@ -134,11 +144,13 @@ public class HttpRuleParser {
                   field.name(), field.type().reference().simpleName()));
 
         } else {
-          if (isPath) {
-            checkHttpFieldIsValid(subFieldName, nestedMessage, !isPath);
+          if (patternSampleValues != null) {
+            checkHttpFieldIsValid(subFieldName, nestedMessage, false);
+            patternSampleValue = patternSampleValues.get(paramName);
           }
           Field field = nestedMessage.fieldMap().get(subFieldName);
-          httpBindings.add(HttpBinding.create(paramName, field.isProto3Optional()));
+          httpBindings.add(
+              HttpBinding.create(paramName, field.isProto3Optional(), patternSampleValue));
         }
       }
     }
@@ -199,5 +211,19 @@ public class HttpRuleParser {
     Preconditions.checkState(
         fieldCondition,
         String.format(messageFormat, field.name(), inputMessage.name(), field.type()));
+  }
+
+  private static Map<String, String> constructPathValuePatterns(String pattern) {
+    Map<String, String> varPattern = new HashMap<>();
+    if (pattern == null || pattern.isEmpty()) {
+      return varPattern;
+    }
+    Matcher m = TEMPLATE_VALS_PATTERN.matcher(PathTemplate.create(pattern).toString());
+
+    while (m.find()) {
+      varPattern.put(m.group("var"), m.group("template"));
+    }
+
+    return varPattern;
   }
 }
