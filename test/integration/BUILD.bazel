@@ -17,30 +17,26 @@ package(default_visibility = ["//visibility:public"])
 # Integration Test Rules
 ####################################################
 
-INTEGRATION_TEST_LIBRARIES = [
-    "asset",  # Basic case.
-    "credentials",  # Check that the capital name edge case is handled.
-    "iam",  # Mixin-only special-case API can build on its own.
-    "kms",  # Mixins, with an override in the proto file.
-    "pubsub",  # Special=case handling for "_deleted-topic_" resource name patterns.
-    "logging",  # Java package remapping in gapic.yaml.
-    "redis",  # Has a gapic.yaml.
-    "storage",  # Exercises storage-specific edge cases.
-    "library",  # No gRPC service config.
-    "compute",  # REGAPIC test.
-]
-
-# Keys must match the values in INTEGRATION_TEST_LIBRARIES above.
 API_GAPIC_TARGETS = {
+    # basic case
     "asset": "@com_google_googleapis//google/cloud/asset/v1:asset_java_gapic",
+    # Check that the capital name edge case is handled.
     "credentials": "@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic",
-    "iam": ":iam_java_gapic",  # Googleapis' LRO does not have a Java Gapic.
-    "kms": ":kms_java_gapic",  # Local target because mixins are not rolled out yet.
+    # Mixin-only special-case API can build on its own.
+    "iam": ":iam_java_gapic",  # Local target: Googleapis' LRO does not have a Java Gapic.
+    # mixins, with an override in the proto file
+    "kms": ":kms_java_gapic",  # Local target: mixins are not rolled out yet.
+    # Special=case handling for "_deleted-topic_" resource name patterns.
     "pubsub": ":pubsub_java_gapic",
+    # Java package remapping in gapic.yaml
     "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
+    # Has a gapic.yaml.
     "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
+    # Exercises storage-specific edge cases.
     "storage": "@com_google_googleapis//google/storage/v2:storage_java_gapic",
+    # No gRPC service config.
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
+    # REGAPIC test.
     "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
 }
 
@@ -49,20 +45,20 @@ API_GAPIC_TARGETS = {
     srcs = ["//scripts:diff_gen_and_golden.sh"],
     args = [lib_name],
     data = [
-      API_GAPIC_TARGETS[lib_name] + "_srcjar_raw.srcjar",
+      gapic_target + "_srcjar_raw.srcjar",
       "//test/integration/goldens/%s:goldens_files" % lib_name,
     ],
-) for lib_name in INTEGRATION_TEST_LIBRARIES]
+) for lib_name, gapic_target in API_GAPIC_TARGETS.items()]
 
 [sh_binary(
     name = "%s_update" % lib_name,
     srcs = ["//scripts:update_golden.sh"],
     args = [lib_name],
     data = [
-      API_GAPIC_TARGETS[lib_name] + "_srcjar_raw.srcjar",
+      gapic_target + "_srcjar_raw.srcjar",
       "//test/integration/goldens/%s:goldens_files" % lib_name,
     ],
-) for lib_name in INTEGRATION_TEST_LIBRARIES]
+) for lib_name, gapic_target in API_GAPIC_TARGETS.items()]
 
 ####################################################
 # API Library Rules
