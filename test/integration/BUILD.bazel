@@ -9,7 +9,6 @@ load(
     "java_gapic_assembly_gradle_pkg",
 )
 load("@rules_gapic//:gapic.bzl", "proto_library_with_info")
-load("//:rules_bazel/java/integration_test.bzl", "golden_update")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 package(default_visibility = ["//visibility:public"])
@@ -55,10 +54,14 @@ API_GAPIC_TARGETS = {
     ],
 ) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
-[golden_update(
+[sh_binary(
     name = "%s_update" % lib_name,
-    data = ["//test/integration/goldens/%s:goldens_files" % lib_name],
-    target = API_GAPIC_TARGETS[lib_name],
+    srcs = ["//scripts:update_golden.sh"],
+    args = [lib_name],
+    data = [
+      API_GAPIC_TARGETS[lib_name] + "_srcjar_raw.srcjar",
+      "//test/integration/goldens/%s:goldens_files" % lib_name,
+    ],
 ) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
 ####################################################
