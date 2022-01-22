@@ -33,7 +33,7 @@ jvm_maven_import_external(
 # which in its turn, prioritizes actual generated clients runtime dependencies
 # over the generator dependencies.
 
-_gax_java_version = "2.7.1"
+_gax_java_version = "2.10.0"
 
 http_archive(
     name = "com_google_api_gax_java",
