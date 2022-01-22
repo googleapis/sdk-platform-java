@@ -33,13 +33,12 @@ jvm_maven_import_external(
 # which in its turn, prioritizes actual generated clients runtime dependencies
 # over the generator dependencies.
 
-# TODO: cleanup once https://github.com/googleapis/gax-java/pull/1599 is merged
-_gax_java_version = "2e2da06134aa6ceefbb5b1d3726ca1fe1ad5c1db"
+_gax_java_version = "2.10.0"
 
 http_archive(
     name = "com_google_api_gax_java",
     strip_prefix = "gax-java-%s" % _gax_java_version,
-    urls = ["https://github.com/vam-google/gax-java/archive/%s.zip" % _gax_java_version],
+    urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
