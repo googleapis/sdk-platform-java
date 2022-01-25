@@ -10,6 +10,7 @@ pkg_tar(
     files = {
         "resources/gradle/gradle/wrapper/gradle-wrapper.jar": "gradle/wrapper/gradle-wrapper.jar",
         "resources/gradle/gradle/wrapper/gradle-wrapper.properties": "gradle/wrapper/gradle-wrapper.properties",
+        "resources/gradle/gradle.properties": "gradle.properties",
         "resources/gradle/gradlew": "gradlew",
         "resources/gradle/gradlew.bat": "gradlew.bat",
     },
