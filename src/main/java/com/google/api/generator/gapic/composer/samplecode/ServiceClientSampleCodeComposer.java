@@ -57,6 +57,7 @@ import com.google.common.base.Strings;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -296,7 +297,7 @@ public class ServiceClientSampleCodeComposer {
         String.format(
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
@@ -352,7 +353,7 @@ public class ServiceClientSampleCodeComposer {
         String.format(
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
@@ -464,7 +465,7 @@ public class ServiceClientSampleCodeComposer {
         String.format(
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
@@ -584,7 +585,7 @@ public class ServiceClientSampleCodeComposer {
         String.format(
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
@@ -632,7 +633,7 @@ public class ServiceClientSampleCodeComposer {
         String.format(
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
+        DefaultValueComposer.createSimpleMessageBuilderValue(
             requestMessage, resourceNames, messageTypes);
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
@@ -1291,7 +1292,7 @@ public class ServiceClientSampleCodeComposer {
         arg ->
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(
-                    DefaultValueComposer.createDefaultValue(
+                    DefaultValueComposer.createResourceHelperValue(
                         resourceNames.get(arg.field().resourceReference().resourceTypeString()),
                         arg.field().resourceReference().isChildType(),
                         resourceNameList,
@@ -1303,7 +1304,8 @@ public class ServiceClientSampleCodeComposer {
         .map(
             arg ->
                 !isStringTypedResourceName(arg, resourceNames)
-                    ? DefaultValueComposer.createDefaultValue(arg, resourceNames, false)
+                    ? DefaultValueComposer.createMethodArgValue(
+                        arg, resourceNames, Collections.emptyMap(), Collections.emptyMap())
                     : stringResourceNameDefaultValueExpr.apply(arg))
         .collect(Collectors.toList());
   }

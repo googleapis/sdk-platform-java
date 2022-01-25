@@ -354,7 +354,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
           AssignmentExpr.builder()
               .setVariableExpr(responsesElementVarExpr.toBuilder().setIsDecl(true).build())
               .setValueExpr(
-                  DefaultValueComposer.createDefaultValue(
+                  DefaultValueComposer.createValue(
                       Field.builder()
                           .setType(repeatedResponseType)
                           .setName("responsesElement")
@@ -377,7 +377,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               method.name(), methodOutputMessage.name()));
 
       expectedResponseValExpr =
-          DefaultValueComposer.createSimplePagedResponse(
+          DefaultValueComposer.createSimplePagedResponseValue(
               method.outputType(),
               firstRepeatedField.name(),
               responsesElementVarExpr,
@@ -385,7 +385,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     } else {
       if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
         expectedResponseValExpr =
-            DefaultValueComposer.createSimpleMessageBuilderExpr(
+            DefaultValueComposer.createSimpleMessageBuilderValue(
                 messageTypes.get(methodOutputType.reference().fullName()),
                 resourceNames,
                 messageTypes);
@@ -393,7 +393,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         // Wrap this in a field so we don't have to split the helper into lots of different methods,
         // or duplicate it for VariableExpr.
         expectedResponseValExpr =
-            DefaultValueComposer.createDefaultValue(
+            DefaultValueComposer.createValue(
                 Field.builder()
                     .setType(methodOutputType)
                     .setIsMessage(true)
@@ -422,7 +422,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
           AssignmentExpr.builder()
               .setVariableExpr(resultOperationVarExpr.toBuilder().setIsDecl(true).build())
               .setValueExpr(
-                  DefaultValueComposer.createSimpleOperationBuilderExpr(
+                  DefaultValueComposer.createSimpleOperationBuilderValue(
                       String.format("%sTest", JavaStyle.toLowerCamelCase(method.name())),
                       expectedResponseVarExpr))
               .build());
@@ -457,22 +457,32 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       argExprs.add(requestVarExpr);
       requestMessage = messageTypes.get(method.inputType().reference().fullName());
       Preconditions.checkNotNull(requestMessage);
+      Map<String, String> pathParamValuePatterns = Collections.emptyMap();
+      if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
+        pathParamValuePatterns = method.httpBindings().getPathParametersValuePatterns();
+      }
       Expr valExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
-              requestMessage, resourceNames, messageTypes);
+          DefaultValueComposer.createSimpleMessageBuilderValue(
+              requestMessage, resourceNames, messageTypes, pathParamValuePatterns);
       methodExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
               .setValueExpr(valExpr)
               .build());
     } else {
+      Map<String, String> valuePatterns = Collections.emptyMap();
+      if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
+        valuePatterns = method.httpBindings().getPathParametersValuePatterns();
+      }
       for (MethodArgument methodArg : methodSignature) {
         String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
-        Expr valExpr = createDefaultValue(methodArg, resourceNames);
+        Expr valExpr =
+            DefaultValueComposer.createMethodArgValue(
+                methodArg, resourceNames, messageTypes, valuePatterns);
         methodExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -737,9 +747,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes);
 
-  protected abstract Expr createDefaultValue(
-      MethodArgument methodArg, Map<String, ResourceName> resourceNames);
-
   protected List<Statement> createRpcExceptionTestStatements(
       Method method,
       List<MethodArgument> methodSignature,
@@ -748,6 +755,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Map<String, Message> messageTypes) {
     List<VariableExpr> argVarExprs = new ArrayList<>();
     List<Expr> tryBodyExprs = new ArrayList<>();
+
     if (methodSignature.isEmpty()) {
       // Construct the actual request.
       VariableExpr varExpr =
@@ -756,22 +764,32 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       argVarExprs.add(varExpr);
       Message requestMessage = messageTypes.get(method.inputType().reference().fullName());
       Preconditions.checkNotNull(requestMessage);
+      Map<String, String> valuePatterns = Collections.emptyMap();
+      if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
+        valuePatterns = method.httpBindings().getPathParametersValuePatterns();
+      }
       Expr valExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
-              requestMessage, resourceNames, messageTypes);
+          DefaultValueComposer.createSimpleMessageBuilderValue(
+              requestMessage, resourceNames, messageTypes, valuePatterns);
       tryBodyExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
               .setValueExpr(valExpr)
               .build());
     } else {
+      Map<String, String> valuePatterns = Collections.emptyMap();
+      if (getTransportContext().useValuePatterns() && method.hasHttpBindings()) {
+        valuePatterns = method.httpBindings().getPathParametersValuePatterns();
+      }
       for (MethodArgument methodArg : methodSignature) {
         String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
-        Expr valExpr = createDefaultValue(methodArg, resourceNames);
+        Expr valExpr =
+            DefaultValueComposer.createMethodArgValue(
+                methodArg, resourceNames, messageTypes, valuePatterns);
         tryBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())

@@ -189,6 +189,28 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
   protected abstract MethodDefinition createOperationCallableMethod(
       Service service, TypeStore typeStore);
 
+  protected MethodDefinition createServerStreamingCallableMethod(
+      Service service, TypeStore typeStore) {
+    String methodVariantName = "ServerStreaming";
+    String requestTemplateName = "RequestT";
+    String responseTemplateName = "ResponseT";
+    List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
+    return createGenericCallableMethod(
+        service,
+        typeStore,
+        /*methodTemplateNames=*/ methodTemplateNames,
+        /*returnCallableKindName=*/ methodVariantName,
+        /*returnCallableTemplateNames=*/ methodTemplateNames,
+        /*methodVariantName=*/ methodVariantName,
+        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+            .map(n -> (Object) n)
+            .collect(Collectors.toList()),
+        /*callSettingsVariantName=*/ methodVariantName,
+        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+            .map(n -> (Object) n)
+            .collect(Collectors.toList()));
+  }
+
   protected MethodDefinition createGenericCallableMethod(
       Service service,
       TypeStore typeStore,

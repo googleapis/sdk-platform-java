@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer.rest;
 import com.google.api.client.http.HttpMethods;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
 import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonLongRunningClient;
@@ -143,6 +144,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .apply(expr);
 
     expr = methodMaker.apply("setHttpMethod", getHttpMethodTypeExpr(protoMethod)).apply(expr);
+    expr = methodMaker.apply("setType", getMethodTypeExpr(protoMethod)).apply(expr);
     expr =
         methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
@@ -338,7 +340,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 Arrays.asList(
                     ValueExpr.withValue(
                         StringObjectValue.withValue(
-                            protoMethod.httpBindings().patternLowerCamel())),
+                            protoMethod.httpBindings().lowerCamelPattern())),
                     createFieldsExtractorClassInstance(
                         protoMethod,
                         extractorVarType,
@@ -976,6 +978,36 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setType(
                 TypeNode.withReference(
                     ConcreteReference.builder().setClazz(HttpMethods.class).build()))
+            .build();
+    return Collections.singletonList(expr);
+  }
+
+  private List<Expr> getMethodTypeExpr(Method protoMethod) {
+    MethodType methodType;
+    switch (protoMethod.stream()) {
+      case NONE:
+        methodType = MethodType.UNARY;
+        break;
+      case SERVER:
+        methodType = MethodType.SERVER_STREAMING;
+        break;
+      case CLIENT:
+        // Not feasible to suppor in REST
+      case BIDI:
+        // Not feasible to suppor in REST
+      default:
+        throw new UnsupportedOperationException(
+            String.format(
+                "Methods of type %s are not supported by REST transport", protoMethod.stream()));
+    }
+    EnumRefExpr expr =
+        EnumRefExpr.builder()
+            .setName(methodType.toString())
+            .setType(
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(ApiMethodDescriptor.MethodType.class)
+                        .build()))
             .build();
     return Collections.singletonList(expr);
   }
