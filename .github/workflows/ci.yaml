@@ -89,7 +89,7 @@ jobs:
         run: bazel coverage  $(bazel query "src/test/..." | grep "Test$")  --combined_report=lcov
 
       - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
           name: actions ${{ matrix.java }}
           files: ./bazel-out/_coverage/_coverage_report.dat
