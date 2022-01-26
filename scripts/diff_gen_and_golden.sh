@@ -8,9 +8,9 @@ RAW_SRCJAR=$( find . -name '*_java_gapic_srcjar_raw.srcjar' )
 mkdir unpacked src
 cd unpacked
 unzip -q -c "../${RAW_SRCJAR}" temp-codegen.srcjar | jar x
-cp -rf src/main/java/* ../src
-cp -rf src/test/java/* ../src
-[ -d proto ] && cp -rf proto/src/main/java/* ../src
+cp -r src/main/java/* ../src
+cp -r src/test/java/* ../src
+[ -d proto ] && cp -r proto/src/main/java/* ../src
 cd ..
 
 # Remove unneeded non-Java files, like MANIFEST
