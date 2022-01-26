@@ -1,13 +1,11 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
-load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
+load("//:rules_bazel/unit_golden_update.bzl", "golden_update")
 
 package(default_visibility = ["//visibility:public"])
 
-UPDATE_GOLDENS_TESTS = [
+TESTS = [
     "ComposerTest",
 ]
-
-TESTS = UPDATE_GOLDENS_TESTS
 
 TEST_DEPS = [
     ":common_resources_java_proto",
@@ -60,14 +58,14 @@ java_proto_library(
 [java_test(
     name = test_name,
     srcs = [
-        "{0}.java".format(test_name),
+        "%s.java" % test_name,
     ],
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
+    test_class = "com.google.api.generator.gapic.composer.%s" % test_name,
     deps = TEST_DEPS,
 ) for test_name in TESTS]
 
@@ -76,15 +74,15 @@ java_proto_library(
 # `ServiceClient*` tests are not supported now since they are still in active development.
 
 [golden_update(
-    name = "{0}_update".format(test_name),
+    name = "%s_update" % test_name,
     srcs = [
-        "{0}.java".format(test_name),
+        "%s.java" % test_name,
     ],
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
+    test_class = "com.google.api.generator.gapic.composer.%s" % test_name,
     deps = TEST_DEPS,
-) for test_name in UPDATE_GOLDENS_TESTS]
+) for test_name in TESTS]
