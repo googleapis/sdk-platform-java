@@ -21,8 +21,7 @@ import java.nio.file.Paths;
 
 public class Utils {
   /**
-   * Save the generated code from JUnit test to a file for updating goldens. These files will be
-   * saved as a zip file, then unzipped to overwrite goldens files. The relative path
+   * Save the generated code from JUnit test to a file for updating goldens. The relative path
    * `com/google/..` which is identical with the location of goldens files which will help us easily
    * replace the original goldens. For example:
    * `src/test/java/com/google/api/generator/gapic/composer/ComposerTest.java` will save the
@@ -30,24 +29,26 @@ public class Utils {
    * `$TEST_OUTPUT_HOME/com/google/api/generator/gapic/composer/goldens/ComposerTest.golden`.
    *
    * @param clazz the test class.
-   * @param fileName the name of saved file, usually it is test method name with suffix `.golden`.
-   * @param codegen the generated code from JUnit test.
+   * @param fileName the name of saved file, usually a test method name with suffix `.golden`
+   * @param codegen the generated code from JUnit test
    */
   public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
     // This system environment variable `TEST_OUTPUT_HOME` is used to specify a folder
-    // which contains generated output from JUnit test.
-    // It will be set when running `bazel run testTarget_update` command.
-    String testOutputHome = System.getenv("TEST_OUTPUT_HOME");
+    // which contains generated output from JUnit test. However, when running `bazel run
+    // testTarget_update` command, the environment variable will be ignored, and the correct
+    // folder in the workspace will be auto-detected.
+    String workspaceDir = System.getenv("BUILD_WORKSPACE_DIRECTORY");
+    String testOutputHome =
+        workspaceDir != null ? workspaceDir + "/src/test/java" : System.getenv("TEST_OUTPUT_HOME");
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
     Path testOutputDir = Paths.get(testOutputHome, relativeGoldenDir);
     testOutputDir.toFile().mkdirs();
-    try (FileWriter myWriter =
-        new FileWriter(Paths.get(testOutputHome, relativeGoldenDir, fileName).toFile())) {
+    try (FileWriter myWriter = new FileWriter(testOutputDir.resolve(fileName).toFile())) {
       myWriter.write(codegen);
     } catch (IOException e) {
       throw new SaveCodegenToFileException(
           String.format(
-              "Error occured when saving codegen to file %s/%s", relativeGoldenDir, fileName));
+              "Error occurred when saving codegen to file %s/%s", relativeGoldenDir, fileName));
     }
   }
 
@@ -56,20 +57,12 @@ public class Utils {
   }
 
   public static String getGoldenDir(Class<?> clazz) {
-    return "src/test/java/" + clazz.getPackage().getName().replace(".", "/") + "/goldens/";
-  }
-
-  public static String getClassName(Class<?> clazz) {
-    return clazz.getSimpleName();
+    return "src/test/java/" + getTestoutGoldenDir(clazz);
   }
 
   public static class SaveCodegenToFileException extends RuntimeException {
     public SaveCodegenToFileException(String errorMessage) {
       super(errorMessage);
-    }
-
-    public SaveCodegenToFileException(String errorMessage, Throwable cause) {
-      super(errorMessage, cause);
     }
   }
 }
