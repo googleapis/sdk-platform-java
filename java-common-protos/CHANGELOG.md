@@ -1,5 +1,20 @@
 # Changelog
 
+### [2.7.2](https://github.com/googleapis/java-common-protos/compare/v2.7.1...v2.7.2) (2022-01-27)
+
+
+### Dependencies
+
+* **java:** update actions/github-script action to v5 ([#1339](https://github.com/googleapis/java-common-protos/issues/1339)) ([#302](https://github.com/googleapis/java-common-protos/issues/302)) ([f958511](https://github.com/googleapis/java-common-protos/commit/f958511d71d0a0977ce54a5d66cb5f59fd141455))
+* update dependency com.google.protobuf:protobuf-bom to v3.19.3 ([#297](https://github.com/googleapis/java-common-protos/issues/297)) ([97a806d](https://github.com/googleapis/java-common-protos/commit/97a806d0bcc1c411a5e7df496fbdd856f8e8ff1d))
+* update dependency com.google.protobuf:protobuf-java to v3.19.3 ([#296](https://github.com/googleapis/java-common-protos/issues/296)) ([e53db58](https://github.com/googleapis/java-common-protos/commit/e53db5802c86070af4bd97835bbc850b1aecf7fe))
+* update dependency io.grpc:grpc-bom to v1.43.2 ([#290](https://github.com/googleapis/java-common-protos/issues/290)) ([4bdf68a](https://github.com/googleapis/java-common-protos/commit/4bdf68ad19e1b4408f8e76ff9cf0287ed5a72622))
+* update dependency io.grpc:grpc-bom to v1.44.0 ([#306](https://github.com/googleapis/java-common-protos/issues/306)) ([7041764](https://github.com/googleapis/java-common-protos/commit/70417647603bbffd541164c6e4dc593bb85d374a))
+* update dependency io.grpc:grpc-protobuf to v1.43.2 ([#291](https://github.com/googleapis/java-common-protos/issues/291)) ([6832de8](https://github.com/googleapis/java-common-protos/commit/6832de8953d49e17c97cae9b714a353a0e085288))
+* update dependency io.grpc:grpc-protobuf to v1.44.0 ([#304](https://github.com/googleapis/java-common-protos/issues/304)) ([db429bf](https://github.com/googleapis/java-common-protos/commit/db429bfd7325e7f908851eaa920058f2faadc3e1))
+* update dependency io.grpc:grpc-stub to v1.43.2 ([#289](https://github.com/googleapis/java-common-protos/issues/289)) ([89c245a](https://github.com/googleapis/java-common-protos/commit/89c245a37ce8b62dc3cbd35f9fd07785f64d35b2))
+* update dependency io.grpc:grpc-stub to v1.44.0 ([#305](https://github.com/googleapis/java-common-protos/issues/305)) ([a085bac](https://github.com/googleapis/java-common-protos/commit/a085bace22b154648f28baa81979804f75245c5d))
+
 ### [2.7.1](https://www.github.com/googleapis/java-common-protos/compare/v2.7.0...v2.7.1) (2022-01-05)
 
 
