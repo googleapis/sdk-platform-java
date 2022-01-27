@@ -27,9 +27,7 @@ java_library(
 
 java_library(
     name = "junit_runner",
-    srcs = [
-        "SingleJUnitTestRunner.java",
-    ],
+    srcs = ["SingleJUnitTestRunner.java"],
     deps = [
         ":utils",
         "@junit_junit//jar",
