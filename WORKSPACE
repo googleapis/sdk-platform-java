@@ -52,14 +52,6 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-load("//:repository_rules.bzl", "gapic_generator_java_properties")
-
-gapic_generator_java_properties(
-    name = "gapic_generator_java_properties",
-    file = "//:dependencies.properties",
-)
-
-load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
 load("//:repositories.bzl", "gapic_generator_java_repositories")
 
 gapic_generator_java_repositories()
