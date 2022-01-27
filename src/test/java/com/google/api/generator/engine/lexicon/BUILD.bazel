@@ -1,6 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_test")
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//:__pkg__"])
 
 TESTS = [
     "InvalidSymbolTest",
@@ -9,11 +9,6 @@ TESTS = [
     "OperatorTest",
     "SeparatorTest",
 ]
-
-filegroup(
-    name = "lexicon_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 [java_test(
     name = test_name,

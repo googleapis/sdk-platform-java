@@ -326,7 +326,6 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return operationsStubType;
   }
 
-
   private TypeStore createTypes(Service service) {
     List<Class<?>> concreteClazzes =
         Arrays.asList(

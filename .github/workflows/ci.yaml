@@ -73,7 +73,7 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
-        run: bazel --batch  build //:google_java_format_verification
+        run: bazel --batch run //:google_java_format_verification
 
   coverage:
     runs-on: ubuntu-latest
@@ -86,7 +86,7 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage  $(bazel query "src/test/..." | grep "Test$")  --combined_report=lcov
+        run: bazel coverage $(bazel query "src/test/..." | grep "Test$") --combined_report=lcov
 
       - name: Upload Code Coverage Report
         uses: codecov/codecov-action@v1

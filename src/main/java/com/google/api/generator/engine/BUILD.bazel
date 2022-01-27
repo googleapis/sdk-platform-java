@@ -1,17 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "engine_files",
-    srcs = [
-        "//src/main/java/com/google/api/generator/engine/ast:ast_files",
-        "//src/main/java/com/google/api/generator/engine/escaper:escaper_files",
-        "//src/main/java/com/google/api/generator/engine/lexicon:lexicon_files",
-        "//src/main/java/com/google/api/generator/engine/writer:writer_files",
-    ],
-)
-
 java_library(
     name = "engine",
     runtime_deps = [

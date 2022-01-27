@@ -1,7 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 TESTS = [
     "BatchingSettingsConfigParserTest",
     "GapicLanguageSettingsParserTest",
@@ -17,11 +15,6 @@ TESTS = [
     "SourceCodeInfoParserTest",
     "TypeParserTest",
 ]
-
-filegroup(
-    name = "protoparser_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 [java_test(
     name = test_name,
