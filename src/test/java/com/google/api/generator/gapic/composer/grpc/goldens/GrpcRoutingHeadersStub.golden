@@ -4,12 +4,13 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
-import com.google.api.gax.grpc.RoutingHeaderParamsBuilder;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
 import com.google.explicit.dynamic.routing.header.Request;
+import com.google.explicit.dynamic.routing.header.RequestWithNestedField;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.protobuf.Empty;
 import io.grpc.MethodDescriptor;
@@ -145,6 +146,17 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<RequestWithNestedField, Empty>
+      nestedFieldTestMethodDescriptor =
+          MethodDescriptor.<RequestWithNestedField, Empty>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(
+                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/NestedFieldTest")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(RequestWithNestedField.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .build();
+
   private final UnaryCallable<Request, Empty> example1TestCallable;
   private final UnaryCallable<Request, Empty> example2TestCallable;
   private final UnaryCallable<Request, Empty> example3TestCallable;
@@ -158,52 +170,55 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
   private final UnaryCallable<Request, Empty> backwardsCompatible1TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible2TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible3TestCallable;
+  private final UnaryCallable<RequestWithNestedField, Empty> nestedFieldTestCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
   private final GrpcStubCallableFactory callableFactory;
 
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE1TEST_0 =
+  private static final PathTemplate EXAMPLE1_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{app_profile_id=**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE2TEST_0 =
+  private static final PathTemplate EXAMPLE2_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE3TEST_0 =
+  private static final PathTemplate EXAMPLE3_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{table_name=projects/*/instances/*/**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE3CTEST_0 =
+  private static final PathTemplate EXAMPLE3_C_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{table_name=regions/*/zones/*/**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE3CTEST_1 =
+  private static final PathTemplate EXAMPLE3_C_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("{table_name=projects/*/instances/*/**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE4TEST_0 =
+  private static final PathTemplate EXAMPLE4_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=projects/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE5TEST_0 =
+  private static final PathTemplate EXAMPLE5_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=projects/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE5TEST_1 =
+  private static final PathTemplate EXAMPLE5_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=projects/*/instances/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE6TEST_0 =
+  private static final PathTemplate EXAMPLE6_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{project_id=projects/*}/instances/*/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE6TEST_1 =
+  private static final PathTemplate EXAMPLE6_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("projects/*/{instance_id=instances/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE7TEST_0 =
+  private static final PathTemplate EXAMPLE7_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{project_id=projects/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE7TEST_1 =
+  private static final PathTemplate EXAMPLE7_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE8TEST_0 =
+  private static final PathTemplate EXAMPLE8_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=projects/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE8TEST_1 =
+  private static final PathTemplate EXAMPLE8_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=regions/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE8TEST_2 =
+  private static final PathTemplate EXAMPLE8_TEST_2_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE9TEST_0 =
+  private static final PathTemplate EXAMPLE9_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("projects/*/{table_location=instances/*}/tables/*");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE9TEST_1 =
+  private static final PathTemplate EXAMPLE9_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("{table_location=regions/*/zones/*}/tables/*");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE9TEST_2 =
+  private static final PathTemplate EXAMPLE9_TEST_2_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=projects/*}/**");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE9TEST_3 =
+  private static final PathTemplate EXAMPLE9_TEST_3_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=**}");
-  private static final PathTemplate PATH_TEMPLATE_EXAMPLE9TEST_4 =
+  private static final PathTemplate EXAMPLE9_TEST_4_PATH_TEMPLATE =
       PathTemplate.create("profiles/{routing_id=*}");
-  private static final PathTemplate PATH_TEMPLATE_BACKWARDSCOMPATIBLE1TEST_0 =
+  private static final PathTemplate BACKWARDS_COMPATIBLE1_TEST_0_PATH_TEMPLATE =
+      PathTemplate.create("{routing_id=projects/*}/**");
+  private static final PathTemplate NESTED_FIELD_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("{routing_id=projects/*}/**");
 
   public static final GrpcExplicitDynamicRoutingHeaderTestingStub create(
@@ -255,13 +270,9 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example1TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getAppProfileId() != null) {
-                    builder.add(
-                        String.valueOf(request.getAppProfileId()),
-                        "app_profile_id",
-                        PATH_TEMPLATE_EXAMPLE1TEST_0);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(
+                      request.getAppProfileId(), "app_profile_id", EXAMPLE1_TEST_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -270,13 +281,9 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example2TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getAppProfileId() != null) {
-                    builder.add(
-                        String.valueOf(request.getAppProfileId()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE2TEST_0);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(
+                      request.getAppProfileId(), "routing_id", EXAMPLE2_TEST_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -285,13 +292,8 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example3TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "table_name",
-                        PATH_TEMPLATE_EXAMPLE3TEST_0);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "table_name", EXAMPLE3_TEST_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -300,19 +302,11 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example3CTestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "table_name",
-                        PATH_TEMPLATE_EXAMPLE3CTEST_0);
-                  }
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "table_name",
-                        PATH_TEMPLATE_EXAMPLE3CTEST_1);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(
+                      request.getTableName(), "table_name", EXAMPLE3_C_TEST_0_PATH_TEMPLATE);
+                  builder.add(
+                      request.getTableName(), "table_name", EXAMPLE3_C_TEST_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -321,13 +315,8 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example4TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE4TEST_0);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "routing_id", EXAMPLE4_TEST_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -336,19 +325,9 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example5TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE5TEST_0);
-                  }
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE5TEST_1);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "routing_id", EXAMPLE5_TEST_0_PATH_TEMPLATE);
+                  builder.add(request.getTableName(), "routing_id", EXAMPLE5_TEST_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -357,19 +336,9 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example6TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "project_id",
-                        PATH_TEMPLATE_EXAMPLE6TEST_0);
-                  }
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "instance_id",
-                        PATH_TEMPLATE_EXAMPLE6TEST_1);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "project_id", EXAMPLE6_TEST_0_PATH_TEMPLATE);
+                  builder.add(request.getTableName(), "instance_id", EXAMPLE6_TEST_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -378,19 +347,10 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example7TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "project_id",
-                        PATH_TEMPLATE_EXAMPLE7TEST_0);
-                  }
-                  if (request.getAppProfileId() != null) {
-                    builder.add(
-                        String.valueOf(request.getAppProfileId()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE7TEST_1);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "project_id", EXAMPLE7_TEST_0_PATH_TEMPLATE);
+                  builder.add(
+                      request.getAppProfileId(), "routing_id", EXAMPLE7_TEST_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -399,25 +359,11 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example8TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE8TEST_0);
-                  }
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE8TEST_1);
-                  }
-                  if (request.getAppProfileId() != null) {
-                    builder.add(
-                        String.valueOf(request.getAppProfileId()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE8TEST_2);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "routing_id", EXAMPLE8_TEST_0_PATH_TEMPLATE);
+                  builder.add(request.getTableName(), "routing_id", EXAMPLE8_TEST_1_PATH_TEMPLATE);
+                  builder.add(
+                      request.getAppProfileId(), "routing_id", EXAMPLE8_TEST_2_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -426,37 +372,16 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(example9TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "table_location",
-                        PATH_TEMPLATE_EXAMPLE9TEST_0);
-                  }
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "table_location",
-                        PATH_TEMPLATE_EXAMPLE9TEST_1);
-                  }
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE9TEST_2);
-                  }
-                  if (request.getAppProfileId() != null) {
-                    builder.add(
-                        String.valueOf(request.getAppProfileId()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE9TEST_3);
-                  }
-                  if (request.getAppProfileId() != null) {
-                    builder.add(
-                        String.valueOf(request.getAppProfileId()),
-                        "routing_id",
-                        PATH_TEMPLATE_EXAMPLE9TEST_4);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(
+                      request.getTableName(), "table_location", EXAMPLE9_TEST_0_PATH_TEMPLATE);
+                  builder.add(
+                      request.getTableName(), "table_location", EXAMPLE9_TEST_1_PATH_TEMPLATE);
+                  builder.add(request.getTableName(), "routing_id", EXAMPLE9_TEST_2_PATH_TEMPLATE);
+                  builder.add(
+                      request.getAppProfileId(), "routing_id", EXAMPLE9_TEST_3_PATH_TEMPLATE);
+                  builder.add(
+                      request.getAppProfileId(), "routing_id", EXAMPLE9_TEST_4_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -465,24 +390,17 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setMethodDescriptor(backwardsCompatible1TestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getTableName() != null) {
-                    builder.add(
-                        String.valueOf(request.getTableName()),
-                        "routing_id",
-                        PATH_TEMPLATE_BACKWARDSCOMPATIBLE1TEST_0);
-                  }
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(
+                      request.getTableName(),
+                      "routing_id",
+                      BACKWARDS_COMPATIBLE1_TEST_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
     GrpcCallSettings<Request, Empty> backwardsCompatible2TestTransportSettings =
         GrpcCallSettings.<Request, Empty>newBuilder()
             .setMethodDescriptor(backwardsCompatible2TestMethodDescriptor)
-            .setParamsExtractor(
-                request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  return builder.build();
-                })
             .build();
     GrpcCallSettings<Request, Empty> backwardsCompatible3TestTransportSettings =
         GrpcCallSettings.<Request, Empty>newBuilder()
@@ -492,6 +410,22 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
                   params.put("table_name", String.valueOf(request.getTableName()));
                   return params.build();
+                })
+            .build();
+    GrpcCallSettings<RequestWithNestedField, Empty> nestedFieldTestTransportSettings =
+        GrpcCallSettings.<RequestWithNestedField, Empty>newBuilder()
+            .setMethodDescriptor(nestedFieldTestMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  if (request.getNestedField() != null
+                      && request.getNestedField().getAnotherNestedField() != null) {
+                    builder.add(
+                        request.getNestedField().getAnotherNestedField().getName(),
+                        "routing_id",
+                        NESTED_FIELD_TEST_0_PATH_TEMPLATE);
+                  }
+                  return builder.build();
                 })
             .build();
 
@@ -540,6 +474,9 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             backwardsCompatible3TestTransportSettings,
             settings.backwardsCompatible3TestSettings(),
             clientContext);
+    this.nestedFieldTestCallable =
+        callableFactory.createUnaryCallable(
+            nestedFieldTestTransportSettings, settings.nestedFieldTestSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -612,6 +549,11 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
   @Override
   public UnaryCallable<Request, Empty> backwardsCompatible3TestCallable() {
     return backwardsCompatible3TestCallable;
+  }
+
+  @Override
+  public UnaryCallable<RequestWithNestedField, Empty> nestedFieldTestCallable() {
+    return nestedFieldTestCallable;
   }
 
   @Override

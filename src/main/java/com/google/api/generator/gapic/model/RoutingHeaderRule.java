@@ -19,26 +19,31 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
+/**
+ * This model represents routing rules configured in rpc services. It will be used for generating
+ * the logic to match-and-extract field values from request, the extracted values will be
+ * concatenated to a request header that is used for routing purposes.
+ */
 @AutoValue
-public abstract class RoutingHeaders {
+public abstract class RoutingHeaderRule {
 
-  public abstract ImmutableList<RoutingHeader> routingHeadersList();
+  public abstract ImmutableList<RoutingHeaderParam> routingHeaderParams();
 
   public static Builder builder() {
-    return new AutoValue_RoutingHeaders.Builder().setRoutingHeadersList(ImmutableList.of());
+    return new AutoValue_RoutingHeaderRule.Builder().setRoutingHeaderParams(ImmutableList.of());
   }
 
   @AutoValue
-  public abstract static class RoutingHeader {
+  public abstract static class RoutingHeaderParam {
 
     public abstract String fieldName();
 
-    public abstract String name();
+    public abstract String key();
 
     public abstract String pattern();
 
-    public static RoutingHeaders.RoutingHeader create(String field, String name, String pattern) {
-      return new AutoValue_RoutingHeaders_RoutingHeader(field, name, pattern);
+    public static RoutingHeaderParam create(String field, String key, String pattern) {
+      return new AutoValue_RoutingHeaderRule_RoutingHeaderParam(field, key, pattern);
     }
 
     public List<String> getDescendantFieldNames() {
@@ -48,15 +53,16 @@ public abstract class RoutingHeaders {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    abstract ImmutableList.Builder<RoutingHeader> routingHeadersListBuilder();
+    abstract ImmutableList.Builder<RoutingHeaderParam> routingHeaderParamsBuilder();
 
-    public final Builder addRoutingHeader(RoutingHeader routingHeader) {
-      routingHeadersListBuilder().add(routingHeader);
+    public final Builder addParam(RoutingHeaderParam routingHeaderParam) {
+      routingHeaderParamsBuilder().add(routingHeaderParam);
       return this;
     }
 
-    public abstract Builder setRoutingHeadersList(ImmutableList<RoutingHeader> routingHeadersList);
+    public abstract Builder setRoutingHeaderParams(
+        ImmutableList<RoutingHeaderParam> routingHeaderParams);
 
-    public abstract RoutingHeaders build();
+    public abstract RoutingHeaderRule build();
   }
 }

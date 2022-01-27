@@ -16,7 +16,8 @@ TESTS = [
     "ServiceYamlParserTest",
     "SourceCodeInfoParserTest",
     "TypeParserTest",
-    "RoutingRuleParserTest"
+    "RoutingRuleParserTest",
+    "PatternParserTest",
 ]
 
 filegroup(

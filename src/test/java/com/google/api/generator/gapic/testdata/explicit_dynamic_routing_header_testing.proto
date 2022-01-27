@@ -256,6 +256,15 @@ service ExplicitDynamicRoutingHeaderTesting {
       get: "/v1beta1/{table_name=tests/*}"
     };
   }
+
+  rpc NestedFieldTest(RequestWithNestedField) returns (google.protobuf.Empty) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "nested_field.another_nested_field.name"
+        path_template: "{routing_id=projects/*}/**"
+      }
+    };
+  }
 }
 
 
@@ -279,5 +288,17 @@ message Request {
   // - `profiles/<profile_id>`
   // - a legacy `profile_id` that can be any string
   string app_profile_id = 2;
+}
+
+message RequestWithNestedField {
+  NestedField nested_field = 1;
+}
+
+message NestedField {
+  AnotherNestedField another_nested_field = 1;
+}
+
+message AnotherNestedField {
+  string name = 1;
 }
 

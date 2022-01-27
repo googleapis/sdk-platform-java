@@ -25,8 +25,13 @@ import org.junit.Test;
 
 public class MessageTest {
 
-  public static final String MESSAGE_NAME = "TestMessage";
-  public static final Message.Builder TEST_MESSAGE_BUILDER =
+  private static final String SUB_FIELD_NAME = "table";
+  private static final String LEAF_FIELD_NAME = "size";
+  private static final String SUB_FIELD_TYPE = "TableFieldType";
+  public static final VaporReference FIELD_TYPE =
+      VaporReference.builder().setPakkage("com.google").setName(SUB_FIELD_TYPE).build();
+  private static final String MESSAGE_NAME = "TestMessage";
+  private static final Message.Builder testMessageBuilder =
       Message.builder()
           .setName(MESSAGE_NAME)
           .setFullProtoName("com.google.test.TestMessage")
@@ -34,22 +39,26 @@ public class MessageTest {
 
   @Test
   public void validateField_shouldThrowExceptionIfFieldNameIsEmpty() {
-    Message message = TEST_MESSAGE_BUILDER.build();
+    Message message = testMessageBuilder.build();
     IllegalStateException illegalStateException =
         assertThrows(
-            IllegalStateException.class, () -> message.validateField("", ImmutableMap.of()));
-    assertThat(illegalStateException.getMessage())
+            IllegalStateException.class,
+            () -> message.validateField("", ImmutableMap.of(), TypeNode.STRING));
+    assertThat(illegalStateException)
+        .hasMessageThat()
         .isEqualTo(String.format("Null or empty field name found for message %s", MESSAGE_NAME));
   }
 
   @Test
   public void validateField_shouldThrowExceptionIfFieldDoesNotExist() {
-    Message message = TEST_MESSAGE_BUILDER.build();
+    Message message = testMessageBuilder.build();
     String fieldName = "doesNotExist";
     NullPointerException nullPointerException =
         assertThrows(
-            NullPointerException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
-    assertThat(nullPointerException.getMessage())
+            NullPointerException.class,
+            () -> message.validateField(fieldName, ImmutableMap.of(), TypeNode.STRING));
+    assertThat(nullPointerException)
+        .hasMessageThat()
         .isEqualTo(
             String.format(
                 "Expected message %s to contain field %s but none found", MESSAGE_NAME, fieldName));
@@ -57,54 +66,86 @@ public class MessageTest {
 
   @Test
   public void validateField_shouldThrowExceptionIfMessageDoesNotExist() {
-    String subFieldName = "table";
-    String fieldTypeName = "doesNotMatter";
     Field subField =
         Field.builder()
-            .setName(subFieldName)
+            .setName(SUB_FIELD_NAME)
             .setType(
                 TypeNode.withReference(
                     VaporReference.builder()
                         .setPakkage("com.google")
-                        .setName(fieldTypeName)
+                        .setName(SUB_FIELD_TYPE)
                         .build()))
             .build();
     Message message =
-        TEST_MESSAGE_BUILDER.setFieldMap(ImmutableMap.of(subFieldName, subField)).build();
-    String fieldName = subFieldName + "." + "size";
+        testMessageBuilder.setFieldMap(ImmutableMap.of(SUB_FIELD_NAME, subField)).build();
+    String fieldName = SUB_FIELD_NAME + "." + LEAF_FIELD_NAME;
     NullPointerException nullPointerException =
         assertThrows(
-            NullPointerException.class, () -> message.validateField(fieldName, ImmutableMap.of()));
-    assertThat(nullPointerException.getMessage())
+            NullPointerException.class,
+            () -> message.validateField(fieldName, ImmutableMap.of(), TypeNode.STRING));
+    assertThat(nullPointerException)
+        .hasMessageThat()
         .isEqualTo(
             String.format(
                 "No containing message found for field %s with type %s",
-                subFieldName, fieldTypeName));
+                SUB_FIELD_NAME, SUB_FIELD_TYPE));
+  }
+
+  @Test
+  public void validateField_shouldThrowExceptionIfFieldIsRepeated() {
+    Field leafField =
+        Field.builder()
+            .setType(TypeNode.STRING)
+            .setIsRepeated(true)
+            .setName(LEAF_FIELD_NAME)
+            .build();
+    testLeafField(leafField);
+  }
+
+  @Test
+  public void validateField_shouldThrowExceptionIfFieldIsOfWrongType() {
+    Field leafField = Field.builder().setType(TypeNode.BOOLEAN).setName(LEAF_FIELD_NAME).build();
+    testLeafField(leafField);
+  }
+
+  private void testLeafField(Field leafField) {
+    Message subMessage = createSubMessage(leafField);
+    Map<String, Message> messageTypes = ImmutableMap.of(FIELD_TYPE.fullName(), subMessage);
+    IllegalStateException illegalStateException =
+        assertThrows(
+            IllegalStateException.class,
+            () ->
+                createdMessage()
+                    .validateField(
+                        SUB_FIELD_NAME + "." + LEAF_FIELD_NAME, messageTypes, TypeNode.STRING));
+    assertThat(illegalStateException)
+        .hasMessageThat()
+        .isEqualTo(
+            String.format(
+                "The type of field %s must be String and not repeated.", LEAF_FIELD_NAME));
   }
 
   @Test
   public void validateField_shouldNotThrowExceptionIfFieldExist() {
-    String subFieldName = "table";
-    String fieldTypeName = "TableFieldType";
-    VaporReference fieldType =
-        VaporReference.builder().setPakkage("com.google").setName(fieldTypeName).build();
+    Field leafField = Field.builder().setType(TypeNode.STRING).setName(LEAF_FIELD_NAME).build();
+    Message subMessage = createSubMessage(leafField);
+    Map<String, Message> messageTypes = ImmutableMap.of(FIELD_TYPE.fullName(), subMessage);
+    createdMessage()
+        .validateField(SUB_FIELD_NAME + "." + LEAF_FIELD_NAME, messageTypes, TypeNode.STRING);
+  }
+
+  private Message createdMessage() {
     Field subField =
-        Field.builder().setName(subFieldName).setType(TypeNode.withReference(fieldType)).build();
-    String subFieldName2 = "size";
-    String fieldName = subFieldName + "." + subFieldName2;
-    Message subMessage =
-        Message.builder()
-            .setName(fieldTypeName)
-            .setFullProtoName("com.google." + fieldTypeName)
-            .setType(TypeNode.OBJECT)
-            .setFieldMap(
-                ImmutableMap.of(
-                    subFieldName2,
-                    Field.builder().setType(TypeNode.STRING).setName(subFieldName2).build()))
-            .build();
-    Map<String, Message> messageTypes = ImmutableMap.of(fieldType.fullName(), subMessage);
-    Message message =
-        TEST_MESSAGE_BUILDER.setFieldMap(ImmutableMap.of(subFieldName, subField)).build();
-    message.validateField(fieldName, messageTypes);
+        Field.builder().setName(SUB_FIELD_NAME).setType(TypeNode.withReference(FIELD_TYPE)).build();
+    return testMessageBuilder.setFieldMap(ImmutableMap.of(SUB_FIELD_NAME, subField)).build();
+  }
+
+  private Message createSubMessage(Field leafField) {
+    return Message.builder()
+        .setName(SUB_FIELD_TYPE)
+        .setFullProtoName("com.google." + SUB_FIELD_TYPE)
+        .setType(TypeNode.OBJECT)
+        .setFieldMap(ImmutableMap.of(LEAF_FIELD_NAME, leafField))
+        .build();
   }
 }

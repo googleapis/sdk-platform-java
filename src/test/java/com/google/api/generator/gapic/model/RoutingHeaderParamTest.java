@@ -16,16 +16,17 @@ package com.google.api.generator.gapic.model;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.generator.gapic.model.RoutingHeaders.RoutingHeader;
+import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import java.util.List;
 import org.junit.Test;
 
-public class RoutingHeadersTest {
+public class RoutingHeaderParamTest {
 
   @Test
   public void getDescendantFieldNames_shouldSplitFieldNameByDot() {
-    RoutingHeader routingHeader = RoutingHeader.create("table.name", "name", "/abc/dec");
-    List<String> descendantFieldNames = routingHeader.getDescendantFieldNames();
+    RoutingHeaderParam routingHeaderParam =
+        RoutingHeaderParam.create("table.name", "name", "/abc/dec");
+    List<String> descendantFieldNames = routingHeaderParam.getDescendantFieldNames();
     assertThat(descendantFieldNames).containsExactly("table", "name");
   }
 }

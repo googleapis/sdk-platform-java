@@ -34,7 +34,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
-import com.google.api.generator.gapic.model.RoutingHeaders;
+import com.google.api.generator.gapic.model.RoutingHeaderRule;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
 import com.google.api.generator.gapic.model.Transport;
@@ -710,8 +710,7 @@ public class Parser {
                   .getOptions()
                   .getExtension(ExtendedOperationsProto.operationPollingMethod)
               : false;
-      // may not need to pass in messageTypes?
-      RoutingHeaders routingHeaders =
+      RoutingHeaderRule routingHeaderRule =
           RoutingRuleParser.parse(protoMethod, inputMessage, messageTypes);
       methods.add(
           methodBuilder
@@ -730,7 +729,7 @@ public class Parser {
                       resourceNames,
                       outputArgResourceNames))
               .setHttpBindings(httpBindings)
-              .setRoutingHeaders(routingHeaders)
+              .setRoutingHeaderRule(routingHeaderRule)
               .setIsBatching(isBatching)
               .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
               .setIsDeprecated(isDeprecated)

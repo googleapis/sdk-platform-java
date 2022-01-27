@@ -17,70 +17,50 @@ package com.google.api.generator.gapic.protoparser;
 import com.google.api.RoutingParameter;
 import com.google.api.RoutingProto;
 import com.google.api.RoutingRule;
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.RoutingHeaders;
-import com.google.api.generator.gapic.model.RoutingHeaders.RoutingHeader;
-import com.google.api.pathtemplate.PathTemplate;
+import com.google.api.generator.gapic.model.RoutingHeaderRule;
+import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableSortedSet;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class RoutingRuleParser {
 
-  public static RoutingHeaders parse(
+  public static RoutingHeaderRule parse(
       MethodDescriptor protoMethod, Message inputMessage, Map<String, Message> messageTypes) {
     MethodOptions methodOptions = protoMethod.getOptions();
-
-    RoutingHeaders.Builder builder = RoutingHeaders.builder();
     if (!methodOptions.hasExtension(RoutingProto.routing)) {
       return null;
     }
 
+    RoutingHeaderRule.Builder routingHeaderRuleBuilder = RoutingHeaderRule.builder();
     RoutingRule routingRule = methodOptions.getExtension(RoutingProto.routing);
-
     for (RoutingParameter routingParameter : routingRule.getRoutingParametersList()) {
       String pathTemplate = routingParameter.getPathTemplate();
-      String field = routingParameter.getField();
-      // validate if field exist in Message or nested Messages
-      inputMessage.validateField(field, messageTypes);
-      String name;
-      // if specified, the pattern must contain one and only one named segment
+      String fieldName = routingParameter.getField();
+      // validate if field exist in Message or nested Messages and the type of leaf level field
+      inputMessage.validateField(fieldName, messageTypes, TypeNode.STRING);
+      String key;
       if (Strings.isNullOrEmpty(pathTemplate)) {
-        name = field;
-        pathTemplate = String.format("{%s=**}", name);
+        key = fieldName;
+        pathTemplate = String.format("{%s=**}", key);
       } else {
-        Set<String> params = getPatternBindings(pathTemplate).build();
+        Set<String> namedSegments = PatternParser.getPattenBindings(pathTemplate);
         Preconditions.checkArgument(
-            params.size() == 1,
+            namedSegments.size() == 1,
             String.format(
                 "There needs to be one and only one named segment in path template %s",
                 pathTemplate));
-        name = params.iterator().next();
+        key = namedSegments.iterator().next();
       }
-
-      RoutingHeader routingHeader = RoutingHeader.create(field, name, pathTemplate);
-      builder.addRoutingHeader(routingHeader);
+      RoutingHeaderParam routingHeaderParam =
+          RoutingHeaderParam.create(fieldName, key, pathTemplate);
+      routingHeaderRuleBuilder.addParam(routingHeaderParam);
     }
-
-    return builder.build();
-  }
-
-  // TODO: duplicate of HttpRuleParser.getPatternBindings, move to a helper class
-  private static ImmutableSortedSet.Builder<String> getPatternBindings(String pattern) {
-    ImmutableSortedSet.Builder<String> bindings = ImmutableSortedSet.naturalOrder();
-    if (pattern.isEmpty()) {
-      return bindings;
-    }
-
-    PathTemplate template = PathTemplate.create(pattern);
-    // Filter out any unbound variable like "$0, $1, etc.
-    bindings.addAll(
-        template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toSet()));
-    return bindings;
+    return routingHeaderRuleBuilder.build();
   }
 }

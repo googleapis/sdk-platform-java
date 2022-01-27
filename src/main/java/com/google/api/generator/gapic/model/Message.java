@@ -84,7 +84,15 @@ public abstract class Message {
     return resource() != null;
   }
 
-  public void validateField(String fieldName, Map<String, Message> messageTypes) {
+  /**
+   * Validates if the field or fields exist in the message and the type of the leaf level field.
+   *
+   * @param fieldName The field name. For nested field, concatenate each field name with dot. For
+   *     example: abc.def.ghi
+   * @param messageTypes All messages configured in a rpc service.
+   * @param type {@link TypeNode} The expected type for the leaf level field
+   */
+  public void validateField(String fieldName, Map<String, Message> messageTypes, TypeNode type) {
     List<String> subFields = Splitter.on(".").splitToList(fieldName);
     Message nestedMessage = this;
     for (int i = 0; i < subFields.size(); i++) {
@@ -106,12 +114,9 @@ public abstract class Message {
                 "No containing message found for field %s with type %s",
                 field.name(), field.type().reference().simpleName()));
       } else {
-        // TODO: Type check for String or primitive?
         Preconditions.checkState(
-            !field.isRepeated() && field.type().isProtoPrimitiveType(),
-            String.format(
-                "The type of field %s must be primitive and not repeated.",
-                field.name()));
+            !field.isRepeated() && field.type().equals(type),
+            String.format("The type of field %s must be String and not repeated.", field.name()));
       }
     }
   }

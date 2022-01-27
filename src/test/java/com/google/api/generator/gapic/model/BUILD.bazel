@@ -7,7 +7,7 @@ TESTS = [
     "MethodArgumentTest",
     "MethodTest",
     "MessageTest",
-    "RoutingHeadersTest",
+    "RoutingHeaderParamTest",
 ]
 
 filegroup(

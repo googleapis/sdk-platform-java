@@ -8,8 +8,8 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
-import com.google.api.gax.grpc.RoutingHeaderParamsBuilder;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
@@ -144,9 +144,9 @@ public class GrpcTestingStub extends TestingStub {
   private final GrpcOperationsStub operationsStub;
   private final GrpcStubCallableFactory callableFactory;
 
-  private static final PathTemplate PATH_TEMPLATE_GETTEST_0 =
+  private static final PathTemplate GET_TEST_0_PATH_TEMPLATE =
       PathTemplate.create("/v1beta1/{rename=tests/*}");
-  private static final PathTemplate PATH_TEMPLATE_GETTEST_1 =
+  private static final PathTemplate GET_TEST_1_PATH_TEMPLATE =
       PathTemplate.create("/v1beta1/{routing_id=tests/*}");
 
   public static final GrpcTestingStub create(TestingStubSettings settings) throws IOException {
@@ -227,16 +227,11 @@ public class GrpcTestingStub extends TestingStub {
             .setMethodDescriptor(getTestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  RoutingHeaderParamsBuilder builder = new RoutingHeaderParamsBuilder();
-                  if (request.getName() != null) {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getName(), "rename", GET_TEST_0_PATH_TEMPLATE);
+                  if (request.getRouting() != null) {
                     builder.add(
-                        String.valueOf(request.getName()), "rename", PATH_TEMPLATE_GETTEST_0);
-                  }
-                  if (request.getRouting() != null && request.getRouting().getName() != null) {
-                    builder.add(
-                        String.valueOf(request.getRouting().getName()),
-                        "routing_id",
-                        PATH_TEMPLATE_GETTEST_1);
+                        request.getRouting().getName(), "routing_id", GET_TEST_1_PATH_TEMPLATE);
                   }
                   return builder.build();
                 })

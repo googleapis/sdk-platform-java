@@ -63,7 +63,7 @@ public abstract class Method {
   public abstract HttpBindings httpBindings();
 
   @Nullable
-  public abstract RoutingHeaders routingHeaders();
+  public abstract RoutingHeaderRule routingHeaderRule();
 
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
@@ -83,8 +83,12 @@ public abstract class Method {
     return httpBindings() != null && !httpBindings().pathParameters().isEmpty();
   }
 
-  public boolean hasRoutingHeaders() {
-    return routingHeaders() != null && !routingHeaders().routingHeadersList().isEmpty();
+  public boolean hasRoutingHeaderParams() {
+    return routingHeaderRule() != null && !routingHeaderRule().routingHeaderParams().isEmpty();
+  }
+
+  public boolean shouldSetParamsExtractor() {
+    return (hasHttpBindings() && routingHeaderRule() == null) || hasRoutingHeaderParams();
   }
 
   public boolean isMixin() {
@@ -147,7 +151,7 @@ public abstract class Method {
 
     public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
 
-    public abstract Builder setRoutingHeaders(RoutingHeaders routingHeaders);
+    public abstract Builder setRoutingHeaderRule(RoutingHeaderRule routingHeaderRule);
 
     public abstract Method build();
   }

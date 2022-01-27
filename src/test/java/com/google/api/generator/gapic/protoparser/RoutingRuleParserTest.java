@@ -18,8 +18,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.RoutingHeaders;
-import com.google.api.generator.gapic.model.RoutingHeaders.RoutingHeader;
+import com.google.api.generator.gapic.model.RoutingHeaderRule;
+import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import com.google.explicit.dynamic.routing.header.RoutingRuleParserTestingOuterClass;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -31,22 +31,21 @@ public class RoutingRuleParserTest {
 
   private static final FileDescriptor TESTING_FILE_DESCRIPTOR =
       RoutingRuleParserTestingOuterClass.getDescriptor();
-  private static final Map<String, Message> MESSAGES =
-      Parser.parseMessages(TESTING_FILE_DESCRIPTOR);
   private static final ServiceDescriptor TESTING_SERVICE =
       TESTING_FILE_DESCRIPTOR.getServices().get(0);
 
   @Test
   public void parse_shouldReturnNullRoutingHeadersIfMethodHasNoRoutingRules() {
-    RoutingHeaders actual = getRoutingHeaders(0);
+    RoutingHeaderRule actual = getRoutingHeaders(0);
     assertThat(actual).isNull();
   }
 
   @Test
   public void parse_shouldSetPathTemplateToWildcardIfNotDefined() {
-    RoutingHeaders actual = getRoutingHeaders(1);
-    RoutingHeader expected = RoutingHeader.create("name", "name", String.format("{%s=**}", "name"));
-    assertThat(actual.routingHeadersList()).containsExactly(expected);
+    RoutingHeaderRule actual = getRoutingHeaders(1);
+    RoutingHeaderParam expected =
+        RoutingHeaderParam.create("name", "name", String.format("{%s=**}", "name"));
+    assertThat(actual.routingHeaderParams()).containsExactly(expected);
   }
 
   @Test
@@ -73,27 +72,30 @@ public class RoutingRuleParserTest {
 
   @Test
   public void parse_shouldParseRoutingRulesWithOneParameter() {
-    RoutingHeaders actual = getRoutingHeaders(4);
-    RoutingHeader expected = RoutingHeader.create("name", "rename", "/v1beta1/{rename=tests/*}");
-    assertThat(actual.routingHeadersList()).containsExactly(expected);
+    RoutingHeaderRule actual = getRoutingHeaders(4);
+    RoutingHeaderParam expected =
+        RoutingHeaderParam.create("name", "rename", "/v1beta1/{rename=tests/*}");
+    assertThat(actual.routingHeaderParams()).containsExactly(expected);
   }
 
   @Test
   public void parse_shouldParseRoutingRulesWithMultipleParameter() {
-    RoutingHeaders actual = getRoutingHeaders(5);
-    RoutingHeader expectedHeader1 =
-        RoutingHeader.create("name", "rename", "/v1beta1/{rename=tests/*}");
-    RoutingHeader expectedHeader2 =
-        RoutingHeader.create("routing_id", "id", "/v1beta1/{id=projects/*}/tables/*");
-    assertThat(actual.routingHeadersList()).containsExactly(expectedHeader1, expectedHeader2);
+    RoutingHeaderRule actual = getRoutingHeaders(5);
+    RoutingHeaderParam expectedHeader1 =
+        RoutingHeaderParam.create("name", "rename", "/v1beta1/{rename=tests/*}");
+    RoutingHeaderParam expectedHeader2 =
+        RoutingHeaderParam.create("routing_id", "id", "/v1beta1/{id=projects/*}/tables/*");
+    assertThat(actual.routingHeaderParams())
+        .containsExactly(expectedHeader1, expectedHeader2)
+        .inOrder();
   }
 
   @Test
   public void parse_shouldParseRoutingRulesWithNestedFields() {
-    RoutingHeaders actual = getRoutingHeaders(6);
-    RoutingHeader expectedHeader1 =
-        RoutingHeader.create("account.name", "rename", "/v1beta1/{rename=tests/*}");
-    assertThat(actual.routingHeadersList()).containsExactly(expectedHeader1);
+    RoutingHeaderRule actual = getRoutingHeaders(6);
+    RoutingHeaderParam expectedHeader1 =
+        RoutingHeaderParam.create("account.name", "rename", "/v1beta1/{rename=tests/*}");
+    assertThat(actual.routingHeaderParams()).containsExactly(expectedHeader1);
   }
 
   @Test
@@ -101,9 +103,10 @@ public class RoutingRuleParserTest {
     assertThrows(Exception.class, () -> getRoutingHeaders(7));
   }
 
-  private RoutingHeaders getRoutingHeaders(int testingIndex) {
+  private RoutingHeaderRule getRoutingHeaders(int testingIndex) {
     MethodDescriptor rpcMethod = TESTING_SERVICE.getMethods().get(testingIndex);
-    Message inputMessage = MESSAGES.get("com." + rpcMethod.getInputType().getFullName());
-    return RoutingRuleParser.parse(rpcMethod, inputMessage, MESSAGES);
+    Map<String, Message> messages = Parser.parseMessages(TESTING_FILE_DESCRIPTOR);
+    Message inputMessage = messages.get("com." + rpcMethod.getInputType().getFullName());
+    return RoutingRuleParser.parse(rpcMethod, inputMessage, messages);
   }
 }
