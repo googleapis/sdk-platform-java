@@ -178,11 +178,9 @@ public class BatchingDescriptorComposerTest {
   }
 
   private static Method findMethod(Service service, String methodName) {
-    for (Method m : service.methods()) {
-      if (m.name().equals(methodName)) {
-        return m;
-      }
-    }
-    return null;
+    return service.methods().stream()
+        .filter(m -> m.name().equals(methodName))
+        .findFirst()
+        .orElse(null);
   }
 }

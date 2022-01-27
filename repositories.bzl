@@ -15,7 +15,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("//:PROPERTIES.bzl", "PROPERTIES")
 
 def gapic_generator_java_repositories():
     # Import dependencies shared between Gradle and Bazel (i.e. maven dependencies)
