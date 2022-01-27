@@ -15,6 +15,19 @@ http_archive(
     ],
 )
 
+jvm_maven_import_external(
+    name = "google_java_format_all_deps",
+    artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
+    licenses = [
+        "notice",
+        "reciprocal",
+    ],
+    server_urls = [
+        "https://repo.maven.apache.org/maven2/",
+        "http://repo1.maven.org/maven2/",
+    ],
+)
+
 # gax-java and its transitive dependencies must be imported before
 # gapic-generator-java dependencies to match the order in googleapis repository,
 # which in its turn, prioritizes actual generated clients runtime dependencies
@@ -59,10 +72,11 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "pr
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
-    artifacts = PROTOBUF_MAVEN_ARTIFACTS + [
-        "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
+    artifacts = PROTOBUF_MAVEN_ARTIFACTS,
+    generate_compat_repositories = True,
+    repositories = [
+        "https://repo.maven.apache.org/maven2/",
     ],
-    repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
 protobuf_deps()
