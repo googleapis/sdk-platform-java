@@ -45,19 +45,11 @@ public class SingleJUnitTestRunner {
     public JUnitClassNotFoundException(String errorMessage) {
       super(errorMessage);
     }
-
-    public JUnitClassNotFoundException(String errorMessage, Throwable cause) {
-      super(errorMessage, cause);
-    }
   }
 
   public static class MissingRequiredArgException extends RuntimeException {
     public MissingRequiredArgException(String errorMessage) {
       super(errorMessage);
-    }
-
-    public MissingRequiredArgException(String errorMessage, Throwable cause) {
-      super(errorMessage, cause);
     }
   }
 }

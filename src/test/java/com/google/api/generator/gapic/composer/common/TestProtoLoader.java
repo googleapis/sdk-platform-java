@@ -28,6 +28,7 @@ import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.bookshop.v1beta1.BookshopProto;
+import com.google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTestingOuterClass;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -197,6 +198,32 @@ public class TestProtoLoader {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseExplicitDynamicRoutingHeaderTesting() {
+    FileDescriptor testingFileDescriptor =
+        ExplicitDynamicRoutingHeaderTestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "ExplicitDynamicRoutingHeaderTesting");
 
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);

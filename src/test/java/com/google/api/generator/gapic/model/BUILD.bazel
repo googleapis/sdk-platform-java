@@ -1,17 +1,12 @@
 load("@rules_java//java:defs.bzl", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 TESTS = [
     "GapicServiceConfigTest",
     "MethodArgumentTest",
     "MethodTest",
+    "MessageTest",
+    "RoutingHeaderParamTest",
 ]
-
-filegroup(
-    name = "model_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 [java_test(
     name = test_name,

@@ -1,17 +1,10 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "ast_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_library(
     name = "ast",
-    srcs = [
-        ":ast_files",
-    ],
+    srcs = glob(["*.java"]),
     deps = [
         "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/engine/escaper",

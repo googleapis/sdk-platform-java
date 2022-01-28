@@ -1,17 +1,10 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "model_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_library(
     name = "model",
-    srcs = [
-        ":model_files",
-    ],
+    srcs = glob(["*.java"]),
     deps = [
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator:autovalue",

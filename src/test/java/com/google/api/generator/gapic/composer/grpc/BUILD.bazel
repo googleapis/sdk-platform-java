@@ -1,7 +1,4 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
-load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
-
-package(default_visibility = ["//visibility:public"])
 
 TESTS = [
     "GrpcServiceCallableFactoryClassComposerTest",
@@ -36,6 +33,7 @@ TEST_DEPS = [
     "//src/main/java/com/google/api/generator/gapic/protoparser",
     "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+    "//src/test/java/com/google/api/generator/gapic/testdata:explicit_dynamic_routing_headers_testing_java_proto",
     "@com_google_api_api_common//jar",
     "@com_google_api_gax_java//gax",
     "@com_google_api_api_common",
@@ -48,11 +46,6 @@ TEST_DEPS = [
     "@junit_junit//jar",
 ]
 
-filegroup(
-    name = "grpc_files",
-    srcs = glob(["*.java"]),
-)
-
 java_proto_library(
     name = "common_resources_java_proto",
     deps = [
@@ -64,14 +57,14 @@ java_proto_library(
     name = test_name,
     size = "medium",
     srcs = [
-        "{0}.java".format(test_name),
+        "%s.java" % test_name,
     ] + COMMON_SRCS,
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/grpc/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class = "com.google.api.generator.gapic.composer.grpc.{0}".format(test_name),
+    test_class = "com.google.api.generator.gapic.composer.grpc.%s" % test_name,
     deps = TEST_DEPS,
 ) for test_name in TESTS]
 
@@ -79,16 +72,16 @@ java_proto_library(
 # to update goldens as expected generated code.
 # `ServiceClient*` tests are not supported now since they are still in active development.
 
-[golden_update(
-    name = "{0}_update".format(test_name),
-    srcs = [
-        "{0}.java".format(test_name),
-    ] + COMMON_SRCS,
+[java_binary(
+    name = "%s_update" % test_name,
+    srcs = ["%s.java" % test_name] + COMMON_SRCS,
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/grpc/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class = "com.google.api.generator.gapic.composer.grpc.{0}".format(test_name),
+    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
+    args = ["com.google.api.generator.gapic.composer.grpc.%s" % test_name],
     deps = TEST_DEPS,
+    runtime_deps = ["//src/test/java/com/google/api/generator/test/framework:junit_runner"],
 ) for test_name in TESTS]
