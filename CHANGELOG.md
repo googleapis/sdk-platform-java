@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0](https://github.com/googleapis/gapic-generator-java/compare/v2.5.0...v2.6.0) (2022-01-28)
+
+
+### Features
+
+* Support explicit dynamic routing header ([#887](https://github.com/googleapis/gapic-generator-java/issues/887)) ([bcc1bdb](https://github.com/googleapis/gapic-generator-java/commit/bcc1bdb5fdf57d8843a03318d746df7d8392d848))
+
+
+### Bug Fixes
+
+* increase default memory for Gradle builds on generated libraries ([#907](https://github.com/googleapis/gapic-generator-java/issues/907)) ([d210aa1](https://github.com/googleapis/gapic-generator-java/commit/d210aa193d45ba5fbdea6ae5f31e471401c27cb7))
+
 ## [2.5.0](https://github.com/googleapis/gapic-generator-java/compare/v2.4.1...v2.5.0) (2022-01-22)
 
 
