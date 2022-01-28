@@ -1,27 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_proto_library")
-load(
-    "//:gapic_generator_java.bzl",
-    "google_java_format",
-    "google_java_format_verification",
-)
 
 package(default_visibility = ["//visibility:public"])
-
-JAVA_SRCS = [
-    "//src/main/java/com/google/api/generator/debug:debug_files",
-    "//src/main/java/com/google/api/generator:generator_files",
-    "//src/main/java/com/google/api/generator/engine:engine_files",
-    "//src/main/java/com/google/api/generator/gapic:gapic_files",
-    "//src/main/java/com/google/api/generator/util:util_files",
-]
-
-TEST_SRCS = [
-    "//src/test/java/com/google/api/generator/engine:engine_files",
-    "//src/test/java/com/google/api/generator/gapic:gapic_files",
-    "//src/test/java/com/google/api/generator/testutils:testutils_files",
-    "//src/test/java/com/google/api/generator/util:util_files",
-    "//src/test/java/com/google/api/generator/test/framework:framework_files",
-]
 
 # ============= Proto wrappers =================
 
@@ -104,21 +83,25 @@ java_binary(
     name = "google_java_format_binary",
     jvm_flags = ["-Xmx512m"],
     main_class = "com.google.googlejavaformat.java.Main",
-    visibility = ["//visibility:public"],
     runtime_deps = ["@google_java_format_all_deps//jar"],
+)
+
+genrule(
+    name = "google_java_format",
+    outs = ["google_java_format.sh"],
+    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --replace' > $(OUTS)",
+    executable = 1,
+    tools = [":google_java_format_binary"],
+    local = 1,
 )
 
 # Run `bazel build //:google_java_format_verification` to verify that gapic-generator-java sources
 # are formatted correctly.
-google_java_format_verification(
+genrule(
     name = "google_java_format_verification",
-    srcs = JAVA_SRCS + TEST_SRCS,
-    formatter = "//:google_java_format_binary",
-)
-
-# Run `bazel run //:google_java_format` to format gapic-generator-java sources.
-google_java_format(
-    name = "google_java_format",
-    srcs = JAVA_SRCS + TEST_SRCS,
-    formatter = "//:google_java_format_binary",
+    outs = ["google_java_format_verification.sh"],
+    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --dry-run --set-exit-if-changed' > $(OUTS)",
+    executable = 1,
+    tools = [":google_java_format_binary"],
+    local = 1,
 )

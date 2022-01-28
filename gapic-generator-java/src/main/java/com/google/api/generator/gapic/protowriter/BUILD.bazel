@@ -1,17 +1,10 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "protowriter_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_library(
     name = "protowriter",
-    srcs = [
-        ":protowriter_files",
-    ],
+    srcs = glob(["*.java"]),
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",

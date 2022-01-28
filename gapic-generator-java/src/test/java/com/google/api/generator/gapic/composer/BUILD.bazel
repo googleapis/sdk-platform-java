@@ -1,7 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 TESTS = [
     "ComposerTest",
 ]
@@ -34,11 +32,6 @@ TEST_DEPS = [
     "@com_google_truth_truth//jar",
     "@junit_junit//jar",
 ]
-
-filegroup(
-    name = "composer_files",
-    srcs = glob(["*.java"]),
-)
 
 java_proto_library(
     name = "pubsub_java_proto",

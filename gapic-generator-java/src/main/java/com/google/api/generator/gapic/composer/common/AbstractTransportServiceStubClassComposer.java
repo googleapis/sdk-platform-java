@@ -210,7 +210,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                     typeStore,
                     classMemberVarExprs,
                     callableClassMemberVarExprs,
-                    protoMethodNameToDescriptorVarExprs, classStatements))
+                    protoMethodNameToDescriptorVarExprs,
+                    classStatements))
             .setStatements(classStatements)
             .build();
     return GapicClass.create(kind, classDef);
@@ -248,7 +249,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   protected abstract Expr createTransportSettingsInitExpr(
-      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr,
+      Method method,
+      VariableExpr transportSettingsVarExpr,
+      VariableExpr methodDescriptorVarExpr,
       List<Statement> classStatements);
 
   protected List<MethodDefinition> createGetMethodDescriptorsMethod(
@@ -669,7 +672,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                         m,
                         javaStyleMethodNameToTransportSettingsVarExprs.get(
                             JavaStyle.toLowerCamelCase(m.name())),
-                        protoMethodNameToDescriptorVarExprs.get(m.name()), classStatements))
+                        protoMethodNameToDescriptorVarExprs.get(m.name()),
+                        classStatements))
             .collect(Collectors.toList()));
     secondCtorStatements.addAll(
         secondCtorExprs.stream().map(ExprStatement::withExpr).collect(Collectors.toList()));

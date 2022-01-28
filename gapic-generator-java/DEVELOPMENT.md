@@ -90,7 +90,7 @@
 -   Run linter checks without actually doing the formatting.
 
     ```sh
-    bazel build :google_java_format_verification
+    bazel run :google_java_format_verification
     ```
 
 -   Format files.

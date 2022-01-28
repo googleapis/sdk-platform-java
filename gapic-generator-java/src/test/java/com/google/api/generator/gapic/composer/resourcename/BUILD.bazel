@@ -1,7 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 UPDATE_GOLDENS_TESTS = [
     "ResourceNameHelperClassComposerTest",
 ]
@@ -9,11 +7,6 @@ UPDATE_GOLDENS_TESTS = [
 TESTS = UPDATE_GOLDENS_TESTS + [
     "ResourceNameTokenizerTest",
 ]
-
-filegroup(
-    name = "resourcename_files",
-    srcs = ["%s.java" % f for f in TESTS],
-)
 
 TEST_DEPS = [
     ":common_resources_java_proto",

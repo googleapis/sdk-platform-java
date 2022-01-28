@@ -1,12 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_library", "java_plugin")
 
-package(default_visibility = ["//visibility:public"])
-#package(default_visibility = ["//:__pkg__"])
-
-filegroup(
-    name = "generator_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_plugin(
     name = "autovalue_plugin",
@@ -29,9 +23,7 @@ java_library(
 
 java_library(
     name = "generator",
-    srcs = [
-        ":generator_files",
-    ],
+    srcs = glob(["*.java"]),
     deps = [
         "//src/main/java/com/google/api/generator/engine",
         "//src/main/java/com/google/api/generator/engine/ast",

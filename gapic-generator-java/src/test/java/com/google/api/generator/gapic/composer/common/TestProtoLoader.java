@@ -220,7 +220,8 @@ public class TestProtoLoader {
   }
 
   public GapicContext parseExplicitDynamicRoutingHeaderTesting() {
-    FileDescriptor testingFileDescriptor = ExplicitDynamicRoutingHeaderTestingOuterClass.getDescriptor();
+    FileDescriptor testingFileDescriptor =
+        ExplicitDynamicRoutingHeaderTestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "ExplicitDynamicRoutingHeaderTesting");
 

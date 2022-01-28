@@ -1,26 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_library", "java_proto_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "gapic_files",
-    srcs = glob(["*.java"]) + [
-        "//src/main/java/com/google/api/generator/gapic/composer:composer_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/comment:comment_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue:defaultvalue_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/grpc:grpc_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/grpcrest:grpcrest_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/resourcename:resourcename_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/rest:rest_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/samplecode:samplecode_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/store:store_files",
-        "//src/main/java/com/google/api/generator/gapic/composer/utils:utils_files",
-        "//src/main/java/com/google/api/generator/gapic/model:model_files",
-        "//src/main/java/com/google/api/generator/gapic/protoparser:protoparser_files",
-        "//src/main/java/com/google/api/generator/gapic/protowriter:protowriter_files",
-        "//src/main/java/com/google/api/generator/gapic/utils:utils_files",
-    ],
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_proto_library(
     name = "status_java_proto",

@@ -1,16 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "engine_files",
-    srcs = glob(["*.java"]) + [
-        "//src/test/java/com/google/api/generator/engine/ast:ast_files",
-        "//src/test/java/com/google/api/generator/engine/lexicon:lexicon_files",
-        "//src/test/java/com/google/api/generator/engine/writer:writer_files",
-    ],
-)
-
 TESTS = [
     "JavaCodeGeneratorTest",
 ]

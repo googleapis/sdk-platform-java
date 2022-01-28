@@ -1,15 +1,8 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 TESTS = [
     "DefaultValueComposerTest",
 ]
-
-filegroup(
-    name = "defaultvalue_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 [java_test(
     name = test_name,

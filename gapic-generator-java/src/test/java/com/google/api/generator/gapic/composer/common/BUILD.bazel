@@ -1,6 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//:__subpackages__"])
 
 UPDATE_GOLDENS_TESTS = [
     "BatchingDescriptorComposerTest",
@@ -46,11 +46,6 @@ java_library(
     name = "common",
     srcs = ["TestProtoLoader.java"],
     deps = TEST_DEPS,
-)
-
-filegroup(
-    name = "common_files",
-    srcs = glob(["*.java"]),
 )
 
 java_proto_library(
