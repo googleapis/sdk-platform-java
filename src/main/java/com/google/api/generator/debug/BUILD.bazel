@@ -1,17 +1,8 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "debug_files",
-    srcs = glob(["*.java"]),
-)
-
 java_library(
     name = "debug",
-    srcs = [
-        ":debug_files",
-    ],
+    srcs = glob(["*.java"]),
     deps = [
         "//src/main/java/com/google/api/generator",
         "//src/main/java/com/google/api/generator/engine",

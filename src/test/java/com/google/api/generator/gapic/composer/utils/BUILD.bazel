@@ -1,7 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 TESTS = [
     "PackageCheckerTest",
 ]
@@ -13,11 +11,6 @@ TEST_DEPS = [
     "@com_google_truth_truth//jar",
     "@junit_junit//jar",
 ]
-
-filegroup(
-    name = "utils_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 [java_test(
     name = test_name,

@@ -1,11 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_library", "java_proto_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "protoparser_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_proto_library(
     name = "client_java_proto",
@@ -17,9 +12,7 @@ java_proto_library(
 
 java_library(
     name = "protoparser",
-    srcs = [
-        ":protoparser_files",
-    ],
+    srcs = glob(["*.java"]),
     deps = [
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",

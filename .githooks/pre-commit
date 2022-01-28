@@ -83,7 +83,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Running Java linter..."
-  bazel --batch build --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
+  bazel --batch run --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
   FORMAT_STATUS=$?
   if [ $FORMAT_STATUS != 0 ]
   then
