@@ -20,6 +20,7 @@ java_library(
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_api_api_common//jar",
+        "@com_google_api_grpc_proto_google_common_protos",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_code_gson//jar",
         "@com_google_googleapis//google/api:api_java_proto",

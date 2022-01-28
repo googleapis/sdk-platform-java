@@ -203,7 +203,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setName(className)
             .setExtendsType(
                 typeStore.get(getTransportContext().classNames().getServiceStubClassName(service)))
-            .setStatements(classStatements)
             .setMethods(
                 createClassMethods(
                     context,
@@ -211,7 +210,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                     typeStore,
                     classMemberVarExprs,
                     callableClassMemberVarExprs,
-                    protoMethodNameToDescriptorVarExprs))
+                    protoMethodNameToDescriptorVarExprs, classStatements))
+            .setStatements(classStatements)
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -248,7 +248,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   protected abstract Expr createTransportSettingsInitExpr(
-      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr);
+      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr,
+      List<Statement> classStatements);
 
   protected List<MethodDefinition> createGetMethodDescriptorsMethod(
       Service service,
@@ -429,7 +430,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       TypeStore typeStore,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
-      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
+      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
+      List<Statement> classStatements) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createStaticCreatorMethods(service, typeStore, "newBuilder"));
     javaMethods.addAll(
@@ -439,7 +441,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             typeStore,
             classMemberVarExprs,
             callableClassMemberVarExprs,
-            protoMethodNameToDescriptorVarExprs));
+            protoMethodNameToDescriptorVarExprs,
+            classStatements));
     javaMethods.addAll(
         createGetMethodDescriptorsMethod(service, typeStore, protoMethodNameToDescriptorVarExprs));
     javaMethods.addAll(
@@ -540,7 +543,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       TypeStore typeStore,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
-      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
+      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
+      List<Statement> classStatements) {
     TypeNode stubSettingsType =
         typeStore.get(getTransportContext().classNames().getServiceStubSettingsClassName(service));
     VariableExpr settingsVarExpr =
@@ -665,7 +669,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                         m,
                         javaStyleMethodNameToTransportSettingsVarExprs.get(
                             JavaStyle.toLowerCamelCase(m.name())),
-                        protoMethodNameToDescriptorVarExprs.get(m.name())))
+                        protoMethodNameToDescriptorVarExprs.get(m.name()), classStatements))
             .collect(Collectors.toList()));
     secondCtorStatements.addAll(
         secondCtorExprs.stream().map(ExprStatement::withExpr).collect(Collectors.toList()));

@@ -4,6 +4,8 @@ TESTS = [
     "GapicServiceConfigTest",
     "MethodArgumentTest",
     "MethodTest",
+    "MessageTest",
+    "RoutingHeaderParamTest",
 ]
 
 [java_test(

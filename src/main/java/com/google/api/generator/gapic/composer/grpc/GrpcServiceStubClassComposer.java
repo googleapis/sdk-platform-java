@@ -16,13 +16,17 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.LambdaExpr;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -35,9 +39,12 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.common.base.Preconditions;
+import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import io.grpc.MethodDescriptor;
@@ -50,9 +57,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
+
   private static final GrpcServiceStubClassComposer INSTANCE = new GrpcServiceStubClassComposer();
 
   // Legacy support for the original reroute_to_grpc_interface option in gapic.yaml. These two APIs
@@ -194,7 +201,10 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
 
   @Override
   protected Expr createTransportSettingsInitExpr(
-      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
+      Method method,
+      VariableExpr transportSettingsVarExpr,
+      VariableExpr methodDescriptorVarExpr,
+      List<Statement> classStatements) {
     MethodInvocationExpr callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(getTransportContext().transportCallSettingsType())
@@ -208,12 +218,12 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .setArguments(Arrays.asList(methodDescriptorVarExpr))
             .build();
 
-    if (method.hasHttpBindings()) {
+    if (method.shouldSetParamsExtractor()) {
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
               .setMethodName("setParamsExtractor")
-              .setArguments(createRequestParamsExtractorClassInstance(method))
+              .setArguments(createRequestParamsExtractorClassInstance(method, classStatements))
               .build();
     }
 
@@ -245,10 +255,44 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     return String.format("google.iam.v1.IAMPolicy/%s", protoMethod.name());
   }
 
-  private LambdaExpr createRequestParamsExtractorClassInstance(Method method) {
-    Preconditions.checkState(
-        method.hasHttpBindings(), String.format("Method %s has no HTTP binding", method.name()));
+  private LambdaExpr createRequestParamsExtractorClassInstance(
+      Method method, List<Statement> classStatements) {
+    List<Statement> bodyStatements = new ArrayList<>();
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Map.class)
+                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
+                .build());
+    MethodInvocationExpr.Builder returnExpr =
+        MethodInvocationExpr.builder().setReturnType(returnType);
+    // If the google.api.routing annotation is present(even with empty routing parameters),
+    // the implicit routing headers specified in the google.api.http annotation should not be sent
+    if (method.routingHeaderRule() == null) {
+      createRequestParamsExtractorBodyForHttpBindings(
+          method, requestVarExpr, bodyStatements, returnExpr);
+    } else {
+      createRequestParamsExtractorBodyForRoutingHeaders(
+          method, requestVarExpr, classStatements, bodyStatements, returnExpr);
+    }
 
+    // Overrides extract().
+    // https://github.com/googleapis/gax-java/blob/8d45d186e36ae97b789a6f89d80ae5213a773b65/gax/src/main/java/com/google/api/gax/rpc/RequestParamsExtractor.java#L55
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(returnExpr.build())
+        .build();
+  }
+
+  private void createRequestParamsExtractorBodyForHttpBindings(
+      Method method,
+      VariableExpr requestVarExpr,
+      List<Statement> bodyStatements,
+      MethodInvocationExpr.Builder returnExprBuilder) {
     TypeNode paramsVarType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -269,32 +313,11 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
                     .setReturnType(paramsVarType)
                     .build())
             .build();
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(paramsAssignExpr);
-
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(method.inputType()).setName("request").build());
+    bodyStatements.add(ExprStatement.withExpr(paramsAssignExpr));
 
     for (HttpBinding httpBindingFieldBinding : method.httpBindings().pathParameters()) {
-      // Handle foo.bar cases by descending into the subfields.
-      MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
-          MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
-      String[] descendantFields = httpBindingFieldBinding.name().split("\\.");
-      for (int i = 0; i < descendantFields.length; i++) {
-        String currFieldName = descendantFields[i];
-        String bindingFieldMethodName =
-            String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
-        requestFieldGetterExprBuilder =
-            requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
-        if (i < descendantFields.length - 1) {
-          requestFieldGetterExprBuilder =
-              MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(requestFieldGetterExprBuilder.build());
-        }
-      }
-
-      MethodInvocationExpr requestBuilderExpr = requestFieldGetterExprBuilder.build();
+      MethodInvocationExpr requestBuilderExpr =
+          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
       Expr valueOfExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(TypeNode.STRING)
@@ -310,29 +333,165 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
                   ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
                   valueOfExpr)
               .build();
-      bodyExprs.add(paramsPutExpr);
+      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
     }
 
-    TypeNode returnType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(Map.class)
-                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
-                .build());
-    Expr returnExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(paramsVarExpr)
-            .setMethodName("build")
-            .setReturnType(returnType)
-            .build();
+    returnExprBuilder.setExprReferenceExpr(paramsVarExpr).setMethodName("build");
+  }
 
-    // Overrides extract().
-    // https://github.com/googleapis/gax-java/blob/8d45d186e36ae97b789a6f89d80ae5213a773b65/gax/src/main/java/com/google/api/gax/rpc/RequestParamsExtractor.java#L55
-    return LambdaExpr.builder()
-        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
-        .setBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
-        .setReturnExpr(returnExpr)
-        .build();
+  private void createRequestParamsExtractorBodyForRoutingHeaders(
+      Method method,
+      VariableExpr requestVarExpr,
+      List<Statement> classStatements,
+      List<Statement> bodyStatements,
+      MethodInvocationExpr.Builder returnExprBuilder) {
+    TypeNode routingHeadersBuilderType =
+        TypeNode.withReference(
+            ConcreteReference.builder().setClazz(RequestParamsBuilder.class).build());
+    VariableExpr routingHeadersBuilderVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("builder").setType(routingHeadersBuilderType).build())
+            .setIsDecl(true)
+            .build();
+    MethodInvocationExpr routingHeaderBuilderInvokeExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(routingHeadersBuilderType)
+            .setMethodName("create")
+            .setReturnType(routingHeadersBuilderType)
+            .build();
+    Expr routingHeadersBuilderInitExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(routingHeadersBuilderVarExpr)
+            .setValueExpr(routingHeaderBuilderInvokeExpr)
+            .build();
+    bodyStatements.add(ExprStatement.withExpr(routingHeadersBuilderInitExpr));
+    List<RoutingHeaderParam> routingHeaderParams = method.routingHeaderRule().routingHeaderParams();
+    VariableExpr routingHeadersBuilderVarNonDeclExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("builder").setType(routingHeadersBuilderType).build())
+            .build();
+    for (int i = 0; i < routingHeaderParams.size(); i++) {
+      RoutingHeaderParam routingHeaderParam = routingHeaderParams.get(i);
+      MethodInvocationExpr requestFieldGetterExpr =
+          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName());
+      Expr routingHeaderKeyExpr =
+          ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.key()));
+      String pathTemplateName =
+          String.format("%s_%s_PATH_TEMPLATE", JavaStyle.toUpperSnakeCase(method.name()), i);
+      TypeNode pathTemplateType =
+          TypeNode.withReference(ConcreteReference.withClazz(PathTemplate.class));
+      Variable pathTemplateVar =
+          Variable.builder().setType(pathTemplateType).setName(pathTemplateName).build();
+      Expr routingHeaderPatternExpr = VariableExpr.withVariable(pathTemplateVar);
+      Statement pathTemplateClassVar =
+          createPathTemplateClassStatement(routingHeaderParam, pathTemplateType, pathTemplateVar);
+      classStatements.add(pathTemplateClassVar);
+      MethodInvocationExpr addParamMethodExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+              .setMethodName("add")
+              .setArguments(requestFieldGetterExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
+              .build();
+
+      ExprStatement addParamStatement = ExprStatement.withExpr(addParamMethodExpr);
+      // No need to add null check if there is no nested fields
+      if (routingHeaderParam.getDescendantFieldNames().size() == 1) {
+        bodyStatements.add(addParamStatement);
+      } else {
+        IfStatement ifStatement =
+            IfStatement.builder()
+                .setConditionExpr(
+                    fieldValuesNotNullConditionExpr(
+                        requestVarExpr, routingHeaderParam.getDescendantFieldNames()))
+                .setBody(ImmutableList.of(addParamStatement))
+                .build();
+        bodyStatements.add(ifStatement);
+      }
+    }
+    returnExprBuilder
+        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+        .setMethodName("build");
+  }
+
+  private Statement createPathTemplateClassStatement(
+      RoutingHeaderParam routingHeaderParam, TypeNode pathTemplateType, Variable pathTemplateVar) {
+    VariableExpr pathTemplateVarExpr =
+        VariableExpr.builder()
+            .setVariable(pathTemplateVar)
+            .setIsDecl(true)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setScope(ScopeNode.PRIVATE)
+            .build();
+    ValueExpr valueExpr =
+        ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.pattern()));
+    Expr pathTemplateExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(pathTemplateVarExpr)
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(pathTemplateType)
+                    .setMethodName("create")
+                    .setArguments(valueExpr)
+                    .setReturnType(pathTemplateType)
+                    .build())
+            .build();
+    return ExprStatement.withExpr(pathTemplateExpr);
+  }
+
+  private Expr fieldValuesNotNullConditionExpr(
+      VariableExpr requestVarExpr, List<String> fieldNames) {
+    MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
+        MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+    Expr fieldValuesNotNullExpr = null;
+    for (int i = 0; i < fieldNames.size() - 1; i++) {
+      String currFieldName = fieldNames.get(i);
+      String bindingFieldMethodName =
+          String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+      requestFieldGetterExprBuilder =
+          requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
+      // set return type of each method invocation to String just to pass the validation for
+      // RelationalOperationExpr that both side of relational operation needs to be a valid equality
+      // type
+      MethodInvocationExpr requestGetterExpr =
+          requestFieldGetterExprBuilder.setReturnType(TypeNode.STRING).build();
+      Expr currentValueNotNullExpr =
+          RelationalOperationExpr.notEqualToWithExprs(
+              requestGetterExpr, ValueExpr.createNullExpr());
+      if (fieldValuesNotNullExpr == null) {
+        fieldValuesNotNullExpr = currentValueNotNullExpr;
+      } else {
+        fieldValuesNotNullExpr =
+            LogicalOperationExpr.logicalAndWithExprs(
+                fieldValuesNotNullExpr, currentValueNotNullExpr);
+      }
+      requestFieldGetterExprBuilder =
+          MethodInvocationExpr.builder().setExprReferenceExpr(requestGetterExpr);
+    }
+    return fieldValuesNotNullExpr;
+  }
+
+  private MethodInvocationExpr createRequestFieldGetterExpr(
+      VariableExpr requestVarExpr, String fieldName) {
+    MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
+        MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+    List<String> descendantFields = Splitter.on(".").splitToList(fieldName);
+    // Handle foo.bar cases by descending into the subfields.
+    // e.g. foo.bar -> request.getFoo().getBar()
+    for (int i = 0; i < descendantFields.size(); i++) {
+      String currFieldName = descendantFields.get(i);
+      String bindingFieldMethodName =
+          String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+      requestFieldGetterExprBuilder =
+          requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
+      if (i < descendantFields.size() - 1) {
+        requestFieldGetterExprBuilder =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(requestFieldGetterExprBuilder.build());
+      }
+    }
+    return requestFieldGetterExprBuilder.build();
   }
 }

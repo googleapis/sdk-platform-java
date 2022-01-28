@@ -36,7 +36,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
@@ -68,11 +67,12 @@ public class HttpRuleParser {
       HttpRule httpRule, Optional<Message> inputMessageOpt, Map<String, Message> messageTypes) {
     // Get pattern.
     String pattern = getHttpVerbPattern(httpRule);
-    ImmutableSet.Builder<String> bindingsBuilder = getPatternBindings(pattern);
+    ImmutableSet.Builder<String> bindingsBuilder = ImmutableSet.builder();
+    bindingsBuilder.addAll(PatternParser.getPattenBindings(pattern));
     if (httpRule.getAdditionalBindingsCount() > 0) {
       for (HttpRule additionalRule : httpRule.getAdditionalBindingsList()) {
         // TODO: save additional bindings path in HttpRuleBindings
-        bindingsBuilder.addAll(getPatternBindings(getHttpVerbPattern(additionalRule)).build());
+        bindingsBuilder.addAll(PatternParser.getPattenBindings(getHttpVerbPattern(additionalRule)));
       }
     }
 
@@ -175,19 +175,6 @@ public class HttpRuleParser {
       default:
         return "";
     }
-  }
-
-  private static ImmutableSortedSet.Builder<String> getPatternBindings(String pattern) {
-    ImmutableSortedSet.Builder<String> bindings = ImmutableSortedSet.naturalOrder();
-    if (pattern.isEmpty()) {
-      return bindings;
-    }
-
-    PathTemplate template = PathTemplate.create(pattern);
-    // Filter out any unbound variable like "$0, $1, etc.
-    bindings.addAll(
-        template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toSet()));
-    return bindings;
   }
 
   private static void checkHttpFieldIsValid(String binding, Message inputMessage, boolean isBody) {
