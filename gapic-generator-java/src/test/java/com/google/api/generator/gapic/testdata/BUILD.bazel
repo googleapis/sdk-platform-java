@@ -54,6 +54,7 @@ proto_library(
     ],
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:routing_proto",
         "@com_google_googleapis//google/api:client_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_googleapis//google/api:resource_proto",
@@ -65,6 +66,20 @@ proto_library(
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:field_mask_proto",
         "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+proto_library(
+    name = "explicit_dynamic_routing_headers_testing_proto",
+    srcs = [
+        "routing_rule_parser_testing.proto",
+        "explicit_dynamic_routing_header_testing.proto",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:routing_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_protobuf//:empty_proto",
     ],
 )
 
@@ -126,4 +141,9 @@ java_proto_library(
 java_proto_library(
     name = "testgapic_java_proto",
     deps = [":testgapic_proto"],
+)
+
+java_proto_library(
+    name = "explicit_dynamic_routing_headers_testing_java_proto",
+    deps = [":explicit_dynamic_routing_headers_testing_proto"],
 )

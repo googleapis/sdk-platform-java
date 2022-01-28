@@ -18,6 +18,9 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
@@ -32,6 +35,7 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Message {
+
   public abstract String name();
 
   // The fully-qualified proto name, which differs from the Java fully-qualified name.
@@ -78,6 +82,43 @@ public abstract class Message {
 
   public boolean hasResource() {
     return resource() != null;
+  }
+
+  /**
+   * Validates if the field or fields exist in the message and the type of the leaf level field.
+   *
+   * @param fieldName The field name. For nested field, concatenate each field name with dot. For
+   *     example: abc.def.ghi
+   * @param messageTypes All messages configured in a rpc service.
+   * @param type {@link TypeNode} The expected type for the leaf level field
+   */
+  public void validateField(String fieldName, Map<String, Message> messageTypes, TypeNode type) {
+    List<String> subFields = Splitter.on(".").splitToList(fieldName);
+    Message nestedMessage = this;
+    for (int i = 0; i < subFields.size(); i++) {
+      String subFieldName = subFields.get(i);
+      Preconditions.checkState(
+          !Strings.isNullOrEmpty(subFieldName),
+          String.format("Null or empty field name found for message %s", nestedMessage.name()));
+      Field field = nestedMessage.fieldMap().get(subFieldName);
+      Preconditions.checkNotNull(
+          field,
+          String.format(
+              "Expected message %s to contain field %s but none found",
+              nestedMessage.name(), subFieldName));
+      if (i < subFields.size() - 1) {
+        nestedMessage = messageTypes.get(field.type().reference().fullName());
+        Preconditions.checkNotNull(
+            nestedMessage,
+            String.format(
+                "No containing message found for field %s with type %s",
+                field.name(), field.type().reference().simpleName()));
+      } else {
+        Preconditions.checkState(
+            !field.isRepeated() && field.type().equals(type),
+            String.format("The type of field %s must be String and not repeated.", field.name()));
+      }
+    }
   }
 
   /** Returns the first list repeated field in a message, unwrapped from its list type. */
