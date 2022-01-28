@@ -62,6 +62,9 @@ public abstract class Method {
   @Nullable
   public abstract HttpBindings httpBindings();
 
+  @Nullable
+  public abstract RoutingHeaderRule routingHeaderRule();
+
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
@@ -78,6 +81,14 @@ public abstract class Method {
 
   public boolean hasHttpBindings() {
     return httpBindings() != null && !httpBindings().pathParameters().isEmpty();
+  }
+
+  public boolean hasRoutingHeaderParams() {
+    return routingHeaderRule() != null && !routingHeaderRule().routingHeaderParams().isEmpty();
+  }
+
+  public boolean shouldSetParamsExtractor() {
+    return (hasHttpBindings() && routingHeaderRule() == null) || hasRoutingHeaderParams();
   }
 
   public boolean isMixin() {
@@ -139,6 +150,8 @@ public abstract class Method {
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
+
+    public abstract Builder setRoutingHeaderRule(RoutingHeaderRule routingHeaderRule);
 
     public abstract Method build();
   }
