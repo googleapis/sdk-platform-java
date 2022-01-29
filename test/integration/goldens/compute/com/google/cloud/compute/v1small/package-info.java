@@ -51,6 +51,6 @@
  * }</pre>
  */
 @Generated("by gapic-generator-java")
-package com.google.cloud.compute.v1;
+package com.google.cloud.compute.v1small;
 
 import javax.annotation.Generated;

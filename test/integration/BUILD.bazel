@@ -1,13 +1,10 @@
 load(
-    "@gapic_generator_java//rules_java_gapic:java_gapic.bzl",
+    "//rules_java_gapic:java_gapic.bzl",
     "java_gapic_library",
     "java_gapic_test",
 )
 load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
-load(
-    "@gapic_generator_java//rules_java_gapic:java_gapic_pkg.bzl",
-    "java_gapic_assembly_gradle_pkg",
-)
+load("//rules_java_gapic:java_gapic_pkg.bzl", "java_gapic_assembly_gradle_pkg")
 load("@rules_gapic//:gapic.bzl", "proto_library_with_info")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
@@ -37,7 +34,7 @@ API_GAPIC_TARGETS = {
     # No gRPC service config.
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
     # REGAPIC test.
-    "compute": "@com_google_googleapis_discovery//google/cloud/compute/v1:compute_small_java_gapic",
+    "compute": "@com_google_googleapis//google/cloud/compute/v1small:compute_small_java_gapic",
 }
 
 [sh_test(

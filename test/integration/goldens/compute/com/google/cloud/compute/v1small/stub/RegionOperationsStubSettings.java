@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -31,9 +31,9 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.cloud.compute.v1.GetRegionOperationRequest;
-import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.WaitRegionOperationRequest;
+import com.google.cloud.compute.v1small.GetRegionOperationRequest;
+import com.google.cloud.compute.v1small.Operation;
+import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -195,7 +195,8 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
                   StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
-      definitions.put("no_retry_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
+      definitions.put(
+          "no_retry_1_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
       RETRYABLE_CODE_DEFINITIONS = definitions.build();
     }
 
@@ -215,8 +216,14 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
               .setTotalTimeout(Duration.ofMillis(600000L))
               .build();
       definitions.put("retry_policy_0_params", settings);
-      settings = RetrySettings.newBuilder().setRpcTimeoutMultiplier(1.0).build();
-      definitions.put("no_retry_params", settings);
+      settings =
+          RetrySettings.newBuilder()
+              .setInitialRpcTimeout(Duration.ofMillis(600000L))
+              .setRpcTimeoutMultiplier(1.0)
+              .setMaxRpcTimeout(Duration.ofMillis(600000L))
+              .setTotalTimeout(Duration.ofMillis(600000L))
+              .build();
+      definitions.put("no_retry_1_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
     }
 
@@ -266,8 +273,8 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
 
       builder
           .waitSettings()
-          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
-          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_1_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_1_params"));
 
       return builder;
     }

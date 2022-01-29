@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
 import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
@@ -33,10 +33,10 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.GetRegionOperationRequest;
-import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.Operation.Status;
-import com.google.cloud.compute.v1.WaitRegionOperationRequest;
+import com.google.cloud.compute.v1small.GetRegionOperationRequest;
+import com.google.cloud.compute.v1small.Operation;
+import com.google.cloud.compute.v1small.Operation.Status;
+import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
   private static final ApiMethodDescriptor<GetRegionOperationRequest, Operation>
       getMethodDescriptor =
           ApiMethodDescriptor.<GetRegionOperationRequest, Operation>newBuilder()
-              .setFullMethodName("google.cloud.compute.v1.RegionOperations/Get")
+              .setFullMethodName("google.cloud.compute.v1small.RegionOperations/Get")
               .setHttpMethod(HttpMethods.GET)
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
@@ -116,7 +116,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
   private static final ApiMethodDescriptor<WaitRegionOperationRequest, Operation>
       waitMethodDescriptor =
           ApiMethodDescriptor.<WaitRegionOperationRequest, Operation>newBuilder()
-              .setFullMethodName("google.cloud.compute.v1.RegionOperations/Wait")
+              .setFullMethodName("google.cloud.compute.v1small.RegionOperations/Wait")
               .setHttpMethod(HttpMethods.POST)
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(

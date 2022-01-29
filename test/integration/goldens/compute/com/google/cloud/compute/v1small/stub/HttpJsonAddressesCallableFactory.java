@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
-import com.google.api.gax.httpjson.longrunning.stub.OperationsStub;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallSettings;
@@ -31,19 +30,19 @@ import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.longrunning.Operation;
+import com.google.cloud.compute.v1small.Operation;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * REST callable factory implementation for the RegionOperations service API.
+ * REST callable factory implementation for the Addresses service API.
  *
  * <p>This class is for advanced usage.
  */
 @Generated("by gapic-generator-java")
 @BetaApi
-public class HttpJsonRegionOperationsCallableFactory
-    implements HttpJsonStubCallableFactory<Operation, OperationsStub> {
+public class HttpJsonAddressesCallableFactory
+    implements HttpJsonStubCallableFactory<Operation, RegionOperationsStub> {
 
   @Override
   public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
@@ -81,7 +80,7 @@ public class HttpJsonRegionOperationsCallableFactory
           HttpJsonCallSettings<RequestT, Operation> httpJsonCallSettings,
           OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,
           ClientContext clientContext,
-          OperationsStub operationsStub) {
+          RegionOperationsStub operationsStub) {
     UnaryCallable<RequestT, Operation> innerCallable =
         HttpJsonCallableFactory.createBaseUnaryCallable(
             httpJsonCallSettings, callSettings.getInitialCallSettings(), clientContext);
