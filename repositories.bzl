@@ -66,15 +66,6 @@ def gapic_generator_java_repositories():
     )
 
     _maybe(
-        http_archive,
-        name = "com_google_googleapis_discovery",
-        strip_prefix = "googleapis-discovery-34478e2969042ed837d33684360f1ee3be7d2f74",
-        urls = [
-            "https://github.com/googleapis/googleapis-discovery/archive/34478e2969042ed837d33684360f1ee3be7d2f74.zip",
-        ],
-    )
-
-    _maybe(
         native.bind,
         name = "guava",
         actual = "@com_google_guava_guava//jar",
@@ -84,20 +75,6 @@ def gapic_generator_java_repositories():
         native.bind,
         name = "gson",
         actual = "@com_google_code_gson_gson//jar",
-    )
-
-    _maybe(
-        jvm_maven_import_external,
-        name = "error_prone_annotations_maven",
-        artifact = "com.google.errorprone:error_prone_annotations:2.3.2",
-        server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"],
-    )
-
-    _maybe(
-        native.bind,
-        name = "error_prone_annotations",
-        actual = "@error_prone_annotations_maven//jar",
     )
 
     _api_common_java_version = PROPERTIES["version.com_google_api_common_java"]

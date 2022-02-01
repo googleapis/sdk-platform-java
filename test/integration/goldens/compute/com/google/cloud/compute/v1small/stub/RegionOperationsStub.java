@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.GetRegionOperationRequest;
-import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.WaitRegionOperationRequest;
+import com.google.cloud.compute.v1small.GetRegionOperationRequest;
+import com.google.cloud.compute.v1small.Operation;
+import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.

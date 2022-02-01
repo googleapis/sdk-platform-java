@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1;
+package com.google.cloud.compute.v1small;
+
+import static com.google.cloud.compute.v1small.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.ListPagedResponse;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.GaxHttpJsonProperties;
@@ -25,11 +28,16 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
-import com.google.cloud.compute.v1.Operation.Status;
-import com.google.cloud.compute.v1.stub.HttpJsonRegionOperationsStub;
+import com.google.cloud.compute.v1small.Operation.Status;
+import com.google.cloud.compute.v1small.stub.HttpJsonAddressesStub;
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -39,25 +47,24 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-public class RegionOperationsClientTest {
+public class AddressesClientTest {
   private static MockHttpService mockService;
-  private static RegionOperationsClient client;
+  private static AddressesClient client;
 
   @BeforeClass
   public static void startStaticServer() throws IOException {
     mockService =
         new MockHttpService(
-            HttpJsonRegionOperationsStub.getMethodDescriptors(),
-            RegionOperationsSettings.getDefaultEndpoint());
-    RegionOperationsSettings settings =
-        RegionOperationsSettings.newBuilder()
+            HttpJsonAddressesStub.getMethodDescriptors(), AddressesSettings.getDefaultEndpoint());
+    AddressesSettings settings =
+        AddressesSettings.newBuilder()
             .setTransportChannelProvider(
-                RegionOperationsSettings.defaultHttpJsonTransportProviderBuilder()
+                AddressesSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(mockService)
                     .build())
             .setCredentialsProvider(NoCredentialsProvider.create())
             .build();
-    client = RegionOperationsClient.create(settings);
+    client = AddressesClient.create(settings);
   }
 
   @AfterClass
@@ -74,41 +81,25 @@ public class RegionOperationsClientTest {
   }
 
   @Test
-  public void getTest() throws Exception {
-    Operation expectedResponse =
-        Operation.newBuilder()
-            .setClientOperationId("clientOperationId-1230366697")
-            .setCreationTimestamp("creationTimestamp-370203401")
-            .setDescription("description-1724546052")
-            .setEndTime("endTime-1607243192")
-            .setError(Error.newBuilder().build())
-            .setHttpErrorMessage("httpErrorMessage1577303431")
-            .setHttpErrorStatusCode(0)
-            .setId(3355)
-            .setInsertTime("insertTime966165798")
-            .setKind("kind3292052")
-            .setName("name3373707")
-            .setOperationType("operationType91999553")
-            .setProgress(-1001078227)
-            .setRegion("region-934795532")
-            .setSelfLink("selfLink1191800166")
-            .setStartTime("startTime-2129294769")
-            .setStatus(Status.DONE)
-            .setStatusMessage("statusMessage-958704715")
-            .setTargetId(-815576439)
-            .setTargetLink("targetLink486368555")
-            .setUser("user3599307")
-            .addAllWarnings(new ArrayList<Warnings>())
-            .setZone("zone3744684")
+  public void aggregatedListTest() throws Exception {
+    AddressesScopedList responsesElement = AddressesScopedList.newBuilder().build();
+    AddressAggregatedList expectedResponse =
+        AddressAggregatedList.newBuilder()
+            .setNextPageToken("")
+            .putAllItems(Collections.singletonMap("items", responsesElement))
             .build();
     mockService.addResponse(expectedResponse);
 
     String project = "project-6911";
-    String region = "region-9622";
-    String operation = "operation-3971";
 
-    Operation actualResponse = client.get(project, region, operation);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    AggregatedListPagedResponse pagedListResponse = client.aggregatedList(project);
+
+    List<Map.Entry<String, AddressesScopedList>> resources =
+        Lists.newArrayList(pagedListResponse.iterateAll());
+
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(
+        expectedResponse.getItemsMap().entrySet().iterator().next(), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
     Assert.assertEquals(1, actualRequests.size());
@@ -126,7 +117,7 @@ public class RegionOperationsClientTest {
   }
 
   @Test
-  public void getExceptionTest() throws Exception {
+  public void aggregatedListExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -134,9 +125,7 @@ public class RegionOperationsClientTest {
 
     try {
       String project = "project-6911";
-      String region = "region-9622";
-      String operation = "operation-3971";
-      client.get(project, region, operation);
+      client.aggregatedList(project);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
@@ -144,7 +133,7 @@ public class RegionOperationsClientTest {
   }
 
   @Test
-  public void waitTest() throws Exception {
+  public void deleteTest() throws Exception {
     Operation expectedResponse =
         Operation.newBuilder()
             .setClientOperationId("clientOperationId-1230366697")
@@ -175,9 +164,9 @@ public class RegionOperationsClientTest {
 
     String project = "project-6911";
     String region = "region-9622";
-    String operation = "operation-3971";
+    String address = "address-4954";
 
-    Operation actualResponse = client.wait(project, region, operation);
+    Operation actualResponse = client.deleteAsync(project, region, address).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
@@ -196,7 +185,7 @@ public class RegionOperationsClientTest {
   }
 
   @Test
-  public void waitExceptionTest() throws Exception {
+  public void deleteExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -205,8 +194,130 @@ public class RegionOperationsClientTest {
     try {
       String project = "project-6911";
       String region = "region-9622";
-      String operation = "operation-3971";
-      client.wait(project, region, operation);
+      String address = "address-4954";
+      client.deleteAsync(project, region, address).get();
+      Assert.fail("No exception raised");
+    } catch (ExecutionException e) {
+    }
+  }
+
+  @Test
+  public void insertTest() throws Exception {
+    Operation expectedResponse =
+        Operation.newBuilder()
+            .setClientOperationId("clientOperationId-1230366697")
+            .setCreationTimestamp("creationTimestamp-370203401")
+            .setDescription("description-1724546052")
+            .setEndTime("endTime-1607243192")
+            .setError(Error.newBuilder().build())
+            .setHttpErrorMessage("httpErrorMessage1577303431")
+            .setHttpErrorStatusCode(0)
+            .setId(3355)
+            .setInsertTime("insertTime966165798")
+            .setKind("kind3292052")
+            .setName("name3373707")
+            .setOperationType("operationType91999553")
+            .setProgress(-1001078227)
+            .setRegion("region-934795532")
+            .setSelfLink("selfLink1191800166")
+            .setStartTime("startTime-2129294769")
+            .setStatus(Status.DONE)
+            .setStatusMessage("statusMessage-958704715")
+            .setTargetId(-815576439)
+            .setTargetLink("targetLink486368555")
+            .setUser("user3599307")
+            .addAllWarnings(new ArrayList<Warnings>())
+            .setZone("zone3744684")
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    String project = "project-6911";
+    String region = "region-9622";
+    Address addressResource = Address.newBuilder().build();
+
+    Operation actualResponse = client.insertAsync(project, region, addressResource).get();
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void insertExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      String project = "project-6911";
+      String region = "region-9622";
+      Address addressResource = Address.newBuilder().build();
+      client.insertAsync(project, region, addressResource).get();
+      Assert.fail("No exception raised");
+    } catch (ExecutionException e) {
+    }
+  }
+
+  @Test
+  public void listTest() throws Exception {
+    Address responsesElement = Address.newBuilder().build();
+    AddressList expectedResponse =
+        AddressList.newBuilder()
+            .setNextPageToken("")
+            .addAllItems(Arrays.asList(responsesElement))
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    String project = "project-6911";
+    String region = "region-9622";
+    String orderBy = "orderBy-1207110587";
+
+    ListPagedResponse pagedListResponse = client.list(project, region, orderBy);
+
+    List<Address> resources = Lists.newArrayList(pagedListResponse.iterateAll());
+
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getItemsList().get(0), resources.get(0));
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void listExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      String project = "project-6911";
+      String region = "region-9622";
+      String orderBy = "orderBy-1207110587";
+      client.list(project, region, orderBy);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.

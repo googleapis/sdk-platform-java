@@ -14,7 +14,6 @@ PROPERTIES = {
     "maven.com_google_protobuf_protobuf_java": "com.google.protobuf:protobuf-java:3.19.1",
     "maven.io_github_java_diff_utils": "io.github.java-diff-utils:java-diff-utils:4.0",
     "maven.javax_annotation_javax_annotation_api": "javax.annotation:javax.annotation-api:1.3.2",
-    "maven.javax_validation_javax_validation_api": "javax.validation:validation-api:2.0.1.Final",
 
     # Gapic YAML parsing for batching settings.
     "maven.org_yaml_snakeyaml": "org.yaml:snakeyaml:1.26",

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1;
+package com.google.cloud.compute.v1small;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.stub.RegionOperationsStub;
-import com.google.cloud.compute.v1.stub.RegionOperationsStubSettings;
+import com.google.cloud.compute.v1small.stub.RegionOperationsStub;
+import com.google.cloud.compute.v1small.stub.RegionOperationsStubSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;

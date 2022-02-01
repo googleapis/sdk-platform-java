@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
-import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
-import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.ListPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -45,15 +45,15 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.Address;
-import com.google.cloud.compute.v1.AddressAggregatedList;
-import com.google.cloud.compute.v1.AddressList;
-import com.google.cloud.compute.v1.AddressesScopedList;
-import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
-import com.google.cloud.compute.v1.DeleteAddressRequest;
-import com.google.cloud.compute.v1.InsertAddressRequest;
-import com.google.cloud.compute.v1.ListAddressesRequest;
-import com.google.cloud.compute.v1.Operation;
+import com.google.cloud.compute.v1small.Address;
+import com.google.cloud.compute.v1small.AddressAggregatedList;
+import com.google.cloud.compute.v1small.AddressList;
+import com.google.cloud.compute.v1small.AddressesScopedList;
+import com.google.cloud.compute.v1small.AggregatedListAddressesRequest;
+import com.google.cloud.compute.v1small.DeleteAddressRequest;
+import com.google.cloud.compute.v1small.InsertAddressRequest;
+import com.google.cloud.compute.v1small.ListAddressesRequest;
+import com.google.cloud.compute.v1small.Operation;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -498,13 +498,13 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(5000L))
+                      .setInitialRetryDelay(Duration.ofMillis(500L))
                       .setRetryDelayMultiplier(1.5)
-                      .setMaxRetryDelay(Duration.ofMillis(45000L))
+                      .setMaxRetryDelay(Duration.ofMillis(20000L))
                       .setInitialRpcTimeout(Duration.ZERO)
                       .setRpcTimeoutMultiplier(1.0)
                       .setMaxRpcTimeout(Duration.ZERO)
-                      .setTotalTimeout(Duration.ofMillis(300000L))
+                      .setTotalTimeout(Duration.ofMillis(600000L))
                       .build()));
 
       builder
@@ -522,13 +522,13 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(5000L))
+                      .setInitialRetryDelay(Duration.ofMillis(500L))
                       .setRetryDelayMultiplier(1.5)
-                      .setMaxRetryDelay(Duration.ofMillis(45000L))
+                      .setMaxRetryDelay(Duration.ofMillis(20000L))
                       .setInitialRpcTimeout(Duration.ZERO)
                       .setRpcTimeoutMultiplier(1.0)
                       .setMaxRpcTimeout(Duration.ZERO)
-                      .setTotalTimeout(Duration.ofMillis(300000L))
+                      .setTotalTimeout(Duration.ofMillis(600000L))
                       .build()));
 
       return builder;
