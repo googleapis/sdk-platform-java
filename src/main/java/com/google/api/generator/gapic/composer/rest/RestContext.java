@@ -68,6 +68,7 @@ public abstract class RestContext extends TransportContext {
           // For ServiceClientClassComposer
           .setOperationsClientTypes(ImmutableList.of(classToType(OperationsClient.class)))
           .setOperationsClientNames(ImmutableList.of("httpJsonOperationsClient"))
+          .setUseValuePatterns(true)
           .build();
 
   public static TransportContext instance() {

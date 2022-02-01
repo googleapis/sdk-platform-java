@@ -1,11 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "framework_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_library(
     name = "asserts",
@@ -28,9 +23,7 @@ java_library(
 
 java_library(
     name = "junit_runner",
-    srcs = [
-        "SingleJUnitTestRunner.java",
-    ],
+    srcs = ["SingleJUnitTestRunner.java"],
     deps = [
         ":utils",
         "@junit_junit//jar",

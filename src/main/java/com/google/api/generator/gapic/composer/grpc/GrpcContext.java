@@ -66,6 +66,7 @@ public abstract class GrpcContext extends TransportContext {
           // For ServiceClientClassComposer
           .setOperationsClientTypes(ImmutableList.of(classToType(OperationsClient.class)))
           .setOperationsClientNames(ImmutableList.of("operationsClient"))
+          .setUseValuePatterns(false)
           .build();
 
   public static TransportContext instance() {

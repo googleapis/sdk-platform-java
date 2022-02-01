@@ -46,6 +46,25 @@ jobs:
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
 
+      - name: Gradle Build Generated Storage Client Library
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          tar zxvf bazel-bin/test/integration/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+      - name: Gradle Build Generated Compute Client Library
+        run: |
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazel --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
       - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
         with:
@@ -54,7 +73,7 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
-        run: bazel --batch  build //:google_java_format_verification
+        run: bazel --batch run //:google_java_format_verification
 
   coverage:
     runs-on: ubuntu-latest
@@ -67,10 +86,10 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage  $(bazel query "src/test/..." | grep "Test$")  --combined_report=lcov
+        run: bazel coverage $(bazel query "src/test/..." | grep "Test$") --combined_report=lcov
 
       - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
           name: actions ${{ matrix.java }}
           files: ./bazel-out/_coverage/_coverage_report.dat

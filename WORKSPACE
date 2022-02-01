@@ -33,7 +33,7 @@ jvm_maven_import_external(
 # which in its turn, prioritizes actual generated clients runtime dependencies
 # over the generator dependencies.
 
-_gax_java_version = "2.7.1"
+_gax_java_version = "2.11.0"
 
 http_archive(
     name = "com_google_api_gax_java",
@@ -52,14 +52,6 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-load("//:repository_rules.bzl", "gapic_generator_java_properties")
-
-gapic_generator_java_properties(
-    name = "gapic_generator_java_properties",
-    file = "//:dependencies.properties",
-)
-
-load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
 load("//:repositories.bzl", "gapic_generator_java_repositories")
 
 gapic_generator_java_repositories()
@@ -114,6 +106,6 @@ grpc_java_repositories()
 
 http_archive(
     name = "com_google_disco_to_proto3_converter",
-    strip_prefix = "disco-to-proto3-converter-4b0956884b1aa9b367cf41488b622dc12eb16652",
-    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/4b0956884b1aa9b367cf41488b622dc12eb16652.zip"],
+    strip_prefix = "disco-to-proto3-converter-ce8d8732120cdfb5bf4847c3238b5be8acde87e3",
+    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/ce8d8732120cdfb5bf4847c3238b5be8acde87e3.zip"],
 )

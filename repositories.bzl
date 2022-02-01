@@ -15,7 +15,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("//:PROPERTIES.bzl", "PROPERTIES")
 
 def gapic_generator_java_repositories():
     # Import dependencies shared between Gradle and Bazel (i.e. maven dependencies)
@@ -59,18 +59,9 @@ def gapic_generator_java_repositories():
     _maybe(
         http_archive,
         name = "com_google_googleapis",
-        strip_prefix = "googleapis-ba30d8097582039ac4cc4e21b4e4baa426423075",
+        strip_prefix = "googleapis-0899ba0f4c053a4487ccf0b699df5f850e39a45f",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/ba30d8097582039ac4cc4e21b4e4baa426423075.zip",
-        ],
-    )
-
-    _maybe(
-        http_archive,
-        name = "com_google_googleapis_discovery",
-        strip_prefix = "googleapis-discovery-34478e2969042ed837d33684360f1ee3be7d2f74",
-        urls = [
-            "https://github.com/googleapis/googleapis-discovery/archive/34478e2969042ed837d33684360f1ee3be7d2f74.zip",
+            "https://github.com/googleapis/googleapis/archive/0899ba0f4c053a4487ccf0b699df5f850e39a45f.zip",
         ],
     )
 
@@ -84,20 +75,6 @@ def gapic_generator_java_repositories():
         native.bind,
         name = "gson",
         actual = "@com_google_code_gson_gson//jar",
-    )
-
-    _maybe(
-        jvm_maven_import_external,
-        name = "error_prone_annotations_maven",
-        artifact = "com.google.errorprone:error_prone_annotations:2.3.2",
-        server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"],
-    )
-
-    _maybe(
-        native.bind,
-        name = "error_prone_annotations",
-        actual = "@error_prone_annotations_maven//jar",
     )
 
     _api_common_java_version = PROPERTIES["version.com_google_api_common_java"]

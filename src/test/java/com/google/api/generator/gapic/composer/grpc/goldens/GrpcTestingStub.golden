@@ -9,7 +9,9 @@ import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.protobuf.Empty;
@@ -142,6 +144,11 @@ public class GrpcTestingStub extends TestingStub {
   private final GrpcOperationsStub operationsStub;
   private final GrpcStubCallableFactory callableFactory;
 
+  private static final PathTemplate GET_TEST_0_PATH_TEMPLATE =
+      PathTemplate.create("/v1beta1/{rename=tests/*}");
+  private static final PathTemplate GET_TEST_1_PATH_TEMPLATE =
+      PathTemplate.create("/v1beta1/{routing_id=tests/*}");
+
   public static final GrpcTestingStub create(TestingStubSettings settings) throws IOException {
     return new GrpcTestingStub(settings, ClientContext.create(settings));
   }
@@ -220,9 +227,13 @@ public class GrpcTestingStub extends TestingStub {
             .setMethodDescriptor(getTestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getName(), "rename", GET_TEST_0_PATH_TEMPLATE);
+                  if (request.getRouting() != null) {
+                    builder.add(
+                        request.getRouting().getName(), "routing_id", GET_TEST_1_PATH_TEMPLATE);
+                  }
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListTestsRequest, ListTestsResponse> listTestsTransportSettings =

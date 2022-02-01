@@ -87,6 +87,7 @@ public abstract class GrpcRestContext extends TransportContext {
                   classToType(com.google.api.gax.httpjson.longrunning.OperationsClient.class)))
           .setOperationsClientNames(
               ImmutableList.of("operationsClient", "httpJsonOperationsClient"))
+          .setUseValuePatterns(true)
           .build();
 
   public static TransportContext instance() {

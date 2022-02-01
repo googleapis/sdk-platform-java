@@ -10,8 +10,15 @@ dependencies {
   testImplementation 'com.google.api:gax:{{version.gax}}:testlib'
   implementation 'com.google.api:gax-grpc:{{version.gax_grpc}}'
   testImplementation 'com.google.api:gax-grpc:{{version.gax_grpc}}:testlib'
+  implementation 'io.grpc:grpc-protobuf:{{version.io_grpc}}'
+  testImplementation 'io.grpc:grpc-stub:{{version.io_grpc}}'
   testImplementation 'io.grpc:grpc-netty-shaded:{{version.io_grpc}}'
   testImplementation '{{maven.junit_junit}}'
+
+  // TODO: remove when dropping Java 8 support.
+  // https://github.com/googleapis/gapic-generator-java/issues/888
+  implementation '{{maven.javax_annotation_javax_annotation_api}}'
+
   {{extra_deps}}
 }
 
@@ -26,14 +33,6 @@ test {
   exclude "**/*SmokeTest*"
 }
 
-sourceSets {
-  main {
-    java {
-      srcDir 'src/main/java'
-    }
-  }
-}
-
 clean {
   delete 'all-jars'
 }
@@ -41,6 +40,6 @@ clean {
 task allJars(type: Copy) {
   dependsOn test, jar
   into 'all-jars'
-  // Replace with `from configurations.testRuntimeOnly, jar` to include test dependencies
-  from configurations.runtimeOnly, jar
+  // Replace with `from configurations.testRuntimeClasspath, jar` to include test dependencies
+  from configurations.runtimeClasspath, jar
 }

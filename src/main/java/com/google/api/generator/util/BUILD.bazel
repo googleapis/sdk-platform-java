@@ -1,15 +1,8 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "util_files",
-    srcs = glob(["*.java"]),
-)
+package(default_visibility = ["//:__subpackages__"])
 
 java_library(
     name = "util",
-    srcs = [
-        ":util_files",
-    ],
+    srcs = glob(["*.java"]),
 )

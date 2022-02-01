@@ -1,7 +1,4 @@
 load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
-load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
-
-package(default_visibility = ["//visibility:public"])
 
 UPDATE_GOLDENS_TESTS = [
     "ResourceNameHelperClassComposerTest",
@@ -10,11 +7,6 @@ UPDATE_GOLDENS_TESTS = [
 TESTS = UPDATE_GOLDENS_TESTS + [
     "ResourceNameTokenizerTest",
 ]
-
-filegroup(
-    name = "resourcename_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 TEST_DEPS = [
     ":common_resources_java_proto",
@@ -40,13 +32,13 @@ TEST_DEPS = [
 
 [java_test(
     name = test_name,
-    srcs = ["{0}.java".format(test_name)],
+    srcs = ["%s.java" % test_name],
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/resourcename/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class = "com.google.api.generator.gapic.composer.resourcename.{0}".format(test_name),
+    test_class = "com.google.api.generator.gapic.composer.resourcename.%s" % test_name,
     deps = TEST_DEPS,
 ) for test_name in TESTS]
 
@@ -61,16 +53,16 @@ java_proto_library(
 # to update goldens as expected generated code.
 # `ServiceClient*` tests are not supported now since they are still in active development.
 
-[golden_update(
-    name = "{0}_update".format(test_name),
-    srcs = [
-        "{0}.java".format(test_name),
-    ],
+[java_binary(
+    name = "%s_update" % test_name,
+    srcs = ["%s.java" % test_name],
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/resourcename/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class = "com.google.api.generator.gapic.composer.resourcename.{0}".format(test_name),
+    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
+    args = ["com.google.api.generator.gapic.composer.resourcename.%s" % test_name],
     deps = TEST_DEPS,
+    runtime_deps = ["//src/test/java/com/google/api/generator/test/framework:junit_runner"],
 ) for test_name in UPDATE_GOLDENS_TESTS]

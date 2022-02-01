@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
-import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
-import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.ListPagedResponse;
 
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.AddressAggregatedList;
-import com.google.cloud.compute.v1.AddressList;
-import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
-import com.google.cloud.compute.v1.DeleteAddressRequest;
-import com.google.cloud.compute.v1.InsertAddressRequest;
-import com.google.cloud.compute.v1.ListAddressesRequest;
-import com.google.cloud.compute.v1.Operation;
+import com.google.cloud.compute.v1small.AddressAggregatedList;
+import com.google.cloud.compute.v1small.AddressList;
+import com.google.cloud.compute.v1small.AggregatedListAddressesRequest;
+import com.google.cloud.compute.v1small.DeleteAddressRequest;
+import com.google.cloud.compute.v1small.InsertAddressRequest;
+import com.google.cloud.compute.v1small.ListAddressesRequest;
+import com.google.cloud.compute.v1small.Operation;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.

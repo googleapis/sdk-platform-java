@@ -71,6 +71,21 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
+  public void generateGrpcServiceStubClass_routingHeaders() {
+    GapicContext context =
+        GrpcTestProtoLoader.instance().parseExplicitDynamicRoutingHeaderTesting();
+    Service service = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "GrpcRoutingHeadersStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcRoutingHeadersStub.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
   public void generateGrpcServiceStubClass_httpBindingsWithSubMessageFields() {
     GapicContext context = GrpcTestProtoLoader.instance().parsePubSubPublisher();
     Service service = context.services().get(0);

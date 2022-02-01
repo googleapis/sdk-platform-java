@@ -1,16 +1,4 @@
 load("@rules_java//java:defs.bzl", "java_test")
-load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
-
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "engine_files",
-    srcs = glob(["*.java"]) + [
-        "//src/test/java/com/google/api/generator/engine/ast:ast_files",
-        "//src/test/java/com/google/api/generator/engine/lexicon:lexicon_files",
-        "//src/test/java/com/google/api/generator/engine/writer:writer_files",
-    ],
-)
 
 TESTS = [
     "JavaCodeGeneratorTest",
@@ -26,20 +14,20 @@ TEST_DEPS = [
 
 [java_test(
     name = test_name,
-    srcs = ["{0}.java".format(test_name)],
+    srcs = ["%s.java" % test_name],
     data = ["//src/test/java/com/google/api/generator/engine/goldens:goldens_files"],
-    test_class = "com.google.api.generator.engine.{0}".format(test_name),
+    test_class = "com.google.api.generator.engine.%s" % test_name,
     deps = TEST_DEPS,
 ) for test_name in TESTS]
 
-TEST_CLASS_NAME = "com.google.api.generator.engine.JavaCodeGeneratorTest"
-
 # Run `bazel run src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update`
 # to update goldens as expected generated code.
-[golden_update(
-    name = "{0}_update".format(test_name),
-    srcs = ["{0}.java".format(test_name)],
+[java_binary(
+    name = "%s_update" % test_name,
+    srcs = ["%s.java" % test_name],
     data = ["//src/test/java/com/google/api/generator/engine/goldens:goldens_files"],
-    test_class = "com.google.api.generator.engine.{0}".format(test_name),
+    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
+    args = ["com.google.api.generator.engine.%s" % test_name],
     deps = TEST_DEPS,
+    runtime_deps = ["//src/test/java/com/google/api/generator/test/framework:junit_runner"],
 ) for test_name in TESTS]

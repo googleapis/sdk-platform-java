@@ -88,6 +88,14 @@ public class HttpJsonServiceCallableFactoryClassComposer
   }
 
   @Override
+  protected List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
+    List<MethodDefinition> classMethods =
+        new ArrayList<>(super.createClassMethods(service, typeStore));
+    classMethods.addAll(Arrays.asList(createServerStreamingCallableMethod(service, typeStore)));
+    return classMethods;
+  }
+
+  @Override
   protected MethodDefinition createOperationCallableMethod(Service service, TypeStore typeStore) {
     String methodVariantName = "Operation";
     String requestTemplateName = "RequestT";

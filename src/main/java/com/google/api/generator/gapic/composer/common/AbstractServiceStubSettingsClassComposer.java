@@ -219,14 +219,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build();
     // enable self signed JWT.
     credsProviderBuilderExpr =
-            MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(credsProviderBuilderExpr)
-                    .setMethodName("setUseJwtAccessWithScope")
-                    .setArguments(
-                            ValueExpr.withValue(
-                                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
-                    .setReturnType(returnType)
-                    .build();
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credsProviderBuilderExpr)
+            .setMethodName("setUseJwtAccessWithScope")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
+            .setReturnType(returnType)
+            .build();
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
@@ -467,7 +467,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR
+            .toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -817,7 +818,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr.toBuilder()
+            pagedListDescVarExpr
+                .toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -956,7 +958,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr.toBuilder()
+            pagedListResponseFactoryVarExpr
+                .toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)

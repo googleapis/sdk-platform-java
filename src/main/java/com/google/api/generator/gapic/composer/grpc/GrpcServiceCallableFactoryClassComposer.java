@@ -146,28 +146,6 @@ public class GrpcServiceCallableFactoryClassComposer
             .collect(Collectors.toList()));
   }
 
-  private MethodDefinition createServerStreamingCallableMethod(
-      Service service, TypeStore typeStore) {
-    String methodVariantName = "ServerStreaming";
-    String requestTemplateName = "RequestT";
-    String responseTemplateName = "ResponseT";
-    List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
-    return createGenericCallableMethod(
-        service,
-        typeStore,
-        /*methodTemplateNames=*/ methodTemplateNames,
-        /*returnCallableKindName=*/ methodVariantName,
-        /*returnCallableTemplateNames=*/ methodTemplateNames,
-        /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
-            .map(n -> (Object) n)
-            .collect(Collectors.toList()),
-        /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
-            .map(n -> (Object) n)
-            .collect(Collectors.toList()));
-  }
-
   private MethodDefinition createClientStreamingCallableMethod(
       Service service, TypeStore typeStore) {
     String methodVariantName = "ClientStreaming";

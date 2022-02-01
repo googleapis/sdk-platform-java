@@ -81,6 +81,8 @@ public abstract class TransportContext {
 
   public abstract List<String> operationsClientNames();
 
+  public abstract boolean useValuePatterns();
+
   protected static TypeNode classToType(Class<?> clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }
@@ -126,19 +128,25 @@ public abstract class TransportContext {
 
     public abstract Builder setTransportCallSettingsName(String transportCallSettingsName);
 
-    public abstract Builder setTransportOperationsStubTypes(List<TypeNode> transportOperationsStubTypes);
+    public abstract Builder setTransportOperationsStubTypes(
+        List<TypeNode> transportOperationsStubTypes);
 
-    public abstract Builder setTransportOperationsStubNames(List<String> transportOperationsStubNames);
+    public abstract Builder setTransportOperationsStubNames(
+        List<String> transportOperationsStubNames);
 
     public abstract Builder setOperationsStubTypes(List<TypeNode> operationsStubType);
 
-    public abstract Builder setOperationResponseTransformerType(TypeNode operationResponseTransformerType);
+    public abstract Builder setOperationResponseTransformerType(
+        TypeNode operationResponseTransformerType);
 
-    public abstract Builder setOperationMetadataTransformerType(TypeNode operationMetadataTransformerType);
+    public abstract Builder setOperationMetadataTransformerType(
+        TypeNode operationMetadataTransformerType);
 
     public abstract Builder setOperationsClientTypes(List<TypeNode> operationsClientTypes);
 
     public abstract Builder setOperationsClientNames(List<String> operationsClientNames);
+
+    public abstract Builder setUseValuePatterns(boolean useValuePatterns);
 
     public abstract TransportContext build();
   }

@@ -2,8 +2,8 @@
   "schema": "1.0",
   "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
   "language": "java",
-  "protoPackage": "google.cloud.compute.v1",
-  "libraryPackage": "com.google.cloud.compute.v1",
+  "protoPackage": "google.cloud.compute.v1small",
+  "libraryPackage": "com.google.cloud.compute.v1small",
   "services": {
     "Addresses": {
       "clients": {

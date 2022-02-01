@@ -1,7 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_test")
 
-package(default_visibility = ["//visibility:public"])
-
 TESTS = [
     "BatchingSettingsConfigParserTest",
     "GapicLanguageSettingsParserTest",
@@ -16,12 +14,9 @@ TESTS = [
     "ServiceYamlParserTest",
     "SourceCodeInfoParserTest",
     "TypeParserTest",
+    "RoutingRuleParserTest",
+    "PatternParserTest",
 ]
-
-filegroup(
-    name = "protoparser_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
-)
 
 [java_test(
     name = test_name,
@@ -43,6 +38,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/gapic/utils",
         "//src/test/java/com/google/api/generator/gapic/testdata:bookshop_java_proto",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+        "//src/test/java/com/google/api/generator/gapic/testdata:explicit_dynamic_routing_headers_testing_java_proto",
         "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
         "@com_google_api_api_common//jar",
         "@com_google_googleapis//google/api:api_java_proto",
