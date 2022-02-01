@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
+import static com.google.api.generator.gapic.composer.utils.SampleNames.createSampleName;
+
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -32,8 +34,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.google.api.generator.gapic.composer.utils.SampleNames.createSampleName;
 
 public final class SettingsSampleCodeComposer {
 
@@ -146,8 +146,8 @@ public final class SettingsSampleCodeComposer {
 
     return Optional.of(
         Sample.builder()
-                .setName(createSampleName(classType.reference().name(), methodNameOpt.get()))
-                .setBody(statements)
-                .build());
+            .setName(createSampleName(classType.reference().name(), methodNameOpt.get()))
+            .setBody(statements)
+            .build());
   }
 }

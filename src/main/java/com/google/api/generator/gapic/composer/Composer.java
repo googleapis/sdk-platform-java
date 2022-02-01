@@ -208,7 +208,9 @@ public class Composer {
         .map(
             gapicClass -> {
               ClassDefinition classWithHeader =
-                  gapicClass.classDefinition().toBuilder()
+                  gapicClass
+                      .classDefinition()
+                      .toBuilder()
                       .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
                       .build();
               return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
@@ -218,7 +220,9 @@ public class Composer {
 
   private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
     return GapicPackageInfo.with(
-        gapicPackageInfo.packageInfo().toBuilder()
+        gapicPackageInfo
+            .packageInfo()
+            .toBuilder()
             .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
             .build());
   }

@@ -15,14 +15,13 @@
 package com.google.api.generator.test.framework;
 
 import com.google.api.generator.gapic.model.Sample;
-import junit.framework.AssertionFailedError;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import junit.framework.AssertionFailedError;
 
 public class Assert {
   /**
@@ -59,11 +58,11 @@ public class Assert {
     File directory = new File(goldenDir);
     if (directory.list().length != samples.size()) {
       List<String> fileNames =
-              Arrays.stream(directory.listFiles()).map(File::getName).collect(Collectors.toList());
+          Arrays.stream(directory.listFiles()).map(File::getName).collect(Collectors.toList());
       List<String> sampleNames =
-              samples.stream()
-                      .map(s -> String.format("%s.golden", s.getName()))
-                      .collect(Collectors.toList());
+          samples.stream()
+              .map(s -> String.format("%s.golden", s.getName()))
+              .collect(Collectors.toList());
       List<String> diffList = Differ.diffTwoStringLists(fileNames, sampleNames);
       if (!diffList.isEmpty()) {
         throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));

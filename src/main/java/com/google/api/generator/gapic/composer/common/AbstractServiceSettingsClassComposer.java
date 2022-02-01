@@ -66,7 +66,6 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
-import javax.annotation.Generated;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,6 +78,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.annotation.Generated;
 
 public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
@@ -105,7 +105,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     String className = ClassNames.getServiceSettingsClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     Set<Sample> samples = new HashSet<>();
-    List<CommentStatement> classHeaderComments = createClassHeaderComments(service, typeStore.get(className), samples);
+    List<CommentStatement> classHeaderComments =
+        createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
@@ -148,7 +149,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
 
     Optional<String> docSampleCode = Optional.empty();
-    if (sampleCode.isPresent()){
+    if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
       docSampleCode = Optional.of(SampleCodeWriter.write(sampleCode.get().getBody()));
     }

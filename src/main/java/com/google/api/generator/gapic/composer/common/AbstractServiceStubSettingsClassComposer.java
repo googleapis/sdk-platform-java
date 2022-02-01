@@ -180,7 +180,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             /* isNestedClass= */ false,
             deprecatedSettingVarNames);
     String className = ClassNames.getServiceStubSettingsClassName(service);
-    List<CommentStatement> classHeaderComments = createClassHeaderComments(service, typeStore.get(className), samples);
+    List<CommentStatement> classHeaderComments =
+        createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)

@@ -204,10 +204,10 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             clientType, settingsType);
     samples.addAll(Arrays.asList(classMethodSampleCode, credentialsSampleCode, endpointSampleCode));
     return ServiceClientCommentComposer.createClassHeaderComments(
-            service,
-            SampleCodeWriter.write(classMethodSampleCode.getBody()),
-            SampleCodeWriter.write(credentialsSampleCode.getBody()),
-            SampleCodeWriter.write(endpointSampleCode.getBody()));
+        service,
+        SampleCodeWriter.write(classMethodSampleCode.getBody()),
+        SampleCodeWriter.write(credentialsSampleCode.getBody()),
+        SampleCodeWriter.write(endpointSampleCode.getBody()));
   }
 
   private List<MethodDefinition> createClassMethods(
@@ -618,7 +618,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
       if (method.hasLro()) {
         MethodDefinition generatedMethod =
-            createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames, samples);
+            createLroCallableMethod(
+                service, method, typeStore, messageTypes, resourceNames, samples);
 
         // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
@@ -626,7 +627,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
       if (method.isPaged()) {
         MethodDefinition generatedMethod =
-            createPagedCallableMethod(service, method, typeStore, messageTypes, resourceNames, samples);
+            createPagedCallableMethod(
+                service, method, typeStore, messageTypes, resourceNames, samples);
 
         // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
@@ -714,7 +716,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
               ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
                   method, typeStore.get(clientName), signature, resourceNames, messageTypes));
       Optional<String> methodDocSample = Optional.empty();
-      if (methodSample.isPresent()){
+      if (methodSample.isPresent()) {
         samples.add(methodSample.get());
         methodDocSample = Optional.of(SampleCodeWriter.write(methodSample.get().getBody()));
       }
@@ -801,9 +803,10 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
                 method, typeStore.get(clientName), resourceNames, messageTypes));
     Optional<String> defaultMethodDocSample = Optional.empty();
-    if (defaultMethodSample.isPresent()){
+    if (defaultMethodSample.isPresent()) {
       samples.add(defaultMethodSample.get());
-      defaultMethodDocSample = Optional.of(SampleCodeWriter.write(defaultMethodSample.get().getBody()));
+      defaultMethodDocSample =
+          Optional.of(SampleCodeWriter.write(defaultMethodSample.get().getBody()));
     }
 
     MethodInvocationExpr callableMethodExpr =
@@ -863,7 +866,13 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       Map<String, ResourceName> resourceNames,
       Set<Sample> samples) {
     return createCallableMethod(
-        service, method, CallableMethodKind.REGULAR, typeStore, messageTypes, resourceNames, samples);
+        service,
+        method,
+        CallableMethodKind.REGULAR,
+        typeStore,
+        messageTypes,
+        resourceNames,
+        samples);
   }
 
   private static MethodDefinition createPagedCallableMethod(
@@ -963,7 +972,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
     }
     Optional<String> sampleDocCode = Optional.empty();
-    if (sampleCode.isPresent()){
+    if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
       sampleDocCode = Optional.of(SampleCodeWriter.write(sampleCode.get().getBody()));
     }

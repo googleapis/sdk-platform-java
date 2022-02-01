@@ -57,11 +57,11 @@ public class Writer {
     Set<String> gapicSamples = new HashSet<>();
     for (GapicClass gapicClazz : clazzes) {
       writeClazzSamples(
-              gapicClazz,
-              getSamplePackage(gapicClazz),
-              writeClazz(gapicClazz, codeWriter, jos),
-              jos,
-              gapicSamples);
+          gapicClazz,
+          getSamplePackage(gapicClazz),
+          writeClazz(gapicClazz, codeWriter, jos),
+          jos,
+          gapicSamples);
     }
 
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
@@ -105,8 +105,12 @@ public class Writer {
     return path;
   }
 
-   static void writeClazzSamples(
-      GapicClass gapicClazz, String pakkage, String clazzPath, JarOutputStream jos, Set<String> gapicSamples) {
+  static void writeClazzSamples(
+      GapicClass gapicClazz,
+      String pakkage,
+      String clazzPath,
+      JarOutputStream jos,
+      Set<String> gapicSamples) {
     for (Sample sample : gapicClazz.samples()) {
       if (!gapicSamples.contains(sample.getName())) {
         writeExecutableSample(sample, pakkage, clazzPath, jos);
@@ -119,15 +123,15 @@ public class Writer {
       Sample sample, String pakkage, String clazzPath, JarOutputStream jos) {
     JarEntry jarEntry =
         new JarEntry(String.format("samples/generated/%s/%s.java", clazzPath, sample.getName()));
-    String executableSampleCode =
-        ExecutableSampleComposer.createExecutableSample(sample, pakkage);
+    String executableSampleCode = ExecutableSampleComposer.createExecutableSample(sample, pakkage);
     try {
       jos.putNextEntry(jarEntry);
       jos.write(executableSampleCode.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException(
           String.format(
-              "Could not write sample code for %s/%s.: %s", clazzPath, sample.getName(), e.getMessage()));
+              "Could not write sample code for %s/%s.: %s",
+              clazzPath, sample.getName(), e.getMessage()));
     }
   }
 
@@ -162,7 +166,7 @@ public class Writer {
     }
   }
 
-   static String getPath(String pakkage, String className) {
+  static String getPath(String pakkage, String className) {
     String path = pakkage.replaceAll("\\.", "/");
     if (className.startsWith("Mock") || className.endsWith("Test")) {
       path = "src/test/java/" + path;
@@ -177,7 +181,7 @@ public class Writer {
     return path;
   }
 
-  public static String getSamplePackage(GapicClass gapicClazz){
+  public static String getSamplePackage(GapicClass gapicClazz) {
     return gapicClazz.classDefinition().packageString().concat(".samples");
   }
 }

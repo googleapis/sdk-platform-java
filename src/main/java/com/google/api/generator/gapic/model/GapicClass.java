@@ -15,10 +15,8 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 @AutoValue
@@ -41,8 +39,7 @@ public abstract class GapicClass {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
   }
 
-  public static GapicClass create(
-      Kind kind, ClassDefinition classDefinition, Set<Sample> samples) {
+  public static GapicClass create(Kind kind, ClassDefinition classDefinition, Set<Sample> samples) {
     return builder().setKind(kind).setClassDefinition(classDefinition).setSamples(samples).build();
   }
 

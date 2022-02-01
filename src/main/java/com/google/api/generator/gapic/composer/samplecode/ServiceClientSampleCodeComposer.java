@@ -780,18 +780,20 @@ public class ServiceClientSampleCodeComposer {
         JavaStyle.toUpperCamelCase(clientRpcMethodInvocationExpr.methodIdentifier().name());
 
     sampleName =
-        sampleName.concat(
-            rpcMethodArgVarExprs.stream()
-                .map(
-                    e ->
-                        String.format(
-                            "%s%s",
-                            JavaStyle.toUpperCamelCase(
-                                (e.variable().type().reference() == null
-                                    ? e.variable().type().typeKind().name().toLowerCase()
-                                    : e.variable().type().reference().name())),
-                            JavaStyle.toUpperCamelCase(e.variable().identifier().name())))
-                .collect(Collectors.joining())).replaceAll("[<>]", "");
+        sampleName
+            .concat(
+                rpcMethodArgVarExprs.stream()
+                    .map(
+                        e ->
+                            String.format(
+                                "%s%s",
+                                JavaStyle.toUpperCamelCase(
+                                    (e.variable().type().reference() == null
+                                        ? e.variable().type().typeKind().name().toLowerCase()
+                                        : e.variable().type().reference().name())),
+                                JavaStyle.toUpperCamelCase(e.variable().identifier().name())))
+                    .collect(Collectors.joining()))
+            .replaceAll("[<>]", "");
     if (returnsVoid) {
       bodyExprs.add(clientRpcMethodInvocationExpr);
     } else {

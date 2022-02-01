@@ -28,7 +28,6 @@ import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
-
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
@@ -44,13 +43,12 @@ public class ServiceStubSettingsClassComposerTest {
     Utils.saveCodegenToFile(
         this.getClass(), "LoggingServiceV2StubSettings.golden", visitor.write());
     String goldenDir = Utils.getGoldenDir(this.getClass());
-    Path goldenFilePath =
-        Paths.get(goldenDir, "LoggingServiceV2StubSettings.golden");
+    Path goldenFilePath = Paths.get(goldenDir, "LoggingServiceV2StubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
     assertGoldenSamples(
-            samples,
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/servicesettings/", goldenDir));
+        samples,
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/servicesettings/", goldenDir));
   }
 
   @Test
@@ -65,13 +63,12 @@ public class ServiceStubSettingsClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "PublisherStubSettings.golden", visitor.write());
     String goldenDir = Utils.getGoldenDir(this.getClass());
-    Path goldenFilePath =
-        Paths.get(goldenDir, "PublisherStubSettings.golden");
+    Path goldenFilePath = Paths.get(goldenDir, "PublisherStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
     assertGoldenSamples(
-            samples,
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/servicesettings/", goldenDir));
+        samples,
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/servicesettings/", goldenDir));
   }
 
   @Test
@@ -89,9 +86,9 @@ public class ServiceStubSettingsClassComposerTest {
     Path goldenFilePath = Paths.get(goldenDir, "EchoStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
     assertGoldenSamples(
-            samples,
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/servicesettings/", goldenDir));
+        samples,
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/servicesettings/", goldenDir));
   }
 
   @Test
@@ -106,13 +103,12 @@ public class ServiceStubSettingsClassComposerTest {
     Utils.saveCodegenToFile(
         this.getClass(), "DeprecatedServiceStubSettings.golden", visitor.write());
     String goldenDir = Utils.getGoldenDir(this.getClass());
-    Path goldenFilePath =
-        Paths.get(goldenDir, "DeprecatedServiceStubSettings.golden");
+    Path goldenFilePath = Paths.get(goldenDir, "DeprecatedServiceStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
     assertGoldenSamples(
-            samples,
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/servicesettings/", goldenDir));
+        samples,
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/servicesettings/", goldenDir));
   }
 
   private void assertGoldenSamples(Set<Sample> samples, String packkage, String goldenDir) {
@@ -120,7 +116,7 @@ public class ServiceStubSettingsClassComposerTest {
       String fileName = sample.getName().concat(".golden");
       Path goldenFilePath = Paths.get(goldenDir, fileName);
       assertCodeEquals(
-              goldenFilePath, ExecutableSampleComposer.createExecutableSample(sample, packkage));
+          goldenFilePath, ExecutableSampleComposer.createExecutableSample(sample, packkage));
     }
   }
 }

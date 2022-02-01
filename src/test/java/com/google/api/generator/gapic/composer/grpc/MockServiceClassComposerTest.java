@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -23,8 +25,6 @@ import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
-
-import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
 
 public class MockServiceClassComposerTest {
   @Test

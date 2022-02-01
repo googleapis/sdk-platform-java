@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
+import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
+
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -22,13 +24,10 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import org.junit.Test;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
-
-import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
+import org.junit.Test;
 
 public class ServiceSettingsClassComposerTest {
   @Test
@@ -45,9 +44,9 @@ public class ServiceSettingsClassComposerTest {
     Path goldenFilePath = Paths.get(goldenDir, "EchoSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
     assertGoldenSamples(
-            samples,
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/servicesettings/", goldenDir));
+        samples,
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/servicesettings/", goldenDir));
   }
 
   @Test
@@ -61,13 +60,12 @@ public class ServiceSettingsClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceSettings.golden", visitor.write());
     String goldenDir = Utils.getGoldenDir(this.getClass());
-    Path goldenFilePath =
-        Paths.get(goldenDir, "DeprecatedServiceSettings.golden");
+    Path goldenFilePath = Paths.get(goldenDir, "DeprecatedServiceSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
     assertGoldenSamples(
-            samples,
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/servicesettings/", goldenDir));
+        samples,
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/servicesettings/", goldenDir));
   }
 
   private void assertGoldenSamples(Set<Sample> samples, String packkage, String goldenDir) {
@@ -75,7 +73,7 @@ public class ServiceSettingsClassComposerTest {
       String fileName = sample.getName().concat(".golden");
       Path goldenFilePath = Paths.get(goldenDir, fileName);
       assertCodeEquals(
-              goldenFilePath, ExecutableSampleComposer.createExecutableSample(sample, packkage));
+          goldenFilePath, ExecutableSampleComposer.createExecutableSample(sample, packkage));
     }
   }
 }

@@ -14,6 +14,9 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
+import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
+import static com.google.api.generator.test.framework.Assert.assertSampleFileCount;
+
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer;
@@ -22,14 +25,10 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Utils;
-import org.junit.Test;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
-
-import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
-import static com.google.api.generator.test.framework.Assert.assertSampleFileCount;
+import org.junit.Test;
 
 public class ServiceClientClassComposerTest {
   @Test
@@ -41,9 +40,9 @@ public class ServiceClientClassComposerTest {
 
     assertGoldenClass(clazz.classDefinition(), goldenDir, "EchoClient.golden");
     assertGoldenSamples(
-            clazz.samples(),
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/echoclient/", goldenDir));
+        clazz.samples(),
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/echoclient/", goldenDir));
   }
 
   @Test
@@ -55,9 +54,9 @@ public class ServiceClientClassComposerTest {
 
     assertGoldenClass(clazz.classDefinition(), goldenDir, "DeprecatedServiceClient.golden");
     assertGoldenSamples(
-            clazz.samples(),
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/deprecatedserviceclient/", goldenDir));
+        clazz.samples(),
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/deprecatedserviceclient/", goldenDir));
   }
 
   @Test
@@ -69,9 +68,9 @@ public class ServiceClientClassComposerTest {
 
     assertGoldenClass(clazz.classDefinition(), goldenDir, "IdentityClient.golden");
     assertGoldenSamples(
-            clazz.samples(),
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/identityclient/", goldenDir));
+        clazz.samples(),
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/identityclient/", goldenDir));
   }
 
   @Test
@@ -83,9 +82,9 @@ public class ServiceClientClassComposerTest {
 
     assertGoldenClass(clazz.classDefinition(), goldenDir, "BookshopClient.golden");
     assertGoldenSamples(
-            clazz.samples(),
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/bookshopclient/", goldenDir));
+        clazz.samples(),
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/bookshopclient/", goldenDir));
   }
 
   @Test
@@ -97,13 +96,13 @@ public class ServiceClientClassComposerTest {
 
     assertGoldenClass(clazz.classDefinition(), goldenDir, "MessagingClient.golden");
     assertGoldenSamples(
-            clazz.samples(),
-            String.format("%s.samples", clazz.classDefinition().packageString()),
-            String.format("%ssamples/messagingclient/", goldenDir));
+        clazz.samples(),
+        String.format("%s.samples", clazz.classDefinition().packageString()),
+        String.format("%ssamples/messagingclient/", goldenDir));
   }
 
   private void assertGoldenClass(
-          ClassDefinition classDefinition, String goldenDir, String fileName) {
+      ClassDefinition classDefinition, String goldenDir, String fileName) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDefinition.accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), fileName, visitor.write());

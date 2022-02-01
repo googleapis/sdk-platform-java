@@ -25,18 +25,22 @@ import java.util.List;
 @AutoValue
 public abstract class Sample {
   public abstract String getName();
+
   public abstract List<Statement> getBody();
+
   public abstract List<AssignmentExpr> getVariableAssignments();
+
   public abstract List<CommentStatement> getFileHeader();
+
   public abstract String getRegionTags();
 
   public static Builder builder() {
     return new AutoValue_Sample.Builder()
-            .setName("")
-            .setBody(ImmutableList.of())
-            .setVariableAssignments(ImmutableList.of())
-            .setFileHeader(ImmutableList.of())
-            .setRegionTags("");
+        .setName("")
+        .setBody(ImmutableList.of())
+        .setVariableAssignments(ImmutableList.of())
+        .setFileHeader(ImmutableList.of())
+        .setRegionTags("");
   }
 
   abstract Builder toBuilder();
@@ -63,13 +67,13 @@ public abstract class Sample {
 
     abstract Sample autoBuild();
 
-    public final Sample build(){
+    public final Sample build() {
       setName(cleanSampleName(autoBuild().getName()));
       return autoBuild();
     };
   }
 
-  private static String cleanSampleName(String sampleName){
+  private static String cleanSampleName(String sampleName) {
     return JavaStyle.toUpperCamelCase(sampleName.replaceAll("[^a-zA-Z0-9]", ""));
   }
 }

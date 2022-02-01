@@ -14,19 +14,18 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
+import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+import static org.junit.Assert.assertEquals;
+
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Utils;
-import org.junit.Test;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
-import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class ServiceClientTestClassComposerTest {
   @Test
