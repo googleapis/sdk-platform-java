@@ -14,17 +14,19 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
-import static org.junit.Assert.assertEquals;
-
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Utils;
+import org.junit.Test;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Test;
+
+import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+import static org.junit.Assert.assertEquals;
 
 public class ServiceClientTestClassComposerTest {
   @Test
@@ -33,6 +35,7 @@ public class ServiceClientTestClassComposerTest {
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, echoProtoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -46,6 +49,7 @@ public class ServiceClientTestClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, protoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -61,6 +65,7 @@ public class ServiceClientTestClassComposerTest {
     Service testingProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, testingProtoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -77,6 +82,7 @@ public class ServiceClientTestClassComposerTest {
     assertEquals("Subscriber", subscriptionService.name());
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, subscriptionService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -91,6 +97,7 @@ public class ServiceClientTestClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseLogging();
     Service loggingService = context.services().get(0);
     GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, loggingService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

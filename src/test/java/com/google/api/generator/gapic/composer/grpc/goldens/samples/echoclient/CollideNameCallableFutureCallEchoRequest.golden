@@ -1,0 +1,31 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.Foobar;
+import com.google.showcase.v1beta1.FoobarName;
+import com.google.showcase.v1beta1.Object;
+import com.google.showcase.v1beta1.Severity;
+
+public class CollideNameCallableFutureCallEchoRequest {
+
+  public static void main(String[] args) throws Exception {
+    collideNameCallableFutureCallEchoRequest();
+  }
+
+  public static void collideNameCallableFutureCallEchoRequest() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFoobar(Foobar.newBuilder().build())
+              .build();
+      ApiFuture<Object> future = echoClient.collideNameCallable().futureCall(request);
+      // Do something.
+      Object response = future.get();
+    }
+  }
+}

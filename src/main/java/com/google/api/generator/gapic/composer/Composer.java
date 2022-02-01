@@ -32,11 +32,14 @@ import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComp
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Composer {
@@ -45,7 +48,7 @@ public class Composer {
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(clazzes);
+    return addApacheLicense(composeSamples(clazzes));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
@@ -186,28 +189,45 @@ public class Composer {
     return clazzes;
   }
 
+  private static List<GapicClass> composeSamples(List<GapicClass> clazzes) {
+    return clazzes.stream()
+        .map(
+            gapicClass -> {
+              Set<Sample> samples =
+                  gapicClass.samples().stream()
+                      .map(sample -> addApacheLicense(addRegionTags(sample)))
+                      .collect(Collectors.toSet());
+              return gapicClass.setSamples(samples);
+            })
+        .collect(Collectors.toList());
+  }
+
   @VisibleForTesting
   protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
     return gapicClassList.stream()
         .map(
             gapicClass -> {
               ClassDefinition classWithHeader =
-                  gapicClass
-                      .classDefinition()
-                      .toBuilder()
+                  gapicClass.classDefinition().toBuilder()
                       .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
                       .build();
-              return GapicClass.create(gapicClass.kind(), classWithHeader);
+              return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
             })
         .collect(Collectors.toList());
   }
 
   private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
     return GapicPackageInfo.with(
-        gapicPackageInfo
-            .packageInfo()
-            .toBuilder()
+        gapicPackageInfo.packageInfo().toBuilder()
             .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
             .build());
+  }
+
+  private static Sample addApacheLicense(Sample sample) {
+    return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
+  }
+
+  private static Sample addRegionTags(Sample sample) {
+    return sample.withRegionTags("REGION TAGS");
   }
 }

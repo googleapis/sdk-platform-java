@@ -1,0 +1,22 @@
+package com.google.testdata.v1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.protobuf.Empty;
+import com.google.testdata.v1.DeprecatedServiceClient;
+import com.google.testdata.v1.FibonacciRequest;
+
+public class SlowFibonacciCallableFutureCallFibonacciRequest {
+
+  public static void main(String[] args) throws Exception {
+    slowFibonacciCallableFutureCallFibonacciRequest();
+  }
+
+  public static void slowFibonacciCallableFutureCallFibonacciRequest() throws Exception {
+    try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
+      FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
+      ApiFuture<Empty> future = deprecatedServiceClient.slowFibonacciCallable().futureCall(request);
+      // Do something.
+      future.get();
+    }
+  }
+}

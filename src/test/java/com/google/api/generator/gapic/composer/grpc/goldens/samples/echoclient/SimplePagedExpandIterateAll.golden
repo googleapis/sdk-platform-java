@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+
+public class SimplePagedExpandIterateAll {
+
+  public static void main(String[] args) throws Exception {
+    simplePagedExpandIterateAll();
+  }
+
+  public static void simplePagedExpandIterateAll() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.IdentitySettings;
+import com.google.showcase.v1beta1.myEndpoint;
+
+public class CreateIdentitySettingsSetEndpoint {
+
+  public static void main(String[] args) throws Exception {
+    createIdentitySettingsSetEndpoint();
+  }
+
+  public static void createIdentitySettingsSetEndpoint() throws Exception {
+    IdentitySettings identitySettings =
+        IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
+    IdentityClient identityClient = IdentityClient.create(identitySettings);
+  }
+}

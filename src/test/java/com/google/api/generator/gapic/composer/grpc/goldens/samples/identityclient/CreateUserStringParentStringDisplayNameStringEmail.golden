@@ -1,0 +1,21 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.UserName;
+
+public class CreateUserStringParentStringDisplayNameStringEmail {
+
+  public static void main(String[] args) throws Exception {
+    createUserStringParentStringDisplayNameStringEmail();
+  }
+
+  public static void createUserStringParentStringDisplayNameStringEmail() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      String parent = UserName.of("[USER]").toString();
+      String displayName = "displayName1714148973";
+      String email = "email96619420";
+      User response = identityClient.createUser(parent, displayName, email);
+    }
+  }
+}

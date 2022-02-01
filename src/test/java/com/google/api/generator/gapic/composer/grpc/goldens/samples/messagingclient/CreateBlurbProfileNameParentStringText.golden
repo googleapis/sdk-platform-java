@@ -1,0 +1,20 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+
+public class CreateBlurbProfileNameParentStringText {
+
+  public static void main(String[] args) throws Exception {
+    createBlurbProfileNameParentStringText();
+  }
+
+  public static void createBlurbProfileNameParentStringText() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ProfileName parent = ProfileName.of("[USER]");
+      String text = "text3556653";
+      Blurb response = messagingClient.createBlurb(parent, text);
+    }
+  }
+}

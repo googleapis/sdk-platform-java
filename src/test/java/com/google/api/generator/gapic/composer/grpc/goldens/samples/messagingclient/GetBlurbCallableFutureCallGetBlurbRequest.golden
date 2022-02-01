@@ -1,0 +1,28 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.BlurbName;
+import com.google.showcase.v1beta1.GetBlurbRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+
+public class GetBlurbCallableFutureCallGetBlurbRequest {
+
+  public static void main(String[] args) throws Exception {
+    getBlurbCallableFutureCallGetBlurbRequest();
+  }
+
+  public static void getBlurbCallableFutureCallGetBlurbRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      GetBlurbRequest request =
+          GetBlurbRequest.newBuilder()
+              .setName(
+                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
+                      .toString())
+              .build();
+      ApiFuture<Blurb> future = messagingClient.getBlurbCallable().futureCall(request);
+      // Do something.
+      Blurb response = future.get();
+    }
+  }
+}

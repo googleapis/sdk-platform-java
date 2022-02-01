@@ -1,0 +1,30 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.ListBlurbsRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+
+public class ListBlurbsPagedCallableFutureCallListBlurbsRequest {
+
+  public static void main(String[] args) throws Exception {
+    listBlurbsPagedCallableFutureCallListBlurbsRequest();
+  }
+
+  public static void listBlurbsPagedCallableFutureCallListBlurbsRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ListBlurbsRequest request =
+          ListBlurbsRequest.newBuilder()
+              .setParent(ProfileName.of("[USER]").toString())
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      ApiFuture<Blurb> future = messagingClient.listBlurbsPagedCallable().futureCall(request);
+      // Do something.
+      for (Blurb element : future.get().iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

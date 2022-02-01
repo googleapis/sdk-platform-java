@@ -30,8 +30,8 @@ TEST_DEPS = [
     "//src/test/java/com/google/api/generator/gapic/composer/common",
     "//src/test/java/com/google/api/generator/test/framework:asserts",
     "//src/test/java/com/google/api/generator/test/framework:utils",
-    "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
     "//src/test/java/com/google/api/generator/testutils",
+    "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
     "//src/main/java/com/google/api/generator/gapic/model",
     "//src/main/java/com/google/api/generator/gapic/protoparser",
     "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
@@ -68,6 +68,7 @@ java_proto_library(
     ] + COMMON_SRCS,
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/grpc/goldens:goldens_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/grpc/goldens/samples:golden_samples_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],

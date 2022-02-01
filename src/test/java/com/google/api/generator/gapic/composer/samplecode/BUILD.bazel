@@ -5,9 +5,9 @@ package(default_visibility = ["//visibility:public"])
 TESTS = [
     "SampleCodeJavaFormatterTest",
     "SampleCodeWriterTest",
+    "SampleComposerTest",
     "ServiceClientSampleCodeComposerTest",
     "SettingsSampleCodeComposerTest",
-    "ExecutableSampleComposerTest"
 ]
 
 filegroup(

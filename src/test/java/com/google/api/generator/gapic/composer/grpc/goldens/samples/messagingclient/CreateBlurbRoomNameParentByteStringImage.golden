@@ -1,0 +1,21 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.protobuf.ByteString;
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.RoomName;
+
+public class CreateBlurbRoomNameParentByteStringImage {
+
+  public static void main(String[] args) throws Exception {
+    createBlurbRoomNameParentByteStringImage();
+  }
+
+  public static void createBlurbRoomNameParentByteStringImage() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      RoomName parent = RoomName.of("[ROOM]");
+      ByteString image = ByteString.EMPTY;
+      Blurb response = messagingClient.createBlurb(parent, image);
+    }
+  }
+}

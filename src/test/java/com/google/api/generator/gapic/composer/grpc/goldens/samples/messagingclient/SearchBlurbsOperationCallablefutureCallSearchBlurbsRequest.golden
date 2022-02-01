@@ -1,0 +1,31 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.gax.longrunning.OperationFuture;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.SearchBlurbsMetadata;
+import com.google.showcase.v1beta1.SearchBlurbsRequest;
+import com.google.showcase.v1beta1.SearchBlurbsResponse;
+
+public class SearchBlurbsOperationCallablefutureCallSearchBlurbsRequest {
+
+  public static void main(String[] args) throws Exception {
+    searchBlurbsOperationCallablefutureCallSearchBlurbsRequest();
+  }
+
+  public static void searchBlurbsOperationCallablefutureCallSearchBlurbsRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      SearchBlurbsRequest request =
+          SearchBlurbsRequest.newBuilder()
+              .setQuery("query107944136")
+              .setParent(ProfileName.of("[USER]").toString())
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      OperationFuture<SearchBlurbsResponse, SearchBlurbsMetadata> future =
+          messagingClient.searchBlurbsOperationCallable().futureCall(request);
+      // Do something.
+      SearchBlurbsResponse response = future.get();
+    }
+  }
+}

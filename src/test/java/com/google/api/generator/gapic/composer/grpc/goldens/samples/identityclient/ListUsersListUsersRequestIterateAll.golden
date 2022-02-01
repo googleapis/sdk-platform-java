@@ -1,0 +1,25 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.ListUsersRequest;
+import com.google.showcase.v1beta1.User;
+
+public class ListUsersListUsersRequestIterateAll {
+
+  public static void main(String[] args) throws Exception {
+    listUsersListUsersRequestIterateAll();
+  }
+
+  public static void listUsersListUsersRequestIterateAll() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      ListUsersRequest request =
+          ListUsersRequest.newBuilder()
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      for (User element : identityClient.listUsers(request).iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

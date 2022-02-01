@@ -1,0 +1,28 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.ListRoomsRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
+
+public class ListRoomsPagedCallableFutureCallListRoomsRequest {
+
+  public static void main(String[] args) throws Exception {
+    listRoomsPagedCallableFutureCallListRoomsRequest();
+  }
+
+  public static void listRoomsPagedCallableFutureCallListRoomsRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ListRoomsRequest request =
+          ListRoomsRequest.newBuilder()
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      ApiFuture<Room> future = messagingClient.listRoomsPagedCallable().futureCall(request);
+      // Do something.
+      for (Room element : future.get().iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

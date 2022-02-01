@@ -24,12 +24,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
 
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+
 public class GrpcServiceStubClassComposerTest {
   @Test
   public void generateGrpcServiceStubClass_simple() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -43,6 +46,7 @@ public class GrpcServiceStubClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, protoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -57,6 +61,7 @@ public class GrpcServiceStubClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseTesting();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -70,6 +75,7 @@ public class GrpcServiceStubClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parsePubSubPublisher();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -84,6 +90,7 @@ public class GrpcServiceStubClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseLogging();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

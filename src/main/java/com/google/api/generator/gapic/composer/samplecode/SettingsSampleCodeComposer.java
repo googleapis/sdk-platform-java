@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
 import java.util.Arrays;
@@ -32,9 +33,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.google.api.generator.gapic.composer.utils.SampleNames.createSampleName;
+
 public final class SettingsSampleCodeComposer {
 
-  public static Optional<String> composeSampleCode(
+  public static Optional<Sample> composeSampleCode(
       Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
     if (!methodNameOpt.isPresent()) {
       return Optional.empty();
@@ -140,6 +143,11 @@ public final class SettingsSampleCodeComposer {
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-    return Optional.of(SampleCodeWriter.write(statements));
+
+    return Optional.of(
+        Sample.builder()
+                .setName(createSampleName(classType.reference().name(), methodNameOpt.get()))
+                .setBody(statements)
+                .build());
   }
 }

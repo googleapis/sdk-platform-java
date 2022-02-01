@@ -1,0 +1,18 @@
+package com.google.bookshop.v1beta1.samples;
+
+import com.google.bookshop.v1beta1.BookshopClient;
+import com.google.bookshop.v1beta1.BookshopSettings;
+import com.google.bookshop.v1beta1.myEndpoint;
+
+public class CreateBookshopSettingsSetEndpoint {
+
+  public static void main(String[] args) throws Exception {
+    createBookshopSettingsSetEndpoint();
+  }
+
+  public static void createBookshopSettingsSetEndpoint() throws Exception {
+    BookshopSettings bookshopSettings =
+        BookshopSettings.newBuilder().setEndpoint(myEndpoint).build();
+    BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
+  }
+}

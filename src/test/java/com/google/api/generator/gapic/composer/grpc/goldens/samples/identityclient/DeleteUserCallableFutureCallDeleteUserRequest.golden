@@ -1,0 +1,24 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.protobuf.Empty;
+import com.google.showcase.v1beta1.DeleteUserRequest;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.UserName;
+
+public class DeleteUserCallableFutureCallDeleteUserRequest {
+
+  public static void main(String[] args) throws Exception {
+    deleteUserCallableFutureCallDeleteUserRequest();
+  }
+
+  public static void deleteUserCallableFutureCallDeleteUserRequest() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      DeleteUserRequest request =
+          DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+      ApiFuture<Empty> future = identityClient.deleteUserCallable().futureCall(request);
+      // Do something.
+      future.get();
+    }
+  }
+}

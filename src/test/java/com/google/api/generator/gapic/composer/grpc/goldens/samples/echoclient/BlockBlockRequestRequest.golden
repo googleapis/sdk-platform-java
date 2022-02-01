@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.BlockRequest;
+import com.google.showcase.v1beta1.BlockResponse;
+import com.google.showcase.v1beta1.EchoClient;
+
+public class BlockBlockRequestRequest {
+
+  public static void main(String[] args) throws Exception {
+    blockBlockRequestRequest();
+  }
+
+  public static void blockBlockRequestRequest() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      BlockRequest request = BlockRequest.newBuilder().build();
+      BlockResponse response = echoClient.block(request);
+    }
+  }
+}

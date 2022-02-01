@@ -24,6 +24,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
 
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+
 public class GrpcServiceCallableFactoryClassComposerTest {
   @Test
   public void generateServiceClasses() {
@@ -31,6 +33,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         GrpcServiceCallableFactoryClassComposer.instance().generate(context, echoProtoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -46,6 +49,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
     Service protoService = context.services().get(0);
     GapicClass clazz =
         GrpcServiceCallableFactoryClassComposer.instance().generate(context, protoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

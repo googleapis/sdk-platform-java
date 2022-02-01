@@ -24,12 +24,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
 
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+
 public class MockServiceClassComposerTest {
   @Test
   public void generateServiceClasses() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = MockServiceClassComposer.instance().generate(context, echoProtoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -43,6 +46,7 @@ public class MockServiceClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = MockServiceClassComposer.instance().generate(context, protoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

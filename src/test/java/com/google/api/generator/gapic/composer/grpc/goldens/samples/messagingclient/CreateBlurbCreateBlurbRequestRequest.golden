@@ -1,0 +1,24 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.CreateBlurbRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+
+public class CreateBlurbCreateBlurbRequestRequest {
+
+  public static void main(String[] args) throws Exception {
+    createBlurbCreateBlurbRequestRequest();
+  }
+
+  public static void createBlurbCreateBlurbRequestRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      CreateBlurbRequest request =
+          CreateBlurbRequest.newBuilder()
+              .setParent(ProfileName.of("[USER]").toString())
+              .setBlurb(Blurb.newBuilder().build())
+              .build();
+      Blurb response = messagingClient.createBlurb(request);
+    }
+  }
+}

@@ -1,0 +1,20 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.CreateRoomRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
+
+public class CreateRoomCreateRoomRequestRequest {
+
+  public static void main(String[] args) throws Exception {
+    createRoomCreateRoomRequestRequest();
+  }
+
+  public static void createRoomCreateRoomRequestRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      CreateRoomRequest request =
+          CreateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
+      Room response = messagingClient.createRoom(request);
+    }
+  }
+}

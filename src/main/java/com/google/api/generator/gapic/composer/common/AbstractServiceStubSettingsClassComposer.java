@@ -79,6 +79,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -91,6 +92,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -168,6 +170,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     String pakkage = String.format("%s.stub", service.pakkage());
     TypeStore typeStore = createDynamicTypes(service, pakkage);
 
+    Set<Sample> samples = new HashSet<>();
     Set<String> deprecatedSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
@@ -177,12 +180,11 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             /* isNestedClass= */ false,
             deprecatedSettingVarNames);
     String className = ClassNames.getServiceStubSettingsClassName(service);
-
+    List<CommentStatement> classHeaderComments = createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(
-                createClassHeaderComments(service, typeStore.get(className)))
+            .setHeaderCommentStatements(classHeaderComments)
             .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -196,7 +198,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setNestedClasses(
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
-    return GapicClass.create(GapicClass.Kind.STUB, classDef);
+    return GapicClass.create(GapicClass.Kind.STUB, classDef, samples);
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
@@ -376,7 +378,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode classType) {
+      Service service, TypeNode classType, Set<Sample> samples) {
     // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
@@ -389,16 +391,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .orElse(service.methods().get(0)));
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
-    Optional<String> sampleCodeOpt =
+    Optional<Sample> sampleCode =
         SettingsSampleCodeComposer.composeSampleCode(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+
+    Optional<String> docSampleCode = Optional.empty();
+    if (sampleCode.isPresent()) {
+      samples.add(sampleCode.get());
+      docSampleCode = Optional.of(SampleCodeWriter.write(sampleCode.get().getBody()));
+    }
 
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceStubClassName(service),
         service.defaultHost(),
         service.isDeprecated(),
         methodNameOpt,
-        sampleCodeOpt,
+        docSampleCode,
         classType);
   }
 

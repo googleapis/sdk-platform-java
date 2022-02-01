@@ -1,0 +1,27 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.CreateUserRequest;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.UserName;
+
+public class CreateUserCallableFutureCallCreateUserRequest {
+
+  public static void main(String[] args) throws Exception {
+    createUserCallableFutureCallCreateUserRequest();
+  }
+
+  public static void createUserCallableFutureCallCreateUserRequest() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      CreateUserRequest request =
+          CreateUserRequest.newBuilder()
+              .setParent(UserName.of("[USER]").toString())
+              .setUser(User.newBuilder().build())
+              .build();
+      ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
+      // Do something.
+      User response = future.get();
+    }
+  }
+}

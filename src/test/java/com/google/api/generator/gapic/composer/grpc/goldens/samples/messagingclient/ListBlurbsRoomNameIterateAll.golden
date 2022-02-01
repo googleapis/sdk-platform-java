@@ -1,0 +1,21 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.RoomName;
+
+public class ListBlurbsRoomNameIterateAll {
+
+  public static void main(String[] args) throws Exception {
+    listBlurbsRoomNameIterateAll();
+  }
+
+  public static void listBlurbsRoomNameIterateAll() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      RoomName parent = RoomName.of("[ROOM]");
+      for (Blurb element : messagingClient.listBlurbs(parent).iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

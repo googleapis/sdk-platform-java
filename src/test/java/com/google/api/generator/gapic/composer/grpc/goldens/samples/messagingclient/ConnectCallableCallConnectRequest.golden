@@ -1,0 +1,25 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.gax.rpc.BidiStream;
+import com.google.showcase.v1beta1.ConnectRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.StreamBlurbsResponse;
+
+public class ConnectCallableCallConnectRequest {
+
+  public static void main(String[] args) throws Exception {
+    connectCallableCallConnectRequest();
+  }
+
+  public static void connectCallableCallConnectRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      BidiStream<ConnectRequest, StreamBlurbsResponse> bidiStream =
+          messagingClient.connectCallable().call();
+      ConnectRequest request = ConnectRequest.newBuilder().build();
+      bidiStream.send(request);
+      for (StreamBlurbsResponse response : bidiStream) {
+        // Do something when a response is received.
+      }
+    }
+  }
+}

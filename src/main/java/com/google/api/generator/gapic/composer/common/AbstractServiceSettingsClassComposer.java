@@ -50,6 +50,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -59,22 +60,25 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
+import javax.annotation.Generated;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.annotation.Generated;
 
 public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
@@ -100,12 +104,12 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getServiceSettingsClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
-
+    Set<Sample> samples = new HashSet<>();
+    List<CommentStatement> classHeaderComments = createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(
-                createClassHeaderComments(service, typeStore.get(className)))
+            .setHeaderCommentStatements(classHeaderComments)
             .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -122,11 +126,11 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .setMethods(createClassMethods(service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
-    return GapicClass.create(kind, classDef);
+    return GapicClass.create(kind, classDef, samples);
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode classType) {
+      Service service, TypeNode classType, Set<Sample> samples) {
     // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
@@ -139,15 +143,22 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     .orElse(service.methods().get(0)));
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
-    Optional<String> sampleCodeOpt =
+    Optional<Sample> sampleCode =
         SettingsSampleCodeComposer.composeSampleCode(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+
+    Optional<String> docSampleCode = Optional.empty();
+    if (sampleCode.isPresent()){
+      samples.add(sampleCode.get());
+      docSampleCode = Optional.of(SampleCodeWriter.write(sampleCode.get().getBody()));
+    }
+
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceClientClassName(service),
         service.defaultHost(),
         service.isDeprecated(),
         methodNameOpt,
-        sampleCodeOpt,
+        docSampleCode,
         classType);
   }
 

@@ -1,0 +1,24 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.gax.rpc.ServerStream;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.ExpandRequest;
+
+public class ExpandCallableCallExpandRequest {
+
+  public static void main(String[] args) throws Exception {
+    expandCallableCallExpandRequest();
+  }
+
+  public static void expandCallableCallExpandRequest() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      ExpandRequest request =
+          ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
+      for (EchoResponse response : stream) {
+        // Do something when a response is received.
+      }
+    }
+  }
+}

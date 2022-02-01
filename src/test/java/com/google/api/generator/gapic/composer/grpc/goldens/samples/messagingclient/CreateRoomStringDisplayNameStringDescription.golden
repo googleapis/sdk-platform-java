@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
+
+public class CreateRoomStringDisplayNameStringDescription {
+
+  public static void main(String[] args) throws Exception {
+    createRoomStringDisplayNameStringDescription();
+  }
+
+  public static void createRoomStringDisplayNameStringDescription() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      String displayName = "displayName1714148973";
+      String description = "description-1724546052";
+      Room response = messagingClient.createRoom(displayName, description);
+    }
+  }
+}

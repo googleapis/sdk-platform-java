@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.FoobarName;
+
+public class EchoStringParent {
+
+  public static void main(String[] args) throws Exception {
+    echoStringParent();
+  }
+
+  public static void echoStringParent() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      String parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
+      EchoResponse response = echoClient.echo(parent);
+    }
+  }
+}

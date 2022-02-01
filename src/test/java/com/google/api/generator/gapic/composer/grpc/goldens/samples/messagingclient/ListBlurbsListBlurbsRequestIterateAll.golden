@@ -1,0 +1,27 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.ListBlurbsRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+
+public class ListBlurbsListBlurbsRequestIterateAll {
+
+  public static void main(String[] args) throws Exception {
+    listBlurbsListBlurbsRequestIterateAll();
+  }
+
+  public static void listBlurbsListBlurbsRequestIterateAll() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ListBlurbsRequest request =
+          ListBlurbsRequest.newBuilder()
+              .setParent(ProfileName.of("[USER]").toString())
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      for (Blurb element : messagingClient.listBlurbs(request).iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

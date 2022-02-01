@@ -1,0 +1,27 @@
+package com.google.testdata.v1.stub.samples;
+
+import com.google.testdata.v1.stub.DeprecatedServiceStubSettings;
+import java.time.Duration;
+
+public class DeprecatedServiceStubSettingsFastFibonacci {
+
+  public static void main(String[] args) throws Exception {
+    deprecatedServiceStubSettingsFastFibonacci();
+  }
+
+  public static void deprecatedServiceStubSettingsFastFibonacci() throws Exception {
+    DeprecatedServiceStubSettings.Builder deprecatedServiceSettingsBuilder =
+        DeprecatedServiceStubSettings.newBuilder();
+    deprecatedServiceSettingsBuilder
+        .fastFibonacciSettings()
+        .setRetrySettings(
+            deprecatedServiceSettingsBuilder
+                .fastFibonacciSettings()
+                .getRetrySettings()
+                .toBuilder()
+                .setTotalTimeout(Duration.ofSeconds(30))
+                .build());
+    DeprecatedServiceStubSettings deprecatedServiceSettings =
+        deprecatedServiceSettingsBuilder.build();
+  }
+}

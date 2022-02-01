@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.protobuf.Duration;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.WaitResponse;
+
+public class WaitAsyncDurationGet {
+
+  public static void main(String[] args) throws Exception {
+    waitAsyncDurationGet();
+  }
+
+  public static void waitAsyncDurationGet() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      Duration ttl = Duration.newBuilder().build();
+      WaitResponse response = echoClient.waitAsync(ttl).get();
+    }
+  }
+}

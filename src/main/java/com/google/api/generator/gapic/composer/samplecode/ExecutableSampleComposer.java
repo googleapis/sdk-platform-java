@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -34,15 +35,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ExecutableSampleComposer {
-  public static String createExecutableSample(ExecutableSample executableSample) {
-    Preconditions.checkNotNull(executableSample);
-    String sampleMethodName = JavaStyle.toLowerCamelCase(executableSample.getSampleName());
+  public static String createExecutableSample(Sample sample, String pakkage) {
+    Preconditions.checkNotNull(sample);
+    String sampleMethodName = JavaStyle.toLowerCamelCase(sample.getName());
     return SampleCodeWriter.write(
         composeExecutableSample(
-            executableSample.getSamplePackage(),
-            sampleMethodName,
-            executableSample.getSampleVariableAssignments(),
-            executableSample.getSampleBody()));
+            pakkage, sampleMethodName, sample.getVariableAssignments(), sample.getBody()));
   }
 
   private static ClassDefinition composeExecutableSample(

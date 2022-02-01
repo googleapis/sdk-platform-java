@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.BlurbName;
+import com.google.showcase.v1beta1.MessagingClient;
+
+public class GetBlurbBlurbNameName {
+
+  public static void main(String[] args) throws Exception {
+    getBlurbBlurbNameName();
+  }
+
+  public static void getBlurbBlurbNameName() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
+      Blurb response = messagingClient.getBlurb(name);
+    }
+  }
+}

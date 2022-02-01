@@ -1,0 +1,20 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.resourcenames.ResourceName;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.FoobarName;
+
+public class EchoResourceNameParent {
+
+  public static void main(String[] args) throws Exception {
+    echoResourceNameParent();
+  }
+
+  public static void echoResourceNameParent() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+      EchoResponse response = echoClient.echo(parent);
+    }
+  }
+}

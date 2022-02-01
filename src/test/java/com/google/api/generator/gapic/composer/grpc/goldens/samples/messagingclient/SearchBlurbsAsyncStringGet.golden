@@ -1,0 +1,18 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.SearchBlurbsResponse;
+
+public class SearchBlurbsAsyncStringGet {
+
+  public static void main(String[] args) throws Exception {
+    searchBlurbsAsyncStringGet();
+  }
+
+  public static void searchBlurbsAsyncStringGet() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      String query = "query107944136";
+      SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(query).get();
+    }
+  }
+}

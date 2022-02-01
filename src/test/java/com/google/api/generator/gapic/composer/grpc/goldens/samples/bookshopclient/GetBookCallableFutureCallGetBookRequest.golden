@@ -1,0 +1,28 @@
+package com.google.bookshop.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.bookshop.v1beta1.Book;
+import com.google.bookshop.v1beta1.BookshopClient;
+import com.google.bookshop.v1beta1.GetBookRequest;
+import java.util.ArrayList;
+
+public class GetBookCallableFutureCallGetBookRequest {
+
+  public static void main(String[] args) throws Exception {
+    getBookCallableFutureCallGetBookRequest();
+  }
+
+  public static void getBookCallableFutureCallGetBookRequest() throws Exception {
+    try (BookshopClient bookshopClient = BookshopClient.create()) {
+      GetBookRequest request =
+          GetBookRequest.newBuilder()
+              .setBooksCount1(1618425911)
+              .setBooksList2("booksList2-1119589686")
+              .addAllBooks3(new ArrayList<Book>())
+              .build();
+      ApiFuture<Book> future = bookshopClient.getBookCallable().futureCall(request);
+      // Do something.
+      Book response = future.get();
+    }
+  }
+}

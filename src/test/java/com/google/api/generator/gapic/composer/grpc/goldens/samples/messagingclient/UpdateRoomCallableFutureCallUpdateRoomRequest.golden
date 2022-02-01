@@ -1,0 +1,23 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
+import com.google.showcase.v1beta1.UpdateRoomRequest;
+
+public class UpdateRoomCallableFutureCallUpdateRoomRequest {
+
+  public static void main(String[] args) throws Exception {
+    updateRoomCallableFutureCallUpdateRoomRequest();
+  }
+
+  public static void updateRoomCallableFutureCallUpdateRoomRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      UpdateRoomRequest request =
+          UpdateRoomRequest.newBuilder().setRoom(Room.newBuilder().build()).build();
+      ApiFuture<Room> future = messagingClient.updateRoomCallable().futureCall(request);
+      // Do something.
+      Room response = future.get();
+    }
+  }
+}

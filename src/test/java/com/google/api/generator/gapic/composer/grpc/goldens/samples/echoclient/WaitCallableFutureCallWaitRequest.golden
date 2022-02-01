@@ -1,0 +1,22 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.longrunning.Operation;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.WaitRequest;
+
+public class WaitCallableFutureCallWaitRequest {
+
+  public static void main(String[] args) throws Exception {
+    waitCallableFutureCallWaitRequest();
+  }
+
+  public static void waitCallableFutureCallWaitRequest() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      WaitRequest request = WaitRequest.newBuilder().build();
+      ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
+      // Do something.
+      Operation response = future.get();
+    }
+  }
+}

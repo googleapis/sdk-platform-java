@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.WaitRequest;
+import com.google.showcase.v1beta1.WaitResponse;
+
+public class WaitAsyncWaitRequestGet {
+
+  public static void main(String[] args) throws Exception {
+    waitAsyncWaitRequestGet();
+  }
+
+  public static void waitAsyncWaitRequestGet() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      WaitRequest request = WaitRequest.newBuilder().build();
+      WaitResponse response = echoClient.waitAsync(request).get();
+    }
+  }
+}

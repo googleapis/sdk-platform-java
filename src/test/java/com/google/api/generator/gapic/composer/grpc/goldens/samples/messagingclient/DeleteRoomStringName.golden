@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.protobuf.Empty;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.RoomName;
+
+public class DeleteRoomStringName {
+
+  public static void main(String[] args) throws Exception {
+    deleteRoomStringName();
+  }
+
+  public static void deleteRoomStringName() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      String name = RoomName.of("[ROOM]").toString();
+      messagingClient.deleteRoom(name);
+    }
+  }
+}

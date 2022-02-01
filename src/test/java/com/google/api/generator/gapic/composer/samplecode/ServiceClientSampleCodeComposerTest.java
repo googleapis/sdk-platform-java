@@ -28,6 +28,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.testutils.LineFormatter;
@@ -66,8 +67,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
-            echoProtoService, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+                echoProtoService, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -148,8 +150,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
-            service, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+                service, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -201,8 +204,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
-            service, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+                service, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -262,8 +266,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
-            service, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+                service, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -293,8 +298,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
-            clientType, settingsType);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+                clientType, settingsType));
     String expected =
         LineFormatter.lines(
             "EchoSettings echoSettings =\n",
@@ -320,8 +326,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
-            clientType, settingsType);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+                clientType, settingsType));
     String expected =
         LineFormatter.lines(
             "EchoSettings echoSettings ="
@@ -1036,8 +1043,9 @@ public class ServiceClientSampleCodeComposerTest {
     messageTypes.put("com.google.showcase.v1beta1.ListContentResponse", listContentResponseMessage);
 
     String results =
-        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1109,8 +1117,9 @@ public class ServiceClientSampleCodeComposerTest {
     messageTypes.put("com.google.showcase.v1beta1.ListContentResponse", listContentResponseMessage);
 
     String results =
-        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1269,8 +1278,9 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
 
     String results =
-        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, Collections.emptyList(), resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, Collections.emptyList(), resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1342,8 +1352,9 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
 
     String results =
-        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1413,8 +1424,9 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
 
     String results =
-        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, clientType, arguments, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1457,8 +1469,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1556,8 +1569,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1613,8 +1627,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1652,8 +1667,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Collections.emptyList())
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1702,8 +1718,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Collections.emptyList())
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1767,8 +1784,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1823,8 +1841,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -1869,8 +1888,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2047,8 +2067,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setStream(Stream.SERVER)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2131,8 +2152,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setStream(Stream.BIDI)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2223,8 +2245,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setStream(Stream.CLIENT)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2325,8 +2348,9 @@ public class ServiceClientSampleCodeComposerTest {
     Method method =
         Method.builder().setName("Echo").setInputType(inputType).setOutputType(outputType).build();
     String results =
-        ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2391,8 +2415,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2446,8 +2471,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2491,8 +2517,9 @@ public class ServiceClientSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-        ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeDocSample(
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -2636,5 +2663,9 @@ public class ServiceClientSampleCodeComposerTest {
         () ->
             ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
                 method, clientType, resourceNames, messageTypes));
+  }
+
+  private String writeDocSample(Sample sample) {
+    return SampleCodeWriter.write(sample.getBody());
   }
 }

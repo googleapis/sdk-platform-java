@@ -1,0 +1,33 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.gax.rpc.BidiStream;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.Foobar;
+import com.google.showcase.v1beta1.FoobarName;
+import com.google.showcase.v1beta1.Severity;
+
+public class ChatCallableCallEchoRequest {
+
+  public static void main(String[] args) throws Exception {
+    chatCallableCallEchoRequest();
+  }
+
+  public static void chatCallableCallEchoRequest() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFoobar(Foobar.newBuilder().build())
+              .build();
+      bidiStream.send(request);
+      for (EchoResponse response : bidiStream) {
+        // Do something when a response is received.
+      }
+    }
+  }
+}

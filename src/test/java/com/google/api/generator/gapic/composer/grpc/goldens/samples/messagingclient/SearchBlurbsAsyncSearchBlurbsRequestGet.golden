@@ -1,0 +1,26 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.SearchBlurbsRequest;
+import com.google.showcase.v1beta1.SearchBlurbsResponse;
+
+public class SearchBlurbsAsyncSearchBlurbsRequestGet {
+
+  public static void main(String[] args) throws Exception {
+    searchBlurbsAsyncSearchBlurbsRequestGet();
+  }
+
+  public static void searchBlurbsAsyncSearchBlurbsRequestGet() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      SearchBlurbsRequest request =
+          SearchBlurbsRequest.newBuilder()
+              .setQuery("query107944136")
+              .setParent(ProfileName.of("[USER]").toString())
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      SearchBlurbsResponse response = messagingClient.searchBlurbsAsync(request).get();
+    }
+  }
+}

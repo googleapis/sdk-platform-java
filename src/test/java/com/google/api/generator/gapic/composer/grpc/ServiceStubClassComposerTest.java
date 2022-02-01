@@ -25,12 +25,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
 
+import static com.google.api.generator.test.framework.Assert.assertEmptySamples;
+
 public class ServiceStubClassComposerTest {
   @Test
   public void generateServiceClasses() {
     GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = ServiceStubClassComposer.instance().generate(context, echoProtoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -44,6 +47,7 @@ public class ServiceStubClassComposerTest {
     GapicContext context = TestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceStubClassComposer.instance().generate(context, protoService);
+    assertEmptySamples(clazz.samples());
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

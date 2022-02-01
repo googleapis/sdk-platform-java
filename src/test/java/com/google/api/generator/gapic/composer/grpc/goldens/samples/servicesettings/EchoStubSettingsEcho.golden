@@ -1,0 +1,25 @@
+package com.google.showcase.v1beta1.stub.samples;
+
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import java.time.Duration;
+
+public class EchoStubSettingsEcho {
+
+  public static void main(String[] args) throws Exception {
+    echoStubSettingsEcho();
+  }
+
+  public static void echoStubSettingsEcho() throws Exception {
+    EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();
+    echoSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(
+            echoSettingsBuilder
+                .echoSettings()
+                .getRetrySettings()
+                .toBuilder()
+                .setTotalTimeout(Duration.ofSeconds(30))
+                .build());
+    EchoStubSettings echoSettings = echoSettingsBuilder.build();
+  }
+}

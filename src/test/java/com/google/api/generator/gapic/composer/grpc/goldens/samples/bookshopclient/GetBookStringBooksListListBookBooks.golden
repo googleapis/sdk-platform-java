@@ -1,0 +1,21 @@
+package com.google.bookshop.v1beta1.samples;
+
+import com.google.bookshop.v1beta1.Book;
+import com.google.bookshop.v1beta1.BookshopClient;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GetBookStringBooksListListBookBooks {
+
+  public static void main(String[] args) throws Exception {
+    getBookStringBooksListListBookBooks();
+  }
+
+  public static void getBookStringBooksListListBookBooks() throws Exception {
+    try (BookshopClient bookshopClient = BookshopClient.create()) {
+      String booksList = "booksList2-1119589686";
+      List<Book> books = new ArrayList<>();
+      Book response = bookshopClient.getBook(booksList, books);
+    }
+  }
+}

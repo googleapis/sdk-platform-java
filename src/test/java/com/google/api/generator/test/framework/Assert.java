@@ -14,9 +14,15 @@
 
 package com.google.api.generator.test.framework;
 
-import java.nio.file.Path;
-import java.util.List;
+import com.google.api.generator.gapic.model.Sample;
 import junit.framework.AssertionFailedError;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Assert {
   /**
@@ -39,6 +45,29 @@ public class Assert {
     List<String> diffList = Differ.diff(expected, codegen);
     if (!diffList.isEmpty()) {
       throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
+    }
+  }
+
+  public static void assertEmptySamples(Set<Sample> samples) {
+    if (!samples.isEmpty()) {
+      List<String> diffList = samples.stream().map(Sample::getName).collect(Collectors.toList());
+      throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
+    }
+  }
+
+  public static void assertSampleFileCount(String goldenDir, Set<Sample> samples) {
+    File directory = new File(goldenDir);
+    if (directory.list().length != samples.size()) {
+      List<String> fileNames =
+              Arrays.stream(directory.listFiles()).map(File::getName).collect(Collectors.toList());
+      List<String> sampleNames =
+              samples.stream()
+                      .map(s -> String.format("%s.golden", s.getName()))
+                      .collect(Collectors.toList());
+      List<String> diffList = Differ.diffTwoStringLists(fileNames, sampleNames);
+      if (!diffList.isEmpty()) {
+        throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
+      }
     }
   }
 }

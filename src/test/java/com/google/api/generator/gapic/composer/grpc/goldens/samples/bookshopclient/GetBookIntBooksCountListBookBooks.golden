@@ -1,0 +1,21 @@
+package com.google.bookshop.v1beta1.samples;
+
+import com.google.bookshop.v1beta1.Book;
+import com.google.bookshop.v1beta1.BookshopClient;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GetBookIntBooksCountListBookBooks {
+
+  public static void main(String[] args) throws Exception {
+    getBookIntBooksCountListBookBooks();
+  }
+
+  public static void getBookIntBooksCountListBookBooks() throws Exception {
+    try (BookshopClient bookshopClient = BookshopClient.create()) {
+      int booksCount = 1618425911;
+      List<Book> books = new ArrayList<>();
+      Book response = bookshopClient.getBook(booksCount, books);
+    }
+  }
+}

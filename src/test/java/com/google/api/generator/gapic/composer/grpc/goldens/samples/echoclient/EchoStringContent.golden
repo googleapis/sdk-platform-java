@@ -1,0 +1,18 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+
+public class EchoStringContent {
+
+  public static void main(String[] args) throws Exception {
+    echoStringContent();
+  }
+
+  public static void echoStringContent() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      String content = "content951530617";
+      EchoResponse response = echoClient.echo(content);
+    }
+  }
+}

@@ -1,0 +1,24 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.CreateUserRequest;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.UserName;
+
+public class CreateUserCreateUserRequestRequest {
+
+  public static void main(String[] args) throws Exception {
+    createUserCreateUserRequestRequest();
+  }
+
+  public static void createUserCreateUserRequestRequest() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      CreateUserRequest request =
+          CreateUserRequest.newBuilder()
+              .setParent(UserName.of("[USER]").toString())
+              .setUser(User.newBuilder().build())
+              .build();
+      User response = identityClient.createUser(request);
+    }
+  }
+}

@@ -1,0 +1,17 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.myEndpoint;
+
+public class CreateEchoSettingsSetEndpoint {
+
+  public static void main(String[] args) throws Exception {
+    createEchoSettingsSetEndpoint();
+  }
+
+  public static void createEchoSettingsSetEndpoint() throws Exception {
+    EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
+    EchoClient echoClient = EchoClient.create(echoSettings);
+  }
+}

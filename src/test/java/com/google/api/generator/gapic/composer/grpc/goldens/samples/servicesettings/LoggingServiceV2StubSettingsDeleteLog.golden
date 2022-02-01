@@ -1,0 +1,26 @@
+package com.google.logging.v2.stub.samples;
+
+import com.google.logging.v2.stub.LoggingServiceV2StubSettings;
+import java.time.Duration;
+
+public class LoggingServiceV2StubSettingsDeleteLog {
+
+  public static void main(String[] args) throws Exception {
+    loggingServiceV2StubSettingsDeleteLog();
+  }
+
+  public static void loggingServiceV2StubSettingsDeleteLog() throws Exception {
+    LoggingServiceV2StubSettings.Builder loggingServiceV2SettingsBuilder =
+        LoggingServiceV2StubSettings.newBuilder();
+    loggingServiceV2SettingsBuilder
+        .deleteLogSettings()
+        .setRetrySettings(
+            loggingServiceV2SettingsBuilder
+                .deleteLogSettings()
+                .getRetrySettings()
+                .toBuilder()
+                .setTotalTimeout(Duration.ofSeconds(30))
+                .build());
+    LoggingServiceV2StubSettings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
+  }
+}

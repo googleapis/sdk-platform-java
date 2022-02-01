@@ -360,10 +360,6 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
     statements(tryCatchStatement.tryBody());
 
-    Preconditions.checkState(
-        !tryCatchStatement.isSampleCode() && !tryCatchStatement.catchVariableExprs().isEmpty(),
-        "Import generation should not be invoked on sample code, but was found when visiting a"
-            + " try-catch block");
     for (int i = 0; i < tryCatchStatement.catchVariableExprs().size(); i++) {
       tryCatchStatement.catchVariableExprs().get(i).accept(this);
       statements(tryCatchStatement.catchBlocks().get(i));

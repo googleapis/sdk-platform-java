@@ -1,0 +1,21 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.protobuf.Empty;
+import com.google.showcase.v1beta1.DeleteUserRequest;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.UserName;
+
+public class DeleteUserDeleteUserRequestRequest {
+
+  public static void main(String[] args) throws Exception {
+    deleteUserDeleteUserRequestRequest();
+  }
+
+  public static void deleteUserDeleteUserRequestRequest() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      DeleteUserRequest request =
+          DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+      identityClient.deleteUser(request);
+    }
+  }
+}

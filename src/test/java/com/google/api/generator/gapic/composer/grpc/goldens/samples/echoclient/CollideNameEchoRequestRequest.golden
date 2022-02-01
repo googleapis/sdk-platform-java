@@ -1,0 +1,28 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.Foobar;
+import com.google.showcase.v1beta1.FoobarName;
+import com.google.showcase.v1beta1.Object;
+import com.google.showcase.v1beta1.Severity;
+
+public class CollideNameEchoRequestRequest {
+
+  public static void main(String[] args) throws Exception {
+    collideNameEchoRequestRequest();
+  }
+
+  public static void collideNameEchoRequestRequest() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFoobar(Foobar.newBuilder().build())
+              .build();
+      Object response = echoClient.collideName(request);
+    }
+  }
+}

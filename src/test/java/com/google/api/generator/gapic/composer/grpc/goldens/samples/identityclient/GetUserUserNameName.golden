@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.UserName;
+
+public class GetUserUserNameName {
+
+  public static void main(String[] args) throws Exception {
+    getUserUserNameName();
+  }
+
+  public static void getUserUserNameName() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      UserName name = UserName.of("[USER]");
+      User response = identityClient.getUser(name);
+    }
+  }
+}

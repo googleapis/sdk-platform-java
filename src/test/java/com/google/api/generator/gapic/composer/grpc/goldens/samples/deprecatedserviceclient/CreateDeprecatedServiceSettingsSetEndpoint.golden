@@ -1,0 +1,19 @@
+package com.google.testdata.v1.samples;
+
+import com.google.testdata.v1.DeprecatedServiceClient;
+import com.google.testdata.v1.DeprecatedServiceSettings;
+import com.google.testdata.v1.myEndpoint;
+
+public class CreateDeprecatedServiceSettingsSetEndpoint {
+
+  public static void main(String[] args) throws Exception {
+    createDeprecatedServiceSettingsSetEndpoint();
+  }
+
+  public static void createDeprecatedServiceSettingsSetEndpoint() throws Exception {
+    DeprecatedServiceSettings deprecatedServiceSettings =
+        DeprecatedServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
+    DeprecatedServiceClient deprecatedServiceClient =
+        DeprecatedServiceClient.create(deprecatedServiceSettings);
+  }
+}

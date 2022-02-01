@@ -1,0 +1,18 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.MessagingSettings;
+import com.google.showcase.v1beta1.myEndpoint;
+
+public class CreateMessagingSettingsSetEndpoint {
+
+  public static void main(String[] args) throws Exception {
+    createMessagingSettingsSetEndpoint();
+  }
+
+  public static void createMessagingSettingsSetEndpoint() throws Exception {
+    MessagingSettings messagingSettings =
+        MessagingSettings.newBuilder().setEndpoint(myEndpoint).build();
+    MessagingClient messagingClient = MessagingClient.create(messagingSettings);
+  }
+}

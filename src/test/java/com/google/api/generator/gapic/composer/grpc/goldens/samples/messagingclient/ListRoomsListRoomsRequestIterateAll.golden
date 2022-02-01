@@ -1,0 +1,25 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.ListRoomsRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
+
+public class ListRoomsListRoomsRequestIterateAll {
+
+  public static void main(String[] args) throws Exception {
+    listRoomsListRoomsRequestIterateAll();
+  }
+
+  public static void listRoomsListRoomsRequestIterateAll() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ListRoomsRequest request =
+          ListRoomsRequest.newBuilder()
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      for (Room element : messagingClient.listRooms(request).iterateAll()) {
+        // doThingsWith(element);
+      }
+    }
+  }
+}

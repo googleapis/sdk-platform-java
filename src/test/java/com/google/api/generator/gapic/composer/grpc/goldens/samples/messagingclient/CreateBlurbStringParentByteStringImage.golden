@@ -1,0 +1,21 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.protobuf.ByteString;
+import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+
+public class CreateBlurbStringParentByteStringImage {
+
+  public static void main(String[] args) throws Exception {
+    createBlurbStringParentByteStringImage();
+  }
+
+  public static void createBlurbStringParentByteStringImage() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      String parent = ProfileName.of("[USER]").toString();
+      ByteString image = ByteString.EMPTY;
+      Blurb response = messagingClient.createBlurb(parent, image);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.common.base.Strings;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.ListUsersRequest;
+import com.google.showcase.v1beta1.ListUsersResponse;
+import com.google.showcase.v1beta1.User;
+
+public class ListUsersCallableCallListUsersRequestSetPageToken {
+
+  public static void main(String[] args) throws Exception {
+    listUsersCallableCallListUsersRequestSetPageToken();
+  }
+
+  public static void listUsersCallableCallListUsersRequestSetPageToken() throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      ListUsersRequest request =
+          ListUsersRequest.newBuilder()
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      while (true) {
+        ListUsersResponse response = identityClient.listUsersCallable().call(request);
+        for (User element : response.getResponsesList()) {
+          // doThingsWith(element);
+        }
+        String nextPageToken = response.getNextPageToken();
+        if (!Strings.isNullOrEmpty(nextPageToken)) {
+          request = request.toBuilder().setPageToken(nextPageToken).build();
+        } else {
+          break;
+        }
+      }
+    }
+  }
+}

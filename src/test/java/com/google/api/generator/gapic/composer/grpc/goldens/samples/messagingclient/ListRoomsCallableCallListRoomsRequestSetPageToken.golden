@@ -1,0 +1,36 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.common.base.Strings;
+import com.google.showcase.v1beta1.ListRoomsRequest;
+import com.google.showcase.v1beta1.ListRoomsResponse;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
+
+public class ListRoomsCallableCallListRoomsRequestSetPageToken {
+
+  public static void main(String[] args) throws Exception {
+    listRoomsCallableCallListRoomsRequestSetPageToken();
+  }
+
+  public static void listRoomsCallableCallListRoomsRequestSetPageToken() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ListRoomsRequest request =
+          ListRoomsRequest.newBuilder()
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      while (true) {
+        ListRoomsResponse response = messagingClient.listRoomsCallable().call(request);
+        for (Room element : response.getResponsesList()) {
+          // doThingsWith(element);
+        }
+        String nextPageToken = response.getNextPageToken();
+        if (!Strings.isNullOrEmpty(nextPageToken)) {
+          request = request.toBuilder().setPageToken(nextPageToken).build();
+        } else {
+          break;
+        }
+      }
+    }
+  }
+}

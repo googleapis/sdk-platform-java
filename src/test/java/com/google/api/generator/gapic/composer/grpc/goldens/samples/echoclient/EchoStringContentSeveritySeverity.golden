@@ -1,0 +1,20 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.Severity;
+
+public class EchoStringContentSeveritySeverity {
+
+  public static void main(String[] args) throws Exception {
+    echoStringContentSeveritySeverity();
+  }
+
+  public static void echoStringContentSeveritySeverity() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      String content = "content951530617";
+      Severity severity = Severity.forNumber(0);
+      EchoResponse response = echoClient.echo(content, severity);
+    }
+  }
+}

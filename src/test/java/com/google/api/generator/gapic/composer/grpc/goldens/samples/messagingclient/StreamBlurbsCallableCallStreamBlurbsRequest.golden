@@ -1,0 +1,26 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.gax.rpc.ServerStream;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.StreamBlurbsRequest;
+import com.google.showcase.v1beta1.StreamBlurbsResponse;
+
+public class StreamBlurbsCallableCallStreamBlurbsRequest {
+
+  public static void main(String[] args) throws Exception {
+    streamBlurbsCallableCallStreamBlurbsRequest();
+  }
+
+  public static void streamBlurbsCallableCallStreamBlurbsRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      StreamBlurbsRequest request =
+          StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
+      ServerStream<StreamBlurbsResponse> stream =
+          messagingClient.streamBlurbsCallable().call(request);
+      for (StreamBlurbsResponse response : stream) {
+        // Do something when a response is received.
+      }
+    }
+  }
+}

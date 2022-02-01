@@ -1,0 +1,24 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.api.core.ApiFuture;
+import com.google.protobuf.Empty;
+import com.google.showcase.v1beta1.DeleteRoomRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.RoomName;
+
+public class DeleteRoomCallableFutureCallDeleteRoomRequest {
+
+  public static void main(String[] args) throws Exception {
+    deleteRoomCallableFutureCallDeleteRoomRequest();
+  }
+
+  public static void deleteRoomCallableFutureCallDeleteRoomRequest() throws Exception {
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      DeleteRoomRequest request =
+          DeleteRoomRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
+      ApiFuture<Empty> future = messagingClient.deleteRoomCallable().futureCall(request);
+      // Do something.
+      future.get();
+    }
+  }
+}

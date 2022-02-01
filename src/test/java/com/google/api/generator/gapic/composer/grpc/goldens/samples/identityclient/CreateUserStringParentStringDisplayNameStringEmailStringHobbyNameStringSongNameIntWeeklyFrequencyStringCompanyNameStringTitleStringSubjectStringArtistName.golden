@@ -1,0 +1,42 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.UserName;
+
+public
+class CreateUserStringParentStringDisplayNameStringEmailStringHobbyNameStringSongNameIntWeeklyFrequencyStringCompanyNameStringTitleStringSubjectStringArtistName {
+
+  public static void main(String[] args) throws Exception {
+    createUserStringParentStringDisplayNameStringEmailStringHobbyNameStringSongNameIntWeeklyFrequencyStringCompanyNameStringTitleStringSubjectStringArtistName();
+  }
+
+  public static void
+      createUserStringParentStringDisplayNameStringEmailStringHobbyNameStringSongNameIntWeeklyFrequencyStringCompanyNameStringTitleStringSubjectStringArtistName()
+          throws Exception {
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      String parent = UserName.of("[USER]").toString();
+      String displayName = "displayName1714148973";
+      String email = "email96619420";
+      String hobbyName = "hobbyName882586493";
+      String songName = "songName1535136064";
+      int weeklyFrequency = 1572999966;
+      String companyName = "companyName-508582744";
+      String title = "title110371416";
+      String subject = "subject-1867885268";
+      String artistName = "artistName629723762";
+      User response =
+          identityClient.createUser(
+              parent,
+              displayName,
+              email,
+              hobbyName,
+              songName,
+              weeklyFrequency,
+              companyName,
+              title,
+              subject,
+              artistName);
+    }
+  }
+}

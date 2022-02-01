@@ -17,6 +17,7 @@ java_library(
         "@io_github_java_diff_utils//jar",
         "@junit_junit//jar",
         "@org_hamcrest_hamcrest_core//jar",
+        "//src/main/java/com/google/api/generator/gapic/model",
     ],
 )
 

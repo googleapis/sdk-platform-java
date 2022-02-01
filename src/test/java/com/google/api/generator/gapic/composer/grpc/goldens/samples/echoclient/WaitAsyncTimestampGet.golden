@@ -1,0 +1,19 @@
+package com.google.showcase.v1beta1.samples;
+
+import com.google.protobuf.Timestamp;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.WaitResponse;
+
+public class WaitAsyncTimestampGet {
+
+  public static void main(String[] args) throws Exception {
+    waitAsyncTimestampGet();
+  }
+
+  public static void waitAsyncTimestampGet() throws Exception {
+    try (EchoClient echoClient = EchoClient.create()) {
+      Timestamp endTime = Timestamp.newBuilder().build();
+      WaitResponse response = echoClient.waitAsync(endTime).get();
+    }
+  }
+}
