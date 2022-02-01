@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1;
+package com.google.cloud.compute.v1small;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -27,7 +27,7 @@ import com.google.api.gax.rpc.ClientSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.cloud.compute.v1.stub.RegionOperationsStubSettings;
+import com.google.cloud.compute.v1small.stub.RegionOperationsStubSettings;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1;
+package com.google.cloud.compute.v1small;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
@@ -27,8 +27,8 @@ import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.stub.AddressesStub;
-import com.google.cloud.compute.v1.stub.AddressesStubSettings;
+import com.google.cloud.compute.v1small.stub.AddressesStub;
+import com.google.cloud.compute.v1small.stub.AddressesStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
 import java.io.IOException;
 import java.util.List;

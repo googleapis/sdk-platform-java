@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.cloud.compute.v1.stub;
+package com.google.cloud.compute.v1small.stub;
 
-import static com.google.cloud.compute.v1.AddressesClient.AggregatedListPagedResponse;
-import static com.google.cloud.compute.v1.AddressesClient.ListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.AggregatedListPagedResponse;
+import static com.google.cloud.compute.v1small.AddressesClient.ListPagedResponse;
 
 import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
@@ -35,14 +35,14 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.compute.v1.AddressAggregatedList;
-import com.google.cloud.compute.v1.AddressList;
-import com.google.cloud.compute.v1.AggregatedListAddressesRequest;
-import com.google.cloud.compute.v1.DeleteAddressRequest;
-import com.google.cloud.compute.v1.InsertAddressRequest;
-import com.google.cloud.compute.v1.ListAddressesRequest;
-import com.google.cloud.compute.v1.Operation;
-import com.google.cloud.compute.v1.Operation.Status;
+import com.google.cloud.compute.v1small.AddressAggregatedList;
+import com.google.cloud.compute.v1small.AddressList;
+import com.google.cloud.compute.v1small.AggregatedListAddressesRequest;
+import com.google.cloud.compute.v1small.DeleteAddressRequest;
+import com.google.cloud.compute.v1small.InsertAddressRequest;
+import com.google.cloud.compute.v1small.ListAddressesRequest;
+import com.google.cloud.compute.v1small.Operation;
+import com.google.cloud.compute.v1small.Operation.Status;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private static final ApiMethodDescriptor<AggregatedListAddressesRequest, AddressAggregatedList>
       aggregatedListMethodDescriptor =
           ApiMethodDescriptor.<AggregatedListAddressesRequest, AddressAggregatedList>newBuilder()
-              .setFullMethodName("google.cloud.compute.v1.Addresses/AggregatedList")
+              .setFullMethodName("google.cloud.compute.v1small.Addresses/AggregatedList")
               .setHttpMethod(HttpMethods.GET)
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
@@ -116,7 +116,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
 
   private static final ApiMethodDescriptor<DeleteAddressRequest, Operation> deleteMethodDescriptor =
       ApiMethodDescriptor.<DeleteAddressRequest, Operation>newBuilder()
-          .setFullMethodName("google.cloud.compute.v1.Addresses/Delete")
+          .setFullMethodName("google.cloud.compute.v1small.Addresses/Delete")
           .setHttpMethod(HttpMethods.DELETE)
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
@@ -166,7 +166,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
 
   private static final ApiMethodDescriptor<InsertAddressRequest, Operation> insertMethodDescriptor =
       ApiMethodDescriptor.<InsertAddressRequest, Operation>newBuilder()
-          .setFullMethodName("google.cloud.compute.v1.Addresses/Insert")
+          .setFullMethodName("google.cloud.compute.v1small.Addresses/Insert")
           .setHttpMethod(HttpMethods.POST)
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
@@ -218,7 +218,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
 
   private static final ApiMethodDescriptor<ListAddressesRequest, AddressList> listMethodDescriptor =
       ApiMethodDescriptor.<ListAddressesRequest, AddressList>newBuilder()
-          .setFullMethodName("google.cloud.compute.v1.Addresses/List")
+          .setFullMethodName("google.cloud.compute.v1small.Addresses/List")
           .setHttpMethod(HttpMethods.GET)
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
