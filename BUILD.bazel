@@ -65,23 +65,3 @@ java_binary(
     main_class = "com.google.googlejavaformat.java.Main",
     runtime_deps = ["@google_java_format_all_deps//jar"],
 )
-
-genrule(
-    name = "google_java_format",
-    outs = ["google_java_format.sh"],
-    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --replace' > $(OUTS)",
-    executable = 1,
-    tools = [":google_java_format_binary"],
-    local = 1,
-)
-
-# Run `bazel build //:google_java_format_verification` to verify that gapic-generator-java sources
-# are formatted correctly.
-genrule(
-    name = "google_java_format_verification",
-    outs = ["google_java_format_verification.sh"],
-    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --dry-run --set-exit-if-changed' > $(OUTS)",
-    executable = 1,
-    tools = [":google_java_format_binary"],
-    local = 1,
-)
