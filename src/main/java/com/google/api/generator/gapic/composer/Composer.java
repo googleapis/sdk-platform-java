@@ -195,7 +195,7 @@ public class Composer {
             gapicClass -> {
               Set<Sample> samples =
                   gapicClass.samples().stream()
-                      .map(sample -> addApacheLicense(addRegionTags(sample)))
+                      .map(sample -> addApacheLicense(addRegionTag(sample)))
                       .collect(Collectors.toSet());
               return gapicClass.setSamples(samples);
             })
@@ -231,7 +231,7 @@ public class Composer {
     return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
   }
 
-  private static Sample addRegionTags(Sample sample) {
-    return sample.withRegionTags("REGION TAGS");
+  private static Sample addRegionTag(Sample sample) {
+    return sample.withRegionTag("REGION TAG");
   }
 }

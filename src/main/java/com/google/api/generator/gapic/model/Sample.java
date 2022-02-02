@@ -30,9 +30,9 @@ public abstract class Sample {
 
   public abstract List<AssignmentExpr> getVariableAssignments();
 
-  public abstract List<CommentStatement> getFileHeader();
+  public abstract List<Statement> getFileHeader();
 
-  public abstract String getRegionTags();
+  public abstract String getRegionTag();
 
   public static Builder builder() {
     return new AutoValue_Sample.Builder()
@@ -40,7 +40,7 @@ public abstract class Sample {
         .setBody(ImmutableList.of())
         .setVariableAssignments(ImmutableList.of())
         .setFileHeader(ImmutableList.of())
-        .setRegionTags("");
+        .setRegionTag("");
   }
 
   abstract Builder toBuilder();
@@ -49,8 +49,8 @@ public abstract class Sample {
     return toBuilder().setFileHeader(header).build();
   }
 
-  public final Sample withRegionTags(String regionTag) {
-    return toBuilder().setRegionTags(regionTag).build();
+  public final Sample withRegionTag(String regionTag) {
+    return toBuilder().setRegionTag(regionTag).build();
   }
 
   @AutoValue.Builder
@@ -63,7 +63,7 @@ public abstract class Sample {
 
     public abstract Builder setFileHeader(List<CommentStatement> header);
 
-    public abstract Builder setRegionTags(String regionTag);
+    public abstract Builder setRegionTag(String regionTag);
 
     abstract Sample autoBuild();
 

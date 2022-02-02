@@ -13,10 +13,9 @@
 // limitations under the License.
 package com.google.api.generator.gapic.composer.samplecode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BlockComment;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -34,9 +33,17 @@ import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 public class SampleComposerTest {
   private final String packageName = "com.google.example";
   private final String sampleMethodName = "echoClientMethod";
+  private final List<CommentStatement> header =
+      Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
 
   @Test
   public void createExecutableSampleNoSample() {
@@ -46,12 +53,24 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleEmptyStatementSample() {
-    Sample sample = Sample.builder().setName(sampleMethodName).build();
+  public void createExecutableSampleNoName() {
+    Sample sample = Sample.builder().build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> ExecutableSampleComposer.createExecutableSample(sample, packageName));
+  }
+
+  @Test
+  public void createExecutableSampleEmptyNoRegionTags() {
+    Sample sample = Sample.builder().setName(sampleMethodName).setFileHeader(header).build();
 
     String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
+            "/*\n",
+            " * Apache License\n",
+            " */\n",
             "package com.google.example;\n",
             "\n",
             "public class EchoClientMethod {\n",
@@ -67,15 +86,82 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleMethodArgsNoVar() {
-    Statement sampleBody = ExprStatement.withExpr(systemOutPrint("Testing " + sampleMethodName));
+  public void createExecutableSampleEmptyNoHeader() {
     Sample sample =
-        Sample.builder().setName(sampleMethodName).setBody(ImmutableList.of(sampleBody)).build();
+        Sample.builder()
+            .setName(sampleMethodName)
+            .setRegionTag("Create_Executable_Sample_Empty_NoHeader")
+            .build();
 
     String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
+            "\npackage com.google.example;\n",
+            "// [START Create_Executable_Sample_Empty_NoHeader]\n",
+            "\n",
+            "public class EchoClientMethod {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientMethod();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientMethod() throws Exception {}\n",
+            "}\n",
+            "// [END Create_Executable_Sample_Empty_NoHeader]");
+
+    assertEquals(expected, sampleResult);
+  }
+
+  @Test
+  public void createExecutableSampleEmptyStatementSample() {
+    Sample sample =
+        Sample.builder()
+            .setName(sampleMethodName)
+            .setFileHeader(header)
+            .setRegionTag("Create_Executable_Sample_Empty_Statement_Sample")
+            .build();
+
+    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
+    String expected =
+        LineFormatter.lines(
+            "/*\n",
+            " * Apache License\n",
+            " */\n",
             "package com.google.example;\n",
+            "// [START Create_Executable_Sample_Empty_Statement_Sample]\n",
+            "\n",
+            "public class EchoClientMethod {\n",
+            "\n",
+            "  public static void main(String[] args) throws Exception {\n",
+            "    echoClientMethod();\n",
+            "  }\n",
+            "\n",
+            "  public static void echoClientMethod() throws Exception {}\n",
+            "}\n",
+            "// [END Create_Executable_Sample_Empty_Statement_Sample]");
+
+    assertEquals(expected, sampleResult);
+  }
+
+  @Test
+  public void createExecutableSampleMethodArgsNoVar() {
+    Statement sampleBody = ExprStatement.withExpr(systemOutPrint("Testing " + sampleMethodName));
+    Sample sample =
+        Sample.builder()
+            .setName(sampleMethodName)
+            .setBody(ImmutableList.of(sampleBody))
+            .setFileHeader(header)
+            .setRegionTag("Create_Executable_Sample_Method_Args_NoVar")
+            .build();
+
+    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
+    String expected =
+        LineFormatter.lines(
+            "/*\n",
+            " * Apache License\n",
+            " */\n",
+            "package com.google.example;\n",
+            "// [START Create_Executable_Sample_Method_Args_NoVar]\n",
             "\n",
             "public class EchoClientMethod {\n",
             "\n",
@@ -86,7 +172,8 @@ public class SampleComposerTest {
             "  public static void echoClientMethod() throws Exception {\n",
             "    System.out.println(\"Testing echoClientMethod\");\n",
             "  }\n",
-            "}\n");
+            "}\n",
+            "// [END Create_Executable_Sample_Method_Args_NoVar]");
 
     assertEquals(expected, sampleResult);
   }
@@ -110,12 +197,18 @@ public class SampleComposerTest {
             .setName(sampleMethodName)
             .setBody(ImmutableList.of(sampleBody))
             .setVariableAssignments(ImmutableList.of(varAssignment))
+            .setFileHeader(header)
+            .setRegionTag("Create_Executable_Sample_Method")
             .build();
 
     String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
+            "/*\n",
+            " * Apache License\n",
+            " */\n",
             "package com.google.example;\n",
+            "// [START Create_Executable_Sample_Method]\n",
             "\n",
             "public class EchoClientMethod {\n",
             "\n",
@@ -127,7 +220,8 @@ public class SampleComposerTest {
             "  public static void echoClientMethod(String content) throws Exception {\n",
             "    System.out.println(content);\n",
             "  }\n",
-            "}\n");
+            "}\n",
+            "// [END Create_Executable_Sample_Method]");
 
     assertEquals(expected, sampleResult);
   }
@@ -184,12 +278,18 @@ public class SampleComposerTest {
             .setBody(ImmutableList.of(strBodyStatement, intBodyStatement, objBodyStatement))
             .setVariableAssignments(
                 ImmutableList.of(strVarAssignment, intVarAssignment, objVarAssignment))
+            .setFileHeader(header)
+            .setRegionTag("Create_Executable_Sample_Method_Multiple_Statements")
             .build();
 
     String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
+            "/*\n",
+            " * Apache License\n",
+            " */\n",
             "package com.google.example;\n",
+            "// [START Create_Executable_Sample_Method_Multiple_Statements]\n",
             "\n",
             "public class EchoClientMethod {\n",
             "\n",
@@ -205,8 +305,8 @@ public class SampleComposerTest {
             "    System.out.println(num);\n",
             "    System.out.println(thing.response());\n",
             "  }\n",
-            "}\n");
-
+            "}\n",
+            "// [END Create_Executable_Sample_Method_Multiple_Statements]");
     assertEquals(expected, sampleResult);
   }
 

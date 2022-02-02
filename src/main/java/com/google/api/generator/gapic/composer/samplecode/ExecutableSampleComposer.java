@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,11 +37,36 @@ import java.util.stream.Collectors;
 
 public class ExecutableSampleComposer {
   public static String createExecutableSample(Sample sample, String pakkage) {
-    Preconditions.checkNotNull(sample);
-    String sampleMethodName = JavaStyle.toLowerCamelCase(sample.getName());
-    return SampleCodeWriter.write(
-        composeExecutableSample(
-            pakkage, sampleMethodName, sample.getVariableAssignments(), sample.getBody()));
+    String sampleHeader = "";
+    if (!sample.getFileHeader().isEmpty()) {
+      sampleHeader = SampleCodeWriter.write(sample.getFileHeader()) + "\n";
+    }
+    Preconditions.checkState(!sample.getName().isEmpty(), "Sample name should not be empty");
+    String sampleClass =
+        SampleCodeWriter.write(
+            composeExecutableSample(
+                pakkage,
+                JavaStyle.toLowerCamelCase(sample.getName()),
+                sample.getVariableAssignments(),
+                sample.getBody()));
+    if (!sample.getRegionTag().isEmpty()) {
+      sampleClass = includeRegionTags(sampleClass, sample.getRegionTag());
+    }
+    return String.format("%s%s", sampleHeader, sampleClass);
+  }
+
+  private static String includeRegionTags(String sampleClass, String regionTag) {
+    String start = String.format("// [START %s]", regionTag);
+    String end = String.format("// [END %s]", regionTag);
+
+    String withRegionTags = String.format("%s%s", start, sampleClass);
+    //  start region tag should go below package statement
+    if (sampleClass.startsWith("package")) {
+      withRegionTags = sampleClass.replaceAll("(^package .+\n)", "$1\n" + start);
+    }
+    withRegionTags = String.format("%s%s", withRegionTags, end);
+
+    return withRegionTags;
   }
 
   private static ClassDefinition composeExecutableSample(
@@ -48,6 +74,7 @@ public class ExecutableSampleComposer {
       String sampleMethodName,
       List<AssignmentExpr> sampleVariableAssignments,
       List<Statement> sampleBody) {
+
     String sampleClassName = JavaStyle.toUpperCamelCase(sampleMethodName);
     List<VariableExpr> sampleMethodArgs = composeSampleMethodArgs(sampleVariableAssignments);
     MethodDefinition mainMethod =
