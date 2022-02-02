@@ -1,8 +1,6 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@rules_java//java:defs.bzl", "java_proto_library")
 
-package(default_visibility = ["//visibility:public"])
-
 filegroup(
     name = "service_config_files",
     srcs = glob(["*.json"]),
@@ -16,21 +14,6 @@ filegroup(
 filegroup(
     name = "service_yaml_files",
     srcs = ["logging.yaml"],
-)
-
-genrule(
-    name = "basic_proto_descriptor",
-    srcs = [
-        "basic.proto",
-    ],
-    outs = ["basic_proto.descriptor"],
-    # CircleCI does not have protoc installed.
-    cmd = "$(location @com_google_protobuf//:protoc) " +
-          "--include_source_info --include_imports --descriptor_set_out=$@ $(SRCS)",
-    message = "Generating proto descriptor",
-    tools = [
-        "@com_google_protobuf//:protoc",
-    ],
 )
 
 proto_library(

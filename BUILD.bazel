@@ -6,25 +6,21 @@ package(default_visibility = ["//visibility:public"])
 
 java_proto_library(
     name = "service_config_java_proto",
-    visibility = ["//:__subpackages__"],
-    deps = [
-        "@io_grpc_proto//:service_config_proto",
-    ],
+    deps = ["@io_grpc_proto//:service_config_proto"],
 )
 
 # ============= Binary targets ================
 
+java_import(
+    name = "gapic_generator_java",
+    # You can also pull from remote filesystem, GCS bucket, Maven repositories, etc.
+    jars = ["target/gapic-generator-java-0.0.1-SNAPSHOT.jar"],
+)
+
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [
-        "//src/main/java/com/google/api/generator",
-        "//src/main/java/com/google/api/generator/gapic",
-        "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
-        "@com_google_guava_guava",
-        "@com_google_protobuf//:protobuf_java",
-    ],
+    runtime_deps = ["gapic_generator_java"],
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
@@ -46,15 +42,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = [
-        "//src/main/java/com/google/api/generator",
-        "//src/main/java/com/google/api/generator/debug",
-        "//src/main/java/com/google/api/generator/gapic",
-        "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
-        "@com_google_guava_guava",
-        "@com_google_protobuf//:protobuf_java",
-    ],
+    runtime_deps = ["gapic_generator_java"],
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -67,15 +55,7 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = [
-        "//src/main/java/com/google/api/generator",
-        "//src/main/java/com/google/api/generator/debug",
-        "//src/main/java/com/google/api/generator/gapic",
-        "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
-        "@com_google_guava_guava",
-        "@com_google_protobuf//:protobuf_java",
-    ],
+    runtime_deps = ["gapic_generator_java"],
 )
 
 # google-java-format
