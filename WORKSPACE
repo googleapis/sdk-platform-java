@@ -3,18 +3,6 @@ workspace(name = "gapic_generator_java")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
-# DO NOT REMOVE.
-# This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
-# like protobuf will build.
-http_archive(
-    name = "bazel_skylib",
-    sha256 = "c6966ec828da198c5d9adbaa94c05e3a1c7f21bd012a0b29ba8ddbccb2c93b0d",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.1.1/bazel-skylib-1.1.1.tar.gz",
-        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.1.1/bazel-skylib-1.1.1.tar.gz",
-    ],
-)
-
 jvm_maven_import_external(
     name = "google_java_format_all_deps",
     artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
@@ -52,9 +40,11 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-load("//:repositories.bzl", "gapic_generator_java_repositories")
-
-gapic_generator_java_repositories()
+http_archive(
+   name = "com_google_googleapis",
+   strip_prefix = "googleapis-0899ba0f4c053a4487ccf0b699df5f850e39a45f",
+   urls = ["https://github.com/googleapis/googleapis/archive/0899ba0f4c053a4487ccf0b699df5f850e39a45f.zip"],
+)
 
 # protobuf
 RULES_JVM_EXTERNAL_TAG = "4.2"

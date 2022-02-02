@@ -5,7 +5,7 @@ set -o errexit
 # Some auto-generated Java proto library code for .proto files are not published anywhere,
 # so currently, we need to build them using `java_proto_library()` to generate .jar files.
 #
-# Many of these are needed due to our usage in tests.
+# Most of these are needed only for compiling test source files.
 #
 # 1. from grpc/grpc-proto: service_config.proto
 #
