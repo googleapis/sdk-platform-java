@@ -13,10 +13,10 @@ java_proto_library(
 
 java_import(
     name = "gapic_generator_java",
-    # You can also pull from remote filesystem, GCS bucket, Maven repositories, etc.
+    # Note referring to target/ is only for local development; you can also pull from remote
+    # filesystem, GCS bucket, Maven repositories, etc.
     jars = ["target/gapic-generator-java-0.0.1-SNAPSHOT.jar"],
 )
-
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
