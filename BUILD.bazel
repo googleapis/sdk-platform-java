@@ -6,24 +6,47 @@ package(default_visibility = ["//visibility:public"])
 
 java_proto_library(
     name = "service_config_java_proto",
-    visibility = ["//:__subpackages__"],
-    deps = [
-        "@io_grpc_proto//:service_config_proto",
-    ],
+    deps = ["@io_grpc_proto//:service_config_proto"],
 )
 
 # ============= Binary targets ================
 
+java_plugin(
+    name = "autovalue_plugin",
+    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = ["@com_google_auto_value_auto_value//jar"],
+)
+
 java_binary(
     name = "protoc-gen-java_gapic",
+    srcs = glob(["src/main/java/**/*.java"]),
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [
-        "//src/main/java/com/google/api/generator",
-        "//src/main/java/com/google/api/generator/gapic",
-        "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_googleapis//google/longrunning:longrunning_java_proto",
+    plugins = [":autovalue_plugin"],
+    deps = [
+        ":service_config_java_proto",
+        "@com_google_api_api_common//jar",
+        "@com_google_api_gax_java//gax",
+        "@com_google_api_gax_java//gax:gax_testlib",
+        "@com_google_api_gax_java//gax-grpc:gax_grpc",
+        "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+        "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+        "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+        "@com_google_api_grpc_proto_google_common_protos",
+        "@com_google_auto_value_auto_value_annotations//jar", # Ideally should be compile-time only, but this is OK.
+        "@com_google_code_gson//jar",
+        "@com_google_googleapis//gapic/metadata:metadata_java_proto",
         "@com_google_guava_guava",
+        "@com_google_http_client_google_http_client//jar",
         "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//:protobuf_java_util",
+        "@google_java_format_all_deps//jar",
+        "@io_grpc_grpc_java//api",
+        "@io_grpc_grpc_java//protobuf",
+        "@io_grpc_grpc_java//stub",
+        "@javax_annotation_javax_annotation_api//jar",
+        "@junit_junit//jar",
+        "@org_threeten_threetenbp//jar",
+        "@org_yaml_snakeyaml//jar",
     ],
 )
 
@@ -47,13 +70,11 @@ java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
     runtime_deps = [
-        "//src/main/java/com/google/api/generator",
-        "//src/main/java/com/google/api/generator/debug",
-        "//src/main/java/com/google/api/generator/gapic",
+        ":protoc-gen-java_gapic",
         "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/cloud:extended_operations_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
-        "@com_google_guava_guava",
-        "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//java/core",
     ],
 )
 
@@ -68,13 +89,11 @@ java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
     runtime_deps = [
-        "//src/main/java/com/google/api/generator",
-        "//src/main/java/com/google/api/generator/debug",
-        "//src/main/java/com/google/api/generator/gapic",
+        ":protoc-gen-java_gapic",
         "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/cloud:extended_operations_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
-        "@com_google_guava_guava",
-        "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//java/core",
     ],
 )
 
