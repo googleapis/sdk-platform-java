@@ -32,8 +32,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SourceCodeInfoParserTest {
+  // TODO: this file should be generated during the generate-test-resources or
+  // process-test-resources lifecycle and fetched as a resource.
   private static final String TEST_PROTO_FILE =
-      "src/test/java/com/google/api/generator/gapic/testdata/basic_proto.descriptor";
+      "bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/basic_proto.descriptor";
 
   private SourceCodeInfoParser parser;
   private FileDescriptor protoFile;
