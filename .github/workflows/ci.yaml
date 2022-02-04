@@ -86,7 +86,7 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage $(bazel query ... | grep ^//unit_) --combined_report=lcov
+        run: bazel coverage $(bazel query ... | grep ^//:unit_) --combined_report=lcov
 
       - name: Upload Code Coverage Report
         uses: codecov/codecov-action@v2
