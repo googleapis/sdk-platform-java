@@ -149,6 +149,39 @@ genrule(
     ]),
 ) for file in glob(["src/test/java/**/*Test.java"])]
 
+GOLDEN_UPDATING_UNIT_TESTS = [
+    "com.google.api.generator.engine.JavaCodeGeneratorTest",
+    "com.google.api.generator.gapic.composer.ComposerTest",
+    "com.google.api.generator.gapic.composer.common.BatchingDescriptorComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.MockServiceClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.MockServiceImplClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceClientClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceClientTestClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceStubClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceStubSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.ServiceClientTestClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.ServiceSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposerTest",
+]
+
+[java_binary(
+    name = "unit_%s_update" % test_name.replace('.', '_'),
+    srcs = glob(["src/test/java/**/*.java"]),
+    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
+    args = [test_name],
+    deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
+    data = [":basic_proto_descriptor"] + glob([
+        "src/test/java/**/*.golden",
+        "src/test/resources/**",
+    ]),
+) for test_name in GOLDEN_UPDATING_UNIT_TESTS]
+
 # google-java-format
 java_binary(
     name = "google_java_format_binary",

@@ -110,7 +110,7 @@
 -   Run all unit tests.
 
     ```sh
-    bazel test $(bazel query ... | grep "^//:unit_")
+    bazel test $(bazel query ... | grep ^//:unit_)
     ```
 
 -   Run a single unit test like `JavaCodeGeneratorTest.java`
