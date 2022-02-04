@@ -101,16 +101,28 @@
 
 ## Test Running
 
+-   Run all unit and integration tests.
+
+    ```sh
+    bazel test ...
+    ```
+
 -   Run all unit tests.
 
     ```sh
-    bazel test //...
+    bazel test $(bazel query ... | grep "^//:unit_")
     ```
 
 -   Run a single unit test like `JavaCodeGeneratorTest.java`
 
     ```sh
-    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest
+    bazel run :unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+    ```
+
+-   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
+
+    ```sh
+    bazel run :unit_com_google_api_generator_engine_JavaCodeGeneratorTest_update
     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
@@ -118,24 +130,12 @@
     in `test/integration/goldens/redis`.
 
     ```sh
-    bazel test //test/integration:redis
-    ```
-
--   Run all unit and integration tests.
-
-    ```sh
-    bazel test $(bazel query "src/test/..." | grep "Test$") //test/integration/...
-    ```
-
--   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
-
-    ```sh
-    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
+    bazel test test/integration:redis
     ```
 
 -   Update integration test golden files, for example `Redis`. This clobbers all the
     files in `test/integration/goldens/redis`.
 
     ```sh
-    bazel run //test/integration:redis_update
+    bazel run test/integration:redis_update
     ```

@@ -139,7 +139,7 @@ genrule(
 )
 
 [java_test(
-    name = file[14:-5].replace('/', '_'),
+    name = "unit_" + file[14:-5].replace('/', '_'),
     srcs = glob(["src/test/java/**/*.java"]),
     test_class = file[14:-5].replace('/', '.'),
     deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,

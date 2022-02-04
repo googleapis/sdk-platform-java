@@ -41,10 +41,10 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Unit Tests
-        run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress --test_output=errors
+        run: bazel --batch test $(bazel query ... | grep ^//:unit_) --noshow_progress --test_output=errors
 
       - name: Integration Tests
-        run: bazel --batch test //test/integration/...
+        run: bazel --batch test test/integration/...
 
       - name: Gradle Build Generated Storage Client Library
         run: |
@@ -73,7 +73,7 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
-        run: bazel --batch run //:google_java_format_verification
+        run: bazel --batch run :google_java_format_verification
 
   coverage:
     runs-on: ubuntu-latest
@@ -86,7 +86,7 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage $(bazel query "src/test/..." | grep "Test$") --combined_report=lcov
+        run: bazel coverage $(bazel query ... | grep ^//unit_) --combined_report=lcov
 
       - name: Upload Code Coverage Report
         uses: codecov/codecov-action@v2
