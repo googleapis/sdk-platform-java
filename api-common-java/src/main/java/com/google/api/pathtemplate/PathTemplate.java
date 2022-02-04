@@ -887,9 +887,7 @@ public class PathTemplate {
 
       boolean isLastSegment = (template.indexOf(seg) + seg.length()) == template.length();
       boolean isCollectionWildcard = !isLastSegment && (seg.equals("-") || seg.equals("-}"));
-      if (!isCollectionWildcard
-          && (COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(0, 1)).find()
-              || COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(seg.length() - 1)).find())) {
+      if (!isCollectionWildcard && isSegmentBeginOrEndInvalid(seg)) {
         throw new ValidationException("parse error: invalid begin or end character in '%s'", seg);
       }
       // Disallow zero or multiple delimiters between variable names.
@@ -1013,6 +1011,20 @@ public class PathTemplate {
       builder.add(Segment.create(SegmentKind.CUSTOM_VERB, customVerb));
     }
     return builder.build();
+  }
+
+  private static boolean isSegmentBeginOrEndInvalid(String seg) {
+    // A segment is invalid if it contains only one character and the character is a delimiter
+    if (seg.length() == 1 && COMPLEX_DELIMITER_PATTERN.matcher(seg).find()) {
+      return true;
+    }
+    // A segment can start with a delimiter, as long as there is no { right after it.
+    // A segment can end with a delimiter, as long as there is no } right before it.
+    // e.g. Invalid: .{well}-{known}, {well}-{known}-
+    // Valid: .well-known, .well-{known}, .-~{well-known}, these segments are all considered as literals for matching
+    return (COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(0, 1)).find() && seg.charAt(1) == '{')
+        || (COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(seg.length() - 1)).find()
+            && seg.charAt(seg.length() - 2) == '}');
   }
 
   private static List<Segment> parseComplexResourceId(String seg) {
