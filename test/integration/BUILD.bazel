@@ -53,7 +53,7 @@ API_GAPIC_TARGETS = {
 ) for lib_name, gapic_target in API_GAPIC_TARGETS.items()]
 
 [sh_binary(
-    name = "%s_update" % lib_name,
+    name = "update_%s" % lib_name,
     srcs = ["//scripts:update_golden.sh"],
     args = [lib_name],
     data = [

@@ -50,7 +50,8 @@ jobs:
         run: |
           echo "Building Storage lib from generated source..."
           mkdir /tmp/java-storage
-          tar zxvf bazel-bin/test/integration/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          bazel --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
           pushd /tmp/java-storage/google-cloud-storage-v2-java
           ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd

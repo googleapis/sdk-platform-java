@@ -171,16 +171,13 @@ GOLDEN_UPDATING_UNIT_TESTS = [
 ]
 
 [java_binary(
-    name = "unit_%s_update" % test_name.replace('.', '_'),
+    name = "update_%s" % test_class.replace('.', '_'),
     srcs = glob(["src/test/java/**/*.java"]),
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
-    args = [test_name],
+    args = [test_class],
     deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
-    data = [":basic_proto_descriptor"] + glob([
-        "src/test/java/**/*.golden",
-        "src/test/resources/**",
-    ]),
-) for test_name in GOLDEN_UPDATING_UNIT_TESTS]
+    data = glob(["src/test/java/**/*.golden"]),
+) for test_class in GOLDEN_UPDATING_UNIT_TESTS]
 
 # google-java-format
 java_binary(

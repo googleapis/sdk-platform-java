@@ -122,7 +122,7 @@
 -   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
 
     ```sh
-    bazel run :unit_com_google_api_generator_engine_JavaCodeGeneratorTest_update
+    bazel run :update_com_google_api_generator_engine_JavaCodeGeneratorTest
     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
@@ -137,5 +137,5 @@
     files in `test/integration/goldens/redis`.
 
     ```sh
-    bazel run test/integration:redis_update
+    bazel run test/integration:update_redis
     ```
