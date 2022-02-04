@@ -55,7 +55,7 @@ import java.util.Set;
 public class TestProtoLoader {
 
   private static final TestProtoLoader INSTANCE =
-      new TestProtoLoader(Transport.GRPC, "src/test/java/com/google/api/generator/gapic/testdata/");
+      new TestProtoLoader(Transport.GRPC, "src/test/resources/");
   private final String testFilesDirectory;
   private final Transport transport;
 

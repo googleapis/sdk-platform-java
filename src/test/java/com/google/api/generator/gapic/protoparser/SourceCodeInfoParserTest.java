@@ -32,8 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SourceCodeInfoParserTest {
-  private static final String TEST_PROTO_FILE =
-      "src/test/java/com/google/api/generator/gapic/testdata/basic_proto.descriptor";
+  private static final String TEST_PROTO_FILE = "basic_proto.descriptor";
 
   private SourceCodeInfoParser parser;
   private FileDescriptor protoFile;
@@ -144,8 +143,8 @@ public class SourceCodeInfoParserTest {
   }
 
   /**
-   * Parses a {@link FileDescriptorSet} from the {@link TEST_PROTO_FILE} and converts the protos to
-   * {@link FileDescriptor} wrappers.
+   * Parses a {@link FileDescriptorSet} from the {@code basic_proto.descriptor} and converts the
+   * protos to {@link FileDescriptor} wrappers.
    *
    * @return the top level target protoFile descriptor
    */
