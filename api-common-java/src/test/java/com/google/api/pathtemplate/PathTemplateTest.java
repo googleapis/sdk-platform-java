@@ -179,6 +179,36 @@ public class PathTemplateTest {
   }
 
   @Test
+  public void matchWithNamedBindings() {
+    PathTemplate template = PathTemplate.create("projects/*/{instance_id=instances/*}/**");
+    Map<String, String> actual =
+        template.match("projects/proj_foo/instances/instance_bar/table/table_baz");
+    Truth.assertThat(actual).containsEntry("instance_id", "instances/instance_bar");
+  }
+
+  @Test
+  public void matchFailWithNamedBindingsWhenPathMismatches() {
+    PathTemplate template = PathTemplate.create("projects/*/{instance_id=instances/*}/**");
+    Map<String, String> actual =
+        template.match("projects/proj_foo/instances_fail/instance_bar/table/table_baz");
+    Truth.assertThat(actual).isNull();
+  }
+
+  @Test
+  public void matchWithNamedBindingsThatHasOnlyWildcard() {
+    PathTemplate template = PathTemplate.create("profiles/{routing_id=*}");
+    Map<String, String> actual = template.match("profiles/prof_qux");
+    Truth.assertThat(actual).containsEntry("routing_id", "prof_qux");
+  }
+
+  @Test
+  public void matchFailWithNamedBindingsThatHasOnlyWildcardWhenPathMismatches() {
+    PathTemplate template = PathTemplate.create("profiles/{routing_id=*}");
+    Map<String, String> actual = template.match("profiles/prof_qux/fail");
+    Truth.assertThat(actual).isNull();
+  }
+
+  @Test
   public void matchWithCustomVerbs() {
     PathTemplate template = PathTemplate.create("**:foo");
     assertPositionalMatch(template.match("a/b/c:foo"), "a/b/c");
