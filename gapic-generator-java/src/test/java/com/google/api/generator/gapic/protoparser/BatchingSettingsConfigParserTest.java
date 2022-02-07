@@ -27,8 +27,7 @@ import java.util.Optional;
 import org.junit.Test;
 
 public class BatchingSettingsConfigParserTest {
-  private static final String YAML_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/testdata/";
+  private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
   public void parseGapicSettings_plain() {

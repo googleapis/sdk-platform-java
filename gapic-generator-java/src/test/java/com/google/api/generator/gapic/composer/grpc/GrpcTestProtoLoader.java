@@ -21,7 +21,7 @@ public class GrpcTestProtoLoader extends TestProtoLoader {
   private static final GrpcTestProtoLoader INSTANCE = new GrpcTestProtoLoader();
 
   protected GrpcTestProtoLoader() {
-    super(Transport.GRPC, "src/test/java/com/google/api/generator/gapic/testdata/");
+    super(Transport.GRPC, "src/test/resources/");
   }
 
   public static GrpcTestProtoLoader instance() {

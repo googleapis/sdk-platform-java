@@ -26,8 +26,7 @@ import org.junit.Test;
 
 public class GapicLroRetrySettingsParserTest {
   private static final double DELTA = 0.0001;
-  private static final String YAML_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/testdata/";
+  private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
   public void parseLroRetrySettings_methodsPresentNoLroRetrySettings() {

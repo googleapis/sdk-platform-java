@@ -38,8 +38,7 @@ import org.junit.Test;
 
 public class GapicServiceConfigTest {
   private static final double EPSILON = 1e-4;
-  private static final String TESTDATA_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/testdata/";
+  private static final String TESTDATA_DIRECTORY = "src/test/resources/";
 
   @Test
   public void serviceConfig_noConfigsFound() {

@@ -41,7 +41,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
   private static final RestTestProtoLoader INSTANCE = new RestTestProtoLoader();
 
   protected RestTestProtoLoader() {
-    super(Transport.REST, "src/test/java/com/google/api/generator/gapic/testdata/");
+    super(Transport.REST, "src/test/resources/");
   }
 
   public static RestTestProtoLoader instance() {
