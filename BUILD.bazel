@@ -183,7 +183,10 @@ GOLDEN_UPDATING_UNIT_TESTS = [
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     args = [test_class],
     deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
-    data = glob(["src/test/java/**/*.golden"]),
+    data = glob([
+        "src/test/java/**/*.golden",
+        "src/test/resources/**",
+    ]),
 ) for test_class in GOLDEN_UPDATING_UNIT_TESTS]
 
 # google-java-format
