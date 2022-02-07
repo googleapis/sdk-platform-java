@@ -40,7 +40,7 @@
     proto_library_with_info(
         name = "showcase_proto_with_info",
         deps = [
-            "//:showcase_proto",
+            ":showcase_proto",
         ],
     )
 
@@ -58,10 +58,10 @@
         srcs = ["//:showcase_proto_with_info"],
         grpc_service_config = "showcase_grpc_service_config.json",
         test_deps = [
-            "//:showcase_java_grpc",
+            ":showcase_java_grpc",
         ],
         deps = [
-            "//:showcase_java_proto",
+            ":showcase_java_proto",
         ],
     )
 
@@ -70,11 +70,11 @@
         name = "google-cloud-showcase-v1beta1-java",
         deps = [
             # This is the new microgen target above.
-            "//:showcase_java_gapic",
+            ":showcase_java_gapic",
             # The following targets already exist.
-            "//:showcase_java_grpc",
-            "//:showcase_java_proto",
-            "//:showcase_proto",
+            ":showcase_java_grpc",
+            ":showcase_java_proto",
+            ":showcase_proto",
         ],
     )
     ```
@@ -143,5 +143,5 @@
 -   Update all integration test golden files.
 
     ```sh
-    bazel run $(bazel query test/integration/... | grep :update_) 
+    bazel run $(bazel query //test/integration/... | grep :update_) 
     ```

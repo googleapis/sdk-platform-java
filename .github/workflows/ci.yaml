@@ -74,7 +74,7 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
-        run: bazel --batch run :google_java_format_verification
+        run: bazel --batch run //:google_java_format_verification
 
   coverage:
     runs-on: ubuntu-latest
