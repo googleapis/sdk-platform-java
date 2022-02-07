@@ -128,6 +128,7 @@ java_binary(
     runtime_deps = MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
+# another test resource
 genrule(
     name = "basic_proto_descriptor",
     srcs = ["src/test/resources/basic.proto"],
@@ -138,6 +139,8 @@ genrule(
     tools = ["@com_google_protobuf//:protoc"],
 )
 
+# Unit tests. Run each test with, e.g.,
+# bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
 [java_test(
     name = "unit_" + file[14:-5].replace('/', '_'),
     srcs = glob(["src/test/java/**/*.java"]),
@@ -149,6 +152,7 @@ genrule(
     ]),
 ) for file in glob(["src/test/java/**/*Test.java"])]
 
+# Tests that generate and save unit golden (.golden) files.
 GOLDEN_UPDATING_UNIT_TESTS = [
     "com.google.api.generator.engine.JavaCodeGeneratorTest",
     "com.google.api.generator.gapic.composer.ComposerTest",
@@ -170,6 +174,9 @@ GOLDEN_UPDATING_UNIT_TESTS = [
     "com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposerTest",
 ]
 
+# Manually runs a single JUnit test for the tests that generate and save .golden
+# files. To update .golden files, run with, e.g.,
+# bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
 [java_binary(
     name = "update_%s" % test_class.replace('.', '_'),
     srcs = glob(["src/test/java/**/*.java"]),
