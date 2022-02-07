@@ -55,7 +55,7 @@
     # that includes "java_gapic".
     java_gapic_library(
         name = "showcase_java_gapic",
-        srcs = [":showcase_proto_with_info"],
+        srcs = ["//:showcase_proto_with_info"],
         grpc_service_config = "showcase_grpc_service_config.json",
         test_deps = [
             ":showcase_java_grpc",
@@ -82,7 +82,7 @@
 4.  Build the new target.
 
     ```sh
-    bazel build google/showcase/v1beta1:showcase_java_gapic
+    bazel build //google/showcase/v1beta1:showcase_java_gapic
     ```
 
 ## Code Formatting
@@ -90,27 +90,39 @@
 -   Run linter checks without actually doing the formatting.
 
     ```sh
-    bazel run :google_java_format_verification
+    bazel run //:google_java_format_verification
     ```
 
 -   Format files.
 
     ```sh
-    bazel run :google_java_format
+    bazel run //:google_java_format
     ```
 
 ## Test Running
 
--   Run all unit tests.
+-   Run all unit and integration tests.
 
     ```sh
     bazel test //...
     ```
 
+-   Run all unit tests.
+
+    ```sh
+    bazel test $(bazel query //... | grep ^//:unit_)
+    ```
+
 -   Run a single unit test like `JavaCodeGeneratorTest.java`
 
     ```sh
-    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest
+    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+    ```
+
+-   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
+
+    ```sh
+    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
@@ -121,21 +133,15 @@
     bazel test //test/integration:redis
     ```
 
--   Run all unit and integration tests.
-
-    ```sh
-    bazel test $(bazel query "src/test/..." | grep "Test$") //test/integration/...
-    ```
-
--   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
-
-    ```sh
-    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
-    ```
-
 -   Update integration test golden files, for example `Redis`. This clobbers all the
     files in `test/integration/goldens/redis`.
 
     ```sh
-    bazel run //test/integration:redis_update
+    bazel run //test/integration:update_redis
+    ```
+
+-   Update all integration test golden files.
+
+    ```sh
+    bazel run $(bazel query //test/integration/... | grep :update_) 
     ```

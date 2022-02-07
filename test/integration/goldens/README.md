@@ -11,7 +11,7 @@ the goldens files in this folder will be used to compare with the actual generat
 If they are not identical, then the integration test will fail.
 
 ```sh
-bazel test //test/integration:redis_java_gapic
+bazel test //test/integration:redis
 ```
 
 ## How To Update Goldens
