@@ -96,7 +96,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_UNIT_GOLDEN_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking unit tests..."
-  bazel --batch test $(bazel query //... | grep ^//:unit_) --disk_cache="$BAZEL_CACHE_DIR"
+  bazel --batch test //:units --disk_cache="$BAZEL_CACHE_DIR"
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then

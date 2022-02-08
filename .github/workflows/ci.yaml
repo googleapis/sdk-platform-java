@@ -41,7 +41,7 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Unit Tests
-        run: bazel --batch test $(bazel query //... | grep ^//:unit_) --noshow_progress --test_output=errors
+        run: bazel --batch test //:units --noshow_progress --test_output=errors
 
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
@@ -87,7 +87,7 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage $(bazel query //... | grep ^//:unit_) --combined_report=lcov
+        run: bazel coverage //:units --combined_report=lcov
 
       - name: Upload Code Coverage Report
         uses: codecov/codecov-action@v2

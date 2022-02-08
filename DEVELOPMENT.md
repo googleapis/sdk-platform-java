@@ -55,7 +55,7 @@
     # that includes "java_gapic".
     java_gapic_library(
         name = "showcase_java_gapic",
-        srcs = ["//:showcase_proto_with_info"],
+        srcs = [":showcase_proto_with_info"],
         grpc_service_config = "showcase_grpc_service_config.json",
         test_deps = [
             ":showcase_java_grpc",
