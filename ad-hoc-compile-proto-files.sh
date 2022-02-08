@@ -40,24 +40,15 @@ function install_jar {
   mvn install:install-file -DgroupId=$1 -DartifactId=$2 -Dfile=$3 -Dversion=0.0.0 -Dpackaging=jar
 }
 
-#install_jar io.grpc        serviceconfig-proto         bazel-bin/external/io_grpc_proto/libservice_config_proto-speed.jar
-#install_jar com.google.api metadata-proto              bazel-bin/external/com_google_googleapis/gapic/metadata/libmetadata_proto-speed.jar
-#install_jar com.google.api common-resources-proto      bazel-bin/external/com_google_googleapis/google/cloud/libcommon_resources_proto-speed.jar
-#install_jar com.google.api pubsub-proto                bazel-bin/external/com_google_googleapis/google/pubsub/v1/libpubsub_proto-speed.jar
-#install_jar com.google.api logging-proto               bazel-bin/external/com_google_googleapis/google/logging/v2/liblogging_proto-speed.jar
-install_jar com.google.api gapic-generator-test-protos bazel-bin/libtest_protos-speed.jar
-
-#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libdeprecated_service_proto-speed.jar \
-#    testdata deprecated-service-proto
-
-#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libbookshop_proto-speed.jar \
-#    testdata bookshop-proto
-
-#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libshowcase_proto-speed.jar \
-#    testdata showcase-proto
-
-#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libtestgapic_proto-speed.jar \
-#    testdata testgapic-proto
-
-#install_jar bazel-bin//src/test/java/com/google/api/generator/gapic/testdata/libexplicit_dynamic_routing_headers_testing_proto-speed.jar \
-#    testdata explicit-dynamic-routing-headers-testing-proto
+install_jar io.grpc serviceconfig-proto \
+    bazel-bin/external/io_grpc_proto/libservice_config_proto-speed.jar
+install_jar com.google.api metadata-proto \
+    bazel-bin/external/com_google_googleapis/gapic/metadata/libmetadata_proto-speed.jar
+install_jar com.google.api common-resources-proto \
+    bazel-bin/external/com_google_googleapis/google/cloud/libcommon_resources_proto-speed.jar
+install_jar com.google.api pubsub-proto \
+    bazel-bin/external/com_google_googleapis/google/pubsub/v1/libpubsub_proto-speed.jar
+install_jar com.google.api logging-proto \
+    bazel-bin/external/com_google_googleapis/google/logging/v2/liblogging_proto-speed.jar
+install_jar com.google.api gapic-generator-test-protos \
+    bazel-bin/libtest_protos-speed.jar

@@ -32,7 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SourceCodeInfoParserTest {
-  private static final String TEST_PROTO_FILE = "basic_proto.descriptor";
+  private static final String TEST_PROTO_FILE = "bazel-bin/basic_proto.descriptor";
 
   private SourceCodeInfoParser parser;
   private FileDescriptor protoFile;

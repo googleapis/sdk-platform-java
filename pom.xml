@@ -41,6 +41,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
               <filters>
                 <filter>
                   <artifact>*:*</artifact>
@@ -190,32 +191,8 @@
     </dependency>
 
     <dependency>
-      <groupId>testdata</groupId>
-      <artifactId>deprecated-service-proto</artifactId>
-      <version>0.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>testdata</groupId>
-      <artifactId>bookshop-proto</artifactId>
-      <version>0.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>testdata</groupId>
-      <artifactId>showcase-proto</artifactId>
-      <version>0.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>testdata</groupId>
-      <artifactId>testgapic-proto</artifactId>
-      <version>0.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>testdata</groupId>
-      <artifactId>explicit-dynamic-routing-headers-testing-proto</artifactId>
+      <groupId>com.google.api</groupId>
+      <artifactId>gapic-generator-test-protos</artifactId>
       <version>0.0.0</version>
       <scope>test</scope>
     </dependency>
