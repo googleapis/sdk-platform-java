@@ -1,6 +1,0 @@
-load("@rules_java//java:defs.bzl", "java_proto_library")
-
-java_proto_library(
-    name = "common_resources_java_proto",
-    deps = ["@com_google_googleapis//google/cloud:common_resources_proto"],
-)
