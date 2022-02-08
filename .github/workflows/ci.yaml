@@ -41,7 +41,7 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Unit Tests
-        run: bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress --test_output=errors
+        run: bazel --batch test $(bazel query //... | grep ^//:unit_) --noshow_progress --test_output=errors
 
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
@@ -50,7 +50,8 @@ jobs:
         run: |
           echo "Building Storage lib from generated source..."
           mkdir /tmp/java-storage
-          tar zxvf bazel-bin/test/integration/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          bazel --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
           pushd /tmp/java-storage/google-cloud-storage-v2-java
           ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
@@ -86,7 +87,7 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage $(bazel query "src/test/..." | grep "Test$") --combined_report=lcov
+        run: bazel coverage $(bazel query //... | grep ^//:unit_) --combined_report=lcov
 
       - name: Upload Code Coverage Report
         uses: codecov/codecov-action@v2

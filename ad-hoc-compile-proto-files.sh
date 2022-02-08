@@ -34,47 +34,30 @@ set -o errexit
 # protoc --include_source_info --include_imports --descriptor_set_out=basic_proto.descriptor basic.proto
 
 
-bazel build service_config_java_proto
-bazel build @com_google_googleapis//gapic/metadata:metadata_java_proto
-bazel build src/test/java/com/google/api/generator/gapic/composer:common_resources_java_proto
-bazel build @com_google_googleapis//google/pubsub/v1:pubsub_java_proto
-bazel build @com_google_googleapis//google/logging/v2:logging_java_proto
+bazel build :service_config_java_proto :test_java_protos :basic_proto_descriptor
 
-bazel build src/test/java/com/google/api/generator/gapic/testdata:deprecated_service_java_proto
-bazel build src/test/java/com/google/api/generator/gapic/testdata:bookshop_java_proto
-bazel build src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto
-bazel build src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto
-bazel build src/test/java/com/google/api/generator/gapic/testdata:explicit_dynamic_routing_headers_testing_java_proto
+function install_jar {
+  mvn install:install-file -DgroupId=$1 -DartifactId=$2 -Dfile=$3 -Dversion=0.0.0 -Dpackaging=jar
+}
 
-bazel build src/test/java/com/google/api/generator/gapic/testdata:basic_proto_descriptor
+#install_jar io.grpc        serviceconfig-proto         bazel-bin/external/io_grpc_proto/libservice_config_proto-speed.jar
+#install_jar com.google.api metadata-proto              bazel-bin/external/com_google_googleapis/gapic/metadata/libmetadata_proto-speed.jar
+#install_jar com.google.api common-resources-proto      bazel-bin/external/com_google_googleapis/google/cloud/libcommon_resources_proto-speed.jar
+#install_jar com.google.api pubsub-proto                bazel-bin/external/com_google_googleapis/google/pubsub/v1/libpubsub_proto-speed.jar
+#install_jar com.google.api logging-proto               bazel-bin/external/com_google_googleapis/google/logging/v2/liblogging_proto-speed.jar
+install_jar com.google.api gapic-generator-test-protos bazel-bin/libtest_protos-speed.jar
 
+#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libdeprecated_service_proto-speed.jar \
+#    testdata deprecated-service-proto
 
-mvn install:install-file -Dfile=bazel-bin/external/io_grpc_proto/libservice_config_proto-speed.jar \
-    -DgroupId=io.grpc -DartifactId=serviceconfig-proto -Dversion=0.0.0 -Dpackaging=jar
+#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libbookshop_proto-speed.jar \
+#    testdata bookshop-proto
 
-mvn install:install-file -Dfile=bazel-bin/external/com_google_googleapis/gapic/metadata/libmetadata_proto-speed.jar \
-    -DgroupId=com.google.api -DartifactId=metadata-proto -Dversion=0.0.0 -Dpackaging=jar
+#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libshowcase_proto-speed.jar \
+#    testdata showcase-proto
 
-mvn install:install-file -Dfile=bazel-bin/external/com_google_googleapis/google/cloud/libcommon_resources_proto-speed.jar \
-    -DgroupId=com.google.api -DartifactId=common-resources-proto -Dversion=0.0.0 -Dpackaging=jar
+#install_jar bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libtestgapic_proto-speed.jar \
+#    testdata testgapic-proto
 
-mvn install:install-file -Dfile=bazel-bin/external/com_google_googleapis/google/pubsub/v1/libpubsub_proto-speed.jar \
-    -DgroupId=com.google.api -DartifactId=pubsub-proto -Dversion=0.0.0 -Dpackaging=jar
-
-mvn install:install-file -Dfile=bazel-bin/external/com_google_googleapis/google/logging/v2/liblogging_proto-speed.jar \
-    -DgroupId=com.google.api -DartifactId=logging-proto -Dversion=0.0.0 -Dpackaging=jar
-
-mvn install:install-file -Dfile=bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libdeprecated_service_proto-speed.jar \
-    -DgroupId=testdata -DartifactId=deprecated-service-proto -Dversion=0.0.0 -Dpackaging=jar
-
-mvn install:install-file -Dfile=bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libbookshop_proto-speed.jar \
-    -DgroupId=testdata -DartifactId=bookshop-proto -Dversion=0.0.0 -Dpackaging=jar
-
-mvn install:install-file -Dfile=bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libshowcase_proto-speed.jar \
-    -DgroupId=testdata -DartifactId=showcase-proto -Dversion=0.0.0 -Dpackaging=jar
-
-mvn install:install-file -Dfile=bazel-bin/src/test/java/com/google/api/generator/gapic/testdata/libtestgapic_proto-speed.jar \
-    -DgroupId=testdata -DartifactId=testgapic-proto -Dversion=0.0.0 -Dpackaging=jar
-
-mvn install:install-file -Dfile=bazel-bin//src/test/java/com/google/api/generator/gapic/testdata/libexplicit_dynamic_routing_headers_testing_proto-speed.jar \
-    -DgroupId=testdata -DartifactId=explicit-dynamic-routing-headers-testing-proto -Dversion=0.0.0 -Dpackaging=jar
+#install_jar bazel-bin//src/test/java/com/google/api/generator/gapic/testdata/libexplicit_dynamic_routing_headers_testing_proto-speed.jar \
+#    testdata explicit-dynamic-routing-headers-testing-proto
