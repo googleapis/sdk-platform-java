@@ -104,25 +104,20 @@
 -   Run all unit and integration tests.
 
     ```sh
-    bazel test //...
+    mvn test          # unit tests
+    bazel test //...  # integration tests
     ```
 
 -   Run all unit tests.
 
     ```sh
-    bazel test $(bazel query //... | grep ^//:unit_)
+    mvn test
     ```
 
--   Run a single unit test like `JavaCodeGeneratorTest.java`
+-   Update unit test golden files:
 
     ```sh
-    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
-    ```
-
--   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
-
-    ```sh
-    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+    mvn test -DupdateUnitGoldens
     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
