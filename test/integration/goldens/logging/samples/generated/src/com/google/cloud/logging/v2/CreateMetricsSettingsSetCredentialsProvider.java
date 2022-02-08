@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_metricsClient_create_metricsSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.cloud.logging.v2.MetricsSettings;
@@ -28,6 +28,8 @@ public class CreateMetricsSettingsSetCredentialsProvider {
   }
 
   public static void createMetricsSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     MetricsSettings metricsSettings =
         MetricsSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateMetricsSettingsSetCredentialsProvider {
     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_metricsClient_create_metricsSettingsSetCredentialsProvider]

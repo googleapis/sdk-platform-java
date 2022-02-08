@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_iamCredentialsClient_create_iamCredentialsSettingsSetEndpoint]
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 import com.google.cloud.iam.credentials.v1.myEndpoint;
@@ -27,9 +27,11 @@ public class CreateIamCredentialsSettingsSetEndpoint {
   }
 
   public static void createIamCredentialsSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     IamCredentialsSettings iamCredentialsSettings =
         IamCredentialsSettings.newBuilder().setEndpoint(myEndpoint).build();
     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_iamCredentialsClient_create_iamCredentialsSettingsSetEndpoint]

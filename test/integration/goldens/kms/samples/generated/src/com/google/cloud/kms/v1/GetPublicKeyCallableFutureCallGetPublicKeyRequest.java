@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_getPublicKeyCallable_futureCallGetPublicKeyRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyVersionName;
 import com.google.cloud.kms.v1.GetPublicKeyRequest;
@@ -29,6 +29,8 @@ public class GetPublicKeyCallableFutureCallGetPublicKeyRequest {
   }
 
   public static void getPublicKeyCallableFutureCallGetPublicKeyRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       GetPublicKeyRequest request =
@@ -49,4 +51,4 @@ public class GetPublicKeyCallableFutureCallGetPublicKeyRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_getPublicKeyCallable_futureCallGetPublicKeyRequest]

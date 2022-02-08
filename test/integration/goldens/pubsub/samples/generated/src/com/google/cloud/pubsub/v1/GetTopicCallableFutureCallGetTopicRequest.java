@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_getTopicCallable_futureCallGetTopicRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.GetTopicRequest;
@@ -29,6 +29,8 @@ public class GetTopicCallableFutureCallGetTopicRequest {
   }
 
   public static void getTopicCallableFutureCallGetTopicRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       GetTopicRequest request =
           GetTopicRequest.newBuilder()
@@ -40,4 +42,4 @@ public class GetTopicCallableFutureCallGetTopicRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_getTopicCallable_futureCallGetTopicRequest]

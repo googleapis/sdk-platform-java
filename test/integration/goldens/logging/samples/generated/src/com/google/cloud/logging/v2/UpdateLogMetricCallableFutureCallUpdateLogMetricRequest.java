@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_metricsClient_updateLogMetricCallable_futureCallUpdateLogMetricRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.LogMetric;
@@ -29,6 +29,8 @@ public class UpdateLogMetricCallableFutureCallUpdateLogMetricRequest {
   }
 
   public static void updateLogMetricCallableFutureCallUpdateLogMetricRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (MetricsClient metricsClient = MetricsClient.create()) {
       UpdateLogMetricRequest request =
           UpdateLogMetricRequest.newBuilder()
@@ -41,4 +43,4 @@ public class UpdateLogMetricCallableFutureCallUpdateLogMetricRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_metricsClient_updateLogMetricCallable_futureCallUpdateLogMetricRequest]

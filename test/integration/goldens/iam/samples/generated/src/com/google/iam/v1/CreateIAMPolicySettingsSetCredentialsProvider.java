@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_iAMPolicyClient_create_iAMPolicySettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.IAMPolicySettings;
@@ -28,6 +28,8 @@ public class CreateIAMPolicySettingsSetCredentialsProvider {
   }
 
   public static void createIAMPolicySettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     IAMPolicySettings iAMPolicySettings =
         IAMPolicySettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateIAMPolicySettingsSetCredentialsProvider {
     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_iAMPolicyClient_create_iAMPolicySettingsSetCredentialsProvider]

@@ -99,6 +99,8 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * PublisherStubSettings.Builder topicAdminSettingsBuilder = PublisherStubSettings.newBuilder();
  * topicAdminSettingsBuilder
  *     .createTopicSettings()

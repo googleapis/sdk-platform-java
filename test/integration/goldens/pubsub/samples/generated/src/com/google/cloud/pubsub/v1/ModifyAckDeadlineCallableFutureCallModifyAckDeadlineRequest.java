@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_modifyAckDeadlineCallable_futureCallModifyAckDeadlineRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
@@ -31,6 +31,8 @@ public class ModifyAckDeadlineCallableFutureCallModifyAckDeadlineRequest {
 
   public static void modifyAckDeadlineCallableFutureCallModifyAckDeadlineRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       ModifyAckDeadlineRequest request =
           ModifyAckDeadlineRequest.newBuilder()
@@ -45,4 +47,4 @@ public class ModifyAckDeadlineCallableFutureCallModifyAckDeadlineRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_modifyAckDeadlineCallable_futureCallModifyAckDeadlineRequest]

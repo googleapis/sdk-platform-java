@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_importInstanceAsync_stringInputConfigGet]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InputConfig;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -27,6 +27,8 @@ public class ImportInstanceAsyncStringInputConfigGet {
   }
 
   public static void importInstanceAsyncStringInputConfigGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       String name = "name3373707";
       InputConfig inputConfig = InputConfig.newBuilder().build();
@@ -34,4 +36,4 @@ public class ImportInstanceAsyncStringInputConfigGet {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_importInstanceAsync_stringInputConfigGet]

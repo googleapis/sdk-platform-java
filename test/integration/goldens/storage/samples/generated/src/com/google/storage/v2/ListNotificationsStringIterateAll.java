@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_listNotifications_stringIterateAll]
 import com.google.storage.v2.Notification;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -27,6 +27,8 @@ public class ListNotificationsStringIterateAll {
   }
 
   public static void listNotificationsStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       String parent = ProjectName.of("[PROJECT]").toString();
       for (Notification element : storageClient.listNotifications(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListNotificationsStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_listNotifications_stringIterateAll]

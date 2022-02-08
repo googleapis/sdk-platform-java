@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_getBucketCallable_futureCallGetBucketRequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
@@ -31,6 +31,8 @@ public class GetBucketCallableFutureCallGetBucketRequest {
   }
 
   public static void getBucketCallableFutureCallGetBucketRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       GetBucketRequest request =
           GetBucketRequest.newBuilder()
@@ -46,4 +48,4 @@ public class GetBucketCallableFutureCallGetBucketRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_getBucketCallable_futureCallGetBucketRequest]

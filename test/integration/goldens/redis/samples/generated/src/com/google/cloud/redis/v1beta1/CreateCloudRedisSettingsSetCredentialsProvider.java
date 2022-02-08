@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_create_cloudRedisSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.CloudRedisSettings;
@@ -28,6 +28,8 @@ public class CreateCloudRedisSettingsSetCredentialsProvider {
   }
 
   public static void createCloudRedisSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     CloudRedisSettings cloudRedisSettings =
         CloudRedisSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateCloudRedisSettingsSetCredentialsProvider {
     CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_create_cloudRedisSettingsSetCredentialsProvider]

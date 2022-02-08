@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_assetServiceClient_createFeedCallable_futureCallCreateFeedRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.CreateFeedRequest;
@@ -28,6 +28,8 @@ public class CreateFeedCallableFutureCallCreateFeedRequest {
   }
 
   public static void createFeedCallableFutureCallCreateFeedRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
       CreateFeedRequest request =
           CreateFeedRequest.newBuilder()
@@ -41,4 +43,4 @@ public class CreateFeedCallableFutureCallCreateFeedRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_assetServiceClient_createFeedCallable_futureCallCreateFeedRequest]

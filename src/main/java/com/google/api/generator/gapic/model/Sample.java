@@ -24,23 +24,21 @@ import java.util.List;
 
 @AutoValue
 public abstract class Sample {
-  public abstract String getName();
+  public abstract List<Statement> body();
 
-  public abstract List<Statement> getBody();
+  public abstract List<AssignmentExpr> variableAssignments();
 
-  public abstract List<AssignmentExpr> getVariableAssignments();
+  public abstract List<Statement> fileHeader();
 
-  public abstract List<Statement> getFileHeader();
+  public abstract RegionTag regionTag();
 
-  public abstract String getRegionTag();
+  public abstract String name();
 
   public static Builder builder() {
     return new AutoValue_Sample.Builder()
-        .setName("")
         .setBody(ImmutableList.of())
         .setVariableAssignments(ImmutableList.of())
-        .setFileHeader(ImmutableList.of())
-        .setRegionTag("");
+        .setFileHeader(ImmutableList.of());
   }
 
   abstract Builder toBuilder();
@@ -49,31 +47,36 @@ public abstract class Sample {
     return toBuilder().setFileHeader(header).build();
   }
 
-  public final Sample withRegionTag(String regionTag) {
+  public final Sample withRegionTag(RegionTag regionTag) {
     return toBuilder().setRegionTag(regionTag).build();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setName(String name);
-
     public abstract Builder setBody(List<Statement> body);
 
     public abstract Builder setVariableAssignments(List<AssignmentExpr> variableAssignments);
 
     public abstract Builder setFileHeader(List<CommentStatement> header);
 
-    public abstract Builder setRegionTag(String regionTag);
+    public abstract Builder setRegionTag(RegionTag regionTag);
+
+    abstract Builder setName(String name);
 
     abstract Sample autoBuild();
 
+    abstract RegionTag regionTag();
+
     public final Sample build() {
-      setName(cleanSampleName(autoBuild().getName()));
+      setName(generateSampleName(regionTag()));
       return autoBuild();
-    };
+    }
   }
 
-  private static String cleanSampleName(String sampleName) {
-    return JavaStyle.toUpperCamelCase(sampleName.replaceAll("[^a-zA-Z0-9]", ""));
+  private static String generateSampleName(RegionTag regionTag) {
+    return String.format(
+        "%s%s",
+        JavaStyle.toLowerCamelCase(regionTag.rpcName()),
+        JavaStyle.toUpperCamelCase(regionTag.overloadDisambiguation()));
   }
 }

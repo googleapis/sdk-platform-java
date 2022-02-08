@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_deleteObjectCallable_futureCallDeleteObjectRequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -30,6 +30,8 @@ public class DeleteObjectCallableFutureCallDeleteObjectRequest {
   }
 
   public static void deleteObjectCallableFutureCallDeleteObjectRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       DeleteObjectRequest request =
           DeleteObjectRequest.newBuilder()
@@ -50,4 +52,4 @@ public class DeleteObjectCallableFutureCallDeleteObjectRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_deleteObjectCallable_futureCallDeleteObjectRequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_assetServiceClient_searchAllIamPolicies_searchAllIamPoliciesRequestIterateAll]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.IamPolicySearchResult;
 import com.google.cloud.asset.v1.SearchAllIamPoliciesRequest;
@@ -28,6 +28,8 @@ public class SearchAllIamPoliciesSearchAllIamPoliciesRequestIterateAll {
   }
 
   public static void searchAllIamPoliciesSearchAllIamPoliciesRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
       SearchAllIamPoliciesRequest request =
           SearchAllIamPoliciesRequest.newBuilder()
@@ -45,4 +47,4 @@ public class SearchAllIamPoliciesSearchAllIamPoliciesRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_assetServiceClient_searchAllIamPolicies_searchAllIamPoliciesRequestIterateAll]

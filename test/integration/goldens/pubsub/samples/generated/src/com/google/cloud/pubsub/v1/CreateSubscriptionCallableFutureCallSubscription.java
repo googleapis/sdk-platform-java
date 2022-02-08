@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_createSubscriptionCallable_futureCallSubscription]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Duration;
@@ -35,6 +35,8 @@ public class CreateSubscriptionCallableFutureCallSubscription {
   }
 
   public static void createSubscriptionCallableFutureCallSubscription() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       Subscription request =
           Subscription.newBuilder()
@@ -60,4 +62,4 @@ public class CreateSubscriptionCallableFutureCallSubscription {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_createSubscriptionCallable_futureCallSubscription]

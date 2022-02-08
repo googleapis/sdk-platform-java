@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_listTopicSnapshots_listTopicSnapshotsRequestIterateAll]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.ListTopicSnapshotsRequest;
 import com.google.pubsub.v1.TopicName;
@@ -27,6 +27,8 @@ public class ListTopicSnapshotsListTopicSnapshotsRequestIterateAll {
   }
 
   public static void listTopicSnapshotsListTopicSnapshotsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       ListTopicSnapshotsRequest request =
           ListTopicSnapshotsRequest.newBuilder()
@@ -40,4 +42,4 @@ public class ListTopicSnapshotsListTopicSnapshotsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_listTopicSnapshots_listTopicSnapshotsRequestIterateAll]

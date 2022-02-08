@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_failoverInstanceAsync_failoverInstanceRequestGet]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -28,6 +28,8 @@ public class FailoverInstanceAsyncFailoverInstanceRequestGet {
   }
 
   public static void failoverInstanceAsyncFailoverInstanceRequestGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       FailoverInstanceRequest request =
           FailoverInstanceRequest.newBuilder()
@@ -37,4 +39,4 @@ public class FailoverInstanceAsyncFailoverInstanceRequestGet {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_failoverInstanceAsync_failoverInstanceRequestGet]

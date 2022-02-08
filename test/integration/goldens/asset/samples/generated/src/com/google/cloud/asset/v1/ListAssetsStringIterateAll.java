@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_assetServiceClient_listAssets_stringIterateAll]
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.FeedName;
@@ -27,6 +27,8 @@ public class ListAssetsStringIterateAll {
   }
 
   public static void listAssetsStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
       String parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString();
       for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListAssetsStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_assetServiceClient_listAssets_stringIterateAll]

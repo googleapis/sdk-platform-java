@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_listExclusions_folderNameIterateAll]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.FolderName;
 import com.google.logging.v2.LogExclusion;
@@ -27,6 +27,8 @@ public class ListExclusionsFolderNameIterateAll {
   }
 
   public static void listExclusionsFolderNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       FolderName parent = FolderName.of("[FOLDER]");
       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListExclusionsFolderNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_listExclusions_folderNameIterateAll]

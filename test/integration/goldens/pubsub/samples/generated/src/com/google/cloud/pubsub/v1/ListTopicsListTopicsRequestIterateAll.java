@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_listTopics_listTopicsRequestIterateAll]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.ListTopicsRequest;
 import com.google.pubsub.v1.ProjectName;
@@ -28,6 +28,8 @@ public class ListTopicsListTopicsRequestIterateAll {
   }
 
   public static void listTopicsListTopicsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       ListTopicsRequest request =
           ListTopicsRequest.newBuilder()
@@ -41,4 +43,4 @@ public class ListTopicsListTopicsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_listTopics_listTopicsRequestIterateAll]

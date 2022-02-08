@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_iamCredentialsClient_signJwtCallable_futureCallSignJwtRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -30,6 +30,8 @@ public class SignJwtCallableFutureCallSignJwtRequest {
   }
 
   public static void signJwtCallableFutureCallSignJwtRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
       SignJwtRequest request =
           SignJwtRequest.newBuilder()
@@ -44,4 +46,4 @@ public class SignJwtCallableFutureCallSignJwtRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_iamCredentialsClient_signJwtCallable_futureCallSignJwtRequest]

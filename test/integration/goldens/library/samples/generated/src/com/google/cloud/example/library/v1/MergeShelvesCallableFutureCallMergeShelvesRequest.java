@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_libraryServiceClient_mergeShelvesCallable_futureCallMergeShelvesRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.MergeShelvesRequest;
@@ -29,6 +29,8 @@ public class MergeShelvesCallableFutureCallMergeShelvesRequest {
   }
 
   public static void mergeShelvesCallableFutureCallMergeShelvesRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
       MergeShelvesRequest request =
           MergeShelvesRequest.newBuilder()
@@ -41,4 +43,4 @@ public class MergeShelvesCallableFutureCallMergeShelvesRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_libraryServiceClient_mergeShelvesCallable_futureCallMergeShelvesRequest]

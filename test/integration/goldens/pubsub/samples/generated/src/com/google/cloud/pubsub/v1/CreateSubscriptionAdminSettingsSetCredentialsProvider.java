@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_create_subscriptionAdminSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
@@ -28,6 +28,8 @@ public class CreateSubscriptionAdminSettingsSetCredentialsProvider {
   }
 
   public static void createSubscriptionAdminSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     SubscriptionAdminSettings subscriptionAdminSettings =
         SubscriptionAdminSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -36,4 +38,4 @@ public class CreateSubscriptionAdminSettingsSetCredentialsProvider {
         SubscriptionAdminClient.create(subscriptionAdminSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_create_subscriptionAdminSettingsSetCredentialsProvider]

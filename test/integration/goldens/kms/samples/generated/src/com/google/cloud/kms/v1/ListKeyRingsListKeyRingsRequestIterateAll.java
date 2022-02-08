@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_listKeyRings_listKeyRingsRequestIterateAll]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRing;
 import com.google.cloud.kms.v1.ListKeyRingsRequest;
@@ -28,6 +28,8 @@ public class ListKeyRingsListKeyRingsRequestIterateAll {
   }
 
   public static void listKeyRingsListKeyRingsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       ListKeyRingsRequest request =
@@ -44,4 +46,4 @@ public class ListKeyRingsListKeyRingsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_listKeyRings_listKeyRingsRequestIterateAll]

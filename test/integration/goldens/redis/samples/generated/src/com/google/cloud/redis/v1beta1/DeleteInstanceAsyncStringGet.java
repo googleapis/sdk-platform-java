@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_deleteInstanceAsync_stringGet]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InstanceName;
 import com.google.protobuf.Empty;
@@ -27,10 +27,12 @@ public class DeleteInstanceAsyncStringGet {
   }
 
   public static void deleteInstanceAsyncStringGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
       cloudRedisClient.deleteInstanceAsync(name).get();
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_deleteInstanceAsync_stringGet]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_streamingPullCallable_callStreamingPullRequest]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.StreamingPullRequest;
@@ -30,6 +30,8 @@ public class StreamingPullCallableCallStreamingPullRequest {
   }
 
   public static void streamingPullCallableCallStreamingPullRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       BidiStream<StreamingPullRequest, StreamingPullResponse> bidiStream =
           subscriptionAdminClient.streamingPullCallable().call();
@@ -51,4 +53,4 @@ public class StreamingPullCallableCallStreamingPullRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_streamingPullCallable_callStreamingPullRequest]

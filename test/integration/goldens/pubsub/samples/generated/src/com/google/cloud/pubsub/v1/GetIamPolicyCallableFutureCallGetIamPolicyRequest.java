@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_getIamPolicyCallable_futureCallGetIamPolicyRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.GetIamPolicyRequest;
@@ -30,6 +30,8 @@ public class GetIamPolicyCallableFutureCallGetIamPolicyRequest {
   }
 
   public static void getIamPolicyCallableFutureCallGetIamPolicyRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
@@ -42,4 +44,4 @@ public class GetIamPolicyCallableFutureCallGetIamPolicyRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_getIamPolicyCallable_futureCallGetIamPolicyRequest]

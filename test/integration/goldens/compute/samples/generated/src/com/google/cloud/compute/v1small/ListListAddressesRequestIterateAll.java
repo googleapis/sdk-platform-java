@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_list_listAddressesRequestIterateAll]
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.ListAddressesRequest;
@@ -27,6 +27,8 @@ public class ListListAddressesRequestIterateAll {
   }
 
   public static void listListAddressesRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       ListAddressesRequest request =
           ListAddressesRequest.newBuilder()
@@ -43,4 +45,4 @@ public class ListListAddressesRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_list_listAddressesRequestIterateAll]

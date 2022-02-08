@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_updateInstanceAsync_updateInstanceRequestGet]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
 import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
@@ -28,6 +28,8 @@ public class UpdateInstanceAsyncUpdateInstanceRequestGet {
   }
 
   public static void updateInstanceAsyncUpdateInstanceRequestGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       UpdateInstanceRequest request =
           UpdateInstanceRequest.newBuilder()
@@ -38,4 +40,4 @@ public class UpdateInstanceAsyncUpdateInstanceRequestGet {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_updateInstanceAsync_updateInstanceRequestGet]

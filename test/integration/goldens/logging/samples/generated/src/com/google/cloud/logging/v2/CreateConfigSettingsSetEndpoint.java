@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_create_configSettingsSetEndpoint]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.cloud.logging.v2.ConfigSettings;
 import com.google.cloud.logging.v2.myEndpoint;
@@ -27,8 +27,10 @@ public class CreateConfigSettingsSetEndpoint {
   }
 
   public static void createConfigSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
     ConfigClient configClient = ConfigClient.create(configSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_create_configSettingsSetEndpoint]

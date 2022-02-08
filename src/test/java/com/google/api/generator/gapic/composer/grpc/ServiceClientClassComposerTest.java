@@ -14,20 +14,11 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
-import static com.google.api.generator.test.framework.Assert.assertSampleFileCount;
-
-import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Set;
 import org.junit.Test;
 
 public class ServiceClientClassComposerTest {
@@ -36,13 +27,12 @@ public class ServiceClientClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, echoProtoService);
-    String goldenDir = Utils.getGoldenDir(this.getClass());
+    String goldenSampleDir = Utils.getGoldenDir(this.getClass()) + "/samples/echoclient/";
 
-    assertGoldenClass(clazz.classDefinition(), goldenDir, "EchoClient.golden");
-    assertGoldenSamples(
-        clazz.samples(),
-        String.format("%s.samples", clazz.classDefinition().packageString()),
-        String.format("%ssamples/echoclient/", goldenDir));
+    Assert.assertGoldenClass(this.getClass(), clazz, "EchoClient.golden");
+    Assert.assertSampleFileCount(goldenSampleDir, clazz.samples());
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -50,13 +40,13 @@ public class ServiceClientClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
-    String goldenDir = Utils.getGoldenDir(this.getClass());
+    String goldenSampleDir =
+        Utils.getGoldenDir(this.getClass()) + "/samples/deprecatedserviceclient/";
 
-    assertGoldenClass(clazz.classDefinition(), goldenDir, "DeprecatedServiceClient.golden");
-    assertGoldenSamples(
-        clazz.samples(),
-        String.format("%s.samples", clazz.classDefinition().packageString()),
-        String.format("%ssamples/deprecatedserviceclient/", goldenDir));
+    Assert.assertGoldenClass(this.getClass(), clazz, "DeprecatedServiceClient.golden");
+    Assert.assertSampleFileCount(goldenSampleDir, clazz.samples());
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -64,13 +54,12 @@ public class ServiceClientClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseIdentity();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
-    String goldenDir = Utils.getGoldenDir(this.getClass());
+    String goldenSampleDir = Utils.getGoldenDir(this.getClass()) + "/samples/identityclient/";
 
-    assertGoldenClass(clazz.classDefinition(), goldenDir, "IdentityClient.golden");
-    assertGoldenSamples(
-        clazz.samples(),
-        String.format("%s.samples", clazz.classDefinition().packageString()),
-        String.format("%ssamples/identityclient/", goldenDir));
+    Assert.assertGoldenClass(this.getClass(), clazz, "IdentityClient.golden");
+    Assert.assertSampleFileCount(goldenSampleDir, clazz.samples());
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -78,13 +67,12 @@ public class ServiceClientClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseBookshopService();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
-    String goldenDir = Utils.getGoldenDir(this.getClass());
+    String goldenSampleDir = Utils.getGoldenDir(this.getClass()) + "/samples/bookshopclient/";
 
-    assertGoldenClass(clazz.classDefinition(), goldenDir, "BookshopClient.golden");
-    assertGoldenSamples(
-        clazz.samples(),
-        String.format("%s.samples", clazz.classDefinition().packageString()),
-        String.format("%ssamples/bookshopclient/", goldenDir));
+    Assert.assertGoldenClass(this.getClass(), clazz, "BookshopClient.golden");
+    Assert.assertSampleFileCount(goldenSampleDir, clazz.samples());
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -92,32 +80,11 @@ public class ServiceClientClassComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseMessaging();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, protoService);
-    String goldenDir = Utils.getGoldenDir(this.getClass());
+    String goldenSampleDir = Utils.getGoldenDir(this.getClass()) + "/samples/messagingclient/";
 
-    assertGoldenClass(clazz.classDefinition(), goldenDir, "MessagingClient.golden");
-    assertGoldenSamples(
-        clazz.samples(),
-        String.format("%s.samples", clazz.classDefinition().packageString()),
-        String.format("%ssamples/messagingclient/", goldenDir));
-  }
-
-  private void assertGoldenClass(
-      ClassDefinition classDefinition, String goldenDir, String fileName) {
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    classDefinition.accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), fileName, visitor.write());
-    Path goldenFilePath = Paths.get(goldenDir, fileName);
-    assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  private void assertGoldenSamples(Set<Sample> samples, String packkage, String goldenDir) {
-    assertSampleFileCount(goldenDir, samples);
-
-    for (Sample sample : samples) {
-      String fileName = sample.getName().concat(".golden");
-      Path goldenFilePath = Paths.get(goldenDir, fileName);
-      assertCodeEquals(
-          goldenFilePath, ExecutableSampleComposer.createExecutableSample(sample, packkage));
-    }
+    Assert.assertGoldenClass(this.getClass(), clazz, "MessagingClient.golden");
+    Assert.assertSampleFileCount(goldenSampleDir, clazz.samples());
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 }

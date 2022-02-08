@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_deleteInstanceAsync_deleteInstanceRequestGet]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
 import com.google.cloud.redis.v1beta1.InstanceName;
@@ -28,6 +28,8 @@ public class DeleteInstanceAsyncDeleteInstanceRequestGet {
   }
 
   public static void deleteInstanceAsyncDeleteInstanceRequestGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       DeleteInstanceRequest request =
           DeleteInstanceRequest.newBuilder()
@@ -37,4 +39,4 @@ public class DeleteInstanceAsyncDeleteInstanceRequestGet {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_deleteInstanceAsync_deleteInstanceRequestGet]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_list_stringStringStringIterateAll]
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
 
@@ -26,6 +26,8 @@ public class ListStringStringStringIterateAll {
   }
 
   public static void listStringStringStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       String project = "project-309310695";
       String region = "region-934795532";
@@ -36,4 +38,4 @@ public class ListStringStringStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_list_stringStringStringIterateAll]

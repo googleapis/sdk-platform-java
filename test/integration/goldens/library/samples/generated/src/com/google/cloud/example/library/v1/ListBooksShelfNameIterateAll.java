@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_libraryServiceClient_listBooks_shelfNameIterateAll]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.ShelfName;
@@ -27,6 +27,8 @@ public class ListBooksShelfNameIterateAll {
   }
 
   public static void listBooksShelfNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
       ShelfName parent = ShelfName.of("[SHELF_ID]");
       for (Book element : libraryServiceClient.listBooks(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListBooksShelfNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_libraryServiceClient_listBooks_shelfNameIterateAll]

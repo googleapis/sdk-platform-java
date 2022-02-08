@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_assetServiceClient_analyzeIamPolicyLongrunningAsync_analyzeIamPolicyLongrunningRequestGet]
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
 import com.google.cloud.asset.v1.AssetServiceClient;
@@ -30,6 +30,8 @@ public class AnalyzeIamPolicyLongrunningAsyncAnalyzeIamPolicyLongrunningRequestG
 
   public static void analyzeIamPolicyLongrunningAsyncAnalyzeIamPolicyLongrunningRequestGet()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
       AnalyzeIamPolicyLongrunningRequest request =
           AnalyzeIamPolicyLongrunningRequest.newBuilder()
@@ -41,4 +43,4 @@ public class AnalyzeIamPolicyLongrunningAsyncAnalyzeIamPolicyLongrunningRequestG
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_assetServiceClient_analyzeIamPolicyLongrunningAsync_analyzeIamPolicyLongrunningRequestGet]

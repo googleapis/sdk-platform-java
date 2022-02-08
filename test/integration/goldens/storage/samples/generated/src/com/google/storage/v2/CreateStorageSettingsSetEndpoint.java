@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_create_storageSettingsSetEndpoint]
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.StorageSettings;
 import com.google.storage.v2.myEndpoint;
@@ -27,8 +27,10 @@ public class CreateStorageSettingsSetEndpoint {
   }
 
   public static void createStorageSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     StorageSettings storageSettings = StorageSettings.newBuilder().setEndpoint(myEndpoint).build();
     StorageClient storageClient = StorageClient.create(storageSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_create_storageSettingsSetEndpoint]

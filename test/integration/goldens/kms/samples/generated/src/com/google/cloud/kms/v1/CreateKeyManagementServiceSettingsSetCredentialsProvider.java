@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_create_keyManagementServiceSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyManagementServiceSettings;
@@ -28,6 +28,8 @@ public class CreateKeyManagementServiceSettingsSetCredentialsProvider {
   }
 
   public static void createKeyManagementServiceSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     KeyManagementServiceSettings keyManagementServiceSettings =
         KeyManagementServiceSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -36,4 +38,4 @@ public class CreateKeyManagementServiceSettingsSetCredentialsProvider {
         KeyManagementServiceClient.create(keyManagementServiceSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_create_keyManagementServiceSettingsSetCredentialsProvider]

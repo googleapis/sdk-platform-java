@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_insertAsync_stringStringAddressGet]
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.Operation;
@@ -27,6 +27,8 @@ public class InsertAsyncStringStringAddressGet {
   }
 
   public static void insertAsyncStringStringAddressGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       String project = "project-309310695";
       String region = "region-934795532";
@@ -35,4 +37,4 @@ public class InsertAsyncStringStringAddressGet {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_insertAsync_stringStringAddressGet]

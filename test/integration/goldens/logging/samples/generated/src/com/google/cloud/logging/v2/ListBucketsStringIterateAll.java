@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_listBuckets_stringIterateAll]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LocationName;
 import com.google.logging.v2.LogBucket;
@@ -27,6 +27,8 @@ public class ListBucketsStringIterateAll {
   }
 
   public static void listBucketsStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
       for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListBucketsStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_listBuckets_stringIterateAll]

@@ -14,8 +14,6 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import static com.google.api.generator.gapic.composer.utils.SampleNames.createSampleName;
-
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -27,6 +25,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
@@ -79,6 +78,8 @@ public final class SettingsSampleCodeComposer {
             .setMethodName(
                 JavaStyle.toLowerCamelCase(String.format("%sSettings", methodNameOpt.get())))
             .build();
+
+    String rpcName = settingBuilderMethodInvocationExpr.methodIdentifier().name();
     MethodInvocationExpr retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
@@ -116,6 +117,9 @@ public final class SettingsSampleCodeComposer {
             .setArguments(retrySettingsArgExpr)
             .build();
 
+    String disambiguation =
+        JavaStyle.toUpperCamelCase(settingBuilderMethodInvocationExpr.methodIdentifier().name());
+
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
@@ -124,6 +128,10 @@ public final class SettingsSampleCodeComposer {
                 .setType(classType)
                 .setName(JavaStyle.toLowerCamelCase(settingsClassName))
                 .build());
+    disambiguation =
+        disambiguation.concat(
+            JavaStyle.toUpperCamelCase(settingsVarExpr.variable().type().reference().name()));
+
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
@@ -144,10 +152,15 @@ public final class SettingsSampleCodeComposer {
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
 
-    return Optional.of(
-        Sample.builder()
-            .setName(createSampleName(classType.reference().name(), methodNameOpt.get()))
-            .setBody(statements)
-            .build());
+    // e.g. serviceName = EchoClient
+    //      rpcName = EchoSettings
+    //      disambiguation = SetRetrySettingsEchoSettings
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(classType.reference().name())
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation(disambiguation)
+            .build();
+    return Optional.of(Sample.builder().setBody(statements).setRegionTag(regionTag).build());
   }
 }

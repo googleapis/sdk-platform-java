@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_metricsClient_deleteLogMetricCallable_futureCallDeleteLogMetricRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.DeleteLogMetricRequest;
@@ -29,6 +29,8 @@ public class DeleteLogMetricCallableFutureCallDeleteLogMetricRequest {
   }
 
   public static void deleteLogMetricCallableFutureCallDeleteLogMetricRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (MetricsClient metricsClient = MetricsClient.create()) {
       DeleteLogMetricRequest request =
           DeleteLogMetricRequest.newBuilder()
@@ -40,4 +42,4 @@ public class DeleteLogMetricCallableFutureCallDeleteLogMetricRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_metricsClient_deleteLogMetricCallable_futureCallDeleteLogMetricRequest]

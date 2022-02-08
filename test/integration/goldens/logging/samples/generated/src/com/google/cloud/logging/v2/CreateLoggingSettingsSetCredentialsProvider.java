@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_loggingClient_create_loggingSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.cloud.logging.v2.LoggingSettings;
@@ -28,6 +28,8 @@ public class CreateLoggingSettingsSetCredentialsProvider {
   }
 
   public static void createLoggingSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     LoggingSettings loggingSettings =
         LoggingSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateLoggingSettingsSetCredentialsProvider {
     LoggingClient loggingClient = LoggingClient.create(loggingSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_loggingClient_create_loggingSettingsSetCredentialsProvider]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_upgradeInstanceCallable_futureCallUpgradeInstanceRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InstanceName;
@@ -29,6 +29,8 @@ public class UpgradeInstanceCallableFutureCallUpgradeInstanceRequest {
   }
 
   public static void upgradeInstanceCallableFutureCallUpgradeInstanceRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       UpgradeInstanceRequest request =
           UpgradeInstanceRequest.newBuilder()
@@ -41,4 +43,4 @@ public class UpgradeInstanceCallableFutureCallUpgradeInstanceRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_upgradeInstanceCallable_futureCallUpgradeInstanceRequest]

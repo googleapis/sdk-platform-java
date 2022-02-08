@@ -17,7 +17,7 @@ package com.google.api.generator.gapic.protowriter;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.samplecode.ExecutableSampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -112,18 +112,18 @@ public class Writer {
       JarOutputStream jos,
       Set<String> gapicSamples) {
     for (Sample sample : gapicClazz.samples()) {
-      if (!gapicSamples.contains(sample.getName())) {
+      if (!gapicSamples.contains(sample.name())) {
         writeExecutableSample(sample, pakkage, clazzPath, jos);
       }
-      gapicSamples.add(sample.getName());
+      gapicSamples.add(sample.name());
     }
   }
 
   private static void writeExecutableSample(
       Sample sample, String pakkage, String clazzPath, JarOutputStream jos) {
     JarEntry jarEntry =
-        new JarEntry(String.format("samples/generated/%s/%s.java", clazzPath, sample.getName()));
-    String executableSampleCode = ExecutableSampleComposer.createExecutableSample(sample, pakkage);
+        new JarEntry(String.format("samples/generated/%s/%s.java", clazzPath, sample.name()));
+    String executableSampleCode = SampleComposer.createExecutableSample(sample, pakkage);
     try {
       jos.putNextEntry(jarEntry);
       jos.write(executableSampleCode.getBytes(StandardCharsets.UTF_8));
@@ -131,7 +131,7 @@ public class Writer {
       throw new GapicWriterException(
           String.format(
               "Could not write sample code for %s/%s.: %s",
-              clazzPath, sample.getName(), e.getMessage()));
+              clazzPath, sample.name(), e.getMessage()));
     }
   }
 

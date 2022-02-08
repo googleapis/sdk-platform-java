@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_loggingClient_listLogs_projectNameIterateAll]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.ProjectName;
 
@@ -26,6 +26,8 @@ public class ListLogsProjectNameIterateAll {
   }
 
   public static void listLogsProjectNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LoggingClient loggingClient = LoggingClient.create()) {
       ProjectName parent = ProjectName.of("[PROJECT]");
       for (String element : loggingClient.listLogs(parent).iterateAll()) {
@@ -34,4 +36,4 @@ public class ListLogsProjectNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_loggingClient_listLogs_projectNameIterateAll]

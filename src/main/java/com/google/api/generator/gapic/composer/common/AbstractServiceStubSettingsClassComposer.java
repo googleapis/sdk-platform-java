@@ -79,7 +79,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -170,7 +170,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     String pakkage = String.format("%s.stub", service.pakkage());
     TypeStore typeStore = createDynamicTypes(service, pakkage);
 
-    Set<Sample> samples = new HashSet<>();
+    List<Sample> samples = new ArrayList<>();
     Set<String> deprecatedSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
@@ -379,7 +379,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode classType, Set<Sample> samples) {
+      Service service, TypeNode classType, List<Sample> samples) {
     // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
@@ -399,7 +399,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     Optional<String> docSampleCode = Optional.empty();
     if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
-      docSampleCode = Optional.of(SampleCodeWriter.write(sampleCode.get().getBody()));
+      docSampleCode = Optional.of(SampleComposer.createInlineSample(sampleCode.get().body()));
     }
 
     return SettingsCommentComposer.createClassHeaderComments(

@@ -97,7 +97,7 @@ public class SettingsSampleCodeComposerTest {
 
   private Optional<String> writeDocSample(Optional<Sample> sample) {
     if (sample.isPresent()) {
-      return Optional.of(SampleCodeWriter.write(sample.get().getBody()));
+      return Optional.of(SampleCodeWriter.write(sample.get().body()));
     }
     return Optional.empty();
   }

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_libraryServiceClient_deleteBookCallable_futureCallDeleteBookRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.BookName;
@@ -29,6 +29,8 @@ public class DeleteBookCallableFutureCallDeleteBookRequest {
   }
 
   public static void deleteBookCallableFutureCallDeleteBookRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
       DeleteBookRequest request =
           DeleteBookRequest.newBuilder()
@@ -40,4 +42,4 @@ public class DeleteBookCallableFutureCallDeleteBookRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_libraryServiceClient_deleteBookCallable_futureCallDeleteBookRequest]

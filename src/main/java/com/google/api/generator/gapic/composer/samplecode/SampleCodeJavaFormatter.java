@@ -24,7 +24,7 @@ public final class SampleCodeJavaFormatter {
 
   private static final Formatter FORMATTER = new Formatter();
 
-  private static final String FAKE_CLASS_TITLE = "public class FakeClass { void fakeMethod() {";
+  private static final String FAKE_CLASS_TITLE = "public class FakeClass { void fakeMethod() {\n";
   private static final String FAKE_CLASS_CLOSE = "}}";
 
   /**

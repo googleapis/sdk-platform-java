@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_decryptCallable_futureCallDecryptRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.DecryptRequest;
@@ -31,6 +31,8 @@ public class DecryptCallableFutureCallDecryptRequest {
   }
 
   public static void decryptCallableFutureCallDecryptRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       DecryptRequest request =
@@ -50,4 +52,4 @@ public class DecryptCallableFutureCallDecryptRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_decryptCallable_futureCallDecryptRequest]

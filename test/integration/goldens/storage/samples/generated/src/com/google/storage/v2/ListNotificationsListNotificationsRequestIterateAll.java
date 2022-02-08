@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_listNotifications_listNotificationsRequestIterateAll]
 import com.google.storage.v2.ListNotificationsRequest;
 import com.google.storage.v2.Notification;
 import com.google.storage.v2.ProjectName;
@@ -28,6 +28,8 @@ public class ListNotificationsListNotificationsRequestIterateAll {
   }
 
   public static void listNotificationsListNotificationsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       ListNotificationsRequest request =
           ListNotificationsRequest.newBuilder()
@@ -41,4 +43,4 @@ public class ListNotificationsListNotificationsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_listNotifications_listNotificationsRequestIterateAll]

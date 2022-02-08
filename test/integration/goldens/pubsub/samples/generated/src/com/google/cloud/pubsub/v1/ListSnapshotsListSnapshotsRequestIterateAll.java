@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_listSnapshots_listSnapshotsRequestIterateAll]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.ListSnapshotsRequest;
 import com.google.pubsub.v1.ProjectName;
@@ -28,6 +28,8 @@ public class ListSnapshotsListSnapshotsRequestIterateAll {
   }
 
   public static void listSnapshotsListSnapshotsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       ListSnapshotsRequest request =
           ListSnapshotsRequest.newBuilder()
@@ -41,4 +43,4 @@ public class ListSnapshotsListSnapshotsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_listSnapshots_listSnapshotsRequestIterateAll]

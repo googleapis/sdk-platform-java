@@ -39,12 +39,16 @@ import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Composer {
+  private static String apiVersion;
+  private static String apiShortName;
+
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
+    apiVersion = context.gapicMetadata().getSchema();
+    apiShortName = context.gapicMetadata().getSchema();
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
@@ -193,11 +197,11 @@ public class Composer {
     return clazzes.stream()
         .map(
             gapicClass -> {
-              Set<Sample> samples =
+              List<Sample> samples =
                   gapicClass.samples().stream()
-                      .map(sample -> addApacheLicense(addRegionTag(sample)))
-                      .collect(Collectors.toSet());
-              return gapicClass.setSamples(samples);
+                      .map(sample -> addApacheLicense(addRegionTagAttributes(sample)))
+                      .collect(Collectors.toList());
+              return gapicClass.withSamples(samples);
             })
         .collect(Collectors.toList());
   }
@@ -231,7 +235,8 @@ public class Composer {
     return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
   }
 
-  private static Sample addRegionTag(Sample sample) {
-    return sample.withRegionTag("REGION TAG");
+  private static Sample addRegionTagAttributes(Sample sample) {
+    return sample.withRegionTag(
+        sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
   }
 }

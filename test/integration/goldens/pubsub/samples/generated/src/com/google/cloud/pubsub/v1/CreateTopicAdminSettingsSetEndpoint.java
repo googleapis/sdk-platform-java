@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_create_topicAdminSettingsSetEndpoint]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.cloud.pubsub.v1.myEndpoint;
@@ -27,9 +27,11 @@ public class CreateTopicAdminSettingsSetEndpoint {
   }
 
   public static void createTopicAdminSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     TopicAdminSettings topicAdminSettings =
         TopicAdminSettings.newBuilder().setEndpoint(myEndpoint).build();
     TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_create_topicAdminSettingsSetEndpoint]

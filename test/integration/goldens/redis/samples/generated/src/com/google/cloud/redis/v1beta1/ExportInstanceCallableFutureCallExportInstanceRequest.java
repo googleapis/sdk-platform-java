@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_exportInstanceCallable_futureCallExportInstanceRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
@@ -29,6 +29,8 @@ public class ExportInstanceCallableFutureCallExportInstanceRequest {
   }
 
   public static void exportInstanceCallableFutureCallExportInstanceRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       ExportInstanceRequest request =
           ExportInstanceRequest.newBuilder()
@@ -41,4 +43,4 @@ public class ExportInstanceCallableFutureCallExportInstanceRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_exportInstanceCallable_futureCallExportInstanceRequest]

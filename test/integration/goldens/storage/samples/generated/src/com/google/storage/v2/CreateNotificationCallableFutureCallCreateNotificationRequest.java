@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_createNotificationCallable_futureCallCreateNotificationRequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.CreateNotificationRequest;
 import com.google.storage.v2.Notification;
@@ -30,6 +30,8 @@ public class CreateNotificationCallableFutureCallCreateNotificationRequest {
 
   public static void createNotificationCallableFutureCallCreateNotificationRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       CreateNotificationRequest request =
           CreateNotificationRequest.newBuilder()
@@ -43,4 +45,4 @@ public class CreateNotificationCallableFutureCallCreateNotificationRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_createNotificationCallable_futureCallCreateNotificationRequest]

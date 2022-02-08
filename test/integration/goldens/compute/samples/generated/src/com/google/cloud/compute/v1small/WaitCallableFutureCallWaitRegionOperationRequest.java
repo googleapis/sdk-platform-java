@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_regionOperationsClient_waitCallable_futureCallWaitRegionOperationRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.RegionOperationsClient;
@@ -28,6 +28,8 @@ public class WaitCallableFutureCallWaitRegionOperationRequest {
   }
 
   public static void waitCallableFutureCallWaitRegionOperationRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
       WaitRegionOperationRequest request =
           WaitRegionOperationRequest.newBuilder()
@@ -41,4 +43,4 @@ public class WaitCallableFutureCallWaitRegionOperationRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_regionOperationsClient_waitCallable_futureCallWaitRegionOperationRequest]

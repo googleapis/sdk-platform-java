@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_listSinks_billingAccountNameIterateAll]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.BillingAccountName;
 import com.google.logging.v2.LogSink;
@@ -27,6 +27,8 @@ public class ListSinksBillingAccountNameIterateAll {
   }
 
   public static void listSinksBillingAccountNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListSinksBillingAccountNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_listSinks_billingAccountNameIterateAll]

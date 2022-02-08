@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_testIamPermissionsCallable_futureCallTestIamPermissionsRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
@@ -31,6 +31,8 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
 
   public static void testIamPermissionsCallableFutureCallTestIamPermissionsRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
@@ -44,4 +46,4 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_testIamPermissionsCallable_futureCallTestIamPermissionsRequest]

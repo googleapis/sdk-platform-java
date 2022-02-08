@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_startResumableWriteCallable_futureCallStartResumableWriteRequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
@@ -32,6 +32,8 @@ public class StartResumableWriteCallableFutureCallStartResumableWriteRequest {
 
   public static void startResumableWriteCallableFutureCallStartResumableWriteRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       StartResumableWriteRequest request =
           StartResumableWriteRequest.newBuilder()
@@ -46,4 +48,4 @@ public class StartResumableWriteCallableFutureCallStartResumableWriteRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_startResumableWriteCallable_futureCallStartResumableWriteRequest]

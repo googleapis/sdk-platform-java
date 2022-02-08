@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_loggingClient_listLogEntries_listLogEntriesRequestIterateAll]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.ListLogEntriesRequest;
 import com.google.logging.v2.LogEntry;
@@ -28,6 +28,8 @@ public class ListLogEntriesListLogEntriesRequestIterateAll {
   }
 
   public static void listLogEntriesListLogEntriesRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LoggingClient loggingClient = LoggingClient.create()) {
       ListLogEntriesRequest request =
           ListLogEntriesRequest.newBuilder()
@@ -43,4 +45,4 @@ public class ListLogEntriesListLogEntriesRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_loggingClient_listLogEntries_listLogEntriesRequestIterateAll]

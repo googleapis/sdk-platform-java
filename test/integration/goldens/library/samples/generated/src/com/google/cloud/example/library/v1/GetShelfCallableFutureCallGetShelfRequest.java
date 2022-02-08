@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_libraryServiceClient_getShelfCallable_futureCallGetShelfRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.GetShelfRequest;
@@ -29,6 +29,8 @@ public class GetShelfCallableFutureCallGetShelfRequest {
   }
 
   public static void getShelfCallableFutureCallGetShelfRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
       GetShelfRequest request =
           GetShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
@@ -38,4 +40,4 @@ public class GetShelfCallableFutureCallGetShelfRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_libraryServiceClient_getShelfCallable_futureCallGetShelfRequest]

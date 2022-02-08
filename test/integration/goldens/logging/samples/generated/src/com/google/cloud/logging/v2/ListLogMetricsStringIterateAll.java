@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_metricsClient_listLogMetrics_stringIterateAll]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.LogMetric;
 import com.google.logging.v2.ProjectName;
@@ -27,6 +27,8 @@ public class ListLogMetricsStringIterateAll {
   }
 
   public static void listLogMetricsStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (MetricsClient metricsClient = MetricsClient.create()) {
       String parent = ProjectName.of("[PROJECT]").toString();
       for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListLogMetricsStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_metricsClient_listLogMetrics_stringIterateAll]

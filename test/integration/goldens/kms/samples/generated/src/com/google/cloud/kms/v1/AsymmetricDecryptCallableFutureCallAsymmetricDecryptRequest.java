@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_asymmetricDecryptCallable_futureCallAsymmetricDecryptRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.AsymmetricDecryptRequest;
 import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
@@ -32,6 +32,8 @@ public class AsymmetricDecryptCallableFutureCallAsymmetricDecryptRequest {
 
   public static void asymmetricDecryptCallableFutureCallAsymmetricDecryptRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       AsymmetricDecryptRequest request =
@@ -54,4 +56,4 @@ public class AsymmetricDecryptCallableFutureCallAsymmetricDecryptRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_asymmetricDecryptCallable_futureCallAsymmetricDecryptRequest]

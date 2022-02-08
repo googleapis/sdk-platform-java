@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_libraryServiceClient_listBooks_listBooksRequestIterateAll]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.ListBooksRequest;
@@ -28,6 +28,8 @@ public class ListBooksListBooksRequestIterateAll {
   }
 
   public static void listBooksListBooksRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
       ListBooksRequest request =
           ListBooksRequest.newBuilder()
@@ -41,4 +43,4 @@ public class ListBooksListBooksRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_libraryServiceClient_listBooks_listBooksRequestIterateAll]

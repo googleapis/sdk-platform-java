@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_createCryptoKeyVersionCallable_futureCallCreateCryptoKeyVersionRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CreateCryptoKeyVersionRequest;
 import com.google.cloud.kms.v1.CryptoKeyName;
@@ -30,6 +30,8 @@ public class CreateCryptoKeyVersionCallableFutureCallCreateCryptoKeyVersionReque
 
   public static void createCryptoKeyVersionCallableFutureCallCreateCryptoKeyVersionRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       CreateCryptoKeyVersionRequest request =
@@ -46,4 +48,4 @@ public class CreateCryptoKeyVersionCallableFutureCallCreateCryptoKeyVersionReque
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_createCryptoKeyVersionCallable_futureCallCreateCryptoKeyVersionRequest]

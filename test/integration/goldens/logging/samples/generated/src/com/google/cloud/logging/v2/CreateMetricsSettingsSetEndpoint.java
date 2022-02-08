@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_metricsClient_create_metricsSettingsSetEndpoint]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.cloud.logging.v2.MetricsSettings;
 import com.google.cloud.logging.v2.myEndpoint;
@@ -27,8 +27,10 @@ public class CreateMetricsSettingsSetEndpoint {
   }
 
   public static void createMetricsSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     MetricsSettings metricsSettings = MetricsSettings.newBuilder().setEndpoint(myEndpoint).build();
     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_metricsClient_create_metricsSettingsSetEndpoint]

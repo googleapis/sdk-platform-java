@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_schemaServiceClient_deleteSchemaCallable_futureCallDeleteSchemaRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.protobuf.Empty;
@@ -29,6 +29,8 @@ public class DeleteSchemaCallableFutureCallDeleteSchemaRequest {
   }
 
   public static void deleteSchemaCallableFutureCallDeleteSchemaRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
       DeleteSchemaRequest request =
           DeleteSchemaRequest.newBuilder()
@@ -40,4 +42,4 @@ public class DeleteSchemaCallableFutureCallDeleteSchemaRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_schemaServiceClient_deleteSchemaCallable_futureCallDeleteSchemaRequest]

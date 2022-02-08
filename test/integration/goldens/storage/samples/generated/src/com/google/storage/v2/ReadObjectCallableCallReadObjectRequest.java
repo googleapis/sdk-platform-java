@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_readObjectCallable_callReadObjectRequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -31,6 +31,8 @@ public class ReadObjectCallableCallReadObjectRequest {
   }
 
   public static void readObjectCallableCallReadObjectRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       ReadObjectRequest request =
           ReadObjectRequest.newBuilder()
@@ -54,4 +56,4 @@ public class ReadObjectCallableCallReadObjectRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_readObjectCallable_callReadObjectRequest]

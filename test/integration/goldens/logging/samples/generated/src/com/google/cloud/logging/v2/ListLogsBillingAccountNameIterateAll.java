@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_loggingClient_listLogs_billingAccountNameIterateAll]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.BillingAccountName;
 
@@ -26,6 +26,8 @@ public class ListLogsBillingAccountNameIterateAll {
   }
 
   public static void listLogsBillingAccountNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LoggingClient loggingClient = LoggingClient.create()) {
       BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
       for (String element : loggingClient.listLogs(parent).iterateAll()) {
@@ -34,4 +36,4 @@ public class ListLogsBillingAccountNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_loggingClient_listLogs_billingAccountNameIterateAll]

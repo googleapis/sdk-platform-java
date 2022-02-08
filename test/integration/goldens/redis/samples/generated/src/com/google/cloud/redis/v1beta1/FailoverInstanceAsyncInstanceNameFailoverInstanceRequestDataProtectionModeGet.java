@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_cloudRedisClient_failoverInstanceAsync_instanceNameFailoverInstanceRequestDataProtectionModeGet]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -29,6 +29,8 @@ public class FailoverInstanceAsyncInstanceNameFailoverInstanceRequestDataProtect
 
   public static void failoverInstanceAsyncInstanceNameFailoverInstanceRequestDataProtectionModeGet()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
       FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
@@ -37,4 +39,4 @@ public class FailoverInstanceAsyncInstanceNameFailoverInstanceRequestDataProtect
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_cloudRedisClient_failoverInstanceAsync_instanceNameFailoverInstanceRequestDataProtectionModeGet]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_create_storageSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.StorageSettings;
@@ -28,6 +28,8 @@ public class CreateStorageSettingsSetCredentialsProvider {
   }
 
   public static void createStorageSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     StorageSettings storageSettings =
         StorageSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateStorageSettingsSetCredentialsProvider {
     StorageClient storageClient = StorageClient.create(storageSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_create_storageSettingsSetCredentialsProvider]

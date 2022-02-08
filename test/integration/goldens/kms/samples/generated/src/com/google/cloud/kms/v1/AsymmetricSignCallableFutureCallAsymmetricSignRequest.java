@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_asymmetricSignCallable_futureCallAsymmetricSignRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.AsymmetricSignRequest;
 import com.google.cloud.kms.v1.AsymmetricSignResponse;
@@ -31,6 +31,8 @@ public class AsymmetricSignCallableFutureCallAsymmetricSignRequest {
   }
 
   public static void asymmetricSignCallableFutureCallAsymmetricSignRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       AsymmetricSignRequest request =
@@ -53,4 +55,4 @@ public class AsymmetricSignCallableFutureCallAsymmetricSignRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_asymmetricSignCallable_futureCallAsymmetricSignRequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_listExclusions_projectNameIterateAll]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogExclusion;
 import com.google.logging.v2.ProjectName;
@@ -27,6 +27,8 @@ public class ListExclusionsProjectNameIterateAll {
   }
 
   public static void listExclusionsProjectNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       ProjectName parent = ProjectName.of("[PROJECT]");
       for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListExclusionsProjectNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_listExclusions_projectNameIterateAll]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_updateSubscriptionCallable_futureCallUpdateSubscriptionRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.FieldMask;
@@ -30,6 +30,8 @@ public class UpdateSubscriptionCallableFutureCallUpdateSubscriptionRequest {
 
   public static void updateSubscriptionCallableFutureCallUpdateSubscriptionRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       UpdateSubscriptionRequest request =
           UpdateSubscriptionRequest.newBuilder()
@@ -43,4 +45,4 @@ public class UpdateSubscriptionCallableFutureCallUpdateSubscriptionRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_updateSubscriptionCallable_futureCallUpdateSubscriptionRequest]

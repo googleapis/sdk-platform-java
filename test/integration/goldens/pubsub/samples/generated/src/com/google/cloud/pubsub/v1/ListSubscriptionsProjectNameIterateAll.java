@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_listSubscriptions_projectNameIterateAll]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.Subscription;
@@ -27,6 +27,8 @@ public class ListSubscriptionsProjectNameIterateAll {
   }
 
   public static void listSubscriptionsProjectNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       ProjectName project = ProjectName.of("[PROJECT]");
       for (Subscription element : subscriptionAdminClient.listSubscriptions(project).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListSubscriptionsProjectNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_listSubscriptions_projectNameIterateAll]

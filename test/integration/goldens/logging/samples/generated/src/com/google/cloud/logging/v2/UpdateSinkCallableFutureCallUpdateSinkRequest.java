@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_updateSinkCallable_futureCallUpdateSinkRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogSink;
@@ -30,6 +30,8 @@ public class UpdateSinkCallableFutureCallUpdateSinkRequest {
   }
 
   public static void updateSinkCallableFutureCallUpdateSinkRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       UpdateSinkRequest request =
           UpdateSinkRequest.newBuilder()
@@ -44,4 +46,4 @@ public class UpdateSinkCallableFutureCallUpdateSinkRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_updateSinkCallable_futureCallUpdateSinkRequest]

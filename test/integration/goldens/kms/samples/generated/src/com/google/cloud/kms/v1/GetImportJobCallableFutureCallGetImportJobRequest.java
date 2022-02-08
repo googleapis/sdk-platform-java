@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_getImportJobCallable_futureCallGetImportJobRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.GetImportJobRequest;
 import com.google.cloud.kms.v1.ImportJob;
@@ -29,6 +29,8 @@ public class GetImportJobCallableFutureCallGetImportJobRequest {
   }
 
   public static void getImportJobCallableFutureCallGetImportJobRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       GetImportJobRequest request =
@@ -44,4 +46,4 @@ public class GetImportJobCallableFutureCallGetImportJobRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_getImportJobCallable_futureCallGetImportJobRequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_updateBucketCallable_futureCallUpdateBucketRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogBucket;
@@ -30,6 +30,8 @@ public class UpdateBucketCallableFutureCallUpdateBucketRequest {
   }
 
   public static void updateBucketCallableFutureCallUpdateBucketRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       UpdateBucketRequest request =
           UpdateBucketRequest.newBuilder()
@@ -45,4 +47,4 @@ public class UpdateBucketCallableFutureCallUpdateBucketRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_updateBucketCallable_futureCallUpdateBucketRequest]

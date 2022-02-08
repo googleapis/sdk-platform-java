@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_writeObject_clientStreamingCallWriteObjectRequest]
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
@@ -31,6 +31,8 @@ public class WriteObjectClientStreamingCallWriteObjectRequest {
   }
 
   public static void writeObjectClientStreamingCallWriteObjectRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       ApiStreamObserver<WriteObjectRequest> responseObserver =
           new ApiStreamObserver<WriteObjectRequest>() {
@@ -63,4 +65,4 @@ public class WriteObjectClientStreamingCallWriteObjectRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_writeObject_clientStreamingCallWriteObjectRequest]

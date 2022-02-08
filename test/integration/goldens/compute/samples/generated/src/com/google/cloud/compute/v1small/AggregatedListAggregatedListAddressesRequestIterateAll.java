@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_aggregatedList_aggregatedListAddressesRequestIterateAll]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesScopedList;
 import com.google.cloud.compute.v1small.AggregatedListAddressesRequest;
@@ -28,6 +28,8 @@ public class AggregatedListAggregatedListAddressesRequestIterateAll {
   }
 
   public static void aggregatedListAggregatedListAddressesRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       AggregatedListAddressesRequest request =
           AggregatedListAddressesRequest.newBuilder()
@@ -45,4 +47,4 @@ public class AggregatedListAggregatedListAddressesRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_aggregatedList_aggregatedListAddressesRequestIterateAll]

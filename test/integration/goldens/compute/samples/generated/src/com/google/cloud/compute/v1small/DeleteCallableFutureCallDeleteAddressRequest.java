@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_deleteCallable_futureCallDeleteAddressRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.DeleteAddressRequest;
@@ -28,6 +28,8 @@ public class DeleteCallableFutureCallDeleteAddressRequest {
   }
 
   public static void deleteCallableFutureCallDeleteAddressRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       DeleteAddressRequest request =
           DeleteAddressRequest.newBuilder()
@@ -42,4 +44,4 @@ public class DeleteCallableFutureCallDeleteAddressRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_deleteCallable_futureCallDeleteAddressRequest]

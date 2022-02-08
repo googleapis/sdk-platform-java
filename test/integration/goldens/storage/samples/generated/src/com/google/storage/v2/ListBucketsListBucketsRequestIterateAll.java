@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_listBuckets_listBucketsRequestIterateAll]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.CommonRequestParams;
@@ -30,6 +30,8 @@ public class ListBucketsListBucketsRequestIterateAll {
   }
 
   public static void listBucketsListBucketsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       ListBucketsRequest request =
           ListBucketsRequest.newBuilder()
@@ -46,4 +48,4 @@ public class ListBucketsListBucketsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_listBuckets_listBucketsRequestIterateAll]

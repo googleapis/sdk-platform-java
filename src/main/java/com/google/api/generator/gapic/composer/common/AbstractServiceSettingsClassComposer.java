@@ -50,7 +50,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -70,11 +70,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -104,7 +102,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getServiceSettingsClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
-    Set<Sample> samples = new HashSet<>();
+    List<Sample> samples = new ArrayList<>();
     List<CommentStatement> classHeaderComments =
         createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
@@ -131,7 +129,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode classType, Set<Sample> samples) {
+      Service service, TypeNode classType, List<Sample> samples) {
     // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
@@ -151,7 +149,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     Optional<String> docSampleCode = Optional.empty();
     if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
-      docSampleCode = Optional.of(SampleCodeWriter.write(sampleCode.get().getBody()));
+      docSampleCode = Optional.of(SampleComposer.createInlineSample(sampleCode.get().body()));
     }
 
     return SettingsCommentComposer.createClassHeaderComments(

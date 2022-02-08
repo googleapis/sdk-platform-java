@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_listCryptoKeyVersions_listCryptoKeyVersionsRequestIterateAll]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -29,6 +29,8 @@ public class ListCryptoKeyVersionsListCryptoKeyVersionsRequestIterateAll {
 
   public static void listCryptoKeyVersionsListCryptoKeyVersionsRequestIterateAll()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       ListCryptoKeyVersionsRequest request =
@@ -48,4 +50,4 @@ public class ListCryptoKeyVersionsListCryptoKeyVersionsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_listCryptoKeyVersions_listCryptoKeyVersionsRequestIterateAll]

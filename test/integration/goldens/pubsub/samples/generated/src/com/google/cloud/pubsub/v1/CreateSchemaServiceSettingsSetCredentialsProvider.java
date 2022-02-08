@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_schemaServiceClient_create_schemaServiceSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.cloud.pubsub.v1.SchemaServiceSettings;
@@ -28,6 +28,8 @@ public class CreateSchemaServiceSettingsSetCredentialsProvider {
   }
 
   public static void createSchemaServiceSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     SchemaServiceSettings schemaServiceSettings =
         SchemaServiceSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateSchemaServiceSettingsSetCredentialsProvider {
     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_schemaServiceClient_create_schemaServiceSettingsSetCredentialsProvider]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_iamCredentialsClient_generateIdTokenCallable_futureCallGenerateIdTokenRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.GenerateIdTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
@@ -30,6 +30,8 @@ public class GenerateIdTokenCallableFutureCallGenerateIdTokenRequest {
   }
 
   public static void generateIdTokenCallableFutureCallGenerateIdTokenRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
       GenerateIdTokenRequest request =
           GenerateIdTokenRequest.newBuilder()
@@ -45,4 +47,4 @@ public class GenerateIdTokenCallableFutureCallGenerateIdTokenRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_iamCredentialsClient_generateIdTokenCallable_futureCallGenerateIdTokenRequest]

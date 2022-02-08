@@ -22,7 +22,9 @@ TEST_DEPS = [
     "//src/main/java/com/google/api/generator/engine/ast",
     "//src/main/java/com/google/api/generator/engine/writer",
     "//src/main/java/com/google/api/generator/gapic/composer",
+    "//src/main/java/com/google/api/generator/gapic/composer/comment",
     "//src/main/java/com/google/api/generator/gapic/composer/common",
+    "//src/main/java/com/google/api/generator/gapic/utils",
     "//src/main/java/com/google/api/generator/gapic/composer/grpc",
     "//src/test/java/com/google/api/generator/gapic/composer/common",
     "//src/test/java/com/google/api/generator/test/framework:asserts",
@@ -78,6 +80,7 @@ java_proto_library(
     srcs = ["%s.java" % test_name] + COMMON_SRCS,
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/grpc/goldens:goldens_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/grpc/goldens/samples:golden_samples_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],

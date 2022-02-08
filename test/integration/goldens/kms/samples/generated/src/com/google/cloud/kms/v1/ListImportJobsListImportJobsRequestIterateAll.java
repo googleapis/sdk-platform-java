@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_listImportJobs_listImportJobsRequestIterateAll]
 import com.google.cloud.kms.v1.ImportJob;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRingName;
@@ -28,6 +28,8 @@ public class ListImportJobsListImportJobsRequestIterateAll {
   }
 
   public static void listImportJobsListImportJobsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       ListImportJobsRequest request =
@@ -44,4 +46,4 @@ public class ListImportJobsListImportJobsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_listImportJobs_listImportJobsRequestIterateAll]

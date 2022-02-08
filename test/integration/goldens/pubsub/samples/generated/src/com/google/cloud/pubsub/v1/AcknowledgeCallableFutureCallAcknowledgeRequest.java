@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_subscriptionAdminClient_acknowledgeCallable_futureCallAcknowledgeRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
@@ -30,6 +30,8 @@ public class AcknowledgeCallableFutureCallAcknowledgeRequest {
   }
 
   public static void acknowledgeCallableFutureCallAcknowledgeRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       AcknowledgeRequest request =
           AcknowledgeRequest.newBuilder()
@@ -42,4 +44,4 @@ public class AcknowledgeCallableFutureCallAcknowledgeRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_subscriptionAdminClient_acknowledgeCallable_futureCallAcknowledgeRequest]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_listBuckets_projectNameIterateAll]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -27,6 +27,8 @@ public class ListBucketsProjectNameIterateAll {
   }
 
   public static void listBucketsProjectNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       ProjectName parent = ProjectName.of("[PROJECT]");
       for (Bucket element : storageClient.listBuckets(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListBucketsProjectNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_listBuckets_projectNameIterateAll]

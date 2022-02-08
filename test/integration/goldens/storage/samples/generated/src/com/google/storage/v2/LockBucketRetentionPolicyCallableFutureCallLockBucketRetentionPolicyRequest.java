@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_storageClient_lockBucketRetentionPolicyCallable_futureCallLockBucketRetentionPolicyRequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.BucketName;
@@ -31,6 +31,8 @@ public class LockBucketRetentionPolicyCallableFutureCallLockBucketRetentionPolic
 
   public static void lockBucketRetentionPolicyCallableFutureCallLockBucketRetentionPolicyRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (StorageClient storageClient = StorageClient.create()) {
       LockBucketRetentionPolicyRequest request =
           LockBucketRetentionPolicyRequest.newBuilder()
@@ -45,4 +47,4 @@ public class LockBucketRetentionPolicyCallableFutureCallLockBucketRetentionPolic
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_storageClient_lockBucketRetentionPolicyCallable_futureCallLockBucketRetentionPolicyRequest]

@@ -31,6 +31,8 @@
  * <p>Sample for LibraryServiceClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
  *   Shelf shelf = Shelf.newBuilder().build();
  *   Shelf response = libraryServiceClient.createShelf(shelf);

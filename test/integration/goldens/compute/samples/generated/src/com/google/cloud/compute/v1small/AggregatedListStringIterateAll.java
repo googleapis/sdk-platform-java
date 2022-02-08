@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_aggregatedList_stringIterateAll]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesScopedList;
 import java.util.Map;
@@ -27,6 +27,8 @@ public class AggregatedListStringIterateAll {
   }
 
   public static void aggregatedListStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       String project = "project-309310695";
       for (Map.Entry<String, AddressesScopedList> element :
@@ -36,4 +38,4 @@ public class AggregatedListStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_aggregatedList_stringIterateAll]

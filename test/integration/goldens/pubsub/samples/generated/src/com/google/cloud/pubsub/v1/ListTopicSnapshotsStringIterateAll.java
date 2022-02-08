@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_topicAdminClient_listTopicSnapshots_stringIterateAll]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.TopicName;
 
@@ -26,6 +26,8 @@ public class ListTopicSnapshotsStringIterateAll {
   }
 
   public static void listTopicSnapshotsStringIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       String topic = TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString();
       for (String element : topicAdminClient.listTopicSnapshots(topic).iterateAll()) {
@@ -34,4 +36,4 @@ public class ListTopicSnapshotsStringIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_topicAdminClient_listTopicSnapshots_stringIterateAll]

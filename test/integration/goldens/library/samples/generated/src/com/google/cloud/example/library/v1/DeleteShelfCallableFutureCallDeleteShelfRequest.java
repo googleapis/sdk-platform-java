@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_libraryServiceClient_deleteShelfCallable_futureCallDeleteShelfRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.DeleteShelfRequest;
@@ -29,6 +29,8 @@ public class DeleteShelfCallableFutureCallDeleteShelfRequest {
   }
 
   public static void deleteShelfCallableFutureCallDeleteShelfRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
       DeleteShelfRequest request =
           DeleteShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
@@ -38,4 +40,4 @@ public class DeleteShelfCallableFutureCallDeleteShelfRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_libraryServiceClient_deleteShelfCallable_futureCallDeleteShelfRequest]

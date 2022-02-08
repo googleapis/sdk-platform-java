@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_loggingClient_tailLogEntriesCallable_callTailLogEntriesRequest]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.TailLogEntriesRequest;
@@ -30,6 +30,8 @@ public class TailLogEntriesCallableCallTailLogEntriesRequest {
   }
 
   public static void tailLogEntriesCallableCallTailLogEntriesRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LoggingClient loggingClient = LoggingClient.create()) {
       BidiStream<TailLogEntriesRequest, TailLogEntriesResponse> bidiStream =
           loggingClient.tailLogEntriesCallable().call();
@@ -46,4 +48,4 @@ public class TailLogEntriesCallableCallTailLogEntriesRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_loggingClient_tailLogEntriesCallable_callTailLogEntriesRequest]

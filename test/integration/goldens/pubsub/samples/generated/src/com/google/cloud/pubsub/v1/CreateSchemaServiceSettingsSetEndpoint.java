@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_schemaServiceClient_create_schemaServiceSettingsSetEndpoint]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.cloud.pubsub.v1.SchemaServiceSettings;
 import com.google.cloud.pubsub.v1.myEndpoint;
@@ -27,9 +27,11 @@ public class CreateSchemaServiceSettingsSetEndpoint {
   }
 
   public static void createSchemaServiceSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     SchemaServiceSettings schemaServiceSettings =
         SchemaServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_schemaServiceClient_create_schemaServiceSettingsSetEndpoint]

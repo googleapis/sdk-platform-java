@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_configClient_listSinks_folderNameIterateAll]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.FolderName;
 import com.google.logging.v2.LogSink;
@@ -27,6 +27,8 @@ public class ListSinksFolderNameIterateAll {
   }
 
   public static void listSinksFolderNameIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (ConfigClient configClient = ConfigClient.create()) {
       FolderName parent = FolderName.of("[FOLDER]");
       for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -35,4 +37,4 @@ public class ListSinksFolderNameIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_configClient_listSinks_folderNameIterateAll]

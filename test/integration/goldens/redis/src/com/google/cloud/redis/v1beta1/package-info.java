@@ -45,6 +45,8 @@
  * <p>Sample for CloudRedisClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
  *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
  *   Instance response = cloudRedisClient.getInstance(name);

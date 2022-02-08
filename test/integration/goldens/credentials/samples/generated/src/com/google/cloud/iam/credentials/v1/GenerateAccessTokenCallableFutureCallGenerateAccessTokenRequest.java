@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_iamCredentialsClient_generateAccessTokenCallable_futureCallGenerateAccessTokenRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
@@ -32,6 +32,8 @@ public class GenerateAccessTokenCallableFutureCallGenerateAccessTokenRequest {
 
   public static void generateAccessTokenCallableFutureCallGenerateAccessTokenRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
       GenerateAccessTokenRequest request =
           GenerateAccessTokenRequest.newBuilder()
@@ -47,4 +49,4 @@ public class GenerateAccessTokenCallableFutureCallGenerateAccessTokenRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_iamCredentialsClient_generateAccessTokenCallable_futureCallGenerateAccessTokenRequest]

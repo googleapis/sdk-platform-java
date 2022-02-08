@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_create_keyManagementServiceSettingsSetEndpoint]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyManagementServiceSettings;
 import com.google.cloud.kms.v1.myEndpoint;
@@ -27,10 +27,12 @@ public class CreateKeyManagementServiceSettingsSetEndpoint {
   }
 
   public static void createKeyManagementServiceSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     KeyManagementServiceSettings keyManagementServiceSettings =
         KeyManagementServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
     KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create(keyManagementServiceSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_create_keyManagementServiceSettingsSetEndpoint]

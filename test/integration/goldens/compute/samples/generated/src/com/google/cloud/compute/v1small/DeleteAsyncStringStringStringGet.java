@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_deleteAsync_stringStringStringGet]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.Operation;
 
@@ -26,6 +26,8 @@ public class DeleteAsyncStringStringStringGet {
   }
 
   public static void deleteAsyncStringStringStringGet() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (AddressesClient addressesClient = AddressesClient.create()) {
       String project = "project-309310695";
       String region = "region-934795532";
@@ -34,4 +36,4 @@ public class DeleteAsyncStringStringStringGet {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_deleteAsync_stringStringStringGet]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_schemaServiceClient_validateSchemaCallable_futureCallValidateSchemaRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.pubsub.v1.ProjectName;
@@ -30,6 +30,8 @@ public class ValidateSchemaCallableFutureCallValidateSchemaRequest {
   }
 
   public static void validateSchemaCallableFutureCallValidateSchemaRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
       ValidateSchemaRequest request =
           ValidateSchemaRequest.newBuilder()
@@ -43,4 +45,4 @@ public class ValidateSchemaCallableFutureCallValidateSchemaRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_schemaServiceClient_validateSchemaCallable_futureCallValidateSchemaRequest]

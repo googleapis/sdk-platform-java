@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_regionOperationsClient_create_regionOperationsSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
@@ -28,6 +28,8 @@ public class CreateRegionOperationsSettingsSetCredentialsProvider {
   }
 
   public static void createRegionOperationsSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     RegionOperationsSettings regionOperationsSettings =
         RegionOperationsSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -36,4 +38,4 @@ public class CreateRegionOperationsSettingsSetCredentialsProvider {
         RegionOperationsClient.create(regionOperationsSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_regionOperationsClient_create_regionOperationsSettingsSetCredentialsProvider]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_listLocations_listLocationsRequestIterateAll]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.Location;
@@ -27,6 +27,8 @@ public class ListLocationsListLocationsRequestIterateAll {
   }
 
   public static void listLocationsListLocationsRequestIterateAll() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       ListLocationsRequest request =
@@ -42,4 +44,4 @@ public class ListLocationsListLocationsRequestIterateAll {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_listLocations_listLocationsRequestIterateAll]

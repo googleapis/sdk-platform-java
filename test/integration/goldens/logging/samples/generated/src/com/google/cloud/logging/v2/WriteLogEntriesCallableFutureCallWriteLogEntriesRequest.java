@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_loggingClient_writeLogEntriesCallable_futureCallWriteLogEntriesRequest]
 import com.google.api.MonitoredResource;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.LoggingClient;
@@ -33,6 +33,8 @@ public class WriteLogEntriesCallableFutureCallWriteLogEntriesRequest {
   }
 
   public static void writeLogEntriesCallableFutureCallWriteLogEntriesRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (LoggingClient loggingClient = LoggingClient.create()) {
       WriteLogEntriesRequest request =
           WriteLogEntriesRequest.newBuilder()
@@ -50,4 +52,4 @@ public class WriteLogEntriesCallableFutureCallWriteLogEntriesRequest {
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_loggingClient_writeLogEntriesCallable_futureCallWriteLogEntriesRequest]

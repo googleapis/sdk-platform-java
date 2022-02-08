@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_keyManagementServiceClient_destroyCryptoKeyVersionCallable_futureCallDestroyCryptoKeyVersionRequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
 import com.google.cloud.kms.v1.CryptoKeyVersionName;
@@ -30,6 +30,8 @@ public class DestroyCryptoKeyVersionCallableFutureCallDestroyCryptoKeyVersionReq
 
   public static void destroyCryptoKeyVersionCallableFutureCallDestroyCryptoKeyVersionRequest()
       throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     try (KeyManagementServiceClient keyManagementServiceClient =
         KeyManagementServiceClient.create()) {
       DestroyCryptoKeyVersionRequest request =
@@ -50,4 +52,4 @@ public class DestroyCryptoKeyVersionCallableFutureCallDestroyCryptoKeyVersionReq
     }
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_keyManagementServiceClient_destroyCryptoKeyVersionCallable_futureCallDestroyCryptoKeyVersionRequest]

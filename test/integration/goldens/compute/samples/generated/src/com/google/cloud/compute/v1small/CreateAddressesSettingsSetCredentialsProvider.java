@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_addressesClient_create_addressesSettingsSetCredentialsProvider]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesSettings;
@@ -28,6 +28,8 @@ public class CreateAddressesSettingsSetCredentialsProvider {
   }
 
   public static void createAddressesSettingsSetCredentialsProvider() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     AddressesSettings addressesSettings =
         AddressesSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -35,4 +37,4 @@ public class CreateAddressesSettingsSetCredentialsProvider {
     AddressesClient addressesClient = AddressesClient.create(addressesSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_addressesClient_create_addressesSettingsSetCredentialsProvider]

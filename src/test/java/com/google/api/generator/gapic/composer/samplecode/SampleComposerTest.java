@@ -13,6 +13,9 @@
 // limitations under the License.
 package com.google.api.generator.gapic.composer.samplecode;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -28,152 +31,147 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.collect.ImmutableList;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import org.junit.Test;
 
 public class SampleComposerTest {
   private final String packageName = "com.google.example";
-  private final String sampleMethodName = "echoClientMethod";
   private final List<CommentStatement> header =
       Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
+  private final RegionTag.Builder regionTag =
+      RegionTag.builder().setApiShortName("echo").setApiVersion("1.0.0").setServiceName("echo");
 
   @Test
   public void createExecutableSampleNoSample() {
     assertThrows(
-        NullPointerException.class,
-        () -> ExecutableSampleComposer.createExecutableSample(null, packageName));
+        NullPointerException.class, () -> SampleComposer.createExecutableSample(null, packageName));
   }
 
   @Test
-  public void createExecutableSampleNoName() {
-    Sample sample = Sample.builder().build();
+  public void createExecutableSampleMissingRegionTagAttributes() {
+    Sample noApiShortNameSample =
+        Sample.builder()
+            .setRegionTag(
+                regionTag
+                    .setApiShortName("")
+                    .setRpcName("createExecutableSample")
+                    .setOverloadDisambiguation("MissingApiShortName")
+                    .build())
+            .build();
 
     assertThrows(
         IllegalStateException.class,
-        () -> ExecutableSampleComposer.createExecutableSample(sample, packageName));
-  }
+        () -> SampleComposer.createExecutableSample(noApiShortNameSample, packageName));
 
-  @Test
-  public void createExecutableSampleEmptyNoRegionTags() {
-    Sample sample = Sample.builder().setName(sampleMethodName).setFileHeader(header).build();
-
-    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
-    String expected =
-        LineFormatter.lines(
-            "/*\n",
-            " * Apache License\n",
-            " */\n",
-            "package com.google.example;\n",
-            "\n",
-            "public class EchoClientMethod {\n",
-            "\n",
-            "  public static void main(String[] args) throws Exception {\n",
-            "    echoClientMethod();\n",
-            "  }\n",
-            "\n",
-            "  public static void echoClientMethod() throws Exception {}\n",
-            "}\n");
-
-    assertEquals(expected, sampleResult);
-  }
-
-  @Test
-  public void createExecutableSampleEmptyNoHeader() {
-    Sample sample =
+    Sample noApiVersionSample =
         Sample.builder()
-            .setName(sampleMethodName)
-            .setRegionTag("Create_Executable_Sample_Empty_NoHeader")
+            .setRegionTag(
+                regionTag
+                    .setApiVersion("")
+                    .setRpcName("createExecutableSample")
+                    .setOverloadDisambiguation("MissingApiVersion")
+                    .build())
             .build();
 
-    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
-    String expected =
-        LineFormatter.lines(
-            "\npackage com.google.example;\n",
-            "// [START Create_Executable_Sample_Empty_NoHeader]\n",
-            "\n",
-            "public class EchoClientMethod {\n",
-            "\n",
-            "  public static void main(String[] args) throws Exception {\n",
-            "    echoClientMethod();\n",
-            "  }\n",
-            "\n",
-            "  public static void echoClientMethod() throws Exception {}\n",
-            "}\n",
-            "// [END Create_Executable_Sample_Empty_NoHeader]");
+    assertThrows(
+        IllegalStateException.class,
+        () -> SampleComposer.createExecutableSample(noApiVersionSample, packageName));
+  }
 
-    assertEquals(expected, sampleResult);
+  @Test
+  public void createExecutableSampleNoHeader() {
+    Sample sample =
+        Sample.builder()
+            .setRegionTag(
+                regionTag
+                    .setRpcName("createExecutableSample")
+                    .setOverloadDisambiguation("NoHeader")
+                    .build())
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> SampleComposer.createExecutableSample(sample, packageName));
   }
 
   @Test
   public void createExecutableSampleEmptyStatementSample() {
     Sample sample =
         Sample.builder()
-            .setName(sampleMethodName)
             .setFileHeader(header)
-            .setRegionTag("Create_Executable_Sample_Empty_Statement_Sample")
+            .setRegionTag(
+                regionTag
+                    .setRpcName("createExecutableSample")
+                    .setOverloadDisambiguation("EmptyStatementSample")
+                    .build())
             .build();
 
-    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
             "/*\n",
             " * Apache License\n",
             " */\n",
             "package com.google.example;\n",
-            "// [START Create_Executable_Sample_Empty_Statement_Sample]\n",
             "\n",
-            "public class EchoClientMethod {\n",
+            "// [START 1.0.0_echo_generated_echo_createExecutableSample_emptyStatementSample]\n",
+            "public class CreateExecutableSampleEmptyStatementSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
-            "    echoClientMethod();\n",
+            "    createExecutableSampleEmptyStatementSample();\n",
             "  }\n",
             "\n",
-            "  public static void echoClientMethod() throws Exception {}\n",
+            "  public static void createExecutableSampleEmptyStatementSample() throws Exception {\n",
+            "    // This snippet has been automatically generated for illustrative purposes only.\n",
+            "    // It may require modifications to work in your environment.\n",
+            "  }\n",
             "}\n",
-            "// [END Create_Executable_Sample_Empty_Statement_Sample]");
+            "// [END 1.0.0_echo_generated_echo_createExecutableSample_emptyStatementSample]");
 
     assertEquals(expected, sampleResult);
   }
 
   @Test
   public void createExecutableSampleMethodArgsNoVar() {
-    Statement sampleBody = ExprStatement.withExpr(systemOutPrint("Testing " + sampleMethodName));
+    Statement sampleBody =
+        ExprStatement.withExpr(systemOutPrint("Testing CreateExecutableSampleMethodArgsNoVar"));
     Sample sample =
         Sample.builder()
-            .setName(sampleMethodName)
             .setBody(ImmutableList.of(sampleBody))
             .setFileHeader(header)
-            .setRegionTag("Create_Executable_Sample_Method_Args_NoVar")
+            .setRegionTag(
+                regionTag
+                    .setRpcName("createExecutableSample")
+                    .setOverloadDisambiguation("MethodArgsNoVar")
+                    .build())
             .build();
 
-    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
             "/*\n",
             " * Apache License\n",
             " */\n",
             "package com.google.example;\n",
-            "// [START Create_Executable_Sample_Method_Args_NoVar]\n",
             "\n",
-            "public class EchoClientMethod {\n",
+            "// [START 1.0.0_echo_generated_echo_createExecutableSample_methodArgsNoVar]\n",
+            "public class CreateExecutableSampleMethodArgsNoVar {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
-            "    echoClientMethod();\n",
+            "    createExecutableSampleMethodArgsNoVar();\n",
             "  }\n",
             "\n",
-            "  public static void echoClientMethod() throws Exception {\n",
-            "    System.out.println(\"Testing echoClientMethod\");\n",
+            "  public static void createExecutableSampleMethodArgsNoVar() throws Exception {\n",
+            "    // This snippet has been automatically generated for illustrative purposes only.\n",
+            "    // It may require modifications to work in your environment.\n",
+            "    System.out.println(\"Testing CreateExecutableSampleMethodArgsNoVar\");\n",
             "  }\n",
             "}\n",
-            "// [END Create_Executable_Sample_Method_Args_NoVar]");
+            "// [END 1.0.0_echo_generated_echo_createExecutableSample_methodArgsNoVar]");
 
     assertEquals(expected, sampleResult);
   }
@@ -189,39 +187,41 @@ public class SampleComposerTest {
         AssignmentExpr.builder()
             .setVariableExpr(variableExpr)
             .setValueExpr(
-                ValueExpr.withValue(StringObjectValue.withValue("Testing " + sampleMethodName)))
+                ValueExpr.withValue(
+                    StringObjectValue.withValue("Testing CreateExecutableSampleMethod")))
             .build();
     Statement sampleBody = ExprStatement.withExpr(systemOutPrint(variableExpr));
     Sample sample =
         Sample.builder()
-            .setName(sampleMethodName)
             .setBody(ImmutableList.of(sampleBody))
             .setVariableAssignments(ImmutableList.of(varAssignment))
             .setFileHeader(header)
-            .setRegionTag("Create_Executable_Sample_Method")
+            .setRegionTag(regionTag.setRpcName("createExecutableSample").build())
             .build();
 
-    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
             "/*\n",
             " * Apache License\n",
             " */\n",
             "package com.google.example;\n",
-            "// [START Create_Executable_Sample_Method]\n",
             "\n",
-            "public class EchoClientMethod {\n",
+            "// [START 1.0.0_echo_generated_echo_createExecutableSample]\n",
+            "public class CreateExecutableSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
-            "    String content = \"Testing echoClientMethod\";\n",
-            "    echoClientMethod(content);\n",
+            "    String content = \"Testing CreateExecutableSampleMethod\";\n",
+            "    createExecutableSample(content);\n",
             "  }\n",
             "\n",
-            "  public static void echoClientMethod(String content) throws Exception {\n",
+            "  public static void createExecutableSample(String content) throws Exception {\n",
+            "    // This snippet has been automatically generated for illustrative purposes only.\n",
+            "    // It may require modifications to work in your environment.\n",
             "    System.out.println(content);\n",
             "  }\n",
             "}\n",
-            "// [END Create_Executable_Sample_Method]");
+            "// [END 1.0.0_echo_generated_echo_createExecutableSample]");
 
     assertEquals(expected, sampleResult);
   }
@@ -248,7 +248,8 @@ public class SampleComposerTest {
             .setVariableExpr(strVariableExpr)
             .setValueExpr(
                 ValueExpr.withValue(
-                    StringObjectValue.withValue("Testing ".concat(sampleMethodName))))
+                    StringObjectValue.withValue(
+                        "Testing CreateExecutableSampleMethodMultipleStatements")))
             .build();
     AssignmentExpr intVarAssignment =
         AssignmentExpr.builder()
@@ -274,39 +275,45 @@ public class SampleComposerTest {
                     .build()));
     Sample sample =
         Sample.builder()
-            .setName(sampleMethodName)
             .setBody(ImmutableList.of(strBodyStatement, intBodyStatement, objBodyStatement))
             .setVariableAssignments(
                 ImmutableList.of(strVarAssignment, intVarAssignment, objVarAssignment))
             .setFileHeader(header)
-            .setRegionTag("Create_Executable_Sample_Method_Multiple_Statements")
+            .setRegionTag(
+                regionTag
+                    .setRpcName("createExecutableSample")
+                    .setOverloadDisambiguation("MethodMultipleStatements")
+                    .build())
             .build();
 
-    String sampleResult = ExecutableSampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
     String expected =
         LineFormatter.lines(
             "/*\n",
             " * Apache License\n",
             " */\n",
             "package com.google.example;\n",
-            "// [START Create_Executable_Sample_Method_Multiple_Statements]\n",
             "\n",
-            "public class EchoClientMethod {\n",
+            "// [START 1.0.0_echo_generated_echo_createExecutableSample_methodMultipleStatements]\n",
+            "public class CreateExecutableSampleMethodMultipleStatements {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
-            "    String content = \"Testing echoClientMethod\";\n",
+            "    String content = \"Testing CreateExecutableSampleMethodMultipleStatements\";\n",
             "    int num = 2;\n",
             "    Object thing = new Object();\n",
-            "    echoClientMethod(content, num, thing);\n",
+            "    createExecutableSampleMethodMultipleStatements(content, num, thing);\n",
             "  }\n",
             "\n",
-            "  public static void echoClientMethod(String content, int num, Object thing) throws Exception {\n",
+            "  public static void createExecutableSampleMethodMultipleStatements(\n",
+            "      String content, int num, Object thing) throws Exception {\n",
+            "    // This snippet has been automatically generated for illustrative purposes only.\n",
+            "    // It may require modifications to work in your environment.\n",
             "    System.out.println(content);\n",
             "    System.out.println(num);\n",
             "    System.out.println(thing.response());\n",
             "  }\n",
             "}\n",
-            "// [END Create_Executable_Sample_Method_Multiple_Statements]");
+            "// [END 1.0.0_echo_generated_echo_createExecutableSample_methodMultipleStatements]");
     assertEquals(expected, sampleResult);
   }
 

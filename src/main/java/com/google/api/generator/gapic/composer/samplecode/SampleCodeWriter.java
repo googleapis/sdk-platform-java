@@ -22,11 +22,11 @@ import java.util.List;
 
 public final class SampleCodeWriter {
 
-  public static String write(Statement... statement) {
+  static String write(Statement... statement) {
     return write(Arrays.asList(statement));
   }
 
-  public static String write(List<Statement> statements) {
+  static String write(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
       statement.accept(visitor);
@@ -36,7 +36,7 @@ public final class SampleCodeWriter {
     return formattedSampleCode.replaceAll("@", "{@literal @}");
   }
 
-  public static String write(ClassDefinition classDefinition) {
+  static String write(ClassDefinition classDefinition) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDefinition.accept(visitor);
     return visitor.write();

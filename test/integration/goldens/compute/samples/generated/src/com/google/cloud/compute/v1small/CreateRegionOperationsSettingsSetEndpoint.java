@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START REGION TAG]
+// [START 10_10_generated_regionOperationsClient_create_regionOperationsSettingsSetEndpoint]
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
 import com.google.cloud.compute.v1small.myEndpoint;
@@ -27,10 +27,12 @@ public class CreateRegionOperationsSettingsSetEndpoint {
   }
 
   public static void createRegionOperationsSettingsSetEndpoint() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
     RegionOperationsSettings regionOperationsSettings =
         RegionOperationsSettings.newBuilder().setEndpoint(myEndpoint).build();
     RegionOperationsClient regionOperationsClient =
         RegionOperationsClient.create(regionOperationsSettings);
   }
 }
-// [END REGION TAG]
+// [END 10_10_generated_regionOperationsClient_create_regionOperationsSettingsSetEndpoint]
