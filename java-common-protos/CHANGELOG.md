@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.7.3](https://github.com/googleapis/java-common-protos/compare/v2.7.2...v2.7.3) (2022-02-08)
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.19.4 ([#309](https://github.com/googleapis/java-common-protos/issues/309)) ([c656ba3](https://github.com/googleapis/java-common-protos/commit/c656ba38e791cc3a72007299e51a68677e4d8857))
+* update dependency com.google.protobuf:protobuf-java to v3.19.4 ([#308](https://github.com/googleapis/java-common-protos/issues/308)) ([effc391](https://github.com/googleapis/java-common-protos/commit/effc39190e46d421100cbc46926f4c032a8c3a28))
+
 ### [2.7.2](https://github.com/googleapis/java-common-protos/compare/v2.7.1...v2.7.2) (2022-01-27)
 
 
