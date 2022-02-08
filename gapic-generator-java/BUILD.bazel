@@ -112,7 +112,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -125,7 +125,7 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # another test resource
@@ -150,7 +150,10 @@ genrule(
         "src/test/java/**/*.golden",
         "src/test/resources/**",
     ]),
+    tags = ["small"],
 ) for file in glob(["src/test/java/**/*Test.java"])]
+
+test_suite(name = "units", tags = ["small"])
 
 # Tests that generate and save unit golden (.golden) files.
 GOLDEN_UPDATING_UNIT_TESTS = [
