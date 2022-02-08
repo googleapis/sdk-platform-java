@@ -110,7 +110,7 @@
 -   Run all unit tests.
 
     ```sh
-    bazel test units
+    bazel test //:units
     ```
 
 -   Run a single unit test like `JavaCodeGeneratorTest.java`
