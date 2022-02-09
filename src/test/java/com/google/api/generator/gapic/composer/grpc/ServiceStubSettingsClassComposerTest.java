@@ -16,30 +16,26 @@ package com.google.api.generator.gapic.composer.grpc;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
+  private final String goldenSampleDir =
+      Utils.getGoldenDir(this.getClass()) + "/samples/servicesettings/";
+
   @Test
   public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() {
     GapicContext context = GrpcTestProtoLoader.instance().parseLogging();
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(
-        this.getClass(), "LoggingServiceV2StubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "LoggingServiceV2StubSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "LoggingServiceV2StubSettings.golden");
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -49,12 +45,9 @@ public class ServiceStubSettingsClassComposerTest {
     assertEquals("Publisher", protoService.name());
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "PublisherStubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "PublisherStubSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "PublisherStubSettings.golden");
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -64,11 +57,9 @@ public class ServiceStubSettingsClassComposerTest {
     GapicClass clazz =
         ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "EchoStubSettings.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "EchoStubSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "EchoStubSettings.golden");
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -77,12 +68,8 @@ public class ServiceStubSettingsClassComposerTest {
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(
-        this.getClass(), "DeprecatedServiceStubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "DeprecatedServiceStubSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "DeprecatedServiceStubSettings.golden");
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 }

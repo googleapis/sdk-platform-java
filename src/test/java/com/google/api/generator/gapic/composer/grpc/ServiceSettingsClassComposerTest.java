@@ -14,28 +14,26 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.Test;
 
 public class ServiceSettingsClassComposerTest {
+  private final String goldenSampleDir =
+      Utils.getGoldenDir(this.getClass()) + "samples/servicesettings/";
+
   @Test
   public void generateServiceClasses() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = ServiceSettingsClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "EchoSettings.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "EchoSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "EchoSettings.golden");
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 
   @Test
@@ -44,11 +42,8 @@ public class ServiceSettingsClassComposerTest {
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceSettingsClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "DeprecatedServiceSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "DeprecatedServiceSettings.golden");
+    Assert.assertGoldenSamples(
+        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
   }
 }

@@ -154,6 +154,7 @@ public class ServiceClientSampleCodeComposer {
             .setReturnType(clientType)
             .build();
     String rpcName = createMethodExpr.methodIdentifier().name();
+    String disambiguation = settingsVarExpr.type().reference().name();
     Expr initClientVarExpr =
         AssignmentExpr.builder()
             .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
@@ -163,14 +164,9 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> sampleBody =
         Arrays.asList(
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
-    String disambiguation =
-        String.format(
-            "%s%s",
-            JavaStyle.toUpperCamelCase(settingsVarExpr.type().reference().name()),
-            JavaStyle.toUpperCamelCase(credentialsMethodExpr.methodIdentifier().name()));
     // e.g.  serviceName = echoClient
     //      rpcName = create
-    //      disambiguation = echoSettingsSetCredentialsProvider
+    //      disambiguation = echoSettings
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientName)
@@ -234,19 +230,15 @@ public class ServiceClientSampleCodeComposer {
             .setReturnType(clientType)
             .build();
     String rpcName = createMethodExpr.methodIdentifier().name();
+    String disambiguation = settingsVarExpr.type().reference().name();
     Expr initClientVarExpr =
         AssignmentExpr.builder()
             .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(createMethodExpr)
             .build();
-    String disambiguation =
-        String.format(
-            "%s%s",
-            JavaStyle.toUpperCamelCase(settingsVarExpr.type().reference().name()),
-            JavaStyle.toUpperCamelCase(credentialsMethodExpr.methodIdentifier().name()));
     // e.g. serviceName = echoClient
     //      rpcName = create
-    //      disambiguation = echoSettingsSetEndpoint
+    //      disambiguation = echoSettings
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientName)
@@ -437,6 +429,7 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName(
                 String.format("%sOperationCallable", JavaStyle.toLowerCamelCase(method.name())))
             .build();
+    String disambiguation = "OperationCallable";
     rpcMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(rpcMethodInvocationExpr)
@@ -444,8 +437,9 @@ public class ServiceClientSampleCodeComposer {
             .setArguments(requestVarExpr)
             .setReturnType(operationFutureType)
             .build();
-    String disambiguation =
-        JavaStyle.toUpperCamelCase(rpcMethodInvocationExpr.methodIdentifier().name());
+    disambiguation =
+        disambiguation
+            + JavaStyle.toUpperCamelCase(rpcMethodInvocationExpr.methodIdentifier().name());
     bodyExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(operationFutureVarExpr.toBuilder().setIsDecl(true).build())
@@ -453,7 +447,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
     disambiguation =
         JavaStyle.toUpperCamelCase(
-            disambiguation.concat(requestVarExpr.variable().type().reference().name()));
+            disambiguation + requestVarExpr.variable().type().reference().name());
 
     List<Statement> bodyStatements =
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
@@ -574,6 +568,7 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName(
                 String.format("%sPagedCallable", JavaStyle.toLowerCamelCase(method.name())))
             .build();
+    String disambiguation = "PagedCallable";
     pagedCallableFutureMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(pagedCallableFutureMethodExpr)
@@ -581,8 +576,9 @@ public class ServiceClientSampleCodeComposer {
             .setArguments(requestVarExpr)
             .setReturnType(apiFutureType)
             .build();
-    String disambiguation =
-        JavaStyle.toUpperCamelCase(pagedCallableFutureMethodExpr.methodIdentifier().name());
+    disambiguation =
+        disambiguation
+            + JavaStyle.toUpperCamelCase(pagedCallableFutureMethodExpr.methodIdentifier().name());
     AssignmentExpr apiFutureAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
@@ -920,14 +916,15 @@ public class ServiceClientSampleCodeComposer {
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
     String disambiguation =
-        rpcMethodArgVarExprs.stream()
-            .map(
-                e ->
-                    e.variable().type().reference() == null
-                        ? JavaStyle.toUpperCamelCase(
-                            e.variable().type().typeKind().name().toLowerCase())
-                        : JavaStyle.toUpperCamelCase(e.variable().type().reference().name()))
-            .collect(Collectors.joining());
+        "Async"
+            + rpcMethodArgVarExprs.stream()
+                .map(
+                    e ->
+                        e.variable().type().reference() == null
+                            ? JavaStyle.toUpperCamelCase(
+                                e.variable().type().typeKind().name().toLowerCase())
+                            : JavaStyle.toUpperCamelCase(e.variable().type().reference().name()))
+                .collect(Collectors.joining());
     invokeLroGetMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(invokeLroGetMethodExpr)
@@ -995,6 +992,7 @@ public class ServiceClientSampleCodeComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
+    String disambiguation = "Callable";
     clientStreamCallMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientStreamCallMethodInvocationExpr)
@@ -1002,19 +1000,27 @@ public class ServiceClientSampleCodeComposer {
             .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
             .setReturnType(serverStreamType)
             .build();
-    String disambiguation =
-        String.format(
-            "%s%s",
-            clientStreamCallMethodInvocationExpr.methodIdentifier().name(),
-            requestAssignmentExpr.variableExpr().variable().type().reference() == null
-                ? requestAssignmentExpr
-                    .variableExpr()
-                    .variable()
-                    .type()
-                    .typeKind()
-                    .name()
-                    .toLowerCase()
-                : requestAssignmentExpr.variableExpr().variable().type().reference().name());
+    disambiguation =
+        disambiguation
+            + String.format(
+                "%s%s",
+                JavaStyle.toUpperCamelCase(
+                    clientStreamCallMethodInvocationExpr.methodIdentifier().name()),
+                JavaStyle.toUpperCamelCase(
+                    requestAssignmentExpr.variableExpr().variable().type().reference() == null
+                        ? requestAssignmentExpr
+                            .variableExpr()
+                            .variable()
+                            .type()
+                            .typeKind()
+                            .name()
+                            .toLowerCase()
+                        : requestAssignmentExpr
+                            .variableExpr()
+                            .variable()
+                            .type()
+                            .reference()
+                            .name()));
     AssignmentExpr streamAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(serverStreamVarExpr.toBuilder().setIsDecl(true).build())
@@ -1079,28 +1085,30 @@ public class ServiceClientSampleCodeComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
+    String disambiguation = "Callable";
     clientBidiStreamCallMethodInvoationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientBidiStreamCallMethodInvoationExpr)
             .setMethodName("call")
             .setReturnType(bidiStreamType)
             .build();
-    String disambiguation =
-        String.format(
-            "%s%s",
-            JavaStyle.toUpperCamelCase(
-                clientBidiStreamCallMethodInvoationExpr.methodIdentifier().name()),
-            requestAssignmentExpr.variableExpr().variable().type().reference() == null
-                ? JavaStyle.toUpperCamelCase(
-                    requestAssignmentExpr
-                        .variableExpr()
-                        .variable()
-                        .type()
-                        .typeKind()
-                        .name()
-                        .toLowerCase())
-                : JavaStyle.toUpperCamelCase(
-                    requestAssignmentExpr.variableExpr().variable().type().reference().name()));
+    disambiguation =
+        disambiguation
+            + String.format(
+                "%s%s",
+                JavaStyle.toUpperCamelCase(
+                    clientBidiStreamCallMethodInvoationExpr.methodIdentifier().name()),
+                requestAssignmentExpr.variableExpr().variable().type().reference() == null
+                    ? JavaStyle.toUpperCamelCase(
+                        requestAssignmentExpr
+                            .variableExpr()
+                            .variable()
+                            .type()
+                            .typeKind()
+                            .name()
+                            .toLowerCase())
+                    : JavaStyle.toUpperCamelCase(
+                        requestAssignmentExpr.variableExpr().variable().type().reference().name()));
     AssignmentExpr bidiStreamAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(bidiStreamVarExpr.toBuilder().setIsDecl(true).build())
@@ -1335,6 +1343,7 @@ public class ServiceClientSampleCodeComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
+    String disambiguation = "Callable";
     callableMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(callableMethodInvocationExpr)
@@ -1342,14 +1351,16 @@ public class ServiceClientSampleCodeComposer {
             .setArguments(requestVarExpr)
             .setReturnType(apiFutureType)
             .build();
-    String disambiguation =
-        String.format(
-            "%s%s",
-            JavaStyle.toUpperCamelCase(callableMethodInvocationExpr.methodIdentifier().name()),
-            requestVarExpr.variable().type().reference().name() == null
-                ? JavaStyle.toUpperCamelCase(
-                    requestVarExpr.variable().type().typeKind().name().toLowerCase())
-                : JavaStyle.toUpperCamelCase(requestVarExpr.variable().type().reference().name()));
+    disambiguation =
+        disambiguation
+            + String.format(
+                "%s%s",
+                JavaStyle.toUpperCamelCase(callableMethodInvocationExpr.methodIdentifier().name()),
+                requestVarExpr.variable().type().reference().name() == null
+                    ? JavaStyle.toUpperCamelCase(
+                        requestVarExpr.variable().type().typeKind().name().toLowerCase())
+                    : JavaStyle.toUpperCamelCase(
+                        requestVarExpr.variable().type().reference().name()));
     AssignmentExpr futureAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
@@ -1422,6 +1433,7 @@ public class ServiceClientSampleCodeComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
+    String disambiguation = "Callable";
     pagedCallableMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(pagedCallableMethodInvocationExpr)
@@ -1429,13 +1441,16 @@ public class ServiceClientSampleCodeComposer {
             .setArguments(requestVarExpr)
             .setReturnType(method.outputType())
             .build();
-    String disambiguation =
-        String.format(
-            "%s%s",
-            JavaStyle.toUpperCamelCase(pagedCallableMethodInvocationExpr.methodIdentifier().name()),
-            requestVarExpr.variable().type().reference() == null
-                ? JavaStyle.toUpperCamelCase(requestVarExpr.variable().type().typeKind().name())
-                : JavaStyle.toUpperCamelCase(requestVarExpr.variable().type().reference().name()));
+    disambiguation =
+        disambiguation
+            + String.format(
+                "%s%s",
+                JavaStyle.toUpperCamelCase(
+                    pagedCallableMethodInvocationExpr.methodIdentifier().name()),
+                requestVarExpr.variable().type().reference() == null
+                    ? JavaStyle.toUpperCamelCase(requestVarExpr.variable().type().typeKind().name())
+                    : JavaStyle.toUpperCamelCase(
+                        requestVarExpr.variable().type().reference().name()));
     AssignmentExpr responseAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())

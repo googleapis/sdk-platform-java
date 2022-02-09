@@ -78,6 +78,7 @@ public final class SettingsSampleCodeComposer {
             .setMethodName(
                 JavaStyle.toLowerCamelCase(String.format("%sSettings", methodNameOpt.get())))
             .build();
+    String disambiguation = "Settings";
     MethodInvocationExpr retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
@@ -115,8 +116,10 @@ public final class SettingsSampleCodeComposer {
             .setArguments(retrySettingsArgExpr)
             .build();
 
-    String disambiguation =
-        JavaStyle.toUpperCamelCase(settingBuilderMethodInvocationExpr.methodIdentifier().name());
+    disambiguation =
+        disambiguation
+            + JavaStyle.toUpperCamelCase(
+                settingBuilderMethodInvocationExpr.methodIdentifier().name());
 
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
@@ -127,8 +130,8 @@ public final class SettingsSampleCodeComposer {
                 .setName(JavaStyle.toLowerCamelCase(settingsClassName))
                 .build());
     disambiguation =
-        disambiguation.concat(
-            JavaStyle.toUpperCamelCase(settingsVarExpr.variable().type().reference().name()));
+        disambiguation
+            + JavaStyle.toUpperCamelCase(settingsVarExpr.variable().type().reference().name());
 
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()

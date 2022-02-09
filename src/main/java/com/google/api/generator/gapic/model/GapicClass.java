@@ -91,22 +91,24 @@ public abstract class GapicClass {
             .collect(Collectors.toList());
 
     // grab samples that are distinct but same sample
-    List<Sample> duplicateDistinctSamples =
+    List<Map.Entry<String, List<Sample>>> duplicateDistinctSamples =
         distinctSamplesGroupedByName.entrySet().stream()
             .filter(entry -> entry.getValue().size() > 1)
-            .flatMap(entry -> entry.getValue().stream())
             .collect(Collectors.toList());
 
-    // update these regionTag/name so they are unique files
-    int sampleNum = 0;
-    for (Sample sample : duplicateDistinctSamples) {
-      sample.withRegionTag(
-          sample
-              .regionTag()
-              .withOverloadDisambiguation(sample.regionTag().overloadDisambiguation() + sampleNum));
-      sampleNum++;
+    // update these regionTag/name so distinct duplicates are unique files
+    for (Map.Entry<String, List<Sample>> entry : duplicateDistinctSamples) {
+      int sampleNum = 1;
+      for (Sample sample : entry.getValue()) {
+        uniqueSamples.add(
+            sample.withRegionTag(
+                sample
+                    .regionTag()
+                    .withOverloadDisambiguation(
+                        sample.regionTag().overloadDisambiguation() + sampleNum)));
+        sampleNum++;
+      }
     }
-    uniqueSamples.addAll(duplicateDistinctSamples);
     return uniqueSamples;
   }
 }

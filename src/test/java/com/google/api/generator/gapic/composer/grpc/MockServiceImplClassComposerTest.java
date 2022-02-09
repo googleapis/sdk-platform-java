@@ -14,14 +14,10 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.Test;
 
 public class MockServiceImplClassComposerTest {
@@ -31,11 +27,8 @@ public class MockServiceImplClassComposerTest {
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = MockServiceImplClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "MockEchoImpl.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "MockEchoImpl.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "MockEchoImpl.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -44,11 +37,7 @@ public class MockServiceImplClassComposerTest {
     Service protoService = context.services().get(0);
     GapicClass clazz = MockServiceImplClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "MockDeprecatedServiceImpl.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "MockDeprecatedServiceImpl.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "MockDeprecatedServiceImpl.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 }
