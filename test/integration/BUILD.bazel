@@ -34,32 +34,20 @@ API_GAPIC_TARGETS = {
     "compute": "@com_google_googleapis//google/cloud/compute/v1small:compute_small_java_gapic",
 }
 
-[filegroup(
-    name = "%s_goldens_files" % lib_name,
-    srcs = glob(
-        ["goldens/%s/**" % lib_name],
-        exclude = ["BUILD.bazel"],
-    ),
-) for lib_name in API_GAPIC_TARGETS]
-
 [sh_test(
     name = lib_name,
     srcs = ["//scripts:diff_gen_and_golden.sh"],
     args = [lib_name],
-    data = [
-      ":%s_goldens_files" % lib_name,
-      "%s_srcjar_raw.srcjar" % gapic_target,
-    ],
+    data = ["%s_srcjar_raw.srcjar" % gapic_target] +
+        glob(["goldens/%s/**" % lib_name], exclude = ["BUILD.bazel"])
 ) for lib_name, gapic_target in API_GAPIC_TARGETS.items()]
 
 [sh_binary(
     name = "update_%s" % lib_name,
     srcs = ["//scripts:update_golden.sh"],
     args = [lib_name],
-    data = [
-      ":%s_goldens_files" % lib_name,
-      "%s_srcjar_raw.srcjar" % gapic_target,
-    ],
+    data = ["%s_srcjar_raw.srcjar" % gapic_target] +
+        glob(["goldens/%s/**" % lib_name], exclude = ["BUILD.bazel"])
 ) for lib_name, gapic_target in API_GAPIC_TARGETS.items()]
 
 ####################################################
