@@ -15,7 +15,6 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
