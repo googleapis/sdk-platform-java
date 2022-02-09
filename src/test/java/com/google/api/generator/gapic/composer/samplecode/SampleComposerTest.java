@@ -41,7 +41,7 @@ import org.junit.Test;
 
 public class SampleComposerTest {
   private final String packageName = "com.google.example";
-  private final List<CommentStatement> header =
+  private final List<Statement> header =
       Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
   private final RegionTag.Builder regionTag =
       RegionTag.builder().setApiShortName("echo").setApiVersion("1.0.0").setServiceName("echo");
