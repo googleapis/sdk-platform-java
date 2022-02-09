@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.testutils.LineFormatter;
 import java.util.Optional;
 import org.junit.Test;
@@ -32,7 +33,9 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        SettingsSampleCodeComposer.composeSampleCode(Optional.empty(), "EchoSettings", classType);
+        writeInlineSample(
+            SettingsSampleCodeComposer.composeSampleCode(
+                Optional.empty(), "EchoSettings", classType));
     assertEquals(results, Optional.empty());
   }
 
@@ -45,8 +48,9 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        SettingsSampleCodeComposer.composeSampleCode(
-            Optional.of("Echo"), "EchoSettings", classType);
+        writeInlineSample(
+            SettingsSampleCodeComposer.composeSampleCode(
+                Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
@@ -72,8 +76,9 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        SettingsSampleCodeComposer.composeSampleCode(
-            Optional.of("Echo"), "EchoSettings", classType);
+        writeInlineSample(
+            SettingsSampleCodeComposer.composeSampleCode(
+                Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
@@ -88,5 +93,12 @@ public class SettingsSampleCodeComposerTest {
             "            .build());\n",
             "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
+  }
+
+  private Optional<String> writeInlineSample(Optional<Sample> sample) {
+    if (sample.isPresent()) {
+      return Optional.of(SampleCodeWriter.write(sample.get().body()));
+    }
+    return Optional.empty();
   }
 }

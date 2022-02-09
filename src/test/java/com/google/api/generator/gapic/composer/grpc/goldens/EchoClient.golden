@@ -34,6 +34,8 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (EchoClient echoClient = EchoClient.create()) {
  *   EchoResponse response = echoClient.echo();
  * }
@@ -68,6 +70,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * EchoSettings echoSettings =
  *     EchoSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -78,6 +82,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
  * EchoClient echoClient = EchoClient.create(echoSettings);
  * }</pre>
@@ -152,6 +158,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   EchoResponse response = echoClient.echo();
    * }
@@ -170,6 +178,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
    *   EchoResponse response = echoClient.echo(parent);
@@ -190,6 +200,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Status error = Status.newBuilder().build();
    *   EchoResponse response = echoClient.echo(error);
@@ -209,6 +221,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
    *   EchoResponse response = echoClient.echo(name);
@@ -229,6 +243,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   String content = "content951530617";
    *   EchoResponse response = echoClient.echo(content);
@@ -248,6 +264,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   String name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
    *   EchoResponse response = echoClient.echo(name);
@@ -267,6 +285,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   String parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
    *   EchoResponse response = echoClient.echo(parent);
@@ -286,6 +306,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   String content = "content951530617";
    *   Severity severity = Severity.forNumber(0);
@@ -308,6 +330,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
@@ -332,6 +356,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
@@ -355,6 +381,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ExpandRequest request =
    *       ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
@@ -374,6 +402,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ApiStreamObserver<EchoRequest> responseObserver =
    *       new ApiStreamObserver<EchoRequest>() {
@@ -414,6 +444,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
    *   EchoRequest request =
@@ -439,6 +471,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatAgainCallable().call();
    *   EchoRequest request =
@@ -464,6 +498,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request =
    *       PagedExpandRequest.newBuilder()
@@ -489,6 +525,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request =
    *       PagedExpandRequest.newBuilder()
@@ -514,6 +552,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request =
    *       PagedExpandRequest.newBuilder()
@@ -545,6 +585,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
    *     // doThingsWith(element);
@@ -565,6 +607,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request =
    *       PagedExpandRequest.newBuilder()
@@ -590,6 +634,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request =
    *       PagedExpandRequest.newBuilder()
@@ -616,6 +662,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request =
    *       PagedExpandRequest.newBuilder()
@@ -647,6 +695,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
    *   WaitResponse response = echoClient.waitAsync(ttl).get();
@@ -666,6 +716,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Timestamp endTime = Timestamp.newBuilder().build();
    *   WaitResponse response = echoClient.waitAsync(endTime).get();
@@ -685,6 +737,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   WaitRequest request = WaitRequest.newBuilder().build();
    *   WaitResponse response = echoClient.waitAsync(request).get();
@@ -703,6 +757,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   WaitRequest request = WaitRequest.newBuilder().build();
    *   OperationFuture<WaitResponse, WaitMetadata> future =
@@ -721,6 +777,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   WaitRequest request = WaitRequest.newBuilder().build();
    *   ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
@@ -738,6 +796,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   BlockRequest request = BlockRequest.newBuilder().build();
    *   BlockResponse response = echoClient.block(request);
@@ -756,6 +816,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   BlockRequest request = BlockRequest.newBuilder().build();
    *   ApiFuture<BlockResponse> future = echoClient.blockCallable().futureCall(request);
@@ -773,6 +835,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
@@ -797,6 +861,8 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()

@@ -14,15 +14,11 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.Test;
 
 public class ServiceStubClassComposerTest {
@@ -32,11 +28,8 @@ public class ServiceStubClassComposerTest {
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = ServiceStubClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "EchoStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "EchoStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "EchoStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -45,11 +38,7 @@ public class ServiceStubClassComposerTest {
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceStubClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceStub.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "DeprecatedServiceStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "DeprecatedServiceStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 }

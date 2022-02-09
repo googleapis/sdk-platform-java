@@ -1,0 +1,50 @@
+/*
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.google.showcase.v1beta1.samples;
+
+// [START 1.0.0_goldensample_generated_echoclient_echo_callablefuturecallechorequest]
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.Foobar;
+import com.google.showcase.v1beta1.FoobarName;
+import com.google.showcase.v1beta1.Severity;
+
+public class EchoCallableFutureCallEchoRequest {
+
+  public static void main(String[] args) throws Exception {
+    echoCallableFutureCallEchoRequest();
+  }
+
+  public static void echoCallableFutureCallEchoRequest() throws Exception {
+    // This snippet has been automatically generated for illustrative purposes only.
+    // It may require modifications to work in your environment.
+    try (EchoClient echoClient = EchoClient.create()) {
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFoobar(Foobar.newBuilder().build())
+              .build();
+      ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
+      // Do something.
+      EchoResponse response = future.get();
+    }
+  }
+}
+// [END 1.0.0_goldensample_generated_echoclient_echo_callablefuturecallechorequest]
