@@ -58,15 +58,6 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createInlineSampleNoDisclaimer() {
-    List<Statement> sampleBody = Arrays.asList(ExprStatement.withExpr(systemOutPrint("testing")));
-    String sampleResult = SampleComposer.createInlineSample(sampleBody, false);
-    String expected = LineFormatter.lines("System.out.println(\"testing\");");
-
-    assertEquals(expected, sampleResult);
-  }
-
-  @Test
   public void createInlineSample() {
     List<Statement> sampleBody = Arrays.asList(ExprStatement.withExpr(systemOutPrint("testing")));
     String sampleResult = SampleComposer.createInlineSample(sampleBody);

@@ -44,13 +44,6 @@ public class SampleComposer {
     return SampleCodeWriter.write(statementsWithComment);
   }
 
-  public static String createInlineSample(List<Statement> sampleBody, boolean includeDisclaimer) {
-    if (!includeDisclaimer) {
-      return SampleCodeWriter.write(sampleBody);
-    }
-    return createInlineSample(sampleBody);
-  }
-
   //  "Executable" meaning it includes the necessary code to execute java code,
   //  still may require additional configuration to actually execute generated sample code
   public static String createExecutableSample(Sample sample, String pakkage) {
