@@ -24,6 +24,8 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (IdentityClient identityClient = IdentityClient.create()) {
  *   String parent = UserName.of("[USER]").toString();
  *   String displayName = "displayName1714148973";
@@ -61,6 +63,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * IdentitySettings identitySettings =
  *     IdentitySettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -71,6 +75,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * IdentitySettings identitySettings =
  *     IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
  * IdentityClient identityClient = IdentityClient.create(identitySettings);
@@ -135,6 +141,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
@@ -162,6 +170,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
@@ -214,6 +224,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
@@ -299,6 +311,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   CreateUserRequest request =
    *       CreateUserRequest.newBuilder()
@@ -321,6 +335,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   CreateUserRequest request =
    *       CreateUserRequest.newBuilder()
@@ -342,6 +358,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
    *   User response = identityClient.getUser(name);
@@ -362,6 +380,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = UserName.of("[USER]").toString();
    *   User response = identityClient.getUser(name);
@@ -381,6 +401,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   GetUserRequest request =
    *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -400,6 +422,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   GetUserRequest request =
    *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -418,6 +442,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UpdateUserRequest request =
    *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
@@ -437,6 +463,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UpdateUserRequest request =
    *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
@@ -455,6 +483,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
    *   identityClient.deleteUser(name);
@@ -475,6 +505,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = UserName.of("[USER]").toString();
    *   identityClient.deleteUser(name);
@@ -494,6 +526,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   DeleteUserRequest request =
    *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -513,6 +547,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   DeleteUserRequest request =
    *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -531,6 +567,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   ListUsersRequest request =
    *       ListUsersRequest.newBuilder()
@@ -555,6 +593,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   ListUsersRequest request =
    *       ListUsersRequest.newBuilder()
@@ -578,6 +618,8 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   ListUsersRequest request =
    *       ListUsersRequest.newBuilder()

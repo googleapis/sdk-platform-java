@@ -67,6 +67,8 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
  *   Shelf shelf = Shelf.newBuilder().build();
  *   Shelf response = libraryServiceClient.createShelf(shelf);
@@ -102,6 +104,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * LibraryServiceSettings libraryServiceSettings =
  *     LibraryServiceSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -112,6 +116,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * LibraryServiceSettings libraryServiceSettings =
  *     LibraryServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  * LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
@@ -179,6 +185,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   Shelf shelf = Shelf.newBuilder().build();
    *   Shelf response = libraryServiceClient.createShelf(shelf);
@@ -200,6 +208,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   CreateShelfRequest request =
    *       CreateShelfRequest.newBuilder().setShelf(Shelf.newBuilder().build()).build();
@@ -221,6 +231,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   CreateShelfRequest request =
    *       CreateShelfRequest.newBuilder().setShelf(Shelf.newBuilder().build()).build();
@@ -241,6 +253,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
    *   Shelf response = libraryServiceClient.getShelf(name);
@@ -263,6 +277,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = ShelfName.of("[SHELF_ID]").toString();
    *   Shelf response = libraryServiceClient.getShelf(name);
@@ -284,6 +300,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   GetShelfRequest request =
    *       GetShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
@@ -305,6 +323,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   GetShelfRequest request =
    *       GetShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
@@ -326,6 +346,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListShelvesRequest request =
    *       ListShelvesRequest.newBuilder()
@@ -353,6 +375,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListShelvesRequest request =
    *       ListShelvesRequest.newBuilder()
@@ -380,6 +404,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListShelvesRequest request =
    *       ListShelvesRequest.newBuilder()
@@ -412,6 +438,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
    *   libraryServiceClient.deleteShelf(name);
@@ -434,6 +462,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = ShelfName.of("[SHELF_ID]").toString();
    *   libraryServiceClient.deleteShelf(name);
@@ -455,6 +485,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   DeleteShelfRequest request =
    *       DeleteShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
@@ -476,6 +508,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   DeleteShelfRequest request =
    *       DeleteShelfRequest.newBuilder().setName(ShelfName.of("[SHELF_ID]").toString()).build();
@@ -501,6 +535,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
    *   ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
@@ -533,6 +569,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
    *   String otherShelf = ShelfName.of("[SHELF_ID]").toString();
@@ -565,6 +603,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = ShelfName.of("[SHELF_ID]").toString();
    *   ShelfName otherShelf = ShelfName.of("[SHELF_ID]");
@@ -597,6 +637,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = ShelfName.of("[SHELF_ID]").toString();
    *   String otherShelf = ShelfName.of("[SHELF_ID]").toString();
@@ -626,6 +668,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MergeShelvesRequest request =
    *       MergeShelvesRequest.newBuilder()
@@ -655,6 +699,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MergeShelvesRequest request =
    *       MergeShelvesRequest.newBuilder()
@@ -678,6 +724,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName parent = ShelfName.of("[SHELF_ID]");
    *   Book book = Book.newBuilder().build();
@@ -705,6 +753,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String parent = ShelfName.of("[SHELF_ID]").toString();
    *   Book book = Book.newBuilder().build();
@@ -729,6 +779,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   CreateBookRequest request =
    *       CreateBookRequest.newBuilder()
@@ -753,6 +805,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   CreateBookRequest request =
    *       CreateBookRequest.newBuilder()
@@ -776,6 +830,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   BookName name = BookName.of("[SHELF]", "[BOOK]");
    *   Book response = libraryServiceClient.getBook(name);
@@ -798,6 +854,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
    *   Book response = libraryServiceClient.getBook(name);
@@ -819,6 +877,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   GetBookRequest request =
    *       GetBookRequest.newBuilder().setName(BookName.of("[SHELF]", "[BOOK]").toString()).build();
@@ -840,6 +900,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   GetBookRequest request =
    *       GetBookRequest.newBuilder().setName(BookName.of("[SHELF]", "[BOOK]").toString()).build();
@@ -862,6 +924,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName parent = ShelfName.of("[SHELF_ID]");
    *   for (Book element : libraryServiceClient.listBooks(parent).iterateAll()) {
@@ -888,6 +952,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String parent = ShelfName.of("[SHELF_ID]").toString();
    *   for (Book element : libraryServiceClient.listBooks(parent).iterateAll()) {
@@ -913,6 +979,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListBooksRequest request =
    *       ListBooksRequest.newBuilder()
@@ -942,6 +1010,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListBooksRequest request =
    *       ListBooksRequest.newBuilder()
@@ -970,6 +1040,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ListBooksRequest request =
    *       ListBooksRequest.newBuilder()
@@ -1003,6 +1075,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   BookName name = BookName.of("[SHELF]", "[BOOK]");
    *   libraryServiceClient.deleteBook(name);
@@ -1025,6 +1099,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
    *   libraryServiceClient.deleteBook(name);
@@ -1046,6 +1122,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   DeleteBookRequest request =
    *       DeleteBookRequest.newBuilder()
@@ -1069,6 +1147,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   DeleteBookRequest request =
    *       DeleteBookRequest.newBuilder()
@@ -1092,6 +1172,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   Book book = Book.newBuilder().build();
    *   FieldMask updateMask = FieldMask.newBuilder().build();
@@ -1117,6 +1199,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   UpdateBookRequest request =
    *       UpdateBookRequest.newBuilder()
@@ -1142,6 +1226,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   UpdateBookRequest request =
    *       UpdateBookRequest.newBuilder()
@@ -1166,6 +1252,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   BookName name = BookName.of("[SHELF]", "[BOOK]");
    *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
@@ -1194,6 +1282,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   BookName name = BookName.of("[SHELF]", "[BOOK]");
    *   String otherShelfName = ShelfName.of("[SHELF_ID]").toString();
@@ -1222,6 +1312,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
    *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
@@ -1250,6 +1342,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = BookName.of("[SHELF]", "[BOOK]").toString();
    *   String otherShelfName = ShelfName.of("[SHELF_ID]").toString();
@@ -1275,6 +1369,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MoveBookRequest request =
    *       MoveBookRequest.newBuilder()
@@ -1300,6 +1396,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   MoveBookRequest request =
    *       MoveBookRequest.newBuilder()

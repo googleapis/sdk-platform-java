@@ -38,6 +38,8 @@
  * <p>Sample for StorageClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (StorageClient storageClient = StorageClient.create()) {
  *   BucketName name = BucketName.of("[PROJECT]", "[BUCKET]");
  *   storageClient.deleteBucket(name);

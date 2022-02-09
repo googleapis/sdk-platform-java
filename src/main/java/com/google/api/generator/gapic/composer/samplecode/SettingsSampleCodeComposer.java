@@ -25,6 +25,8 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.RegionTag;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
 import java.util.Arrays;
@@ -34,7 +36,7 @@ import java.util.stream.Collectors;
 
 public final class SettingsSampleCodeComposer {
 
-  public static Optional<String> composeSampleCode(
+  public static Optional<Sample> composeSampleCode(
       Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
     if (!methodNameOpt.isPresent()) {
       return Optional.empty();
@@ -113,6 +115,9 @@ public final class SettingsSampleCodeComposer {
             .setArguments(retrySettingsArgExpr)
             .build();
 
+    String disambiguation =
+        JavaStyle.toUpperCamelCase(settingBuilderMethodInvocationExpr.methodIdentifier().name());
+
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
@@ -121,6 +126,10 @@ public final class SettingsSampleCodeComposer {
                 .setType(classType)
                 .setName(JavaStyle.toLowerCamelCase(settingsClassName))
                 .build());
+    disambiguation =
+        disambiguation.concat(
+            JavaStyle.toUpperCamelCase(settingsVarExpr.variable().type().reference().name()));
+
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
@@ -140,6 +149,16 @@ public final class SettingsSampleCodeComposer {
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-    return Optional.of(SampleCodeWriter.write(statements));
+
+    // e.g. serviceName = echoSettings
+    //      rpcName = echo
+    //      disambiguation = setRetrySettingsEchoSettings
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(classType.reference().name())
+            .setRpcName(methodNameOpt.get())
+            .setOverloadDisambiguation(disambiguation)
+            .build();
+    return Optional.of(Sample.builder().setBody(statements).setRegionTag(regionTag).build());
   }
 }
