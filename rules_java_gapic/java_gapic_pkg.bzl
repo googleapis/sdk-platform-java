@@ -373,18 +373,13 @@ def _java_gapic_gradle_pkg(
         **kwargs):
     resource_target_name = "%s-resources" % name
 
-    static_substitutions = dict()
-    static_substitutions["{{name}}"] = name
-
     java_gapic_build_configs_pkg(
         name = resource_target_name,
         deps = deps,
         test_deps = test_deps,
         package_dir = name,
-        templates = {
-            template_label: "build.gradle",
-        },
-        static_substitutions = static_substitutions,
+        templates = {template_label: "build.gradle"},
+        static_substitutions = {"{{name}}": name}
     )
 
     srcs_gapic_pkg_target_name = "%s-srcs_pkg" % name
