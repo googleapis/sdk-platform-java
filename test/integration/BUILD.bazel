@@ -32,6 +32,8 @@ API_GAPIC_TARGETS = {
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
     # REGAPIC test.
     "compute": "@com_google_googleapis//google/cloud/compute/v1small:compute_small_java_gapic",
+    # Routing headers.
+    "bigtable": "@com_google_googleapis//google/bigtable/v2:bigtable_java_gapic",
 }
 
 [filegroup(
