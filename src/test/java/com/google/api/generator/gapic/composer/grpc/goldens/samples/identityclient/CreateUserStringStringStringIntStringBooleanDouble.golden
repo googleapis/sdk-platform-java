@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_identityClient_createUser_stringStringStringIntStringBooleanDouble]
+// [START 1.0.0_goldensample_generated_identityclient_createuser_stringstringstringintstringbooleandouble]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
 import com.google.showcase.v1beta1.UserName;
@@ -43,4 +43,4 @@ public class CreateUserStringStringStringIntStringBooleanDouble {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_identityClient_createUser_stringStringStringIntStringBooleanDouble]
+// [END 1.0.0_goldensample_generated_identityclient_createuser_stringstringstringintstringbooleandouble]

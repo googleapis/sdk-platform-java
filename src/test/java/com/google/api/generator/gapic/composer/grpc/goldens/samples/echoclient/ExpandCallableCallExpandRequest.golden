@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_echoClient_expand_callableCallExpandRequest]
+// [START 1.0.0_goldensample_generated_echoclient_expand_callablecallexpandrequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -40,4 +40,4 @@ public class ExpandCallableCallExpandRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_echoClient_expand_callableCallExpandRequest]
+// [END 1.0.0_goldensample_generated_echoclient_expand_callablecallexpandrequest]

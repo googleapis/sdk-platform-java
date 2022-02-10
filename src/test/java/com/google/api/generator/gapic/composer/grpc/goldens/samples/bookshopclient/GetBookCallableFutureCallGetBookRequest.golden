@@ -15,7 +15,7 @@
  */
 package com.google.bookshop.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_bookshopClient_getBook_callableFutureCallGetBookRequest]
+// [START 1.0.0_goldensample_generated_bookshopclient_getbook_callablefuturecallgetbookrequest]
 import com.google.api.core.ApiFuture;
 import com.google.bookshop.v1beta1.Book;
 import com.google.bookshop.v1beta1.BookshopClient;
@@ -44,4 +44,4 @@ public class GetBookCallableFutureCallGetBookRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_bookshopClient_getBook_callableFutureCallGetBookRequest]
+// [END 1.0.0_goldensample_generated_bookshopclient_getbook_callablefuturecallgetbookrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_identityClient_getUser_callableFutureCallGetUserRequest]
+// [START 1.0.0_goldensample_generated_identityclient_getuser_callablefuturecallgetuserrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.GetUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
@@ -40,4 +40,4 @@ public class GetUserCallableFutureCallGetUserRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_identityClient_getUser_callableFutureCallGetUserRequest]
+// [END 1.0.0_goldensample_generated_identityclient_getuser_callablefuturecallgetuserrequest]

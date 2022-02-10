@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_identityClient_create_identitySettings2]
+// [START 1.0.0_goldensample_generated_identityclient_create_identitysettings2]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateIdentitySettings2 {
     IdentityClient identityClient = IdentityClient.create(identitySettings);
   }
 }
-// [END 1.0.0_goldenSample_generated_identityClient_create_identitySettings2]
+// [END 1.0.0_goldensample_generated_identityclient_create_identitysettings2]

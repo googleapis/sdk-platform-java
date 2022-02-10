@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_identityClient_deleteUser_callableFutureCallDeleteUserRequest]
+// [START 1.0.0_goldensample_generated_identityclient_deleteuser_callablefuturecalldeleteuserrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.DeleteUserRequest;
@@ -40,4 +40,4 @@ public class DeleteUserCallableFutureCallDeleteUserRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_identityClient_deleteUser_callableFutureCallDeleteUserRequest]
+// [END 1.0.0_goldensample_generated_identityclient_deleteuser_callablefuturecalldeleteuserrequest]

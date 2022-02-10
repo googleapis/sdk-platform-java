@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_messagingClient_listRooms_callableCallListRoomsRequest]
+// [START 1.0.0_goldensample_generated_messagingclient_listrooms_callablecalllistroomsrequest]
 import com.google.common.base.Strings;
 import com.google.showcase.v1beta1.ListRoomsRequest;
 import com.google.showcase.v1beta1.ListRoomsResponse;
@@ -52,4 +52,4 @@ public class ListRoomsCallableCallListRoomsRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_messagingClient_listRooms_callableCallListRoomsRequest]
+// [END 1.0.0_goldensample_generated_messagingclient_listrooms_callablecalllistroomsrequest]

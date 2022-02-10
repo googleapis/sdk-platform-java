@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_messagingClient_getRoom_roomName]
+// [START 1.0.0_goldensample_generated_messagingclient_getroom_roomname]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
 import com.google.showcase.v1beta1.RoomName;
@@ -35,4 +35,4 @@ public class GetRoomRoomName {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_messagingClient_getRoom_roomName]
+// [END 1.0.0_goldensample_generated_messagingclient_getroom_roomname]

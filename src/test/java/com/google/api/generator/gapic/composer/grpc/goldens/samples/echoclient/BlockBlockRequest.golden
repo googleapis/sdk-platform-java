@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_echoClient_block_blockRequest]
+// [START 1.0.0_goldensample_generated_echoclient_block_blockrequest]
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
@@ -35,4 +35,4 @@ public class BlockBlockRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_echoClient_block_blockRequest]
+// [END 1.0.0_goldensample_generated_echoclient_block_blockrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_messagingClient_updateRoom_updateRoomRequest]
+// [START 1.0.0_goldensample_generated_messagingclient_updateroom_updateroomrequest]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
 import com.google.showcase.v1beta1.UpdateRoomRequest;
@@ -36,4 +36,4 @@ public class UpdateRoomUpdateRoomRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_messagingClient_updateRoom_updateRoomRequest]
+// [END 1.0.0_goldensample_generated_messagingclient_updateroom_updateroomrequest]

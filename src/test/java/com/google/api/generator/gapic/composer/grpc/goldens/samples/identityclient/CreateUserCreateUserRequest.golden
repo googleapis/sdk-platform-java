@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_identityClient_createUser_createUserRequest]
+// [START 1.0.0_goldensample_generated_identityclient_createuser_createuserrequest]
 import com.google.showcase.v1beta1.CreateUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
@@ -40,4 +40,4 @@ public class CreateUserCreateUserRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_identityClient_createUser_createUserRequest]
+// [END 1.0.0_goldensample_generated_identityclient_createuser_createuserrequest]

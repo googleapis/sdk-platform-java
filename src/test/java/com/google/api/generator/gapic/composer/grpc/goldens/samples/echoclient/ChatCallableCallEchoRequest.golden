@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_echoClient_chat_callableCallEchoRequest]
+// [START 1.0.0_goldensample_generated_echoclient_chat_callablecallechorequest]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -49,4 +49,4 @@ public class ChatCallableCallEchoRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_echoClient_chat_callableCallEchoRequest]
+// [END 1.0.0_goldensample_generated_echoclient_chat_callablecallechorequest]

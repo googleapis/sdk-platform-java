@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_echoClient_echo_foobarName]
+// [START 1.0.0_goldensample_generated_echoclient_echo_foobarname]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.FoobarName;
@@ -35,4 +35,4 @@ public class EchoFoobarName {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_echoClient_echo_foobarName]
+// [END 1.0.0_goldensample_generated_echoclient_echo_foobarname]
