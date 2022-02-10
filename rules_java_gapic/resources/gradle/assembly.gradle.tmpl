@@ -5,6 +5,10 @@ subprojects {
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
 
+  dependencies {
+    implementation platform('com.google.cloud:libraries-bom:24.3.0')
+  }
+
   test {
     testLogging {
       events "passed", "skipped", "failed", "standardOut", "standardError"

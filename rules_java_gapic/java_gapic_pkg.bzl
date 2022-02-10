@@ -12,16 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_api_gax_java_properties//:dependencies.properties.bzl", "PROPERTIES")
-
-def _wrapPropertyNamesInBraces(properties):
-    wrappedProperties = {}
-    for k, v in properties.items():
-        wrappedProperties["{{%s}}" % k] = v
-    return wrappedProperties
-
-_PROPERTIES = _wrapPropertyNamesInBraces(PROPERTIES)
-
 # ========================================================================
 # General packaging helpers.
 # ========================================================================
@@ -111,13 +101,13 @@ gapic_pkg_tar = rule(
 # ========================================================================
 # Java Gapic package helpers.
 # ========================================================================
-def _construct_extra_deps(scope_to_deps, versions_map):
+def _construct_extra_deps(scope_to_deps):
     label_name_to_maven_artifact = {
-        "policy_proto": "maven.com_google_api_grpc_proto_google_iam_v1",
-        "iam_policy_proto": "maven.com_google_api_grpc_proto_google_iam_v1",
-        "iam_java_proto": "maven.com_google_api_grpc_proto_google_iam_v1",
-        "iam_java_grpc": "maven.com_google_api_grpc_grpc_google_iam_v1",
-        "iam_policy_java_grpc": "maven.com_google_api_grpc_grpc_google_iam_v1",
+        "policy_proto":         "com.google.api.grpc:proto-google-iam-v1",
+        "iam_policy_proto":     "com.google.api.grpc:proto-google-iam-v1",
+        "iam_java_proto":       "com.google.api.grpc:proto-google-iam-v1",
+        "iam_java_grpc":        "com.google.api.grpc:grpc-google-iam-v1",
+        "iam_policy_java_grpc": "com.google.api.grpc:grpc-google-iam-v1",
     }
     extra_deps = {}
     for scope, deps in scope_to_deps.items():
@@ -128,13 +118,13 @@ def _construct_extra_deps(scope_to_deps, versions_map):
                 if not extra_deps.get(key):
                     extra_deps[key] = "%s project(':%s')" % (scope, pkg_dependency)
             elif _is_java_dependency(dep):
-                for f in dep[JavaInfo].transitive_deps.to_list():
+                for f in dep[JavaInfo].transitive_compile_time_jars.to_list():
                     maven_artifact = label_name_to_maven_artifact.get(f.owner.name)
                     if not maven_artifact:
                         continue
                     key = "{{%s}}" % maven_artifact
                     if not extra_deps.get(key):
-                        extra_deps[key] = "%s '%s'" % (scope, versions_map[key])
+                        extra_deps[key] = "%s '%s'" % (scope, maven_artifact)
 
     return "\n  ".join(extra_deps.values())
 
@@ -168,7 +158,7 @@ def _java_gapic_build_configs_pkg_impl(ctx):
     substitutions["{{extra_deps}}"] = _construct_extra_deps({
         "api": ctx.attr.deps,
         "testImplementation": ctx.attr.test_deps,
-    }, substitutions)
+    })
 
     for template in ctx.attr.templates.items():
         expanded_template = ctx.actions.declare_file(
@@ -383,7 +373,7 @@ def _java_gapic_gradle_pkg(
         **kwargs):
     resource_target_name = "%s-resources" % name
 
-    static_substitutions = dict(_PROPERTIES)
+    static_substitutions = dict()
     static_substitutions["{{name}}"] = name
 
     java_gapic_build_configs_pkg(

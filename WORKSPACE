@@ -21,8 +21,11 @@ maven_install(
         "com.google.api:gax-httpjson:0.97.0",
         "com.google.api:gax-httpjson:jar:testlib:0.97.0",
         "com.google.api.grpc:proto-google-common-protos:2.7.3",
+        "com.google.auth:google-auth-library-credentials:1.4.0",
+        "com.google.auth:google-auth-library-oauth2-http:1.4.0",
         "com.google.auto.value:auto-value:1.7.2",
         "com.google.auto.value:auto-value-annotations:1.7.2",
+        "com.google.code.findbugs:jsr305:3.0.2",
         "com.google.code.gson:gson:2.8.6",
         "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
         "com.google.guava:guava:30.1-jre",
@@ -31,35 +34,23 @@ maven_install(
         "com.google.protobuf:protobuf-java-util:3.19.1",
         "com.google.truth:truth:1.1.2",
         "io.github.java-diff-utils:java-diff-utils:4.0",
+        "io.grpc:grpc-auth:1.44.0",
+        "io.grpc:grpc-netty-shaded:1.44.0",
         "io.grpc:grpc-protobuf:1.44.0",
         "io.grpc:grpc-stub:1.44.0",
+        "io.opencensus:opencensus-api:0.31.0",
+        "io.opencensus:opencensus-contrib-grpc-metrics:0.31.0",
         "javax.annotation:javax.annotation-api:1.3.2",
         "junit:junit:4.13.1",
+        "org.apache.tomcat:annotations-api:6.0.53",
         "org.threeten:threetenbp:1.3.3",
         "org.yaml:snakeyaml:1.26",
     ],
+    generate_compat_repositories = True,
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
-
-# gax-java and its transitive dependencies must be imported before
-# gapic-generator-java dependencies to match the order in googleapis repository,
-# which in its turn, prioritizes actual generated clients runtime dependencies
-# over the generator dependencies.
-
-_gax_java_version = "2.11.0"
-
-http_archive(
-    name = "com_google_api_gax_java",
-    strip_prefix = "gax-java-%s" % _gax_java_version,
-    urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
-)
-
-load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
-
-com_google_api_gax_java_properties(
-    name = "com_google_api_gax_java_properties",
-    file = "@com_google_api_gax_java//:dependencies.properties",
-)
+load("@maven//:compat.bzl", "compat_repositories")
+compat_repositories()
 
 http_archive(
     name = "com_google_googleapis",
@@ -67,40 +58,37 @@ http_archive(
     urls = ["https://github.com/googleapis/googleapis/archive/0899ba0f4c053a4487ccf0b699df5f850e39a45f.zip"],
 )
 
-# To build :service_config_java_proto, we need the protobuf source in the grpc-proto repo.
+# to build :service_config_java_proto, we need the protobuf source in the grpc-proto repo
 http_archive(
     name = "io_grpc_proto",
     strip_prefix = "grpc-proto-8e3fec8612bc0708e857950dccadfd5063703e04", # Nov 6, 2021
     urls = ["https://github.com/grpc/grpc-proto/archive/8e3fec8612bc0708e857950dccadfd5063703e04.zip"],
 )
 
+# To load java_grpc_library(). This is only used in integraion tests.
 http_archive(
     name = "io_grpc_grpc_java",
     strip_prefix = "grpc-java-1.44.0",
     urls = ["https://github.com/grpc/grpc-java/archive/v1.44.0.zip"],
 )
 
+# proto_library() requires getting protoc (the protobuf compiler) via @com_google_protobuf//:protoc.
 http_archive(
     name = "com_google_protobuf",
     strip_prefix = "protobuf-3.19.1",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.19.1.zip"],
 )
-
-# protobuf
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
 protobuf_deps()
 
-# Bazel rules.
+# to load proto_custom_library() and proto_library_with_info()
 http_archive(
     name = "rules_gapic",
     strip_prefix = "rules_gapic-0.5.5",
     urls = ["https://github.com/googleapis/rules_gapic/archive/v0.5.5.tar.gz"],
 )
 
-# Java dependencies.
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-
 switched_rules_by_language(
     name = "com_google_googleapis_imports",
     gapic = True,
@@ -108,6 +96,7 @@ switched_rules_by_language(
     java = True,
 )
 
+# required for generating Compute API, which is based on discovery
 http_archive(
     name = "com_google_disco_to_proto3_converter",
     strip_prefix = "disco-to-proto3-converter-ce8d8732120cdfb5bf4847c3238b5be8acde87e3",
