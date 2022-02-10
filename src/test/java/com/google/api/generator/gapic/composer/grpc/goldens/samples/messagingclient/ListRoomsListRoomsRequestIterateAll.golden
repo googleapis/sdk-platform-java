@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_messagingClient_listRooms_listRoomsRequestIterateAll]
+// [START 1.0.0_goldensample_generated_messagingclient_listrooms_listroomsrequestiterateall]
 import com.google.showcase.v1beta1.ListRoomsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
@@ -41,4 +41,4 @@ public class ListRoomsListRoomsRequestIterateAll {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_messagingClient_listRooms_listRoomsRequestIterateAll]
+// [END 1.0.0_goldensample_generated_messagingclient_listrooms_listroomsrequestiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.stub.samples;
 
-// [START 1.0.0_goldenSample_generated_echoStubSettings_echo_settingsSetRetrySettingsEchoStubSettings]
+// [START 1.0.0_goldensample_generated_echostubsettings_echo_settingssetretrysettingsechostubsettings]
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class EchoSettingsSetRetrySettingsEchoStubSettings {
     EchoStubSettings echoSettings = echoSettingsBuilder.build();
   }
 }
-// [END 1.0.0_goldenSample_generated_echoStubSettings_echo_settingsSetRetrySettingsEchoStubSettings]
+// [END 1.0.0_goldensample_generated_echostubsettings_echo_settingssetretrysettingsechostubsettings]

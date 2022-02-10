@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_echoClient_simplePagedExpand_pagedExpandRequestIterateAll]
+// [START 1.0.0_goldensample_generated_echoclient_simplepagedexpand_pagedexpandrequestiterateall]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -42,4 +42,4 @@ public class SimplePagedExpandPagedExpandRequestIterateAll {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_echoClient_simplePagedExpand_pagedExpandRequestIterateAll]
+// [END 1.0.0_goldensample_generated_echoclient_simplepagedexpand_pagedexpandrequestiterateall]

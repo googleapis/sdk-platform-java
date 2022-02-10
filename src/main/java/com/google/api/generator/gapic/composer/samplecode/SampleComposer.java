@@ -82,8 +82,8 @@ public class SampleComposer {
     if (!regionTag.overloadDisambiguation().isEmpty()) {
       rt = String.format("%s_%s", rt, regionTag.overloadDisambiguation());
     }
-    String start = String.format("// [START %s]", rt);
-    String end = String.format("// [END %s]", rt);
+    String start = String.format("// [START %s]", rt.toLowerCase());
+    String end = String.format("// [END %s]", rt.toLowerCase());
 
     String sampleWithRegionTags = String.format("%s%s", start, sampleClass);
     //  START region tag should go below package statement

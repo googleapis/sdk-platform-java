@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_echoClient_create_echoSettings1]
+// [START 1.0.0_goldensample_generated_echoclient_create_echosettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -37,4 +37,4 @@ public class CreateEchoSettings1 {
     EchoClient echoClient = EchoClient.create(echoSettings);
   }
 }
-// [END 1.0.0_goldenSample_generated_echoClient_create_echoSettings1]
+// [END 1.0.0_goldensample_generated_echoclient_create_echosettings1]

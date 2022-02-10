@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_identityClient_listUsers_listUsersRequestIterateAll]
+// [START 1.0.0_goldensample_generated_identityclient_listusers_listusersrequestiterateall]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.User;
@@ -41,4 +41,4 @@ public class ListUsersListUsersRequestIterateAll {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_identityClient_listUsers_listUsersRequestIterateAll]
+// [END 1.0.0_goldensample_generated_identityclient_listusers_listusersrequestiterateall]

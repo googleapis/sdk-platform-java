@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldenSample_generated_messagingClient_createRoom_callableFutureCallCreateRoomRequest]
+// [START 1.0.0_goldensample_generated_messagingclient_createroom_callablefuturecallcreateroomrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.CreateRoomRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -39,4 +39,4 @@ public class CreateRoomCallableFutureCallCreateRoomRequest {
     }
   }
 }
-// [END 1.0.0_goldenSample_generated_messagingClient_createRoom_callableFutureCallCreateRoomRequest]
+// [END 1.0.0_goldensample_generated_messagingclient_createroom_callablefuturecallcreateroomrequest]
