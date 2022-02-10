@@ -42,201 +42,201 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Composer {
-    private static String apiVersion;
-    private static String apiShortName;
+  private static String apiVersion;
+  private static String apiShortName;
 
-    public static List<GapicClass> composeServiceClasses(GapicContext context) {
-        List<GapicClass> clazzes = new ArrayList<>();
-        apiVersion = context.gapicMetadata().getSchema();
-        apiShortName = context.gapicMetadata().getSchema();
-        clazzes.addAll(generateServiceClasses(context));
-        clazzes.addAll(generateMockClasses(context, context.mixinServices()));
-        clazzes.addAll(generateResourceNameHelperClasses(context));
-        return addApacheLicense(composeSamples(clazzes));
-    }
+  public static List<GapicClass> composeServiceClasses(GapicContext context) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    apiVersion = context.gapicMetadata().getSchema();
+    apiShortName = context.gapicMetadata().getSchema();
+    clazzes.addAll(generateServiceClasses(context));
+    clazzes.addAll(generateMockClasses(context, context.mixinServices()));
+    clazzes.addAll(generateResourceNameHelperClasses(context));
+    return addApacheLicense(composeSamples(clazzes));
+  }
 
-    public static GapicPackageInfo composePackageInfo(GapicContext context) {
-        return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
-    }
+  public static GapicPackageInfo composePackageInfo(GapicContext context) {
+    return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
+  }
 
-    public static List<GapicClass> generateServiceClasses(GapicContext context) {
-        List<GapicClass> clazzes = new ArrayList<>();
-        clazzes.addAll(generateStubClasses(context));
-        clazzes.addAll(generateClientSettingsClasses(context));
-        clazzes.addAll(generateMockClasses(context, context.services()));
-        clazzes.addAll(generateTestClasses(context));
-        return clazzes;
-    }
+  public static List<GapicClass> generateServiceClasses(GapicContext context) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    clazzes.addAll(generateStubClasses(context));
+    clazzes.addAll(generateClientSettingsClasses(context));
+    clazzes.addAll(generateMockClasses(context, context.services()));
+    clazzes.addAll(generateTestClasses(context));
+    return clazzes;
+  }
 
-    public static List<GapicClass> generateResourceNameHelperClasses(GapicContext context) {
-        return context.helperResourceNames().values().stream()
-                .distinct()
-                .filter(r -> !r.isOnlyWildcard())
-                .map(r -> ResourceNameHelperClassComposer.instance().generate(r, context))
-                .collect(Collectors.toList());
-    }
+  public static List<GapicClass> generateResourceNameHelperClasses(GapicContext context) {
+    return context.helperResourceNames().values().stream()
+        .distinct()
+        .filter(r -> !r.isOnlyWildcard())
+        .map(r -> ResourceNameHelperClassComposer.instance().generate(r, context))
+        .collect(Collectors.toList());
+  }
 
-    public static List<GapicClass> generateStubClasses(GapicContext context) {
-        List<GapicClass> clazzes = new ArrayList<>();
-        context
-                .services()
-                .forEach(
-                        s -> {
-                            if (context.transport() == Transport.REST) {
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.rest.ServiceStubClassComposer.instance()
-                                                .generate(context, s));
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                                clazzes.add(
-                                        HttpJsonServiceCallableFactoryClassComposer.instance().generate(context, s));
-                                clazzes.add(HttpJsonServiceStubClassComposer.instance().generate(context, s));
-                            } else if (context.transport() == Transport.GRPC) {
-                                clazzes.add(ServiceStubClassComposer.instance().generate(context, s));
-                                clazzes.add(ServiceStubSettingsClassComposer.instance().generate(context, s));
-                                clazzes.add(
-                                        GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
-                                clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
-                            } else if (context.transport() == Transport.GRPC_REST) {
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.grpcrest.ServiceStubClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.grpcrest
-                                                .ServiceStubSettingsClassComposer.instance()
-                                                .generate(context, s));
-                                clazzes.add(
-                                        GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
-                                clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
-                                clazzes.add(
-                                        HttpJsonServiceCallableFactoryClassComposer.instance().generate(context, s));
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.grpcrest
-                                                .HttpJsonServiceStubClassComposer.instance()
-                                                .generate(context, s));
-                            }
-                        });
-        return clazzes;
-    }
+  public static List<GapicClass> generateStubClasses(GapicContext context) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    context
+        .services()
+        .forEach(
+            s -> {
+              if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceStubClassComposer.instance()
+                        .generate(context, s));
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposer
+                        .instance()
+                        .generate(context, s));
+                clazzes.add(
+                    HttpJsonServiceCallableFactoryClassComposer.instance().generate(context, s));
+                clazzes.add(HttpJsonServiceStubClassComposer.instance().generate(context, s));
+              } else if (context.transport() == Transport.GRPC) {
+                clazzes.add(ServiceStubClassComposer.instance().generate(context, s));
+                clazzes.add(ServiceStubSettingsClassComposer.instance().generate(context, s));
+                clazzes.add(
+                    GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
+                clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
+              } else if (context.transport() == Transport.GRPC_REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.grpcrest.ServiceStubClassComposer
+                        .instance()
+                        .generate(context, s));
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.grpcrest
+                        .ServiceStubSettingsClassComposer.instance()
+                        .generate(context, s));
+                clazzes.add(
+                    GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
+                clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
+                clazzes.add(
+                    HttpJsonServiceCallableFactoryClassComposer.instance().generate(context, s));
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.grpcrest
+                        .HttpJsonServiceStubClassComposer.instance()
+                        .generate(context, s));
+              }
+            });
+    return clazzes;
+  }
 
-    public static List<GapicClass> generateClientSettingsClasses(GapicContext context) {
-        List<GapicClass> clazzes = new ArrayList<>();
-        context
-                .services()
-                .forEach(
-                        s -> {
-                            if (context.transport() == Transport.REST) {
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.rest.ServiceClientClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.rest.ServiceSettingsClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                            } else if (context.transport() == Transport.GRPC) {
-                                clazzes.add(ServiceClientClassComposer.instance().generate(context, s));
-                                clazzes.add(ServiceSettingsClassComposer.instance().generate(context, s));
-                            } else if (context.transport() == Transport.GRPC_REST) {
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.grpcrest.ServiceClientClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.grpcrest.ServiceSettingsClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                            }
-                        });
-        return clazzes;
-    }
+  public static List<GapicClass> generateClientSettingsClasses(GapicContext context) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    context
+        .services()
+        .forEach(
+            s -> {
+              if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceClientClassComposer
+                        .instance()
+                        .generate(context, s));
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceSettingsClassComposer
+                        .instance()
+                        .generate(context, s));
+              } else if (context.transport() == Transport.GRPC) {
+                clazzes.add(ServiceClientClassComposer.instance().generate(context, s));
+                clazzes.add(ServiceSettingsClassComposer.instance().generate(context, s));
+              } else if (context.transport() == Transport.GRPC_REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.grpcrest.ServiceClientClassComposer
+                        .instance()
+                        .generate(context, s));
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.grpcrest.ServiceSettingsClassComposer
+                        .instance()
+                        .generate(context, s));
+              }
+            });
+    return clazzes;
+  }
 
-    public static List<GapicClass> generateMockClasses(GapicContext context, List<Service> services) {
-        List<GapicClass> clazzes = new ArrayList<>();
-        services.forEach(
-                s -> {
-                    if (context.transport() == Transport.REST) {
-                        // REST transport tests do not use mock services.
-                    } else if (context.transport() == Transport.GRPC) {
-                        clazzes.add(MockServiceClassComposer.instance().generate(context, s));
-                        clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
-                    } else if (context.transport() == Transport.GRPC_REST) {
-                        clazzes.add(MockServiceClassComposer.instance().generate(context, s));
-                        clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
-                    }
-                });
-        return clazzes;
-    }
+  public static List<GapicClass> generateMockClasses(GapicContext context, List<Service> services) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    services.forEach(
+        s -> {
+          if (context.transport() == Transport.REST) {
+            // REST transport tests do not use mock services.
+          } else if (context.transport() == Transport.GRPC) {
+            clazzes.add(MockServiceClassComposer.instance().generate(context, s));
+            clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
+          } else if (context.transport() == Transport.GRPC_REST) {
+            clazzes.add(MockServiceClassComposer.instance().generate(context, s));
+            clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
+          }
+        });
+    return clazzes;
+  }
 
-    public static List<GapicClass> generateTestClasses(GapicContext context) {
-        List<GapicClass> clazzes = new ArrayList<>();
-        context
-                .services()
-                .forEach(
-                        s -> {
-                            if (context.transport() == Transport.REST) {
-                                clazzes.add(
-                                        com.google.api.generator.gapic.composer.rest.ServiceClientTestClassComposer
-                                                .instance()
-                                                .generate(context, s));
-                            } else if (context.transport() == Transport.GRPC) {
-                                clazzes.add(ServiceClientTestClassComposer.instance().generate(context, s));
-                            } else if (context.transport() == Transport.GRPC_REST) {
-                                clazzes.add(ServiceClientTestClassComposer.instance().generate(context, s));
-                                clazzes.add(HttpJsonServiceClientTestClassComposer.instance().generate(context, s));
-                            }
-                        });
+  public static List<GapicClass> generateTestClasses(GapicContext context) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    context
+        .services()
+        .forEach(
+            s -> {
+              if (context.transport() == Transport.REST) {
+                clazzes.add(
+                    com.google.api.generator.gapic.composer.rest.ServiceClientTestClassComposer
+                        .instance()
+                        .generate(context, s));
+              } else if (context.transport() == Transport.GRPC) {
+                clazzes.add(ServiceClientTestClassComposer.instance().generate(context, s));
+              } else if (context.transport() == Transport.GRPC_REST) {
+                clazzes.add(ServiceClientTestClassComposer.instance().generate(context, s));
+                clazzes.add(HttpJsonServiceClientTestClassComposer.instance().generate(context, s));
+              }
+            });
 
-        return clazzes;
-    }
+    return clazzes;
+  }
 
-    private static List<GapicClass> composeSamples(List<GapicClass> clazzes) {
-        return clazzes.stream()
-                .map(
-                        gapicClass -> {
-                            List<Sample> samples =
-                                    gapicClass.samples().stream()
-                                            .map(sample -> addApacheLicense(addRegionTagAttributes(sample)))
-                                            .collect(Collectors.toList());
-                            return gapicClass.withSamples(samples);
-                        })
-                .collect(Collectors.toList());
-    }
+  private static List<GapicClass> composeSamples(List<GapicClass> clazzes) {
+    return clazzes.stream()
+        .map(
+            gapicClass -> {
+              List<Sample> samples =
+                  gapicClass.samples().stream()
+                      .map(sample -> addApacheLicense(addRegionTagAttributes(sample)))
+                      .collect(Collectors.toList());
+              return gapicClass.withSamples(samples);
+            })
+        .collect(Collectors.toList());
+  }
 
-    @VisibleForTesting
-    protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
-        return gapicClassList.stream()
-                .map(
-                        gapicClass -> {
-                            ClassDefinition classWithHeader =
-                                    gapicClass
-                                            .classDefinition()
-                                            .toBuilder()
-                                            .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
-                                            .build();
-                            return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
-                        })
-                .collect(Collectors.toList());
-    }
+  @VisibleForTesting
+  protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
+    return gapicClassList.stream()
+        .map(
+            gapicClass -> {
+              ClassDefinition classWithHeader =
+                  gapicClass
+                      .classDefinition()
+                      .toBuilder()
+                      .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
+                      .build();
+              return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
+            })
+        .collect(Collectors.toList());
+  }
 
-    private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
-        return GapicPackageInfo.with(
-                gapicPackageInfo
-                        .packageInfo()
-                        .toBuilder()
-                        .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
-                        .build());
-    }
+  private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
+    return GapicPackageInfo.with(
+        gapicPackageInfo
+            .packageInfo()
+            .toBuilder()
+            .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
+            .build());
+  }
 
-    private static Sample addApacheLicense(Sample sample) {
-        return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
-    }
+  private static Sample addApacheLicense(Sample sample) {
+    return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
+  }
 
-    private static Sample addRegionTagAttributes(Sample sample) {
-        return sample.withRegionTag(
-                sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
-    }
+  private static Sample addRegionTagAttributes(Sample sample) {
+    return sample.withRegionTag(
+        sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
+  }
 }

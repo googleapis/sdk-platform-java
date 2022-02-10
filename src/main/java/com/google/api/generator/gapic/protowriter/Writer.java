@@ -41,10 +41,10 @@ public class Writer {
   }
 
   public static CodeGeneratorResponse write(
-          GapicContext context,
-          List<GapicClass> clazzes,
-          GapicPackageInfo gapicPackageInfo,
-          String outputFilePath) {
+      GapicContext context,
+      List<GapicClass> clazzes,
+      GapicPackageInfo gapicPackageInfo,
+      String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos;
@@ -57,11 +57,11 @@ public class Writer {
     Set<String> gapicSamples = new HashSet<>();
     for (GapicClass gapicClazz : clazzes) {
       writeClazzSamples(
-              gapicClazz,
-              getSamplePackage(gapicClazz),
-              writeClazz(gapicClazz, codeWriter, jos),
-              jos,
-              gapicSamples);
+          gapicClazz,
+          getSamplePackage(gapicClazz),
+          writeClazz(gapicClazz, codeWriter, jos),
+          jos,
+          gapicSamples);
     }
 
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
@@ -75,15 +75,15 @@ public class Writer {
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
     response
-            .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
-            .addFileBuilder()
-            .setName(outputFilePath)
-            .setContentBytes(output.toByteString());
+        .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
+        .addFileBuilder()
+        .setName(outputFilePath)
+        .setContentBytes(output.toByteString());
     return response.build();
   }
 
   private static String writeClazz(
-          GapicClass gapicClazz, JavaWriterVisitor codeWriter, JarOutputStream jos) {
+      GapicClass gapicClazz, JavaWriterVisitor codeWriter, JarOutputStream jos) {
     ClassDefinition clazz = gapicClazz.classDefinition();
 
     clazz.accept(codeWriter);
@@ -98,19 +98,19 @@ public class Writer {
       jos.write(code.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException(
-              String.format(
-                      "Could not write code for class %s.%s: %s",
-                      clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()));
+          String.format(
+              "Could not write code for class %s.%s: %s",
+              clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()));
     }
     return path;
   }
 
   static void writeClazzSamples(
-          GapicClass gapicClazz,
-          String pakkage,
-          String clazzPath,
-          JarOutputStream jos,
-          Set<String> gapicSamples) {
+      GapicClass gapicClazz,
+      String pakkage,
+      String clazzPath,
+      JarOutputStream jos,
+      Set<String> gapicSamples) {
     for (Sample sample : gapicClazz.samples()) {
       if (!gapicSamples.contains(sample.name())) {
         writeExecutableSample(sample, pakkage, clazzPath, jos);
@@ -120,23 +120,23 @@ public class Writer {
   }
 
   private static void writeExecutableSample(
-          Sample sample, String pakkage, String clazzPath, JarOutputStream jos) {
+      Sample sample, String pakkage, String clazzPath, JarOutputStream jos) {
     JarEntry jarEntry =
-            new JarEntry(String.format("samples/generated/%s/%s.java", clazzPath, sample.name()));
+        new JarEntry(String.format("samples/generated/%s/%s.java", clazzPath, sample.name()));
     String executableSampleCode = SampleComposer.createExecutableSample(sample, pakkage);
     try {
       jos.putNextEntry(jarEntry);
       jos.write(executableSampleCode.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException(
-              String.format(
-                      "Could not write sample code for %s/%s.: %s",
-                      clazzPath, sample.name(), e.getMessage()));
+          String.format(
+              "Could not write sample code for %s/%s.: %s",
+              clazzPath, sample.name(), e.getMessage()));
     }
   }
 
   private static String writePackageInfo(
-          GapicPackageInfo gapicPackageInfo, JavaWriterVisitor codeWriter, JarOutputStream jos) {
+      GapicPackageInfo gapicPackageInfo, JavaWriterVisitor codeWriter, JarOutputStream jos) {
     PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
     packageInfo.accept(codeWriter);
     String code = codeWriter.write();
@@ -159,7 +159,7 @@ public class Writer {
       try {
         jos.putNextEntry(jarEntry);
         jos.write(
-                JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
+            JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
       } catch (IOException e) {
         throw new GapicWriterException("Could not write gapic_metadata.json");
       }
