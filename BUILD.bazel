@@ -112,7 +112,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -125,7 +125,7 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # another test resource
