@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_getExclusion_getExclusionRequest]
+// [START 1.0_10_generated_configclient_getexclusion_getexclusionrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.GetExclusionRequest;
 import com.google.logging.v2.LogExclusion;
@@ -40,4 +40,4 @@ public class GetExclusionGetExclusionRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_getExclusion_getExclusionRequest]
+// [END 1.0_10_generated_configclient_getexclusion_getexclusionrequest]

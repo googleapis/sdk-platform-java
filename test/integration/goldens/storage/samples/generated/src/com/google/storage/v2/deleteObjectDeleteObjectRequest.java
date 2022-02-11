@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_deleteObject_deleteObjectRequest]
+// [START 1.0_10_generated_storageclient_deleteobject_deleteobjectrequest]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
@@ -49,4 +49,4 @@ public class DeleteObjectDeleteObjectRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_deleteObject_deleteObjectRequest]
+// [END 1.0_10_generated_storageclient_deleteobject_deleteobjectrequest]

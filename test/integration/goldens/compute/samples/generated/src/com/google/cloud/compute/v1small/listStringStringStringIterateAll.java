@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_addressesClient_list_stringStringStringIterateAll]
+// [START 1.0_10_generated_addressesclient_list_stringstringstringiterateall]
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
 
@@ -38,4 +38,4 @@ public class ListStringStringStringIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_addressesClient_list_stringStringStringIterateAll]
+// [END 1.0_10_generated_addressesclient_list_stringstringstringiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_updateExclusion_callableFutureCallUpdateExclusionRequest]
+// [START 1.0_10_generated_configclient_updateexclusion_callablefuturecallupdateexclusionrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogExclusion;
@@ -46,4 +46,4 @@ public class UpdateExclusionCallableFutureCallUpdateExclusionRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_updateExclusion_callableFutureCallUpdateExclusionRequest]
+// [END 1.0_10_generated_configclient_updateexclusion_callablefuturecallupdateexclusionrequest]

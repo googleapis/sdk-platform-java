@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetServiceClient_create_assetServiceSettings1]
+// [START 1.0_10_generated_assetserviceclient_create_assetservicesettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.AssetServiceSettings;
@@ -37,4 +37,4 @@ public class CreateAssetServiceSettings1 {
     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
   }
 }
-// [END 1.0_10_generated_assetServiceClient_create_assetServiceSettings1]
+// [END 1.0_10_generated_assetserviceclient_create_assetservicesettings1]

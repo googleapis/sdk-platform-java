@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_createInstance_asyncStringStringInstanceGet]
+// [START 1.0_10_generated_cloudredisclient_createinstance_asyncstringstringinstanceget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
 import com.google.cloud.redis.v1beta1.LocationName;
@@ -37,4 +37,4 @@ public class CreateInstanceAsyncStringStringInstanceGet {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_createInstance_asyncStringStringInstanceGet]
+// [END 1.0_10_generated_cloudredisclient_createinstance_asyncstringstringinstanceget]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_testIamPermissions_resourceNameListString]
+// [START 1.0_10_generated_storageclient_testiampermissions_resourcenameliststring]
 import com.google.api.resourcenames.ResourceName;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.storage.v2.CryptoKeyName;
@@ -40,4 +40,4 @@ public class TestIamPermissionsResourceNameListString {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_testIamPermissions_resourceNameListString]
+// [END 1.0_10_generated_storageclient_testiampermissions_resourcenameliststring]

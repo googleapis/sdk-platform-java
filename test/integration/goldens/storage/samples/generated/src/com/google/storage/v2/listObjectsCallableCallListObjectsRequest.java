@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_listObjects_callableCallListObjectsRequest]
+// [START 1.0_10_generated_storageclient_listobjects_callablecalllistobjectsrequest]
 import com.google.common.base.Strings;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonRequestParams;
@@ -64,4 +64,4 @@ public class ListObjectsCallableCallListObjectsRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_listObjects_callableCallListObjectsRequest]
+// [END 1.0_10_generated_storageclient_listobjects_callablecalllistobjectsrequest]

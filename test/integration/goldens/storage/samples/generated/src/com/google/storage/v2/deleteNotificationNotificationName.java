@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_deleteNotification_notificationName]
+// [START 1.0_10_generated_storageclient_deletenotification_notificationname]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.NotificationName;
 import com.google.storage.v2.StorageClient;
@@ -35,4 +35,4 @@ public class DeleteNotificationNotificationName {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_deleteNotification_notificationName]
+// [END 1.0_10_generated_storageclient_deletenotification_notificationname]

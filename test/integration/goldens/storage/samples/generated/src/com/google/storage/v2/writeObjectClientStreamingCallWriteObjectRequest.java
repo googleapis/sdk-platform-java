@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_writeObject_clientStreamingCallWriteObjectRequest]
+// [START 1.0_10_generated_storageclient_writeobject_clientstreamingcallwriteobjectrequest]
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
@@ -65,4 +65,4 @@ public class WriteObjectClientStreamingCallWriteObjectRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_writeObject_clientStreamingCallWriteObjectRequest]
+// [END 1.0_10_generated_storageclient_writeobject_clientstreamingcallwriteobjectrequest]

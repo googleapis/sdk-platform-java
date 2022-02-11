@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsClient_listLogMetrics_callableCallListLogMetricsRequest]
+// [START 1.0_10_generated_metricsclient_listlogmetrics_callablecalllistlogmetricsrequest]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.common.base.Strings;
 import com.google.logging.v2.ListLogMetricsRequest;
@@ -54,4 +54,4 @@ public class ListLogMetricsCallableCallListLogMetricsRequest {
     }
   }
 }
-// [END 1.0_10_generated_metricsClient_listLogMetrics_callableCallListLogMetricsRequest]
+// [END 1.0_10_generated_metricsclient_listlogmetrics_callablecalllistlogmetricsrequest]

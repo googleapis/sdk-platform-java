@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_createBucket_callableFutureCallCreateBucketRequest]
+// [START 1.0_10_generated_storageclient_createbucket_callablefuturecallcreatebucketrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.CreateBucketRequest;
@@ -48,4 +48,4 @@ public class CreateBucketCallableFutureCallCreateBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_createBucket_callableFutureCallCreateBucketRequest]
+// [END 1.0_10_generated_storageclient_createbucket_callablefuturecallcreatebucketrequest]

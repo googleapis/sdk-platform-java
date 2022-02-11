@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_addressesClient_delete_callableFutureCallDeleteAddressRequest]
+// [START 1.0_10_generated_addressesclient_delete_callablefuturecalldeleteaddressrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.DeleteAddressRequest;
@@ -44,4 +44,4 @@ public class DeleteCallableFutureCallDeleteAddressRequest {
     }
   }
 }
-// [END 1.0_10_generated_addressesClient_delete_callableFutureCallDeleteAddressRequest]
+// [END 1.0_10_generated_addressesclient_delete_callablefuturecalldeleteaddressrequest]

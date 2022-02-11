@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicAdminClient_createTopic_topic]
+// [START 1.0_10_generated_topicadminclient_createtopic_topic]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.protobuf.Duration;
 import com.google.pubsub.v1.MessageStoragePolicy;
@@ -48,4 +48,4 @@ public class CreateTopicTopic {
     }
   }
 }
-// [END 1.0_10_generated_topicAdminClient_createTopic_topic]
+// [END 1.0_10_generated_topicadminclient_createtopic_topic]

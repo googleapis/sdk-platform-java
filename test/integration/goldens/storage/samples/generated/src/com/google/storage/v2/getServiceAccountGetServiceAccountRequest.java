@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_getServiceAccount_getServiceAccountRequest]
+// [START 1.0_10_generated_storageclient_getserviceaccount_getserviceaccountrequest]
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.GetServiceAccountRequest;
 import com.google.storage.v2.ProjectName;
@@ -41,4 +41,4 @@ public class GetServiceAccountGetServiceAccountRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_getServiceAccount_getServiceAccountRequest]
+// [END 1.0_10_generated_storageclient_getserviceaccount_getserviceaccountrequest]

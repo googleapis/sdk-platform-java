@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionAdminClient_createSnapshot_callableFutureCallCreateSnapshotRequest]
+// [START 1.0_10_generated_subscriptionadminclient_createsnapshot_callablefuturecallcreatesnapshotrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.CreateSnapshotRequest;
@@ -47,4 +47,4 @@ public class CreateSnapshotCallableFutureCallCreateSnapshotRequest {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionAdminClient_createSnapshot_callableFutureCallCreateSnapshotRequest]
+// [END 1.0_10_generated_subscriptionadminclient_createsnapshot_callablefuturecallcreatesnapshotrequest]

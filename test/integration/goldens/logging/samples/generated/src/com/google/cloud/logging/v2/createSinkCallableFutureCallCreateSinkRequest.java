@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_createSink_callableFutureCallCreateSinkRequest]
+// [START 1.0_10_generated_configclient_createsink_callablefuturecallcreatesinkrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CreateSinkRequest;
@@ -44,4 +44,4 @@ public class CreateSinkCallableFutureCallCreateSinkRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_createSink_callableFutureCallCreateSinkRequest]
+// [END 1.0_10_generated_configclient_createsink_callablefuturecallcreatesinkrequest]

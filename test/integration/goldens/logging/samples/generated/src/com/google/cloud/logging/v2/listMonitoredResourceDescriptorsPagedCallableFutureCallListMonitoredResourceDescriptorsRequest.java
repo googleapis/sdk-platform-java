@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingClient_listMonitoredResourceDescriptors_pagedCallableFutureCallListMonitoredResourceDescriptorsRequest]
+// [START 1.0_10_generated_loggingclient_listmonitoredresourcedescriptors_pagedcallablefuturecalllistmonitoredresourcedescriptorsrequest]
 import com.google.api.MonitoredResourceDescriptor;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.LoggingClient;
@@ -48,4 +48,4 @@ class ListMonitoredResourceDescriptorsPagedCallableFutureCallListMonitoredResour
     }
   }
 }
-// [END 1.0_10_generated_loggingClient_listMonitoredResourceDescriptors_pagedCallableFutureCallListMonitoredResourceDescriptorsRequest]
+// [END 1.0_10_generated_loggingclient_listmonitoredresourcedescriptors_pagedcallablefuturecalllistmonitoredresourcedescriptorsrequest]

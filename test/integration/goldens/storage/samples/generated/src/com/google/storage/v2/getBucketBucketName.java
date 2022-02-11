@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_getBucket_bucketName]
+// [START 1.0_10_generated_storageclient_getbucket_bucketname]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.StorageClient;
@@ -35,4 +35,4 @@ public class GetBucketBucketName {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_getBucket_bucketName]
+// [END 1.0_10_generated_storageclient_getbucket_bucketname]

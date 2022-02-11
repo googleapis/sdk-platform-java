@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_createBucket_projectNameBucketString]
+// [START 1.0_10_generated_storageclient_createbucket_projectnamebucketstring]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -37,4 +37,4 @@ public class CreateBucketProjectNameBucketString {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_createBucket_projectNameBucketString]
+// [END 1.0_10_generated_storageclient_createbucket_projectnamebucketstring]

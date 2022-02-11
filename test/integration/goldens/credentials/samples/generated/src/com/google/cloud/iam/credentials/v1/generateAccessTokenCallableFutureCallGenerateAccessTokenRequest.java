@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START 1.0_10_generated_iamCredentialsClient_generateAccessToken_callableFutureCallGenerateAccessTokenRequest]
+// [START 1.0_10_generated_iamcredentialsclient_generateaccesstoken_callablefuturecallgenerateaccesstokenrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
@@ -49,4 +49,4 @@ public class GenerateAccessTokenCallableFutureCallGenerateAccessTokenRequest {
     }
   }
 }
-// [END 1.0_10_generated_iamCredentialsClient_generateAccessToken_callableFutureCallGenerateAccessTokenRequest]
+// [END 1.0_10_generated_iamcredentialsclient_generateaccesstoken_callablefuturecallgenerateaccesstokenrequest]

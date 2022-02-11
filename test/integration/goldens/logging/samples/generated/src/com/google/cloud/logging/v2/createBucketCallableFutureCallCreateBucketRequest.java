@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_createBucket_callableFutureCallCreateBucketRequest]
+// [START 1.0_10_generated_configclient_createbucket_callablefuturecallcreatebucketrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CreateBucketRequest;
@@ -44,4 +44,4 @@ public class CreateBucketCallableFutureCallCreateBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_createBucket_callableFutureCallCreateBucketRequest]
+// [END 1.0_10_generated_configclient_createbucket_callablefuturecallcreatebucketrequest]

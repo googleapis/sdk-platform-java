@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsClient_updateLogMetric_callableFutureCallUpdateLogMetricRequest]
+// [START 1.0_10_generated_metricsclient_updatelogmetric_callablefuturecallupdatelogmetricrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.LogMetric;
@@ -43,4 +43,4 @@ public class UpdateLogMetricCallableFutureCallUpdateLogMetricRequest {
     }
   }
 }
-// [END 1.0_10_generated_metricsClient_updateLogMetric_callableFutureCallUpdateLogMetricRequest]
+// [END 1.0_10_generated_metricsclient_updatelogmetric_callablefuturecallupdatelogmetricrequest]

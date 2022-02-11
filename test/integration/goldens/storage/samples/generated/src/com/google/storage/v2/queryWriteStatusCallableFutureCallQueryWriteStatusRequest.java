@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_queryWriteStatus_callableFutureCallQueryWriteStatusRequest]
+// [START 1.0_10_generated_storageclient_querywritestatus_callablefuturecallquerywritestatusrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
@@ -46,4 +46,4 @@ public class QueryWriteStatusCallableFutureCallQueryWriteStatusRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_queryWriteStatus_callableFutureCallQueryWriteStatusRequest]
+// [END 1.0_10_generated_storageclient_querywritestatus_callablefuturecallquerywritestatusrequest]

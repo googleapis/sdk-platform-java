@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_listBooks_listBooksRequestIterateAll]
+// [START 1.0_10_generated_libraryserviceclient_listbooks_listbooksrequestiterateall]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.ListBooksRequest;
@@ -43,4 +43,4 @@ public class ListBooksListBooksRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_listBooks_listBooksRequestIterateAll]
+// [END 1.0_10_generated_libraryserviceclient_listbooks_listbooksrequestiterateall]

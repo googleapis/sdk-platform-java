@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionAdminClient_deleteSnapshot_snapshotName]
+// [START 1.0_10_generated_subscriptionadminclient_deletesnapshot_snapshotname]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.SnapshotName;
@@ -35,4 +35,4 @@ public class DeleteSnapshotSnapshotName {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionAdminClient_deleteSnapshot_snapshotName]
+// [END 1.0_10_generated_subscriptionadminclient_deletesnapshot_snapshotname]

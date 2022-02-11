@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_listBuckets_stringIterateAll]
+// [START 1.0_10_generated_configclient_listbuckets_stringiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LocationName;
 import com.google.logging.v2.LogBucket;
@@ -37,4 +37,4 @@ public class ListBucketsStringIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_configClient_listBuckets_stringIterateAll]
+// [END 1.0_10_generated_configclient_listbuckets_stringiterateall]

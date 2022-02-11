@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_listExclusions_pagedCallableFutureCallListExclusionsRequest]
+// [START 1.0_10_generated_configclient_listexclusions_pagedcallablefuturecalllistexclusionsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.ListExclusionsRequest;
@@ -47,4 +47,4 @@ public class ListExclusionsPagedCallableFutureCallListExclusionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_listExclusions_pagedCallableFutureCallListExclusionsRequest]
+// [END 1.0_10_generated_configclient_listexclusions_pagedcallablefuturecalllistexclusionsrequest]

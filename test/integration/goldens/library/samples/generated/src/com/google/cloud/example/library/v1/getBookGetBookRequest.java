@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_getBook_getBookRequest]
+// [START 1.0_10_generated_libraryserviceclient_getbook_getbookrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.BookName;
@@ -37,4 +37,4 @@ public class GetBookGetBookRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_getBook_getBookRequest]
+// [END 1.0_10_generated_libraryserviceclient_getbook_getbookrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_createBucket_createBucketRequest]
+// [START 1.0_10_generated_storageclient_createbucket_createbucketrequest]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.CreateBucketRequest;
 import com.google.storage.v2.PredefinedBucketAcl;
@@ -45,4 +45,4 @@ public class CreateBucketCreateBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_createBucket_createBucketRequest]
+// [END 1.0_10_generated_storageclient_createbucket_createbucketrequest]

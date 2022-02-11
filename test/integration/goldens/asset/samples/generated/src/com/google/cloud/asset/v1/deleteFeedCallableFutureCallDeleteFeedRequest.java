@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetServiceClient_deleteFeed_callableFutureCallDeleteFeedRequest]
+// [START 1.0_10_generated_assetserviceclient_deletefeed_callablefuturecalldeletefeedrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.DeleteFeedRequest;
@@ -42,4 +42,4 @@ public class DeleteFeedCallableFutureCallDeleteFeedRequest {
     }
   }
 }
-// [END 1.0_10_generated_assetServiceClient_deleteFeed_callableFutureCallDeleteFeedRequest]
+// [END 1.0_10_generated_assetserviceclient_deletefeed_callablefuturecalldeletefeedrequest]

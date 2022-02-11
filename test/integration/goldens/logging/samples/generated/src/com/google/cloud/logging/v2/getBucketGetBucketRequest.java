@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_getBucket_getBucketRequest]
+// [START 1.0_10_generated_configclient_getbucket_getbucketrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.GetBucketRequest;
 import com.google.logging.v2.LogBucket;
@@ -41,4 +41,4 @@ public class GetBucketGetBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_getBucket_getBucketRequest]
+// [END 1.0_10_generated_configclient_getbucket_getbucketrequest]

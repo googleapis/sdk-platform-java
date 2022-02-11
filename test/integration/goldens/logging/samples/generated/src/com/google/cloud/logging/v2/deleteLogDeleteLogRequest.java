@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingClient_deleteLog_deleteLogRequest]
+// [START 1.0_10_generated_loggingclient_deletelog_deletelogrequest]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.DeleteLogRequest;
 import com.google.logging.v2.LogName;
@@ -39,4 +39,4 @@ public class DeleteLogDeleteLogRequest {
     }
   }
 }
-// [END 1.0_10_generated_loggingClient_deleteLog_deleteLogRequest]
+// [END 1.0_10_generated_loggingclient_deletelog_deletelogrequest]

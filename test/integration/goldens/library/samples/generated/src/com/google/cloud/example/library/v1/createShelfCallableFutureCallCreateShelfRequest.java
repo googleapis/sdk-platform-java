@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_createShelf_callableFutureCallCreateShelfRequest]
+// [START 1.0_10_generated_libraryserviceclient_createshelf_callablefuturecallcreateshelfrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.CreateShelfRequest;
@@ -39,4 +39,4 @@ public class CreateShelfCallableFutureCallCreateShelfRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_createShelf_callableFutureCallCreateShelfRequest]
+// [END 1.0_10_generated_libraryserviceclient_createshelf_callablefuturecallcreateshelfrequest]

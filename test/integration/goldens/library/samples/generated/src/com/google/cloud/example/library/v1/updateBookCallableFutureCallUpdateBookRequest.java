@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_updateBook_callableFutureCallUpdateBookRequest]
+// [START 1.0_10_generated_libraryserviceclient_updatebook_callablefuturecallupdatebookrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
@@ -43,4 +43,4 @@ public class UpdateBookCallableFutureCallUpdateBookRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_updateBook_callableFutureCallUpdateBookRequest]
+// [END 1.0_10_generated_libraryserviceclient_updatebook_callablefuturecallupdatebookrequest]

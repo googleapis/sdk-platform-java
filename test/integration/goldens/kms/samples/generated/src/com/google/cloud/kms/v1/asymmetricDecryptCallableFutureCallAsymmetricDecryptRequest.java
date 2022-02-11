@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_asymmetricDecrypt_callableFutureCallAsymmetricDecryptRequest]
+// [START 1.0_10_generated_keymanagementserviceclient_asymmetricdecrypt_callablefuturecallasymmetricdecryptrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.AsymmetricDecryptRequest;
 import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
@@ -56,4 +56,4 @@ public class AsymmetricDecryptCallableFutureCallAsymmetricDecryptRequest {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_asymmetricDecrypt_callableFutureCallAsymmetricDecryptRequest]
+// [END 1.0_10_generated_keymanagementserviceclient_asymmetricdecrypt_callablefuturecallasymmetricdecryptrequest]

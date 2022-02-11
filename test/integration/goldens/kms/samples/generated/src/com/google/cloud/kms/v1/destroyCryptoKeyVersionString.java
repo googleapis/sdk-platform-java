@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_destroyCryptoKeyVersion_string]
+// [START 1.0_10_generated_keymanagementserviceclient_destroycryptokeyversion_string]
 import com.google.cloud.kms.v1.CryptoKeyVersion;
 import com.google.cloud.kms.v1.CryptoKeyVersionName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -39,4 +39,4 @@ public class DestroyCryptoKeyVersionString {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_destroyCryptoKeyVersion_string]
+// [END 1.0_10_generated_keymanagementserviceclient_destroycryptokeyversion_string]

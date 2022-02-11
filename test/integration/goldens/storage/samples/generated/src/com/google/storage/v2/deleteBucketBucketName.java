@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_deleteBucket_bucketName]
+// [START 1.0_10_generated_storageclient_deletebucket_bucketname]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.StorageClient;
@@ -35,4 +35,4 @@ public class DeleteBucketBucketName {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_deleteBucket_bucketName]
+// [END 1.0_10_generated_storageclient_deletebucket_bucketname]

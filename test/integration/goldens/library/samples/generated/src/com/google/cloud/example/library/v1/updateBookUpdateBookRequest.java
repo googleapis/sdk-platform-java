@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_updateBook_updateBookRequest]
+// [START 1.0_10_generated_libraryserviceclient_updatebook_updatebookrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.UpdateBookRequest;
@@ -40,4 +40,4 @@ public class UpdateBookUpdateBookRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_updateBook_updateBookRequest]
+// [END 1.0_10_generated_libraryserviceclient_updatebook_updatebookrequest]

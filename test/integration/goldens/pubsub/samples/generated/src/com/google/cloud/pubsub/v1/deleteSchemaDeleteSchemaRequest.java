@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_schemaServiceClient_deleteSchema_deleteSchemaRequest]
+// [START 1.0_10_generated_schemaserviceclient_deleteschema_deleteschemarequest]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.DeleteSchemaRequest;
@@ -39,4 +39,4 @@ public class DeleteSchemaDeleteSchemaRequest {
     }
   }
 }
-// [END 1.0_10_generated_schemaServiceClient_deleteSchema_deleteSchemaRequest]
+// [END 1.0_10_generated_schemaserviceclient_deleteschema_deleteschemarequest]

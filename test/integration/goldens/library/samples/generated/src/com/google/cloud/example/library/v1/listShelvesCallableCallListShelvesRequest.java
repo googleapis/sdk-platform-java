@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_listShelves_callableCallListShelvesRequest]
+// [START 1.0_10_generated_libraryserviceclient_listshelves_callablecalllistshelvesrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.common.base.Strings;
 import com.google.example.library.v1.ListShelvesRequest;
@@ -52,4 +52,4 @@ public class ListShelvesCallableCallListShelvesRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_listShelves_callableCallListShelvesRequest]
+// [END 1.0_10_generated_libraryserviceclient_listshelves_callablecalllistshelvesrequest]

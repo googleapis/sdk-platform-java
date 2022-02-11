@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_updateBucket_updateBucketRequest]
+// [START 1.0_10_generated_configclient_updatebucket_updatebucketrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogBucket;
 import com.google.logging.v2.LogBucketName;
@@ -44,4 +44,4 @@ public class UpdateBucketUpdateBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_updateBucket_updateBucketRequest]
+// [END 1.0_10_generated_configclient_updatebucket_updatebucketrequest]

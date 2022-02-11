@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetServiceSettings_batchGetAssetsHistory_settingsSetRetrySettingsAssetServiceSettings]
+// [START 1.0_10_generated_assetservicesettings_batchgetassetshistory_settingssetretrysettingsassetservicesettings]
 import com.google.cloud.asset.v1.AssetServiceSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class BatchGetAssetsHistorySettingsSetRetrySettingsAssetServiceSettings {
     AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_assetServiceSettings_batchGetAssetsHistory_settingsSetRetrySettingsAssetServiceSettings]
+// [END 1.0_10_generated_assetservicesettings_batchgetassetshistory_settingssetretrysettingsassetservicesettings]

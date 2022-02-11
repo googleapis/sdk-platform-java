@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configSettings_getBucket_settingsSetRetrySettingsConfigSettings]
+// [START 1.0_10_generated_configsettings_getbucket_settingssetretrysettingsconfigsettings]
 import com.google.cloud.logging.v2.ConfigSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class GetBucketSettingsSetRetrySettingsConfigSettings {
     ConfigSettings configSettings = configSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_configSettings_getBucket_settingsSetRetrySettingsConfigSettings]
+// [END 1.0_10_generated_configsettings_getbucket_settingssetretrysettingsconfigsettings]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_deleteInstance_operationCallableFutureCallDeleteInstanceRequest]
+// [START 1.0_10_generated_cloudredisclient_deleteinstance_operationcallablefuturecalldeleteinstancerequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
@@ -45,4 +45,4 @@ public class DeleteInstanceOperationCallableFutureCallDeleteInstanceRequest {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_deleteInstance_operationCallableFutureCallDeleteInstanceRequest]
+// [END 1.0_10_generated_cloudredisclient_deleteinstance_operationcallablefuturecalldeleteinstancerequest]

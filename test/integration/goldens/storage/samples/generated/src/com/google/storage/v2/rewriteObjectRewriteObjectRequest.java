@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_rewriteObject_rewriteObjectRequest]
+// [START 1.0_10_generated_storageclient_rewriteobject_rewriteobjectrequest]
 import com.google.protobuf.ByteString;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -64,4 +64,4 @@ public class RewriteObjectRewriteObjectRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_rewriteObject_rewriteObjectRequest]
+// [END 1.0_10_generated_storageclient_rewriteobject_rewriteobjectrequest]

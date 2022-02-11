@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.stub.samples;
 
-// [START 1.0_10_generated_keyManagementServiceStubSettings_getKeyRing_settingsSetRetrySettingsKeyManagementServiceStubSettings]
+// [START 1.0_10_generated_keymanagementservicestubsettings_getkeyring_settingssetretrysettingskeymanagementservicestubsettings]
 import com.google.cloud.kms.v1.stub.KeyManagementServiceStubSettings;
 import java.time.Duration;
 
@@ -44,4 +44,4 @@ public class GetKeyRingSettingsSetRetrySettingsKeyManagementServiceStubSettings 
         keyManagementServiceSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_keyManagementServiceStubSettings_getKeyRing_settingsSetRetrySettingsKeyManagementServiceStubSettings]
+// [END 1.0_10_generated_keymanagementservicestubsettings_getkeyring_settingssetretrysettingskeymanagementservicestubsettings]

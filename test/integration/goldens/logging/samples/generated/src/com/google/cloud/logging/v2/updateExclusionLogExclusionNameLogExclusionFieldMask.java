@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_updateExclusion_logExclusionNameLogExclusionFieldMask]
+// [START 1.0_10_generated_configclient_updateexclusion_logexclusionnamelogexclusionfieldmask]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogExclusion;
 import com.google.logging.v2.LogExclusionName;
@@ -38,4 +38,4 @@ public class UpdateExclusionLogExclusionNameLogExclusionFieldMask {
     }
   }
 }
-// [END 1.0_10_generated_configClient_updateExclusion_logExclusionNameLogExclusionFieldMask]
+// [END 1.0_10_generated_configclient_updateexclusion_logexclusionnamelogexclusionfieldmask]

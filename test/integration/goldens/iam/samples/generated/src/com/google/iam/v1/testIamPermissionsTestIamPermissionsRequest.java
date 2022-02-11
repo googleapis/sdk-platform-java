@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START 1.0_10_generated_iAMPolicyClient_testIamPermissions_testIamPermissionsRequest]
+// [START 1.0_10_generated_iampolicyclient_testiampermissions_testiampermissionsrequest]
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -40,4 +40,4 @@ public class TestIamPermissionsTestIamPermissionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_iAMPolicyClient_testIamPermissions_testIamPermissionsRequest]
+// [END 1.0_10_generated_iampolicyclient_testiampermissions_testiampermissionsrequest]

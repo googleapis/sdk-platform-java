@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_createShelf_createShelfRequest]
+// [START 1.0_10_generated_libraryserviceclient_createshelf_createshelfrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.CreateShelfRequest;
 import com.google.example.library.v1.Shelf;
@@ -36,4 +36,4 @@ public class CreateShelfCreateShelfRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_createShelf_createShelfRequest]
+// [END 1.0_10_generated_libraryserviceclient_createshelf_createshelfrequest]

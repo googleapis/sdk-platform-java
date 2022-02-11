@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_deleteShelf_shelfName]
+// [START 1.0_10_generated_libraryserviceclient_deleteshelf_shelfname]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.ShelfName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteShelfShelfName {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_deleteShelf_shelfName]
+// [END 1.0_10_generated_libraryserviceclient_deleteshelf_shelfname]

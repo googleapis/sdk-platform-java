@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicAdminClient_createTopic_callableFutureCallTopic]
+// [START 1.0_10_generated_topicadminclient_createtopic_callablefuturecalltopic]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.protobuf.Duration;
@@ -51,4 +51,4 @@ public class CreateTopicCallableFutureCallTopic {
     }
   }
 }
-// [END 1.0_10_generated_topicAdminClient_createTopic_callableFutureCallTopic]
+// [END 1.0_10_generated_topicadminclient_createtopic_callablefuturecalltopic]

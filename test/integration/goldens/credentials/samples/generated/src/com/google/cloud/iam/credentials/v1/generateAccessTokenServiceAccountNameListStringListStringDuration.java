@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START 1.0_10_generated_iamCredentialsClient_generateAccessToken_serviceAccountNameListStringListStringDuration]
+// [START 1.0_10_generated_iamcredentialsclient_generateaccesstoken_serviceaccountnameliststringliststringduration]
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -43,4 +43,4 @@ public class GenerateAccessTokenServiceAccountNameListStringListStringDuration {
     }
   }
 }
-// [END 1.0_10_generated_iamCredentialsClient_generateAccessToken_serviceAccountNameListStringListStringDuration]
+// [END 1.0_10_generated_iamcredentialsclient_generateaccesstoken_serviceaccountnameliststringliststringduration]

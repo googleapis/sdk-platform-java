@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_failoverInstance_operationCallableFutureCallFailoverInstanceRequest]
+// [START 1.0_10_generated_cloudredisclient_failoverinstance_operationcallablefuturecallfailoverinstancerequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
@@ -45,4 +45,4 @@ public class FailoverInstanceOperationCallableFutureCallFailoverInstanceRequest 
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_failoverInstance_operationCallableFutureCallFailoverInstanceRequest]
+// [END 1.0_10_generated_cloudredisclient_failoverinstance_operationcallablefuturecallfailoverinstancerequest]

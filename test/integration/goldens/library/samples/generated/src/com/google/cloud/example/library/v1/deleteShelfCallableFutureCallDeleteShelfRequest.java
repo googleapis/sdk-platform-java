@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_deleteShelf_callableFutureCallDeleteShelfRequest]
+// [START 1.0_10_generated_libraryserviceclient_deleteshelf_callablefuturecalldeleteshelfrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.DeleteShelfRequest;
@@ -40,4 +40,4 @@ public class DeleteShelfCallableFutureCallDeleteShelfRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_deleteShelf_callableFutureCallDeleteShelfRequest]
+// [END 1.0_10_generated_libraryserviceclient_deleteshelf_callablefuturecalldeleteshelfrequest]

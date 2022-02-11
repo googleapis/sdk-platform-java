@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_createBook_shelfNameBook]
+// [START 1.0_10_generated_libraryserviceclient_createbook_shelfnamebook]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.ShelfName;
@@ -36,4 +36,4 @@ public class CreateBookShelfNameBook {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_createBook_shelfNameBook]
+// [END 1.0_10_generated_libraryserviceclient_createbook_shelfnamebook]

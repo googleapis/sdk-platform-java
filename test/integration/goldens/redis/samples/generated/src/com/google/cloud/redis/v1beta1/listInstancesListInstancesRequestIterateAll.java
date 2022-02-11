@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_listInstances_listInstancesRequestIterateAll]
+// [START 1.0_10_generated_cloudredisclient_listinstances_listinstancesrequestiterateall]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
 import com.google.cloud.redis.v1beta1.ListInstancesRequest;
@@ -43,4 +43,4 @@ public class ListInstancesListInstancesRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_listInstances_listInstancesRequestIterateAll]
+// [END 1.0_10_generated_cloudredisclient_listinstances_listinstancesrequestiterateall]

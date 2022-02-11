@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.stub.samples;
 
-// [START 1.0_10_generated_subscriberStubSettings_createSubscription_settingsSetRetrySettingsSubscriberStubSettings]
+// [START 1.0_10_generated_subscriberstubsettings_createsubscription_settingssetretrysettingssubscriberstubsettings]
 import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class CreateSubscriptionSettingsSetRetrySettingsSubscriberStubSettings {
     SubscriberStubSettings subscriptionAdminSettings = subscriptionAdminSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_subscriberStubSettings_createSubscription_settingsSetRetrySettingsSubscriberStubSettings]
+// [END 1.0_10_generated_subscriberstubsettings_createsubscription_settingssetretrysettingssubscriberstubsettings]

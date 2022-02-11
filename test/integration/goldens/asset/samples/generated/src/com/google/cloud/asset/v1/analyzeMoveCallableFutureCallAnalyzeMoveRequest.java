@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetServiceClient_analyzeMove_callableFutureCallAnalyzeMoveRequest]
+// [START 1.0_10_generated_assetserviceclient_analyzemove_callablefuturecallanalyzemoverequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AnalyzeMoveRequest;
 import com.google.cloud.asset.v1.AnalyzeMoveResponse;
@@ -43,4 +43,4 @@ public class AnalyzeMoveCallableFutureCallAnalyzeMoveRequest {
     }
   }
 }
-// [END 1.0_10_generated_assetServiceClient_analyzeMove_callableFutureCallAnalyzeMoveRequest]
+// [END 1.0_10_generated_assetserviceclient_analyzemove_callablefuturecallanalyzemoverequest]

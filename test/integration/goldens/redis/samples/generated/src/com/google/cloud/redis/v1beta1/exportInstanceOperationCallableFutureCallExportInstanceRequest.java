@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_exportInstance_operationCallableFutureCallExportInstanceRequest]
+// [START 1.0_10_generated_cloudredisclient_exportinstance_operationcallablefuturecallexportinstancerequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
@@ -46,4 +46,4 @@ public class ExportInstanceOperationCallableFutureCallExportInstanceRequest {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_exportInstance_operationCallableFutureCallExportInstanceRequest]
+// [END 1.0_10_generated_cloudredisclient_exportinstance_operationcallablefuturecallexportinstancerequest]

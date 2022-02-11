@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_getHmacKey_getHmacKeyRequest]
+// [START 1.0_10_generated_storageclient_gethmackey_gethmackeyrequest]
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.GetHmacKeyRequest;
 import com.google.storage.v2.HmacKeyMetadata;
@@ -42,4 +42,4 @@ public class GetHmacKeyGetHmacKeyRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_getHmacKey_getHmacKeyRequest]
+// [END 1.0_10_generated_storageclient_gethmackey_gethmackeyrequest]

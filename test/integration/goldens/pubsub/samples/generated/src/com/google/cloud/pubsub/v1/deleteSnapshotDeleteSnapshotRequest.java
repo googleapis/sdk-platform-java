@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionAdminClient_deleteSnapshot_deleteSnapshotRequest]
+// [START 1.0_10_generated_subscriptionadminclient_deletesnapshot_deletesnapshotrequest]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.DeleteSnapshotRequest;
@@ -39,4 +39,4 @@ public class DeleteSnapshotDeleteSnapshotRequest {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionAdminClient_deleteSnapshot_deleteSnapshotRequest]
+// [END 1.0_10_generated_subscriptionadminclient_deletesnapshot_deletesnapshotrequest]

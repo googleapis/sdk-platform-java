@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicAdminClient_publish_topicNameListPubsubMessage]
+// [START 1.0_10_generated_topicadminclient_publish_topicnamelistpubsubmessage]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.PublishResponse;
 import com.google.pubsub.v1.PubsubMessage;
@@ -39,4 +39,4 @@ public class PublishTopicNameListPubsubMessage {
     }
   }
 }
-// [END 1.0_10_generated_topicAdminClient_publish_topicNameListPubsubMessage]
+// [END 1.0_10_generated_topicadminclient_publish_topicnamelistpubsubmessage]

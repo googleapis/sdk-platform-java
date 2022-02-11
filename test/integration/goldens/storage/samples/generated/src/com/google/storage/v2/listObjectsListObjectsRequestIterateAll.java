@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_listObjects_listObjectsRequestIterateAll]
+// [START 1.0_10_generated_storageclient_listobjects_listobjectsrequestiterateall]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ListObjectsRequest;
@@ -53,4 +53,4 @@ public class ListObjectsListObjectsRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_listObjects_listObjectsRequestIterateAll]
+// [END 1.0_10_generated_storageclient_listobjects_listobjectsrequestiterateall]

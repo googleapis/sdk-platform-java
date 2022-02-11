@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_decrypt_callableFutureCallDecryptRequest]
+// [START 1.0_10_generated_keymanagementserviceclient_decrypt_callablefuturecalldecryptrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.DecryptRequest;
@@ -52,4 +52,4 @@ public class DecryptCallableFutureCallDecryptRequest {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_decrypt_callableFutureCallDecryptRequest]
+// [END 1.0_10_generated_keymanagementserviceclient_decrypt_callablefuturecalldecryptrequest]

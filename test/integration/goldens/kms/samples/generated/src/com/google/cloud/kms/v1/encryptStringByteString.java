@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_encrypt_stringByteString]
+// [START 1.0_10_generated_keymanagementserviceclient_encrypt_stringbytestring]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.EncryptResponse;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -39,4 +39,4 @@ public class EncryptStringByteString {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_encrypt_stringByteString]
+// [END 1.0_10_generated_keymanagementserviceclient_encrypt_stringbytestring]

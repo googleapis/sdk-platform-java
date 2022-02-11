@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_updateInstance_callableFutureCallUpdateInstanceRequest]
+// [START 1.0_10_generated_cloudredisclient_updateinstance_callablefuturecallupdateinstancerequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -44,4 +44,4 @@ public class UpdateInstanceCallableFutureCallUpdateInstanceRequest {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_updateInstance_callableFutureCallUpdateInstanceRequest]
+// [END 1.0_10_generated_cloudredisclient_updateinstance_callablefuturecallupdateinstancerequest]

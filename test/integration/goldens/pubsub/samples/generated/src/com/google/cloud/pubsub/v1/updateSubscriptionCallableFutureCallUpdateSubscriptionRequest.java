@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionAdminClient_updateSubscription_callableFutureCallUpdateSubscriptionRequest]
+// [START 1.0_10_generated_subscriptionadminclient_updatesubscription_callablefuturecallupdatesubscriptionrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.FieldMask;
@@ -45,4 +45,4 @@ public class UpdateSubscriptionCallableFutureCallUpdateSubscriptionRequest {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionAdminClient_updateSubscription_callableFutureCallUpdateSubscriptionRequest]
+// [END 1.0_10_generated_subscriptionadminclient_updatesubscription_callablefuturecallupdatesubscriptionrequest]

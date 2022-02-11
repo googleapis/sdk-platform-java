@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_listKeyRings_callableCallListKeyRingsRequest]
+// [START 1.0_10_generated_keymanagementserviceclient_listkeyrings_callablecalllistkeyringsrequest]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRing;
 import com.google.cloud.kms.v1.ListKeyRingsRequest;
@@ -58,4 +58,4 @@ public class ListKeyRingsCallableCallListKeyRingsRequest {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_listKeyRings_callableCallListKeyRingsRequest]
+// [END 1.0_10_generated_keymanagementserviceclient_listkeyrings_callablecalllistkeyringsrequest]

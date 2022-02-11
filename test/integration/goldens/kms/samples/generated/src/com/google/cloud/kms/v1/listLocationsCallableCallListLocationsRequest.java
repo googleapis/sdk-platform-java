@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_listLocations_callableCallListLocationsRequest]
+// [START 1.0_10_generated_keymanagementserviceclient_listlocations_callablecalllistlocationsrequest]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
@@ -56,4 +56,4 @@ public class ListLocationsCallableCallListLocationsRequest {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_listLocations_callableCallListLocationsRequest]
+// [END 1.0_10_generated_keymanagementserviceclient_listlocations_callablecalllistlocationsrequest]

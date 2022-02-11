@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_deleteSink_string]
+// [START 1.0_10_generated_configclient_deletesink_string]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogSinkName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteSinkString {
     }
   }
 }
-// [END 1.0_10_generated_configClient_deleteSink_string]
+// [END 1.0_10_generated_configclient_deletesink_string]

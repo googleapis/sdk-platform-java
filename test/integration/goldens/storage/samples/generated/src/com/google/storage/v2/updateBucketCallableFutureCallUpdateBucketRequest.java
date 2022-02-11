@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_updateBucket_callableFutureCallUpdateBucketRequest]
+// [START 1.0_10_generated_storageclient_updatebucket_callablefuturecallupdatebucketrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
@@ -51,4 +51,4 @@ public class UpdateBucketCallableFutureCallUpdateBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_updateBucket_callableFutureCallUpdateBucketRequest]
+// [END 1.0_10_generated_storageclient_updatebucket_callablefuturecallupdatebucketrequest]

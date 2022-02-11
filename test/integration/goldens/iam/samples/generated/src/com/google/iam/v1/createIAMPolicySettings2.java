@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START 1.0_10_generated_iAMPolicyClient_create_iAMPolicySettings2]
+// [START 1.0_10_generated_iampolicyclient_create_iampolicysettings2]
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.IAMPolicySettings;
 import com.google.iam.v1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateIAMPolicySettings2 {
     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
   }
 }
-// [END 1.0_10_generated_iAMPolicyClient_create_iAMPolicySettings2]
+// [END 1.0_10_generated_iampolicyclient_create_iampolicysettings2]

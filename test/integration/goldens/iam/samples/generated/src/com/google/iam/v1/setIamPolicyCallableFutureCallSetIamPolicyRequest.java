@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START 1.0_10_generated_iAMPolicyClient_setIamPolicy_callableFutureCallSetIamPolicyRequest]
+// [START 1.0_10_generated_iampolicyclient_setiampolicy_callablefuturecallsetiampolicyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.Policy;
@@ -42,4 +42,4 @@ public class SetIamPolicyCallableFutureCallSetIamPolicyRequest {
     }
   }
 }
-// [END 1.0_10_generated_iAMPolicyClient_setIamPolicy_callableFutureCallSetIamPolicyRequest]
+// [END 1.0_10_generated_iampolicyclient_setiampolicy_callablefuturecallsetiampolicyrequest]

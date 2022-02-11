@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingClient_listLogEntries_listLogEntriesRequestIterateAll]
+// [START 1.0_10_generated_loggingclient_listlogentries_listlogentriesrequestiterateall]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.ListLogEntriesRequest;
 import com.google.logging.v2.LogEntry;
@@ -45,4 +45,4 @@ public class ListLogEntriesListLogEntriesRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_loggingClient_listLogEntries_listLogEntriesRequestIterateAll]
+// [END 1.0_10_generated_loggingclient_listlogentries_listlogentriesrequestiterateall]

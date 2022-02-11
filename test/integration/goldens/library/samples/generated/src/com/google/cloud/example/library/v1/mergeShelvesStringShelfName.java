@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_mergeShelves_stringShelfName]
+// [START 1.0_10_generated_libraryserviceclient_mergeshelves_stringshelfname]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Shelf;
 import com.google.example.library.v1.ShelfName;
@@ -36,4 +36,4 @@ public class MergeShelvesStringShelfName {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_mergeShelves_stringShelfName]
+// [END 1.0_10_generated_libraryserviceclient_mergeshelves_stringshelfname]

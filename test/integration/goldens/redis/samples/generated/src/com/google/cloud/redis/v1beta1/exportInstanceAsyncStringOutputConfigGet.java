@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_exportInstance_asyncStringOutputConfigGet]
+// [START 1.0_10_generated_cloudredisclient_exportinstance_asyncstringoutputconfigget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
 import com.google.cloud.redis.v1beta1.OutputConfig;
@@ -36,4 +36,4 @@ public class ExportInstanceAsyncStringOutputConfigGet {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_exportInstance_asyncStringOutputConfigGet]
+// [END 1.0_10_generated_cloudredisclient_exportinstance_asyncstringoutputconfigget]

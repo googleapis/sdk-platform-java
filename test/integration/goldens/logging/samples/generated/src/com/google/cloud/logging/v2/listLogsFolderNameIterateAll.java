@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingClient_listLogs_folderNameIterateAll]
+// [START 1.0_10_generated_loggingclient_listlogs_foldernameiterateall]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.FolderName;
 
@@ -36,4 +36,4 @@ public class ListLogsFolderNameIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_loggingClient_listLogs_folderNameIterateAll]
+// [END 1.0_10_generated_loggingclient_listlogs_foldernameiterateall]

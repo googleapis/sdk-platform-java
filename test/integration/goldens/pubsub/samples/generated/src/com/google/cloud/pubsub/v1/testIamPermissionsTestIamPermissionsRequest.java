@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicAdminClient_testIamPermissions_testIamPermissionsRequest]
+// [START 1.0_10_generated_topicadminclient_testiampermissions_testiampermissionsrequest]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -41,4 +41,4 @@ public class TestIamPermissionsTestIamPermissionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_topicAdminClient_testIamPermissions_testIamPermissionsRequest]
+// [END 1.0_10_generated_topicadminclient_testiampermissions_testiampermissionsrequest]

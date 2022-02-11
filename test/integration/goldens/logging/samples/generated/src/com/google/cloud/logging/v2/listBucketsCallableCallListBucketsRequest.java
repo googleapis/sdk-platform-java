@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_listBuckets_callableCallListBucketsRequest]
+// [START 1.0_10_generated_configclient_listbuckets_callablecalllistbucketsrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.common.base.Strings;
 import com.google.logging.v2.ListBucketsRequest;
@@ -54,4 +54,4 @@ public class ListBucketsCallableCallListBucketsRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_listBuckets_callableCallListBucketsRequest]
+// [END 1.0_10_generated_configclient_listbuckets_callablecalllistbucketsrequest]

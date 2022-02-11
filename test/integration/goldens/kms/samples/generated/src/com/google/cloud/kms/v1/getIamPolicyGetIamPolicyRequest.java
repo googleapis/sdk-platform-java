@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_getIamPolicy_getIamPolicyRequest]
+// [START 1.0_10_generated_keymanagementserviceclient_getiampolicy_getiampolicyrequest]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.iam.v1.GetIamPolicyRequest;
@@ -44,4 +44,4 @@ public class GetIamPolicyGetIamPolicyRequest {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_getIamPolicy_getIamPolicyRequest]
+// [END 1.0_10_generated_keymanagementserviceclient_getiampolicy_getiampolicyrequest]

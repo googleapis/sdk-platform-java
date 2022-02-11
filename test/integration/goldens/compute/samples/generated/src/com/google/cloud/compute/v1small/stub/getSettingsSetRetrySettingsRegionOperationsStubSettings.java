@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.stub.samples;
 
-// [START 1.0_10_generated_regionOperationsStubSettings_get_settingsSetRetrySettingsRegionOperationsStubSettings]
+// [START 1.0_10_generated_regionoperationsstubsettings_get_settingssetretrysettingsregionoperationsstubsettings]
 import com.google.cloud.compute.v1small.stub.RegionOperationsStubSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class GetSettingsSetRetrySettingsRegionOperationsStubSettings {
     RegionOperationsStubSettings regionOperationsSettings = regionOperationsSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_regionOperationsStubSettings_get_settingsSetRetrySettingsRegionOperationsStubSettings]
+// [END 1.0_10_generated_regionoperationsstubsettings_get_settingssetretrysettingsregionoperationsstubsettings]

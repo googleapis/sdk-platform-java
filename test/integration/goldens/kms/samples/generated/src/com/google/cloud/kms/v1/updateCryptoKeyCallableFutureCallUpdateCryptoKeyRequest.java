@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_updateCryptoKey_callableFutureCallUpdateCryptoKeyRequest]
+// [START 1.0_10_generated_keymanagementserviceclient_updatecryptokey_callablefuturecallupdatecryptokeyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -45,4 +45,4 @@ public class UpdateCryptoKeyCallableFutureCallUpdateCryptoKeyRequest {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_updateCryptoKey_callableFutureCallUpdateCryptoKeyRequest]
+// [END 1.0_10_generated_keymanagementserviceclient_updatecryptokey_callablefuturecallupdatecryptokeyrequest]

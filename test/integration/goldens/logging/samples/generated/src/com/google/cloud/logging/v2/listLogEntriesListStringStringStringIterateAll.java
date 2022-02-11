@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingClient_listLogEntries_listStringStringStringIterateAll]
+// [START 1.0_10_generated_loggingclient_listlogentries_liststringstringstringiterateall]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.LogEntry;
 import java.util.ArrayList;
@@ -41,4 +41,4 @@ public class ListLogEntriesListStringStringStringIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_loggingClient_listLogEntries_listStringStringStringIterateAll]
+// [END 1.0_10_generated_loggingclient_listlogentries_liststringstringstringiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_getIamPolicy_resourceName]
+// [START 1.0_10_generated_storageclient_getiampolicy_resourcename]
 import com.google.api.resourcenames.ResourceName;
 import com.google.iam.v1.Policy;
 import com.google.storage.v2.CryptoKeyName;
@@ -37,4 +37,4 @@ public class GetIamPolicyResourceName {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_getIamPolicy_resourceName]
+// [END 1.0_10_generated_storageclient_getiampolicy_resourcename]

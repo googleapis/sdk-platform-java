@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.stub.samples;
 
-// [START 1.0_10_generated_assetServiceStubSettings_batchGetAssetsHistory_settingsSetRetrySettingsAssetServiceStubSettings]
+// [START 1.0_10_generated_assetservicestubsettings_batchgetassetshistory_settingssetretrysettingsassetservicestubsettings]
 import com.google.cloud.asset.v1.stub.AssetServiceStubSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class BatchGetAssetsHistorySettingsSetRetrySettingsAssetServiceStubSettin
     AssetServiceStubSettings assetServiceSettings = assetServiceSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_assetServiceStubSettings_batchGetAssetsHistory_settingsSetRetrySettingsAssetServiceStubSettings]
+// [END 1.0_10_generated_assetservicestubsettings_batchgetassetshistory_settingssetretrysettingsassetservicestubsettings]

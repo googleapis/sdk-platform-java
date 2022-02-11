@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_createBucket_createBucketRequest]
+// [START 1.0_10_generated_configclient_createbucket_createbucketrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CreateBucketRequest;
 import com.google.logging.v2.LocationName;
@@ -41,4 +41,4 @@ public class CreateBucketCreateBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_createBucket_createBucketRequest]
+// [END 1.0_10_generated_configclient_createbucket_createbucketrequest]

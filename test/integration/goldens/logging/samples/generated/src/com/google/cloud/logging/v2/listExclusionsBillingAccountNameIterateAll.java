@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_listExclusions_billingAccountNameIterateAll]
+// [START 1.0_10_generated_configclient_listexclusions_billingaccountnameiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.BillingAccountName;
 import com.google.logging.v2.LogExclusion;
@@ -37,4 +37,4 @@ public class ListExclusionsBillingAccountNameIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_configClient_listExclusions_billingAccountNameIterateAll]
+// [END 1.0_10_generated_configclient_listexclusions_billingaccountnameiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_importInstance_asyncStringInputConfigGet]
+// [START 1.0_10_generated_cloudredisclient_importinstance_asyncstringinputconfigget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InputConfig;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -36,4 +36,4 @@ public class ImportInstanceAsyncStringInputConfigGet {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_importInstance_asyncStringInputConfigGet]
+// [END 1.0_10_generated_cloudredisclient_importinstance_asyncstringinputconfigget]

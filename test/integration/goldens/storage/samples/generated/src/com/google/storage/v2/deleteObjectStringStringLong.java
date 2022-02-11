@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_deleteObject_stringStringLong]
+// [START 1.0_10_generated_storageclient_deleteobject_stringstringlong]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.StorageClient;
 
@@ -36,4 +36,4 @@ public class DeleteObjectStringStringLong {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_deleteObject_stringStringLong]
+// [END 1.0_10_generated_storageclient_deleteobject_stringstringlong]

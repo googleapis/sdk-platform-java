@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_addressesClient_list_pagedCallableFutureCallListAddressesRequest]
+// [START 1.0_10_generated_addressesclient_list_pagedcallablefuturecalllistaddressesrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
@@ -48,4 +48,4 @@ public class ListPagedCallableFutureCallListAddressesRequest {
     }
   }
 }
-// [END 1.0_10_generated_addressesClient_list_pagedCallableFutureCallListAddressesRequest]
+// [END 1.0_10_generated_addressesclient_list_pagedcallablefuturecalllistaddressesrequest]

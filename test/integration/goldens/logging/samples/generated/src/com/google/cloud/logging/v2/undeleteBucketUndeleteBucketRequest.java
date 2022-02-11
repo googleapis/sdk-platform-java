@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_undeleteBucket_undeleteBucketRequest]
+// [START 1.0_10_generated_configclient_undeletebucket_undeletebucketrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogBucketName;
 import com.google.logging.v2.UndeleteBucketRequest;
@@ -41,4 +41,4 @@ public class UndeleteBucketUndeleteBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_undeleteBucket_undeleteBucketRequest]
+// [END 1.0_10_generated_configclient_undeletebucket_undeletebucketrequest]

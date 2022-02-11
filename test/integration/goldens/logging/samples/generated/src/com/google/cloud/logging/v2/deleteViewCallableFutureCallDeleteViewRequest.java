@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_deleteView_callableFutureCallDeleteViewRequest]
+// [START 1.0_10_generated_configclient_deleteview_callablefuturecalldeleteviewrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.DeleteViewRequest;
@@ -45,4 +45,4 @@ public class DeleteViewCallableFutureCallDeleteViewRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_deleteView_callableFutureCallDeleteViewRequest]
+// [END 1.0_10_generated_configclient_deleteview_callablefuturecalldeleteviewrequest]

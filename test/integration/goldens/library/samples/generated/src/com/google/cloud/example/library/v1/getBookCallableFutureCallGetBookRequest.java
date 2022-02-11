@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_getBook_callableFutureCallGetBookRequest]
+// [START 1.0_10_generated_libraryserviceclient_getbook_callablefuturecallgetbookrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
@@ -40,4 +40,4 @@ public class GetBookCallableFutureCallGetBookRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_getBook_callableFutureCallGetBookRequest]
+// [END 1.0_10_generated_libraryserviceclient_getbook_callablefuturecallgetbookrequest]

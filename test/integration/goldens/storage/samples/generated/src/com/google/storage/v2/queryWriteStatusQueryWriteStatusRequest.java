@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_queryWriteStatus_queryWriteStatusRequest]
+// [START 1.0_10_generated_storageclient_querywritestatus_querywritestatusrequest]
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.QueryWriteStatusRequest;
@@ -42,4 +42,4 @@ public class QueryWriteStatusQueryWriteStatusRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_queryWriteStatus_queryWriteStatusRequest]
+// [END 1.0_10_generated_storageclient_querywritestatus_querywritestatusrequest]

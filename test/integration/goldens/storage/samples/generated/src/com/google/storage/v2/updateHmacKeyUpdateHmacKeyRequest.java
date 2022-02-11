@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_updateHmacKey_updateHmacKeyRequest]
+// [START 1.0_10_generated_storageclient_updatehmackey_updatehmackeyrequest]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
@@ -42,4 +42,4 @@ public class UpdateHmacKeyUpdateHmacKeyRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_updateHmacKey_updateHmacKeyRequest]
+// [END 1.0_10_generated_storageclient_updatehmackey_updatehmackeyrequest]

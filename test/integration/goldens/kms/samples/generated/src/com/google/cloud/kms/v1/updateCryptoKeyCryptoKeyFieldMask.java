@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_updateCryptoKey_cryptoKeyFieldMask]
+// [START 1.0_10_generated_keymanagementserviceclient_updatecryptokey_cryptokeyfieldmask]
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.protobuf.FieldMask;
@@ -37,4 +37,4 @@ public class UpdateCryptoKeyCryptoKeyFieldMask {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_updateCryptoKey_cryptoKeyFieldMask]
+// [END 1.0_10_generated_keymanagementserviceclient_updatecryptokey_cryptokeyfieldmask]

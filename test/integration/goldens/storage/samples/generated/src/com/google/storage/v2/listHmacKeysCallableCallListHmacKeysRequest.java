@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_listHmacKeys_callableCallListHmacKeysRequest]
+// [START 1.0_10_generated_storageclient_listhmackeys_callablecalllisthmackeysrequest]
 import com.google.common.base.Strings;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
@@ -58,4 +58,4 @@ public class ListHmacKeysCallableCallListHmacKeysRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_listHmacKeys_callableCallListHmacKeysRequest]
+// [END 1.0_10_generated_storageclient_listhmackeys_callablecalllisthmackeysrequest]

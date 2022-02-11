@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START 1.0_10_generated_iamCredentialsClient_create_iamCredentialsSettings1]
+// [START 1.0_10_generated_iamcredentialsclient_create_iamcredentialssettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
@@ -37,4 +37,4 @@ public class CreateIamCredentialsSettings1 {
     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END 1.0_10_generated_iamCredentialsClient_create_iamCredentialsSettings1]
+// [END 1.0_10_generated_iamcredentialsclient_create_iamcredentialssettings1]

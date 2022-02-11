@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_getNotification_callableFutureCallGetNotificationRequest]
+// [START 1.0_10_generated_storageclient_getnotification_callablefuturecallgetnotificationrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.GetNotificationRequest;
@@ -42,4 +42,4 @@ public class GetNotificationCallableFutureCallGetNotificationRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_getNotification_callableFutureCallGetNotificationRequest]
+// [END 1.0_10_generated_storageclient_getnotification_callablefuturecallgetnotificationrequest]

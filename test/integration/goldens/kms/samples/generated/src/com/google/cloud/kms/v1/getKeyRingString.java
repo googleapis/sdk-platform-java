@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keyManagementServiceClient_getKeyRing_string]
+// [START 1.0_10_generated_keymanagementserviceclient_getkeyring_string]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRing;
 import com.google.cloud.kms.v1.KeyRingName;
@@ -36,4 +36,4 @@ public class GetKeyRingString {
     }
   }
 }
-// [END 1.0_10_generated_keyManagementServiceClient_getKeyRing_string]
+// [END 1.0_10_generated_keymanagementserviceclient_getkeyring_string]

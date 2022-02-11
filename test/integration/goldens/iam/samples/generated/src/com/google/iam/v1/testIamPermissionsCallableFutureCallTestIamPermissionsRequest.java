@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START 1.0_10_generated_iAMPolicyClient_testIamPermissions_callableFutureCallTestIamPermissionsRequest]
+// [START 1.0_10_generated_iampolicyclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
@@ -45,4 +45,4 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_iAMPolicyClient_testIamPermissions_callableFutureCallTestIamPermissionsRequest]
+// [END 1.0_10_generated_iampolicyclient_testiampermissions_callablefuturecalltestiampermissionsrequest]

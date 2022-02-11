@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_getSink_getSinkRequest]
+// [START 1.0_10_generated_configclient_getsink_getsinkrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.GetSinkRequest;
 import com.google.logging.v2.LogSink;
@@ -39,4 +39,4 @@ public class GetSinkGetSinkRequest {
     }
   }
 }
-// [END 1.0_10_generated_configClient_getSink_getSinkRequest]
+// [END 1.0_10_generated_configclient_getsink_getsinkrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_listBooks_callableCallListBooksRequest]
+// [START 1.0_10_generated_libraryserviceclient_listbooks_callablecalllistbooksrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.common.base.Strings;
 import com.google.example.library.v1.Book;
@@ -54,4 +54,4 @@ public class ListBooksCallableCallListBooksRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_listBooks_callableCallListBooksRequest]
+// [END 1.0_10_generated_libraryserviceclient_listbooks_callablecalllistbooksrequest]

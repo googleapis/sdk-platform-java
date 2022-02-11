@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsClient_listLogMetrics_stringIterateAll]
+// [START 1.0_10_generated_metricsclient_listlogmetrics_stringiterateall]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.LogMetric;
 import com.google.logging.v2.ProjectName;
@@ -37,4 +37,4 @@ public class ListLogMetricsStringIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_metricsClient_listLogMetrics_stringIterateAll]
+// [END 1.0_10_generated_metricsclient_listlogmetrics_stringiterateall]

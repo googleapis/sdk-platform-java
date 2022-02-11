@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_updateObject_objectFieldMask]
+// [START 1.0_10_generated_storageclient_updateobject_objectfieldmask]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Object;
 import com.google.storage.v2.StorageClient;
@@ -36,4 +36,4 @@ public class UpdateObjectObjectFieldMask {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_updateObject_objectFieldMask]
+// [END 1.0_10_generated_storageclient_updateobject_objectfieldmask]

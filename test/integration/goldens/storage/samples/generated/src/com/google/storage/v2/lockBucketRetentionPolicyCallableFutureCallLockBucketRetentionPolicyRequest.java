@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_lockBucketRetentionPolicy_callableFutureCallLockBucketRetentionPolicyRequest]
+// [START 1.0_10_generated_storageclient_lockbucketretentionpolicy_callablefuturecalllockbucketretentionpolicyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.BucketName;
@@ -47,4 +47,4 @@ public class LockBucketRetentionPolicyCallableFutureCallLockBucketRetentionPolic
     }
   }
 }
-// [END 1.0_10_generated_storageClient_lockBucketRetentionPolicy_callableFutureCallLockBucketRetentionPolicyRequest]
+// [END 1.0_10_generated_storageclient_lockbucketretentionpolicy_callablefuturecalllockbucketretentionpolicyrequest]

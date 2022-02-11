@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_deleteNotification_callableFutureCallDeleteNotificationRequest]
+// [START 1.0_10_generated_storageclient_deletenotification_callablefuturecalldeletenotificationrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.storage.v2.DeleteNotificationRequest;
@@ -43,4 +43,4 @@ public class DeleteNotificationCallableFutureCallDeleteNotificationRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_deleteNotification_callableFutureCallDeleteNotificationRequest]
+// [END 1.0_10_generated_storageclient_deletenotification_callablefuturecalldeletenotificationrequest]

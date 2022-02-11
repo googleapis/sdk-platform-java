@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsClient_getLogMetric_string]
+// [START 1.0_10_generated_metricsclient_getlogmetric_string]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.LogMetric;
 import com.google.logging.v2.LogMetricName;
@@ -35,4 +35,4 @@ public class GetLogMetricString {
     }
   }
 }
-// [END 1.0_10_generated_metricsClient_getLogMetric_string]
+// [END 1.0_10_generated_metricsclient_getlogmetric_string]

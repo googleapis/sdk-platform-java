@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageClient_listBuckets_listBucketsRequestIterateAll]
+// [START 1.0_10_generated_storageclient_listbuckets_listbucketsrequestiterateall]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.CommonRequestParams;
@@ -48,4 +48,4 @@ public class ListBucketsListBucketsRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_storageClient_listBuckets_listBucketsRequestIterateAll]
+// [END 1.0_10_generated_storageclient_listbuckets_listbucketsrequestiterateall]

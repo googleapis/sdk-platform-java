@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudRedisClient_listInstances_callableCallListInstancesRequest]
+// [START 1.0_10_generated_cloudredisclient_listinstances_callablecalllistinstancesrequest]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
 import com.google.cloud.redis.v1beta1.ListInstancesRequest;
@@ -54,4 +54,4 @@ public class ListInstancesCallableCallListInstancesRequest {
     }
   }
 }
-// [END 1.0_10_generated_cloudRedisClient_listInstances_callableCallListInstancesRequest]
+// [END 1.0_10_generated_cloudredisclient_listinstances_callablecalllistinstancesrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_createSink_organizationNameLogSink]
+// [START 1.0_10_generated_configclient_createsink_organizationnamelogsink]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogSink;
 import com.google.logging.v2.OrganizationName;
@@ -36,4 +36,4 @@ public class CreateSinkOrganizationNameLogSink {
     }
   }
 }
-// [END 1.0_10_generated_configClient_createSink_organizationNameLogSink]
+// [END 1.0_10_generated_configclient_createsink_organizationnamelogsink]

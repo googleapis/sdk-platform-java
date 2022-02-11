@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicAdminClient_setIamPolicy_setIamPolicyRequest]
+// [START 1.0_10_generated_topicadminclient_setiampolicy_setiampolicyrequest]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
@@ -40,4 +40,4 @@ public class SetIamPolicySetIamPolicyRequest {
     }
   }
 }
-// [END 1.0_10_generated_topicAdminClient_setIamPolicy_setIamPolicyRequest]
+// [END 1.0_10_generated_topicadminclient_setiampolicy_setiampolicyrequest]

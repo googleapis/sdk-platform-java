@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetServiceClient_listFeeds_listFeedsRequest]
+// [START 1.0_10_generated_assetserviceclient_listfeeds_listfeedsrequest]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ListFeedsRequest;
 import com.google.cloud.asset.v1.ListFeedsResponse;
@@ -36,4 +36,4 @@ public class ListFeedsListFeedsRequest {
     }
   }
 }
-// [END 1.0_10_generated_assetServiceClient_listFeeds_listFeedsRequest]
+// [END 1.0_10_generated_assetserviceclient_listfeeds_listfeedsrequest]

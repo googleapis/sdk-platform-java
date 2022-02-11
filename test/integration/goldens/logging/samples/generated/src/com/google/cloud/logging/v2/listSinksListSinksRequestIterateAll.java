@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configClient_listSinks_listSinksRequestIterateAll]
+// [START 1.0_10_generated_configclient_listsinks_listsinksrequestiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.ListSinksRequest;
 import com.google.logging.v2.LogSink;
@@ -43,4 +43,4 @@ public class ListSinksListSinksRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_configClient_listSinks_listSinksRequestIterateAll]
+// [END 1.0_10_generated_configclient_listsinks_listsinksrequestiterateall]

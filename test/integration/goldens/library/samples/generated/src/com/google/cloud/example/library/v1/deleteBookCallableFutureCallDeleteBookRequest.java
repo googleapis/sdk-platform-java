@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryServiceClient_deleteBook_callableFutureCallDeleteBookRequest]
+// [START 1.0_10_generated_libraryserviceclient_deletebook_callablefuturecalldeletebookrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.BookName;
@@ -42,4 +42,4 @@ public class DeleteBookCallableFutureCallDeleteBookRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryServiceClient_deleteBook_callableFutureCallDeleteBookRequest]
+// [END 1.0_10_generated_libraryserviceclient_deletebook_callablefuturecalldeletebookrequest]

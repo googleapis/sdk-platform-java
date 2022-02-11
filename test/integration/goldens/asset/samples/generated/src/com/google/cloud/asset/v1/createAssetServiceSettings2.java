@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetServiceClient_create_assetServiceSettings2]
+// [START 1.0_10_generated_assetserviceclient_create_assetservicesettings2]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.AssetServiceSettings;
 import com.google.cloud.asset.v1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateAssetServiceSettings2 {
     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
   }
 }
-// [END 1.0_10_generated_assetServiceClient_create_assetServiceSettings2]
+// [END 1.0_10_generated_assetserviceclient_create_assetservicesettings2]
