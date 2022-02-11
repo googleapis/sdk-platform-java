@@ -32,6 +32,8 @@ API_GAPIC_TARGETS = {
     "library": "@com_google_googleapis//google/example/library/v1:library_java_gapic",
     # REGAPIC test.
     "compute": "@com_google_googleapis//google/cloud/compute/v1small:compute_small_java_gapic",
+    # Routing headers.
+    "bigtable": "@com_google_googleapis//google/bigtable/v2:bigtable_java_gapic",
 }
 
 [filegroup(
@@ -122,6 +124,15 @@ java_gapic_test(
         "com.google.cloud.iam.credentials.v1.IAMCredentialsClientTest",
     ],
     runtime_deps = ["@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic_test"],
+)
+
+# Bigtable API
+java_gapic_test(
+    name = "bigtable_java_gapic_test_suite",
+    test_classes = [
+        "com.google.cloud.bigtable.data.v2.BaseBigtableDataClientTest",
+    ],
+    runtime_deps = ["@com_google_googleapis//google/bigtable/v2:bigtable_java_gapic_test"],
 )
 
 # IAM (for a standalone mixed-in API).

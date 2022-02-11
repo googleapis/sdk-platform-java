@@ -375,9 +375,9 @@ public class StorageClient implements BackgroundResource {
    * @param parent Required. The project to which this bucket will belong.
    * @param bucket Required. Properties of the new bucket being inserted. The project and name of
    *     the bucket are specified in this request, not in the bucket resource.
-   * @param bucketId The ID to use for this bucket, which will become the final component of the
-   *     bucket's resource name. For example, the value `foo` might result in a bucket with the name
-   *     `projects/123456/buckets/foo`.
+   * @param bucketId Required. The ID to use for this bucket, which will become the final component
+   *     of the bucket's resource name. For example, the value `foo` might result in a bucket with
+   *     the name `projects/123456/buckets/foo`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Bucket createBucket(ProjectName parent, Bucket bucket, String bucketId) {
@@ -408,9 +408,9 @@ public class StorageClient implements BackgroundResource {
    * @param parent Required. The project to which this bucket will belong.
    * @param bucket Required. Properties of the new bucket being inserted. The project and name of
    *     the bucket are specified in this request, not in the bucket resource.
-   * @param bucketId The ID to use for this bucket, which will become the final component of the
-   *     bucket's resource name. For example, the value `foo` might result in a bucket with the name
-   *     `projects/123456/buckets/foo`.
+   * @param bucketId Required. The ID to use for this bucket, which will become the final component
+   *     of the bucket's resource name. For example, the value `foo` might result in a bucket with
+   *     the name `projects/123456/buckets/foo`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Bucket createBucket(String parent, Bucket bucket, String bucketId) {
@@ -2228,8 +2228,12 @@ public class StorageClient implements BackgroundResource {
    * try (StorageClient storageClient = StorageClient.create()) {
    *   RewriteObjectRequest request =
    *       RewriteObjectRequest.newBuilder()
+   *           .setDestinationName("destinationName-1762755655")
+   *           .setDestinationBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+   *           .setDestinationKmsKey(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setDestination(Object.newBuilder().build())
-   *           .setRewriteMask(FieldMask.newBuilder().build())
    *           .setSourceBucket("sourceBucket841604581")
    *           .setSourceObject("sourceObject1196439354")
    *           .setSourceGeneration(1232209852)
@@ -2271,8 +2275,12 @@ public class StorageClient implements BackgroundResource {
    * try (StorageClient storageClient = StorageClient.create()) {
    *   RewriteObjectRequest request =
    *       RewriteObjectRequest.newBuilder()
+   *           .setDestinationName("destinationName-1762755655")
+   *           .setDestinationBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+   *           .setDestinationKmsKey(
+   *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+   *                   .toString())
    *           .setDestination(Object.newBuilder().build())
-   *           .setRewriteMask(FieldMask.newBuilder().build())
    *           .setSourceBucket("sourceBucket841604581")
    *           .setSourceObject("sourceObject1196439354")
    *           .setSourceGeneration(1232209852)
