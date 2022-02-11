@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -122,7 +123,10 @@ public class Writer {
   private static void writeExecutableSample(
       Sample sample, String pakkage, String clazzPath, JarOutputStream jos) {
     JarEntry jarEntry =
-        new JarEntry(String.format("samples/generated/%s/%s.java", clazzPath, sample.name()));
+        new JarEntry(
+            String.format(
+                "samples/generated/%s/%s.java",
+                clazzPath, JavaStyle.toUpperCamelCase(sample.name())));
     String executableSampleCode = SampleComposer.createExecutableSample(sample, pakkage);
     try {
       jos.putNextEntry(jarEntry);

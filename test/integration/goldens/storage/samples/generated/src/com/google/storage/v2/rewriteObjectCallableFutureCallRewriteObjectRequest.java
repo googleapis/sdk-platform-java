@@ -18,9 +18,10 @@ package com.google.storage.v2.samples;
 // [START v2_storage_generated_storageclient_rewriteobject_callablefuturecallrewriteobjectrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.ByteString;
-import com.google.protobuf.FieldMask;
+import com.google.storage.v2.BucketName;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
+import com.google.storage.v2.CryptoKeyName;
 import com.google.storage.v2.Object;
 import com.google.storage.v2.PredefinedObjectAcl;
 import com.google.storage.v2.RewriteObjectRequest;
@@ -39,8 +40,12 @@ public class RewriteObjectCallableFutureCallRewriteObjectRequest {
     try (StorageClient storageClient = StorageClient.create()) {
       RewriteObjectRequest request =
           RewriteObjectRequest.newBuilder()
+              .setDestinationName("destinationName-1762755655")
+              .setDestinationBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+              .setDestinationKmsKey(
+                  CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
+                      .toString())
               .setDestination(Object.newBuilder().build())
-              .setRewriteMask(FieldMask.newBuilder().build())
               .setSourceBucket("sourceBucket841604581")
               .setSourceObject("sourceObject1196439354")
               .setSourceGeneration(1232209852)

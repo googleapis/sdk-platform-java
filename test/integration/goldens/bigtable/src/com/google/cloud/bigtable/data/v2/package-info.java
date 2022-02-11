@@ -24,6 +24,8 @@
  * <p>Sample for BaseBigtableDataClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
  *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
  *   ByteString rowKey = ByteString.EMPTY;

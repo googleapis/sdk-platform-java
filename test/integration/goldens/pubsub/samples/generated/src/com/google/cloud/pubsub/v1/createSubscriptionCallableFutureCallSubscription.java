@@ -53,6 +53,7 @@ public class CreateSubscriptionCallableFutureCallSubscription {
               .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
               .setRetryPolicy(RetryPolicy.newBuilder().build())
               .setDetached(true)
+              .setEnableExactlyOnceDelivery(true)
               .setTopicMessageRetentionDuration(Duration.newBuilder().build())
               .build();
       ApiFuture<Subscription> future =
