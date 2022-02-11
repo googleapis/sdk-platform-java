@@ -85,6 +85,12 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     return ((CloudRedisStubSettings) getStubSettings()).getInstanceSettings();
   }
 
+  /** Returns the object with the settings used for calls to getInstanceAuthString. */
+  public UnaryCallSettings<GetInstanceAuthStringRequest, InstanceAuthString>
+      getInstanceAuthStringSettings() {
+    return ((CloudRedisStubSettings) getStubSettings()).getInstanceAuthStringSettings();
+  }
+
   /** Returns the object with the settings used for calls to createInstance. */
   public UnaryCallSettings<CreateInstanceRequest, Operation> createInstanceSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).createInstanceSettings();
@@ -160,6 +166,18 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   public OperationCallSettings<DeleteInstanceRequest, Empty, Any>
       deleteInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).deleteInstanceOperationSettings();
+  }
+
+  /** Returns the object with the settings used for calls to rescheduleMaintenance. */
+  public UnaryCallSettings<RescheduleMaintenanceRequest, Operation>
+      rescheduleMaintenanceSettings() {
+    return ((CloudRedisStubSettings) getStubSettings()).rescheduleMaintenanceSettings();
+  }
+
+  /** Returns the object with the settings used for calls to rescheduleMaintenance. */
+  public OperationCallSettings<RescheduleMaintenanceRequest, Instance, Any>
+      rescheduleMaintenanceOperationSettings() {
+    return ((CloudRedisStubSettings) getStubSettings()).rescheduleMaintenanceOperationSettings();
   }
 
   public static final CloudRedisSettings create(CloudRedisStubSettings stub) throws IOException {
@@ -270,6 +288,12 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
       return getStubSettingsBuilder().getInstanceSettings();
     }
 
+    /** Returns the builder for the settings used for calls to getInstanceAuthString. */
+    public UnaryCallSettings.Builder<GetInstanceAuthStringRequest, InstanceAuthString>
+        getInstanceAuthStringSettings() {
+      return getStubSettingsBuilder().getInstanceAuthStringSettings();
+    }
+
     /** Returns the builder for the settings used for calls to createInstance. */
     public UnaryCallSettings.Builder<CreateInstanceRequest, Operation> createInstanceSettings() {
       return getStubSettingsBuilder().createInstanceSettings();
@@ -346,6 +370,18 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     public OperationCallSettings.Builder<DeleteInstanceRequest, Empty, Any>
         deleteInstanceOperationSettings() {
       return getStubSettingsBuilder().deleteInstanceOperationSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to rescheduleMaintenance. */
+    public UnaryCallSettings.Builder<RescheduleMaintenanceRequest, Operation>
+        rescheduleMaintenanceSettings() {
+      return getStubSettingsBuilder().rescheduleMaintenanceSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to rescheduleMaintenance. */
+    public OperationCallSettings.Builder<RescheduleMaintenanceRequest, Instance, Any>
+        rescheduleMaintenanceOperationSettings() {
+      return getStubSettingsBuilder().rescheduleMaintenanceOperationSettings();
     }
 
     @Override

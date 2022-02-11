@@ -126,6 +126,15 @@ java_gapic_test(
     runtime_deps = ["@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic_test"],
 )
 
+# Bigtable API
+java_gapic_test(
+    name = "bigtable_java_gapic_test_suite",
+    test_classes = [
+        "com.google.cloud.bigtable.data.v2.BaseBigtableDataClientTest",
+    ],
+    runtime_deps = ["@com_google_googleapis//google/bigtable/v2:bigtable_java_gapic_test"],
+)
+
 # IAM (for a standalone mixed-in API).
 java_gapic_library(
     name = "iam_java_gapic",
