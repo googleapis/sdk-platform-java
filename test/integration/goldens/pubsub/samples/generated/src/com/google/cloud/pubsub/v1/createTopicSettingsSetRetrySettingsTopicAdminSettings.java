@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminsettings_createtopic_settingssetretrysettingstopicadminsettings]
+// [START pubsub_v1_generated_topicadminsettings_createtopic_settingssetretrysettingstopicadminsettings]
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class CreateTopicSettingsSetRetrySettingsTopicAdminSettings {
     TopicAdminSettings topicAdminSettings = topicAdminSettingsBuilder.build();
   }
 }
-// [END v1_pubsub_generated_topicadminsettings_createtopic_settingssetretrysettingstopicadminsettings]
+// [END pubsub_v1_generated_topicadminsettings_createtopic_settingssetretrysettingstopicadminsettings]

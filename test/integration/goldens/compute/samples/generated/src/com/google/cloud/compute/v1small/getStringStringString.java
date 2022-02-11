@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_regionoperationsclient_get_stringstringstring]
+// [START compute_v1small_generated_regionoperationsclient_get_stringstringstring]
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 
@@ -36,4 +36,4 @@ public class GetStringStringString {
     }
   }
 }
-// [END v1small_compute_generated_regionoperationsclient_get_stringstringstring]
+// [END compute_v1small_generated_regionoperationsclient_get_stringstringstring]

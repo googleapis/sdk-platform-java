@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_searchblurbs_operationcallablefuturecallsearchblurbsrequest]
+// [START goldensample_v1_generated_messagingclient_searchblurbs_operationcallablefuturecallsearchblurbsrequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
@@ -47,4 +47,4 @@ public class SearchBlurbsOperationCallableFutureCallSearchBlurbsRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_searchblurbs_operationcallablefuturecallsearchblurbsrequest]
+// [END goldensample_v1_generated_messagingclient_searchblurbs_operationcallablefuturecallsearchblurbsrequest]

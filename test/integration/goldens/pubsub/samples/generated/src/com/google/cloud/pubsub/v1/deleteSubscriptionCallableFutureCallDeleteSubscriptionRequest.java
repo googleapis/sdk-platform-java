@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_deletesubscription_callablefuturecalldeletesubscriptionrequest]
+// [START pubsub_v1_generated_subscriptionadminclient_deletesubscription_callablefuturecalldeletesubscriptionrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
@@ -44,4 +44,4 @@ public class DeleteSubscriptionCallableFutureCallDeleteSubscriptionRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_deletesubscription_callablefuturecalldeletesubscriptionrequest]
+// [END pubsub_v1_generated_subscriptionadminclient_deletesubscription_callablefuturecalldeletesubscriptionrequest]

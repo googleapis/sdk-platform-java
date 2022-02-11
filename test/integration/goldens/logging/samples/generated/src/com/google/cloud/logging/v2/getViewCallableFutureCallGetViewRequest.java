@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_getview_callablefuturecallgetviewrequest]
+// [START logging_v2_generated_configclient_getview_callablefuturecallgetviewrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.GetViewRequest;
@@ -45,4 +45,4 @@ public class GetViewCallableFutureCallGetViewRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_getview_callablefuturecallgetviewrequest]
+// [END logging_v2_generated_configclient_getview_callablefuturecallgetviewrequest]

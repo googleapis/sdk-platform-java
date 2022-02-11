@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaserviceclient_listschemas_callablecalllistschemasrequest]
+// [START pubsub_v1_generated_schemaserviceclient_listschemas_callablecalllistschemasrequest]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.common.base.Strings;
 import com.google.pubsub.v1.ListSchemasRequest;
@@ -56,4 +56,4 @@ public class ListSchemasCallableCallListSchemasRequest {
     }
   }
 }
-// [END v1_pubsub_generated_schemaserviceclient_listschemas_callablecalllistschemasrequest]
+// [END pubsub_v1_generated_schemaserviceclient_listschemas_callablecalllistschemasrequest]

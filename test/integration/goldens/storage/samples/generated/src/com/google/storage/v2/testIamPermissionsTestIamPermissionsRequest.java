@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_testiampermissions_testiampermissionsrequest]
+// [START storage_v2_generated_storageclient_testiampermissions_testiampermissionsrequest]
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.storage.v2.CryptoKeyName;
@@ -43,4 +43,4 @@ public class TestIamPermissionsTestIamPermissionsRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_testiampermissions_testiampermissionsrequest]
+// [END storage_v2_generated_storageclient_testiampermissions_testiampermissionsrequest]

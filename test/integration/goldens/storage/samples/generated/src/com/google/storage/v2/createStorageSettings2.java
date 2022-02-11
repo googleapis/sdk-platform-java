@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_create_storagesettings2]
+// [START storage_v2_generated_storageclient_create_storagesettings2]
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.StorageSettings;
 import com.google.storage.v2.myEndpoint;
@@ -33,4 +33,4 @@ public class CreateStorageSettings2 {
     StorageClient storageClient = StorageClient.create(storageSettings);
   }
 }
-// [END v2_storage_generated_storageclient_create_storagesettings2]
+// [END storage_v2_generated_storageclient_create_storagesettings2]

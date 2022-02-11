@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.stub.samples;
 
-// [START v1beta1_redis_generated_cloudredisstubsettings_getinstance_settingssetretrysettingscloudredisstubsettings]
+// [START redis_v1beta1_generated_cloudredisstubsettings_getinstance_settingssetretrysettingscloudredisstubsettings]
 import com.google.cloud.redis.v1beta1.stub.CloudRedisStubSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class GetInstanceSettingsSetRetrySettingsCloudRedisStubSettings {
     CloudRedisStubSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
   }
 }
-// [END v1beta1_redis_generated_cloudredisstubsettings_getinstance_settingssetretrysettingscloudredisstubsettings]
+// [END redis_v1beta1_generated_cloudredisstubsettings_getinstance_settingssetretrysettingscloudredisstubsettings]

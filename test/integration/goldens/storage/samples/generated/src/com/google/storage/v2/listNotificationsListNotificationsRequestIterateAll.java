@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_listnotifications_listnotificationsrequestiterateall]
+// [START storage_v2_generated_storageclient_listnotifications_listnotificationsrequestiterateall]
 import com.google.storage.v2.ListNotificationsRequest;
 import com.google.storage.v2.Notification;
 import com.google.storage.v2.ProjectName;
@@ -43,4 +43,4 @@ public class ListNotificationsListNotificationsRequestIterateAll {
     }
   }
 }
-// [END v2_storage_generated_storageclient_listnotifications_listnotificationsrequestiterateall]
+// [END storage_v2_generated_storageclient_listnotifications_listnotificationsrequestiterateall]

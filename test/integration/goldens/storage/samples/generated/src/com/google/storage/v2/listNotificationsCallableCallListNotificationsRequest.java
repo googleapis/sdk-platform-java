@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_listnotifications_callablecalllistnotificationsrequest]
+// [START storage_v2_generated_storageclient_listnotifications_callablecalllistnotificationsrequest]
 import com.google.common.base.Strings;
 import com.google.storage.v2.ListNotificationsRequest;
 import com.google.storage.v2.ListNotificationsResponse;
@@ -55,4 +55,4 @@ public class ListNotificationsCallableCallListNotificationsRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_listnotifications_callablecalllistnotificationsrequest]
+// [END storage_v2_generated_storageclient_listnotifications_callablecalllistnotificationsrequest]

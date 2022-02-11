@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getnotification_string]
+// [START storage_v2_generated_storageclient_getnotification_string]
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.Notification;
 import com.google.storage.v2.StorageClient;
@@ -35,4 +35,4 @@ public class GetNotificationString {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getnotification_string]
+// [END storage_v2_generated_storageclient_getnotification_string]

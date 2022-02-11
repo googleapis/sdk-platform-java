@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_insert_callablefuturecallinsertaddressrequest]
+// [START compute_v1small_generated_addressesclient_insert_callablefuturecallinsertaddressrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
@@ -45,4 +45,4 @@ public class InsertCallableFutureCallInsertAddressRequest {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_insert_callablefuturecallinsertaddressrequest]
+// [END compute_v1small_generated_addressesclient_insert_callablefuturecallinsertaddressrequest]

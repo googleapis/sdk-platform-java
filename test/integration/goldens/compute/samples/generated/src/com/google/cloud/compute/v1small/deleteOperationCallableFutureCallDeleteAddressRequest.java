@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_delete_operationcallablefuturecalldeleteaddressrequest]
+// [START compute_v1small_generated_addressesclient_delete_operationcallablefuturecalldeleteaddressrequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.DeleteAddressRequest;
@@ -45,4 +45,4 @@ public class DeleteOperationCallableFutureCallDeleteAddressRequest {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_delete_operationcallablefuturecalldeleteaddressrequest]
+// [END compute_v1small_generated_addressesclient_delete_operationcallablefuturecalldeleteaddressrequest]

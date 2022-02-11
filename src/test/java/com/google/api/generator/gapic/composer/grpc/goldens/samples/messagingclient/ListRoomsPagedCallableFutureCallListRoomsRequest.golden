@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest]
+// [START goldensample_v1_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.ListRoomsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -44,4 +44,4 @@ public class ListRoomsPagedCallableFutureCallListRoomsRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest]
+// [END goldensample_v1_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest]

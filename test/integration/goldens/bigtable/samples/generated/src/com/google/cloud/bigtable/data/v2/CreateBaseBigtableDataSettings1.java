@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_create_basebigtabledatasettings1]
+// [START bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataClient;
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataSettings;
@@ -38,4 +38,4 @@ public class CreateBaseBigtableDataSettings1 {
         BaseBigtableDataClient.create(baseBigtableDataSettings);
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_create_basebigtabledatasettings1]
+// [END bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings1]

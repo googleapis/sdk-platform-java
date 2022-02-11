@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_regionoperationssettings_get_settingssetretrysettingsregionoperationssettings]
+// [START compute_v1small_generated_regionoperationssettings_get_settingssetretrysettingsregionoperationssettings]
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class GetSettingsSetRetrySettingsRegionOperationsSettings {
     RegionOperationsSettings regionOperationsSettings = regionOperationsSettingsBuilder.build();
   }
 }
-// [END v1small_compute_generated_regionoperationssettings_get_settingssetretrysettingsregionoperationssettings]
+// [END compute_v1small_generated_regionoperationssettings_get_settingssetretrysettingsregionoperationssettings]

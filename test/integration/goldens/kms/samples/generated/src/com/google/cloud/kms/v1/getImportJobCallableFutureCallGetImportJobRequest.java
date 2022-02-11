@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_getimportjob_callablefuturecallgetimportjobrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getimportjob_callablefuturecallgetimportjobrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.GetImportJobRequest;
 import com.google.cloud.kms.v1.ImportJob;
@@ -46,4 +46,4 @@ public class GetImportJobCallableFutureCallGetImportJobRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_getimportjob_callablefuturecallgetimportjobrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getimportjob_callablefuturecallgetimportjobrequest]

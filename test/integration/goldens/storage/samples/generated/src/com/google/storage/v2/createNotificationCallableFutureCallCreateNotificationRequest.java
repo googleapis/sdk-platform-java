@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_createnotification_callablefuturecallcreatenotificationrequest]
+// [START storage_v2_generated_storageclient_createnotification_callablefuturecallcreatenotificationrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.CreateNotificationRequest;
 import com.google.storage.v2.Notification;
@@ -45,4 +45,4 @@ public class CreateNotificationCallableFutureCallCreateNotificationRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_createnotification_callablefuturecallcreatenotificationrequest]
+// [END storage_v2_generated_storageclient_createnotification_callablefuturecallcreatenotificationrequest]

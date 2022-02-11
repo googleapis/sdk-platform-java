@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_echoclient_wait_operationcallablefuturecallwaitrequest]
+// [START goldensample_v1_generated_echoclient_wait_operationcallablefuturecallwaitrequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -40,4 +40,4 @@ public class WaitOperationCallableFutureCallWaitRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_echoclient_wait_operationcallablefuturecallwaitrequest]
+// [END goldensample_v1_generated_echoclient_wait_operationcallablefuturecallwaitrequest]

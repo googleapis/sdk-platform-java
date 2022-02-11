@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_create_addressessettings1]
+// [START compute_v1small_generated_addressesclient_create_addressessettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesSettings;
@@ -37,4 +37,4 @@ public class CreateAddressesSettings1 {
     AddressesClient addressesClient = AddressesClient.create(addressesSettings);
   }
 }
-// [END v1small_compute_generated_addressesclient_create_addressessettings1]
+// [END compute_v1small_generated_addressesclient_create_addressessettings1]

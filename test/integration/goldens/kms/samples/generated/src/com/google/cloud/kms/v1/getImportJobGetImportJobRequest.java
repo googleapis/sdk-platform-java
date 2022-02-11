@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_getimportjob_getimportjobrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getimportjob_getimportjobrequest]
 import com.google.cloud.kms.v1.GetImportJobRequest;
 import com.google.cloud.kms.v1.ImportJob;
 import com.google.cloud.kms.v1.ImportJobName;
@@ -42,4 +42,4 @@ public class GetImportJobGetImportJobRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_getimportjob_getimportjobrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getimportjob_getimportjobrequest]

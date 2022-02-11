@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_pull_pullrequest]
+// [START pubsub_v1_generated_subscriptionadminclient_pull_pullrequest]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.PullRequest;
 import com.google.pubsub.v1.PullResponse;
@@ -41,4 +41,4 @@ public class PullPullRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_pull_pullrequest]
+// [END pubsub_v1_generated_subscriptionadminclient_pull_pullrequest]

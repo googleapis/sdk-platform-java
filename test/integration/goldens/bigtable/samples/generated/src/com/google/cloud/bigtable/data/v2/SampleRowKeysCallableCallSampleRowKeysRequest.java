@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_samplerowkeys_callablecallsamplerowkeysrequest]
+// [START bigtable_v2_generated_basebigtabledataclient_samplerowkeys_callablecallsamplerowkeysrequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.bigtable.v2.SampleRowKeysRequest;
 import com.google.bigtable.v2.SampleRowKeysResponse;
@@ -45,4 +45,4 @@ public class SampleRowKeysCallableCallSampleRowKeysRequest {
     }
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_samplerowkeys_callablecallsamplerowkeysrequest]
+// [END bigtable_v2_generated_basebigtabledataclient_samplerowkeys_callablecallsamplerowkeysrequest]

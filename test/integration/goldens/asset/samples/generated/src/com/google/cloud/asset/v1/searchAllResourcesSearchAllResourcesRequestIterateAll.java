@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_searchallresources_searchallresourcesrequestiterateall]
+// [START asset_v1_generated_assetserviceclient_searchallresources_searchallresourcesrequestiterateall]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ResourceSearchResult;
 import com.google.cloud.asset.v1.SearchAllResourcesRequest;
@@ -49,4 +49,4 @@ public class SearchAllResourcesSearchAllResourcesRequestIterateAll {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_searchallresources_searchallresourcesrequestiterateall]
+// [END asset_v1_generated_assetserviceclient_searchallresources_searchallresourcesrequestiterateall]

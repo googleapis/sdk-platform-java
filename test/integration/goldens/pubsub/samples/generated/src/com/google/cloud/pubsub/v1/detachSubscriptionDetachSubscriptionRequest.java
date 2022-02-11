@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_detachsubscription_detachsubscriptionrequest]
+// [START pubsub_v1_generated_topicadminclient_detachsubscription_detachsubscriptionrequest]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.DetachSubscriptionRequest;
 import com.google.pubsub.v1.DetachSubscriptionResponse;
@@ -39,4 +39,4 @@ public class DetachSubscriptionDetachSubscriptionRequest {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_detachsubscription_detachsubscriptionrequest]
+// [END pubsub_v1_generated_topicadminclient_detachsubscription_detachsubscriptionrequest]

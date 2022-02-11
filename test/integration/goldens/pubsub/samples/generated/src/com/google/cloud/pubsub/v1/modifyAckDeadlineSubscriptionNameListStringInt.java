@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_modifyackdeadline_subscriptionnameliststringint]
+// [START pubsub_v1_generated_subscriptionadminclient_modifyackdeadline_subscriptionnameliststringint]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.SubscriptionName;
@@ -39,4 +39,4 @@ public class ModifyAckDeadlineSubscriptionNameListStringInt {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_modifyackdeadline_subscriptionnameliststringint]
+// [END pubsub_v1_generated_subscriptionadminclient_modifyackdeadline_subscriptionnameliststringint]

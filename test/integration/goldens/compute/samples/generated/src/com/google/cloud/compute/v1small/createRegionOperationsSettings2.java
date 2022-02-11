@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_regionoperationsclient_create_regionoperationssettings2]
+// [START compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2]
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
 import com.google.cloud.compute.v1small.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateRegionOperationsSettings2 {
         RegionOperationsClient.create(regionOperationsSettings);
   }
 }
-// [END v1small_compute_generated_regionoperationsclient_create_regionoperationssettings2]
+// [END compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2]

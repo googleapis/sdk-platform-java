@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_create_subscriptionadminsettings1]
+// [START pubsub_v1_generated_subscriptionadminclient_create_subscriptionadminsettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
@@ -38,4 +38,4 @@ public class CreateSubscriptionAdminSettings1 {
         SubscriptionAdminClient.create(subscriptionAdminSettings);
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_create_subscriptionadminsettings1]
+// [END pubsub_v1_generated_subscriptionadminclient_create_subscriptionadminsettings1]

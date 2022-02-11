@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_seek_callablefuturecallseekrequest]
+// [START pubsub_v1_generated_subscriptionadminclient_seek_callablefuturecallseekrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.SeekRequest;
@@ -42,4 +42,4 @@ public class SeekCallableFutureCallSeekRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_seek_callablefuturecallseekrequest]
+// [END pubsub_v1_generated_subscriptionadminclient_seek_callablefuturecallseekrequest]

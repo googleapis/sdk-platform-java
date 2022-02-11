@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_getcmeksettings_callablefuturecallgetcmeksettingsrequest]
+// [START logging_v2_generated_configclient_getcmeksettings_callablefuturecallgetcmeksettingsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CmekSettings;
@@ -42,4 +42,4 @@ public class GetCmekSettingsCallableFutureCallGetCmekSettingsRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_getcmeksettings_callablefuturecallgetcmeksettingsrequest]
+// [END logging_v2_generated_configclient_getcmeksettings_callablefuturecallgetcmeksettingsrequest]

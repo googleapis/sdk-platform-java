@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_getexclusion_logexclusionname]
+// [START logging_v2_generated_configclient_getexclusion_logexclusionname]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogExclusion;
 import com.google.logging.v2.LogExclusionName;
@@ -35,4 +35,4 @@ public class GetExclusionLogExclusionName {
     }
   }
 }
-// [END v2_logging_generated_configclient_getexclusion_logexclusionname]
+// [END logging_v2_generated_configclient_getexclusion_logexclusionname]

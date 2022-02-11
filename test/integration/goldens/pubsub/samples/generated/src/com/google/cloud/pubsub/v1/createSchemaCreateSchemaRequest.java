@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaserviceclient_createschema_createschemarequest]
+// [START pubsub_v1_generated_schemaserviceclient_createschema_createschemarequest]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.pubsub.v1.CreateSchemaRequest;
 import com.google.pubsub.v1.ProjectName;
@@ -41,4 +41,4 @@ public class CreateSchemaCreateSchemaRequest {
     }
   }
 }
-// [END v1_pubsub_generated_schemaserviceclient_createschema_createschemarequest]
+// [END pubsub_v1_generated_schemaserviceclient_createschema_createschemarequest]

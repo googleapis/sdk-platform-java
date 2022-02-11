@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_createnotification_projectnamenotification]
+// [START storage_v2_generated_storageclient_createnotification_projectnamenotification]
 import com.google.storage.v2.Notification;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -36,4 +36,4 @@ public class CreateNotificationProjectNameNotification {
     }
   }
 }
-// [END v2_storage_generated_storageclient_createnotification_projectnamenotification]
+// [END storage_v2_generated_storageclient_createnotification_projectnamenotification]

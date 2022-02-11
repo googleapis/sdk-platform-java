@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_listshelves_listshelvesrequestiterateall]
+// [START library_v1_generated_libraryserviceclient_listshelves_listshelvesrequestiterateall]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.ListShelvesRequest;
 import com.google.example.library.v1.Shelf;
@@ -41,4 +41,4 @@ public class ListShelvesListShelvesRequestIterateAll {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_listshelves_listshelvesrequestiterateall]
+// [END library_v1_generated_libraryserviceclient_listshelves_listshelvesrequestiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_getfeed_callablefuturecallgetfeedrequest]
+// [START asset_v1_generated_assetserviceclient_getfeed_callablefuturecallgetfeedrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.Feed;
@@ -42,4 +42,4 @@ public class GetFeedCallableFutureCallGetFeedRequest {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_getfeed_callablefuturecallgetfeedrequest]
+// [END asset_v1_generated_assetserviceclient_getfeed_callablefuturecallgetfeedrequest]

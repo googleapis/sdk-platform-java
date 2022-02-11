@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_echoclient_echo_echorequest]
+// [START goldensample_v1_generated_echoclient_echo_echorequest]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -44,4 +44,4 @@ public class EchoEchoRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_echoclient_echo_echorequest]
+// [END goldensample_v1_generated_echoclient_echo_echorequest]

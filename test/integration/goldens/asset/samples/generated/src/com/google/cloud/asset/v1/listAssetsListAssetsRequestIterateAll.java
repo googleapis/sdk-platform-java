@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_listassets_listassetsrequestiterateall]
+// [START asset_v1_generated_assetserviceclient_listassets_listassetsrequestiterateall]
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ContentType;
@@ -50,4 +50,4 @@ public class ListAssetsListAssetsRequestIterateAll {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_listassets_listassetsrequestiterateall]
+// [END asset_v1_generated_assetserviceclient_listassets_listassetsrequestiterateall]

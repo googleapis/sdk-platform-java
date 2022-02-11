@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_createsubscription_callablefuturecallsubscription]
+// [START pubsub_v1_generated_subscriptionadminclient_createsubscription_callablefuturecallsubscription]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Duration;
@@ -63,4 +63,4 @@ public class CreateSubscriptionCallableFutureCallSubscription {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_createsubscription_callablefuturecallsubscription]
+// [END pubsub_v1_generated_subscriptionadminclient_createsubscription_callablefuturecallsubscription]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_insert_asyncinsertaddressrequestget]
+// [START compute_v1small_generated_addressesclient_insert_asyncinsertaddressrequestget]
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.InsertAddressRequest;
@@ -42,4 +42,4 @@ public class InsertAsyncInsertAddressRequestGet {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_insert_asyncinsertaddressrequestget]
+// [END compute_v1small_generated_addressesclient_insert_asyncinsertaddressrequestget]

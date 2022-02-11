@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryservicesettings_createshelf_settingssetretrysettingslibraryservicesettings]
+// [START library_v1_generated_libraryservicesettings_createshelf_settingssetretrysettingslibraryservicesettings]
 import com.google.cloud.example.library.v1.LibraryServiceSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class CreateShelfSettingsSetRetrySettingsLibraryServiceSettings {
     LibraryServiceSettings libraryServiceSettings = libraryServiceSettingsBuilder.build();
   }
 }
-// [END v1_library_generated_libraryservicesettings_createshelf_settingssetretrysettingslibraryservicesettings]
+// [END library_v1_generated_libraryservicesettings_createshelf_settingssetretrysettingslibraryservicesettings]

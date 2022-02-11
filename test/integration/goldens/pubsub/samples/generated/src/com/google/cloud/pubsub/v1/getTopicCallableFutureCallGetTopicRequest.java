@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_gettopic_callablefuturecallgettopicrequest]
+// [START pubsub_v1_generated_topicadminclient_gettopic_callablefuturecallgettopicrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.GetTopicRequest;
@@ -42,4 +42,4 @@ public class GetTopicCallableFutureCallGetTopicRequest {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_gettopic_callablefuturecallgettopicrequest]
+// [END pubsub_v1_generated_topicadminclient_gettopic_callablefuturecallgettopicrequest]

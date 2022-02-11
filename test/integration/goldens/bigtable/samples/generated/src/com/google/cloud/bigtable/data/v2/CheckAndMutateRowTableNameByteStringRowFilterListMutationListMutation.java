@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_checkandmutaterow_tablenamebytestringrowfilterlistmutationlistmutation]
+// [START bigtable_v2_generated_basebigtabledataclient_checkandmutaterow_tablenamebytestringrowfilterlistmutationlistmutation]
 import com.google.bigtable.v2.CheckAndMutateRowResponse;
 import com.google.bigtable.v2.Mutation;
 import com.google.bigtable.v2.RowFilter;
@@ -47,4 +47,4 @@ public class CheckAndMutateRowTableNameByteStringRowFilterListMutationListMutati
     }
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_checkandmutaterow_tablenamebytestringrowfilterlistmutationlistmutation]
+// [END bigtable_v2_generated_basebigtabledataclient_checkandmutaterow_tablenamebytestringrowfilterlistmutationlistmutation]

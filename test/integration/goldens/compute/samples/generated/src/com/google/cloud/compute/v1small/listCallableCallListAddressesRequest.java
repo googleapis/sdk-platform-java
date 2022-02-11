@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_list_callablecalllistaddressesrequest]
+// [START compute_v1small_generated_addressesclient_list_callablecalllistaddressesrequest]
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressList;
 import com.google.cloud.compute.v1small.AddressesClient;
@@ -56,4 +56,4 @@ public class ListCallableCallListAddressesRequest {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_list_callablecalllistaddressesrequest]
+// [END compute_v1small_generated_addressesclient_list_callablecalllistaddressesrequest]

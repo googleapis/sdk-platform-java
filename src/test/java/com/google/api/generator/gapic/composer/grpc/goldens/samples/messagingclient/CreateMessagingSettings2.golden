@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_create_messagingsettings2]
+// [START goldensample_v1_generated_messagingclient_create_messagingsettings2]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.MessagingSettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateMessagingSettings2 {
     MessagingClient messagingClient = MessagingClient.create(messagingSettings);
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_create_messagingsettings2]
+// [END goldensample_v1_generated_messagingclient_create_messagingsettings2]

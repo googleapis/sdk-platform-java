@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getserviceaccount_callablefuturecallgetserviceaccountrequest]
+// [START storage_v2_generated_storageclient_getserviceaccount_callablefuturecallgetserviceaccountrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.GetServiceAccountRequest;
@@ -46,4 +46,4 @@ public class GetServiceAccountCallableFutureCallGetServiceAccountRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getserviceaccount_callablefuturecallgetserviceaccountrequest]
+// [END storage_v2_generated_storageclient_getserviceaccount_callablefuturecallgetserviceaccountrequest]

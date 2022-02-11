@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_deleteinstance_asyncinstancenameget]
+// [START redis_v1beta1_generated_cloudredisclient_deleteinstance_asyncinstancenameget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InstanceName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteInstanceAsyncInstanceNameGet {
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_deleteinstance_asyncinstancenameget]
+// [END redis_v1beta1_generated_cloudredisclient_deleteinstance_asyncinstancenameget]

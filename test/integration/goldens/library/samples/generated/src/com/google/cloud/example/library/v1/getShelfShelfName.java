@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_getshelf_shelfname]
+// [START library_v1_generated_libraryserviceclient_getshelf_shelfname]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Shelf;
 import com.google.example.library.v1.ShelfName;
@@ -35,4 +35,4 @@ public class GetShelfShelfName {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_getshelf_shelfname]
+// [END library_v1_generated_libraryserviceclient_getshelf_shelfname]

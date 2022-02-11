@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_regionoperationsclient_create_regionoperationssettings1]
+// [START compute_v1small_generated_regionoperationsclient_create_regionoperationssettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
@@ -38,4 +38,4 @@ public class CreateRegionOperationsSettings1 {
         RegionOperationsClient.create(regionOperationsSettings);
   }
 }
-// [END v1small_compute_generated_regionoperationsclient_create_regionoperationssettings1]
+// [END compute_v1small_generated_regionoperationsclient_create_regionoperationssettings1]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_getinstanceauthstring_callablefuturecallgetinstanceauthstringrequest]
+// [START redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_callablefuturecallgetinstanceauthstringrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.GetInstanceAuthStringRequest;
@@ -44,4 +44,4 @@ public class GetInstanceAuthStringCallableFutureCallGetInstanceAuthStringRequest
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_getinstanceauthstring_callablefuturecallgetinstanceauthstringrequest]
+// [END redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_callablefuturecallgetinstanceauthstringrequest]

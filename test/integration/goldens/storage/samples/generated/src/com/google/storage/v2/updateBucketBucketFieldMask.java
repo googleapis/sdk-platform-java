@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_updatebucket_bucketfieldmask]
+// [START storage_v2_generated_storageclient_updatebucket_bucketfieldmask]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.StorageClient;
@@ -36,4 +36,4 @@ public class UpdateBucketBucketFieldMask {
     }
   }
 }
-// [END v2_storage_generated_storageclient_updatebucket_bucketfieldmask]
+// [END storage_v2_generated_storageclient_updatebucket_bucketfieldmask]

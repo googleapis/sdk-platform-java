@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_getiampolicy_callablefuturecallgetiampolicyrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getiampolicy_callablefuturecallgetiampolicyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -48,4 +48,4 @@ public class GetIamPolicyCallableFutureCallGetIamPolicyRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_getiampolicy_callablefuturecallgetiampolicyrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getiampolicy_callablefuturecallgetiampolicyrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_exportassets_operationcallablefuturecallexportassetsrequest]
+// [START asset_v1_generated_assetserviceclient_exportassets_operationcallablefuturecallexportassetsrequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ContentType;
@@ -52,4 +52,4 @@ public class ExportAssetsOperationCallableFutureCallExportAssetsRequest {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_exportassets_operationcallablefuturecallexportassetsrequest]
+// [END asset_v1_generated_assetserviceclient_exportassets_operationcallablefuturecallexportassetsrequest]

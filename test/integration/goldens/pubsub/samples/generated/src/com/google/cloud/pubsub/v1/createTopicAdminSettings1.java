@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_create_topicadminsettings1]
+// [START pubsub_v1_generated_topicadminclient_create_topicadminsettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
@@ -37,4 +37,4 @@ public class CreateTopicAdminSettings1 {
     TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
   }
 }
-// [END v1_pubsub_generated_topicadminclient_create_topicadminsettings1]
+// [END pubsub_v1_generated_topicadminclient_create_topicadminsettings1]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_searchalliampolicies_stringstringiterateall]
+// [START asset_v1_generated_assetserviceclient_searchalliampolicies_stringstringiterateall]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.IamPolicySearchResult;
 
@@ -38,4 +38,4 @@ public class SearchAllIamPoliciesStringStringIterateAll {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_searchalliampolicies_stringstringiterateall]
+// [END asset_v1_generated_assetserviceclient_searchalliampolicies_stringstringiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.stub.samples;
 
-// [START v1_credentials_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings]
+// [START credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings]
 import com.google.cloud.iam.credentials.v1.stub.IamCredentialsStubSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class GenerateAccessTokenSettingsSetRetrySettingsIamCredentialsStubSettin
     IamCredentialsStubSettings iamCredentialsSettings = iamCredentialsSettingsBuilder.build();
   }
 }
-// [END v1_credentials_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings]
+// [END credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings]

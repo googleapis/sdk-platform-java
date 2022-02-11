@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_readobject_callablecallreadobjectrequest]
+// [START storage_v2_generated_storageclient_readobject_callablecallreadobjectrequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -56,4 +56,4 @@ public class ReadObjectCallableCallReadObjectRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_readobject_callablecallreadobjectrequest]
+// [END storage_v2_generated_storageclient_readobject_callablecallreadobjectrequest]

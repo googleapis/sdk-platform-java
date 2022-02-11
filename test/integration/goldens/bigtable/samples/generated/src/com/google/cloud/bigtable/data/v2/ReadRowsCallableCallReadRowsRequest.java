@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_readrows_callablecallreadrowsrequest]
+// [START bigtable_v2_generated_basebigtabledataclient_readrows_callablecallreadrowsrequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.bigtable.v2.ReadRowsRequest;
 import com.google.bigtable.v2.ReadRowsResponse;
@@ -50,4 +50,4 @@ public class ReadRowsCallableCallReadRowsRequest {
     }
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_readrows_callablecallreadrowsrequest]
+// [END bigtable_v2_generated_basebigtabledataclient_readrows_callablecallreadrowsrequest]

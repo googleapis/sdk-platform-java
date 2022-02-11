@@ -92,7 +92,7 @@ public class Assert {
           sample
               .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
               .withRegionTag(
-                  sample.regionTag().withApiShortName("goldenSample").withApiVersion("1.0.0"));
+                  sample.regionTag().withApiShortName("goldenSample").withApiVersion("v1"));
       assertCodeEquals(
           goldenFilePath, SampleComposer.createExecutableSample(sample, packkage + ".samples"));
     }

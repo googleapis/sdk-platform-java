@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_mergeshelves_mergeshelvesrequest]
+// [START library_v1_generated_libraryserviceclient_mergeshelves_mergeshelvesrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.MergeShelvesRequest;
 import com.google.example.library.v1.Shelf;
@@ -40,4 +40,4 @@ public class MergeShelvesMergeShelvesRequest {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_mergeshelves_mergeshelvesrequest]
+// [END library_v1_generated_libraryserviceclient_mergeshelves_mergeshelvesrequest]

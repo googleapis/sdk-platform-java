@@ -15,7 +15,7 @@
  */
 package com.google.logging.v2.stub.samples;
 
-// [START 1.0.0_goldensample_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
+// [START goldensample_v1_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
 import com.google.logging.v2.stub.LoggingServiceV2StubSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class DeleteLogSettingsSetRetrySettingsLoggingServiceV2StubSettings {
     LoggingServiceV2StubSettings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
   }
 }
-// [END 1.0.0_goldensample_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
+// [END goldensample_v1_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]

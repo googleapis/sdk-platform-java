@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_getlocation_callablefuturecallgetlocationrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getlocation_callablefuturecallgetlocationrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.GetLocationRequest;
@@ -40,4 +40,4 @@ public class GetLocationCallableFutureCallGetLocationRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_getlocation_callablefuturecallgetlocationrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getlocation_callablefuturecallgetlocationrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_deletebucket_callablefuturecalldeletebucketrequest]
+// [START storage_v2_generated_storageclient_deletebucket_callablefuturecalldeletebucketrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.storage.v2.BucketName;
@@ -46,4 +46,4 @@ public class DeleteBucketCallableFutureCallDeleteBucketRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_deletebucket_callablefuturecalldeletebucketrequest]
+// [END storage_v2_generated_storageclient_deletebucket_callablefuturecalldeletebucketrequest]

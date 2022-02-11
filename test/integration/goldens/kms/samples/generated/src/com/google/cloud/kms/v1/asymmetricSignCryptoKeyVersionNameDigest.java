@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_asymmetricsign_cryptokeyversionnamedigest]
+// [START kms_v1_generated_keymanagementserviceclient_asymmetricsign_cryptokeyversionnamedigest]
 import com.google.cloud.kms.v1.AsymmetricSignResponse;
 import com.google.cloud.kms.v1.CryptoKeyVersionName;
 import com.google.cloud.kms.v1.Digest;
@@ -40,4 +40,4 @@ public class AsymmetricSignCryptoKeyVersionNameDigest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_asymmetricsign_cryptokeyversionnamedigest]
+// [END kms_v1_generated_keymanagementserviceclient_asymmetricsign_cryptokeyversionnamedigest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_delete_asyncstringstringstringget]
+// [START compute_v1small_generated_addressesclient_delete_asyncstringstringstringget]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.Operation;
 
@@ -36,4 +36,4 @@ public class DeleteAsyncStringStringStringGet {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_delete_asyncstringstringstringget]
+// [END compute_v1small_generated_addressesclient_delete_asyncstringstringstringget]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_acknowledge_acknowledgerequest]
+// [START pubsub_v1_generated_subscriptionadminclient_acknowledge_acknowledgerequest]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.AcknowledgeRequest;
@@ -41,4 +41,4 @@ public class AcknowledgeAcknowledgeRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_acknowledge_acknowledgerequest]
+// [END pubsub_v1_generated_subscriptionadminclient_acknowledge_acknowledgerequest]

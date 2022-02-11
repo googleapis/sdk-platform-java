@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getserviceaccount_projectname]
+// [START storage_v2_generated_storageclient_getserviceaccount_projectname]
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.ServiceAccount;
 import com.google.storage.v2.StorageClient;
@@ -35,4 +35,4 @@ public class GetServiceAccountProjectName {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getserviceaccount_projectname]
+// [END storage_v2_generated_storageclient_getserviceaccount_projectname]

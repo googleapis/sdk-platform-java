@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_loggingclient_listlogs_projectnameiterateall]
+// [START logging_v2_generated_loggingclient_listlogs_projectnameiterateall]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.ProjectName;
 
@@ -36,4 +36,4 @@ public class ListLogsProjectNameIterateAll {
     }
   }
 }
-// [END v2_logging_generated_loggingclient_listlogs_projectnameiterateall]
+// [END logging_v2_generated_loggingclient_listlogs_projectnameiterateall]

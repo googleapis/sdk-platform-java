@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_modifypushconfig_callablefuturecallmodifypushconfigrequest]
+// [START pubsub_v1_generated_subscriptionadminclient_modifypushconfig_callablefuturecallmodifypushconfigrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
@@ -45,4 +45,4 @@ public class ModifyPushConfigCallableFutureCallModifyPushConfigRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_modifypushconfig_callablefuturecallmodifypushconfigrequest]
+// [END pubsub_v1_generated_subscriptionadminclient_modifypushconfig_callablefuturecallmodifypushconfigrequest]

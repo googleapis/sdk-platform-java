@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_reschedulemaintenance_asyncinstancenamereschedulemaintenancerequestrescheduletypetimestampget]
+// [START redis_v1beta1_generated_cloudredisclient_reschedulemaintenance_asyncinstancenamereschedulemaintenancerequestrescheduletypetimestampget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
 import com.google.cloud.redis.v1beta1.InstanceName;
@@ -44,4 +44,4 @@ class RescheduleMaintenanceAsyncInstanceNameRescheduleMaintenanceRequestReschedu
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_reschedulemaintenance_asyncinstancenamereschedulemaintenancerequestrescheduletypetimestampget]
+// [END redis_v1beta1_generated_cloudredisclient_reschedulemaintenance_asyncinstancenamereschedulemaintenancerequestrescheduletypetimestampget]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getobject_getobjectrequest]
+// [START storage_v2_generated_storageclient_getobject_getobjectrequest]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
@@ -50,4 +50,4 @@ public class GetObjectGetObjectRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getobject_getobjectrequest]
+// [END storage_v2_generated_storageclient_getobject_getobjectrequest]

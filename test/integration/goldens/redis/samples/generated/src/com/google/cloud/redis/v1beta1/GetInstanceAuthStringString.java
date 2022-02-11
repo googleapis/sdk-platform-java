@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_getinstanceauthstring_string]
+// [START redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_string]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InstanceAuthString;
 import com.google.cloud.redis.v1beta1.InstanceName;
@@ -35,4 +35,4 @@ public class GetInstanceAuthStringString {
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_getinstanceauthstring_string]
+// [END redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_string]

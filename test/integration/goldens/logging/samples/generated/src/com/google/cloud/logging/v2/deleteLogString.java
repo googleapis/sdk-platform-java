@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_loggingclient_deletelog_string]
+// [START logging_v2_generated_loggingclient_deletelog_string]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.LogName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteLogString {
     }
   }
 }
-// [END v2_logging_generated_loggingclient_deletelog_string]
+// [END logging_v2_generated_loggingclient_deletelog_string]

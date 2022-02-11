@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_identityclient_deleteuser_deleteuserrequest]
+// [START goldensample_v1_generated_identityclient_deleteuser_deleteuserrequest]
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.DeleteUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
@@ -37,4 +37,4 @@ public class DeleteUserDeleteUserRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_identityclient_deleteuser_deleteuserrequest]
+// [END goldensample_v1_generated_identityclient_deleteuser_deleteuserrequest]

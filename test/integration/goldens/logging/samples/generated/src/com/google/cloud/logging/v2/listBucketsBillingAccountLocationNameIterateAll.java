@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_listbuckets_billingaccountlocationnameiterateall]
+// [START logging_v2_generated_configclient_listbuckets_billingaccountlocationnameiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.BillingAccountLocationName;
 import com.google.logging.v2.LogBucket;
@@ -38,4 +38,4 @@ public class ListBucketsBillingAccountLocationNameIterateAll {
     }
   }
 }
-// [END v2_logging_generated_configclient_listbuckets_billingaccountlocationnameiterateall]
+// [END logging_v2_generated_configclient_listbuckets_billingaccountlocationnameiterateall]

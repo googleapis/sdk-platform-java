@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_insert_operationcallablefuturecallinsertaddressrequest]
+// [START compute_v1small_generated_addressesclient_insert_operationcallablefuturecallinsertaddressrequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressesClient;
@@ -46,4 +46,4 @@ public class InsertOperationCallableFutureCallInsertAddressRequest {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_insert_operationcallablefuturecallinsertaddressrequest]
+// [END compute_v1small_generated_addressesclient_insert_operationcallablefuturecallinsertaddressrequest]

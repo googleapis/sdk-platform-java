@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_getlocation_getlocationrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getlocation_getlocationrequest]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.Location;
@@ -36,4 +36,4 @@ public class GetLocationGetLocationRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_getlocation_getlocationrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getlocation_getlocationrequest]

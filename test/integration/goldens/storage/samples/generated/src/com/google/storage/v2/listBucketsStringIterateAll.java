@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_listbuckets_stringiterateall]
+// [START storage_v2_generated_storageclient_listbuckets_stringiterateall]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -37,4 +37,4 @@ public class ListBucketsStringIterateAll {
     }
   }
 }
-// [END v2_storage_generated_storageclient_listbuckets_stringiterateall]
+// [END storage_v2_generated_storageclient_listbuckets_stringiterateall]

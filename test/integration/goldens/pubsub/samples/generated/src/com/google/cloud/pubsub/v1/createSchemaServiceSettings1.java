@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaserviceclient_create_schemaservicesettings1]
+// [START pubsub_v1_generated_schemaserviceclient_create_schemaservicesettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.cloud.pubsub.v1.SchemaServiceSettings;
@@ -37,4 +37,4 @@ public class CreateSchemaServiceSettings1 {
     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
   }
 }
-// [END v1_pubsub_generated_schemaserviceclient_create_schemaservicesettings1]
+// [END pubsub_v1_generated_schemaserviceclient_create_schemaservicesettings1]

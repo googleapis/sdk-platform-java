@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_deleteobject_callablefuturecalldeleteobjectrequest]
+// [START storage_v2_generated_storageclient_deleteobject_callablefuturecalldeleteobjectrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -52,4 +52,4 @@ public class DeleteObjectCallableFutureCallDeleteObjectRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_deleteobject_callablefuturecalldeleteobjectrequest]
+// [END storage_v2_generated_storageclient_deleteobject_callablefuturecalldeleteobjectrequest]

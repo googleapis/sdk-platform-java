@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_listviews_callablecalllistviewsrequest]
+// [START logging_v2_generated_configclient_listviews_callablecalllistviewsrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.common.base.Strings;
 import com.google.logging.v2.ListViewsRequest;
@@ -53,4 +53,4 @@ public class ListViewsCallableCallListViewsRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_listviews_callablecalllistviewsrequest]
+// [END logging_v2_generated_configclient_listviews_callablecalllistviewsrequest]

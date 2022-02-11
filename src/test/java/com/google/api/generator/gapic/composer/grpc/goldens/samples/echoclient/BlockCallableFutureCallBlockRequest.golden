@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_echoclient_block_callablefuturecallblockrequest]
+// [START goldensample_v1_generated_echoclient_block_callablefuturecallblockrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
@@ -38,4 +38,4 @@ public class BlockCallableFutureCallBlockRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_echoclient_block_callablefuturecallblockrequest]
+// [END goldensample_v1_generated_echoclient_block_callablefuturecallblockrequest]

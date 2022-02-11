@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_createcryptokeyversion_createcryptokeyversionrequest]
+// [START kms_v1_generated_keymanagementserviceclient_createcryptokeyversion_createcryptokeyversionrequest]
 import com.google.cloud.kms.v1.CreateCryptoKeyVersionRequest;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
@@ -43,4 +43,4 @@ public class CreateCryptoKeyVersionCreateCryptoKeyVersionRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_createcryptokeyversion_createcryptokeyversionrequest]
+// [END kms_v1_generated_keymanagementserviceclient_createcryptokeyversion_createcryptokeyversionrequest]

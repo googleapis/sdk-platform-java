@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getbucket_getbucketrequest]
+// [START storage_v2_generated_storageclient_getbucket_getbucketrequest]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.BucketName;
@@ -45,4 +45,4 @@ public class GetBucketGetBucketRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getbucket_getbucketrequest]
+// [END storage_v2_generated_storageclient_getbucket_getbucketrequest]

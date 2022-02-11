@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_listobjects_projectnameiterateall]
+// [START storage_v2_generated_storageclient_listobjects_projectnameiterateall]
 import com.google.storage.v2.Object;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -37,4 +37,4 @@ public class ListObjectsProjectNameIterateAll {
     }
   }
 }
-// [END v2_storage_generated_storageclient_listobjects_projectnameiterateall]
+// [END storage_v2_generated_storageclient_listobjects_projectnameiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_listbuckets_pagedcallablefuturecalllistbucketsrequest]
+// [START logging_v2_generated_configclient_listbuckets_pagedcallablefuturecalllistbucketsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.ListBucketsRequest;
@@ -46,4 +46,4 @@ public class ListBucketsPagedCallableFutureCallListBucketsRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_listbuckets_pagedcallablefuturecalllistbucketsrequest]
+// [END logging_v2_generated_configclient_listbuckets_pagedcallablefuturecalllistbucketsrequest]

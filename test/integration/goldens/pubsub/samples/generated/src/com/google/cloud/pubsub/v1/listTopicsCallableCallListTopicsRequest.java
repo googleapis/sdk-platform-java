@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_listtopics_callablecalllisttopicsrequest]
+// [START pubsub_v1_generated_topicadminclient_listtopics_callablecalllisttopicsrequest]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.common.base.Strings;
 import com.google.pubsub.v1.ListTopicsRequest;
@@ -54,4 +54,4 @@ public class ListTopicsCallableCallListTopicsRequest {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_listtopics_callablecalllisttopicsrequest]
+// [END pubsub_v1_generated_topicadminclient_listtopics_callablecalllisttopicsrequest]

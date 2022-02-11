@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_getfeed_string]
+// [START asset_v1_generated_assetserviceclient_getfeed_string]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.Feed;
 import com.google.cloud.asset.v1.FeedName;
@@ -35,4 +35,4 @@ public class GetFeedString {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_getfeed_string]
+// [END asset_v1_generated_assetserviceclient_getfeed_string]

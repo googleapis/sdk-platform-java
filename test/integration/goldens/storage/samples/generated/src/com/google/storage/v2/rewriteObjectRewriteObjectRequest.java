@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_rewriteobject_rewriteobjectrequest]
+// [START storage_v2_generated_storageclient_rewriteobject_rewriteobjectrequest]
 import com.google.protobuf.ByteString;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -69,4 +69,4 @@ public class RewriteObjectRewriteObjectRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_rewriteobject_rewriteobjectrequest]
+// [END storage_v2_generated_storageclient_rewriteobject_rewriteobjectrequest]

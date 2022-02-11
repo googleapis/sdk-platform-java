@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_getcmeksettings_getcmeksettingsrequest]
+// [START logging_v2_generated_configclient_getcmeksettings_getcmeksettingsrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CmekSettings;
 import com.google.logging.v2.CmekSettingsName;
@@ -39,4 +39,4 @@ public class GetCmekSettingsGetCmekSettingsRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_getcmeksettings_getcmeksettingsrequest]
+// [END logging_v2_generated_configclient_getcmeksettings_getcmeksettingsrequest]

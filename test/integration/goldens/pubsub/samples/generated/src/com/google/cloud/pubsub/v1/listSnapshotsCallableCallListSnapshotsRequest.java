@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_listsnapshots_callablecalllistsnapshotsrequest]
+// [START pubsub_v1_generated_subscriptionadminclient_listsnapshots_callablecalllistsnapshotsrequest]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.common.base.Strings;
 import com.google.pubsub.v1.ListSnapshotsRequest;
@@ -55,4 +55,4 @@ public class ListSnapshotsCallableCallListSnapshotsRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_listsnapshots_callablecalllistsnapshotsrequest]
+// [END pubsub_v1_generated_subscriptionadminclient_listsnapshots_callablecalllistsnapshotsrequest]

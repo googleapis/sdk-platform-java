@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_acknowledge_callablefuturecallacknowledgerequest]
+// [START pubsub_v1_generated_subscriptionadminclient_acknowledge_callablefuturecallacknowledgerequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
@@ -44,4 +44,4 @@ public class AcknowledgeCallableFutureCallAcknowledgeRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_acknowledge_callablefuturecallacknowledgerequest]
+// [END pubsub_v1_generated_subscriptionadminclient_acknowledge_callablefuturecallacknowledgerequest]

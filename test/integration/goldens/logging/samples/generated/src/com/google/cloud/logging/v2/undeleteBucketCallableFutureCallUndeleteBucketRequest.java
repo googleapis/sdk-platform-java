@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_undeletebucket_callablefuturecallundeletebucketrequest]
+// [START logging_v2_generated_configclient_undeletebucket_callablefuturecallundeletebucketrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogBucketName;
@@ -44,4 +44,4 @@ public class UndeleteBucketCallableFutureCallUndeleteBucketRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_undeletebucket_callablefuturecallundeletebucketrequest]
+// [END logging_v2_generated_configclient_undeletebucket_callablefuturecallundeletebucketrequest]

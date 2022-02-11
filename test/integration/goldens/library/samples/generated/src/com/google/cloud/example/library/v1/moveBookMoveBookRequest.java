@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_movebook_movebookrequest]
+// [START library_v1_generated_libraryserviceclient_movebook_movebookrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.BookName;
@@ -41,4 +41,4 @@ public class MoveBookMoveBookRequest {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_movebook_movebookrequest]
+// [END library_v1_generated_libraryserviceclient_movebook_movebookrequest]

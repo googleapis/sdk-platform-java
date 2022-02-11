@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_loggingsettings_deletelog_settingssetretrysettingsloggingsettings]
+// [START logging_v2_generated_loggingsettings_deletelog_settingssetretrysettingsloggingsettings]
 import com.google.cloud.logging.v2.LoggingSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class DeleteLogSettingsSetRetrySettingsLoggingSettings {
     LoggingSettings loggingSettings = loggingSettingsBuilder.build();
   }
 }
-// [END v2_logging_generated_loggingsettings_deletelog_settingssetretrysettingsloggingsettings]
+// [END logging_v2_generated_loggingsettings_deletelog_settingssetretrysettingsloggingsettings]

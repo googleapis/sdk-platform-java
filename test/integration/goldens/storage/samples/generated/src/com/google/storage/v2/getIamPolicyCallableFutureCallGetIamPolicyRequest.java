@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getiampolicy_callablefuturecallgetiampolicyrequest]
+// [START storage_v2_generated_storageclient_getiampolicy_callablefuturecallgetiampolicyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.GetPolicyOptions;
@@ -46,4 +46,4 @@ public class GetIamPolicyCallableFutureCallGetIamPolicyRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getiampolicy_callablefuturecallgetiampolicyrequest]
+// [END storage_v2_generated_storageclient_getiampolicy_callablefuturecallgetiampolicyrequest]

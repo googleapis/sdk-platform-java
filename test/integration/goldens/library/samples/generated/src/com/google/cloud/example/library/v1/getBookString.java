@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_getbook_string]
+// [START library_v1_generated_libraryserviceclient_getbook_string]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.BookName;
@@ -35,4 +35,4 @@ public class GetBookString {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_getbook_string]
+// [END library_v1_generated_libraryserviceclient_getbook_string]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_create_libraryservicesettings1]
+// [START library_v1_generated_libraryserviceclient_create_libraryservicesettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.cloud.example.library.v1.LibraryServiceSettings;
@@ -37,4 +37,4 @@ public class CreateLibraryServiceSettings1 {
     LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
   }
 }
-// [END v1_library_generated_libraryserviceclient_create_libraryservicesettings1]
+// [END library_v1_generated_libraryserviceclient_create_libraryservicesettings1]

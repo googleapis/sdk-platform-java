@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaserviceclient_listschemas_pagedcallablefuturecalllistschemasrequest]
+// [START pubsub_v1_generated_schemaserviceclient_listschemas_pagedcallablefuturecalllistschemasrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.pubsub.v1.ListSchemasRequest;
@@ -48,4 +48,4 @@ public class ListSchemasPagedCallableFutureCallListSchemasRequest {
     }
   }
 }
-// [END v1_pubsub_generated_schemaserviceclient_listschemas_pagedcallablefuturecalllistschemasrequest]
+// [END pubsub_v1_generated_schemaserviceclient_listschemas_pagedcallablefuturecalllistschemasrequest]

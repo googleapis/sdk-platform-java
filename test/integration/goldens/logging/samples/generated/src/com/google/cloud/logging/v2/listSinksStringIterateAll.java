@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_listsinks_stringiterateall]
+// [START logging_v2_generated_configclient_listsinks_stringiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogSink;
 import com.google.logging.v2.ProjectName;
@@ -37,4 +37,4 @@ public class ListSinksStringIterateAll {
     }
   }
 }
-// [END v2_logging_generated_configclient_listsinks_stringiterateall]
+// [END logging_v2_generated_configclient_listsinks_stringiterateall]

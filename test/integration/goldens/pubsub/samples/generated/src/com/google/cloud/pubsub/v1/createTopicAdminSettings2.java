@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_create_topicadminsettings2]
+// [START pubsub_v1_generated_topicadminclient_create_topicadminsettings2]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.cloud.pubsub.v1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateTopicAdminSettings2 {
     TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings);
   }
 }
-// [END v1_pubsub_generated_topicadminclient_create_topicadminsettings2]
+// [END pubsub_v1_generated_topicadminclient_create_topicadminsettings2]

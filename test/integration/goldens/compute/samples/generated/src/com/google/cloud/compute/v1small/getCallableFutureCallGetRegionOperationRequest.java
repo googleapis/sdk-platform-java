@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_regionoperationsclient_get_callablefuturecallgetregionoperationrequest]
+// [START compute_v1small_generated_regionoperationsclient_get_callablefuturecallgetregionoperationrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.compute.v1small.GetRegionOperationRequest;
 import com.google.cloud.compute.v1small.Operation;
@@ -43,4 +43,4 @@ public class GetCallableFutureCallGetRegionOperationRequest {
     }
   }
 }
-// [END v1small_compute_generated_regionoperationsclient_get_callablefuturecallgetregionoperationrequest]
+// [END compute_v1small_generated_regionoperationsclient_get_callablefuturecallgetregionoperationrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_getobject_stringstring]
+// [START storage_v2_generated_storageclient_getobject_stringstring]
 import com.google.storage.v2.Object;
 import com.google.storage.v2.StorageClient;
 
@@ -35,4 +35,4 @@ public class GetObjectStringString {
     }
   }
 }
-// [END v2_storage_generated_storageclient_getobject_stringstring]
+// [END storage_v2_generated_storageclient_getobject_stringstring]

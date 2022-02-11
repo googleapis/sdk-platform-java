@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_failoverinstance_asyncinstancenamefailoverinstancerequestdataprotectionmodeget]
+// [START redis_v1beta1_generated_cloudredisclient_failoverinstance_asyncinstancenamefailoverinstancerequestdataprotectionmodeget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -39,4 +39,4 @@ public class FailoverInstanceAsyncInstanceNameFailoverInstanceRequestDataProtect
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_failoverinstance_asyncinstancenamefailoverinstancerequestdataprotectionmodeget]
+// [END redis_v1beta1_generated_cloudredisclient_failoverinstance_asyncinstancenamefailoverinstancerequestdataprotectionmodeget]

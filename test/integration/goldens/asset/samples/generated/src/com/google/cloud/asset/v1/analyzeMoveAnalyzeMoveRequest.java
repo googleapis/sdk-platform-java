@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_analyzemove_analyzemoverequest]
+// [START asset_v1_generated_assetserviceclient_analyzemove_analyzemoverequest]
 import com.google.cloud.asset.v1.AnalyzeMoveRequest;
 import com.google.cloud.asset.v1.AnalyzeMoveResponse;
 import com.google.cloud.asset.v1.AssetServiceClient;
@@ -39,4 +39,4 @@ public class AnalyzeMoveAnalyzeMoveRequest {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_analyzemove_analyzemoverequest]
+// [END asset_v1_generated_assetserviceclient_analyzemove_analyzemoverequest]

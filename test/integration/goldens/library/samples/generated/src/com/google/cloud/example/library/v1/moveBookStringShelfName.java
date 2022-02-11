@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_movebook_stringshelfname]
+// [START library_v1_generated_libraryserviceclient_movebook_stringshelfname]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.BookName;
@@ -37,4 +37,4 @@ public class MoveBookStringShelfName {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_movebook_stringshelfname]
+// [END library_v1_generated_libraryserviceclient_movebook_stringshelfname]

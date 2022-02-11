@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_deleteroom_string]
+// [START goldensample_v1_generated_messagingclient_deleteroom_string]
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.RoomName;
@@ -35,4 +35,4 @@ public class DeleteRoomString {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_deleteroom_string]
+// [END goldensample_v1_generated_messagingclient_deleteroom_string]

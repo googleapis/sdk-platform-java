@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_listhmackeys_listhmackeysrequestiterateall]
+// [START storage_v2_generated_storageclient_listhmackeys_listhmackeysrequestiterateall]
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
 import com.google.storage.v2.ListHmacKeysRequest;
@@ -47,4 +47,4 @@ public class ListHmacKeysListHmacKeysRequestIterateAll {
     }
   }
 }
-// [END v2_storage_generated_storageclient_listhmackeys_listhmackeysrequestiterateall]
+// [END storage_v2_generated_storageclient_listhmackeys_listhmackeysrequestiterateall]

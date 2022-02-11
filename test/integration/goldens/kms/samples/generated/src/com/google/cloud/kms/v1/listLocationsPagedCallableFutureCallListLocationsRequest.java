@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_listlocations_pagedcallablefuturecalllistlocationsrequest]
+// [START kms_v1_generated_keymanagementserviceclient_listlocations_pagedcallablefuturecalllistlocationsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.ListLocationsRequest;
@@ -48,4 +48,4 @@ public class ListLocationsPagedCallableFutureCallListLocationsRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_listlocations_pagedcallablefuturecalllistlocationsrequest]
+// [END kms_v1_generated_keymanagementserviceclient_listlocations_pagedcallablefuturecalllistlocationsrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_analyzeiampolicy_analyzeiampolicyrequest]
+// [START asset_v1_generated_assetserviceclient_analyzeiampolicy_analyzeiampolicyrequest]
 import com.google.cloud.asset.v1.AnalyzeIamPolicyRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyResponse;
 import com.google.cloud.asset.v1.AssetServiceClient;
@@ -41,4 +41,4 @@ public class AnalyzeIamPolicyAnalyzeIamPolicyRequest {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_analyzeiampolicy_analyzeiampolicyrequest]
+// [END asset_v1_generated_assetserviceclient_analyzeiampolicy_analyzeiampolicyrequest]

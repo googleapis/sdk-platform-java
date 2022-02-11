@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementservicesettings_getkeyring_settingssetretrysettingskeymanagementservicesettings]
+// [START kms_v1_generated_keymanagementservicesettings_getkeyring_settingssetretrysettingskeymanagementservicesettings]
 import com.google.cloud.kms.v1.KeyManagementServiceSettings;
 import java.time.Duration;
 
@@ -44,4 +44,4 @@ public class GetKeyRingSettingsSetRetrySettingsKeyManagementServiceSettings {
         keyManagementServiceSettingsBuilder.build();
   }
 }
-// [END v1_kms_generated_keymanagementservicesettings_getkeyring_settingssetretrysettingskeymanagementservicesettings]
+// [END kms_v1_generated_keymanagementservicesettings_getkeyring_settingssetretrysettingskeymanagementservicesettings]

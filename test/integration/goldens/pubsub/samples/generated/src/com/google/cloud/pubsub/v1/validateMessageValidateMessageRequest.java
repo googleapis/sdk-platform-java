@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaserviceclient_validatemessage_validatemessagerequest]
+// [START pubsub_v1_generated_schemaserviceclient_validatemessage_validatemessagerequest]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.Encoding;
@@ -43,4 +43,4 @@ public class ValidateMessageValidateMessageRequest {
     }
   }
 }
-// [END v1_pubsub_generated_schemaserviceclient_validatemessage_validatemessagerequest]
+// [END pubsub_v1_generated_schemaserviceclient_validatemessage_validatemessagerequest]

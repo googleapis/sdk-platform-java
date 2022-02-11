@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_deletehmackey_callablefuturecalldeletehmackeyrequest]
+// [START storage_v2_generated_storageclient_deletehmackey_callablefuturecalldeletehmackeyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.storage.v2.CommonRequestParams;
@@ -45,4 +45,4 @@ public class DeleteHmacKeyCallableFutureCallDeleteHmacKeyRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_deletehmackey_callablefuturecalldeletehmackeyrequest]
+// [END storage_v2_generated_storageclient_deletehmackey_callablefuturecalldeletehmackeyrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_reschedulemaintenance_operationcallablefuturecallreschedulemaintenancerequest]
+// [START redis_v1beta1_generated_cloudredisclient_reschedulemaintenance_operationcallablefuturecallreschedulemaintenancerequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -47,4 +47,4 @@ public class RescheduleMaintenanceOperationCallableFutureCallRescheduleMaintenan
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_reschedulemaintenance_operationcallablefuturecallreschedulemaintenancerequest]
+// [END redis_v1beta1_generated_cloudredisclient_reschedulemaintenance_operationcallablefuturecallreschedulemaintenancerequest]

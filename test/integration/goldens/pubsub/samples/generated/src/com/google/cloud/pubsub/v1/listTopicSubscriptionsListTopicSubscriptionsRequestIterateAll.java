@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_listtopicsubscriptions_listtopicsubscriptionsrequestiterateall]
+// [START pubsub_v1_generated_topicadminclient_listtopicsubscriptions_listtopicsubscriptionsrequestiterateall]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
 import com.google.pubsub.v1.TopicName;
@@ -43,4 +43,4 @@ public class ListTopicSubscriptionsListTopicSubscriptionsRequestIterateAll {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_listtopicsubscriptions_listtopicsubscriptionsrequestiterateall]
+// [END pubsub_v1_generated_topicadminclient_listtopicsubscriptions_listtopicsubscriptionsrequestiterateall]

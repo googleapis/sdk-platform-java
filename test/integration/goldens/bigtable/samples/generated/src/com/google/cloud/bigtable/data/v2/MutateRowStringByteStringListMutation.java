@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutation]
+// [START bigtable_v2_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutation]
 import com.google.bigtable.v2.MutateRowResponse;
 import com.google.bigtable.v2.Mutation;
 import com.google.bigtable.v2.TableName;
@@ -41,4 +41,4 @@ public class MutateRowStringByteStringListMutation {
     }
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutation]
+// [END bigtable_v2_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutation]

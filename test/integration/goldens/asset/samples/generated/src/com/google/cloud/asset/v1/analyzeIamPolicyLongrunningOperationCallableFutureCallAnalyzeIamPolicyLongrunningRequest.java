@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_analyzeiampolicylongrunning_operationcallablefuturecallanalyzeiampolicylongrunningrequest]
+// [START asset_v1_generated_assetserviceclient_analyzeiampolicylongrunning_operationcallablefuturecallanalyzeiampolicylongrunningrequest]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningMetadata;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
@@ -50,4 +50,4 @@ class AnalyzeIamPolicyLongrunningOperationCallableFutureCallAnalyzeIamPolicyLong
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_analyzeiampolicylongrunning_operationcallablefuturecallanalyzeiampolicylongrunningrequest]
+// [END asset_v1_generated_assetserviceclient_analyzeiampolicylongrunning_operationcallablefuturecallanalyzeiampolicylongrunningrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_create_basebigtabledatasettings2]
+// [START bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings2]
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataClient;
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataSettings;
 import com.google.cloud.bigtable.data.v2.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateBaseBigtableDataSettings2 {
         BaseBigtableDataClient.create(baseBigtableDataSettings);
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_create_basebigtabledatasettings2]
+// [END bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings2]

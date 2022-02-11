@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_listtopics_pagedcallablefuturecalllisttopicsrequest]
+// [START pubsub_v1_generated_topicadminclient_listtopics_pagedcallablefuturecalllisttopicsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.ListTopicsRequest;
@@ -46,4 +46,4 @@ public class ListTopicsPagedCallableFutureCallListTopicsRequest {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_listtopics_pagedcallablefuturecalllisttopicsrequest]
+// [END pubsub_v1_generated_topicadminclient_listtopics_pagedcallablefuturecalllisttopicsrequest]

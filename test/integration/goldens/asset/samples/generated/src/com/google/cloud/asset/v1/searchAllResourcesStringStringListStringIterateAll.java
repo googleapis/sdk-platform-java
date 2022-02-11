@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_searchallresources_stringstringliststringiterateall]
+// [START asset_v1_generated_assetserviceclient_searchallresources_stringstringliststringiterateall]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ResourceSearchResult;
 import java.util.ArrayList;
@@ -41,4 +41,4 @@ public class SearchAllResourcesStringStringListStringIterateAll {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_searchallresources_stringstringliststringiterateall]
+// [END asset_v1_generated_assetserviceclient_searchallresources_stringstringliststringiterateall]

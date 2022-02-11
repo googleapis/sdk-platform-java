@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_asymmetricsign_callablefuturecallasymmetricsignrequest]
+// [START kms_v1_generated_keymanagementserviceclient_asymmetricsign_callablefuturecallasymmetricsignrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.AsymmetricSignRequest;
 import com.google.cloud.kms.v1.AsymmetricSignResponse;
@@ -55,4 +55,4 @@ public class AsymmetricSignCallableFutureCallAsymmetricSignRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_asymmetricsign_callablefuturecallasymmetricsignrequest]
+// [END kms_v1_generated_keymanagementserviceclient_asymmetricsign_callablefuturecallasymmetricsignrequest]

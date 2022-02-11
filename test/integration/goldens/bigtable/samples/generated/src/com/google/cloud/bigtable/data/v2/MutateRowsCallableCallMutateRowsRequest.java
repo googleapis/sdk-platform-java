@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_mutaterows_callablecallmutaterowsrequest]
+// [START bigtable_v2_generated_basebigtabledataclient_mutaterows_callablecallmutaterowsrequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.bigtable.v2.MutateRowsRequest;
 import com.google.bigtable.v2.MutateRowsResponse;
@@ -47,4 +47,4 @@ public class MutateRowsCallableCallMutateRowsRequest {
     }
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_mutaterows_callablecallmutaterowsrequest]
+// [END bigtable_v2_generated_basebigtabledataclient_mutaterows_callablecallmutaterowsrequest]

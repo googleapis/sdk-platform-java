@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START v1_credentials_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest]
+// [START credentials_v1_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -46,4 +46,4 @@ public class SignJwtCallableFutureCallSignJwtRequest {
     }
   }
 }
-// [END v1_credentials_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest]
+// [END credentials_v1_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest]

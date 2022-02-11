@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_deleteview_deleteviewrequest]
+// [START logging_v2_generated_configclient_deleteview_deleteviewrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.DeleteViewRequest;
 import com.google.logging.v2.LogViewName;
@@ -42,4 +42,4 @@ public class DeleteViewDeleteViewRequest {
     }
   }
 }
-// [END v2_logging_generated_configclient_deleteview_deleteviewrequest]
+// [END logging_v2_generated_configclient_deleteview_deleteviewrequest]

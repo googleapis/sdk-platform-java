@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_create_libraryservicesettings2]
+// [START library_v1_generated_libraryserviceclient_create_libraryservicesettings2]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.cloud.example.library.v1.LibraryServiceSettings;
 import com.google.cloud.example.library.v1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateLibraryServiceSettings2 {
     LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
   }
 }
-// [END v1_library_generated_libraryserviceclient_create_libraryservicesettings2]
+// [END library_v1_generated_libraryserviceclient_create_libraryservicesettings2]

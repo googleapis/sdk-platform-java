@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_updatebucket_updatebucketrequest]
+// [START storage_v2_generated_storageclient_updatebucket_updatebucketrequest]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.CommonRequestParams;
@@ -48,4 +48,4 @@ public class UpdateBucketUpdateBucketRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_updatebucket_updatebucketrequest]
+// [END storage_v2_generated_storageclient_updatebucket_updatebucketrequest]

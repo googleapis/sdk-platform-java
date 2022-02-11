@@ -15,7 +15,7 @@
  */
 package com.google.testdata.v1.samples;
 
-// [START 1.0.0_goldensample_generated_deprecatedserviceclient_slowfibonacci_callablefuturecallfibonaccirequest]
+// [START goldensample_v1_generated_deprecatedserviceclient_slowfibonacci_callablefuturecallfibonaccirequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.testdata.v1.DeprecatedServiceClient;
@@ -38,4 +38,4 @@ public class SlowFibonacciCallableFutureCallFibonacciRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_deprecatedserviceclient_slowfibonacci_callablefuturecallfibonaccirequest]
+// [END goldensample_v1_generated_deprecatedserviceclient_slowfibonacci_callablefuturecallfibonaccirequest]

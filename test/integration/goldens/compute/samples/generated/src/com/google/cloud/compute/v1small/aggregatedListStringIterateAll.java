@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START v1small_compute_generated_addressesclient_aggregatedlist_stringiterateall]
+// [START compute_v1small_generated_addressesclient_aggregatedlist_stringiterateall]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesScopedList;
 import java.util.Map;
@@ -38,4 +38,4 @@ public class AggregatedListStringIterateAll {
     }
   }
 }
-// [END v1small_compute_generated_addressesclient_aggregatedlist_stringiterateall]
+// [END compute_v1small_generated_addressesclient_aggregatedlist_stringiterateall]

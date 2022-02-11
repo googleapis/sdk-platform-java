@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START v1beta1_redis_generated_cloudredisclient_importinstance_asyncimportinstancerequestget]
+// [START redis_v1beta1_generated_cloudredisclient_importinstance_asyncimportinstancerequestget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
 import com.google.cloud.redis.v1beta1.InputConfig;
@@ -40,4 +40,4 @@ public class ImportInstanceAsyncImportInstanceRequestGet {
     }
   }
 }
-// [END v1beta1_redis_generated_cloudredisclient_importinstance_asyncimportinstancerequestget]
+// [END redis_v1beta1_generated_cloudredisclient_importinstance_asyncimportinstancerequestget]

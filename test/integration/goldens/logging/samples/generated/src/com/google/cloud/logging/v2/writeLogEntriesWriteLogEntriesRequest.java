@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_loggingclient_writelogentries_writelogentriesrequest]
+// [START logging_v2_generated_loggingclient_writelogentries_writelogentriesrequest]
 import com.google.api.MonitoredResource;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.LogEntry;
@@ -48,4 +48,4 @@ public class WriteLogEntriesWriteLogEntriesRequest {
     }
   }
 }
-// [END v2_logging_generated_loggingclient_writelogentries_writelogentriesrequest]
+// [END logging_v2_generated_loggingclient_writelogentries_writelogentriesrequest]

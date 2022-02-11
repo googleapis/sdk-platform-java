@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaserviceclient_validatemessage_callablefuturecallvalidatemessagerequest]
+// [START pubsub_v1_generated_schemaserviceclient_validatemessage_callablefuturecallvalidatemessagerequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.protobuf.ByteString;
@@ -47,4 +47,4 @@ public class ValidateMessageCallableFutureCallValidateMessageRequest {
     }
   }
 }
-// [END v1_pubsub_generated_schemaserviceclient_validatemessage_callablefuturecallvalidatemessagerequest]
+// [END pubsub_v1_generated_schemaserviceclient_validatemessage_callablefuturecallvalidatemessagerequest]

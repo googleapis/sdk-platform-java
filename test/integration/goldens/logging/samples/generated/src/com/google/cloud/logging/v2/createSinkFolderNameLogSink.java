@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_createsink_foldernamelogsink]
+// [START logging_v2_generated_configclient_createsink_foldernamelogsink]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.FolderName;
 import com.google.logging.v2.LogSink;
@@ -36,4 +36,4 @@ public class CreateSinkFolderNameLogSink {
     }
   }
 }
-// [END v2_logging_generated_configclient_createsink_foldernamelogsink]
+// [END logging_v2_generated_configclient_createsink_foldernamelogsink]

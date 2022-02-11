@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_getkeyring_callablefuturecallgetkeyringrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getkeyring_callablefuturecallgetkeyringrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.GetKeyRingRequest;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -44,4 +44,4 @@ public class GetKeyRingCallableFutureCallGetKeyRingRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_getkeyring_callablefuturecallgetkeyringrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getkeyring_callablefuturecallgetkeyringrequest]

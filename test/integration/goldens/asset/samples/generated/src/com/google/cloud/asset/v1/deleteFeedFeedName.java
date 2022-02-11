@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_deletefeed_feedname]
+// [START asset_v1_generated_assetserviceclient_deletefeed_feedname]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.FeedName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteFeedFeedName {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_deletefeed_feedname]
+// [END asset_v1_generated_assetserviceclient_deletefeed_feedname]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledataclient_readmodifywriterow_stringbytestringlistreadmodifywriterule]
+// [START bigtable_v2_generated_basebigtabledataclient_readmodifywriterow_stringbytestringlistreadmodifywriterule]
 import com.google.bigtable.v2.ReadModifyWriteRowResponse;
 import com.google.bigtable.v2.ReadModifyWriteRule;
 import com.google.bigtable.v2.TableName;
@@ -42,4 +42,4 @@ public class ReadModifyWriteRowStringByteStringListReadModifyWriteRule {
     }
   }
 }
-// [END v2_bigtable_generated_basebigtabledataclient_readmodifywriterow_stringbytestringlistreadmodifywriterule]
+// [END bigtable_v2_generated_basebigtabledataclient_readmodifywriterow_stringbytestringlistreadmodifywriterule]

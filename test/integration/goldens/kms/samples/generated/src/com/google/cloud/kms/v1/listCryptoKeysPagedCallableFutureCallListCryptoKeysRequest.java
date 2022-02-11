@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_listcryptokeys_pagedcallablefuturecalllistcryptokeysrequest]
+// [START kms_v1_generated_keymanagementserviceclient_listcryptokeys_pagedcallablefuturecalllistcryptokeysrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -50,4 +50,4 @@ public class ListCryptoKeysPagedCallableFutureCallListCryptoKeysRequest {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_listcryptokeys_pagedcallablefuturecalllistcryptokeysrequest]
+// [END kms_v1_generated_keymanagementserviceclient_listcryptokeys_pagedcallablefuturecalllistcryptokeysrequest]

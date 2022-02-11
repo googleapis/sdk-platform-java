@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_schemaservicesettings_createschema_settingssetretrysettingsschemaservicesettings]
+// [START pubsub_v1_generated_schemaservicesettings_createschema_settingssetretrysettingsschemaservicesettings]
 import com.google.cloud.pubsub.v1.SchemaServiceSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class CreateSchemaSettingsSetRetrySettingsSchemaServiceSettings {
     SchemaServiceSettings schemaServiceSettings = schemaServiceSettingsBuilder.build();
   }
 }
-// [END v1_pubsub_generated_schemaservicesettings_createschema_settingssetretrysettingsschemaservicesettings]
+// [END pubsub_v1_generated_schemaservicesettings_createschema_settingssetretrysettingsschemaservicesettings]

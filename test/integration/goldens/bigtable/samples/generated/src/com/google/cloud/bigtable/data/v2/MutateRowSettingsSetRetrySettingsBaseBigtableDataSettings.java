@@ -15,7 +15,7 @@
  */
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START v2_bigtable_generated_basebigtabledatasettings_mutaterow_settingssetretrysettingsbasebigtabledatasettings]
+// [START bigtable_v2_generated_basebigtabledatasettings_mutaterow_settingssetretrysettingsbasebigtabledatasettings]
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class MutateRowSettingsSetRetrySettingsBaseBigtableDataSettings {
     BaseBigtableDataSettings baseBigtableDataSettings = baseBigtableDataSettingsBuilder.build();
   }
 }
-// [END v2_bigtable_generated_basebigtabledatasettings_mutaterow_settingssetretrysettingsbasebigtabledatasettings]
+// [END bigtable_v2_generated_basebigtabledatasettings_mutaterow_settingssetretrysettingsbasebigtabledatasettings]

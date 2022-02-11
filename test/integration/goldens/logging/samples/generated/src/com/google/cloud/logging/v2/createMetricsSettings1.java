@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_metricsclient_create_metricssettings1]
+// [START logging_v2_generated_metricsclient_create_metricssettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.cloud.logging.v2.MetricsSettings;
@@ -37,4 +37,4 @@ public class CreateMetricsSettings1 {
     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
   }
 }
-// [END v2_logging_generated_metricsclient_create_metricssettings1]
+// [END logging_v2_generated_metricsclient_create_metricssettings1]

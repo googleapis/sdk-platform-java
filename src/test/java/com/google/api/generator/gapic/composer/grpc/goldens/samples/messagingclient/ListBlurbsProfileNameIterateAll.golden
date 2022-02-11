@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_listblurbs_profilenameiterateall]
+// [START goldensample_v1_generated_messagingclient_listblurbs_profilenameiterateall]
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
@@ -37,4 +37,4 @@ public class ListBlurbsProfileNameIterateAll {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_listblurbs_profilenameiterateall]
+// [END goldensample_v1_generated_messagingclient_listblurbs_profilenameiterateall]

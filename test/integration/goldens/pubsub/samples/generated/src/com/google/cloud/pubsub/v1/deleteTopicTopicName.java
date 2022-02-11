@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_deletetopic_topicname]
+// [START pubsub_v1_generated_topicadminclient_deletetopic_topicname]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.TopicName;
@@ -35,4 +35,4 @@ public class DeleteTopicTopicName {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_deletetopic_topicname]
+// [END pubsub_v1_generated_topicadminclient_deletetopic_topicname]

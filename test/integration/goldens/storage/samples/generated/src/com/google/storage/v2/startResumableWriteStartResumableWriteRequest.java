@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_startresumablewrite_startresumablewriterequest]
+// [START storage_v2_generated_storageclient_startresumablewrite_startresumablewriterequest]
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.StartResumableWriteRequest;
@@ -43,4 +43,4 @@ public class StartResumableWriteStartResumableWriteRequest {
     }
   }
 }
-// [END v2_storage_generated_storageclient_startresumablewrite_startresumablewriterequest]
+// [END storage_v2_generated_storageclient_startresumablewrite_startresumablewriterequest]

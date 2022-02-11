@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_loggingclient_taillogentries_callablecalltaillogentriesrequest]
+// [START logging_v2_generated_loggingclient_taillogentries_callablecalltaillogentriesrequest]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.TailLogEntriesRequest;
@@ -48,4 +48,4 @@ public class TailLogEntriesCallableCallTailLogEntriesRequest {
     }
   }
 }
-// [END v2_logging_generated_loggingclient_taillogentries_callablecalltaillogentriesrequest]
+// [END logging_v2_generated_loggingclient_taillogentries_callablecalltaillogentriesrequest]

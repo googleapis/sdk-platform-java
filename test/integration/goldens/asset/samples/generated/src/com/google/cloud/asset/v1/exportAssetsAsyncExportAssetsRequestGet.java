@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START v1_asset_generated_assetserviceclient_exportassets_asyncexportassetsrequestget]
+// [START asset_v1_generated_assetserviceclient_exportassets_asyncexportassetsrequestget]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ContentType;
 import com.google.cloud.asset.v1.ExportAssetsRequest;
@@ -48,4 +48,4 @@ public class ExportAssetsAsyncExportAssetsRequestGet {
     }
   }
 }
-// [END v1_asset_generated_assetserviceclient_exportassets_asyncexportassetsrequestget]
+// [END asset_v1_generated_assetserviceclient_exportassets_asyncexportassetsrequestget]

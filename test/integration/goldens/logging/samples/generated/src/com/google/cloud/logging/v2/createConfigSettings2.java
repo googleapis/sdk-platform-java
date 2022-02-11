@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START v2_logging_generated_configclient_create_configsettings2]
+// [START logging_v2_generated_configclient_create_configsettings2]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.cloud.logging.v2.ConfigSettings;
 import com.google.cloud.logging.v2.myEndpoint;
@@ -33,4 +33,4 @@ public class CreateConfigSettings2 {
     ConfigClient configClient = ConfigClient.create(configSettings);
   }
 }
-// [END v2_logging_generated_configclient_create_configsettings2]
+// [END logging_v2_generated_configclient_create_configsettings2]

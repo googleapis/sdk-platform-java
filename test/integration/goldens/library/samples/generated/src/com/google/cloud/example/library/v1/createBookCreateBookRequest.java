@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START v1_library_generated_libraryserviceclient_createbook_createbookrequest]
+// [START library_v1_generated_libraryserviceclient_createbook_createbookrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.CreateBookRequest;
@@ -40,4 +40,4 @@ public class CreateBookCreateBookRequest {
     }
   }
 }
-// [END v1_library_generated_libraryserviceclient_createbook_createbookrequest]
+// [END library_v1_generated_libraryserviceclient_createbook_createbookrequest]

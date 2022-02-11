@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START v1_kms_generated_keymanagementserviceclient_encrypt_resourcenamebytestring]
+// [START kms_v1_generated_keymanagementserviceclient_encrypt_resourcenamebytestring]
 import com.google.api.resourcenames.ResourceName;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.EncryptResponse;
@@ -39,4 +39,4 @@ public class EncryptResourceNameByteString {
     }
   }
 }
-// [END v1_kms_generated_keymanagementserviceclient_encrypt_resourcenamebytestring]
+// [END kms_v1_generated_keymanagementserviceclient_encrypt_resourcenamebytestring]

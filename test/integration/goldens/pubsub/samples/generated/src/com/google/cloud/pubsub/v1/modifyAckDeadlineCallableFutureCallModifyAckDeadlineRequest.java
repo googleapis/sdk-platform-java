@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_subscriptionadminclient_modifyackdeadline_callablefuturecallmodifyackdeadlinerequest]
+// [START pubsub_v1_generated_subscriptionadminclient_modifyackdeadline_callablefuturecallmodifyackdeadlinerequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
@@ -47,4 +47,4 @@ public class ModifyAckDeadlineCallableFutureCallModifyAckDeadlineRequest {
     }
   }
 }
-// [END v1_pubsub_generated_subscriptionadminclient_modifyackdeadline_callablefuturecallmodifyackdeadlinerequest]
+// [END pubsub_v1_generated_subscriptionadminclient_modifyackdeadline_callablefuturecallmodifyackdeadlinerequest]

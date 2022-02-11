@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START v1_credentials_generated_iamcredentialsclient_create_iamcredentialssettings2]
+// [START credentials_v1_generated_iamcredentialsclient_create_iamcredentialssettings2]
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 import com.google.cloud.iam.credentials.v1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateIamCredentialsSettings2 {
     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END v1_credentials_generated_iamcredentialsclient_create_iamcredentialssettings2]
+// [END credentials_v1_generated_iamcredentialsclient_create_iamcredentialssettings2]

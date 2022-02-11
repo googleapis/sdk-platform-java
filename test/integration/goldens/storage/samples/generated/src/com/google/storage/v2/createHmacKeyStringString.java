@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START v2_storage_generated_storageclient_createhmackey_stringstring]
+// [START storage_v2_generated_storageclient_createhmackey_stringstring]
 import com.google.storage.v2.CreateHmacKeyResponse;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -36,4 +36,4 @@ public class CreateHmacKeyStringString {
     }
   }
 }
-// [END v2_storage_generated_storageclient_createhmackey_stringstring]
+// [END storage_v2_generated_storageclient_createhmackey_stringstring]

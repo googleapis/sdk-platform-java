@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_setiampolicy_callablefuturecallsetiampolicyrequest]
+// [START pubsub_v1_generated_topicadminclient_setiampolicy_callablefuturecallsetiampolicyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.Policy;
@@ -43,4 +43,4 @@ public class SetIamPolicyCallableFutureCallSetIamPolicyRequest {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_setiampolicy_callablefuturecallsetiampolicyrequest]
+// [END pubsub_v1_generated_topicadminclient_setiampolicy_callablefuturecallsetiampolicyrequest]

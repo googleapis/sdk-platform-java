@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START v1_pubsub_generated_topicadminclient_updatetopic_callablefuturecallupdatetopicrequest]
+// [START pubsub_v1_generated_topicadminclient_updatetopic_callablefuturecallupdatetopicrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.protobuf.FieldMask;
@@ -43,4 +43,4 @@ public class UpdateTopicCallableFutureCallUpdateTopicRequest {
     }
   }
 }
-// [END v1_pubsub_generated_topicadminclient_updatetopic_callablefuturecallupdatetopicrequest]
+// [END pubsub_v1_generated_topicadminclient_updatetopic_callablefuturecallupdatetopicrequest]
