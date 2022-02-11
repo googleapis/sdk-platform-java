@@ -501,6 +501,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *           .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
    *           .setRetryPolicy(RetryPolicy.newBuilder().build())
    *           .setDetached(true)
+   *           .setEnableExactlyOnceDelivery(true)
    *           .setTopicMessageRetentionDuration(Duration.newBuilder().build())
    *           .build();
    *   Subscription response = subscriptionAdminClient.createSubscription(request);
@@ -548,6 +549,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *           .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
    *           .setRetryPolicy(RetryPolicy.newBuilder().build())
    *           .setDetached(true)
+   *           .setEnableExactlyOnceDelivery(true)
    *           .setTopicMessageRetentionDuration(Duration.newBuilder().build())
    *           .build();
    *   ApiFuture<Subscription> future =
