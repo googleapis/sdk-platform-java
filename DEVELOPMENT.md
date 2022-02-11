@@ -139,9 +139,3 @@
     ```sh
     bazel run //test/integration:update_redis
     ```
-
--   Update all integration test golden files.
-
-    ```sh
-    bazel run $(bazel query //test/integration/... | grep :update_) 
-    ```

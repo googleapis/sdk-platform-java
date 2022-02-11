@@ -88,6 +88,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -147,6 +148,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -206,6 +208,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -265,6 +268,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -324,6 +328,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -373,6 +378,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -422,6 +428,7 @@ public class SubscriberClientTest {
             .setDeadLetterPolicy(DeadLetterPolicy.newBuilder().build())
             .setRetryPolicy(RetryPolicy.newBuilder().build())
             .setDetached(true)
+            .setEnableExactlyOnceDelivery(true)
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -939,6 +946,10 @@ public class SubscriberClientTest {
     StreamingPullResponse expectedResponse =
         StreamingPullResponse.newBuilder()
             .addAllReceivedMessages(new ArrayList<ReceivedMessage>())
+            .setAcknowlegeConfirmation(
+                StreamingPullResponse.AcknowledgeConfirmation.newBuilder().build())
+            .setModifyAckDeadlineConfirmation(
+                StreamingPullResponse.ModifyAckDeadlineConfirmation.newBuilder().build())
             .setSubscriptionProperties(
                 StreamingPullResponse.SubscriptionProperties.newBuilder().build())
             .build();
