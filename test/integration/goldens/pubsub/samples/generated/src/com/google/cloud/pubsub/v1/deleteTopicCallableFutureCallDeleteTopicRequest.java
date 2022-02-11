@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicadminclient_deletetopic_callablefuturecalldeletetopicrequest]
+// [START v1_pubsub_generated_topicadminclient_deletetopic_callablefuturecalldeletetopicrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.protobuf.Empty;
@@ -42,4 +42,4 @@ public class DeleteTopicCallableFutureCallDeleteTopicRequest {
     }
   }
 }
-// [END 1.0_10_generated_topicadminclient_deletetopic_callablefuturecalldeletetopicrequest]
+// [END v1_pubsub_generated_topicadminclient_deletetopic_callablefuturecalldeletetopicrequest]

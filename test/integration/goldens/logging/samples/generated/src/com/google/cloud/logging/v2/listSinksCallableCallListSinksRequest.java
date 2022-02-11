@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_listsinks_callablecalllistsinksrequest]
+// [START v2_logging_generated_configclient_listsinks_callablecalllistsinksrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.common.base.Strings;
 import com.google.logging.v2.ListSinksRequest;
@@ -54,4 +54,4 @@ public class ListSinksCallableCallListSinksRequest {
     }
   }
 }
-// [END 1.0_10_generated_configclient_listsinks_callablecalllistsinksrequest]
+// [END v2_logging_generated_configclient_listsinks_callablecalllistsinksrequest]

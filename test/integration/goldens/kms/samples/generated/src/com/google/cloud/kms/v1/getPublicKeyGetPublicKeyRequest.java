@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_getpublickey_getpublickeyrequest]
+// [START v1_kms_generated_keymanagementserviceclient_getpublickey_getpublickeyrequest]
 import com.google.cloud.kms.v1.CryptoKeyVersionName;
 import com.google.cloud.kms.v1.GetPublicKeyRequest;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -47,4 +47,4 @@ public class GetPublicKeyGetPublicKeyRequest {
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_getpublickey_getpublickeyrequest]
+// [END v1_kms_generated_keymanagementserviceclient_getpublickey_getpublickeyrequest]

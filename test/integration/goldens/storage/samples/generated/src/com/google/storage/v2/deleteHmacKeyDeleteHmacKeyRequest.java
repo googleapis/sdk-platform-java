@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_deletehmackey_deletehmackeyrequest]
+// [START v2_storage_generated_storageclient_deletehmackey_deletehmackeyrequest]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.DeleteHmacKeyRequest;
@@ -42,4 +42,4 @@ public class DeleteHmacKeyDeleteHmacKeyRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_deletehmackey_deletehmackeyrequest]
+// [END v2_storage_generated_storageclient_deletehmackey_deletehmackeyrequest]

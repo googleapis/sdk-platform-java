@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetserviceclient_listassets_stringiterateall]
+// [START v1_asset_generated_assetserviceclient_listassets_stringiterateall]
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.FeedName;
@@ -37,4 +37,4 @@ public class ListAssetsStringIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_assetserviceclient_listassets_stringiterateall]
+// [END v1_asset_generated_assetserviceclient_listassets_stringiterateall]

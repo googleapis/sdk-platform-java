@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_getsink_logsinkname]
+// [START v2_logging_generated_configclient_getsink_logsinkname]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogSink;
 import com.google.logging.v2.LogSinkName;
@@ -35,4 +35,4 @@ public class GetSinkLogSinkName {
     }
   }
 }
-// [END 1.0_10_generated_configclient_getsink_logsinkname]
+// [END v2_logging_generated_configclient_getsink_logsinkname]

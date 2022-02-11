@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionadminclient_createsubscription_subscriptionnametopicnamepushconfigint]
+// [START v1_pubsub_generated_subscriptionadminclient_createsubscription_subscriptionnametopicnamepushconfigint]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.PushConfig;
 import com.google.pubsub.v1.Subscription;
@@ -41,4 +41,4 @@ public class CreateSubscriptionSubscriptionNameTopicNamePushConfigInt {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionadminclient_createsubscription_subscriptionnametopicnamepushconfigint]
+// [END v1_pubsub_generated_subscriptionadminclient_createsubscription_subscriptionnametopicnamepushconfigint]

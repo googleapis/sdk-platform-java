@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingclient_writelogentries_stringmonitoredresourcemapstringstringlistlogentry]
+// [START v2_logging_generated_loggingclient_writelogentries_stringmonitoredresourcemapstringstringlistlogentry]
 import com.google.api.MonitoredResource;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.LogEntry;
@@ -46,4 +46,4 @@ public class WriteLogEntriesStringMonitoredResourceMapStringStringListLogEntry {
     }
   }
 }
-// [END 1.0_10_generated_loggingclient_writelogentries_stringmonitoredresourcemapstringstringlistlogentry]
+// [END v2_logging_generated_loggingclient_writelogentries_stringmonitoredresourcemapstringstringlistlogentry]

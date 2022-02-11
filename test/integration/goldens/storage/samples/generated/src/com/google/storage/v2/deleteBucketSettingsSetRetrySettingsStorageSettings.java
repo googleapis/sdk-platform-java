@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storagesettings_deletebucket_settingssetretrysettingsstoragesettings]
+// [START v2_storage_generated_storagesettings_deletebucket_settingssetretrysettingsstoragesettings]
 import com.google.storage.v2.StorageSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class DeleteBucketSettingsSetRetrySettingsStorageSettings {
     StorageSettings storageSettings = storageSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_storagesettings_deletebucket_settingssetretrysettingsstoragesettings]
+// [END v2_storage_generated_storagesettings_deletebucket_settingssetretrysettingsstoragesettings]

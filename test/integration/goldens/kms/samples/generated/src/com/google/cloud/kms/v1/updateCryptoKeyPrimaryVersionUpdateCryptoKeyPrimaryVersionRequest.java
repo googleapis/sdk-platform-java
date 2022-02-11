@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_updatecryptokeyprimaryversion_updatecryptokeyprimaryversionrequest]
+// [START v1_kms_generated_keymanagementserviceclient_updatecryptokeyprimaryversion_updatecryptokeyprimaryversionrequest]
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -44,4 +44,4 @@ public class UpdateCryptoKeyPrimaryVersionUpdateCryptoKeyPrimaryVersionRequest {
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_updatecryptokeyprimaryversion_updatecryptokeyprimaryversionrequest]
+// [END v1_kms_generated_keymanagementserviceclient_updatecryptokeyprimaryversion_updatecryptokeyprimaryversionrequest]

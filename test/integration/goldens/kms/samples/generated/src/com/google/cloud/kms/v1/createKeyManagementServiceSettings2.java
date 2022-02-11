@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_create_keymanagementservicesettings2]
+// [START v1_kms_generated_keymanagementserviceclient_create_keymanagementservicesettings2]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyManagementServiceSettings;
 import com.google.cloud.kms.v1.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateKeyManagementServiceSettings2 {
         KeyManagementServiceClient.create(keyManagementServiceSettings);
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_create_keymanagementservicesettings2]
+// [END v1_kms_generated_keymanagementserviceclient_create_keymanagementservicesettings2]

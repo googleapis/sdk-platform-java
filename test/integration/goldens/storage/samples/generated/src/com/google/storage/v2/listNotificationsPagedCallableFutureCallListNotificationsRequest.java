@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_listnotifications_pagedcallablefuturecalllistnotificationsrequest]
+// [START v2_storage_generated_storageclient_listnotifications_pagedcallablefuturecalllistnotificationsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.storage.v2.ListNotificationsRequest;
 import com.google.storage.v2.Notification;
@@ -48,4 +48,4 @@ public class ListNotificationsPagedCallableFutureCallListNotificationsRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_listnotifications_pagedcallablefuturecalllistnotificationsrequest]
+// [END v2_storage_generated_storageclient_listnotifications_pagedcallablefuturecalllistnotificationsrequest]

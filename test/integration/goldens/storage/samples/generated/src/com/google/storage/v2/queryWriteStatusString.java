@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_querywritestatus_string]
+// [START v2_storage_generated_storageclient_querywritestatus_string]
 import com.google.storage.v2.QueryWriteStatusResponse;
 import com.google.storage.v2.StorageClient;
 
@@ -34,4 +34,4 @@ public class QueryWriteStatusString {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_querywritestatus_string]
+// [END v2_storage_generated_storageclient_querywritestatus_string]

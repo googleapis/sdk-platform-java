@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsclient_deletelogmetric_callablefuturecalldeletelogmetricrequest]
+// [START v2_logging_generated_metricsclient_deletelogmetric_callablefuturecalldeletelogmetricrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.DeleteLogMetricRequest;
@@ -42,4 +42,4 @@ public class DeleteLogMetricCallableFutureCallDeleteLogMetricRequest {
     }
   }
 }
-// [END 1.0_10_generated_metricsclient_deletelogmetric_callablefuturecalldeletelogmetricrequest]
+// [END v2_logging_generated_metricsclient_deletelogmetric_callablefuturecalldeletelogmetricrequest]

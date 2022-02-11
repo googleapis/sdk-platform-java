@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [START v2_storage_generated_storageclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -48,4 +48,4 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [END v2_storage_generated_storageclient_testiampermissions_callablefuturecalltestiampermissionsrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START 1.0_10_generated_iampolicyclient_setiampolicy_setiampolicyrequest]
+// [START v1_iam_generated_iampolicyclient_setiampolicy_setiampolicyrequest]
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
@@ -39,4 +39,4 @@ public class SetIamPolicySetIamPolicyRequest {
     }
   }
 }
-// [END 1.0_10_generated_iampolicyclient_setiampolicy_setiampolicyrequest]
+// [END v1_iam_generated_iampolicyclient_setiampolicy_setiampolicyrequest]

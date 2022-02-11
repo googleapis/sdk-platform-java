@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsclient_create_metricssettings2]
+// [START v2_logging_generated_metricsclient_create_metricssettings2]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.cloud.logging.v2.MetricsSettings;
 import com.google.cloud.logging.v2.myEndpoint;
@@ -33,4 +33,4 @@ public class CreateMetricsSettings2 {
     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
   }
 }
-// [END 1.0_10_generated_metricsclient_create_metricssettings2]
+// [END v2_logging_generated_metricsclient_create_metricssettings2]

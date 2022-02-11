@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingclient_create_loggingsettings2]
+// [START v2_logging_generated_loggingclient_create_loggingsettings2]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.cloud.logging.v2.LoggingSettings;
 import com.google.cloud.logging.v2.myEndpoint;
@@ -33,4 +33,4 @@ public class CreateLoggingSettings2 {
     LoggingClient loggingClient = LoggingClient.create(loggingSettings);
   }
 }
-// [END 1.0_10_generated_loggingclient_create_loggingsettings2]
+// [END v2_logging_generated_loggingclient_create_loggingsettings2]

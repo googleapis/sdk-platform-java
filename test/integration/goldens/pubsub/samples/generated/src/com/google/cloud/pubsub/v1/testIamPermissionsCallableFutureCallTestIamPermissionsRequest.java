@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicadminclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [START v1_pubsub_generated_topicadminclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
@@ -46,4 +46,4 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_topicadminclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [END v1_pubsub_generated_topicadminclient_testiampermissions_callablefuturecalltestiampermissionsrequest]

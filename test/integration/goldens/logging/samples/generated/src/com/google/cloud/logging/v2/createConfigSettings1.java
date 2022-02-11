@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_create_configsettings1]
+// [START v2_logging_generated_configclient_create_configsettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.cloud.logging.v2.ConfigSettings;
@@ -37,4 +37,4 @@ public class CreateConfigSettings1 {
     ConfigClient configClient = ConfigClient.create(configSettings);
   }
 }
-// [END 1.0_10_generated_configclient_create_configsettings1]
+// [END v2_logging_generated_configclient_create_configsettings1]

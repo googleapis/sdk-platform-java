@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_listkeyrings_listkeyringsrequestiterateall]
+// [START v1_kms_generated_keymanagementserviceclient_listkeyrings_listkeyringsrequestiterateall]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRing;
 import com.google.cloud.kms.v1.ListKeyRingsRequest;
@@ -46,4 +46,4 @@ public class ListKeyRingsListKeyRingsRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_listkeyrings_listkeyringsrequestiterateall]
+// [END v1_kms_generated_keymanagementserviceclient_listkeyrings_listkeyringsrequestiterateall]

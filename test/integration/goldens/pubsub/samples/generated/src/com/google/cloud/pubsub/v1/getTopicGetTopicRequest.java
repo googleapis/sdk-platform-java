@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_topicadminclient_gettopic_gettopicrequest]
+// [START v1_pubsub_generated_topicadminclient_gettopic_gettopicrequest]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.pubsub.v1.GetTopicRequest;
 import com.google.pubsub.v1.Topic;
@@ -39,4 +39,4 @@ public class GetTopicGetTopicRequest {
     }
   }
 }
-// [END 1.0_10_generated_topicadminclient_gettopic_gettopicrequest]
+// [END v1_pubsub_generated_topicadminclient_gettopic_gettopicrequest]

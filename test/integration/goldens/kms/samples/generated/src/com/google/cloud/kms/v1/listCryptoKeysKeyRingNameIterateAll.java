@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_listcryptokeys_keyringnameiterateall]
+// [START v1_kms_generated_keymanagementserviceclient_listcryptokeys_keyringnameiterateall]
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRingName;
@@ -38,4 +38,4 @@ public class ListCryptoKeysKeyRingNameIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_listcryptokeys_keyringnameiterateall]
+// [END v1_kms_generated_keymanagementserviceclient_listcryptokeys_keyringnameiterateall]

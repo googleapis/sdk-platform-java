@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_listsinks_billingaccountnameiterateall]
+// [START v2_logging_generated_configclient_listsinks_billingaccountnameiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.BillingAccountName;
 import com.google.logging.v2.LogSink;
@@ -37,4 +37,4 @@ public class ListSinksBillingAccountNameIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_configclient_listsinks_billingaccountnameiterateall]
+// [END v2_logging_generated_configclient_listsinks_billingaccountnameiterateall]

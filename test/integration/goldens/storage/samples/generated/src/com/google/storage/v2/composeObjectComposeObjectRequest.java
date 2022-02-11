@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_composeobject_composeobjectrequest]
+// [START v2_storage_generated_storageclient_composeobject_composeobjectrequest]
 import com.google.storage.v2.CommonObjectRequestParams;
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ComposeObjectRequest;
@@ -52,4 +52,4 @@ public class ComposeObjectComposeObjectRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_composeobject_composeobjectrequest]
+// [END v2_storage_generated_storageclient_composeobject_composeobjectrequest]

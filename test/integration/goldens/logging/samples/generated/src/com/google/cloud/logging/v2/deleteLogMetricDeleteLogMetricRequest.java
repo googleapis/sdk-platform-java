@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_metricsclient_deletelogmetric_deletelogmetricrequest]
+// [START v2_logging_generated_metricsclient_deletelogmetric_deletelogmetricrequest]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.logging.v2.DeleteLogMetricRequest;
 import com.google.logging.v2.LogMetricName;
@@ -39,4 +39,4 @@ public class DeleteLogMetricDeleteLogMetricRequest {
     }
   }
 }
-// [END 1.0_10_generated_metricsclient_deletelogmetric_deletelogmetricrequest]
+// [END v2_logging_generated_metricsclient_deletelogmetric_deletelogmetricrequest]

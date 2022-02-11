@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionadminclient_streamingpull_callablecallstreamingpullrequest]
+// [START v1_pubsub_generated_subscriptionadminclient_streamingpull_callablecallstreamingpullrequest]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.StreamingPullRequest;
@@ -53,4 +53,4 @@ public class StreamingPullCallableCallStreamingPullRequest {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionadminclient_streamingpull_callablecallstreamingpullrequest]
+// [END v1_pubsub_generated_subscriptionadminclient_streamingpull_callablecallstreamingpullrequest]

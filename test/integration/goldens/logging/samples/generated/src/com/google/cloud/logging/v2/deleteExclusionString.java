@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_deleteexclusion_string]
+// [START v2_logging_generated_configclient_deleteexclusion_string]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogExclusionName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteExclusionString {
     }
   }
 }
-// [END 1.0_10_generated_configclient_deleteexclusion_string]
+// [END v2_logging_generated_configclient_deleteexclusion_string]

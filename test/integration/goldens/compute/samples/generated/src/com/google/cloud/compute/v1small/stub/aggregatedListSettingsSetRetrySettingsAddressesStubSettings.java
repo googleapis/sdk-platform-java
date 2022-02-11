@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.stub.samples;
 
-// [START 1.0_10_generated_addressesstubsettings_aggregatedlist_settingssetretrysettingsaddressesstubsettings]
+// [START v1small_compute_generated_addressesstubsettings_aggregatedlist_settingssetretrysettingsaddressesstubsettings]
 import com.google.cloud.compute.v1small.stub.AddressesStubSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class AggregatedListSettingsSetRetrySettingsAddressesStubSettings {
     AddressesStubSettings addressesSettings = addressesSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_addressesstubsettings_aggregatedlist_settingssetretrysettingsaddressesstubsettings]
+// [END v1small_compute_generated_addressesstubsettings_aggregatedlist_settingssetretrysettingsaddressesstubsettings]

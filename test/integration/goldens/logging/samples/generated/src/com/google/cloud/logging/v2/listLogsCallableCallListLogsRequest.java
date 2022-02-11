@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingclient_listlogs_callablecalllistlogsrequest]
+// [START v2_logging_generated_loggingclient_listlogs_callablecalllistlogsrequest]
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.common.base.Strings;
 import com.google.logging.v2.ListLogsRequest;
@@ -55,4 +55,4 @@ public class ListLogsCallableCallListLogsRequest {
     }
   }
 }
-// [END 1.0_10_generated_loggingclient_listlogs_callablecalllistlogsrequest]
+// [END v2_logging_generated_loggingclient_listlogs_callablecalllistlogsrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_deletesink_callablefuturecalldeletesinkrequest]
+// [START v2_logging_generated_configclient_deletesink_callablefuturecalldeletesinkrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.DeleteSinkRequest;
@@ -42,4 +42,4 @@ public class DeleteSinkCallableFutureCallDeleteSinkRequest {
     }
   }
 }
-// [END 1.0_10_generated_configclient_deletesink_callablefuturecalldeletesinkrequest]
+// [END v2_logging_generated_configclient_deletesink_callablefuturecalldeletesinkrequest]

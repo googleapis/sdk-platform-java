@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudredisclient_create_cloudredissettings2]
+// [START v1beta1_redis_generated_cloudredisclient_create_cloudredissettings2]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.CloudRedisSettings;
 import com.google.cloud.redis.v1beta1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateCloudRedisSettings2 {
     CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
   }
 }
-// [END 1.0_10_generated_cloudredisclient_create_cloudredissettings2]
+// [END v1beta1_redis_generated_cloudredisclient_create_cloudredissettings2]

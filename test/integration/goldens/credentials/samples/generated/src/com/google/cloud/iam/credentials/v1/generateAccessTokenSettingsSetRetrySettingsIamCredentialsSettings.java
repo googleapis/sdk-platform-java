@@ -15,7 +15,7 @@
  */
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START 1.0_10_generated_iamcredentialssettings_generateaccesstoken_settingssetretrysettingsiamcredentialssettings]
+// [START v1_credentials_generated_iamcredentialssettings_generateaccesstoken_settingssetretrysettingsiamcredentialssettings]
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class GenerateAccessTokenSettingsSetRetrySettingsIamCredentialsSettings {
     IamCredentialsSettings iamCredentialsSettings = iamCredentialsSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_iamcredentialssettings_generateaccesstoken_settingssetretrysettingsiamcredentialssettings]
+// [END v1_credentials_generated_iamcredentialssettings_generateaccesstoken_settingssetretrysettingsiamcredentialssettings]

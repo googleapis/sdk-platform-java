@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_create_storagesettings1]
+// [START v2_storage_generated_storageclient_create_storagesettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.StorageSettings;
@@ -37,4 +37,4 @@ public class CreateStorageSettings1 {
     StorageClient storageClient = StorageClient.create(storageSettings);
   }
 }
-// [END 1.0_10_generated_storageclient_create_storagesettings1]
+// [END v2_storage_generated_storageclient_create_storagesettings1]

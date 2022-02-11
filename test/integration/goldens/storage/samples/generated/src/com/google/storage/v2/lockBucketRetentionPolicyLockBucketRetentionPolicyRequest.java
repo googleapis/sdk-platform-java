@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_lockbucketretentionpolicy_lockbucketretentionpolicyrequest]
+// [START v2_storage_generated_storageclient_lockbucketretentionpolicy_lockbucketretentionpolicyrequest]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.CommonRequestParams;
@@ -42,4 +42,4 @@ public class LockBucketRetentionPolicyLockBucketRetentionPolicyRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_lockbucketretentionpolicy_lockbucketretentionpolicyrequest]
+// [END v2_storage_generated_storageclient_lockbucketretentionpolicy_lockbucketretentionpolicyrequest]

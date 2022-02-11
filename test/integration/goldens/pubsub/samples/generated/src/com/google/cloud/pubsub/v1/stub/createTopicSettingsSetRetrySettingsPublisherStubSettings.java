@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.stub.samples;
 
-// [START 1.0_10_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]
+// [START v1_pubsub_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]
 import com.google.cloud.pubsub.v1.stub.PublisherStubSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class CreateTopicSettingsSetRetrySettingsPublisherStubSettings {
     PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]
+// [END v1_pubsub_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]

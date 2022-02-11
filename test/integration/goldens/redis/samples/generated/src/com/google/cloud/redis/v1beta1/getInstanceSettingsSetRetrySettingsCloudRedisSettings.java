@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings]
+// [START v1beta1_redis_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings]
 import com.google.cloud.redis.v1beta1.CloudRedisSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class GetInstanceSettingsSetRetrySettingsCloudRedisSettings {
     CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings]
+// [END v1beta1_redis_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings]

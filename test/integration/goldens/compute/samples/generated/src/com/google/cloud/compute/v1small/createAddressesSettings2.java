@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_addressesclient_create_addressessettings2]
+// [START v1small_compute_generated_addressesclient_create_addressessettings2]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesSettings;
 import com.google.cloud.compute.v1small.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateAddressesSettings2 {
     AddressesClient addressesClient = AddressesClient.create(addressesSettings);
   }
 }
-// [END 1.0_10_generated_addressesclient_create_addressessettings2]
+// [END v1small_compute_generated_addressesclient_create_addressessettings2]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_deletebucket_deletebucketrequest]
+// [START v2_logging_generated_configclient_deletebucket_deletebucketrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.DeleteBucketRequest;
 import com.google.logging.v2.LogBucketName;
@@ -41,4 +41,4 @@ public class DeleteBucketDeleteBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_configclient_deletebucket_deletebucketrequest]
+// [END v2_logging_generated_configclient_deletebucket_deletebucketrequest]

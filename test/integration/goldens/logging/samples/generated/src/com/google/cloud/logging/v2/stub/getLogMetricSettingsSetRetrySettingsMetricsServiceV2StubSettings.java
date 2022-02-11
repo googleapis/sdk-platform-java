@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.stub.samples;
 
-// [START 1.0_10_generated_metricsservicev2stubsettings_getlogmetric_settingssetretrysettingsmetricsservicev2stubsettings]
+// [START v2_logging_generated_metricsservicev2stubsettings_getlogmetric_settingssetretrysettingsmetricsservicev2stubsettings]
 import com.google.cloud.logging.v2.stub.MetricsServiceV2StubSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class GetLogMetricSettingsSetRetrySettingsMetricsServiceV2StubSettings {
     MetricsServiceV2StubSettings metricsSettings = metricsSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_metricsservicev2stubsettings_getlogmetric_settingssetretrysettingsmetricsservicev2stubsettings]
+// [END v2_logging_generated_metricsservicev2stubsettings_getlogmetric_settingssetretrysettingsmetricsservicev2stubsettings]

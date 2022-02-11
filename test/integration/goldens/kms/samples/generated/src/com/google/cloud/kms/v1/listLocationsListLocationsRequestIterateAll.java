@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_listlocations_listlocationsrequestiterateall]
+// [START v1_kms_generated_keymanagementserviceclient_listlocations_listlocationsrequestiterateall]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.Location;
@@ -44,4 +44,4 @@ public class ListLocationsListLocationsRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_listlocations_listlocationsrequestiterateall]
+// [END v1_kms_generated_keymanagementserviceclient_listlocations_listlocationsrequestiterateall]

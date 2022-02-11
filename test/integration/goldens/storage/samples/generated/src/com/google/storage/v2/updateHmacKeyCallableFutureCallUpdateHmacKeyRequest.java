@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_updatehmackey_callablefuturecallupdatehmackeyrequest]
+// [START v2_storage_generated_storageclient_updatehmackey_callablefuturecallupdatehmackeyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonRequestParams;
@@ -45,4 +45,4 @@ public class UpdateHmacKeyCallableFutureCallUpdateHmacKeyRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_updatehmackey_callablefuturecallupdatehmackeyrequest]
+// [END v2_storage_generated_storageclient_updatehmackey_callablefuturecallupdatehmackeyrequest]

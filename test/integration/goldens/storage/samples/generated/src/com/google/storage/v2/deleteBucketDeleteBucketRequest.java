@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_deletebucket_deletebucketrequest]
+// [START v2_storage_generated_storageclient_deletebucket_deletebucketrequest]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.CommonRequestParams;
@@ -43,4 +43,4 @@ public class DeleteBucketDeleteBucketRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_deletebucket_deletebucketrequest]
+// [END v2_storage_generated_storageclient_deletebucket_deletebucketrequest]

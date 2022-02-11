@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_regionoperationsclient_wait_waitregionoperationrequest]
+// [START v1small_compute_generated_regionoperationsclient_wait_waitregionoperationrequest]
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
@@ -40,4 +40,4 @@ public class WaitWaitRegionOperationRequest {
     }
   }
 }
-// [END 1.0_10_generated_regionoperationsclient_wait_waitregionoperationrequest]
+// [END v1small_compute_generated_regionoperationsclient_wait_waitregionoperationrequest]

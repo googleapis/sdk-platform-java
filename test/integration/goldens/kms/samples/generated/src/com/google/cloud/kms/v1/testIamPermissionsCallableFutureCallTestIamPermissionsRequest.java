@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [START v1_kms_generated_keymanagementserviceclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -49,4 +49,4 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [END v1_kms_generated_keymanagementserviceclient_testiampermissions_callablefuturecalltestiampermissionsrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.stub.samples;
 
-// [START 1.0_10_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings]
+// [START v1_iam_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings]
 import com.google.iam.v1.stub.IAMPolicyStubSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class SetIamPolicySettingsSetRetrySettingsIAMPolicyStubSettings {
     IAMPolicyStubSettings iAMPolicySettings = iAMPolicySettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings]
+// [END v1_iam_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings]

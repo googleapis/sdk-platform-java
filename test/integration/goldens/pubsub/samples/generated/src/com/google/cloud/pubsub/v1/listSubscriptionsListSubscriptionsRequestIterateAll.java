@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionadminclient_listsubscriptions_listsubscriptionsrequestiterateall]
+// [START v1_pubsub_generated_subscriptionadminclient_listsubscriptions_listsubscriptionsrequestiterateall]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.pubsub.v1.ListSubscriptionsRequest;
 import com.google.pubsub.v1.ProjectName;
@@ -43,4 +43,4 @@ public class ListSubscriptionsListSubscriptionsRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionadminclient_listsubscriptions_listsubscriptionsrequestiterateall]
+// [END v1_pubsub_generated_subscriptionadminclient_listsubscriptions_listsubscriptionsrequestiterateall]

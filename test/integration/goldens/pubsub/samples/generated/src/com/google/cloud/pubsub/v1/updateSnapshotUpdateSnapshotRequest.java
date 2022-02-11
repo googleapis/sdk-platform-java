@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_subscriptionadminclient_updatesnapshot_updatesnapshotrequest]
+// [START v1_pubsub_generated_subscriptionadminclient_updatesnapshot_updatesnapshotrequest]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.FieldMask;
 import com.google.pubsub.v1.Snapshot;
@@ -40,4 +40,4 @@ public class UpdateSnapshotUpdateSnapshotRequest {
     }
   }
 }
-// [END 1.0_10_generated_subscriptionadminclient_updatesnapshot_updatesnapshotrequest]
+// [END v1_pubsub_generated_subscriptionadminclient_updatesnapshot_updatesnapshotrequest]

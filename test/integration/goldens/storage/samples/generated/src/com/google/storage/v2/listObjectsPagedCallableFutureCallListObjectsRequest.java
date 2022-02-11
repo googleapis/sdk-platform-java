@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_listobjects_pagedcallablefuturecalllistobjectsrequest]
+// [START v2_storage_generated_storageclient_listobjects_pagedcallablefuturecalllistobjectsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonRequestParams;
@@ -56,4 +56,4 @@ public class ListObjectsPagedCallableFutureCallListObjectsRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_listobjects_pagedcallablefuturecalllistobjectsrequest]
+// [END v2_storage_generated_storageclient_listobjects_pagedcallablefuturecalllistobjectsrequest]

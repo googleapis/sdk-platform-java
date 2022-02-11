@@ -15,7 +15,7 @@
  */
 package com.google.cloud.example.library.v1.samples;
 
-// [START 1.0_10_generated_libraryserviceclient_deletebook_deletebookrequest]
+// [START v1_library_generated_libraryserviceclient_deletebook_deletebookrequest]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.BookName;
 import com.google.example.library.v1.DeleteBookRequest;
@@ -39,4 +39,4 @@ public class DeleteBookDeleteBookRequest {
     }
   }
 }
-// [END 1.0_10_generated_libraryserviceclient_deletebook_deletebookrequest]
+// [END v1_library_generated_libraryserviceclient_deletebook_deletebookrequest]

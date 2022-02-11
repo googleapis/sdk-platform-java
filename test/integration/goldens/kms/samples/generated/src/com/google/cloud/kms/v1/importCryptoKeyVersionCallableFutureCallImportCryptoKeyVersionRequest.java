@@ -15,7 +15,7 @@
  */
 package com.google.cloud.kms.v1.samples;
 
-// [START 1.0_10_generated_keymanagementserviceclient_importcryptokeyversion_callablefuturecallimportcryptokeyversionrequest]
+// [START v1_kms_generated_keymanagementserviceclient_importcryptokeyversion_callablefuturecallimportcryptokeyversionrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
@@ -48,4 +48,4 @@ public class ImportCryptoKeyVersionCallableFutureCallImportCryptoKeyVersionReque
     }
   }
 }
-// [END 1.0_10_generated_keymanagementserviceclient_importcryptokeyversion_callablefuturecallimportcryptokeyversionrequest]
+// [END v1_kms_generated_keymanagementserviceclient_importcryptokeyversion_callablefuturecallimportcryptokeyversionrequest]

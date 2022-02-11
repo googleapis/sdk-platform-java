@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_schemaserviceclient_create_schemaservicesettings2]
+// [START v1_pubsub_generated_schemaserviceclient_create_schemaservicesettings2]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.cloud.pubsub.v1.SchemaServiceSettings;
 import com.google.cloud.pubsub.v1.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateSchemaServiceSettings2 {
     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
   }
 }
-// [END 1.0_10_generated_schemaserviceclient_create_schemaservicesettings2]
+// [END v1_pubsub_generated_schemaserviceclient_create_schemaservicesettings2]

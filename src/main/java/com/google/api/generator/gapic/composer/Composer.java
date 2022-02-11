@@ -42,17 +42,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Composer {
-  private static String apiVersion;
-  private static String apiShortName;
-
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    apiVersion = context.gapicMetadata().getSchema();
-    apiShortName = context.gapicMetadata().getSchema();
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(composeSamples(clazzes));
+    return addApacheLicense(composeSamples(clazzes, context.gapicMetadata().getProtoPackage()));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
@@ -193,13 +188,26 @@ public class Composer {
     return clazzes;
   }
 
-  private static List<GapicClass> composeSamples(List<GapicClass> clazzes) {
+  private static List<GapicClass> composeSamples(List<GapicClass> clazzes, String protoPackage) {
+    String[] pakkage = protoPackage.split("\\.");
+    String apiVersion;
+    String apiShortName;
+    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
+      apiVersion = pakkage[pakkage.length - 1];
+      apiShortName = pakkage[pakkage.length - 2];
+    } else {
+      apiVersion = "";
+      apiShortName = pakkage[pakkage.length - 1];
+    }
     return clazzes.stream()
         .map(
             gapicClass -> {
               List<Sample> samples =
                   gapicClass.samples().stream()
-                      .map(sample -> addApacheLicense(addRegionTagAttributes(sample)))
+                      .map(
+                          sample ->
+                              addApacheLicense(
+                                  addRegionTagAttributes(sample, apiVersion, apiShortName)))
                       .collect(Collectors.toList());
               return gapicClass.withSamples(samples);
             })
@@ -235,7 +243,8 @@ public class Composer {
     return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
   }
 
-  private static Sample addRegionTagAttributes(Sample sample) {
+  private static Sample addRegionTagAttributes(
+      Sample sample, String apiVersion, String apiShortName) {
     return sample.withRegionTag(
         sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
   }

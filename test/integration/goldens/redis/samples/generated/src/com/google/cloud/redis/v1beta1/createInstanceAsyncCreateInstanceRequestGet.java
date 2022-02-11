@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudredisclient_createinstance_asynccreateinstancerequestget]
+// [START v1beta1_redis_generated_cloudredisclient_createinstance_asynccreateinstancerequestget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -41,4 +41,4 @@ public class CreateInstanceAsyncCreateInstanceRequestGet {
     }
   }
 }
-// [END 1.0_10_generated_cloudredisclient_createinstance_asynccreateinstancerequestget]
+// [END v1beta1_redis_generated_cloudredisclient_createinstance_asynccreateinstancerequestget]

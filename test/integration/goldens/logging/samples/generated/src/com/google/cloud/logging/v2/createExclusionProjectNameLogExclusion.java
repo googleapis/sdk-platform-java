@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_createexclusion_projectnamelogexclusion]
+// [START v2_logging_generated_configclient_createexclusion_projectnamelogexclusion]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogExclusion;
 import com.google.logging.v2.ProjectName;
@@ -36,4 +36,4 @@ public class CreateExclusionProjectNameLogExclusion {
     }
   }
 }
-// [END 1.0_10_generated_configclient_createexclusion_projectnamelogexclusion]
+// [END v2_logging_generated_configclient_createexclusion_projectnamelogexclusion]

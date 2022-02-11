@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_deletesink_deletesinkrequest]
+// [START v2_logging_generated_configclient_deletesink_deletesinkrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.DeleteSinkRequest;
 import com.google.logging.v2.LogSinkName;
@@ -39,4 +39,4 @@ public class DeleteSinkDeleteSinkRequest {
     }
   }
 }
-// [END 1.0_10_generated_configclient_deletesink_deletesinkrequest]
+// [END v2_logging_generated_configclient_deletesink_deletesinkrequest]

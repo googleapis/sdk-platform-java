@@ -15,7 +15,7 @@
  */
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START 1.0_10_generated_cloudredisclient_deleteinstance_asyncstringget]
+// [START v1beta1_redis_generated_cloudredisclient_deleteinstance_asyncstringget]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InstanceName;
 import com.google.protobuf.Empty;
@@ -35,4 +35,4 @@ public class DeleteInstanceAsyncStringGet {
     }
   }
 }
-// [END 1.0_10_generated_cloudredisclient_deleteinstance_asyncstringget]
+// [END v1beta1_redis_generated_cloudredisclient_deleteinstance_asyncstringget]

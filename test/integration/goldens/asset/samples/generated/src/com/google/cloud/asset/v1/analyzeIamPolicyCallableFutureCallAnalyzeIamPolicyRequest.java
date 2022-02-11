@@ -15,7 +15,7 @@
  */
 package com.google.cloud.asset.v1.samples;
 
-// [START 1.0_10_generated_assetserviceclient_analyzeiampolicy_callablefuturecallanalyzeiampolicyrequest]
+// [START v1_asset_generated_assetserviceclient_analyzeiampolicy_callablefuturecallanalyzeiampolicyrequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyResponse;
@@ -45,4 +45,4 @@ public class AnalyzeIamPolicyCallableFutureCallAnalyzeIamPolicyRequest {
     }
   }
 }
-// [END 1.0_10_generated_assetserviceclient_analyzeiampolicy_callablefuturecallanalyzeiampolicyrequest]
+// [END v1_asset_generated_assetserviceclient_analyzeiampolicy_callablefuturecallanalyzeiampolicyrequest]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_loggingclient_listmonitoredresourcedescriptors_listmonitoredresourcedescriptorsrequestiterateall]
+// [START v2_logging_generated_loggingclient_listmonitoredresourcedescriptors_listmonitoredresourcedescriptorsrequestiterateall]
 import com.google.api.MonitoredResourceDescriptor;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
@@ -44,4 +44,4 @@ public class ListMonitoredResourceDescriptorsListMonitoredResourceDescriptorsReq
     }
   }
 }
-// [END 1.0_10_generated_loggingclient_listmonitoredresourcedescriptors_listmonitoredresourcedescriptorsrequestiterateall]
+// [END v2_logging_generated_loggingclient_listmonitoredresourcedescriptors_listmonitoredresourcedescriptorsrequestiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_addressessettings_aggregatedlist_settingssetretrysettingsaddressessettings]
+// [START v1small_compute_generated_addressessettings_aggregatedlist_settingssetretrysettingsaddressessettings]
 import com.google.cloud.compute.v1small.AddressesSettings;
 import java.time.Duration;
 
@@ -41,4 +41,4 @@ public class AggregatedListSettingsSetRetrySettingsAddressesSettings {
     AddressesSettings addressesSettings = addressesSettingsBuilder.build();
   }
 }
-// [END 1.0_10_generated_addressessettings_aggregatedlist_settingssetretrysettingsaddressessettings]
+// [END v1small_compute_generated_addressessettings_aggregatedlist_settingssetretrysettingsaddressessettings]

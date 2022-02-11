@@ -15,7 +15,7 @@
  */
 package com.google.cloud.pubsub.v1.samples;
 
-// [START 1.0_10_generated_schemaserviceclient_deleteschema_callablefuturecalldeleteschemarequest]
+// [START v1_pubsub_generated_schemaserviceclient_deleteschema_callablefuturecalldeleteschemarequest]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.protobuf.Empty;
@@ -42,4 +42,4 @@ public class DeleteSchemaCallableFutureCallDeleteSchemaRequest {
     }
   }
 }
-// [END 1.0_10_generated_schemaserviceclient_deleteschema_callablefuturecalldeleteschemarequest]
+// [END v1_pubsub_generated_schemaserviceclient_deleteschema_callablefuturecalldeleteschemarequest]

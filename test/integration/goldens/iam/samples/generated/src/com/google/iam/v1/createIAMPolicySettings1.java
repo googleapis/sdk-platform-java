@@ -15,7 +15,7 @@
  */
 package com.google.iam.v1.samples;
 
-// [START 1.0_10_generated_iampolicyclient_create_iampolicysettings1]
+// [START v1_iam_generated_iampolicyclient_create_iampolicysettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.IAMPolicySettings;
@@ -37,4 +37,4 @@ public class CreateIAMPolicySettings1 {
     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
   }
 }
-// [END 1.0_10_generated_iampolicyclient_create_iampolicysettings1]
+// [END v1_iam_generated_iampolicyclient_create_iampolicysettings1]

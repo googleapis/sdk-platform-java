@@ -15,7 +15,7 @@
  */
 package com.google.storage.v2.samples;
 
-// [START 1.0_10_generated_storageclient_rewriteobject_callablefuturecallrewriteobjectrequest]
+// [START v2_storage_generated_storageclient_rewriteobject_callablefuturecallrewriteobjectrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.FieldMask;
@@ -67,4 +67,4 @@ public class RewriteObjectCallableFutureCallRewriteObjectRequest {
     }
   }
 }
-// [END 1.0_10_generated_storageclient_rewriteobject_callablefuturecallrewriteobjectrequest]
+// [END v2_storage_generated_storageclient_rewriteobject_callablefuturecallrewriteobjectrequest]

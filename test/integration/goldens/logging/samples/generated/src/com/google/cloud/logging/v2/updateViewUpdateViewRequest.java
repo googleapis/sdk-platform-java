@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_updateview_updateviewrequest]
+// [START v2_logging_generated_configclient_updateview_updateviewrequest]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.LogView;
 import com.google.logging.v2.UpdateViewRequest;
@@ -41,4 +41,4 @@ public class UpdateViewUpdateViewRequest {
     }
   }
 }
-// [END 1.0_10_generated_configclient_updateview_updateviewrequest]
+// [END v2_logging_generated_configclient_updateview_updateviewrequest]

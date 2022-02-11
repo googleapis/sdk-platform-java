@@ -15,7 +15,7 @@
  */
 package com.google.cloud.logging.v2.samples;
 
-// [START 1.0_10_generated_configclient_listviews_listviewsrequestiterateall]
+// [START v2_logging_generated_configclient_listviews_listviewsrequestiterateall]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.ListViewsRequest;
 import com.google.logging.v2.LogView;
@@ -42,4 +42,4 @@ public class ListViewsListViewsRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_configclient_listviews_listviewsrequestiterateall]
+// [END v2_logging_generated_configclient_listviews_listviewsrequestiterateall]

@@ -15,7 +15,7 @@
  */
 package com.google.cloud.compute.v1small.samples;
 
-// [START 1.0_10_generated_addressesclient_aggregatedlist_aggregatedlistaddressesrequestiterateall]
+// [START v1small_compute_generated_addressesclient_aggregatedlist_aggregatedlistaddressesrequestiterateall]
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesScopedList;
 import com.google.cloud.compute.v1small.AggregatedListAddressesRequest;
@@ -47,4 +47,4 @@ public class AggregatedListAggregatedListAddressesRequestIterateAll {
     }
   }
 }
-// [END 1.0_10_generated_addressesclient_aggregatedlist_aggregatedlistaddressesrequestiterateall]
+// [END v1small_compute_generated_addressesclient_aggregatedlist_aggregatedlistaddressesrequestiterateall]
