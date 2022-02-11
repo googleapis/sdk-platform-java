@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.7.4](https://github.com/googleapis/java-common-protos/compare/v2.7.3...v2.7.4) (2022-02-11)
+
+
+### Dependencies
+
+* update actions/github-script action to v6 ([#319](https://github.com/googleapis/java-common-protos/issues/319)) ([a148f4d](https://github.com/googleapis/java-common-protos/commit/a148f4d5ae8a825b8cc3d4bcb1b33d1e94856689))
+
 ### [2.7.3](https://github.com/googleapis/java-common-protos/compare/v2.7.2...v2.7.3) (2022-02-08)
 
 
