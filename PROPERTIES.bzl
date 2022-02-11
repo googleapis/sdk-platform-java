@@ -2,7 +2,6 @@ PROPERTIES = {
     "version.com_google_protobuf": "3.19.1",
     # Version of google-java-format is downgraded from 1.8 to 1.7, because 1.8 supports java 11 minimum, while our JRE is java 8.
     "version.google_java_format": "1.7",
-    "version.com_google_api_common_java": "1.9.3",
     "version.io_grpc_java": "1.42.1",
 
     # Common deps.
