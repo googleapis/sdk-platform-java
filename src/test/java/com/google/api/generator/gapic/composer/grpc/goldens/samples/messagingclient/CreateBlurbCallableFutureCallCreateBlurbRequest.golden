@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_createblurb_callablefuturecallcreateblurbrequest]
+// [START goldensample_v1_generated_messagingclient_createblurb_callablefuturecallcreateblurbrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
@@ -43,4 +43,4 @@ public class CreateBlurbCallableFutureCallCreateBlurbRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_createblurb_callablefuturecallcreateblurbrequest]
+// [END goldensample_v1_generated_messagingclient_createblurb_callablefuturecallcreateblurbrequest]

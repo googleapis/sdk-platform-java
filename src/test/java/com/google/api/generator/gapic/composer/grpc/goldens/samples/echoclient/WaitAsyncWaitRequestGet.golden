@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_echoclient_wait_asyncwaitrequestget]
+// [START goldensample_v1_generated_echoclient_wait_asyncwaitrequestget]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
@@ -35,4 +35,4 @@ public class WaitAsyncWaitRequestGet {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_echoclient_wait_asyncwaitrequestget]
+// [END goldensample_v1_generated_echoclient_wait_asyncwaitrequestget]

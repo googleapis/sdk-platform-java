@@ -68,17 +68,14 @@ public class SampleComposer {
     return bodyWithComment;
   }
 
-  private static String includeRegionTags(String sampleClass, RegionTag regionTag) {
-    Preconditions.checkState(!regionTag.apiVersion().isEmpty(), "apiVersion should not be empty");
+  static String includeRegionTags(String sampleClass, RegionTag regionTag) {
     Preconditions.checkState(
         !regionTag.apiShortName().isEmpty(), "apiShortName should not be empty");
-    String rt =
-        String.format(
-            "%s_%s_generated_%s_%s",
-            regionTag.apiVersion(),
-            regionTag.apiShortName(),
-            regionTag.serviceName(),
-            regionTag.rpcName());
+    String rt = regionTag.apiShortName() + "_";
+    if (!regionTag.apiVersion().isEmpty()) {
+      rt = rt + regionTag.apiVersion() + "_";
+    }
+    rt = rt + "generated_" + regionTag.serviceName() + "_" + regionTag.rpcName();
     if (!regionTag.overloadDisambiguation().isEmpty()) {
       rt = String.format("%s_%s", rt, regionTag.overloadDisambiguation());
     }

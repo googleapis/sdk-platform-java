@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_echoclient_collidename_echorequest]
+// [START goldensample_v1_generated_echoclient_collidename_echorequest]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.Foobar;
@@ -44,4 +44,4 @@ public class CollideNameEchoRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_echoclient_collidename_echorequest]
+// [END goldensample_v1_generated_echoclient_collidename_echorequest]

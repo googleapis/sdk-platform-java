@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.samples;
 
-// [START 1.0.0_goldensample_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest]
+// [START goldensample_v1_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.BlurbName;
@@ -44,4 +44,4 @@ public class DeleteBlurbCallableFutureCallDeleteBlurbRequest {
     }
   }
 }
-// [END 1.0.0_goldensample_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest]
+// [END goldensample_v1_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest]

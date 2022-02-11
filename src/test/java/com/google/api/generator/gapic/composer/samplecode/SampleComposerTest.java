@@ -44,7 +44,7 @@ public class SampleComposerTest {
   private final List<Statement> header =
       Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
   private final RegionTag.Builder regionTag =
-      RegionTag.builder().setApiShortName("echo").setApiVersion("1.0.0").setServiceName("echo");
+      RegionTag.builder().setApiShortName("echo").setApiVersion("v1beta").setServiceName("echo");
 
   @Test
   public void createExecutableSampleNoSample() {
@@ -71,7 +71,7 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleMissingRegionTagAttributes() {
+  public void createExecutableSampleMissingApiName() {
     Sample noApiShortNameSample =
         Sample.builder()
             .setRegionTag(
@@ -85,20 +85,6 @@ public class SampleComposerTest {
     assertThrows(
         IllegalStateException.class,
         () -> SampleComposer.createExecutableSample(noApiShortNameSample, packageName));
-
-    Sample noApiVersionSample =
-        Sample.builder()
-            .setRegionTag(
-                regionTag
-                    .setApiVersion("")
-                    .setRpcName("createExecutableSample")
-                    .setOverloadDisambiguation("MissingApiVersion")
-                    .build())
-            .build();
-
-    assertThrows(
-        IllegalStateException.class,
-        () -> SampleComposer.createExecutableSample(noApiVersionSample, packageName));
   }
 
   @Test
@@ -114,6 +100,15 @@ public class SampleComposerTest {
     assertThrows(
         IllegalStateException.class,
         () -> SampleComposer.createExecutableSample(sample, packageName));
+  }
+
+  @Test
+  public void includeRegionTagMissingApiVersionMissingOverload() {
+    String sampleResult =
+        SampleComposer.includeRegionTags(
+            "", regionTag.setApiVersion("").setRpcName("rpcName").build());
+    String expected = "// [START echo_generated_echo_rpcname]// [END echo_generated_echo_rpcname]";
+    assertEquals(expected, sampleResult);
   }
 
   @Test
@@ -136,7 +131,7 @@ public class SampleComposerTest {
             " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START 1.0.0_echo_generated_echo_createexecutablesample_emptystatementsample]\n",
+            "// [START echo_v1beta_generated_echo_createexecutablesample_emptystatementsample]\n",
             "public class CreateExecutableSampleEmptyStatementSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -148,7 +143,7 @@ public class SampleComposerTest {
             "    // It may require modifications to work in your environment.\n",
             "  }\n",
             "}\n",
-            "// [END 1.0.0_echo_generated_echo_createexecutablesample_emptystatementsample]");
+            "// [END echo_v1beta_generated_echo_createexecutablesample_emptystatementsample]");
 
     assertEquals(expected, sampleResult);
   }
@@ -176,7 +171,7 @@ public class SampleComposerTest {
             " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START 1.0.0_echo_generated_echo_createexecutablesample_methodargsnovar]\n",
+            "// [START echo_v1beta_generated_echo_createexecutablesample_methodargsnovar]\n",
             "public class CreateExecutableSampleMethodArgsNoVar {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -189,7 +184,7 @@ public class SampleComposerTest {
             "    System.out.println(\"Testing CreateExecutableSampleMethodArgsNoVar\");\n",
             "  }\n",
             "}\n",
-            "// [END 1.0.0_echo_generated_echo_createexecutablesample_methodargsnovar]");
+            "// [END echo_v1beta_generated_echo_createexecutablesample_methodargsnovar]");
 
     assertEquals(expected, sampleResult);
   }
@@ -225,7 +220,7 @@ public class SampleComposerTest {
             " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START 1.0.0_echo_generated_echo_createexecutablesample]\n",
+            "// [START echo_v1beta_generated_echo_createexecutablesample]\n",
             "public class CreateExecutableSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -239,7 +234,7 @@ public class SampleComposerTest {
             "    System.out.println(content);\n",
             "  }\n",
             "}\n",
-            "// [END 1.0.0_echo_generated_echo_createexecutablesample]");
+            "// [END echo_v1beta_generated_echo_createexecutablesample]");
 
     assertEquals(expected, sampleResult);
   }
@@ -312,7 +307,7 @@ public class SampleComposerTest {
             " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START 1.0.0_echo_generated_echo_createexecutablesample_methodmultiplestatements]\n",
+            "// [START echo_v1beta_generated_echo_createexecutablesample_methodmultiplestatements]\n",
             "public class CreateExecutableSampleMethodMultipleStatements {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -331,7 +326,7 @@ public class SampleComposerTest {
             "    System.out.println(thing.response());\n",
             "  }\n",
             "}\n",
-            "// [END 1.0.0_echo_generated_echo_createexecutablesample_methodmultiplestatements]");
+            "// [END echo_v1beta_generated_echo_createexecutablesample_methodmultiplestatements]");
     assertEquals(expected, sampleResult);
   }
 
