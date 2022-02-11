@@ -77,14 +77,6 @@ def gapic_generator_java_repositories():
         actual = "@com_google_code_gson_gson//jar",
     )
 
-    _api_common_java_version = PROPERTIES["version.com_google_api_common_java"]
-    _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_api_common",
-        artifact = "com.google.api:api-common:%s" % _api_common_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
     # grpc-proto doesn't have releases, so we use hashes instead.
     _io_grpc_proto_prefix = "8e3fec8612bc0708e857950dccadfd5063703e04"  # Nov. 6, 2021.
     _maybe(
