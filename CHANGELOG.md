@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.1](https://github.com/googleapis/gapic-generator-java/compare/v2.6.0...v2.6.1) (2022-02-11)
+
+
+### Bug Fixes
+
+* Routing annotation was not recognized on parsing protos ([#928](https://github.com/googleapis/gapic-generator-java/issues/928)) ([2ce9f42](https://github.com/googleapis/gapic-generator-java/commit/2ce9f42ce23e91ff4f559d6a44be57df9f97eb46))
+
 ## [2.6.0](https://github.com/googleapis/gapic-generator-java/compare/v2.5.0...v2.6.0) (2022-01-28)
 
 
