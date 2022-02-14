@@ -496,6 +496,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
    *   InstanceAuthString response = cloudRedisClient.getInstanceAuthString(name);
@@ -523,6 +525,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
    *   InstanceAuthString response = cloudRedisClient.getInstanceAuthString(name);
@@ -548,6 +552,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   GetInstanceAuthStringRequest request =
    *       GetInstanceAuthStringRequest.newBuilder()
@@ -572,6 +578,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   GetInstanceAuthStringRequest request =
    *       GetInstanceAuthStringRequest.newBuilder()
@@ -1615,6 +1623,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
    *   RescheduleMaintenanceRequest.RescheduleType rescheduleType =
@@ -1654,6 +1664,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
    *   RescheduleMaintenanceRequest.RescheduleType rescheduleType =
@@ -1693,6 +1705,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   RescheduleMaintenanceRequest request =
    *       RescheduleMaintenanceRequest.newBuilder()
@@ -1718,6 +1732,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   RescheduleMaintenanceRequest request =
    *       RescheduleMaintenanceRequest.newBuilder()
@@ -1743,6 +1759,8 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   RescheduleMaintenanceRequest request =
    *       RescheduleMaintenanceRequest.newBuilder()
