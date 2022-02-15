@@ -43,11 +43,7 @@ public abstract class GapicClass {
 
   public static GapicClass create(
       Kind kind, ClassDefinition classDefinition, List<Sample> samples) {
-    return builder()
-        .setKind(kind)
-        .setClassDefinition(classDefinition)
-        .setSamples(handleDuplicateSamples(samples))
-        .build();
+    return builder().setKind(kind).setClassDefinition(classDefinition).setSamples(samples).build();
   }
 
   static Builder builder() {
@@ -57,7 +53,7 @@ public abstract class GapicClass {
   abstract Builder toBuilder();
 
   public final GapicClass withSamples(List<Sample> samples) {
-    return toBuilder().setSamples(handleDuplicateSamples(samples)).build();
+    return toBuilder().setSamples(samples).build();
   }
 
   @AutoValue.Builder
@@ -79,7 +75,7 @@ public abstract class GapicClass {
   }
 
   private static List<Sample> handleDuplicateSamples(List<Sample> samples) {
-    //  filter out any duplicate samples
+    //  filter out any duplicate samples and group by sample name
     Map<String, List<Sample>> distinctSamplesGroupedByName =
         samples.stream().distinct().collect(Collectors.groupingBy(s -> s.name()));
 
@@ -90,13 +86,13 @@ public abstract class GapicClass {
             .map(entry -> entry.getValue().get(0))
             .collect(Collectors.toList());
 
-    // grab samples that are distinct but same sample
+    // grab distinct samples with same name - similar version of same sample
     List<Map.Entry<String, List<Sample>>> duplicateDistinctSamples =
         distinctSamplesGroupedByName.entrySet().stream()
             .filter(entry -> entry.getValue().size() > 1)
             .collect(Collectors.toList());
 
-    // update these regionTag/name so distinct duplicates are unique files
+    // update similar samples regionTag/name so filesname/regiontag are unique
     for (Map.Entry<String, List<Sample>> entry : duplicateDistinctSamples) {
       int sampleNum = 1;
       for (Sample sample : entry.getValue()) {
