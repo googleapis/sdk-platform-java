@@ -14,89 +14,49 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
-import static org.junit.Assert.assertEquals;
-
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.google.api.generator.test.framework.Assert;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class ServiceClientTestClassComposerTest {
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    return Arrays.asList(
+        new Object[][] {
+          {"EchoClientTest", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0},
+          {
+            "DeprecatedServiceClientTest",
+            GrpcTestProtoLoader.instance().parseDeprecatedService(),
+            0
+          },
+          {"TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0},
+          {"SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1},
+          {"LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0},
+        });
+  }
+
+  @Parameterized.Parameter public String name;
+
+  @Parameterized.Parameter(1)
+  public GapicContext context;
+
+  @Parameterized.Parameter(2)
+  public int serviceIndex;
+
   @Test
-  public void generateClientTest_echoClient() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
-    Service echoProtoService = context.services().get(0);
+  public void generateServiceClientTestClasses() {
+    Service echoProtoService = context.services().get(serviceIndex);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "EchoClientTest.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "EchoClientTest.golden");
-    assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  @Test
-  public void generateClientTest_deprecatedServiceClient() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
-    Service protoService = context.services().get(0);
-    GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, protoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "DeprecatedServiceClientTest.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "DeprecatedServiceClientTest.golden");
-    assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  @Test
-  public void generateClientTest_testingClientResnameWithOnePatternWithNonSlashSepNames() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseTesting();
-    Service testingProtoService = context.services().get(0);
-    GapicClass clazz =
-        ServiceClientTestClassComposer.instance().generate(context, testingProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "TestingClientTest.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "TestingClientTest.golden");
-    assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  @Test
-  public void generateClientTest_pubSubPublisherClient() {
-    GapicContext context = GrpcTestProtoLoader.instance().parsePubSubPublisher();
-    Service subscriptionService = context.services().get(1);
-    assertEquals("Subscriber", subscriptionService.name());
-    GapicClass clazz =
-        ServiceClientTestClassComposer.instance().generate(context, subscriptionService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "SubscriberClientTest.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "SubscriberClientTest.golden");
-    assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  @Test
-  public void generateClientTest_logging() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseLogging();
-    Service loggingService = context.services().get(0);
-    GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, loggingService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "LoggingClientTest.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "LoggingClientTest.golden");
-    assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 }
