@@ -107,8 +107,8 @@ public class Writer {
               String.format(
                   "samples/generated/%s/%s/%s/%s.java",
                   clazzPath,
-                  sample.regionTag().serviceName(),
-                  sample.regionTag().rpcName(),
+                  sample.regionTag().serviceName().toLowerCase(),
+                  sample.regionTag().rpcName().toLowerCase(),
                   JavaStyle.toUpperCamelCase(sample.name())));
       String executableSampleCode = SampleComposer.createExecutableSample(sample, pakkage);
       try {
