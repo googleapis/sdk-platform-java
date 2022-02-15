@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer.samplecode;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter.FormatException;
 import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
@@ -26,7 +25,7 @@ public class SampleCodeJavaFormatterTest {
   @Test
   public void validFormatSampleCode_tryCatchStatement() {
     String samplecode = LineFormatter.lines("try(boolean condition = false){", "int x = 3;", "}");
-    String result = SampleCodeJavaFormatter.format(samplecode);
+    String result = SampleCodeBodyJavaFormatter.format(samplecode);
     String expected =
         LineFormatter.lines("try (boolean condition = false) {\n", "  int x = 3;\n", "}");
     assertEquals(expected, result);
@@ -37,7 +36,7 @@ public class SampleCodeJavaFormatterTest {
     String sampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings = "
             + "SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();";
-    String result = SampleCodeJavaFormatter.format(sampleCode);
+    String result = SampleCodeBodyJavaFormatter.format(sampleCode);
     String expected =
         LineFormatter.lines(
             "SubscriptionAdminSettings subscriptionAdminSettings =\n",
@@ -51,7 +50,7 @@ public class SampleCodeJavaFormatterTest {
         "echoSettingsBuilder.echoSettings().setRetrySettings("
             + "echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()"
             + ".setTotalTimeout(Duration.ofSeconds(30)).build());";
-    String result = SampleCodeJavaFormatter.format(sampleCode);
+    String result = SampleCodeBodyJavaFormatter.format(sampleCode);
     String expected =
         LineFormatter.lines(
             "echoSettingsBuilder\n",
@@ -69,9 +68,9 @@ public class SampleCodeJavaFormatterTest {
   @Test
   public void invalidFormatSampleCode_nonStatement() {
     assertThrows(
-        FormatException.class,
+        SampleCodeBodyJavaFormatter.FormatException.class,
         () -> {
-          SampleCodeJavaFormatter.format("abc");
+          SampleCodeBodyJavaFormatter.format("abc");
         });
   }
 }
