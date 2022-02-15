@@ -54,6 +54,8 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
  *   SetIamPolicyRequest request =
  *       SetIamPolicyRequest.newBuilder()
@@ -93,6 +95,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * IAMPolicySettings iAMPolicySettings =
  *     IAMPolicySettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -103,6 +107,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * IAMPolicySettings iAMPolicySettings =
  *     IAMPolicySettings.newBuilder().setEndpoint(myEndpoint).build();
  * IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
@@ -168,6 +174,8 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
@@ -192,6 +200,8 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
@@ -216,6 +226,8 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
@@ -241,6 +253,8 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
@@ -269,6 +283,8 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
@@ -298,6 +314,8 @@ public class IAMPolicyClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
