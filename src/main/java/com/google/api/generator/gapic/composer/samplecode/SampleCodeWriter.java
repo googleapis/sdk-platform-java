@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import java.util.Arrays;
@@ -21,17 +22,23 @@ import java.util.List;
 
 public final class SampleCodeWriter {
 
-  public static String write(Statement... statement) {
+  static String write(Statement... statement) {
     return write(Arrays.asList(statement));
   }
 
-  public static String write(List<Statement> statements) {
+  static String write(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
       statement.accept(visitor);
     }
-    String formattedSampleCode = SampleCodeJavaFormatter.format(visitor.write());
+    String formattedSampleCode = SampleCodeBodyJavaFormatter.format(visitor.write());
     // Escape character "@" in the markdown code block <pre>{@code...} tags.
     return formattedSampleCode.replaceAll("@", "{@literal @}");
+  }
+
+  static String write(ClassDefinition classDefinition) {
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    classDefinition.accept(visitor);
+    return visitor.write();
   }
 }
