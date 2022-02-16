@@ -18,6 +18,14 @@ jobs:
           java-version: ${{ matrix.java }}
       - run: java -version
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Bazel File Cache Setup
         id: cache-bazel
         uses: actions/cache@v2
@@ -41,7 +49,9 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Unit Tests
-        run: bazel --batch test //:units --noshow_progress --test_output=errors
+        run: |
+          ./ad-hoc-compile-proto-files.sh
+          mvn verify --batch-mode --no-transfer-progress
 
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
@@ -76,25 +86,6 @@ jobs:
       - name: Java Linter
         run: bazel --batch run //:google_java_format_verification
 
-  coverage:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          java-version: 8
-      - run: java -version
-
-      - name: Generate Code Coverage Report
-        # Run only test targets, and not golden_update targets.
-        run: bazel coverage //:units --combined_report=lcov
-
-      - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v2
-        with:
-          name: actions ${{ matrix.java }}
-          files: ./bazel-out/_coverage/_coverage_report.dat
-
   license-header:
     runs-on: ubuntu-latest
     steps:
@@ -106,4 +97,3 @@ jobs:
         run: |
           go get -u github.com/google/addlicense
           addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java')
-
