@@ -38,7 +38,7 @@ bazel build :service_config_java_proto :test_java_protos :basic_proto_descriptor
     @com_google_googleapis//google/logging/v2:logging_java_proto \
     @com_google_googleapis//google/pubsub/v1:pubsub_java_proto
 
-function install_jar {
+install_jar() {
   mvn install:install-file -Dfile=$1 -DgroupId=$2 -DartifactId=$3 -Dversion=0.0.0 -Dpackaging=jar
 }
 
