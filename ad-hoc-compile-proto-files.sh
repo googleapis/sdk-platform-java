@@ -33,13 +33,14 @@ set -o errexit
 # protoc --include_source_info --include_imports --descriptor_set_out=basic_proto.descriptor basic.proto
 
 
-bazel build :service_config_java_proto :test_java_protos :basic_proto_descriptor \
+bazel --batch build :service_config_java_proto :test_java_protos :basic_proto_descriptor \
     @com_google_googleapis//gapic/metadata:metadata_java_proto \
     @com_google_googleapis//google/logging/v2:logging_java_proto \
     @com_google_googleapis//google/pubsub/v1:pubsub_java_proto
 
 install_jar() {
-  mvn install:install-file -Dfile=$1 -DgroupId=$2 -DartifactId=$3 -Dversion=0.0.0 -Dpackaging=jar
+  mvn install:install-file -Dfile=$1 -DgroupId=$2 -DartifactId=$3 -Dversion=0.0.0 -Dpackaging=jar \
+    --batch-mode --no-transfer-progress
 }
 
 install_jar bazel-bin/external/io_grpc_proto/libservice_config_proto-speed.jar io.grpc serviceconfig-proto
