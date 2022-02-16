@@ -26,13 +26,15 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.OneofDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
 public class SourceCodeInfoParserTest {
-  private static final String TEST_PROTO_FILE = "bazel-bin/basic_proto.descriptor";
+  private static final String BASIC_PROTO = "basic.proto";
+  private static final String PROTO_DESCRIPTOR_SET = "test-proto.descriptorset";
 
   private SourceCodeInfoParser parser;
   private FileDescriptor protoFile;
@@ -143,20 +145,29 @@ public class SourceCodeInfoParserTest {
   }
 
   /**
-   * Parses a {@link FileDescriptorSet} from the {@code basic_proto.descriptor} and converts the
+   * Parses a {@link FileDescriptorSet} from the descriptor of {@code basic.proto} and converts the
    * protos to {@link FileDescriptor} wrappers.
    *
    * @return the top level target protoFile descriptor
    */
   private static FileDescriptor buildFileDescriptor() throws Exception {
-    FileDescriptor result = null;
-    List<FileDescriptorProto> protoFileList =
-        FileDescriptorSet.parseFrom(new FileInputStream(TEST_PROTO_FILE)).getFileList();
-    List<FileDescriptor> deps = new ArrayList<>();
-    for (FileDescriptorProto proto : protoFileList) {
-      result = FileDescriptor.buildFrom(proto, deps.toArray(new FileDescriptor[0]));
-      deps.add(result);
+    InputStream testProto =
+        SourceCodeInfoParserTest.class.getClassLoader().getResourceAsStream(PROTO_DESCRIPTOR_SET);
+    if (testProto == null) { // TODO: only for Bazel build. Remove when we don't build with Bazel.
+      testProto = new FileInputStream(PROTO_DESCRIPTOR_SET);
     }
-    return result;
+    try (InputStream in = testProto) {
+      List<FileDescriptorProto> protoFileList = FileDescriptorSet.parseFrom(in).getFileList();
+      List<FileDescriptor> deps = new ArrayList<>();
+      for (FileDescriptorProto proto : protoFileList) {
+        FileDescriptor descriptor =
+            FileDescriptor.buildFrom(proto, deps.toArray(new FileDescriptor[0]));
+        if (descriptor.getName().endsWith(BASIC_PROTO)) {
+          return descriptor;
+        }
+        deps.add(descriptor);
+      }
+    }
+    return null;
   }
 }

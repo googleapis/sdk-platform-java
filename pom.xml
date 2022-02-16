@@ -25,11 +25,50 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>com.coveo</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
         <version>2.9.1</version>
       </plugin>
+
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>0.6.1</version>
+        <executions>
+          <execution>
+            <id>protobuf-compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>protobuf-test-compile</id>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+            <configuration>
+              <writeDescriptorSet>true</writeDescriptorSet>
+              <includeSourceInfoInDescriptorSet>true</includeSourceInfoInDescriptorSet>
+              <includeDependenciesInDescriptorSet>true</includeDependenciesInDescriptorSet>
+              <descriptorSetFileName>test-proto.descriptor</descriptorSetFileName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <additionalClasspathElements>
+            <additionalClasspathElement>${project.build.directory}/generated-test-resources/protobuf/descriptor-sets/</additionalClasspathElement>
+          </additionalClasspathElements>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -168,12 +207,6 @@
     </dependency>
 
     <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>serviceconfig-proto</artifactId>
-      <version>0.0.0</version>
-    </dependency>
-
-    <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>metadata-proto</artifactId>
       <version>0.0.0</version>
@@ -196,13 +229,6 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>pubsub-proto</artifactId>
-      <version>0.0.0</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.api</groupId>
-      <artifactId>gapic-generator-test-protos</artifactId>
       <version>0.0.0</version>
       <scope>test</scope>
     </dependency>

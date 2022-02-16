@@ -49,6 +49,9 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Unit Tests
+        run: bazel --batch test //:units --noshow_progress --test_output=errors
+
+      - name: Unit Tests (Maven)
         run: |
           ./ad-hoc-compile-proto-files.sh
           mvn verify --batch-mode --no-transfer-progress
@@ -84,7 +87,29 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
+        run: bazel --batch run //:google_java_format_verification
+
+      - name: Java Linter (Maven)
         run: mvn fmt:check
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          java-version: 8
+      - run: java -version
+
+      - name: Generate Code Coverage Report
+        # Run only test targets, and not golden_update targets.
+        run: bazel coverage //:units --combined_report=lcov
+
+      - name: Upload Code Coverage Report
+        uses: codecov/codecov-action@v2
+        with:
+          name: actions ${{ matrix.java }}
+          files: ./bazel-out/_coverage/_coverage_report.dat
 
   license-header:
     runs-on: ubuntu-latest

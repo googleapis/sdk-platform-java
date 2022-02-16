@@ -3,6 +3,18 @@ workspace(name = "gapic_generator_java")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
+# DO NOT REMOVE.
+# This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
+# like protobuf will build.
+http_archive(
+    name = "bazel_skylib",
+    sha256 = "af87959afe497dc8dfd4c6cb66e1279cb98ccc84284619ebfec27d9c09a903de",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.2.0/bazel-skylib-1.2.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.2.0/bazel-skylib-1.2.0.tar.gz",
+    ],
+)
+
 jvm_maven_import_external(
     name = "google_java_format_all_deps",
     artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
@@ -40,18 +52,9 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-http_archive(
-    name = "com_google_googleapis",
-    urls = ["https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip"],
-    strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
-)
+load("//:repositories.bzl", "gapic_generator_java_repositories")
 
-http_archive(
-    name = "io_grpc_proto",
-    # Nov. 6, 2021.
-    urls = ["https://github.com/grpc/grpc-proto/archive/8e3fec8612bc0708e857950dccadfd5063703e04.zip"],
-    strip_prefix = "grpc-proto-8e3fec8612bc0708e857950dccadfd5063703e04",
-)
+gapic_generator_java_repositories()
 
 # protobuf
 RULES_JVM_EXTERNAL_TAG = "4.2"
@@ -70,7 +73,10 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
     artifacts = PROTOBUF_MAVEN_ARTIFACTS,
-    repositories = ["https://repo.maven.apache.org/maven2/"],
+    generate_compat_repositories = True,
+    repositories = [
+        "https://repo.maven.apache.org/maven2/",
+    ],
 )
 
 protobuf_deps()

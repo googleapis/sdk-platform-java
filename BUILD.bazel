@@ -2,14 +2,69 @@ load("@rules_java//java:defs.bzl", "java_binary", "java_proto_library")
 
 package(default_visibility = ["//visibility:public"])
 
+# TODO: some dependencies may be runtime only.
+MAIN_DEPS = [
+    ":service_config_java_proto",
+    "@com_google_api_api_common//jar",
+    "@com_google_api_gax_java//gax",
+    "@com_google_api_gax_java//gax:gax_testlib",
+    "@com_google_api_gax_java//gax-grpc:gax_grpc",
+    "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
+    "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
+    "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
+    "@com_google_api_grpc_proto_google_common_protos",
+    "@com_google_auto_value_auto_value_annotations//jar", # Ideally should be compile-time only, but this is OK.
+    "@com_google_code_gson//jar",
+    "@com_google_googleapis//gapic/metadata:metadata_java_proto",
+    "@com_google_guava_guava",
+    "@com_google_http_client_google_http_client//jar",
+    "@com_google_protobuf//:protobuf_java",
+    "@com_google_protobuf//:protobuf_java_util",
+    "@google_java_format_all_deps//jar",
+    "@io_grpc_grpc_java//api",
+    "@io_grpc_grpc_java//protobuf",
+    "@io_grpc_grpc_java//stub",
+    "@javax_annotation_javax_annotation_api//jar",
+    "@junit_junit//jar",
+    "@org_threeten_threetenbp//jar",
+    "@org_yaml_snakeyaml//jar",
+]
+
+MAIN_DEPS_DEBUG_RUNTIME_ONLY = [
+    "@com_google_googleapis//google/api:api_java_proto",
+    "@com_google_googleapis//google/cloud:extended_operations_java_proto",
+    "@com_google_googleapis//google/longrunning:longrunning_java_proto",
+    "@com_google_protobuf//java/core",
+]
+
+# Some dependencies are runtime only, but that's fine for tests.
+TEST_DEPS = [
+    ":test_java_protos",
+    "@com_google_googleapis//google/logging/v2:logging_java_proto",
+    "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
+    "@com_google_googleapis//google/rpc:rpc_java_proto",
+    "@com_google_truth_truth//jar",
+    "@io_github_java_diff_utils//jar",
+]
+
+proto_library(
+    name = "service_config_proto",
+    srcs = ["src/main/proto/service_config.proto"],
+    deps = [
+        "@com_google_googleapis//google/rpc:code_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:wrappers_proto",
+        "@com_google_protobuf//:struct_proto",
+    ],
+)
 java_proto_library(
     name = "service_config_java_proto",
-    deps = ["@io_grpc_proto//:service_config_proto"],
+    deps = [":service_config_proto"],
 )
 
 proto_library(
     name = "test_protos",
-    srcs = glob(["src/test/resources/*.proto"]),
+    srcs = glob(["src/test/proto/*.proto"]),
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",
         "@com_google_googleapis//google/api:client_proto",
@@ -34,27 +89,21 @@ java_proto_library(
     ],
 )
 
-# another test resource
-genrule(
-    name = "basic_proto_descriptor",
-    srcs = ["src/test/resources/basic.proto"],
-    outs = ["basic_proto.descriptor"],
-    cmd = "$(location @com_google_protobuf//:protoc) " +
-          "--include_source_info --include_imports --descriptor_set_out=$(OUTS) $(SRCS)",
-    message = "Generating proto descriptor",
-    tools = ["@com_google_protobuf//:protoc"],
+java_plugin(
+    name = "autovalue_plugin",
+    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = ["@com_google_auto_value_auto_value//jar"],
 )
-
-java_import(
-    name = "gapic_generator_java",
-    # Note referring to target/ is only for local development; you can also pull from remote
-    # filesystem, GCS bucket, Maven repositories, etc.
-    jars = ["target/gapic-generator-java-0.0.1-SNAPSHOT.jar"],
+java_library(
+    name = "gapic-generator-java",
+    srcs = glob(["src/main/java/**/*.java"]),
+    plugins = [":autovalue_plugin"],
+    deps = MAIN_DEPS,
 )
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = ["gapic_generator_java"]
+    runtime_deps = [":gapic-generator-java"] + MAIN_DEPS,
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
@@ -76,7 +125,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = ["gapic_generator_java"],
+    runtime_deps = [":gapic-generator-java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -89,8 +138,76 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = ["gapic_generator_java"],
+    runtime_deps = [":gapic-generator-java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
+
+# another test resource
+genrule(
+    name = "basic_proto_descriptor",
+    srcs = ["src/test/proto/basic.proto"],
+    outs = ["test-proto.descriptorset"],
+    cmd = "$(location @com_google_protobuf//:protoc) " +
+          "--include_source_info --include_imports --descriptor_set_out=$(OUTS) $(SRCS)",
+    message = "Generating proto descriptor",
+    tools = ["@com_google_protobuf//:protoc"],
+)
+
+# Unit tests. Run each test with, e.g.,
+# bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+java_library(
+    name = "gapic-generator-java-test",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [":gapic-generator-java"] + MAIN_DEPS + TEST_DEPS,
+)
+[java_test(
+    name = "unit_" + file[14:-5].replace('/', '_'),
+    test_class = file[14:-5].replace('/', '.'),
+    runtime_deps = [":gapic-generator-java", ":gapic-generator-java-test"] + MAIN_DEPS + TEST_DEPS,
+    data = [":basic_proto_descriptor"] + glob([
+        "src/test/java/**/*.golden",
+        "src/test/resources/**",
+    ]),
+    tags = ["small"],
+) for file in glob(["src/test/java/**/*Test.java"])]
+
+test_suite(name = "units", tags = ["small"])
+
+# Tests that generate and save unit golden (.golden) files.
+GOLDEN_UPDATING_UNIT_TESTS = [
+    "com.google.api.generator.engine.JavaCodeGeneratorTest",
+    "com.google.api.generator.gapic.composer.ComposerTest",
+    "com.google.api.generator.gapic.composer.common.BatchingDescriptorComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.MockServiceClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.MockServiceImplClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceClientClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceClientTestClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceStubClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpc.ServiceStubSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.ServiceClientTestClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.ServiceSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposerTest",
+]
+
+# Manually runs a single JUnit test for the tests that generate and save .golden
+# files. To update .golden files, run with, e.g.,
+# bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+[java_binary(
+    name = "update_%s" % test_class.replace('.', '_'),
+    srcs = glob(["src/test/java/**/*.java"]),
+    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
+    args = [test_class],
+    deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
+    data = glob([
+        "src/test/java/**/*.golden",
+        "src/test/resources/**",
+    ]),
+) for test_class in GOLDEN_UPDATING_UNIT_TESTS]
 
 # google-java-format
 java_binary(
@@ -98,4 +215,24 @@ java_binary(
     jvm_flags = ["-Xmx512m"],
     main_class = "com.google.googlejavaformat.java.Main",
     runtime_deps = ["@google_java_format_all_deps//jar"],
+)
+
+genrule(
+    name = "google_java_format",
+    outs = ["google_java_format.sh"],
+    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --replace' > $(OUTS)",
+    executable = 1,
+    tools = [":google_java_format_binary"],
+    local = 1,
+)
+
+# Run `bazel build //:google_java_format_verification` to verify that gapic-generator-java sources
+# are formatted correctly.
+genrule(
+    name = "google_java_format_verification",
+    outs = ["google_java_format_verification.sh"],
+    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --dry-run --set-exit-if-changed' > $(OUTS)",
+    executable = 1,
+    tools = [":google_java_format_binary"],
+    local = 1,
 )

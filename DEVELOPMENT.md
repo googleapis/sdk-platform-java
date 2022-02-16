@@ -90,11 +90,19 @@
 -   Run linter checks without actually doing the formatting.
 
     ```sh
+    bazel run //:google_java_format_verification
+    ```
+    or
+    ```sh
     mvn fmt:check
     ```
 
 -   Format files.
 
+    ```sh
+    bazel run //:google_java_format
+    ```
+    or
     ```sh
     mvn fmt:format
     ```
@@ -104,15 +112,30 @@
 -   Run all unit and integration tests.
 
     ```sh
-    mvn test          # unit tests
-    bazel test //...  # integration tests
+    bazel test //...
     ```
 
 -   Run all unit tests.
 
     ```sh
+    bazel test //:units
+    ```
+    or
+    ```sh
     mvn test
     ```
+
+-   Run a single unit test like `JavaCodeGeneratorTest.java`:
+
+     ```sh
+￼    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+     ```
+￼
+￼-   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
+
+     ```sh
+￼    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+     ```
 
 -   Update unit test golden files:
 
