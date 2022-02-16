@@ -90,13 +90,13 @@
 -   Run linter checks without actually doing the formatting.
 
     ```sh
-    bazel run //:google_java_format_verification
+    mvn fmt:check
     ```
 
 -   Format files.
 
     ```sh
-    bazel run //:google_java_format
+    mvn fmt:format
     ```
 
 ## Test Running

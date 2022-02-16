@@ -83,11 +83,11 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Running Java linter..."
-  bazel --batch run --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
+  mvn fmt:check
   FORMAT_STATUS=$?
   if [ $FORMAT_STATUS != 0 ]
   then
-    echo_error "Linting failed." "Please run :google_java_format and try again."
+    echo_error "Linting failed." "Please run mvn fmt:format try again."
     exit 1
   fi
 fi

@@ -84,7 +84,7 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
-        run: bazel --batch run //:google_java_format_verification
+        run: mvn fmt:check
 
   license-header:
     runs-on: ubuntu-latest
