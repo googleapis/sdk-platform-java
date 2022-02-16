@@ -83,11 +83,11 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Running Java linter..."
-  mvn fmt:check
+  bazel --batch run --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
   FORMAT_STATUS=$?
   if [ $FORMAT_STATUS != 0 ]
   then
-    echo_error "Linting failed." "Please run mvn fmt:format try again."
+    echo_error "Linting failed." "Please run :google_java_format and try again."
     exit 1
   fi
 fi
@@ -96,8 +96,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_UNIT_GOLDEN_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking unit tests..."
-  ./ad-hoc-compile-proto-files.sh
-  mvn verify
+  bazel --batch test //:units --disk_cache="$BAZEL_CACHE_DIR"
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then

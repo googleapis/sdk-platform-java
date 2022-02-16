@@ -37,6 +37,7 @@ public class Utils {
     Path testOutputDir = Paths.get("src", "test", "java", relativeGoldenDir);
 
     // Auto-detect project workspace when running `bazel run //:update_TargetTest`.
+    // TODO: remove when we don't use Bazel.
     String workspaceDir = System.getenv("BUILD_WORKSPACE_DIRECTORY");
     if (workspaceDir != null) {
       testOutputDir = Paths.get(workspaceDir).resolve(testOutputDir);

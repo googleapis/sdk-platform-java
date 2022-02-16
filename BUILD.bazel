@@ -94,12 +94,20 @@ java_plugin(
     processor_class = "com.google.auto.value.processor.AutoValueProcessor",
     deps = ["@com_google_auto_value_auto_value//jar"],
 )
+
 java_library(
     name = "gapic-generator-java",
     srcs = glob(["src/main/java/**/*.java"]),
     plugins = [":autovalue_plugin"],
     deps = MAIN_DEPS,
 )
+
+java_library(
+    name = "gapic-generator-java-test",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [":gapic-generator-java"] + MAIN_DEPS + TEST_DEPS,
+)
+
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
@@ -154,15 +162,13 @@ genrule(
 
 # Unit tests. Run each test with, e.g.,
 # bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
-java_library(
-    name = "gapic-generator-java-test",
-    srcs = glob(["src/test/java/**/*.java"]),
-    deps = [":gapic-generator-java"] + MAIN_DEPS + TEST_DEPS,
-)
 [java_test(
     name = "unit_" + file[14:-5].replace('/', '_'),
     test_class = file[14:-5].replace('/', '.'),
-    runtime_deps = [":gapic-generator-java", ":gapic-generator-java-test"] + MAIN_DEPS + TEST_DEPS,
+    runtime_deps = [
+        ":gapic-generator-java",
+        ":gapic-generator-java-test",
+    ] + MAIN_DEPS + TEST_DEPS,
     data = [":basic_proto_descriptor"] + glob([
         "src/test/java/**/*.golden",
         "src/test/resources/**",
@@ -199,10 +205,12 @@ GOLDEN_UPDATING_UNIT_TESTS = [
 # bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
 [java_binary(
     name = "update_%s" % test_class.replace('.', '_'),
-    srcs = glob(["src/test/java/**/*.java"]),
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     args = [test_class],
-    deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
+    runtime_deps = [
+        ":gapic-generator-java",
+        ":gapic-generator-java-test",
+    ] + MAIN_DEPS + TEST_DEPS,
     data = glob([
         "src/test/java/**/*.golden",
         "src/test/resources/**",
