@@ -127,6 +127,7 @@
     ```sh
     mvn test -DupdateUnitGoldens
     ```
+    This is inefficient for updating only a few golden files, as it runs all tests.
 
 ￼-  Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
