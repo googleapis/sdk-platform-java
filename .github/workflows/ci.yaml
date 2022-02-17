@@ -41,7 +41,9 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Integration Tests
-        run: bazel --batch test //test/integration/...
+        run: |
+          mvn package
+          bazel --batch test //test/integration/...
 
       - name: Gradle Build Generated Storage Client Library
         run: |
