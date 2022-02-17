@@ -96,22 +96,22 @@ java_plugin(
 )
 
 java_library(
-    name = "gapic-generator-java",
+    name = "gapic_generator_java",
     srcs = glob(["src/main/java/**/*.java"]),
     plugins = [":autovalue_plugin"],
     deps = MAIN_DEPS,
 )
 
 java_library(
-    name = "gapic-generator-java-test",
+    name = "gapic_generator_java_test",
     srcs = glob(["src/test/java/**/*.java"]),
-    deps = [":gapic-generator-java"] + MAIN_DEPS + TEST_DEPS,
+    deps = [":gapic_generator_java"] + MAIN_DEPS + TEST_DEPS,
 )
 
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [":gapic-generator-java"] + MAIN_DEPS,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS,
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
@@ -133,7 +133,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = [":gapic-generator-java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -146,7 +146,7 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = [":gapic-generator-java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # another test resource
@@ -166,8 +166,8 @@ genrule(
     name = "unit_" + file[14:-5].replace('/', '_'),
     test_class = file[14:-5].replace('/', '.'),
     runtime_deps = [
-        ":gapic-generator-java",
-        ":gapic-generator-java-test",
+        ":gapic_generator_java",
+        ":gapic_generator_java_test",
     ] + MAIN_DEPS + TEST_DEPS,
     data = [":basic_proto_descriptor"] + glob([
         "src/test/java/**/*.golden",
@@ -208,8 +208,8 @@ GOLDEN_UPDATING_UNIT_TESTS = [
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     args = [test_class],
     runtime_deps = [
-        ":gapic-generator-java",
-        ":gapic-generator-java-test",
+        ":gapic_generator_java",
+        ":gapic_generator_java-test",
     ] + MAIN_DEPS + TEST_DEPS,
     data = glob([
         "src/test/java/**/*.golden",

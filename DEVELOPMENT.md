@@ -47,7 +47,7 @@
     java_proto_library(
         name = "showcase_java_proto",
         deps = [
-            "showcase_proto",
+            ":showcase_proto",
         ],
     )
 
