@@ -129,7 +129,7 @@
     ```
     This is inefficient for updating only a few golden files, as it runs all tests.
 
-￼-  Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+-   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
     ```sh
 ￼   mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
