@@ -25,7 +25,6 @@ import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.OneofDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,13 +150,10 @@ public class SourceCodeInfoParserTest {
    * @return the top level target protoFile descriptor
    */
   private static FileDescriptor buildFileDescriptor() throws Exception {
-    InputStream testProto =
-        SourceCodeInfoParserTest.class.getClassLoader().getResourceAsStream(PROTO_DESCRIPTOR_SET);
-    if (testProto == null) { // TODO: only for Bazel build. Remove when we don't build with Bazel.
-      testProto = new FileInputStream(PROTO_DESCRIPTOR_SET);
-    }
-    try (InputStream in = testProto) {
-      List<FileDescriptorProto> protoFileList = FileDescriptorSet.parseFrom(in).getFileList();
+    try (InputStream testProto =
+        SourceCodeInfoParserTest.class.getClassLoader().getResourceAsStream(PROTO_DESCRIPTOR_SET)) {
+      List<FileDescriptorProto> protoFileList =
+          FileDescriptorSet.parseFrom(testProto).getFileList();
       List<FileDescriptor> deps = new ArrayList<>();
       for (FileDescriptorProto proto : protoFileList) {
         FileDescriptor descriptor =

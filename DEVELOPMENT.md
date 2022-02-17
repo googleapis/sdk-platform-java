@@ -47,7 +47,7 @@
     java_proto_library(
         name = "showcase_java_proto",
         deps = [
-            "showcase_proto",
+            ":showcase_proto",
         ],
     )
 
@@ -90,19 +90,11 @@
 -   Run linter checks without actually doing the formatting.
 
     ```sh
-    bazel run //:google_java_format_verification
-    ```
-    or
-    ```sh
     mvn fmt:check
     ```
 
 -   Format files.
 
-    ```sh
-    bazel run //:google_java_format
-    ```
-    or
     ```sh
     mvn fmt:format
     ```
@@ -112,28 +104,23 @@
 -   Run all unit and integration tests.
 
     ```sh
-    bazel test //...
+    mvn test          # unit tests
+    bazel test //...  # integration tests
     ```
 
 -   Run all unit tests.
 
     ```sh
-    bazel test //:units
-    ```
-    or
-    ```sh
     mvn test
     ```
 
--   Run a single unit test like `JavaCodeGeneratorTest.java`:
+-   Run a single or multiple unit tests:
 
-     ```sh
-￼    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
-     ```
-     or
-     ```sh
-￼    mvn test -Dtest=JavaCodeGeneratorTest
-     ```
+    ```sh
+￼   mvn test -Dtest=JavaCodeGeneratorTest
+
+￼   mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+    ```
 ￼
 -   Update all unit test golden files:
 
@@ -141,15 +128,11 @@
     mvn test -DupdateUnitGoldens
     ```
 
-￼-   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+￼-  Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
-     ```sh
-￼    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
-     ```
-     or
-     ```sh
-￼    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
-     ```
+    ```sh
+￼   mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+    ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
     code using the Java microgenerator and compares them with the goldens files
