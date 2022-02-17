@@ -92,11 +92,19 @@
     ```sh
     bazel run //:google_java_format_verification
     ```
+    or
+    ```sh
+    mvn fmt:check
+    ```
 
 -   Format files.
 
     ```sh
     bazel run //:google_java_format
+    ```
+    or
+    ```sh
+    mvn fmt:format
     ```
 
 ## Test Running
@@ -112,18 +120,36 @@
     ```sh
     bazel test //:units
     ```
-
--   Run a single unit test like `JavaCodeGeneratorTest.java`
-
+    or
     ```sh
-    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+    mvn test
     ```
 
--   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
+-   Run a single unit test like `JavaCodeGeneratorTest.java`:
+
+     ```sh
+￼    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+     ```
+     or
+     ```sh
+￼    mvn test -Dtest=JavaCodeGeneratorTest
+     ```
+￼
+-   Update all unit test golden files:
 
     ```sh
-    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+    mvn test -DupdateUnitGoldens
     ```
+
+￼-   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+
+     ```sh
+￼    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+     ```
+     or
+     ```sh
+￼    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
     code using the Java microgenerator and compares them with the goldens files
