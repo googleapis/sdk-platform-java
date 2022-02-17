@@ -12,7 +12,7 @@ java_import(
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [":gapic-generator-java"],
+    runtime_deps = [":gapic_generator_java"],
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
@@ -34,7 +34,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = [":gapic-generator-java"],
+    runtime_deps = [":gapic_generator_java"],
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -47,7 +47,7 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = [":gapic-generator-java"],
+    runtime_deps = [":gapic_generator_java"],
 )
 
 # google-java-format
