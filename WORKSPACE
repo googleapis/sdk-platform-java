@@ -1,7 +1,15 @@
 workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+
+http_archive(
+    name = "rules_jvm_external",
+    strip_prefix = "rules_jvm_external-4.2",
+    sha256 = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/4.2.zip",
+)
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 # DO NOT REMOVE.
 # This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
@@ -15,17 +23,9 @@ http_archive(
     ],
 )
 
-jvm_maven_import_external(
-    name = "google_java_format_all_deps",
-    artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
-    licenses = [
-        "notice",
-        "reciprocal",
-    ],
-    server_urls = [
-        "https://repo.maven.apache.org/maven2/",
-        "http://repo1.maven.org/maven2/",
-    ],
+maven_install(
+    artifacts = ["com.google.googlejavaformat:google-java-format:jar:all-deps:1.7"],
+    repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
 # gax-java and its transitive dependencies must be imported before
@@ -42,7 +42,6 @@ http_archive(
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
-
 com_google_api_gax_java_properties(
     name = "com_google_api_gax_java_properties",
     file = "@com_google_api_gax_java//:dependencies.properties",
@@ -57,26 +56,11 @@ load("//:repositories.bzl", "gapic_generator_java_repositories")
 gapic_generator_java_repositories()
 
 # protobuf
-RULES_JVM_EXTERNAL_TAG = "4.2"
-RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
-
-http_archive(
-    name = "rules_jvm_external",
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
-    sha256 = RULES_JVM_EXTERNAL_SHA,
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
-)
-
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
-
-load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
     artifacts = PROTOBUF_MAVEN_ARTIFACTS,
-    generate_compat_repositories = True,
-    repositories = [
-        "https://repo.maven.apache.org/maven2/",
-    ],
+    repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
 protobuf_deps()

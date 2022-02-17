@@ -41,14 +41,6 @@ def gapic_generator_java_repositories():
     )
 
     _maybe(
-        jvm_maven_import_external,
-        name = "google_java_format_all_deps",
-        artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:%s" % PROPERTIES["version.google_java_format"],
-        server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"],
-    )
-
-    _maybe(
         http_archive,
         name = "bazel_skylib",
         sha256 = "bbccf674aa441c266df9894182d80de104cabd19be98be002f6d478aaa31574d",
