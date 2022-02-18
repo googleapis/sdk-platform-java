@@ -117,9 +117,9 @@
 -   Run a single or multiple unit tests:
 
     ```sh
-￼   mvn test -Dtest=JavaCodeGeneratorTest
+    mvn test -Dtest=JavaCodeGeneratorTest
 
-￼   mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
     ```
 ￼
 -   Update all unit test golden files:
@@ -132,7 +132,7 @@
 -   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
     ```sh
-￼   mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
