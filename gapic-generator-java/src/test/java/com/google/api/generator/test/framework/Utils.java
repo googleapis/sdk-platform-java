@@ -26,22 +26,25 @@ public class Utils {
    * replace the original goldens. For example:
    * `src/test/java/com/google/api/generator/gapic/composer/ComposerTest.java` will save the
    * generated code into a file called `ComposerTest.golden` at
-   * `$TEST_OUTPUT_HOME/com/google/api/generator/gapic/composer/goldens/ComposerTest.golden`.
+   * `src/test/java/com/google/api/generator/gapic/composer/goldens/ComposerTest.golden`.
    *
    * @param clazz the test class.
    * @param fileName the name of saved file, usually a test method name with suffix `.golden`
    * @param codegen the generated code from JUnit test
    */
   public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
-    // This system environment variable `TEST_OUTPUT_HOME` is used to specify a folder
-    // which contains generated output from JUnit test. However, when running `bazel run
-    // testTarget_update` command, the environment variable will be ignored, and the correct
-    // folder in the workspace will be auto-detected.
-    String workspaceDir = System.getenv("BUILD_WORKSPACE_DIRECTORY");
-    String testOutputHome =
-        workspaceDir != null ? workspaceDir + "/src/test/java" : System.getenv("TEST_OUTPUT_HOME");
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
-    Path testOutputDir = Paths.get(testOutputHome, relativeGoldenDir);
+    Path testOutputDir = Paths.get("src", "test", "java", relativeGoldenDir);
+
+    // Auto-detect project workspace when running `bazel run //:update_TargetTest`.
+    // TODO: remove when we don't use Bazel.
+    String workspaceDir = System.getenv("BUILD_WORKSPACE_DIRECTORY");
+    if (workspaceDir != null) {
+      testOutputDir = Paths.get(workspaceDir).resolve(testOutputDir);
+    } else if (System.getProperty("updateUnitGoldens") == null) {
+      return;
+    }
+
     testOutputDir.toFile().mkdirs();
     try (FileWriter myWriter = new FileWriter(testOutputDir.resolve(fileName).toFile())) {
       myWriter.write(codegen);

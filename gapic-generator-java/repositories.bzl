@@ -77,15 +77,6 @@ def gapic_generator_java_repositories():
         actual = "@com_google_code_gson_gson//jar",
     )
 
-    # grpc-proto doesn't have releases, so we use hashes instead.
-    _io_grpc_proto_prefix = "8e3fec8612bc0708e857950dccadfd5063703e04"  # Nov. 6, 2021.
-    _maybe(
-        http_archive,
-        name = "io_grpc_proto",
-        urls = ["https://github.com/grpc/grpc-proto/archive/%s.zip" % _io_grpc_proto_prefix],
-        strip_prefix = "grpc-proto-%s" % _io_grpc_proto_prefix,
-    )
-
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
     if not name.startswith(strip_repo_prefix):
         return
