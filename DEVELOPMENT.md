@@ -121,7 +121,7 @@
 
     mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
     ```
-￼
+
 -   Update all unit test golden files:
 
     ```sh
