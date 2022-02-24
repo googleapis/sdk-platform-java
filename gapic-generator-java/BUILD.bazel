@@ -209,7 +209,6 @@ GOLDEN_UPDATING_UNIT_TESTS = [
     args = [test_class],
     runtime_deps = [
         ":gapic_generator_java",
-        ":gapic_generator_java-test",
     ] + MAIN_DEPS + TEST_DEPS,
     data = glob([
         "src/test/java/**/*.golden",
