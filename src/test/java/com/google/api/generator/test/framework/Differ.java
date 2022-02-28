@@ -16,7 +16,6 @@ package com.google.api.generator.test.framework;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
-import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.Patch;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,7 +48,7 @@ public class Differ {
     Patch<String> diff = null;
     try {
       diff = DiffUtils.diff(original, revised);
-    } catch (DiffException e) {
+    } catch (RuntimeException e) {
       throw new ComputeDiffException("Could not compute the differences.", e);
     }
     List<String> unifiedDiff =
