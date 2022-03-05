@@ -55,7 +55,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
-import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -205,9 +205,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     samples.addAll(Arrays.asList(classMethodSampleCode, credentialsSampleCode, endpointSampleCode));
     return ServiceClientCommentComposer.createClassHeaderComments(
         service,
-        SampleComposer.createInlineSample(classMethodSampleCode.body()),
-        SampleComposer.createInlineSample(credentialsSampleCode.body()),
-        SampleComposer.createInlineSample(endpointSampleCode.body()));
+        SampleCodeWriter.writeInlineSample(classMethodSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(credentialsSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(endpointSampleCode.body()));
   }
 
   private List<MethodDefinition> createClassMethods(
@@ -718,7 +718,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       Optional<String> methodDocSample = Optional.empty();
       if (methodSample.isPresent()) {
         samples.add(methodSample.get());
-        methodDocSample = Optional.of(SampleComposer.createInlineSample(methodSample.get().body()));
+        methodDocSample =
+            Optional.of(SampleCodeWriter.writeInlineSample(methodSample.get().body()));
       }
 
       MethodDefinition.Builder methodVariantBuilder =
@@ -806,7 +807,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     if (defaultMethodSample.isPresent()) {
       samples.add(defaultMethodSample.get());
       defaultMethodDocSample =
-          Optional.of(SampleComposer.createInlineSample(defaultMethodSample.get().body()));
+          Optional.of(SampleCodeWriter.writeInlineSample(defaultMethodSample.get().body()));
     }
 
     MethodInvocationExpr callableMethodExpr =
@@ -974,7 +975,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     Optional<String> sampleDocCode = Optional.empty();
     if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
-      sampleDocCode = Optional.of(SampleComposer.createInlineSample(sampleCode.get().body()));
+      sampleDocCode = Optional.of(SampleCodeWriter.writeInlineSample(sampleCode.get().body()));
     }
 
     MethodDefinition.Builder methodDefBuilder = MethodDefinition.builder();

@@ -17,7 +17,7 @@ package com.google.api.generator.gapic.protowriter;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -110,10 +110,10 @@ public class Writer {
                   sample.regionTag().serviceName().toLowerCase(),
                   sample.regionTag().rpcName().toLowerCase(),
                   JavaStyle.toUpperCamelCase(sample.name())));
-      String executableSampleCode = SampleComposer.createExecutableSample(sample, pakkage);
+      String sampleFileContent = SampleCodeWriter.writeExecutableSample(sample, pakkage);
       try {
         jos.putNextEntry(jarEntry);
-        jos.write(executableSampleCode.getBytes(StandardCharsets.UTF_8));
+        jos.write(sampleFileContent.getBytes(StandardCharsets.UTF_8));
       } catch (IOException e) {
         throw new GapicWriterException(
             String.format(
