@@ -63,6 +63,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.api.generator.gapic.model.RegionTag;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -910,6 +911,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       newline();
     }
 
+    String regionTagReplace = "REPLACE_REGION_TAG";
+    if (classDefinition.regionTag() != null) {
+      statements(
+          Arrays.asList(
+              classDefinition
+                  .regionTag()
+                  .generateTag(RegionTag.RegionTagRegion.START, regionTagReplace)));
+    }
+
     // This must go first, so that we can check for type collisions.
     classDefinition.accept(importWriterVisitor);
     if (!classDefinition.isNested()) {
@@ -974,10 +984,27 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     classes(classDefinition.nestedClasses());
 
     rightBrace();
+    if (classDefinition.regionTag() != null) {
+      statements(
+          Arrays.asList(
+              classDefinition
+                  .regionTag()
+                  .generateTag(RegionTag.RegionTagRegion.END, regionTagReplace)));
+    }
 
     // We should have valid Java by now, so format it.
     if (!classDefinition.isNested()) {
-      buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
+      String formattedClazz = JavaFormatter.format(buffer.toString());
+
+      // fixing region tag after formatting
+      // formatter splits long region tags on multiple lines and moves the end tag up - doesn't meet
+      // tag requirements
+      if (classDefinition.regionTag() != null) {
+        formattedClazz =
+            formattedClazz.replaceAll(regionTagReplace, classDefinition.regionTag().generate());
+        formattedClazz = formattedClazz.replaceAll("} // \\[END", "}\n// \\[END");
+      }
+      buffer.replace(0, buffer.length(), formattedClazz);
     }
   }
 

@@ -14,11 +14,9 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.BlockComment;
-import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -41,26 +39,13 @@ import org.junit.Test;
 
 public class SampleComposerTest {
   private final String packageName = "com.google.example";
-  private final List<Statement> header =
-      Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
   private final RegionTag.Builder regionTag =
-      RegionTag.builder().setApiShortName("echo").setApiVersion("v1beta").setServiceName("echo");
-
-  @Test
-  public void createExecutableSampleNoSample() {
-    assertThrows(
-        NullPointerException.class, () -> SampleComposer.createExecutableSample(null, packageName));
-  }
-
-  @Test
-  public void createInlineSampleNoSample() {
-    assertThrows(NullPointerException.class, () -> SampleComposer.createInlineSample(null));
-  }
+      RegionTag.builder().setApiShortName("apiName").setServiceName("echo");
 
   @Test
   public void createInlineSample() {
     List<Statement> sampleBody = Arrays.asList(ExprStatement.withExpr(systemOutPrint("testing")));
-    String sampleResult = SampleComposer.createInlineSample(sampleBody);
+    String sampleResult = writeSample(SampleComposer.composeInlineSample(sampleBody));
     String expected =
         LineFormatter.lines(
             "// This snippet has been automatically generated for illustrative purposes only.\n",
@@ -71,51 +56,9 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleMissingApiName() {
-    Sample noApiShortNameSample =
-        Sample.builder()
-            .setRegionTag(
-                regionTag
-                    .setApiShortName("")
-                    .setRpcName("createExecutableSample")
-                    .setOverloadDisambiguation("MissingApiShortName")
-                    .build())
-            .build();
-
-    assertThrows(
-        IllegalStateException.class,
-        () -> SampleComposer.createExecutableSample(noApiShortNameSample, packageName));
-  }
-
-  @Test
-  public void createExecutableSampleNoHeader() {
-    Sample sample =
-        Sample.builder()
-            .setRegionTag(
-                regionTag
-                    .setRpcName("createExecutableSample")
-                    .setOverloadDisambiguation("NoHeader")
-                    .build())
-            .build();
-    assertThrows(
-        IllegalStateException.class,
-        () -> SampleComposer.createExecutableSample(sample, packageName));
-  }
-
-  @Test
-  public void includeRegionTagMissingApiVersionMissingOverload() {
-    String sampleResult =
-        SampleComposer.includeRegionTags(
-            "", regionTag.setApiVersion("").setRpcName("rpcName").build());
-    String expected = "// [START echo_generated_echo_rpcname]// [END echo_generated_echo_rpcname]";
-    assertEquals(expected, sampleResult);
-  }
-
-  @Test
   public void createExecutableSampleEmptyStatementSample() {
     Sample sample =
         Sample.builder()
-            .setFileHeader(header)
             .setRegionTag(
                 regionTag
                     .setRpcName("createExecutableSample")
@@ -123,15 +66,12 @@ public class SampleComposerTest {
                     .build())
             .build();
 
-    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = writeSample(SampleComposer.composeExecutableSample(sample, packageName));
     String expected =
         LineFormatter.lines(
-            "/*\n",
-            " * Apache License\n",
-            " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START echo_v1beta_generated_echo_createexecutablesample_emptystatementsample]\n",
+            "// [START apiname_generated_echo_createexecutablesample_emptystatementsample]\n",
             "public class CreateExecutableSampleEmptyStatementSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -143,7 +83,7 @@ public class SampleComposerTest {
             "    // It may require modifications to work in your environment.\n",
             "  }\n",
             "}\n",
-            "// [END echo_v1beta_generated_echo_createexecutablesample_emptystatementsample]");
+            "// [END apiname_generated_echo_createexecutablesample_emptystatementsample]\n");
 
     assertEquals(expected, sampleResult);
   }
@@ -155,7 +95,6 @@ public class SampleComposerTest {
     Sample sample =
         Sample.builder()
             .setBody(ImmutableList.of(sampleBody))
-            .setFileHeader(header)
             .setRegionTag(
                 regionTag
                     .setRpcName("createExecutableSample")
@@ -163,15 +102,12 @@ public class SampleComposerTest {
                     .build())
             .build();
 
-    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = writeSample(SampleComposer.composeExecutableSample(sample, packageName));
     String expected =
         LineFormatter.lines(
-            "/*\n",
-            " * Apache License\n",
-            " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START echo_v1beta_generated_echo_createexecutablesample_methodargsnovar]\n",
+            "// [START apiname_generated_echo_createexecutablesample_methodargsnovar]\n",
             "public class CreateExecutableSampleMethodArgsNoVar {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -184,7 +120,7 @@ public class SampleComposerTest {
             "    System.out.println(\"Testing CreateExecutableSampleMethodArgsNoVar\");\n",
             "  }\n",
             "}\n",
-            "// [END echo_v1beta_generated_echo_createexecutablesample_methodargsnovar]");
+            "// [END apiname_generated_echo_createexecutablesample_methodargsnovar]\n");
 
     assertEquals(expected, sampleResult);
   }
@@ -208,19 +144,15 @@ public class SampleComposerTest {
         Sample.builder()
             .setBody(ImmutableList.of(sampleBody))
             .setVariableAssignments(ImmutableList.of(varAssignment))
-            .setFileHeader(header)
             .setRegionTag(regionTag.setRpcName("createExecutableSample").build())
             .build();
 
-    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = writeSample(SampleComposer.composeExecutableSample(sample, packageName));
     String expected =
         LineFormatter.lines(
-            "/*\n",
-            " * Apache License\n",
-            " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START echo_v1beta_generated_echo_createexecutablesample]\n",
+            "// [START apiname_generated_echo_createexecutablesample]\n",
             "public class CreateExecutableSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -234,7 +166,7 @@ public class SampleComposerTest {
             "    System.out.println(content);\n",
             "  }\n",
             "}\n",
-            "// [END echo_v1beta_generated_echo_createexecutablesample]");
+            "// [END apiname_generated_echo_createexecutablesample]\n");
 
     assertEquals(expected, sampleResult);
   }
@@ -291,7 +223,6 @@ public class SampleComposerTest {
             .setBody(ImmutableList.of(strBodyStatement, intBodyStatement, objBodyStatement))
             .setVariableAssignments(
                 ImmutableList.of(strVarAssignment, intVarAssignment, objVarAssignment))
-            .setFileHeader(header)
             .setRegionTag(
                 regionTag
                     .setRpcName("createExecutableSample")
@@ -299,15 +230,12 @@ public class SampleComposerTest {
                     .build())
             .build();
 
-    String sampleResult = SampleComposer.createExecutableSample(sample, packageName);
+    String sampleResult = writeSample(SampleComposer.composeExecutableSample(sample, packageName));
     String expected =
         LineFormatter.lines(
-            "/*\n",
-            " * Apache License\n",
-            " */\n",
             "package com.google.example;\n",
             "\n",
-            "// [START echo_v1beta_generated_echo_createexecutablesample_methodmultiplestatements]\n",
+            "// [START apiname_generated_echo_createexecutablesample_methodmultiplestatements]\n",
             "public class CreateExecutableSampleMethodMultipleStatements {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -326,7 +254,7 @@ public class SampleComposerTest {
             "    System.out.println(thing.response());\n",
             "  }\n",
             "}\n",
-            "// [END echo_v1beta_generated_echo_createexecutablesample_methodmultiplestatements]");
+            "// [END apiname_generated_echo_createexecutablesample_methodmultiplestatements]\n");
     assertEquals(expected, sampleResult);
   }
 
@@ -354,5 +282,13 @@ public class SampleComposerTest {
         .setMethodName("println")
         .setArguments(content)
         .build();
+  }
+
+  private static String writeSample(ClassDefinition sample) {
+    return SampleCodeWriter.write(sample);
+  }
+
+  private static String writeSample(List<Statement> sample) {
+    return SampleCodeWriter.write(sample);
   }
 }

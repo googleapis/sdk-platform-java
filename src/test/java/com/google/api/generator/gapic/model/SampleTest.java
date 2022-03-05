@@ -29,7 +29,7 @@ public class SampleTest {
       RegionTag.builder().setServiceName("serviceName").setRpcName("rpcName").build();
   private final List<Statement> sampleBody =
       Arrays.asList(CommentStatement.withComment(LineComment.withComment("testing")));
-  private final List<Statement> header =
+  private final List<CommentStatement> header =
       Arrays.asList(CommentStatement.withComment(BlockComment.withComment("apache license")));
 
   @Test
