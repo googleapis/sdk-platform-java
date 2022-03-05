@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_pagedexpand_pagedexpandrequestiterateall]
+// [START goldensample_generated_echoclient_pagedexpand_pagedexpandrequestiterateall]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -42,4 +43,4 @@ public class PagedExpandPagedExpandRequestIterateAll {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_pagedexpand_pagedexpandrequestiterateall]
+// [END goldensample_generated_echoclient_pagedexpand_pagedexpandrequestiterateall]

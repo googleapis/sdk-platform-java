@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_identityclient_deleteuser_string]
+// [START goldensample_generated_identityclient_deleteuser_string]
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.UserName;
@@ -35,4 +36,4 @@ public class DeleteUserString {
     }
   }
 }
-// [END goldensample_v1_generated_identityclient_deleteuser_string]
+// [END goldensample_generated_identityclient_deleteuser_string]

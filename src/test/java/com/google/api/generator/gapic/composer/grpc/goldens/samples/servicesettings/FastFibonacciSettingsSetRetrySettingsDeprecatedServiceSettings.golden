@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.testdata.v1.samples;
 
-// [START goldensample_v1_generated_deprecatedservicesettings_fastfibonacci_settingssetretrysettingsdeprecatedservicesettings]
+// [START goldensample_generated_deprecatedservicesettings_fastfibonacci_settingssetretrysettingsdeprecatedservicesettings]
 import com.google.testdata.v1.DeprecatedServiceSettings;
 import java.time.Duration;
 
@@ -43,4 +44,4 @@ public class FastFibonacciSettingsSetRetrySettingsDeprecatedServiceSettings {
     DeprecatedServiceSettings deprecatedServiceSettings = deprecatedServiceSettingsBuilder.build();
   }
 }
-// [END goldensample_v1_generated_deprecatedservicesettings_fastfibonacci_settingssetretrysettingsdeprecatedservicesettings]
+// [END goldensample_generated_deprecatedservicesettings_fastfibonacci_settingssetretrysettingsdeprecatedservicesettings]

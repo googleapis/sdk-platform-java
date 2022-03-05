@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_createroom_stringstring]
+// [START goldensample_generated_messagingclient_createroom_stringstring]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
 
@@ -35,4 +36,4 @@ public class CreateRoomStringString {
     }
   }
 }
-// [END goldensample_v1_generated_messagingclient_createroom_stringstring]
+// [END goldensample_generated_messagingclient_createroom_stringstring]

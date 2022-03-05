@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_identityclient_getuser_callablefuturecallgetuserrequest]
+// [START goldensample_generated_identityclient_getuser_callablefuturecallgetuserrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.GetUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
@@ -40,4 +41,4 @@ public class GetUserCallableFutureCallGetUserRequest {
     }
   }
 }
-// [END goldensample_v1_generated_identityclient_getuser_callablefuturecallgetuserrequest]
+// [END goldensample_generated_identityclient_getuser_callablefuturecallgetuserrequest]

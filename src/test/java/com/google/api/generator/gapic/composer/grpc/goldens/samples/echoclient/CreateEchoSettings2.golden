@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_create_echosettings2]
+// [START goldensample_generated_echoclient_create_echosettings2]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -33,4 +34,4 @@ public class CreateEchoSettings2 {
     EchoClient echoClient = EchoClient.create(echoSettings);
   }
 }
-// [END goldensample_v1_generated_echoclient_create_echosettings2]
+// [END goldensample_generated_echoclient_create_echosettings2]

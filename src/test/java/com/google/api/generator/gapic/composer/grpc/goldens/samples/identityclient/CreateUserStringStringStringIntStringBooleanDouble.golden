@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_identityclient_createuser_stringstringstringintstringbooleandouble]
+// [START goldensample_generated_identityclient_createuser_stringstringstringintstringbooleandouble]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
 import com.google.showcase.v1beta1.UserName;
@@ -43,4 +44,4 @@ public class CreateUserStringStringStringIntStringBooleanDouble {
     }
   }
 }
-// [END goldensample_v1_generated_identityclient_createuser_stringstringstringintstringbooleandouble]
+// [END goldensample_generated_identityclient_createuser_stringstringstringintstringbooleandouble]

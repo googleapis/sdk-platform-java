@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_identityclient_listusers_listusersrequestiterateall]
+// [START goldensample_generated_identityclient_listusers_listusersrequestiterateall]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.User;
@@ -41,4 +42,4 @@ public class ListUsersListUsersRequestIterateAll {
     }
   }
 }
-// [END goldensample_v1_generated_identityclient_listusers_listusersrequestiterateall]
+// [END goldensample_generated_identityclient_listusers_listusersrequestiterateall]

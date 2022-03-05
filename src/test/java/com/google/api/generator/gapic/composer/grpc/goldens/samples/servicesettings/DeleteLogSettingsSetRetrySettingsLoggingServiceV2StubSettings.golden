@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.logging.v2.stub.samples;
 
-// [START goldensample_v1_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
+// [START goldensample_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
 import com.google.logging.v2.stub.LoggingServiceV2StubSettings;
 import java.time.Duration;
 
@@ -43,4 +44,4 @@ public class DeleteLogSettingsSetRetrySettingsLoggingServiceV2StubSettings {
     LoggingServiceV2StubSettings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
   }
 }
-// [END goldensample_v1_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
+// [END goldensample_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]

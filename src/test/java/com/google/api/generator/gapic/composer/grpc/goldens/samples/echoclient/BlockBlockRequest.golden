@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_block_blockrequest]
+// [START goldensample_generated_echoclient_block_blockrequest]
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
@@ -35,4 +36,4 @@ public class BlockBlockRequest {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_block_blockrequest]
+// [END goldensample_generated_echoclient_block_blockrequest]

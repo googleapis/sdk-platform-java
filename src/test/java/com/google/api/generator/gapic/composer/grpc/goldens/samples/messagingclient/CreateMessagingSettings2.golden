@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_create_messagingsettings2]
+// [START goldensample_generated_messagingclient_create_messagingsettings2]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.MessagingSettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -34,4 +35,4 @@ public class CreateMessagingSettings2 {
     MessagingClient messagingClient = MessagingClient.create(messagingSettings);
   }
 }
-// [END goldensample_v1_generated_messagingclient_create_messagingsettings2]
+// [END goldensample_generated_messagingclient_create_messagingsettings2]

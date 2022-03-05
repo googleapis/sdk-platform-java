@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_echo_resourcename]
+// [START goldensample_generated_echoclient_echo_resourcename]
 import com.google.api.resourcenames.ResourceName;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -36,4 +37,4 @@ public class EchoResourceName {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_echo_resourcename]
+// [END goldensample_generated_echoclient_echo_resourcename]

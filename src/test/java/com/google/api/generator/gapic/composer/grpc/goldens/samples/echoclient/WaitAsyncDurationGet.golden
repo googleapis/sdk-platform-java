@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_wait_asyncdurationget]
+// [START goldensample_generated_echoclient_wait_asyncdurationget]
 import com.google.protobuf.Duration;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitResponse;
@@ -35,4 +36,4 @@ public class WaitAsyncDurationGet {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_wait_asyncdurationget]
+// [END goldensample_generated_echoclient_wait_asyncdurationget]

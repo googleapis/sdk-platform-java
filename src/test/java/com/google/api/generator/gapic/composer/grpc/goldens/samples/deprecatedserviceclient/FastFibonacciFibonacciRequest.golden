@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.testdata.v1.samples;
 
-// [START goldensample_v1_generated_deprecatedserviceclient_fastfibonacci_fibonaccirequest]
+// [START goldensample_generated_deprecatedserviceclient_fastfibonacci_fibonaccirequest]
 import com.google.protobuf.Empty;
 import com.google.testdata.v1.DeprecatedServiceClient;
 import com.google.testdata.v1.FibonacciRequest;
@@ -35,4 +36,4 @@ public class FastFibonacciFibonacciRequest {
     }
   }
 }
-// [END goldensample_v1_generated_deprecatedserviceclient_fastfibonacci_fibonaccirequest]
+// [END goldensample_generated_deprecatedserviceclient_fastfibonacci_fibonaccirequest]

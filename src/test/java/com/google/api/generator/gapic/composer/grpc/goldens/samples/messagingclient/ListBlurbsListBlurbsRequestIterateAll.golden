@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_listblurbs_listblurbsrequestiterateall]
+// [START goldensample_generated_messagingclient_listblurbs_listblurbsrequestiterateall]
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.ListBlurbsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -43,4 +44,4 @@ public class ListBlurbsListBlurbsRequestIterateAll {
     }
   }
 }
-// [END goldensample_v1_generated_messagingclient_listblurbs_listblurbsrequestiterateall]
+// [END goldensample_generated_messagingclient_listblurbs_listblurbsrequestiterateall]

@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.testdata.v1.stub.samples;
 
-// [START goldensample_v1_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings]
+// [START goldensample_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings]
 import com.google.testdata.v1.stub.DeprecatedServiceStubSettings;
 import java.time.Duration;
 
@@ -44,4 +45,4 @@ public class FastFibonacciSettingsSetRetrySettingsDeprecatedServiceStubSettings 
         deprecatedServiceSettingsBuilder.build();
   }
 }
-// [END goldensample_v1_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings]
+// [END goldensample_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings]

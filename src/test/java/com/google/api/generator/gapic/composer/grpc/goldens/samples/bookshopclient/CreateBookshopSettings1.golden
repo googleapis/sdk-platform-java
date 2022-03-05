@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.bookshop.v1beta1.samples;
 
-// [START goldensample_v1_generated_bookshopclient_create_bookshopsettings1]
+// [START goldensample_generated_bookshopclient_create_bookshopsettings1]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.bookshop.v1beta1.BookshopClient;
 import com.google.bookshop.v1beta1.BookshopSettings;
@@ -37,4 +38,4 @@ public class CreateBookshopSettings1 {
     BookshopClient bookshopClient = BookshopClient.create(bookshopSettings);
   }
 }
-// [END goldensample_v1_generated_bookshopclient_create_bookshopsettings1]
+// [END goldensample_generated_bookshopclient_create_bookshopsettings1]

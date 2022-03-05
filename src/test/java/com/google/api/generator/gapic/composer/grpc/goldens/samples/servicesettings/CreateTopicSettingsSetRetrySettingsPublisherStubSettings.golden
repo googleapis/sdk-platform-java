@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.pubsub.v1.stub.samples;
 
-// [START goldensample_v1_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]
+// [START goldensample_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]
 import com.google.pubsub.v1.stub.PublisherStubSettings;
 import java.time.Duration;
 
@@ -41,4 +42,4 @@ public class CreateTopicSettingsSetRetrySettingsPublisherStubSettings {
     PublisherStubSettings publisherSettings = publisherSettingsBuilder.build();
   }
 }
-// [END goldensample_v1_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]
+// [END goldensample_generated_publisherstubsettings_createtopic_settingssetretrysettingspublisherstubsettings]

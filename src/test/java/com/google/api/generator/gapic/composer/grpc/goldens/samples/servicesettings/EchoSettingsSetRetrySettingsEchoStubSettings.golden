@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.stub.samples;
 
-// [START goldensample_v1_generated_echostubsettings_echo_settingssetretrysettingsechostubsettings]
+// [START goldensample_generated_echostubsettings_echo_settingssetretrysettingsechostubsettings]
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.time.Duration;
 
@@ -41,4 +42,4 @@ public class EchoSettingsSetRetrySettingsEchoStubSettings {
     EchoStubSettings echoSettings = echoSettingsBuilder.build();
   }
 }
-// [END goldensample_v1_generated_echostubsettings_echo_settingssetretrysettingsechostubsettings]
+// [END goldensample_generated_echostubsettings_echo_settingssetretrysettingsechostubsettings]

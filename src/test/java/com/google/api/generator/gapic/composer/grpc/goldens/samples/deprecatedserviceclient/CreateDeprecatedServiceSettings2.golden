@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.testdata.v1.samples;
 
-// [START goldensample_v1_generated_deprecatedserviceclient_create_deprecatedservicesettings2]
+// [START goldensample_generated_deprecatedserviceclient_create_deprecatedservicesettings2]
 import com.google.testdata.v1.DeprecatedServiceClient;
 import com.google.testdata.v1.DeprecatedServiceSettings;
 import com.google.testdata.v1.myEndpoint;
@@ -35,4 +36,4 @@ public class CreateDeprecatedServiceSettings2 {
         DeprecatedServiceClient.create(deprecatedServiceSettings);
   }
 }
-// [END goldensample_v1_generated_deprecatedserviceclient_create_deprecatedservicesettings2]
+// [END goldensample_generated_deprecatedserviceclient_create_deprecatedservicesettings2]

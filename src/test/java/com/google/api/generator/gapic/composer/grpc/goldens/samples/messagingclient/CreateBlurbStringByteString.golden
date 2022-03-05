@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_createblurb_stringbytestring]
+// [START goldensample_generated_messagingclient_createblurb_stringbytestring]
 import com.google.protobuf.ByteString;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -37,4 +38,4 @@ public class CreateBlurbStringByteString {
     }
   }
 }
-// [END goldensample_v1_generated_messagingclient_createblurb_stringbytestring]
+// [END goldensample_generated_messagingclient_createblurb_stringbytestring]
