@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.compute.v1small.samples;
 
 // [START compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2]

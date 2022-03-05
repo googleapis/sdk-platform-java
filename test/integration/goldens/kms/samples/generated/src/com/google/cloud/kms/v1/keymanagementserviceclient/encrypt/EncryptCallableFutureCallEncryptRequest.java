@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.kms.v1.samples;
 
 // [START kms_v1_generated_keymanagementserviceclient_encrypt_callablefuturecallencryptrequest]

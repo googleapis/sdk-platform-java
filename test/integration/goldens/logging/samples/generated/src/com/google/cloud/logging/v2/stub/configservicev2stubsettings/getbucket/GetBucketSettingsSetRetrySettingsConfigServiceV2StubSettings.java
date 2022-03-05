@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.logging.v2.stub.samples;
 
 // [START logging_v2_generated_configservicev2stubsettings_getbucket_settingssetretrysettingsconfigservicev2stubsettings]

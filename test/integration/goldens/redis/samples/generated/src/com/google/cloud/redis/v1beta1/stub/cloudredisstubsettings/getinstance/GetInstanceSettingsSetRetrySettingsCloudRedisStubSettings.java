@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.redis.v1beta1.stub.samples;
 
 // [START redis_v1beta1_generated_cloudredisstubsettings_getinstance_settingssetretrysettingscloudredisstubsettings]

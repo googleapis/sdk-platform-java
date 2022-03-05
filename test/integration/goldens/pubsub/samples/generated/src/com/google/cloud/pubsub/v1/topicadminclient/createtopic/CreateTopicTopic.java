@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.pubsub.v1.samples;
 
 // [START pubsub_v1_generated_topicadminclient_createtopic_topic]

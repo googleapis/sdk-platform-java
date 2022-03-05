@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.example.library.v1.samples;
 
 // [START library_v1_generated_libraryserviceclient_deleteshelf_shelfname]
