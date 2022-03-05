@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.google.api.generator.gapic.composer.samplecode;
 
+import static org.junit.Assert.assertEquals;
+
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
@@ -31,12 +33,9 @@ import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.collect.ImmutableList;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class SampleComposerTest {
   private final String packageName = "com.google.example";
