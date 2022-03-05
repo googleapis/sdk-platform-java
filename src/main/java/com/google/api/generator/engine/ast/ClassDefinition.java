@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.api.generator.gapic.model.RegionTag;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -26,6 +27,9 @@ import javax.annotation.Nullable;
 public abstract class ClassDefinition implements AstNode {
   // Optional.
   public abstract ImmutableList<CommentStatement> fileHeader();
+  // Required for samples classes.
+  @Nullable
+  public abstract RegionTag regionTag();
   // Required.
   public abstract ScopeNode scope();
   // Required.
@@ -91,6 +95,8 @@ public abstract class ClassDefinition implements AstNode {
     }
 
     public abstract Builder setFileHeader(List<CommentStatement> fileHeader);
+
+    public abstract Builder setRegionTag(RegionTag regionTag);
 
     public Builder setHeaderCommentStatements(CommentStatement... comments) {
       return setHeaderCommentStatements(Arrays.asList(comments));
