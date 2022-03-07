@@ -14,12 +14,15 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.testutils.LineFormatter;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class RegionTagTest {
   private final String serviceName = "serviceName";
-  private final String apiVersion = "1";
+  private final String apiVersion = "v1";
   private final String apiShortName = "shortName";
   private final String rpcName = "rpcName";
   private final String disambiguation = "disambiguation";
@@ -75,5 +78,69 @@ public class RegionTagTest {
     Assert.assertEquals("1.4.0Version", regionTag.apiVersion());
     Assert.assertEquals("serviceNameString", regionTag.serviceName());
     Assert.assertEquals("rpcNameString10", regionTag.rpcName());
+  }
+
+  @Test
+  public void generateRegionTagsMissingRequiredFields() {
+    RegionTag rtMissingShortName =
+        RegionTag.builder()
+            .setApiVersion(apiVersion)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .build();
+    Assert.assertThrows(IllegalStateException.class, () -> rtMissingShortName.generate());
+  }
+
+  @Test
+  public void generateRegionTagsValidMissingFields() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .build();
+
+    String result = regionTag.generate();
+    String expected = "shortname_generated_servicename_rpcname";
+    Assert.assertEquals(expected, result);
+  }
+
+  @Test
+  public void generateRegionTagsAllFields() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setApiVersion(apiVersion)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation(disambiguation)
+            .build();
+
+    String result = regionTag.generate();
+    String expected = "shortname_v1_generated_servicename_rpcname_disambiguation";
+    Assert.assertEquals(expected, result);
+  }
+
+  @Test
+  public void generateRegionTagTag() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setApiVersion(apiVersion)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation(disambiguation)
+            .build();
+
+    String result =
+        SampleCodeWriter.write(
+            Arrays.asList(
+                regionTag.generateTag(RegionTag.RegionTagRegion.START, regionTag.generate()),
+                regionTag.generateTag(RegionTag.RegionTagRegion.END, regionTag.generate())));
+    String expected =
+        LineFormatter.lines(
+            "// [START shortname_v1_generated_servicename_rpcname_disambiguation]\n",
+            "// [END shortname_v1_generated_servicename_rpcname_disambiguation]");
+    Assert.assertEquals(expected, result);
   }
 }

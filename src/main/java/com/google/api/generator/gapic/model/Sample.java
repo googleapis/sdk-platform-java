@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
@@ -27,7 +28,7 @@ public abstract class Sample {
 
   public abstract List<AssignmentExpr> variableAssignments();
 
-  public abstract List<Statement> fileHeader();
+  public abstract List<CommentStatement> fileHeader();
 
   public abstract RegionTag regionTag();
 
@@ -42,7 +43,7 @@ public abstract class Sample {
 
   abstract Builder toBuilder();
 
-  public final Sample withHeader(List<Statement> header) {
+  public final Sample withHeader(List<CommentStatement> header) {
     return toBuilder().setFileHeader(header).build();
   }
 
@@ -56,7 +57,7 @@ public abstract class Sample {
 
     public abstract Builder setVariableAssignments(List<AssignmentExpr> variableAssignments);
 
-    public abstract Builder setFileHeader(List<Statement> header);
+    public abstract Builder setFileHeader(List<CommentStatement> header);
 
     public abstract Builder setRegionTag(RegionTag regionTag);
 
