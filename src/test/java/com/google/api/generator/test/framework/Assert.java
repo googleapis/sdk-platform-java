@@ -16,7 +16,7 @@ package com.google.api.generator.test.framework;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
-import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -91,10 +91,9 @@ public class Assert {
       sample =
           sample
               .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
-              .withRegionTag(
-                  sample.regionTag().withApiShortName("goldenSample").withApiVersion("v1"));
+              .withRegionTag(sample.regionTag().withApiShortName("goldenSample"));
       assertCodeEquals(
-          goldenFilePath, SampleComposer.createExecutableSample(sample, packkage + ".samples"));
+          goldenFilePath, SampleCodeWriter.writeExecutableSample(sample, packkage + ".samples"));
     }
   }
 }

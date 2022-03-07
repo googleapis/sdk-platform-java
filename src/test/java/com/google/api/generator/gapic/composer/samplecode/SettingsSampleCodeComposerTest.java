@@ -33,7 +33,7 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        writeInlineSample(
+        writeSample(
             SettingsSampleCodeComposer.composeSampleCode(
                 Optional.empty(), "EchoSettings", classType));
     assertEquals(results, Optional.empty());
@@ -48,7 +48,7 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        writeInlineSample(
+        writeSample(
             SettingsSampleCodeComposer.composeSampleCode(
                 Optional.of("Echo"), "EchoSettings", classType));
     String expected =
@@ -76,7 +76,7 @@ public class SettingsSampleCodeComposerTest {
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
-        writeInlineSample(
+        writeSample(
             SettingsSampleCodeComposer.composeSampleCode(
                 Optional.of("Echo"), "EchoSettings", classType));
     String expected =
@@ -95,7 +95,7 @@ public class SettingsSampleCodeComposerTest {
     assertEquals(results.get(), expected);
   }
 
-  private Optional<String> writeInlineSample(Optional<Sample> sample) {
+  private Optional<String> writeSample(Optional<Sample> sample) {
     if (sample.isPresent()) {
       return Optional.of(SampleCodeWriter.write(sample.get().body()));
     }
