@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.common.annotations.VisibleForTesting;
+import java.util.Arrays;
 import java.util.List;
 
 public final class SampleCodeWriter {
