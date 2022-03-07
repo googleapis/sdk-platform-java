@@ -71,7 +71,7 @@ public class SampleComposerTest {
         LineFormatter.lines(
             "package com.google.example;\n",
             "\n",
-            "// [START apiname_generated_echo_createexecutablesample_emptystatementsample]\n",
+            "// [START apiname_generated_echo_createexecutablesample_emptystatementsample_sync]\n",
             "public class CreateExecutableSampleEmptyStatementSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -83,7 +83,7 @@ public class SampleComposerTest {
             "    // It may require modifications to work in your environment.\n",
             "  }\n",
             "}\n",
-            "// [END apiname_generated_echo_createexecutablesample_emptystatementsample]\n");
+            "// [END apiname_generated_echo_createexecutablesample_emptystatementsample_sync]\n");
 
     assertEquals(expected, sampleResult);
   }
@@ -107,7 +107,7 @@ public class SampleComposerTest {
         LineFormatter.lines(
             "package com.google.example;\n",
             "\n",
-            "// [START apiname_generated_echo_createexecutablesample_methodargsnovar]\n",
+            "// [START apiname_generated_echo_createexecutablesample_methodargsnovar_sync]\n",
             "public class CreateExecutableSampleMethodArgsNoVar {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -120,7 +120,7 @@ public class SampleComposerTest {
             "    System.out.println(\"Testing CreateExecutableSampleMethodArgsNoVar\");\n",
             "  }\n",
             "}\n",
-            "// [END apiname_generated_echo_createexecutablesample_methodargsnovar]\n");
+            "// [END apiname_generated_echo_createexecutablesample_methodargsnovar_sync]\n");
 
     assertEquals(expected, sampleResult);
   }
@@ -152,7 +152,7 @@ public class SampleComposerTest {
         LineFormatter.lines(
             "package com.google.example;\n",
             "\n",
-            "// [START apiname_generated_echo_createexecutablesample]\n",
+            "// [START apiname_generated_echo_createexecutablesample_sync]\n",
             "public class CreateExecutableSample {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -166,7 +166,7 @@ public class SampleComposerTest {
             "    System.out.println(content);\n",
             "  }\n",
             "}\n",
-            "// [END apiname_generated_echo_createexecutablesample]\n");
+            "// [END apiname_generated_echo_createexecutablesample_sync]\n");
 
     assertEquals(expected, sampleResult);
   }
@@ -235,7 +235,7 @@ public class SampleComposerTest {
         LineFormatter.lines(
             "package com.google.example;\n",
             "\n",
-            "// [START apiname_generated_echo_createexecutablesample_methodmultiplestatements]\n",
+            "// [START apiname_generated_echo_createexecutablesample_methodmultiplestatements_sync]\n",
             "public class CreateExecutableSampleMethodMultipleStatements {\n",
             "\n",
             "  public static void main(String[] args) throws Exception {\n",
@@ -254,7 +254,7 @@ public class SampleComposerTest {
             "    System.out.println(thing.response());\n",
             "  }\n",
             "}\n",
-            "// [END apiname_generated_echo_createexecutablesample_methodmultiplestatements]\n");
+            "// [END apiname_generated_echo_createexecutablesample_methodmultiplestatements_sync]\n");
     assertEquals(expected, sampleResult);
   }
 

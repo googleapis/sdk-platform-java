@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_listusers_listusersrequestiterateall]
+// [START goldensample_generated_identityclient_listusers_listusersrequestiterateall_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.User;
@@ -42,4 +42,4 @@ public class ListUsersListUsersRequestIterateAll {
     }
   }
 }
-// [END goldensample_generated_identityclient_listusers_listusersrequestiterateall]
+// [END goldensample_generated_identityclient_listusers_listusersrequestiterateall_sync]

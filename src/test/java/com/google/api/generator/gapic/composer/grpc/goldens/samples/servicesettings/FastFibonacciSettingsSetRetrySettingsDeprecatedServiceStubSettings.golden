@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.testdata.v1.stub.samples;
 
-// [START goldensample_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings]
+// [START goldensample_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings_sync]
 import com.google.testdata.v1.stub.DeprecatedServiceStubSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class FastFibonacciSettingsSetRetrySettingsDeprecatedServiceStubSettings 
         deprecatedServiceSettingsBuilder.build();
   }
 }
-// [END goldensample_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings]
+// [END goldensample_generated_deprecatedservicestubsettings_fastfibonacci_settingssetretrysettingsdeprecatedservicestubsettings_sync]

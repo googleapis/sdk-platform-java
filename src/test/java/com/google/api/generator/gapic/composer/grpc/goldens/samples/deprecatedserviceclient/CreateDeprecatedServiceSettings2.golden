@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.testdata.v1.samples;
 
-// [START goldensample_generated_deprecatedserviceclient_create_deprecatedservicesettings2]
+// [START goldensample_generated_deprecatedserviceclient_create_deprecatedservicesettings2_sync]
 import com.google.testdata.v1.DeprecatedServiceClient;
 import com.google.testdata.v1.DeprecatedServiceSettings;
 import com.google.testdata.v1.myEndpoint;
@@ -36,4 +36,4 @@ public class CreateDeprecatedServiceSettings2 {
         DeprecatedServiceClient.create(deprecatedServiceSettings);
   }
 }
-// [END goldensample_generated_deprecatedserviceclient_create_deprecatedservicesettings2]
+// [END goldensample_generated_deprecatedserviceclient_create_deprecatedservicesettings2_sync]

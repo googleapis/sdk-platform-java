@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest]
+// [START goldensample_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest_sync]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
@@ -43,4 +43,4 @@ public class StreamBlurbsCallableCallStreamBlurbsRequest {
     }
   }
 }
-// [END goldensample_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest]
+// [END goldensample_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest_sync]

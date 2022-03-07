@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_create_echosettings1]
+// [START goldensample_generated_echoclient_create_echosettings1_sync]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -38,4 +38,4 @@ public class CreateEchoSettings1 {
     EchoClient echoClient = EchoClient.create(echoSettings);
   }
 }
-// [END goldensample_generated_echoclient_create_echosettings1]
+// [END goldensample_generated_echoclient_create_echosettings1_sync]

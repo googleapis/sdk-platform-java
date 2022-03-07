@@ -32,11 +32,14 @@ public abstract class RegionTag {
 
   public abstract String overloadDisambiguation();
 
+  public abstract Boolean isSynchronous();
+
   public static Builder builder() {
     return new AutoValue_RegionTag.Builder()
         .setApiVersion("")
         .setApiShortName("")
-        .setOverloadDisambiguation("");
+        .setOverloadDisambiguation("")
+        .setIsSynchronous(true);
   }
 
   abstract RegionTag.Builder toBuilder();
@@ -64,6 +67,8 @@ public abstract class RegionTag {
     public abstract Builder setRpcName(String rpcName);
 
     public abstract Builder setOverloadDisambiguation(String overloadDisambiguation);
+
+    public abstract Builder setIsSynchronous(Boolean isSynchronous);
 
     abstract String apiVersion();
 
@@ -112,6 +117,11 @@ public abstract class RegionTag {
     rt = rt + "generated_" + serviceName() + "_" + rpcName();
     if (!overloadDisambiguation().isEmpty()) {
       rt = rt + "_" + overloadDisambiguation();
+    }
+    if (isSynchronous()) {
+      rt = rt + "_sync";
+    } else {
+      rt = rt + "_async";
     }
 
     return rt.toLowerCase();

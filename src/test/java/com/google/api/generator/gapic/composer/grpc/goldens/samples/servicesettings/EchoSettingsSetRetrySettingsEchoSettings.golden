@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echosettings_echo_settingssetretrysettingsechosettings]
+// [START goldensample_generated_echosettings_echo_settingssetretrysettingsechosettings_sync]
 import com.google.showcase.v1beta1.EchoSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class EchoSettingsSetRetrySettingsEchoSettings {
     EchoSettings echoSettings = echoSettingsBuilder.build();
   }
 }
-// [END goldensample_generated_echosettings_echo_settingssetretrysettingsechosettings]
+// [END goldensample_generated_echosettings_echo_settingssetretrysettingsechosettings_sync]
