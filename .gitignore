@@ -1,6 +1,6 @@
-# Bazel.
 bazel-*
 .gradle/
+target/
 
 # IDE
 .idea

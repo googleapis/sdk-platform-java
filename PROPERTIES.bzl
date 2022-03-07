@@ -11,7 +11,7 @@ PROPERTIES = {
     "maven.com_google_auto_value_auto_value_annotations": "com.google.auto.value:auto-value-annotations:1.7.2",
     "maven.com_google_code_gson": "com.google.code.gson:gson:2.8.6",
     "maven.com_google_protobuf_protobuf_java": "com.google.protobuf:protobuf-java:3.19.1",
-    "maven.io_github_java_diff_utils": "io.github.java-diff-utils:java-diff-utils:4.0",
+    "maven.io_github_java_diff_utils": "io.github.java-diff-utils:java-diff-utils:4.11",
     "maven.javax_annotation_javax_annotation_api": "javax.annotation:javax.annotation-api:1.3.2",
 
     # Gapic YAML parsing for batching settings.

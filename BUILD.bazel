@@ -47,14 +47,24 @@ TEST_DEPS = [
     "@io_github_java_diff_utils//jar",
 ]
 
+proto_library(
+    name = "service_config_proto",
+    srcs = ["src/main/proto/service_config.proto"],
+    deps = [
+        "@com_google_googleapis//google/rpc:code_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:wrappers_proto",
+        "@com_google_protobuf//:struct_proto",
+    ],
+)
 java_proto_library(
     name = "service_config_java_proto",
-    deps = ["@io_grpc_proto//:service_config_proto"],
+    deps = [":service_config_proto"],
 )
 
 proto_library(
     name = "test_protos",
-    srcs = glob(["src/test/resources/*.proto"]),
+    srcs = glob(["src/test/proto/*.proto"]),
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",
         "@com_google_googleapis//google/api:client_proto",
@@ -85,12 +95,23 @@ java_plugin(
     deps = ["@com_google_auto_value_auto_value//jar"],
 )
 
-java_binary(
-    name = "protoc-gen-java_gapic",
+java_library(
+    name = "gapic_generator_java",
     srcs = glob(["src/main/java/**/*.java"]),
-    main_class = "com.google.api.generator.Main",
     plugins = [":autovalue_plugin"],
     deps = MAIN_DEPS,
+)
+
+java_library(
+    name = "gapic_generator_java_test",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [":gapic_generator_java"] + MAIN_DEPS + TEST_DEPS,
+)
+
+java_binary(
+    name = "protoc-gen-java_gapic",
+    main_class = "com.google.api.generator.Main",
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS,
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
@@ -112,7 +133,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-code_generator_request_dumper",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestDumper",
-    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # A binary similar to protoc-gen-java_gapic but reads the CodeGeneratorRequest
@@ -125,14 +146,14 @@ java_binary(
 java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
-    runtime_deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
 )
 
 # another test resource
 genrule(
     name = "basic_proto_descriptor",
-    srcs = ["src/test/resources/basic.proto"],
-    outs = ["basic_proto.descriptor"],
+    srcs = ["src/test/proto/basic.proto"],
+    outs = ["test-proto.descriptorset"],
     cmd = "$(location @com_google_protobuf//:protoc) " +
           "--include_source_info --include_imports --descriptor_set_out=$(OUTS) $(SRCS)",
     message = "Generating proto descriptor",
@@ -143,9 +164,11 @@ genrule(
 # bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
 [java_test(
     name = "unit_" + file[14:-5].replace('/', '_'),
-    srcs = glob(["src/test/java/**/*.java"]),
     test_class = file[14:-5].replace('/', '.'),
-    deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
+    runtime_deps = [
+        ":gapic_generator_java",
+        ":gapic_generator_java_test",
+    ] + MAIN_DEPS + TEST_DEPS,
     data = [":basic_proto_descriptor"] + glob([
         "src/test/java/**/*.golden",
         "src/test/resources/**",
@@ -182,10 +205,12 @@ GOLDEN_UPDATING_UNIT_TESTS = [
 # bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
 [java_binary(
     name = "update_%s" % test_class.replace('.', '_'),
-    srcs = glob(["src/test/java/**/*.java"]),
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     args = [test_class],
-    deps = [":protoc-gen-java_gapic"] + MAIN_DEPS + TEST_DEPS,
+    runtime_deps = [
+        ":gapic_generator_java",
+        ":gapic_generator_java_test",
+    ] + MAIN_DEPS + TEST_DEPS,
     data = glob([
         "src/test/java/**/*.golden",
         "src/test/resources/**",

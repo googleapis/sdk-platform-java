@@ -47,7 +47,7 @@
     java_proto_library(
         name = "showcase_java_proto",
         deps = [
-            "showcase_proto",
+            ":showcase_proto",
         ],
     )
 
@@ -92,11 +92,19 @@
     ```sh
     bazel run //:google_java_format_verification
     ```
+    or
+    ```sh
+    mvn fmt:check
+    ```
 
 -   Format files.
 
     ```sh
     bazel run //:google_java_format
+    ```
+    or
+    ```sh
+    mvn fmt:format
     ```
 
 ## Test Running
@@ -112,17 +120,37 @@
     ```sh
     bazel test //:units
     ```
+    or
+    ```sh
+    mvn test
+    ```
 
--   Run a single unit test like `JavaCodeGeneratorTest.java`
+-   Run a single unit test like `JavaCodeGeneratorTest.java`:
 
     ```sh
     bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
     ```
+    or
+    ```sh
+    mvn test -Dtest=JavaCodeGeneratorTest
 
--   Update unit test golden files, for example `JavaCodeGeneratorTest.java`:
+    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+    ```
+￼
+-   Update all unit test golden files:
+
+    ```sh
+    mvn test -DupdateUnitGoldens
+    ```
+
+-   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
     ```sh
     bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+    ```
+    or
+    ```sh
+    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
     ```
 
 -   Run a single integration test for API like `Redis`, it generates Java source
