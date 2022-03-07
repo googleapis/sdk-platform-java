@@ -37,6 +37,7 @@ public class RegionTagTest {
                 .setApiShortName(apiShortName)
                 .setServiceName(serviceName)
                 .setOverloadDisambiguation(disambiguation)
+                .setIsSynchronous(true)
                 .build());
   }
 
@@ -50,6 +51,7 @@ public class RegionTagTest {
                 .setApiShortName(apiShortName)
                 .setRpcName(rpcName)
                 .setOverloadDisambiguation(disambiguation)
+                .setIsSynchronous(true)
                 .build());
   }
 
@@ -61,6 +63,7 @@ public class RegionTagTest {
     Assert.assertEquals("", regionTag.apiShortName());
     Assert.assertEquals("", regionTag.apiVersion());
     Assert.assertEquals("", regionTag.overloadDisambiguation());
+    Assert.assertEquals(true, regionTag.isSynchronous());
   }
 
   @Test
@@ -101,7 +104,7 @@ public class RegionTagTest {
             .build();
 
     String result = regionTag.generate();
-    String expected = "shortname_generated_servicename_rpcname";
+    String expected = "shortname_generated_servicename_rpcname_sync";
     Assert.assertEquals(expected, result);
   }
 
@@ -114,10 +117,11 @@ public class RegionTagTest {
             .setServiceName(serviceName)
             .setRpcName(rpcName)
             .setOverloadDisambiguation(disambiguation)
+            .setIsSynchronous(false)
             .build();
 
     String result = regionTag.generate();
-    String expected = "shortname_v1_generated_servicename_rpcname_disambiguation";
+    String expected = "shortname_v1_generated_servicename_rpcname_disambiguation_async";
     Assert.assertEquals(expected, result);
   }
 
@@ -139,8 +143,8 @@ public class RegionTagTest {
                 regionTag.generateTag(RegionTag.RegionTagRegion.END, regionTag.generate())));
     String expected =
         LineFormatter.lines(
-            "// [START shortname_v1_generated_servicename_rpcname_disambiguation]\n",
-            "// [END shortname_v1_generated_servicename_rpcname_disambiguation]");
+            "// [START shortname_v1_generated_servicename_rpcname_disambiguation_sync]\n",
+            "// [END shortname_v1_generated_servicename_rpcname_disambiguation_sync]");
     Assert.assertEquals(expected, result);
   }
 }
