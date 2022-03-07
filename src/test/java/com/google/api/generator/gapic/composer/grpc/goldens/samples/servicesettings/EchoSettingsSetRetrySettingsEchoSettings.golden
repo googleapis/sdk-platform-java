@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echosettings_echo_settingssetretrysettingsechosettings]
+// [START goldensample_generated_echosettings_echo_settingssetretrysettingsechosettings]
 import com.google.showcase.v1beta1.EchoSettings;
 import java.time.Duration;
 
@@ -41,4 +42,4 @@ public class EchoSettingsSetRetrySettingsEchoSettings {
     EchoSettings echoSettings = echoSettingsBuilder.build();
   }
 }
-// [END goldensample_v1_generated_echosettings_echo_settingssetretrysettingsechosettings]
+// [END goldensample_generated_echosettings_echo_settingssetretrysettingsechosettings]

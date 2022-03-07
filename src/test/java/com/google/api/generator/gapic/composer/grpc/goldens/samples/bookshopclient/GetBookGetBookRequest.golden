@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.bookshop.v1beta1.samples;
 
-// [START goldensample_v1_generated_bookshopclient_getbook_getbookrequest]
+// [START goldensample_generated_bookshopclient_getbook_getbookrequest]
 import com.google.bookshop.v1beta1.Book;
 import com.google.bookshop.v1beta1.BookshopClient;
 import com.google.bookshop.v1beta1.GetBookRequest;
@@ -41,4 +42,4 @@ public class GetBookGetBookRequest {
     }
   }
 }
-// [END goldensample_v1_generated_bookshopclient_getbook_getbookrequest]
+// [END goldensample_generated_bookshopclient_getbook_getbookrequest]

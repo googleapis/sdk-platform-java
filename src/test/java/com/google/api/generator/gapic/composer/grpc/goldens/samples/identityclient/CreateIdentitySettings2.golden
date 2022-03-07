@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_identityclient_create_identitysettings2]
+// [START goldensample_generated_identityclient_create_identitysettings2]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -34,4 +35,4 @@ public class CreateIdentitySettings2 {
     IdentityClient identityClient = IdentityClient.create(identitySettings);
   }
 }
-// [END goldensample_v1_generated_identityclient_create_identitysettings2]
+// [END goldensample_generated_identityclient_create_identitysettings2]

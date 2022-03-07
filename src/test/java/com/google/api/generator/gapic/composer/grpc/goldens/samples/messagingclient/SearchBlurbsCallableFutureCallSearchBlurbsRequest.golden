@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_searchblurbs_callablefuturecallsearchblurbsrequest]
+// [START goldensample_generated_messagingclient_searchblurbs_callablefuturecallsearchblurbsrequest]
 import com.google.api.core.ApiFuture;
 import com.google.longrunning.Operation;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -45,4 +46,4 @@ public class SearchBlurbsCallableFutureCallSearchBlurbsRequest {
     }
   }
 }
-// [END goldensample_v1_generated_messagingclient_searchblurbs_callablefuturecallsearchblurbsrequest]
+// [END goldensample_generated_messagingclient_searchblurbs_callablefuturecallsearchblurbsrequest]

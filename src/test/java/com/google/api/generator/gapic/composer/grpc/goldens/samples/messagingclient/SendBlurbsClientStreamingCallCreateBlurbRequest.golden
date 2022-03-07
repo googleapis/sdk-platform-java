@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_sendblurbs_clientstreamingcallcreateblurbrequest]
+// [START goldensample_generated_messagingclient_sendblurbs_clientstreamingcallcreateblurbrequest]
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
@@ -61,4 +62,4 @@ public class SendBlurbsClientStreamingCallCreateBlurbRequest {
     }
   }
 }
-// [END goldensample_v1_generated_messagingclient_sendblurbs_clientstreamingcallcreateblurbrequest]
+// [END goldensample_generated_messagingclient_sendblurbs_clientstreamingcallcreateblurbrequest]

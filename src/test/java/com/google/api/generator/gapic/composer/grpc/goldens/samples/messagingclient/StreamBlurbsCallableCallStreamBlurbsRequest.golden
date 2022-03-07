@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest]
+// [START goldensample_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
@@ -42,4 +43,4 @@ public class StreamBlurbsCallableCallStreamBlurbsRequest {
     }
   }
 }
-// [END goldensample_v1_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest]
+// [END goldensample_generated_messagingclient_streamblurbs_callablecallstreamblurbsrequest]

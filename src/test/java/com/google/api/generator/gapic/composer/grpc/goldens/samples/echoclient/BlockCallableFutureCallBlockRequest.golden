@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_block_callablefuturecallblockrequest]
+// [START goldensample_generated_echoclient_block_callablefuturecallblockrequest]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
@@ -38,4 +39,4 @@ public class BlockCallableFutureCallBlockRequest {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_block_callablefuturecallblockrequest]
+// [END goldensample_generated_echoclient_block_callablefuturecallblockrequest]

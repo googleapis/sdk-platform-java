@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_chatagain_callablecallechorequest]
+// [START goldensample_generated_echoclient_chatagain_callablecallechorequest]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -49,4 +50,4 @@ public class ChatAgainCallableCallEchoRequest {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_chatagain_callablecallechorequest]
+// [END goldensample_generated_echoclient_chatagain_callablecallechorequest]

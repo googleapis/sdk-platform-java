@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_v1_generated_echoclient_wait_callablefuturecallwaitrequest]
+// [START goldensample_generated_echoclient_wait_callablefuturecallwaitrequest]
 import com.google.api.core.ApiFuture;
 import com.google.longrunning.Operation;
 import com.google.showcase.v1beta1.EchoClient;
@@ -38,4 +39,4 @@ public class WaitCallableFutureCallWaitRequest {
     }
   }
 }
-// [END goldensample_v1_generated_echoclient_wait_callablefuturecallwaitrequest]
+// [END goldensample_generated_echoclient_wait_callablefuturecallwaitrequest]
