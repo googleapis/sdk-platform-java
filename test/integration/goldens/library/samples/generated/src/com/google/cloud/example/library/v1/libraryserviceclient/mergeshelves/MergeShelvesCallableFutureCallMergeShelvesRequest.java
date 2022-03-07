@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_mergeshelves_callablefuturecallmergeshelvesrequest]
+// [START library_v1_generated_libraryserviceclient_mergeshelves_callablefuturecallmergeshelvesrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.MergeShelvesRequest;
@@ -44,4 +44,4 @@ public class MergeShelvesCallableFutureCallMergeShelvesRequest {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_mergeshelves_callablefuturecallmergeshelvesrequest]
+// [END library_v1_generated_libraryserviceclient_mergeshelves_callablefuturecallmergeshelvesrequest_sync]

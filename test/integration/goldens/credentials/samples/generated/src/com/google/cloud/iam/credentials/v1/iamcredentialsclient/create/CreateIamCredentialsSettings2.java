@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START credentials_v1_generated_iamcredentialsclient_create_iamcredentialssettings2]
+// [START credentials_v1_generated_iamcredentialsclient_create_iamcredentialssettings2_sync]
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 import com.google.cloud.iam.credentials.v1.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateIamCredentialsSettings2 {
     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END credentials_v1_generated_iamcredentialsclient_create_iamcredentialssettings2]
+// [END credentials_v1_generated_iamcredentialsclient_create_iamcredentialssettings2_sync]

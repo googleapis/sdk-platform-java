@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.samples;
 
-// [START storage_v2_generated_storageclient_deletehmackey_stringprojectname]
+// [START storage_v2_generated_storageclient_deletehmackey_stringprojectname_sync]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -37,4 +37,4 @@ public class DeleteHmacKeyStringProjectName {
     }
   }
 }
-// [END storage_v2_generated_storageclient_deletehmackey_stringprojectname]
+// [END storage_v2_generated_storageclient_deletehmackey_stringprojectname_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.stub.samples;
 
-// [START asset_v1_generated_assetservicestubsettings_batchgetassetshistory_settingssetretrysettingsassetservicestubsettings]
+// [START asset_v1_generated_assetservicestubsettings_batchgetassetshistory_settingssetretrysettingsassetservicestubsettings_sync]
 import com.google.cloud.asset.v1.stub.AssetServiceStubSettings;
 import java.time.Duration;
 
@@ -44,4 +44,4 @@ public class BatchGetAssetsHistorySettingsSetRetrySettingsAssetServiceStubSettin
     AssetServiceStubSettings assetServiceSettings = assetServiceSettingsBuilder.build();
   }
 }
-// [END asset_v1_generated_assetservicestubsettings_batchgetassetshistory_settingssetretrysettingsassetservicestubsettings]
+// [END asset_v1_generated_assetservicestubsettings_batchgetassetshistory_settingssetretrysettingsassetservicestubsettings_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.compute.v1small.samples;
 
-// [START compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2]
+// [START compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2_sync]
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
 import com.google.cloud.compute.v1small.myEndpoint;
@@ -36,4 +36,4 @@ public class CreateRegionOperationsSettings2 {
         RegionOperationsClient.create(regionOperationsSettings);
   }
 }
-// [END compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2]
+// [END compute_v1small_generated_regionoperationsclient_create_regionoperationssettings2_sync]

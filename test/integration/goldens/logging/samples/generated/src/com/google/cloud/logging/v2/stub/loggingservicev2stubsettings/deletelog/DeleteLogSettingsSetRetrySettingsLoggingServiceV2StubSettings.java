@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.stub.samples;
 
-// [START logging_v2_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
+// [START logging_v2_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings_sync]
 import com.google.cloud.logging.v2.stub.LoggingServiceV2StubSettings;
 import java.time.Duration;
 
@@ -44,4 +44,4 @@ public class DeleteLogSettingsSetRetrySettingsLoggingServiceV2StubSettings {
     LoggingServiceV2StubSettings loggingSettings = loggingSettingsBuilder.build();
   }
 }
-// [END logging_v2_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings]
+// [END logging_v2_generated_loggingservicev2stubsettings_deletelog_settingssetretrysettingsloggingservicev2stubsettings_sync]

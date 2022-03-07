@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.samples;
 
-// [START storage_v2_generated_storageclient_querywritestatus_string]
+// [START storage_v2_generated_storageclient_querywritestatus_string_sync]
 import com.google.storage.v2.QueryWriteStatusResponse;
 import com.google.storage.v2.StorageClient;
 
@@ -35,4 +35,4 @@ public class QueryWriteStatusString {
     }
   }
 }
-// [END storage_v2_generated_storageclient_querywritestatus_string]
+// [END storage_v2_generated_storageclient_querywritestatus_string_sync]

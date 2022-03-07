@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.samples;
 
-// [START logging_v2_generated_configclient_create_configsettings1]
+// [START logging_v2_generated_configclient_create_configsettings1_sync]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.cloud.logging.v2.ConfigSettings;
@@ -38,4 +38,4 @@ public class CreateConfigSettings1 {
     ConfigClient configClient = ConfigClient.create(configSettings);
   }
 }
-// [END logging_v2_generated_configclient_create_configsettings1]
+// [END logging_v2_generated_configclient_create_configsettings1_sync]

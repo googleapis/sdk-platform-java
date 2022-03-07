@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest]
+// [START goldensample_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.ListRoomsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -45,4 +45,4 @@ public class ListRoomsPagedCallableFutureCallListRoomsRequest {
     }
   }
 }
-// [END goldensample_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest]
+// [END goldensample_generated_messagingclient_listrooms_pagedcallablefuturecalllistroomsrequest_sync]

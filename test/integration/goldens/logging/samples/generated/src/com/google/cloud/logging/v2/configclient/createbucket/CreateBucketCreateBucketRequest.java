@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.samples;
 
-// [START logging_v2_generated_configclient_createbucket_createbucketrequest]
+// [START logging_v2_generated_configclient_createbucket_createbucketrequest_sync]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CreateBucketRequest;
 import com.google.logging.v2.LocationName;
@@ -42,4 +42,4 @@ public class CreateBucketCreateBucketRequest {
     }
   }
 }
-// [END logging_v2_generated_configclient_createbucket_createbucketrequest]
+// [END logging_v2_generated_configclient_createbucket_createbucketrequest_sync]

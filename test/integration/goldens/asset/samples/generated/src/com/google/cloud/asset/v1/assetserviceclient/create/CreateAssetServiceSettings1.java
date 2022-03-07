@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START asset_v1_generated_assetserviceclient_create_assetservicesettings1]
+// [START asset_v1_generated_assetserviceclient_create_assetservicesettings1_sync]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.AssetServiceSettings;
@@ -38,4 +38,4 @@ public class CreateAssetServiceSettings1 {
     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
   }
 }
-// [END asset_v1_generated_assetserviceclient_create_assetservicesettings1]
+// [END asset_v1_generated_assetserviceclient_create_assetservicesettings1_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START kms_v1_generated_keymanagementserviceclient_importcryptokeyversion_importcryptokeyversionrequest]
+// [START kms_v1_generated_keymanagementserviceclient_importcryptokeyversion_importcryptokeyversionrequest_sync]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
 import com.google.cloud.kms.v1.ImportCryptoKeyVersionRequest;
@@ -44,4 +44,4 @@ public class ImportCryptoKeyVersionImportCryptoKeyVersionRequest {
     }
   }
 }
-// [END kms_v1_generated_keymanagementserviceclient_importcryptokeyversion_importcryptokeyversionrequest]
+// [END kms_v1_generated_keymanagementserviceclient_importcryptokeyversion_importcryptokeyversionrequest_sync]

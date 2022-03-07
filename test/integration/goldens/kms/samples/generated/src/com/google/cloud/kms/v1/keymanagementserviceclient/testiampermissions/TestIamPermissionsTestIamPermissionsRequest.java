@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START kms_v1_generated_keymanagementserviceclient_testiampermissions_testiampermissionsrequest]
+// [START kms_v1_generated_keymanagementserviceclient_testiampermissions_testiampermissionsrequest_sync]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
@@ -45,4 +45,4 @@ public class TestIamPermissionsTestIamPermissionsRequest {
     }
   }
 }
-// [END kms_v1_generated_keymanagementserviceclient_testiampermissions_testiampermissionsrequest]
+// [END kms_v1_generated_keymanagementserviceclient_testiampermissions_testiampermissionsrequest_sync]

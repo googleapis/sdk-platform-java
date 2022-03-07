@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START credentials_v1_generated_iamcredentialsclient_generateaccesstoken_generateaccesstokenrequest]
+// [START credentials_v1_generated_iamcredentialsclient_generateaccesstoken_generateaccesstokenrequest_sync]
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
@@ -45,4 +45,4 @@ public class GenerateAccessTokenGenerateAccessTokenRequest {
     }
   }
 }
-// [END credentials_v1_generated_iamcredentialsclient_generateaccesstoken_generateaccesstokenrequest]
+// [END credentials_v1_generated_iamcredentialsclient_generateaccesstoken_generateaccesstokenrequest_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.compute.v1small.stub.samples;
 
-// [START compute_v1small_generated_regionoperationsstubsettings_get_settingssetretrysettingsregionoperationsstubsettings]
+// [START compute_v1small_generated_regionoperationsstubsettings_get_settingssetretrysettingsregionoperationsstubsettings_sync]
 import com.google.cloud.compute.v1small.stub.RegionOperationsStubSettings;
 import java.time.Duration;
 
@@ -43,4 +43,4 @@ public class GetSettingsSetRetrySettingsRegionOperationsStubSettings {
     RegionOperationsStubSettings regionOperationsSettings = regionOperationsSettingsBuilder.build();
   }
 }
-// [END compute_v1small_generated_regionoperationsstubsettings_get_settingssetretrysettingsregionoperationsstubsettings]
+// [END compute_v1small_generated_regionoperationsstubsettings_get_settingssetretrysettingsregionoperationsstubsettings_sync]

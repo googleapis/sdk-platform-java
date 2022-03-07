@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.samples;
 
-// [START storage_v2_generated_storageclient_gethmackey_gethmackeyrequest]
+// [START storage_v2_generated_storageclient_gethmackey_gethmackeyrequest_sync]
 import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.GetHmacKeyRequest;
 import com.google.storage.v2.HmacKeyMetadata;
@@ -43,4 +43,4 @@ public class GetHmacKeyGetHmacKeyRequest {
     }
   }
 }
-// [END storage_v2_generated_storageclient_gethmackey_gethmackeyrequest]
+// [END storage_v2_generated_storageclient_gethmackey_gethmackeyrequest_sync]

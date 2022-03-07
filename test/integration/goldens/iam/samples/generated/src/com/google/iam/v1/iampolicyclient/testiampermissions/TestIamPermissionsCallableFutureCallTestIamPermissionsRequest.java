@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START iam_v1_generated_iampolicyclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [START iam_v1_generated_iampolicyclient_testiampermissions_callablefuturecalltestiampermissionsrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
@@ -46,4 +46,4 @@ public class TestIamPermissionsCallableFutureCallTestIamPermissionsRequest {
     }
   }
 }
-// [END iam_v1_generated_iampolicyclient_testiampermissions_callablefuturecalltestiampermissionsrequest]
+// [END iam_v1_generated_iampolicyclient_testiampermissions_callablefuturecalltestiampermissionsrequest_sync]

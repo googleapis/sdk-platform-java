@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_subscriptionadminclient_deletesubscription_subscriptionname]
+// [START pubsub_v1_generated_subscriptionadminclient_deletesubscription_subscriptionname_sync]
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Empty;
 import com.google.pubsub.v1.SubscriptionName;
@@ -36,4 +36,4 @@ public class DeleteSubscriptionSubscriptionName {
     }
   }
 }
-// [END pubsub_v1_generated_subscriptionadminclient_deletesubscription_subscriptionname]
+// [END pubsub_v1_generated_subscriptionadminclient_deletesubscription_subscriptionname_sync]

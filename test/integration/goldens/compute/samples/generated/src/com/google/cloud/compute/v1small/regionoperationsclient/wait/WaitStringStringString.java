@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.compute.v1small.samples;
 
-// [START compute_v1small_generated_regionoperationsclient_wait_stringstringstring]
+// [START compute_v1small_generated_regionoperationsclient_wait_stringstringstring_sync]
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.RegionOperationsClient;
 
@@ -37,4 +37,4 @@ public class WaitStringStringString {
     }
   }
 }
-// [END compute_v1small_generated_regionoperationsclient_wait_stringstringstring]
+// [END compute_v1small_generated_regionoperationsclient_wait_stringstringstring_sync]

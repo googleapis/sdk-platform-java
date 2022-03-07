@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START asset_v1_generated_assetserviceclient_listassets_resourcenameiterateall]
+// [START asset_v1_generated_assetserviceclient_listassets_resourcenameiterateall_sync]
 import com.google.api.resourcenames.ResourceName;
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
@@ -39,4 +39,4 @@ public class ListAssetsResourceNameIterateAll {
     }
   }
 }
-// [END asset_v1_generated_assetserviceclient_listassets_resourcenameiterateall]
+// [END asset_v1_generated_assetserviceclient_listassets_resourcenameiterateall_sync]

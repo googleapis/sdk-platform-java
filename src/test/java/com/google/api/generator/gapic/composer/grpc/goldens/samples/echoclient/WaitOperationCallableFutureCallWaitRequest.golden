@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_wait_operationcallablefuturecallwaitrequest]
+// [START goldensample_generated_echoclient_wait_operationcallablefuturecallwaitrequest_sync]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -41,4 +41,4 @@ public class WaitOperationCallableFutureCallWaitRequest {
     }
   }
 }
-// [END goldensample_generated_echoclient_wait_operationcallablefuturecallwaitrequest]
+// [END goldensample_generated_echoclient_wait_operationcallablefuturecallwaitrequest_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.samples;
 
-// [START storage_v2_generated_storageclient_getobject_callablefuturecallgetobjectrequest]
+// [START storage_v2_generated_storageclient_getobject_callablefuturecallgetobjectrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
@@ -54,4 +54,4 @@ public class GetObjectCallableFutureCallGetObjectRequest {
     }
   }
 }
-// [END storage_v2_generated_storageclient_getobject_callablefuturecallgetobjectrequest]
+// [END storage_v2_generated_storageclient_getobject_callablefuturecallgetobjectrequest_sync]

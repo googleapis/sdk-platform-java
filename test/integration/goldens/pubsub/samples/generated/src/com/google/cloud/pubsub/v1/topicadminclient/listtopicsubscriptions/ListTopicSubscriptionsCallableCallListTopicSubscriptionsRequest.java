@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_topicadminclient_listtopicsubscriptions_callablecalllisttopicsubscriptionsrequest]
+// [START pubsub_v1_generated_topicadminclient_listtopicsubscriptions_callablecalllisttopicsubscriptionsrequest_sync]
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.common.base.Strings;
 import com.google.pubsub.v1.ListTopicSubscriptionsRequest;
@@ -56,4 +56,4 @@ public class ListTopicSubscriptionsCallableCallListTopicSubscriptionsRequest {
     }
   }
 }
-// [END pubsub_v1_generated_topicadminclient_listtopicsubscriptions_callablecalllisttopicsubscriptionsrequest]
+// [END pubsub_v1_generated_topicadminclient_listtopicsubscriptions_callablecalllisttopicsubscriptionsrequest_sync]

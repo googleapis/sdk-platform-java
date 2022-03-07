@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START redis_v1beta1_generated_cloudredisclient_exportinstance_callablefuturecallexportinstancerequest]
+// [START redis_v1beta1_generated_cloudredisclient_exportinstance_callablefuturecallexportinstancerequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
@@ -44,4 +44,4 @@ public class ExportInstanceCallableFutureCallExportInstanceRequest {
     }
   }
 }
-// [END redis_v1beta1_generated_cloudredisclient_exportinstance_callablefuturecallexportinstancerequest]
+// [END redis_v1beta1_generated_cloudredisclient_exportinstance_callablefuturecallexportinstancerequest_sync]

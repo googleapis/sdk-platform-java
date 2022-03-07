@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.stub.samples;
 
-// [START storage_v2_generated_storagestubsettings_deletebucket_settingssetretrysettingsstoragestubsettings]
+// [START storage_v2_generated_storagestubsettings_deletebucket_settingssetretrysettingsstoragestubsettings_sync]
 import com.google.storage.v2.stub.StorageStubSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class DeleteBucketSettingsSetRetrySettingsStorageStubSettings {
     StorageStubSettings storageSettings = storageSettingsBuilder.build();
   }
 }
-// [END storage_v2_generated_storagestubsettings_deletebucket_settingssetretrysettingsstoragestubsettings]
+// [END storage_v2_generated_storagestubsettings_deletebucket_settingssetretrysettingsstoragestubsettings_sync]

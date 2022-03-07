@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.stub.samples;
 
-// [START library_v1_generated_libraryservicestubsettings_createshelf_settingssetretrysettingslibraryservicestubsettings]
+// [START library_v1_generated_libraryservicestubsettings_createshelf_settingssetretrysettingslibraryservicestubsettings_sync]
 import com.google.cloud.example.library.v1.stub.LibraryServiceStubSettings;
 import java.time.Duration;
 
@@ -44,4 +44,4 @@ public class CreateShelfSettingsSetRetrySettingsLibraryServiceStubSettings {
     LibraryServiceStubSettings libraryServiceSettings = libraryServiceSettingsBuilder.build();
   }
 }
-// [END library_v1_generated_libraryservicestubsettings_createshelf_settingssetretrysettingslibraryservicestubsettings]
+// [END library_v1_generated_libraryservicestubsettings_createshelf_settingssetretrysettingslibraryservicestubsettings_sync]

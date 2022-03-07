@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.samples;
 
-// [START storage_v2_generated_storageclient_create_storagesettings2]
+// [START storage_v2_generated_storageclient_create_storagesettings2_sync]
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.StorageSettings;
 import com.google.storage.v2.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateStorageSettings2 {
     StorageClient storageClient = StorageClient.create(storageSettings);
   }
 }
-// [END storage_v2_generated_storageclient_create_storagesettings2]
+// [END storage_v2_generated_storageclient_create_storagesettings2_sync]

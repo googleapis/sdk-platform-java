@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.stub.samples;
 
-// [START goldensample_generated_service_addapachelicense_sample]
+// [START goldensample_generated_service_addapachelicense_sample_sync]
 public class AddApacheLicenseSample {
 
   public static void main(String[] args) throws Exception {
@@ -28,4 +28,4 @@ public class AddApacheLicenseSample {
     // It may require modifications to work in your environment.
   }
 }
-// [END goldensample_generated_service_addapachelicense_sample]
+// [END goldensample_generated_service_addapachelicense_sample_sync]

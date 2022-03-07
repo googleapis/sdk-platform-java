@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_create_identitysettings2]
+// [START goldensample_generated_identityclient_create_identitysettings2_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateIdentitySettings2 {
     IdentityClient identityClient = IdentityClient.create(identitySettings);
   }
 }
-// [END goldensample_generated_identityclient_create_identitysettings2]
+// [END goldensample_generated_identityclient_create_identitysettings2_sync]

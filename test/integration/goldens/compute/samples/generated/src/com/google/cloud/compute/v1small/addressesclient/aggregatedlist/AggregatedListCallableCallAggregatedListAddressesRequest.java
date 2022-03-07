@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.compute.v1small.samples;
 
-// [START compute_v1small_generated_addressesclient_aggregatedlist_callablecallaggregatedlistaddressesrequest]
+// [START compute_v1small_generated_addressesclient_aggregatedlist_callablecallaggregatedlistaddressesrequest_sync]
 import com.google.cloud.compute.v1small.AddressAggregatedList;
 import com.google.cloud.compute.v1small.AddressesClient;
 import com.google.cloud.compute.v1small.AddressesScopedList;
@@ -58,4 +58,4 @@ public class AggregatedListCallableCallAggregatedListAddressesRequest {
     }
   }
 }
-// [END compute_v1small_generated_addressesclient_aggregatedlist_callablecallaggregatedlistaddressesrequest]
+// [END compute_v1small_generated_addressesclient_aggregatedlist_callablecallaggregatedlistaddressesrequest_sync]

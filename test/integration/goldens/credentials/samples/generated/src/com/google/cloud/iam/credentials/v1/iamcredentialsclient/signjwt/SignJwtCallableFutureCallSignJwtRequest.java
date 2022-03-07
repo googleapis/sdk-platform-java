@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START credentials_v1_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest]
+// [START credentials_v1_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -47,4 +47,4 @@ public class SignJwtCallableFutureCallSignJwtRequest {
     }
   }
 }
-// [END credentials_v1_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest]
+// [END credentials_v1_generated_iamcredentialsclient_signjwt_callablefuturecallsignjwtrequest_sync]

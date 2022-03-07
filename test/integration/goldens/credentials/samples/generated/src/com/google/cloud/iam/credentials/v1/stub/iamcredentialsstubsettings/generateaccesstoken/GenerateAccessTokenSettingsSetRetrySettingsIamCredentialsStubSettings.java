@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.stub.samples;
 
-// [START credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings]
+// [START credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings_sync]
 import com.google.cloud.iam.credentials.v1.stub.IamCredentialsStubSettings;
 import java.time.Duration;
 
@@ -44,4 +44,4 @@ public class GenerateAccessTokenSettingsSetRetrySettingsIamCredentialsStubSettin
     IamCredentialsStubSettings iamCredentialsSettings = iamCredentialsSettingsBuilder.build();
   }
 }
-// [END credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings]
+// [END credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_settingssetretrysettingsiamcredentialsstubsettings_sync]

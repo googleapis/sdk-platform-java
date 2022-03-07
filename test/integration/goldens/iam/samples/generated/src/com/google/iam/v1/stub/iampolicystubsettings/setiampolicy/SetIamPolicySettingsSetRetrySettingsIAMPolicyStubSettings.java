@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.stub.samples;
 
-// [START iam_v1_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings]
+// [START iam_v1_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings_sync]
 import com.google.iam.v1.stub.IAMPolicyStubSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class SetIamPolicySettingsSetRetrySettingsIAMPolicyStubSettings {
     IAMPolicyStubSettings iAMPolicySettings = iAMPolicySettingsBuilder.build();
   }
 }
-// [END iam_v1_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings]
+// [END iam_v1_generated_iampolicystubsettings_setiampolicy_settingssetretrysettingsiampolicystubsettings_sync]

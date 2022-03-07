@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_schemaserviceclient_listschemas_listschemasrequestiterateall]
+// [START pubsub_v1_generated_schemaserviceclient_listschemas_listschemasrequestiterateall_sync]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.pubsub.v1.ListSchemasRequest;
 import com.google.pubsub.v1.ProjectName;
@@ -46,4 +46,4 @@ public class ListSchemasListSchemasRequestIterateAll {
     }
   }
 }
-// [END pubsub_v1_generated_schemaserviceclient_listschemas_listschemasrequestiterateall]
+// [END pubsub_v1_generated_schemaserviceclient_listschemas_listschemasrequestiterateall_sync]

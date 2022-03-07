@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_getinstanceauthstringrequest]
+// [START redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_getinstanceauthstringrequest_sync]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.GetInstanceAuthStringRequest;
 import com.google.cloud.redis.v1beta1.InstanceAuthString;
@@ -40,4 +40,4 @@ public class GetInstanceAuthStringGetInstanceAuthStringRequest {
     }
   }
 }
-// [END redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_getinstanceauthstringrequest]
+// [END redis_v1beta1_generated_cloudredisclient_getinstanceauthstring_getinstanceauthstringrequest_sync]

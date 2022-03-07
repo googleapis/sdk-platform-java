@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START bigtable_v2_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutationstring]
+// [START bigtable_v2_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutationstring_sync]
 import com.google.bigtable.v2.MutateRowResponse;
 import com.google.bigtable.v2.Mutation;
 import com.google.bigtable.v2.TableName;
@@ -44,4 +44,4 @@ public class MutateRowStringByteStringListMutationString {
     }
   }
 }
-// [END bigtable_v2_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutationstring]
+// [END bigtable_v2_generated_basebigtabledataclient_mutaterow_stringbytestringlistmutationstring_sync]

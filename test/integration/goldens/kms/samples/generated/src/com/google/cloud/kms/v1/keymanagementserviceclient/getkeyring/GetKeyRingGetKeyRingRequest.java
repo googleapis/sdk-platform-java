@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START kms_v1_generated_keymanagementserviceclient_getkeyring_getkeyringrequest]
+// [START kms_v1_generated_keymanagementserviceclient_getkeyring_getkeyringrequest_sync]
 import com.google.cloud.kms.v1.GetKeyRingRequest;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRing;
@@ -41,4 +41,4 @@ public class GetKeyRingGetKeyRingRequest {
     }
   }
 }
-// [END kms_v1_generated_keymanagementserviceclient_getkeyring_getkeyringrequest]
+// [END kms_v1_generated_keymanagementserviceclient_getkeyring_getkeyringrequest_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest]
+// [START goldensample_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.BlurbName;
@@ -45,4 +45,4 @@ public class DeleteBlurbCallableFutureCallDeleteBlurbRequest {
     }
   }
 }
-// [END goldensample_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest]
+// [END goldensample_generated_messagingclient_deleteblurb_callablefuturecalldeleteblurbrequest_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_create_libraryservicesettings2]
+// [START library_v1_generated_libraryserviceclient_create_libraryservicesettings2_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.cloud.example.library.v1.LibraryServiceSettings;
 import com.google.cloud.example.library.v1.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateLibraryServiceSettings2 {
     LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
   }
 }
-// [END library_v1_generated_libraryserviceclient_create_libraryservicesettings2]
+// [END library_v1_generated_libraryserviceclient_create_libraryservicesettings2_sync]

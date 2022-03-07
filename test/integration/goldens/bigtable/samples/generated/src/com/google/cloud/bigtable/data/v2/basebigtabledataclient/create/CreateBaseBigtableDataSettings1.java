@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings1]
+// [START bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings1_sync]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataClient;
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataSettings;
@@ -39,4 +39,4 @@ public class CreateBaseBigtableDataSettings1 {
         BaseBigtableDataClient.create(baseBigtableDataSettings);
   }
 }
-// [END bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings1]
+// [END bigtable_v2_generated_basebigtabledataclient_create_basebigtabledatasettings1_sync]

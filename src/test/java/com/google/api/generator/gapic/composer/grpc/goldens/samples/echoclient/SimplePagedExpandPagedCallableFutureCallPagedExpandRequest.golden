@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_simplepagedexpand_pagedcallablefuturecallpagedexpandrequest]
+// [START goldensample_generated_echoclient_simplepagedexpand_pagedcallablefuturecallpagedexpandrequest_sync]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -47,4 +47,4 @@ public class SimplePagedExpandPagedCallableFutureCallPagedExpandRequest {
     }
   }
 }
-// [END goldensample_generated_echoclient_simplepagedexpand_pagedcallablefuturecallpagedexpandrequest]
+// [END goldensample_generated_echoclient_simplepagedexpand_pagedcallablefuturecallpagedexpandrequest_sync]

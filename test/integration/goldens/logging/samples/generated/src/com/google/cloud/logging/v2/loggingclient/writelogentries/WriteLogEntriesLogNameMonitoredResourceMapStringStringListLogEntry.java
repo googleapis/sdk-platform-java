@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.samples;
 
-// [START logging_v2_generated_loggingclient_writelogentries_lognamemonitoredresourcemapstringstringlistlogentry]
+// [START logging_v2_generated_loggingclient_writelogentries_lognamemonitoredresourcemapstringstringlistlogentry_sync]
 import com.google.api.MonitoredResource;
 import com.google.cloud.logging.v2.LoggingClient;
 import com.google.logging.v2.LogEntry;
@@ -47,4 +47,4 @@ public class WriteLogEntriesLogNameMonitoredResourceMapStringStringListLogEntry 
     }
   }
 }
-// [END logging_v2_generated_loggingclient_writelogentries_lognamemonitoredresourcemapstringstringlistlogentry]
+// [END logging_v2_generated_loggingclient_writelogentries_lognamemonitoredresourcemapstringstringlistlogentry_sync]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START redis_v1beta1_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings]
+// [START redis_v1beta1_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings_sync]
 import com.google.cloud.redis.v1beta1.CloudRedisSettings;
 import java.time.Duration;
 
@@ -42,4 +42,4 @@ public class GetInstanceSettingsSetRetrySettingsCloudRedisSettings {
     CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
   }
 }
-// [END redis_v1beta1_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings]
+// [END redis_v1beta1_generated_cloudredissettings_getinstance_settingssetretrysettingscloudredissettings_sync]

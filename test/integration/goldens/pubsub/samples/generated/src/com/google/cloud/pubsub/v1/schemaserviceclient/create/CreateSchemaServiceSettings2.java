@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_schemaserviceclient_create_schemaservicesettings2]
+// [START pubsub_v1_generated_schemaserviceclient_create_schemaservicesettings2_sync]
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.cloud.pubsub.v1.SchemaServiceSettings;
 import com.google.cloud.pubsub.v1.myEndpoint;
@@ -35,4 +35,4 @@ public class CreateSchemaServiceSettings2 {
     SchemaServiceClient schemaServiceClient = SchemaServiceClient.create(schemaServiceSettings);
   }
 }
-// [END pubsub_v1_generated_schemaserviceclient_create_schemaservicesettings2]
+// [END pubsub_v1_generated_schemaserviceclient_create_schemaservicesettings2_sync]

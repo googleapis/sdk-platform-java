@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.samples;
 
-// [START logging_v2_generated_configclient_listviews_callablecalllistviewsrequest]
+// [START logging_v2_generated_configclient_listviews_callablecalllistviewsrequest_sync]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.common.base.Strings;
 import com.google.logging.v2.ListViewsRequest;
@@ -54,4 +54,4 @@ public class ListViewsCallableCallListViewsRequest {
     }
   }
 }
-// [END logging_v2_generated_configclient_listviews_callablecalllistviewsrequest]
+// [END logging_v2_generated_configclient_listviews_callablecalllistviewsrequest_sync]

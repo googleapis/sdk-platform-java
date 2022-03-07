@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START redis_v1beta1_generated_cloudredisclient_importinstance_asyncstringinputconfigget]
+// [START redis_v1beta1_generated_cloudredisclient_importinstance_asyncstringinputconfigget_sync]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.InputConfig;
 import com.google.cloud.redis.v1beta1.Instance;
@@ -37,4 +37,4 @@ public class ImportInstanceAsyncStringInputConfigGet {
     }
   }
 }
-// [END redis_v1beta1_generated_cloudredisclient_importinstance_asyncstringinputconfigget]
+// [END redis_v1beta1_generated_cloudredisclient_importinstance_asyncstringinputconfigget_sync]

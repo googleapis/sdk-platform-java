@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.samples;
 
-// [START logging_v2_generated_metricsclient_create_metricssettings2]
+// [START logging_v2_generated_metricsclient_create_metricssettings2_sync]
 import com.google.cloud.logging.v2.MetricsClient;
 import com.google.cloud.logging.v2.MetricsSettings;
 import com.google.cloud.logging.v2.myEndpoint;
@@ -34,4 +34,4 @@ public class CreateMetricsSettings2 {
     MetricsClient metricsClient = MetricsClient.create(metricsSettings);
   }
 }
-// [END logging_v2_generated_metricsclient_create_metricssettings2]
+// [END logging_v2_generated_metricsclient_create_metricssettings2_sync]
