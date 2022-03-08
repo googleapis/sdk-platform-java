@@ -22,7 +22,7 @@ import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -122,7 +122,7 @@ public class ClientLibraryPackageInfoComposer {
                   .setName(ClassNames.getServiceClientClassName(service))
                   .build());
       Sample packageInfoSampleCode =
-          ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+          ServiceClientHeaderSampleComposer.composeClassHeaderSample(
               service, clientType, context.resourceNames(), context.messages());
       javaDocCommentBuilder.addSampleCode(
           SampleCodeWriter.writeInlineSample(packageInfoSampleCode.body()));

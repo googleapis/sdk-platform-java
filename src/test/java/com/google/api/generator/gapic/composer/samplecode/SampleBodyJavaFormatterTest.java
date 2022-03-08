@@ -17,16 +17,16 @@ package com.google.api.generator.gapic.composer.samplecode;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeBodyJavaFormatter.FormatException;
+import com.google.api.generator.gapic.composer.samplecode.SampleBodyJavaFormatter.FormatException;
 import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
-public class SampleCodeBodyJavaFormatterTest {
+public class SampleBodyJavaFormatterTest {
 
   @Test
   public void validFormatSampleCode_tryCatchStatement() {
     String samplecode = LineFormatter.lines("try(boolean condition = false){", "int x = 3;", "}");
-    String result = SampleCodeBodyJavaFormatter.format(samplecode);
+    String result = SampleBodyJavaFormatter.format(samplecode);
     String expected =
         LineFormatter.lines("try (boolean condition = false) {\n", "  int x = 3;\n", "}");
     assertEquals(expected, result);
@@ -37,7 +37,7 @@ public class SampleCodeBodyJavaFormatterTest {
     String sampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings = "
             + "SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();";
-    String result = SampleCodeBodyJavaFormatter.format(sampleCode);
+    String result = SampleBodyJavaFormatter.format(sampleCode);
     String expected =
         LineFormatter.lines(
             "SubscriptionAdminSettings subscriptionAdminSettings =\n",
@@ -51,7 +51,7 @@ public class SampleCodeBodyJavaFormatterTest {
         "echoSettingsBuilder.echoSettings().setRetrySettings("
             + "echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()"
             + ".setTotalTimeout(Duration.ofSeconds(30)).build());";
-    String result = SampleCodeBodyJavaFormatter.format(sampleCode);
+    String result = SampleBodyJavaFormatter.format(sampleCode);
     String expected =
         LineFormatter.lines(
             "echoSettingsBuilder\n",
@@ -71,7 +71,7 @@ public class SampleCodeBodyJavaFormatterTest {
     assertThrows(
         FormatException.class,
         () -> {
-          SampleCodeBodyJavaFormatter.format("abc");
+          SampleBodyJavaFormatter.format("abc");
         });
   }
 }

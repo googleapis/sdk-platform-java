@@ -80,7 +80,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
-import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
+import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
@@ -393,7 +393,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
     Optional<Sample> sampleCode =
-        SettingsSampleCodeComposer.composeSampleCode(
+        SettingsSampleComposer.composeSettingsSample(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
 
     Optional<String> docSampleCode = Optional.empty();

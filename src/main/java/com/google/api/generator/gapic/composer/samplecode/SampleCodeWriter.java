@@ -37,7 +37,7 @@ public final class SampleCodeWriter {
     for (Statement statement : statements) {
       statement.accept(visitor);
     }
-    String formattedSampleCode = SampleCodeBodyJavaFormatter.format(visitor.write());
+    String formattedSampleCode = SampleBodyJavaFormatter.format(visitor.write());
     // Escape character "@" in the markdown code block <pre>{@code...} tags.
     return formattedSampleCode.replaceAll("@", "{@literal @}");
   }

@@ -23,9 +23,9 @@ import com.google.api.generator.testutils.LineFormatter;
 import java.util.Optional;
 import org.junit.Test;
 
-public class SettingsSampleCodeComposerTest {
+public class SettingsSampleComposerTest {
   @Test
-  public void composeSettingsSampleCode_noMethods() {
+  public void composeSettingsSample_noMethods() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -34,13 +34,12 @@ public class SettingsSampleCodeComposerTest {
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleCodeComposer.composeSampleCode(
-                Optional.empty(), "EchoSettings", classType));
+            SettingsSampleComposer.composeSettingsSample(Optional.empty(), "EchoSettings", classType));
     assertEquals(results, Optional.empty());
   }
 
   @Test
-  public void composeSettingsSampleCode_serviceSettingsClass() {
+  public void composeSettingsSample_serviceSettingsClass() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -49,8 +48,7 @@ public class SettingsSampleCodeComposerTest {
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleCodeComposer.composeSampleCode(
-                Optional.of("Echo"), "EchoSettings", classType));
+            SettingsSampleComposer.composeSettingsSample(Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
@@ -68,7 +66,7 @@ public class SettingsSampleCodeComposerTest {
   }
 
   @Test
-  public void composeSettingsSampleCode_serviceStubClass() {
+  public void composeSettingsSample_serviceStubClass() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -77,8 +75,7 @@ public class SettingsSampleCodeComposerTest {
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleCodeComposer.composeSampleCode(
-                Optional.of("Echo"), "EchoSettings", classType));
+            SettingsSampleComposer.composeSettingsSample(Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",

@@ -34,9 +34,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class SettingsSampleCodeComposer {
+public final class SettingsSampleComposer {
 
-  public static Optional<Sample> composeSampleCode(
+  public static Optional<Sample> composeSettingsSample(
       Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
     if (!methodNameOpt.isPresent()) {
       return Optional.empty();
