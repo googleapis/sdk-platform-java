@@ -67,7 +67,7 @@ jobs:
           ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: ${{ failure() }}
         with:
           name: test-artifacts
