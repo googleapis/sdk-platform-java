@@ -37,7 +37,7 @@ public class RegionTagTest {
                 .setApiShortName(apiShortName)
                 .setServiceName(serviceName)
                 .setOverloadDisambiguation(disambiguation)
-                .setIsSynchronous(true)
+                .setIsAsynchronous(true)
                 .build());
   }
 
@@ -51,7 +51,7 @@ public class RegionTagTest {
                 .setApiShortName(apiShortName)
                 .setRpcName(rpcName)
                 .setOverloadDisambiguation(disambiguation)
-                .setIsSynchronous(true)
+                .setIsAsynchronous(true)
                 .build());
   }
 
@@ -63,7 +63,7 @@ public class RegionTagTest {
     Assert.assertEquals("", regionTag.apiShortName());
     Assert.assertEquals("", regionTag.apiVersion());
     Assert.assertEquals("", regionTag.overloadDisambiguation());
-    Assert.assertEquals(true, regionTag.isSynchronous());
+    Assert.assertEquals(false, regionTag.isAsynchronous());
   }
 
   @Test
@@ -78,9 +78,9 @@ public class RegionTagTest {
             .setRpcName(rpcName)
             .build();
 
-    Assert.assertEquals("1.4.0Version", regionTag.apiVersion());
-    Assert.assertEquals("serviceNameString", regionTag.serviceName());
-    Assert.assertEquals("rpcNameString10", regionTag.rpcName());
+    Assert.assertEquals("140Version", regionTag.apiVersion());
+    Assert.assertEquals("ServiceNameString", regionTag.serviceName());
+    Assert.assertEquals("RpcNameString10", regionTag.rpcName());
   }
 
   @Test
@@ -117,7 +117,7 @@ public class RegionTagTest {
             .setServiceName(serviceName)
             .setRpcName(rpcName)
             .setOverloadDisambiguation(disambiguation)
-            .setIsSynchronous(false)
+            .setIsAsynchronous(true)
             .build();
 
     String result = regionTag.generate();
