@@ -30,7 +30,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ServiceClientMethodSampleComposerTest {clear
+public class ServiceClientMethodSampleComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
@@ -42,48 +42,48 @@ public class ServiceClientMethodSampleComposerTest {clear
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoClient")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("PagedExpandRequest")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("PagedExpandResponse")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Method method =
-            Method.builder()
-                    .setName("PagedExpand")
-                    .setInputType(inputType)
-                    .setOutputType(outputType)
-                    .setMethodSignatures(Collections.emptyList())
-                    .setPageSizeFieldName(PAGINATED_FIELD_NAME)
-                    .build();
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
+            .build();
     String results =
-            writeStatements(
-                    ServiceClientMethodSampleComposer.composeCanonicalSample(
-                            method, clientType, resourceNames, messageTypes));
+        writeStatements(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
+                method, clientType, resourceNames, messageTypes));
     String expected =
-            LineFormatter.lines(
-                    "try (EchoClient echoClient = EchoClient.create()) {\n",
-                    "  PagedExpandRequest request =\n",
-                    "      PagedExpandRequest.newBuilder()\n",
-                    "          .setContent(\"content951530617\")\n",
-                    "          .setPageSize(883849137)\n",
-                    "          .setPageToken(\"pageToken873572522\")\n",
-                    "          .build();\n",
-                    "  for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {\n",
-                    "    // doThingsWith(element);\n",
-                    "  }\n",
-                    "}");
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  PagedExpandRequest request =\n",
+            "      PagedExpandRequest.newBuilder()\n",
+            "          .setContent(\"content951530617\")\n",
+            "          .setPageSize(883849137)\n",
+            "          .setPageToken(\"pageToken873572522\")\n",
+            "          .build();\n",
+            "  for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {\n",
+            "    // doThingsWith(element);\n",
+            "  }\n",
+            "}");
     Assert.assertEquals(results, expected);
   }
 
@@ -93,36 +93,36 @@ public class ServiceClientMethodSampleComposerTest {clear
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoClient")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("NotExistRequest")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NotExistRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("PagedExpandResponse")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Method method =
-            Method.builder()
-                    .setName("PagedExpand")
-                    .setInputType(inputType)
-                    .setOutputType(outputType)
-                    .setMethodSignatures(Collections.emptyList())
-                    .setPageSizeFieldName(PAGINATED_FIELD_NAME)
-                    .build();
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setPageSizeFieldName(PAGINATED_FIELD_NAME)
+            .build();
     Assert.assertThrows(
-            NullPointerException.class,
-            () ->
-                    ServiceClientMethodSampleComposer.composeCanonicalSample(
-                            method, clientType, resourceNames, messageTypes));
+        NullPointerException.class,
+        () ->
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
+                method, clientType, resourceNames, messageTypes));
   }
 
   @Test
@@ -131,52 +131,52 @@ public class ServiceClientMethodSampleComposerTest {clear
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoClient")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("WaitRequest")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
-            TypeNode.withReference(
-                    VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
+        TypeNode.withReference(
+            VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
     TypeNode responseType =
-            TypeNode.withReference(
-                    VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
+        TypeNode.withReference(
+            VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
     TypeNode metadataType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("WaitMetadata")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitMetadata")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     LongrunningOperation lro =
-            LongrunningOperation.builder()
-                    .setResponseType(responseType)
-                    .setMetadataType(metadataType)
-                    .build();
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
-            Method.builder()
-                    .setName("Wait")
-                    .setInputType(inputType)
-                    .setOutputType(outputType)
-                    .setMethodSignatures(Collections.emptyList())
-                    .setLro(lro)
-                    .build();
+        Method.builder()
+            .setName("Wait")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setLro(lro)
+            .build();
     String results =
-            writeStatements(
-                    ServiceClientMethodSampleComposer.composeCanonicalSample(
-                            method, clientType, resourceNames, messageTypes));
+        writeStatements(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
+                method, clientType, resourceNames, messageTypes));
     String expected =
-            LineFormatter.lines(
-                    "try (EchoClient echoClient = EchoClient.create()) {\n",
-                    "  WaitRequest request = WaitRequest.newBuilder().build();\n",
-                    "  echoClient.waitAsync(request).get();\n",
-                    "}");
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "  echoClient.waitAsync(request).get();\n",
+            "}");
     Assert.assertEquals(results, expected);
   }
 
@@ -186,55 +186,55 @@ public class ServiceClientMethodSampleComposerTest {clear
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoClient")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("WaitRequest")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
-            TypeNode.withReference(
-                    VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
+        TypeNode.withReference(
+            VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
     TypeNode responseType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("WaitResponse")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode metadataType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("WaitMetadata")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitMetadata")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     LongrunningOperation lro =
-            LongrunningOperation.builder()
-                    .setResponseType(responseType)
-                    .setMetadataType(metadataType)
-                    .build();
+        LongrunningOperation.builder()
+            .setResponseType(responseType)
+            .setMetadataType(metadataType)
+            .build();
     Method method =
-            Method.builder()
-                    .setName("Wait")
-                    .setInputType(inputType)
-                    .setOutputType(outputType)
-                    .setMethodSignatures(Collections.emptyList())
-                    .setLro(lro)
-                    .build();
+        Method.builder()
+            .setName("Wait")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setLro(lro)
+            .build();
     String results =
-            writeStatements(
-                    ServiceClientMethodSampleComposer.composeCanonicalSample(
-                            method, clientType, resourceNames, messageTypes));
+        writeStatements(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
+                method, clientType, resourceNames, messageTypes));
     String expected =
-            LineFormatter.lines(
-                    "try (EchoClient echoClient = EchoClient.create()) {\n",
-                    "  WaitRequest request = WaitRequest.newBuilder().build();\n",
-                    "  WaitResponse response = echoClient.waitAsync(request).get();\n",
-                    "}");
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "  WaitResponse response = echoClient.waitAsync(request).get();\n",
+            "}");
     Assert.assertEquals(results, expected);
   }
 
@@ -244,45 +244,45 @@ public class ServiceClientMethodSampleComposerTest {clear
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoClient")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoRequest")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
-            TypeNode.withReference(
-                    VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
+        TypeNode.withReference(
+            VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
     Method method =
-            Method.builder()
-                    .setName("Echo")
-                    .setInputType(inputType)
-                    .setOutputType(outputType)
-                    .setMethodSignatures(Collections.emptyList())
-                    .build();
+        Method.builder()
+            .setName("Echo")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .build();
     String results =
-            writeStatements(
-                    ServiceClientMethodSampleComposer.composeCanonicalSample(
-                            method, clientType, resourceNames, messageTypes));
+        writeStatements(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
+                method, clientType, resourceNames, messageTypes));
     String expected =
-            LineFormatter.lines(
-                    "try (EchoClient echoClient = EchoClient.create()) {\n",
-                    "  EchoRequest request =\n",
-                    "      EchoRequest.newBuilder()\n",
-                    "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
-                            + " \"[FOOBAR]\").toString())\n",
-                    "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
-                            + " \"[FOOBAR]\").toString())\n",
-                    "          .setSeverity(Severity.forNumber(0))\n",
-                    "          .setFoobar(Foobar.newBuilder().build())\n",
-                    "          .build();\n",
-                    "  echoClient.echo(request);\n",
-                    "}");
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoRequest request =\n",
+            "      EchoRequest.newBuilder()\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
+            "          .setFoobar(Foobar.newBuilder().build())\n",
+            "          .build();\n",
+            "  echoClient.echo(request);\n",
+            "}");
     Assert.assertEquals(results, expected);
   }
 
@@ -292,48 +292,48 @@ public class ServiceClientMethodSampleComposerTest {clear
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoClient")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoRequest")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName("EchoResponse")
-                            .setPakkage(SHOWCASE_PACKAGE_NAME)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Method method =
-            Method.builder()
-                    .setName("Echo")
-                    .setInputType(inputType)
-                    .setOutputType(outputType)
-                    .setMethodSignatures(Collections.emptyList())
-                    .build();
+        Method.builder()
+            .setName("Echo")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .build();
     String results =
-            writeStatements(
-                    ServiceClientMethodSampleComposer.composeCanonicalSample(
-                            method, clientType, resourceNames, messageTypes));
+        writeStatements(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
+                method, clientType, resourceNames, messageTypes));
     String expected =
-            LineFormatter.lines(
-                    "try (EchoClient echoClient = EchoClient.create()) {\n",
-                    "  EchoRequest request =\n",
-                    "      EchoRequest.newBuilder()\n",
-                    "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
-                            + " \"[FOOBAR]\").toString())\n",
-                    "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
-                            + " \"[FOOBAR]\").toString())\n",
-                    "          .setSeverity(Severity.forNumber(0))\n",
-                    "          .setFoobar(Foobar.newBuilder().build())\n",
-                    "          .build();\n",
-                    "  EchoResponse response = echoClient.echo(request);\n",
-                    "}");
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoRequest request =\n",
+            "      EchoRequest.newBuilder()\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
+            "          .setFoobar(Foobar.newBuilder().build())\n",
+            "          .build();\n",
+            "  EchoResponse response = echoClient.echo(request);\n",
+            "}");
     Assert.assertEquals(results, expected);
   }
 
