@@ -98,7 +98,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setMethodName(
                 String.format("%sOperationCallable", JavaStyle.toLowerCamelCase(method.name())))
             .build();
-    String disambiguation = "OperationCallable";
     rpcMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(rpcMethodInvocationExpr)
@@ -106,18 +105,11 @@ public class ServiceClientCallableMethodSampleComposer {
             .setArguments(requestVarExpr)
             .setReturnType(operationFutureType)
             .build();
-    disambiguation =
-        disambiguation
-            + JavaStyle.toUpperCamelCase(rpcMethodInvocationExpr.methodIdentifier().name());
     bodyExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(operationFutureVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(rpcMethodInvocationExpr)
             .build());
-    disambiguation =
-        JavaStyle.toUpperCamelCase(
-            disambiguation + requestVarExpr.variable().type().reference().name());
-
     List<Statement> bodyStatements =
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
     bodyExprs.clear();
@@ -156,14 +148,12 @@ public class ServiceClientCallableMethodSampleComposer {
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     bodyExprs.clear();
 
-    // e.g. serviceName = echoClient
-    //      rpcName = wait
-    //      disambiguation = futureCallWaitRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientType.reference().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("OperationCallable")
             .build();
     List<Statement> body =
         Arrays.asList(
@@ -238,7 +228,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setMethodName(
                 String.format("%sPagedCallable", JavaStyle.toLowerCamelCase(method.name())))
             .build();
-    String disambiguation = "PagedCallable";
     pagedCallableFutureMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(pagedCallableFutureMethodExpr)
@@ -246,9 +235,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setArguments(requestVarExpr)
             .setReturnType(apiFutureType)
             .build();
-    disambiguation =
-        disambiguation
-            + JavaStyle.toUpperCamelCase(pagedCallableFutureMethodExpr.methodIdentifier().name());
     AssignmentExpr apiFutureAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
@@ -259,7 +245,6 @@ public class ServiceClientCallableMethodSampleComposer {
     List<Statement> bodyStatements =
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
     bodyExprs.clear();
-    disambiguation = disambiguation.concat(requestVarExpr.variable().type().reference().name());
 
     // Add line comment
     bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
@@ -300,14 +285,12 @@ public class ServiceClientCallableMethodSampleComposer {
                 .setIsSampleCode(true)
                 .build());
 
-    // e.g. serviceName = echoClient
-    //      rpcName = pagedExpand
-    //      disambiguation = futureCallExpandRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientType.reference().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("PagedCallable")
             .build();
     return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
@@ -451,7 +434,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
-    String disambiguation = "Callable";
     clientStreamCallMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientStreamCallMethodInvocationExpr)
@@ -459,27 +441,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
             .setReturnType(serverStreamType)
             .build();
-    disambiguation =
-        disambiguation
-            + String.format(
-                "%s%s",
-                JavaStyle.toUpperCamelCase(
-                    clientStreamCallMethodInvocationExpr.methodIdentifier().name()),
-                JavaStyle.toUpperCamelCase(
-                    requestAssignmentExpr.variableExpr().variable().type().reference() == null
-                        ? requestAssignmentExpr
-                            .variableExpr()
-                            .variable()
-                            .type()
-                            .typeKind()
-                            .name()
-                            .toLowerCase()
-                        : requestAssignmentExpr
-                            .variableExpr()
-                            .variable()
-                            .type()
-                            .reference()
-                            .name()));
     AssignmentExpr streamAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(serverStreamVarExpr.toBuilder().setIsDecl(true).build())
@@ -511,14 +472,12 @@ public class ServiceClientCallableMethodSampleComposer {
             .build();
     bodyStatements.add(forStatement);
 
-    // e.g. serviceName = echoClient
-    //      rpcName = expand
-    //      disambiguation = callExpandRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("StreamServer")
             .build();
     return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
@@ -544,30 +503,12 @@ public class ServiceClientCallableMethodSampleComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
-    String disambiguation = "Callable";
     clientBidiStreamCallMethodInvoationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientBidiStreamCallMethodInvoationExpr)
             .setMethodName("call")
             .setReturnType(bidiStreamType)
             .build();
-    disambiguation =
-        disambiguation
-            + String.format(
-                "%s%s",
-                JavaStyle.toUpperCamelCase(
-                    clientBidiStreamCallMethodInvoationExpr.methodIdentifier().name()),
-                requestAssignmentExpr.variableExpr().variable().type().reference() == null
-                    ? JavaStyle.toUpperCamelCase(
-                        requestAssignmentExpr
-                            .variableExpr()
-                            .variable()
-                            .type()
-                            .typeKind()
-                            .name()
-                            .toLowerCase())
-                    : JavaStyle.toUpperCamelCase(
-                        requestAssignmentExpr.variableExpr().variable().type().reference().name()));
     AssignmentExpr bidiStreamAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(bidiStreamVarExpr.toBuilder().setIsDecl(true).build())
@@ -611,14 +552,12 @@ public class ServiceClientCallableMethodSampleComposer {
             .build();
     bodyStatements.add(forStatement);
 
-    // e.g. serviceName = echoClient
-    //      rpcName = chat
-    //      disambiguation = callEchoRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("StreamBidi")
             .build();
     return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
@@ -726,22 +665,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setMethodName("clientStreamingCall")
             .setReturnType(requestObserverType)
             .build();
-    String disambiguation =
-        String.format(
-            "%s%s",
-            JavaStyle.toUpperCamelCase(
-                clientStreamCallMethodInvocationExpr.methodIdentifier().name()),
-            JavaStyle.toUpperCamelCase(
-                requestAssignmentExpr.variableExpr().variable().type().reference() == null
-                    ? requestAssignmentExpr
-                        .variableExpr()
-                        .variable()
-                        .type()
-                        .typeKind()
-                        .name()
-                        .toLowerCase()
-                    : requestAssignmentExpr.variableExpr().variable().type().reference().name()));
-
     AssignmentExpr requestObserverAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -762,16 +685,13 @@ public class ServiceClientCallableMethodSampleComposer {
             .build();
     bodyExprs.add(onNextMethodExpr);
 
-    // e.g. serviceName = echoClient
-    //      rpcName = collect
-    //      disambiguation = clientStreamingCallEchoRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("StreamClient")
             .build();
-
     return Sample.builder()
         .setBody(
             bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
@@ -802,7 +722,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
-    String disambiguation = "Callable";
     callableMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(callableMethodInvocationExpr)
@@ -810,16 +729,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setArguments(requestVarExpr)
             .setReturnType(apiFutureType)
             .build();
-    disambiguation =
-        disambiguation
-            + String.format(
-                "%s%s",
-                JavaStyle.toUpperCamelCase(callableMethodInvocationExpr.methodIdentifier().name()),
-                requestVarExpr.variable().type().reference().name() == null
-                    ? JavaStyle.toUpperCamelCase(
-                        requestVarExpr.variable().type().typeKind().name().toLowerCase())
-                    : JavaStyle.toUpperCamelCase(
-                        requestVarExpr.variable().type().reference().name()));
     AssignmentExpr futureAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
@@ -853,16 +762,12 @@ public class ServiceClientCallableMethodSampleComposer {
       bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
     }
 
-    // e.g. serviceName = echoClient
-    //      rpcName = echo
-    //      disambiguation = futureCallEchoRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
             .build();
-
     return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
 
@@ -892,7 +797,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
             .build();
-    String disambiguation = "Callable";
     pagedCallableMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(pagedCallableMethodInvocationExpr)
@@ -900,16 +804,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setArguments(requestVarExpr)
             .setReturnType(method.outputType())
             .build();
-    disambiguation =
-        disambiguation
-            + String.format(
-                "%s%s",
-                JavaStyle.toUpperCamelCase(
-                    pagedCallableMethodInvocationExpr.methodIdentifier().name()),
-                requestVarExpr.variable().type().reference() == null
-                    ? JavaStyle.toUpperCamelCase(requestVarExpr.variable().type().typeKind().name())
-                    : JavaStyle.toUpperCamelCase(
-                        requestVarExpr.variable().type().reference().name()));
     AssignmentExpr responseAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
@@ -1014,14 +908,11 @@ public class ServiceClientCallableMethodSampleComposer {
             .setBody(whileBodyStatements)
             .build();
 
-    // e.g. serviceName = echoClient
-    //      rpcName =  pagedExpand
-    //      disambiguation = callPagedExpandRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setOverloadDisambiguation("Paged")
             .build();
     return Sample.builder()
         .setBody(Arrays.asList(pagedWhileStatement))

@@ -116,11 +116,6 @@ public final class SettingsSampleComposer {
             .setArguments(retrySettingsArgExpr)
             .build();
 
-    disambiguation =
-        disambiguation
-            + JavaStyle.toUpperCamelCase(
-                settingBuilderMethodInvocationExpr.methodIdentifier().name());
-
     // Initialize clientSetting with builder() method.
     // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
@@ -129,9 +124,6 @@ public final class SettingsSampleComposer {
                 .setType(classType)
                 .setName(JavaStyle.toLowerCamelCase(settingsClassName))
                 .build());
-    disambiguation =
-        disambiguation
-            + JavaStyle.toUpperCamelCase(settingsVarExpr.variable().type().reference().name());
 
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
@@ -153,14 +145,10 @@ public final class SettingsSampleComposer {
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
 
-    // e.g. serviceName = echoSettings
-    //      rpcName = echo
-    //      disambiguation = setRetrySettingsEchoSettings
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(classType.reference().name())
             .setRpcName(methodNameOpt.get())
-            .setOverloadDisambiguation(disambiguation)
             .build();
     return Optional.of(Sample.builder().setBody(statements).setRegionTag(regionTag).build());
   }

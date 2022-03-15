@@ -58,7 +58,7 @@ import com.google.api.generator.gapic.composer.comment.ServiceClientCommentCompo
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientCallableMethodSampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientUnaryMethodSampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientMethodSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
@@ -718,7 +718,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       Optional<String> methodDocSample = Optional.empty();
       if (methodSample.isPresent()) {
         samples.add(methodSample.get());
-        methodDocSample = Optional.of(SampleCodeWriter.writeInlineSample(methodSample.get().body()));
+        methodDocSample =
+            Optional.of(SampleCodeWriter.writeInlineSample(methodSample.get().body()));
       }
 
       MethodDefinition.Builder methodVariantBuilder =
@@ -800,7 +801,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     Optional<Sample> defaultMethodSample =
         Optional.of(
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, typeStore.get(clientName), resourceNames, messageTypes));
     Optional<String> defaultMethodDocSample = Optional.empty();
     if (defaultMethodSample.isPresent()) {

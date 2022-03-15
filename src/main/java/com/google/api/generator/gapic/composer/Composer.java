@@ -245,14 +245,4 @@ public class Composer {
             .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
             .build());
   }
-
-  private static Sample addApacheLicense(Sample sample) {
-    return sample.withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
-  }
-
-  private static Sample addRegionTagAttributes(
-      Sample sample, String apiVersion, String apiShortName) {
-    return sample.withRegionTag(
-        sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
-  }
 }

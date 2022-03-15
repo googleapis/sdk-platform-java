@@ -21,7 +21,6 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class ComposerTest {
                         .setApiShortName("apiShortName")
                         .setServiceName("service")
                         .setRpcName("addApacheLicense")
-                        .setOverloadDisambiguation("Sample")
+                        .setOverloadDisambiguation("sample")
                         .build())
                 .build());
     List<GapicClass> gapicClassWithHeaderList =
@@ -52,8 +51,9 @@ public class ComposerTest {
     Assert.assertGoldenClass(
         this.getClass(), gapicClassWithHeaderList.get(0), "ComposerPostProcOnFooBar.golden");
     Assert.assertGoldenSamples(
-        gapicClassWithHeaderList.get(0).samples(),
+        this.getClass(),
+        "",
         gapicClassWithHeaderList.get(0).classDefinition().packageString(),
-        Utils.getGoldenDir(this.getClass()));
+        gapicClassWithHeaderList.get(0).samples());
   }
 }

@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ServiceClientUnaryMethodSampleComposer {
-  public static Sample composeDefaultSample(
+public class ServiceClientMethodSampleComposer {
+  public static Sample composeCanonicalSample(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -89,7 +89,11 @@ public class ServiceClientUnaryMethodSampleComposer {
                 .setTryBody(bodyStatements)
                 .setIsSampleCode(true)
                 .build());
-    return Sample.builder().setBody(body).setRegionTag(regionTag).build();
+    //  setting overloadDisambiguation to empty since this is the canonical snippet
+    return Sample.builder()
+        .setBody(body)
+        .setRegionTag(regionTag.withOverloadDisambiguation(""))
+        .build();
   }
 
   static Sample composeSample(
@@ -110,16 +114,6 @@ public class ServiceClientUnaryMethodSampleComposer {
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .setReturnType(method.outputType())
             .build();
-    String disambiguation =
-        rpcMethodArgVarExprs.stream()
-            .map(
-                e ->
-                    e.variable().type().reference() == null
-                        ? JavaStyle.toUpperCamelCase(
-                            e.variable().type().typeKind().name().toLowerCase())
-                        : JavaStyle.toUpperCamelCase(e.variable().type().reference().name()))
-            .collect(Collectors.joining());
-
     if (returnsVoid) {
       bodyExprs.add(clientRpcMethodInvocationExpr);
     } else {
@@ -133,14 +127,12 @@ public class ServiceClientUnaryMethodSampleComposer {
               .build());
     }
 
-    // e.g. serviceName = echoClient
-    //      rpcName =  echo
-    //      disambiguation = echoRequest
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setOverloadDisambiguation(
+                SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
             .build();
     return Sample.builder()
         .setBody(
@@ -182,15 +174,6 @@ public class ServiceClientUnaryMethodSampleComposer {
             .setArguments(
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
-    String disambiguation =
-        rpcMethodArgVarExprs.stream()
-            .map(
-                arg ->
-                    arg.variable().type().reference() == null
-                        ? JavaStyle.toUpperCamelCase(
-                            arg.variable().type().typeKind().name().toLowerCase())
-                        : JavaStyle.toUpperCamelCase(arg.variable().type().reference().name()))
-            .collect(Collectors.joining());
 
     clientMethodIterateAllExpr =
         MethodInvocationExpr.builder()
@@ -198,9 +181,6 @@ public class ServiceClientUnaryMethodSampleComposer {
             .setMethodName("iterateAll")
             .setReturnType(repeatedResponseType)
             .build();
-    disambiguation =
-        disambiguation.concat(
-            JavaStyle.toUpperCamelCase(clientMethodIterateAllExpr.methodIdentifier().name()));
     ForStatement loopIteratorStatement =
         ForStatement.builder()
             .setLocalVariableExpr(
@@ -221,14 +201,12 @@ public class ServiceClientUnaryMethodSampleComposer {
     bodyExprs.clear();
     bodyStatements.add(loopIteratorStatement);
 
-    // e.g. serviceName = echoClient
-    //      rpcName =  listContent
-    //      disambiguation = iterateAll
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setOverloadDisambiguation(
+                SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
             .build();
     return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
@@ -248,25 +226,12 @@ public class ServiceClientUnaryMethodSampleComposer {
             .setArguments(
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
-    String disambiguation =
-        "Async"
-            + rpcMethodArgVarExprs.stream()
-                .map(
-                    e ->
-                        e.variable().type().reference() == null
-                            ? JavaStyle.toUpperCamelCase(
-                                e.variable().type().typeKind().name().toLowerCase())
-                            : JavaStyle.toUpperCamelCase(e.variable().type().reference().name()))
-                .collect(Collectors.joining());
     invokeLroGetMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(invokeLroGetMethodExpr)
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    disambiguation =
-        disambiguation.concat(
-            JavaStyle.toUpperCamelCase(invokeLroGetMethodExpr.methodIdentifier().name()));
     boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.lro().responseType());
     if (returnsVoid) {
       bodyExprs.add(invokeLroGetMethodExpr);
@@ -286,15 +251,12 @@ public class ServiceClientUnaryMethodSampleComposer {
               .setValueExpr(invokeLroGetMethodExpr)
               .build());
     }
-
-    // e.g. serviceName = echoClient
-    //      rpcName =  wait
-    //      disambiguation = durationGet
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
-            .setOverloadDisambiguation(disambiguation)
+            .setOverloadDisambiguation(
+                SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
             .build();
     return Sample.builder()
         .setBody(
