@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer.samplecode;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeBodyJavaFormatter.FormatException;
 import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
@@ -69,7 +68,7 @@ public class SampleCodeBodyJavaFormatterTest {
   @Test
   public void invalidFormatSampleCode_nonStatement() {
     assertThrows(
-        FormatException.class,
+        SampleCodeBodyJavaFormatter.FormatException.class,
         () -> {
           SampleCodeBodyJavaFormatter.format("abc");
         });

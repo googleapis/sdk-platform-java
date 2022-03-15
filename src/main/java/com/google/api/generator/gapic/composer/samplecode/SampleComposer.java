@@ -63,12 +63,12 @@ public class SampleComposer {
   private static ClassDefinition createExecutableSample(
       List<CommentStatement> fileHeader,
       String packageName,
-      String sampleMethodName,
+      String sampleClassName,
       List<AssignmentExpr> sampleVariableAssignments,
       List<Statement> sampleBody,
       RegionTag regionTag) {
 
-    String sampleClassName = JavaStyle.toUpperCamelCase(sampleMethodName);
+    String sampleMethodName = JavaStyle.toLowerCamelCase(sampleClassName);
     List<VariableExpr> sampleMethodArgs = composeSampleMethodArgs(sampleVariableAssignments);
     MethodDefinition mainMethod =
         composeMainMethod(

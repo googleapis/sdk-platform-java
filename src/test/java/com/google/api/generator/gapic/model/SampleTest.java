@@ -60,10 +60,14 @@ public class SampleTest {
   @Test
   public void sampleNameWithRegionTag() {
     Sample sample = Sample.builder().setRegionTag(regionTag).build();
-    Assert.assertEquals("rpcName", sample.name());
+    Assert.assertEquals("SyncRpcName", sample.name());
 
     RegionTag rt = regionTag.toBuilder().setOverloadDisambiguation("disambiguation").build();
     sample = sample.withRegionTag(rt);
-    Assert.assertEquals("rpcNameDisambiguation", sample.name());
+    Assert.assertEquals("SyncRpcNameDisambiguation", sample.name());
+
+    rt = rt.toBuilder().setIsAsynchronous(true).build();
+    sample = sample.withRegionTag(rt);
+    Assert.assertEquals("AsyncRpcNameDisambiguation", sample.name());
   }
 }

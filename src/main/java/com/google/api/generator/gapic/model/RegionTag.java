@@ -32,14 +32,14 @@ public abstract class RegionTag {
 
   public abstract String overloadDisambiguation();
 
-  public abstract Boolean isSynchronous();
+  public abstract Boolean isAsynchronous();
 
   public static Builder builder() {
     return new AutoValue_RegionTag.Builder()
         .setApiVersion("")
         .setApiShortName("")
         .setOverloadDisambiguation("")
-        .setIsSynchronous(true);
+        .setIsAsynchronous(false);
   }
 
   abstract RegionTag.Builder toBuilder();
@@ -68,7 +68,7 @@ public abstract class RegionTag {
 
     public abstract Builder setOverloadDisambiguation(String overloadDisambiguation);
 
-    public abstract Builder setIsSynchronous(Boolean isSynchronous);
+    public abstract Builder setIsAsynchronous(Boolean isAsynchronous);
 
     abstract String apiVersion();
 
@@ -83,7 +83,7 @@ public abstract class RegionTag {
     abstract RegionTag autoBuild();
 
     public final RegionTag build() {
-      setApiVersion(sanitizeVersion(apiVersion()));
+      setApiVersion(sanitizeAttributes(apiVersion()));
       setApiShortName(sanitizeAttributes(apiShortName()));
       setServiceName(sanitizeAttributes(serviceName()));
       setRpcName(sanitizeAttributes(rpcName()));
@@ -92,11 +92,7 @@ public abstract class RegionTag {
     }
 
     private final String sanitizeAttributes(String attribute) {
-      return JavaStyle.toLowerCamelCase(attribute.replaceAll("[^a-zA-Z0-9]", ""));
-    }
-
-    private final String sanitizeVersion(String version) {
-      return JavaStyle.toLowerCamelCase(version.replaceAll("[^a-zA-Z0-9.]", ""));
+      return JavaStyle.toUpperCamelCase(attribute.replaceAll("[^a-zA-Z0-9]", ""));
     }
   }
 
@@ -118,10 +114,10 @@ public abstract class RegionTag {
     if (!overloadDisambiguation().isEmpty()) {
       rt = rt + "_" + overloadDisambiguation();
     }
-    if (isSynchronous()) {
-      rt = rt + "_sync";
-    } else {
+    if (isAsynchronous()) {
       rt = rt + "_async";
+    } else {
+      rt = rt + "_sync";
     }
 
     return rt.toLowerCase();

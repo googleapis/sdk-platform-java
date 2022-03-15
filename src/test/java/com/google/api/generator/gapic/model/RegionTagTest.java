@@ -37,7 +37,7 @@ public class RegionTagTest {
                 .setApiShortName(apiShortName)
                 .setServiceName(serviceName)
                 .setOverloadDisambiguation(disambiguation)
-                .setIsSynchronous(true)
+                .setIsAsynchronous(true)
                 .build());
   }
 
@@ -51,7 +51,7 @@ public class RegionTagTest {
                 .setApiShortName(apiShortName)
                 .setRpcName(rpcName)
                 .setOverloadDisambiguation(disambiguation)
-                .setIsSynchronous(true)
+                .setIsAsynchronous(true)
                 .build());
   }
 
@@ -63,7 +63,7 @@ public class RegionTagTest {
     Assert.assertEquals("", regionTag.apiShortName());
     Assert.assertEquals("", regionTag.apiVersion());
     Assert.assertEquals("", regionTag.overloadDisambiguation());
-    Assert.assertEquals(true, regionTag.isSynchronous());
+    Assert.assertEquals(false, regionTag.isAsynchronous());
   }
 
   @Test
@@ -78,9 +78,74 @@ public class RegionTagTest {
             .setRpcName(rpcName)
             .build();
 
-    Assert.assertEquals("1.4.0Version", regionTag.apiVersion());
-    Assert.assertEquals("serviceNameString", regionTag.serviceName());
-    Assert.assertEquals("rpcNameString10", regionTag.rpcName());
+    Assert.assertEquals("140Version", regionTag.apiVersion());
+    Assert.assertEquals("ServiceNameString", regionTag.serviceName());
+    Assert.assertEquals("RpcNameString10", regionTag.rpcName());
+  }
+
+  @Test
+  public void generateRegionTagsMissingRequiredFields() {
+    RegionTag rtMissingShortName =
+        RegionTag.builder()
+            .setApiVersion(apiVersion)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .build();
+    Assert.assertThrows(IllegalStateException.class, () -> rtMissingShortName.generate());
+  }
+
+  @Test
+  public void generateRegionTagsValidMissingFields() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .build();
+
+    String result = regionTag.generate();
+    String expected = "shortname_generated_servicename_rpcname_sync";
+    Assert.assertEquals(expected, result);
+  }
+
+  @Test
+  public void generateRegionTagsAllFields() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setApiVersion(apiVersion)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation(disambiguation)
+            .setIsAsynchronous(true)
+            .build();
+
+    String result = regionTag.generate();
+    String expected = "shortname_v1_generated_servicename_rpcname_disambiguation_async";
+    Assert.assertEquals(expected, result);
+  }
+
+  @Test
+  public void generateRegionTagTag() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setApiVersion(apiVersion)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation(disambiguation)
+            .build();
+
+    String result =
+        SampleCodeWriter.write(
+            Arrays.asList(
+                regionTag.generateTag(RegionTag.RegionTagRegion.START, regionTag.generate()),
+                regionTag.generateTag(RegionTag.RegionTagRegion.END, regionTag.generate())));
+    String expected =
+        LineFormatter.lines(
+            "// [START shortname_v1_generated_servicename_rpcname_disambiguation_sync]\n",
+            "// [END shortname_v1_generated_servicename_rpcname_disambiguation_sync]");
+    Assert.assertEquals(expected, result);
   }
 
   @Test

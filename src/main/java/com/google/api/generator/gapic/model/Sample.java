@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
@@ -48,7 +47,10 @@ public abstract class Sample {
   }
 
   public final Sample withRegionTag(RegionTag regionTag) {
-    return toBuilder().setRegionTag(regionTag).build();
+    return toBuilder()
+        .setName(generateSampleClassName(regionTag()))
+        .setRegionTag(regionTag)
+        .build();
   }
 
   @AutoValue.Builder
@@ -68,15 +70,14 @@ public abstract class Sample {
     abstract RegionTag regionTag();
 
     public final Sample build() {
-      setName(generateSampleName(regionTag()));
+      setName(generateSampleClassName(regionTag()));
       return autoBuild();
     }
   }
 
-  private static String generateSampleName(RegionTag regionTag) {
-    return String.format(
-        "%s%s",
-        JavaStyle.toLowerCamelCase(regionTag.rpcName()),
-        JavaStyle.toUpperCamelCase(regionTag.overloadDisambiguation()));
+  private static String generateSampleClassName(RegionTag regionTag) {
+    return (regionTag.isAsynchronous() ? "Async" : "Sync")
+        + regionTag.rpcName()
+        + regionTag.overloadDisambiguation();
   }
 }
