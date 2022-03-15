@@ -56,7 +56,9 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientCallableMethodSampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientMethodSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
@@ -194,13 +196,13 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
     TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
     Sample classMethodSampleCode =
-        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+        ServiceClientHeaderSampleComposer.composeClassHeaderSample(
             service, clientType, resourceNames, messageTypes);
     Sample credentialsSampleCode =
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+        ServiceClientHeaderSampleComposer.composeSetCredentialsSample(
             clientType, settingsType);
     Sample endpointSampleCode =
-        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+        ServiceClientHeaderSampleComposer.composeSetEndpointSample(
             clientType, settingsType);
     samples.addAll(Arrays.asList(classMethodSampleCode, credentialsSampleCode, endpointSampleCode));
     return ServiceClientCommentComposer.createClassHeaderComments(
@@ -713,7 +715,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
       Optional<Sample> methodSample =
           Optional.of(
-              ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+              ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
                   method, typeStore.get(clientName), signature, resourceNames, messageTypes));
       Optional<String> methodDocSample = Optional.empty();
       if (methodSample.isPresent()) {
@@ -801,7 +803,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     Optional<Sample> defaultMethodSample =
         Optional.of(
-            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, typeStore.get(clientName), resourceNames, messageTypes));
     Optional<String> defaultMethodDocSample = Optional.empty();
     if (defaultMethodSample.isPresent()) {
@@ -940,7 +942,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCode =
           Optional.of(
-              ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                  ServiceClientCallableMethodSampleComposer.composeLroCallableMethod(
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
@@ -948,7 +950,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     } else if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
       sampleCode =
           Optional.of(
-              ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                  ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
@@ -957,7 +959,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       if (method.stream().equals(Stream.NONE)) {
         sampleCode =
             Optional.of(
-                ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                    ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
                     method,
                     typeStore.get(ClassNames.getServiceClientClassName(service)),
                     resourceNames,
@@ -965,7 +967,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       } else {
         sampleCode =
             Optional.of(
-                ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                    ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
                     method,
                     typeStore.get(ClassNames.getServiceClientClassName(service)),
                     resourceNames,

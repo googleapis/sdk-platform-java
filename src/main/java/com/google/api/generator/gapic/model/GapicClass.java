@@ -98,14 +98,19 @@ public abstract class GapicClass {
 
     // update these regionTag/name so distinct duplicates are unique files
     for (Map.Entry<String, List<Sample>> entry : duplicateDistinctSamples) {
-      int sampleNum = 1;
+      int sampleNum = 0;
       for (Sample sample : entry.getValue()) {
-        uniqueSamples.add(
-            sample.withRegionTag(
-                sample
-                    .regionTag()
-                    .withOverloadDisambiguation(
-                        sample.regionTag().overloadDisambiguation() + sampleNum)));
+        //  first sample will be canonical, not updating disambiguation
+        Sample uniqueSample = sample;
+        if (sampleNum != 0) {
+          uniqueSample =
+              sample.withRegionTag(
+                  sample
+                      .regionTag()
+                      .withOverloadDisambiguation(
+                          sample.regionTag().overloadDisambiguation() + sampleNum));
+        }
+        uniqueSamples.add(uniqueSample);
         sampleNum++;
       }
     }
