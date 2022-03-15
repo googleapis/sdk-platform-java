@@ -33,6 +33,8 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
  *   String project = "project-309310695";
  *   String region = "region-934795532";
@@ -71,6 +73,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * RegionOperationsSettings regionOperationsSettings =
  *     RegionOperationsSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -82,6 +86,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * RegionOperationsSettings regionOperationsSettings =
  *     RegionOperationsSettings.newBuilder().setEndpoint(myEndpoint).build();
  * RegionOperationsClient regionOperationsClient =
@@ -150,6 +156,8 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
    *   String project = "project-309310695";
    *   String region = "region-934795532";
@@ -180,6 +188,8 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
    *   GetRegionOperationRequest request =
    *       GetRegionOperationRequest.newBuilder()
@@ -205,6 +215,8 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
    *   GetRegionOperationRequest request =
    *       GetRegionOperationRequest.newBuilder()
@@ -238,6 +250,8 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
    *   String project = "project-309310695";
    *   String region = "region-934795532";
@@ -277,6 +291,8 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
    *   WaitRegionOperationRequest request =
    *       WaitRegionOperationRequest.newBuilder()
@@ -311,6 +327,8 @@ public class RegionOperationsClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
    *   WaitRegionOperationRequest request =
    *       WaitRegionOperationRequest.newBuilder()

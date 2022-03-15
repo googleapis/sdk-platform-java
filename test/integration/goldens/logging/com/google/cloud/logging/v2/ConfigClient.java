@@ -85,6 +85,8 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (ConfigClient configClient = ConfigClient.create()) {
  *   GetBucketRequest request =
  *       GetBucketRequest.newBuilder()
@@ -125,6 +127,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * ConfigSettings configSettings =
  *     ConfigSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -135,6 +139,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
  * ConfigClient configClient = ConfigClient.create(configSettings);
  * }</pre>
@@ -199,6 +205,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   BillingAccountLocationName parent =
    *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
@@ -232,6 +240,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   FolderLocationName parent = FolderLocationName.of("[FOLDER]", "[LOCATION]");
    *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
@@ -264,6 +274,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
    *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
@@ -296,6 +308,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   OrganizationLocationName parent = OrganizationLocationName.of("[ORGANIZATION]", "[LOCATION]");
    *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
@@ -328,6 +342,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
    *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
@@ -357,6 +373,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListBucketsRequest request =
    *       ListBucketsRequest.newBuilder()
@@ -384,6 +402,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListBucketsRequest request =
    *       ListBucketsRequest.newBuilder()
@@ -411,6 +431,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListBucketsRequest request =
    *       ListBucketsRequest.newBuilder()
@@ -444,6 +466,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetBucketRequest request =
    *       GetBucketRequest.newBuilder()
@@ -469,6 +493,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetBucketRequest request =
    *       GetBucketRequest.newBuilder()
@@ -494,6 +520,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateBucketRequest request =
    *       CreateBucketRequest.newBuilder()
@@ -520,6 +548,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateBucketRequest request =
    *       CreateBucketRequest.newBuilder()
@@ -553,6 +583,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateBucketRequest request =
    *       UpdateBucketRequest.newBuilder()
@@ -589,6 +621,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateBucketRequest request =
    *       UpdateBucketRequest.newBuilder()
@@ -616,6 +650,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteBucketRequest request =
    *       DeleteBucketRequest.newBuilder()
@@ -642,6 +678,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteBucketRequest request =
    *       DeleteBucketRequest.newBuilder()
@@ -667,6 +705,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UndeleteBucketRequest request =
    *       UndeleteBucketRequest.newBuilder()
@@ -693,6 +733,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UndeleteBucketRequest request =
    *       UndeleteBucketRequest.newBuilder()
@@ -717,6 +759,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String parent = "parent-995424086";
    *   for (LogView element : configClient.listViews(parent).iterateAll()) {
@@ -741,6 +785,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListViewsRequest request =
    *       ListViewsRequest.newBuilder()
@@ -768,6 +814,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListViewsRequest request =
    *       ListViewsRequest.newBuilder()
@@ -794,6 +842,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListViewsRequest request =
    *       ListViewsRequest.newBuilder()
@@ -827,6 +877,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetViewRequest request =
    *       GetViewRequest.newBuilder()
@@ -853,6 +905,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetViewRequest request =
    *       GetViewRequest.newBuilder()
@@ -878,6 +932,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateViewRequest request =
    *       CreateViewRequest.newBuilder()
@@ -903,6 +959,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateViewRequest request =
    *       CreateViewRequest.newBuilder()
@@ -928,6 +986,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateViewRequest request =
    *       UpdateViewRequest.newBuilder()
@@ -954,6 +1014,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateViewRequest request =
    *       UpdateViewRequest.newBuilder()
@@ -978,6 +1040,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteViewRequest request =
    *       DeleteViewRequest.newBuilder()
@@ -1004,6 +1068,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteViewRequest request =
    *       DeleteViewRequest.newBuilder()
@@ -1029,6 +1095,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -1055,6 +1123,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   FolderName parent = FolderName.of("[FOLDER]");
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -1081,6 +1151,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -1107,6 +1179,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ProjectName parent = ProjectName.of("[PROJECT]");
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -1133,6 +1207,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String parent = ProjectName.of("[PROJECT]").toString();
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
@@ -1158,6 +1234,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListSinksRequest request =
    *       ListSinksRequest.newBuilder()
@@ -1185,6 +1263,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListSinksRequest request =
    *       ListSinksRequest.newBuilder()
@@ -1211,6 +1291,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListSinksRequest request =
    *       ListSinksRequest.newBuilder()
@@ -1244,6 +1326,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink response = configClient.getSink(sinkName);
@@ -1273,6 +1357,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
    *   LogSink response = configClient.getSink(sinkName);
@@ -1299,6 +1385,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetSinkRequest request =
    *       GetSinkRequest.newBuilder()
@@ -1322,6 +1410,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetSinkRequest request =
    *       GetSinkRequest.newBuilder()
@@ -1347,6 +1437,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1381,6 +1473,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   FolderName parent = FolderName.of("[FOLDER]");
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1415,6 +1509,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1449,6 +1545,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ProjectName parent = ProjectName.of("[PROJECT]");
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1483,6 +1581,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String parent = ProjectName.of("[PROJECT]").toString();
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1514,6 +1614,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateSinkRequest request =
    *       CreateSinkRequest.newBuilder()
@@ -1542,6 +1644,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateSinkRequest request =
    *       CreateSinkRequest.newBuilder()
@@ -1570,6 +1674,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1608,6 +1714,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1643,6 +1751,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1692,6 +1802,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
    *   LogSink sink = LogSink.newBuilder().build();
@@ -1741,6 +1853,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateSinkRequest request =
    *       UpdateSinkRequest.newBuilder()
@@ -1771,6 +1885,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateSinkRequest request =
    *       UpdateSinkRequest.newBuilder()
@@ -1797,6 +1913,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   configClient.deleteSink(sinkName);
@@ -1828,6 +1946,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
    *   configClient.deleteSink(sinkName);
@@ -1856,6 +1976,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteSinkRequest request =
    *       DeleteSinkRequest.newBuilder()
@@ -1880,6 +2002,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteSinkRequest request =
    *       DeleteSinkRequest.newBuilder()
@@ -1902,6 +2026,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -1930,6 +2056,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   FolderName parent = FolderName.of("[FOLDER]");
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -1958,6 +2086,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -1986,6 +2116,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ProjectName parent = ProjectName.of("[PROJECT]");
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -2014,6 +2146,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String parent = ProjectName.of("[PROJECT]").toString();
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
@@ -2039,6 +2173,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListExclusionsRequest request =
    *       ListExclusionsRequest.newBuilder()
@@ -2066,6 +2202,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListExclusionsRequest request =
    *       ListExclusionsRequest.newBuilder()
@@ -2094,6 +2232,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ListExclusionsRequest request =
    *       ListExclusionsRequest.newBuilder()
@@ -2128,6 +2268,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
    *   LogExclusion response = configClient.getExclusion(name);
@@ -2155,6 +2297,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
    *   LogExclusion response = configClient.getExclusion(name);
@@ -2181,6 +2325,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetExclusionRequest request =
    *       GetExclusionRequest.newBuilder()
@@ -2205,6 +2351,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetExclusionRequest request =
    *       GetExclusionRequest.newBuilder()
@@ -2229,6 +2377,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2261,6 +2411,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   FolderName parent = FolderName.of("[FOLDER]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2293,6 +2445,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2325,6 +2479,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   ProjectName parent = ProjectName.of("[PROJECT]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2357,6 +2513,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String parent = ProjectName.of("[PROJECT]").toString();
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2386,6 +2544,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateExclusionRequest request =
    *       CreateExclusionRequest.newBuilder()
@@ -2411,6 +2571,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   CreateExclusionRequest request =
    *       CreateExclusionRequest.newBuilder()
@@ -2434,6 +2596,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2476,6 +2640,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
@@ -2518,6 +2684,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateExclusionRequest request =
    *       UpdateExclusionRequest.newBuilder()
@@ -2544,6 +2712,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateExclusionRequest request =
    *       UpdateExclusionRequest.newBuilder()
@@ -2569,6 +2739,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
    *   configClient.deleteExclusion(name);
@@ -2596,6 +2768,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
    *   configClient.deleteExclusion(name);
@@ -2622,6 +2796,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteExclusionRequest request =
    *       DeleteExclusionRequest.newBuilder()
@@ -2646,6 +2822,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   DeleteExclusionRequest request =
    *       DeleteExclusionRequest.newBuilder()
@@ -2675,6 +2853,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetCmekSettingsRequest request =
    *       GetCmekSettingsRequest.newBuilder()
@@ -2704,6 +2884,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetCmekSettingsRequest request =
    *       GetCmekSettingsRequest.newBuilder()
@@ -2737,6 +2919,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateCmekSettingsRequest request =
    *       UpdateCmekSettingsRequest.newBuilder()
@@ -2773,6 +2957,8 @@ public class ConfigClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   UpdateCmekSettingsRequest request =
    *       UpdateCmekSettingsRequest.newBuilder()
