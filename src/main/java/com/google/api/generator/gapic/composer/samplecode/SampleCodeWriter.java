@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.common.annotations.VisibleForTesting;
+import java.util.Arrays;
 import java.util.List;
 
 public final class SampleCodeWriter {
@@ -29,6 +30,11 @@ public final class SampleCodeWriter {
 
   public static String writeExecutableSample(Sample sample, String packkage) {
     return write(SampleComposer.composeExecutableSample(sample, packkage));
+  }
+
+  @VisibleForTesting
+  public static String write(Statement... statement) {
+    return write(Arrays.asList(statement));
   }
 
   @VisibleForTesting
@@ -47,9 +53,5 @@ public final class SampleCodeWriter {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDefinition.accept(visitor);
     return visitor.write();
-  }
-
-  public static String write(Statement... statement) {
-    return write(Arrays.asList(statement));
   }
 }

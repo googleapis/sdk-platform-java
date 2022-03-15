@@ -14,8 +14,17 @@
 
 package com.google.api.generator.test.framework;
 
+import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.comment.CommentComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import junit.framework.AssertionFailedError;
 
 public class Assert {
@@ -39,6 +48,40 @@ public class Assert {
     List<String> diffList = Differ.diff(expected, codegen);
     if (!diffList.isEmpty()) {
       throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
+    }
+  }
+
+  public static void assertEmptySamples(List<Sample> samples) {
+    if (!samples.isEmpty()) {
+      List<String> diffList = samples.stream().map(Sample::name).collect(Collectors.toList());
+      throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
+    }
+  }
+
+  public static void assertGoldenClass(Class<?> clazz, GapicClass gapicClass, String fileName) {
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    gapicClass.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(clazz, fileName, visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(clazz), fileName);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  public static void assertGoldenSamples(
+      Class<?> clazz, String sampleDirName, String packkage, List<Sample> samples) {
+    for (Sample sample : samples) {
+      String fileName = JavaStyle.toUpperCamelCase(sample.name()).concat(".golden");
+      String goldenSampleDir =
+          Utils.getGoldenDir(clazz) + "/samples/" + sampleDirName.toLowerCase() + "/";
+      Path goldenFilePath = Paths.get(goldenSampleDir, fileName);
+      sample =
+          sample
+              .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
+              .withRegionTag(sample.regionTag().withApiShortName("goldenSample"));
+
+      String sampleString = SampleCodeWriter.writeExecutableSample(sample, packkage + ".samples");
+
+      Utils.saveSampleCodegenToFile(clazz, sampleDirName, fileName, sampleString);
+      assertCodeEquals(goldenFilePath, sampleString);
     }
   }
 }
