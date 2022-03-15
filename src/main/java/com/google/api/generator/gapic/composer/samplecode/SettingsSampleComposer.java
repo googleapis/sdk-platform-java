@@ -25,6 +25,8 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.RegionTag;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
 import java.util.Arrays;
@@ -32,9 +34,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class SettingsSampleCodeComposer {
+public final class SettingsSampleComposer {
 
-  public static Optional<String> composeSampleCode(
+  public static Optional<Sample> composeSettingsSample(
       Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
     if (!methodNameOpt.isPresent()) {
       return Optional.empty();
@@ -76,6 +78,7 @@ public final class SettingsSampleCodeComposer {
             .setMethodName(
                 JavaStyle.toLowerCamelCase(String.format("%sSettings", methodNameOpt.get())))
             .build();
+    String disambiguation = "Settings";
     MethodInvocationExpr retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
@@ -121,6 +124,7 @@ public final class SettingsSampleCodeComposer {
                 .setType(classType)
                 .setName(JavaStyle.toLowerCamelCase(settingsClassName))
                 .build());
+
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
@@ -140,6 +144,12 @@ public final class SettingsSampleCodeComposer {
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-    return Optional.of(SampleCodeWriter.write(statements));
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(classType.reference().name())
+            .setRpcName(methodNameOpt.get())
+            .build();
+    return Optional.of(Sample.builder().setBody(statements).setRegionTag(regionTag).build());
   }
 }

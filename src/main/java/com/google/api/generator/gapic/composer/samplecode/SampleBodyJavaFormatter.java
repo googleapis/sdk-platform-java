@@ -18,9 +18,9 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
-public final class SampleCodeBodyJavaFormatter {
+public final class SampleBodyJavaFormatter {
 
-  private SampleCodeBodyJavaFormatter() {}
+  private SampleBodyJavaFormatter() {}
 
   private static final Formatter FORMATTER = new Formatter();
 

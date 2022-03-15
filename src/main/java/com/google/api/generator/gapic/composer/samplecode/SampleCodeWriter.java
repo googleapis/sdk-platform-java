@@ -19,7 +19,6 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.common.annotations.VisibleForTesting;
-import java.util.Arrays;
 import java.util.List;
 
 public final class SampleCodeWriter {
@@ -38,7 +37,7 @@ public final class SampleCodeWriter {
     for (Statement statement : statements) {
       statement.accept(visitor);
     }
-    String formattedSampleCode = SampleCodeBodyJavaFormatter.format(visitor.write());
+    String formattedSampleCode = SampleBodyJavaFormatter.format(visitor.write());
     // Escape character "@" in the markdown code block <pre>{@code...} tags.
     return formattedSampleCode.replaceAll("@", "{@literal @}");
   }
