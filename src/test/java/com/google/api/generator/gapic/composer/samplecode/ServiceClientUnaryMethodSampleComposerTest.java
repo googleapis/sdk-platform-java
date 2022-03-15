@@ -69,7 +69,7 @@ public class ServiceClientUnaryMethodSampleComposerTest {
             .build();
     String results =
         writeStatements(
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
@@ -121,7 +121,7 @@ public class ServiceClientUnaryMethodSampleComposerTest {
     Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, clientType, resourceNames, messageTypes));
   }
 
@@ -169,7 +169,7 @@ public class ServiceClientUnaryMethodSampleComposerTest {
             .build();
     String results =
         writeStatements(
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
@@ -227,7 +227,7 @@ public class ServiceClientUnaryMethodSampleComposerTest {
             .build();
     String results =
         writeStatements(
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
@@ -267,7 +267,7 @@ public class ServiceClientUnaryMethodSampleComposerTest {
             .build();
     String results =
         writeStatements(
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
@@ -318,7 +318,7 @@ public class ServiceClientUnaryMethodSampleComposerTest {
             .build();
     String results =
         writeStatements(
-            ServiceClientUnaryMethodSampleComposer.composeDefaultSample(
+            ServiceClientMethodSampleComposer.composeCanonicalSample(
                 method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(

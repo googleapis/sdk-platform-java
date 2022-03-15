@@ -34,7 +34,8 @@ public class SettingsSampleComposerTest {
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleComposer.composeSettingsSample(Optional.empty(), "EchoSettings", classType));
+            SettingsSampleComposer.composeSettingsSample(
+                Optional.empty(), "EchoSettings", classType));
     assertEquals(results, Optional.empty());
   }
 
@@ -48,7 +49,8 @@ public class SettingsSampleComposerTest {
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleComposer.composeSettingsSample(Optional.of("Echo"), "EchoSettings", classType));
+            SettingsSampleComposer.composeSettingsSample(
+                Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
@@ -75,7 +77,8 @@ public class SettingsSampleComposerTest {
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleComposer.composeSettingsSample(Optional.of("Echo"), "EchoSettings", classType));
+            SettingsSampleComposer.composeSettingsSample(
+                Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",

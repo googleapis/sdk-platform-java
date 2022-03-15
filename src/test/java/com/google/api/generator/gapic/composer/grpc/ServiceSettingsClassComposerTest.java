@@ -19,7 +19,6 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Test;
@@ -46,10 +45,12 @@ public class ServiceSettingsClassComposerTest {
   public void generateServiceSettingsClasses() {
     Service service = context.services().get(0);
     GapicClass clazz = ServiceSettingsClassComposer.instance().generate(context, service);
-    String goldenSampleDir = Utils.getGoldenDir(this.getClass()) + "samples/servicesettings/";
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertGoldenSamples(
-        clazz.samples(), clazz.classDefinition().packageString(), goldenSampleDir);
+        this.getClass(),
+        "servicesettings",
+        clazz.classDefinition().packageString(),
+        clazz.samples());
   }
 }
