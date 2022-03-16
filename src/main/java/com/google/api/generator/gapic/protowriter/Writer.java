@@ -17,9 +17,12 @@ package com.google.api.generator.gapic.protowriter;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -43,7 +46,7 @@ public class Writer {
       String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
-    JarOutputStream jos = null;
+    JarOutputStream jos;
     try {
       jos = new JarOutputStream(output);
     } catch (IOException e) {
@@ -51,52 +54,11 @@ public class Writer {
     }
 
     for (GapicClass gapicClazz : clazzes) {
-      ClassDefinition clazz = gapicClazz.classDefinition();
-
-      clazz.accept(codeWriter);
-      String code = codeWriter.write();
-      codeWriter.clear();
-
-      String path = getPath(clazz.packageString(), clazz.classIdentifier().name());
-      String className = clazz.classIdentifier().name();
-      JarEntry jarEntry = new JarEntry(String.format("%s/%s.java", path, className));
-      try {
-        jos.putNextEntry(jarEntry);
-        jos.write(code.getBytes(StandardCharsets.UTF_8));
-      } catch (IOException e) {
-        throw new GapicWriterException(
-            String.format(
-                "Could not write code for class %s.%s: %s",
-                clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()));
-      }
+      String classPath = writeClazz(gapicClazz, codeWriter, jos);
+      writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
-    // Write the package info.
-    PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
-    packageInfo.accept(codeWriter);
-    String code = codeWriter.write();
-    codeWriter.clear();
-
-    String path = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
-    JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", path));
-    try {
-      jos.putNextEntry(jarEntry);
-      jos.write(code.getBytes(StandardCharsets.UTF_8));
-    } catch (IOException e) {
-      throw new GapicWriterException("Could not write code for package-info.java");
-    }
-
-    if (context.gapicMetadataEnabled()) {
-      // Write the mdatadata file.
-      jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
-      try {
-        jos.putNextEntry(jarEntry);
-        jos.write(
-            JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
-      } catch (IOException e) {
-        throw new GapicWriterException("Could not write gapic_metadata.json");
-      }
-    }
+    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
 
     try {
       jos.finish();
@@ -114,6 +76,84 @@ public class Writer {
     return response.build();
   }
 
+  private static String writeClazz(
+      GapicClass gapicClazz, JavaWriterVisitor codeWriter, JarOutputStream jos) {
+    ClassDefinition clazz = gapicClazz.classDefinition();
+
+    clazz.accept(codeWriter);
+    String code = codeWriter.write();
+    codeWriter.clear();
+
+    String path = getPath(clazz.packageString(), clazz.classIdentifier().name());
+    String className = clazz.classIdentifier().name();
+    JarEntry jarEntry = new JarEntry(String.format("%s/%s.java", path, className));
+    try {
+      jos.putNextEntry(jarEntry);
+      jos.write(code.getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException(
+          String.format(
+              "Could not write code for class %s.%s: %s",
+              clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()));
+    }
+    return path;
+  }
+
+  private static void writeSamples(
+      GapicClass gapicClazz, String pakkage, String clazzPath, JarOutputStream jos) {
+    for (Sample sample : gapicClazz.samples()) {
+      JarEntry jarEntry =
+          new JarEntry(
+              String.format(
+                  "samples/generated/%s/%s/%s/%s.java",
+                  clazzPath,
+                  sample.regionTag().serviceName(),
+                  sample.regionTag().rpcName(),
+                  JavaStyle.toUpperCamelCase(sample.name())));
+      String executableSampleCode = SampleCodeWriter.writeExecutableSample(sample, pakkage);
+      try {
+        jos.putNextEntry(jarEntry);
+        jos.write(executableSampleCode.getBytes(StandardCharsets.UTF_8));
+      } catch (IOException e) {
+        throw new GapicWriterException(
+            String.format(
+                "Could not write sample code for %s/%s.: %s",
+                clazzPath, sample.name(), e.getMessage()));
+      }
+    }
+  }
+
+  private static String writePackageInfo(
+      GapicPackageInfo gapicPackageInfo, JavaWriterVisitor codeWriter, JarOutputStream jos) {
+    PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
+    packageInfo.accept(codeWriter);
+    String code = codeWriter.write();
+    codeWriter.clear();
+
+    String packagePath = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
+    JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", packagePath));
+    try {
+      jos.putNextEntry(jarEntry);
+      jos.write(code.getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write code for package-info.java");
+    }
+    return packagePath;
+  }
+
+  private static void writeMetadataFile(GapicContext context, String path, JarOutputStream jos) {
+    if (context.gapicMetadataEnabled()) {
+      JarEntry jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
+      try {
+        jos.putNextEntry(jarEntry);
+        jos.write(
+            JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
+      } catch (IOException e) {
+        throw new GapicWriterException("Could not write gapic_metadata.json");
+      }
+    }
+  }
+
   private static String getPath(String pakkage, String className) {
     String path = pakkage.replaceAll("\\.", "/");
     if (className.startsWith("Mock") || className.endsWith("Test")) {
@@ -127,5 +167,9 @@ public class Writer {
       path = "proto/" + path;
     }
     return path;
+  }
+
+  private static String getSamplePackage(GapicClass gapicClazz) {
+    return gapicClazz.classDefinition().packageString().concat(".samples");
   }
 }
