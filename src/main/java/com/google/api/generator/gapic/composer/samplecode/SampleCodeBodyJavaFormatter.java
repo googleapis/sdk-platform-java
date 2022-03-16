@@ -54,7 +54,7 @@ public final class SampleCodeBodyJavaFormatter {
     // 1. Removing the first and last two lines.
     // 2. Delete the first 4 space for each line.
     // 3. Trim the last new empty line.
-    Pattern pattern = Pattern.compile("^([^\n]*\n){2}|([^\n]*\n){2}$");
+    Pattern pattern = Pattern.compile("(^([^\n]*\n){2})|(([^\n]*\n){2}$)");
     Matcher matcher = pattern.matcher(formattedString);
     formattedString = matcher.replaceAll("");
 
