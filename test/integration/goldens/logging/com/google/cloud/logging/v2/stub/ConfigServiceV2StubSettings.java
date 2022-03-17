@@ -103,6 +103,8 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of getBucket to 30 seconds:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * ConfigServiceV2StubSettings.Builder configSettingsBuilder =
  *     ConfigServiceV2StubSettings.newBuilder();
  * configSettingsBuilder

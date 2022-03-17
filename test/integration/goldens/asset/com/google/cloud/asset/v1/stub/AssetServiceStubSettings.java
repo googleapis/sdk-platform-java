@@ -102,6 +102,8 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * AssetServiceStubSettings.Builder assetServiceSettingsBuilder =
  *     AssetServiceStubSettings.newBuilder();
  * assetServiceSettingsBuilder
