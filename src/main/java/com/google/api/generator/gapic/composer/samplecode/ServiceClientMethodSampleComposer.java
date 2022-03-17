@@ -30,8 +30,9 @@ import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
@@ -41,56 +42,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientMethodSampleComposer {
-  public static String composeRpcMethodHeaderSampleCode(
-      Method method,
-      TypeNode clientType,
-      List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
-    VariableExpr clientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
-                .setType(clientType)
-                .build());
-
-    // Assign method's arguments variable with the default values.
-    List<VariableExpr> rpcMethodArgVarExprs =
-        ServiceClientSampleUtil.createRpcMethodArgumentVariableExprs(arguments);
-    List<Expr> rpcMethodArgDefaultValueExprs =
-        ServiceClientSampleUtil.createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-    List<Expr> rpcMethodArgAssignmentExprs =
-        ServiceClientSampleUtil.createAssignmentsForVarExprsWithValueExprs(
-            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
-
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.addAll(rpcMethodArgAssignmentExprs);
-
-    List<Statement> bodyStatements = new ArrayList<>();
-    if (method.isPaged()) {
-      bodyStatements.addAll(
-          composeUnaryPagedRpcMethodBodyStatements(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
-    } else if (method.hasLro()) {
-      bodyStatements.addAll(
-          composeUnaryLroRpcMethodBodyStatements(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
-    } else {
-      bodyStatements.addAll(
-          composeUnaryRpcMethodBodyStatements(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
-    }
-
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(
-                ServiceClientSampleUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
-  }
-
-  public static String composeRpcDefaultMethodHeaderSampleCode(
+  public static Sample composeCanonicalSample(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -125,30 +77,40 @@ public class ServiceClientMethodSampleComposer {
     bodyExprs.add(requestAssignmentExpr);
 
     List<Statement> bodyStatements = new ArrayList<>();
+    RegionTag regionTag;
     if (method.isPaged()) {
-      bodyStatements.addAll(
-          composeUnaryPagedRpcMethodBodyStatements(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
+      // e.g. echoClient.pagedExpand(request).iterateAll()
+      Sample unaryPagedRpc =
+          composePagedSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes);
+      bodyStatements.addAll(unaryPagedRpc.body());
+      regionTag = unaryPagedRpc.regionTag();
     } else if (method.hasLro()) {
-      bodyStatements.addAll(
-          composeUnaryLroRpcMethodBodyStatements(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
+      Sample unaryLroRpc = composeLroSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs);
+      bodyStatements.addAll(unaryLroRpc.body());
+      regionTag = unaryLroRpc.regionTag();
     } else {
-      bodyStatements.addAll(
-          composeUnaryRpcMethodBodyStatements(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
+      // e.g. echoClient.echo(request)
+      Sample unaryRpc = composeSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs);
+      bodyStatements.addAll(unaryRpc.body());
+      regionTag = unaryRpc.regionTag();
     }
 
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(
-                ServiceClientSampleUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> body =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(
+                    SampleComposerUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
+    //  setting overloadDisambiguation to empty since this is the canonical snippet
+    return Sample.builder()
+        .setBody(body)
+        .setRegionTag(regionTag.withOverloadDisambiguation(""))
+        .build();
   }
 
-  private static List<Statement> composeUnaryRpcMethodBodyStatements(
+  static Sample composeSample(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -157,7 +119,7 @@ public class ServiceClientMethodSampleComposer {
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
-    boolean returnsVoid = ServiceClientSampleUtil.isProtoEmptyType(method.outputType());
+    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.outputType());
     MethodInvocationExpr clientRpcMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
@@ -179,10 +141,21 @@ public class ServiceClientMethodSampleComposer {
               .build());
     }
 
-    return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setOverloadDisambiguation(
+                SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
+            .build();
+    return Sample.builder()
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setRegionTag(regionTag)
+        .build();
   }
 
-  private static List<Statement> composeUnaryPagedRpcMethodBodyStatements(
+  static Sample composePagedSample(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -215,6 +188,7 @@ public class ServiceClientMethodSampleComposer {
             .setArguments(
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
+
     clientMethodIterateAllExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientMethodIterateAllExpr)
@@ -241,10 +215,17 @@ public class ServiceClientMethodSampleComposer {
     bodyExprs.clear();
     bodyStatements.add(loopIteratorStatement);
 
-    return bodyStatements;
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setOverloadDisambiguation(
+                SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
+            .build();
+    return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
 
-  private static List<Statement> composeUnaryLroRpcMethodBodyStatements(
+  static Sample composeLroSample(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -252,7 +233,7 @@ public class ServiceClientMethodSampleComposer {
     // Assign response variable with invoking client's LRO method.
     // e.g. if return void, echoClient.waitAsync(ttl).get(); or,
     // e.g. if return other type, WaitResponse response = echoClient.waitAsync(ttl).get();
-    Expr invokeLroGetMethodExpr =
+    MethodInvocationExpr invokeLroGetMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(String.format("%sAsync", JavaStyle.toLowerCamelCase(method.name())))
@@ -265,7 +246,7 @@ public class ServiceClientMethodSampleComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    boolean returnsVoid = ServiceClientSampleUtil.isProtoEmptyType(method.lro().responseType());
+    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.lro().responseType());
     if (returnsVoid) {
       bodyExprs.add(invokeLroGetMethodExpr);
     } else {
@@ -284,7 +265,17 @@ public class ServiceClientMethodSampleComposer {
               .setValueExpr(invokeLroGetMethodExpr)
               .build());
     }
-
-    return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setOverloadDisambiguation(
+                SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
+            .build();
+    return Sample.builder()
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setRegionTag(regionTag)
+        .build();
   }
 }

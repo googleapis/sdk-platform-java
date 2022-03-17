@@ -21,11 +21,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class SampleBodyJavaFormatter {
-
   private SampleBodyJavaFormatter() {}
 
   private static final Formatter FORMATTER = new Formatter();
-
   private static final String FAKE_CLASS_TITLE = "public class FakeClass { void fakeMethod() {\n";
   private static final String FAKE_CLASS_CLOSE = "}}";
 

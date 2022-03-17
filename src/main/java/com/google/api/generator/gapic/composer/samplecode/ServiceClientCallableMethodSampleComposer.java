@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,8 +45,9 @@ import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -57,9 +58,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ServiceClientCallableSampleComposer {
+public class ServiceClientCallableMethodSampleComposer {
   // Compose sample code for the method where it is CallableMethodKind.LRO.
-  public static String composeLroCallableMethodHeaderSampleCode(
+  public static Sample composeLroCallableMethod(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -123,7 +124,6 @@ public class ServiceClientCallableSampleComposer {
             .setVariableExpr(operationFutureVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(rpcMethodInvocationExpr)
             .build());
-
     List<Statement> bodyStatements =
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
     bodyExprs.clear();
@@ -139,7 +139,7 @@ public class ServiceClientCallableSampleComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    boolean returnsVoid = ServiceClientSampleUtil.isProtoEmptyType(method.lro().responseType());
+    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.lro().responseType());
     if (returnsVoid) {
       bodyExprs.add(futureGetMethodExpr);
     } else {
@@ -162,17 +162,26 @@ public class ServiceClientCallableSampleComposer {
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     bodyExprs.clear();
 
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(
-                ServiceClientSampleUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientType.reference().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("OperationCallable")
+            .build();
+    List<Statement> body =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(
+                    SampleComposerUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
+    return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
 
   // Compose sample code for the method where it is CallableMethodKind.PAGED.
-  public static String composePagedCallableMethodHeaderSampleCode(
+  public static Sample composePagedCallableMethod(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -281,18 +290,27 @@ public class ServiceClientCallableSampleComposer {
             .setBody(Arrays.asList(lineCommentStatement))
             .build();
     bodyStatements.add(repeatedResponseForStatement);
+    List<Statement> body =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(
+                    SampleComposerUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
 
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(
-                ServiceClientSampleUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientType.reference().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("PagedCallable")
+            .build();
+    return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
 
   // Compose sample code for the method where it is CallableMethodKind.REGULAR.
-  public static String composeRegularCallableMethodHeaderSampleCode(
+  public static Sample composeRegularCallableMethod(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -325,24 +343,32 @@ public class ServiceClientCallableSampleComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     bodyStatements.add(ExprStatement.withExpr(requestAssignmentExpr));
 
+    RegionTag regionTag;
     if (method.isPaged()) {
-      bodyStatements.addAll(
-          composePagedCallableBodyStatements(method, clientVarExpr, requestVarExpr, messageTypes));
+      Sample pagedCallable =
+          composePagedCallableSample(method, clientVarExpr, requestVarExpr, messageTypes);
+      bodyStatements.addAll(pagedCallable.body());
+      regionTag = pagedCallable.regionTag();
     } else {
-      bodyStatements.addAll(
-          composeUnaryOrLroCallableBodyStatements(method, clientVarExpr, requestVarExpr));
+      // e.g.  echoClient.echoCallable().futureCall(request)
+      Sample unaryOrLroCallable =
+          composeUnaryOrLroCallableSample(method, clientVarExpr, requestVarExpr);
+      bodyStatements.addAll(unaryOrLroCallable.body());
+      regionTag = unaryOrLroCallable.regionTag();
     }
 
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(
-                ServiceClientSampleUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> body =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(
+                    SampleComposerUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
+    return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
 
-  public static String composeStreamCallableMethodHeaderSampleCode(
+  public static Sample composeStreamCallableMethod(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -371,28 +397,106 @@ public class ServiceClientCallableSampleComposer {
             .setValueExpr(requestBuilderExpr)
             .build();
 
+    RegionTag regionTag = null;
     List<Statement> bodyStatements = new ArrayList<>();
-    if (method.stream().equals(Stream.SERVER)) {
-      bodyStatements.addAll(
-          composeStreamServerBodyStatements(method, clientVarExpr, requestAssignmentExpr));
-    } else if (method.stream().equals(Stream.BIDI)) {
-      bodyStatements.addAll(
-          composeStreamBidiBodyStatements(method, clientVarExpr, requestAssignmentExpr));
-    } else if (method.stream().equals(Stream.CLIENT)) {
-      bodyStatements.addAll(
-          composeStreamClientBodyStatements(method, clientVarExpr, requestAssignmentExpr));
+    if (method.stream().equals(Method.Stream.SERVER)) {
+      // e.g. ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
+      Sample streamServer = composeStreamServerSample(method, clientVarExpr, requestAssignmentExpr);
+      bodyStatements.addAll(streamServer.body());
+      regionTag = streamServer.regionTag();
+    } else if (method.stream().equals(Method.Stream.BIDI)) {
+      // e.g. echoClient.collect().clientStreamingCall(responseObserver);
+      Sample streamBidi = composeStreamBidiSample(method, clientVarExpr, requestAssignmentExpr);
+      bodyStatements.addAll(streamBidi.body());
+      regionTag = streamBidi.regionTag();
+    } else if (method.stream().equals(Method.Stream.CLIENT)) {
+      Sample streamClient = composeStreamClientSample(method, clientVarExpr, requestAssignmentExpr);
+      bodyStatements.addAll(streamClient.body());
+      regionTag = streamClient.regionTag();
     }
 
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(
-                ServiceClientSampleUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+    List<Statement> body =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(
+                    SampleComposerUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
+    return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
 
-  private static List<Statement> composeStreamBidiBodyStatements(
+  private static Sample composeStreamServerSample(
+      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(requestAssignmentExpr);
+
+    // Create server stream variable expression, and assign it a value by invoking server stream
+    // method.
+    // e.g. ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request)
+    TypeNode serverStreamType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ServerStream.class)
+                .setGenerics(method.outputType().reference())
+                .build());
+    VariableExpr serverStreamVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("stream").setType(serverStreamType).build());
+    MethodInvocationExpr clientStreamCallMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    clientStreamCallMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientStreamCallMethodInvocationExpr)
+            .setMethodName("call")
+            .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
+            .setReturnType(serverStreamType)
+            .build();
+    AssignmentExpr streamAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(serverStreamVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(clientStreamCallMethodInvocationExpr)
+            .build();
+    bodyExprs.add(streamAssignmentExpr);
+
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+
+    // For-loop on server stream variable expression.
+    // e.g. for (EchoResponse response : stream) {
+    //        // Do something when a response is received.
+    //      }
+    VariableExpr responseVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("response").setType(method.outputType()).build())
+            .setIsDecl(true)
+            .build();
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(responseVarExpr)
+            .setCollectionExpr(serverStreamVarExpr)
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("Do something when a response is received."))))
+            .build();
+    bodyStatements.add(forStatement);
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("StreamServer")
+            .build();
+    return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
+  }
+
+  private static Sample composeStreamBidiSample(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
 
@@ -462,10 +566,17 @@ public class ServiceClientCallableSampleComposer {
             .build();
     bodyStatements.add(forStatement);
 
-    return bodyStatements;
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("StreamBidi")
+            .build();
+    return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
 
-  private static List<Statement> composeStreamClientBodyStatements(
+  private static Sample composeStreamClientSample(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
 
@@ -588,73 +699,21 @@ public class ServiceClientCallableSampleComposer {
             .build();
     bodyExprs.add(onNextMethodExpr);
 
-    return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .setOverloadDisambiguation("StreamClient")
+            .build();
+    return Sample.builder()
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setRegionTag(regionTag)
+        .build();
   }
 
-  private static List<Statement> composeStreamServerBodyStatements(
-      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(requestAssignmentExpr);
-
-    // Create server stream variable expression, and assign it a value by invoking server stream
-    // method.
-    // e.g. ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request)
-    TypeNode serverStreamType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ServerStream.class)
-                .setGenerics(method.outputType().reference())
-                .build());
-    VariableExpr serverStreamVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("stream").setType(serverStreamType).build());
-    MethodInvocationExpr clientStreamCallMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientVarExpr)
-            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
-            .build();
-    clientStreamCallMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientStreamCallMethodInvocationExpr)
-            .setMethodName("call")
-            .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
-            .setReturnType(serverStreamType)
-            .build();
-    AssignmentExpr streamAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(serverStreamVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(clientStreamCallMethodInvocationExpr)
-            .build();
-    bodyExprs.add(streamAssignmentExpr);
-
-    List<Statement> bodyStatements =
-        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
-
-    // For-loop on server stream variable expression.
-    // e.g. for (EchoResponse response : stream) {
-    //        // Do something when a response is received.
-    //      }
-    VariableExpr responseVarExpr =
-        VariableExpr.builder()
-            .setVariable(
-                Variable.builder().setName("response").setType(method.outputType()).build())
-            .setIsDecl(true)
-            .build();
-    ForStatement forStatement =
-        ForStatement.builder()
-            .setLocalVariableExpr(responseVarExpr)
-            .setCollectionExpr(serverStreamVarExpr)
-            .setBody(
-                Arrays.asList(
-                    CommentStatement.withComment(
-                        LineComment.withComment("Do something when a response is received."))))
-            .build();
-    bodyStatements.add(forStatement);
-
-    return bodyStatements;
-  }
-
-  private static List<Statement> composeUnaryOrLroCallableBodyStatements(
+  private static Sample composeUnaryOrLroCallableSample(
       Method method, VariableExpr clientVarExpr, VariableExpr requestVarExpr) {
     List<Statement> bodyStatements = new ArrayList<>();
     // Create api future variable expression, and assign it with a value by invoking callable
@@ -699,7 +758,7 @@ public class ServiceClientCallableSampleComposer {
             .setReturnType(method.outputType())
             .build();
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
-    boolean returnsVoid = ServiceClientSampleUtil.isProtoEmptyType(methodOutputType);
+    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(methodOutputType);
     if (returnsVoid) {
       bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
     } else {
@@ -716,10 +775,17 @@ public class ServiceClientCallableSampleComposer {
               .build();
       bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
     }
-    return bodyStatements;
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .build();
+    return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
 
-  private static List<Statement> composePagedCallableBodyStatements(
+  private static Sample composePagedCallableSample(
       Method method,
       VariableExpr clientVarExpr,
       VariableExpr requestVarExpr,
@@ -855,6 +921,16 @@ public class ServiceClientCallableSampleComposer {
                     PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
             .setBody(whileBodyStatements)
             .build();
-    return Arrays.asList(pagedWhileStatement);
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setOverloadDisambiguation("Paged")
+            .build();
+    return Sample.builder()
+        .setBody(Arrays.asList(pagedWhileStatement))
+        .setRegionTag(regionTag)
+        .build();
   }
 }

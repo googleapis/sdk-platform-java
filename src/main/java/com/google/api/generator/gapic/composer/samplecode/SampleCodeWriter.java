@@ -33,6 +33,11 @@ public final class SampleCodeWriter {
   }
 
   @VisibleForTesting
+  public static String write(Statement... statement) {
+    return write(Arrays.asList(statement));
+  }
+
+  @VisibleForTesting
   public static String write(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
@@ -48,9 +53,5 @@ public final class SampleCodeWriter {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDefinition.accept(visitor);
     return visitor.write();
-  }
-
-  public static String write(Statement... statement) {
-    return write(Arrays.asList(statement));
   }
 }
