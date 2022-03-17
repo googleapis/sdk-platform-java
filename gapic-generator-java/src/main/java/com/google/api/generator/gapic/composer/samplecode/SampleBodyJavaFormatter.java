@@ -20,9 +20,9 @@ import com.google.googlejavaformat.java.FormatterException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class SampleCodeBodyJavaFormatter {
+public final class SampleBodyJavaFormatter {
 
-  private SampleCodeBodyJavaFormatter() {}
+  private SampleBodyJavaFormatter() {}
 
   private static final Formatter FORMATTER = new Formatter();
 
