@@ -17,14 +17,16 @@ package com.google.api.generator.gapic.composer.samplecode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public final class SampleCodeJavaFormatter {
+public final class SampleCodeBodyJavaFormatter {
 
-  private SampleCodeJavaFormatter() {}
+  private SampleCodeBodyJavaFormatter() {}
 
   private static final Formatter FORMATTER = new Formatter();
 
-  private static final String FAKE_CLASS_TITLE = "public class FakeClass { void fakeMethod() {";
+  private static final String FAKE_CLASS_TITLE = "public class FakeClass { void fakeMethod() {\n";
   private static final String FAKE_CLASS_CLOSE = "}}";
 
   /**
@@ -52,10 +54,15 @@ public final class SampleCodeJavaFormatter {
     // 1. Removing the first and last two lines.
     // 2. Delete the first 4 space for each line.
     // 3. Trim the last new empty line.
-    return formattedString
-        .replaceAll("^([^\n]*\n){2}|([^\n]*\n){2}$", "")
-        .replaceAll("(?m)^ {4}", "")
-        .trim();
+    Pattern pattern = Pattern.compile("(^([^\n]*\n){2})|(([^\n]*\n){2}$)");
+    Matcher matcher = pattern.matcher(formattedString);
+    formattedString = matcher.replaceAll("");
+
+    pattern = Pattern.compile("(?m)^ {4}");
+    matcher = pattern.matcher(formattedString);
+    formattedString = matcher.replaceAll("");
+
+    return formattedString.trim();
   }
 
   @VisibleForTesting
