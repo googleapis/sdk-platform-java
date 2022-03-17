@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
-public class SampleCodeJavaFormatterTest {
+public class SampleBodyJavaFormatterTest {
 
   @Test
   public void validFormatSampleCode_tryCatchStatement() {

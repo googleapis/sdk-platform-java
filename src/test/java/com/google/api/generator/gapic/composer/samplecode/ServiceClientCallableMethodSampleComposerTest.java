@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,36 +14,34 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.testutils.LineFormatter;
-import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.protobuf.Descriptors;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import org.junit.Assert;
 import org.junit.Test;
 
-public class ServiceClientCallableMethodSampleCodeComposerTest {
+public class ServiceClientCallableMethodSampleComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
   private static final String PAGINATED_FIELD_NAME = "page_size";
 
-  // ================================LRO Callable Method Sample Code ====================//
+  /*Testing composeLroCallableMethod*/
   @Test
-  public void validComposeLroCallableMethodHeaderSampleCode_withReturnResponse() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeLroCallableMethod_withReturnResponse() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -86,8 +84,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeLroCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeLroCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -97,12 +96,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "  // Do something.\n",
             "  WaitResponse response = future.get();\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void validComposeLroCallableMethodHeaderSampleCode_withReturnVoid() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeLroCallableMethod_withReturnVoid() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -142,8 +141,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeLroCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeLroCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -153,13 +153,13 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "  // Do something.\n",
             "  future.get();\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
-  // ================================Paged Callable Method Sample Code ====================//
+  /*Testing composePagedCallableMethod*/
   @Test
-  public void validComposePagedCallableMethodHeaderSampleCode() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composePagedCallableMethod() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -188,8 +188,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composePagedCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -206,12 +207,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "    // doThingsWith(element);\n",
             "  }\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void invalidComposePagedCallableMethodHeaderSampleCode_inputTypeNotExistInMessage() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composePagedCallableMethod_inputTypeNotExistInMessage() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -239,16 +240,16 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setOutputType(outputType)
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composePagedCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
   @Test
-  public void invalidComposePagedCallableMethodHeaderSampleCode_noExistMethodResponse() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composePagedCallableMethod_noExistMethodResponse() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -276,16 +277,16 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setOutputType(outputType)
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composePagedCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
   @Test
-  public void invalidComposePagedCallableMethodHeaderSampleCode_noRepeatedResponse() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composePagedCallableMethod_noRepeatedResponse() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -327,17 +328,17 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setFields(Arrays.asList(responseField))
             .build();
     messageTypes.put("NoRepeatedResponse", noRepeatedResponseMessage);
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composePagedCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
-  // ==============================Stream Callable Method Sample Code ====================//
+  /*Testing composeStreamCallableMethod*/
   @Test
-  public void validComposeStreamCallableMethodHeaderSampleCode_serverStream() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeStreamCallableMethod_serverStream() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -363,28 +364,28 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setName("Expand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setStream(Stream.SERVER)
+            .setStream(Method.Stream.SERVER)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  ExpandRequest request =\n",
-            "     "
-                + " ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
+            "      ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
             "  ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
             "  for (EchoResponse response : stream) {\n",
             "    // Do something when a response is received.\n",
             "  }\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void invalidComposeStreamCallableMethodHeaderSampleCode_serverStreamNotExistRequest() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composeStreamCallableMethod_serverStreamNotExistRequest() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -410,18 +411,18 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setName("Expand")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setStream(Stream.SERVER)
+            .setStream(Method.Stream.SERVER)
             .build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composeStreamCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
   @Test
-  public void validComposeStreamCallableMethodHeaderSampleCode_bidiStream() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeStreamCallableMethod_bidiStream() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -447,11 +448,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setName("chat")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setStream(Stream.BIDI)
+            .setStream(Method.Stream.BIDI)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -471,12 +473,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "    // Do something when a response is received.\n",
             "  }\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void invalidComposeStreamCallableMethodHeaderSampleCode_bidiStreamNotExistRequest() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composeStreamCallableMethod_bidiStreamNotExistRequest() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -502,18 +504,18 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setName("chat")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setStream(Stream.BIDI)
+            .setStream(Method.Stream.BIDI)
             .build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composeStreamCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
   @Test
-  public void validComposeStreamCallableMethodHeaderSampleCode_clientStream() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeStreamCallableMethod_clientStream() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -539,11 +541,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setName("Collect")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setStream(Stream.CLIENT)
+            .setStream(Method.Stream.CLIENT)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeStreamCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -577,12 +580,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "          .build();\n",
             "  requestObserver.onNext(request);\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void invalidComposeStreamCallableMethodHeaderSampleCode_clientStreamNotExistRequest() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composeStreamCallableMethod_clientStreamNotExistRequest() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -608,19 +611,19 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setName("Collect")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setStream(Stream.CLIENT)
+            .setStream(Method.Stream.CLIENT)
             .build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composeStreamCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
-  // ================================Regular Callable Method Sample Code ====================//
+  /*Testing composeRegularCallableMethod*/
   @Test
-  public void validComposeRegularCallableMethodHeaderSampleCode_unaryRpc() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeRegularCallableMethod_unaryRpc() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -644,8 +647,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
     Method method =
         Method.builder().setName("Echo").setInputType(inputType).setOutputType(outputType).build();
     String results =
-        ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -662,12 +666,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "  // Do something.\n",
             "  EchoResponse response = future.get();\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void validComposeRegularCallableMethodHeaderSampleCode_lroRpc() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeRegularCallableMethod_lroRpc() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -710,8 +714,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -720,12 +725,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "  // Do something.\n",
             "  Operation response = future.get();\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void validComposeRegularCallableMethodHeaderSampleCode_lroRpcWithReturnVoid() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeRegularCallableMethod_lroRpcWithReturnVoid() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -765,8 +770,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setLro(lro)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -775,12 +781,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "  // Do something.\n",
             "  future.get();\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void validComposeRegularCallableMethodHeaderSampleCode_pageRpc() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void valid_composeRegularCallableMethod_pageRpc() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -810,8 +816,9 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
     String results =
-        ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
-            method, clientType, resourceNames, messageTypes);
+        writeStatements(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
+                method, clientType, resourceNames, messageTypes));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -834,12 +841,12 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             "    }\n",
             "  }\n",
             "}");
-    assertEquals(results, expected);
+    Assert.assertEquals(results, expected);
   }
 
   @Test
-  public void invalidComposeRegularCallableMethodHeaderSampleCode_noExistMethodRequest() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composeRegularCallableMethod_noExistMethodRequest() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -862,16 +869,16 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
                 .build());
     Method method =
         Method.builder().setName("Echo").setInputType(inputType).setOutputType(outputType).build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
   @Test
-  public void invalidComposeRegularCallableMethodHeaderSampleCode_noExistMethodResponsePagedRpc() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composeRegularCallableMethod_noExistMethodResponsePagedRpc() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -899,16 +906,16 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setOutputType(outputType)
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
                 method, clientType, resourceNames, messageTypes));
   }
 
   @Test
-  public void invalidComposeRegularCallableMethodHeaderSampleCode_noRepeatedResponsePagedRpc() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+  public void invalid_composeRegularCallableMethod_noRepeatedResponsePagedRpc() {
+    Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
@@ -950,10 +957,14 @@ public class ServiceClientCallableMethodSampleCodeComposerTest {
             .setFields(Arrays.asList(responseField))
             .build();
     messageTypes.put("NoRepeatedResponse", noRepeatedResponseMessage);
-    assertThrows(
+    Assert.assertThrows(
         NullPointerException.class,
         () ->
-            ServiceClientCallableSampleComposer.composeRegularCallableMethodHeaderSampleCode(
+            ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
                 method, clientType, resourceNames, messageTypes));
+  }
+
+  private String writeStatements(Sample sample) {
+    return SampleCodeWriter.write(sample.body());
   }
 }
