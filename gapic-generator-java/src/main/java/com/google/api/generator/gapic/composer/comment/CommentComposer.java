@@ -17,6 +17,9 @@ package com.google.api.generator.gapic.composer.comment;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.Statement;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommentComposer {
   private static final String APACHE_LICENSE_STRING =
@@ -52,4 +55,13 @@ public class CommentComposer {
   public static final CommentStatement AUTO_GENERATED_METHOD_COMMENT =
       CommentStatement.withComment(
           LineComment.withComment(AUTO_GENERATED_METHOD_DISCLAIMER_STRING));
+
+  public static final List<Statement> AUTO_GENERATED_SAMPLE_COMMENT =
+      Arrays.asList(
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "This snippet has been automatically generated for illustrative purposes only.")),
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "It may require modifications to work in your environment.")));
 }
