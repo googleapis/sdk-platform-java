@@ -86,7 +86,7 @@ public abstract class GapicClass {
             .map(entry -> entry.getValue().get(0))
             .collect(Collectors.toList());
 
-    if (uniqueSamples.size() == distinctSamplesGroupedByName.size()){
+    if (uniqueSamples.size() == distinctSamplesGroupedByName.size()) {
       return uniqueSamples;
     }
 
