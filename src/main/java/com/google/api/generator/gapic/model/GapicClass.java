@@ -86,6 +86,10 @@ public abstract class GapicClass {
             .map(entry -> entry.getValue().get(0))
             .collect(Collectors.toList());
 
+    if (uniqueSamples.size() == distinctSamplesGroupedByName.size()){
+      return uniqueSamples;
+    }
+
     // grab distinct samples with same name - similar version of same sample
     List<Map.Entry<String, List<Sample>>> duplicateDistinctSamples =
         distinctSamplesGroupedByName.entrySet().stream()
