@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.1.5](https://github.com/googleapis/api-common-java/compare/v2.1.4...v2.1.5) (2022-03-23)
+
+
+### Dependencies
+
+* guava 31.1 ([#346](https://github.com/googleapis/api-common-java/issues/346)) ([94ec147](https://github.com/googleapis/api-common-java/commit/94ec14787626d64b82197ae541fb152e66dfa442))
+* update dependency gradle to v6.9.2 ([#325](https://github.com/googleapis/api-common-java/issues/325)) ([58b33f5](https://github.com/googleapis/api-common-java/commit/58b33f5b83583f85a3091c83e1f13771aa7d0a1c))
+
 ### [2.1.4](https://github.com/googleapis/api-common-java/compare/v2.1.3...v2.1.4) (2022-02-07)
 
 
