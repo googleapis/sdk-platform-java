@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.8.0](https://github.com/googleapis/java-common-protos/compare/v2.7.4...v2.8.0) (2022-03-11)
+
+
+### Features
+
+* KMS configuration in settings ([#322](https://github.com/googleapis/java-common-protos/issues/322)) ([14ca04e](https://github.com/googleapis/java-common-protos/commit/14ca04e78d547cc643f419984747781c8915a261))
+
+
+### Dependencies
+
+* update dependency io.grpc:grpc-bom to v1.45.0 ([#323](https://github.com/googleapis/java-common-protos/issues/323)) ([ac71fd9](https://github.com/googleapis/java-common-protos/commit/ac71fd90e50498386c559b1e764c948677696ab9))
+* update dependency io.grpc:grpc-protobuf to v1.44.1 ([#324](https://github.com/googleapis/java-common-protos/issues/324)) ([7be56a8](https://github.com/googleapis/java-common-protos/commit/7be56a87aadcbebc98d3136d8c7f4a54a8fe802d))
+* update dependency io.grpc:grpc-protobuf to v1.45.0 ([#336](https://github.com/googleapis/java-common-protos/issues/336)) ([4bbd7a5](https://github.com/googleapis/java-common-protos/commit/4bbd7a5d8a57b0f171893e7f1ece6bee9f778f4e))
+* update dependency io.grpc:grpc-stub to v1.44.1 ([#325](https://github.com/googleapis/java-common-protos/issues/325)) ([bf00d6a](https://github.com/googleapis/java-common-protos/commit/bf00d6a3067df2a6f057be601b27b29accc9d0fb))
+* update dependency io.grpc:grpc-stub to v1.45.0 ([#335](https://github.com/googleapis/java-common-protos/issues/335)) ([3dd8e8f](https://github.com/googleapis/java-common-protos/commit/3dd8e8f4f9c56e4673b428b4ff43dfc30475c50c))
+
 ### [2.7.4](https://github.com/googleapis/java-common-protos/compare/v2.7.3...v2.7.4) (2022-02-11)
 
 
