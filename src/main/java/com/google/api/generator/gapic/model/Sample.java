@@ -43,7 +43,7 @@ public abstract class Sample {
         .setIsCanonical(false);
   }
 
-  abstract Builder toBuilder();
+  public abstract Builder toBuilder();
 
   public final Sample withHeader(List<CommentStatement> header) {
     return toBuilder().setFileHeader(header).build();

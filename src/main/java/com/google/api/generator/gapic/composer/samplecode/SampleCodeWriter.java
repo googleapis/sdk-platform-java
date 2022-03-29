@@ -15,6 +15,8 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Sample;
@@ -53,5 +55,10 @@ public final class SampleCodeWriter {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDefinition.accept(visitor);
     return visitor.write();
+  }
+
+  @VisibleForTesting
+  public static String write(Expr expr) {
+    return write(ExprStatement.withExpr(expr));
   }
 }
