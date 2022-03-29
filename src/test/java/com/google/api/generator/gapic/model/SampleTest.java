@@ -75,7 +75,8 @@ public class SampleTest {
   @Test
   public void sampleNameWithRegionTagCanonical() {
     String disambig = "Disambiguation";
-    Sample sample = Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
+    Sample sample =
+        Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
     Assert.assertEquals(disambig, sample.regionTag().overloadDisambiguation());
 
     sample = sample.toBuilder().setIsCanonical(true).build();
@@ -84,11 +85,11 @@ public class SampleTest {
     Assert.assertEquals("", sample.regionTag().overloadDisambiguation());
   }
 
-
   @Test
   public void sampleCanonicalOverload() {
     String disambig = "Disambiguation";
-    Sample sample = Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
+    Sample sample =
+        Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
     Assert.assertEquals(disambig, sample.regionTag().overloadDisambiguation());
     Assert.assertEquals(false, sample.isCanonical());
 
@@ -96,5 +97,4 @@ public class SampleTest {
     Assert.assertEquals("", sample.regionTag().overloadDisambiguation());
     Assert.assertEquals(true, sample.isCanonical());
   }
-
 }

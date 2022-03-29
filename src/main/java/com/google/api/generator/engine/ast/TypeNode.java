@@ -203,6 +203,11 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
     return isPrimitiveType() || equals(TypeNode.STRING) || equals(TypeNode.BYTESTRING);
   }
 
+  public boolean isProtoEmptyType() {
+    return reference().pakkage().equals("com.google.protobuf")
+        && reference().name().equals("Empty");
+  }
+
   public boolean isSupertypeOrEquals(TypeNode other) {
     boolean oneTypeIsNull = equals(TypeNode.NULL) ^ other.equals(TypeNode.NULL);
     return !isPrimitiveType()

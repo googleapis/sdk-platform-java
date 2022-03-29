@@ -47,13 +47,8 @@ public class SampleComposerUtil {
         && resourceNames.containsKey(arg.field().resourceReference().resourceTypeString());
   }
 
-  static boolean isProtoEmptyType(TypeNode type) {
-    return type.reference().pakkage().equals("com.google.protobuf")
-        && type.reference().name().equals("Empty");
-  }
-
   static String createOverloadDisambiguation(List<VariableExpr> methodArgVarExprs) {
-    if (methodArgVarExprs.isEmpty()){
+    if (methodArgVarExprs.isEmpty()) {
       return "Noargs";
     }
     return methodArgVarExprs.stream()

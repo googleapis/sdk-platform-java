@@ -104,7 +104,7 @@ public class ServiceClientCallableMethodSampleComposer {
             .setReturnType(method.outputType())
             .build();
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
-    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(methodOutputType);
+    boolean returnsVoid = methodOutputType.isProtoEmptyType();
     if (returnsVoid) {
       bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
     } else {
@@ -365,7 +365,7 @@ public class ServiceClientCallableMethodSampleComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.lro().responseType());
+    boolean returnsVoid = method.lro().responseType().isProtoEmptyType();
     if (returnsVoid) {
       bodyExprs.add(futureGetMethodExpr);
     } else {

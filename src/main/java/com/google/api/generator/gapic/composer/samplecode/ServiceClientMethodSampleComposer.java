@@ -115,7 +115,7 @@ public class ServiceClientMethodSampleComposer {
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
-    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.outputType());
+    boolean returnsVoid = method.outputType().isProtoEmptyType();
     MethodInvocationExpr clientRpcMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
@@ -242,7 +242,7 @@ public class ServiceClientMethodSampleComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(method.lro().responseType());
+    boolean returnsVoid = method.lro().responseType().isProtoEmptyType();
     if (returnsVoid) {
       bodyExprs.add(invokeLroGetMethodExpr);
     } else {
