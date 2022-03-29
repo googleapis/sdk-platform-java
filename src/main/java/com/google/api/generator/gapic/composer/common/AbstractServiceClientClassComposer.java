@@ -56,6 +56,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientCallableMethodSampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientMethodSampleComposer;
@@ -164,7 +165,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .build();
 
     updateGapicMetadata(context, service, className, grpcRpcsToJavaMethodNames);
-    return GapicClass.create(kind, classDef, samples);
+    return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples));
   }
 
   private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {

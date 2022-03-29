@@ -80,6 +80,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -199,7 +200,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setNestedClasses(
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
-    return GapicClass.create(GapicClass.Kind.STUB, classDef, samples);
+    return GapicClass.create(
+        GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples));
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {

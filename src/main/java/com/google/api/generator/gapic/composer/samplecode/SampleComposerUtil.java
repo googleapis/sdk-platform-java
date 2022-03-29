@@ -20,6 +20,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.List;
 import java.util.Map;
@@ -59,5 +60,54 @@ public class SampleComposerUtil {
                         ? arg.variable().type().typeKind().name().toLowerCase()
                         : arg.variable().type().reference().name().toLowerCase()))
         .collect(Collectors.joining());
+  }
+
+  public static List<Sample> handleDuplicateSamples(List<Sample> samples) {
+    //  grab all distinct samples and group by sample name
+    //  ie: { "echo", ["echo(request"],
+    //        "echoString", ["echo(parent)", "echo(child)", "echo(context)"],
+    //        "echoDelete", ["echo.delete(request)"] }
+    Map<String, List<Sample>> distinctSamplesGroupedByName =
+            samples.stream().distinct().collect(Collectors.groupingBy(s -> s.name()));
+
+    // collect samples that don't have duplicates
+    // ie: ["echo", "echoDelete"]
+    List<Sample> uniqueSamples =
+            distinctSamplesGroupedByName.entrySet().stream()
+                    .filter(entry -> entry.getValue().size() < 2)
+                    .map(entry -> entry.getValue().get(0))
+                    .collect(Collectors.toList());
+
+    if (uniqueSamples.size() == distinctSamplesGroupedByName.size()) {
+      return uniqueSamples;
+    }
+
+    // collect samples that do have duplicates
+    // ie: ["echoString"]
+    List<Map.Entry<String, List<Sample>>> duplicateDistinctSamples =
+            distinctSamplesGroupedByName.entrySet().stream()
+                    .filter(entry -> entry.getValue().size() > 1)
+                    .collect(Collectors.toList());
+
+    // update similar samples regionTag/name so filesname/regiontag are unique
+    // ie: ["echo", "echoDelete", "echoString", "echoString1"]
+    for (Map.Entry<String, List<Sample>> entry : duplicateDistinctSamples) {
+      int sampleNum = 0;
+      for (Sample sample : entry.getValue()) {
+        Sample uniqueSample = sample;
+        //  first sample will be "canonical", not updating name
+        if (sampleNum != 0) {
+          uniqueSample =
+                  sample.withRegionTag(
+                          sample
+                                  .regionTag()
+                                  .withOverloadDisambiguation(
+                                          sample.regionTag().overloadDisambiguation() + sampleNum));
+        }
+        uniqueSamples.add(uniqueSample);
+        sampleNum++;
+      }
+    }
+    return uniqueSamples;
   }
 }

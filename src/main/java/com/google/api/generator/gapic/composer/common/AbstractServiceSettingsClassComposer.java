@@ -51,6 +51,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
@@ -125,7 +126,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .setMethods(createClassMethods(service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
-    return GapicClass.create(kind, classDef, samples);
+    return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples));
   }
 
   private static List<CommentStatement> createClassHeaderComments(
