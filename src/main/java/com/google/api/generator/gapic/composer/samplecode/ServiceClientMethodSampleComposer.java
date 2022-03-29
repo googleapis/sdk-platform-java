@@ -103,11 +103,7 @@ public class ServiceClientMethodSampleComposer {
                 .setTryBody(bodyStatements)
                 .setIsSampleCode(true)
                 .build());
-    //  setting overloadDisambiguation to empty since this is the canonical snippet
-    return Sample.builder()
-        .setBody(body)
-        .setRegionTag(regionTag.withOverloadDisambiguation(""))
-        .build();
+    return Sample.builder().setBody(body).setRegionTag(regionTag).setIsCanonical(true).build();
   }
 
   static Sample composeSample(

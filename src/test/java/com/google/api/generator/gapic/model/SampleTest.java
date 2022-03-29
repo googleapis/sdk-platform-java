@@ -46,6 +46,7 @@ public class SampleTest {
     Assert.assertEquals(ImmutableList.of(), sample.fileHeader());
     Assert.assertEquals(ImmutableList.of(), sample.body());
     Assert.assertEquals(ImmutableList.of(), sample.variableAssignments());
+    Assert.assertEquals(false, sample.isCanonical());
   }
 
   @Test
@@ -70,4 +71,30 @@ public class SampleTest {
     sample = sample.withRegionTag(rt);
     Assert.assertEquals("AsyncRpcNameDisambiguation", sample.name());
   }
+
+  @Test
+  public void sampleNameWithRegionTagCanonical() {
+    String disambig = "Disambiguation";
+    Sample sample = Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
+    Assert.assertEquals(disambig, sample.regionTag().overloadDisambiguation());
+
+    sample = sample.toBuilder().setIsCanonical(true).build();
+    disambig = "NewDisambiguation";
+    sample.withRegionTag(regionTag.withOverloadDisambiguation(disambig));
+    Assert.assertEquals("", sample.regionTag().overloadDisambiguation());
+  }
+
+
+  @Test
+  public void sampleCanonicalOverload() {
+    String disambig = "Disambiguation";
+    Sample sample = Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
+    Assert.assertEquals(disambig, sample.regionTag().overloadDisambiguation());
+    Assert.assertEquals(false, sample.isCanonical());
+
+    sample = sample.toBuilder().setIsCanonical(true).build();
+    Assert.assertEquals("", sample.regionTag().overloadDisambiguation());
+    Assert.assertEquals(true, sample.isCanonical());
+  }
+
 }

@@ -19,6 +19,7 @@ package com.google.showcase.v1beta1.samples;
 // [START goldensample_generated_echoclient_simplepagedexpand_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.PagedExpandRequest;
 
 public class SyncSimplePagedExpand {
 
@@ -30,7 +31,13 @@ public class SyncSimplePagedExpand {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (EchoClient echoClient = EchoClient.create()) {
-      for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
+      PagedExpandRequest request =
+          PagedExpandRequest.newBuilder()
+              .setContent("content951530617")
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      for (EchoResponse element : echoClient.simplePagedExpand(request).iterateAll()) {
         // doThingsWith(element);
       }
     }

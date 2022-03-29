@@ -19,7 +19,6 @@ import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Sample;
-import com.google.api.generator.gapic.utils.JavaStyle;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -69,7 +68,7 @@ public class Assert {
   public static void assertGoldenSamples(
       Class<?> clazz, String sampleDirName, String packkage, List<Sample> samples) {
     for (Sample sample : samples) {
-      String fileName = JavaStyle.toUpperCamelCase(sample.name()).concat(".golden");
+      String fileName = sample.generateSampleFileName() + ".golden";
       String goldenSampleDir =
           Utils.getGoldenDir(clazz) + "/samples/" + sampleDirName.toLowerCase() + "/";
       Path goldenFilePath = Paths.get(goldenSampleDir, fileName);

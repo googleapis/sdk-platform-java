@@ -53,6 +53,9 @@ public class SampleComposerUtil {
   }
 
   static String createOverloadDisambiguation(List<VariableExpr> methodArgVarExprs) {
+    if (methodArgVarExprs.isEmpty()){
+      return "Noargs";
+    }
     return methodArgVarExprs.stream()
         .map(
             arg ->

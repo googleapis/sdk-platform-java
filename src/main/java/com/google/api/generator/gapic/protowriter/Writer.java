@@ -22,7 +22,6 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
-import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -109,7 +108,7 @@ public class Writer {
                   clazzPath,
                   sample.regionTag().serviceName(),
                   sample.regionTag().rpcName(),
-                  JavaStyle.toUpperCamelCase(sample.name())));
+                  sample.generateSampleFileName()));
       String executableSampleCode = SampleCodeWriter.writeExecutableSample(sample, pakkage);
       try {
         jos.putNextEntry(jarEntry);

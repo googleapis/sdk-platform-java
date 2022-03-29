@@ -33,11 +33,14 @@ public abstract class Sample {
 
   public abstract String name();
 
+  public abstract boolean isCanonical();
+
   public static Builder builder() {
     return new AutoValue_Sample.Builder()
         .setBody(ImmutableList.of())
         .setVariableAssignments(ImmutableList.of())
-        .setFileHeader(ImmutableList.of());
+        .setFileHeader(ImmutableList.of())
+        .setIsCanonical(false);
   }
 
   abstract Builder toBuilder();
@@ -47,6 +50,10 @@ public abstract class Sample {
   }
 
   public final Sample withRegionTag(RegionTag regionTag) {
+    if (isCanonical() && !regionTag.overloadDisambiguation().isEmpty()) {
+      //  don't set overload on canonical samples
+      withRegionTag(regionTag.withOverloadDisambiguation(""));
+    }
     return toBuilder()
         .setName(generateSampleClassName(regionTag()))
         .setRegionTag(regionTag)
@@ -63,13 +70,21 @@ public abstract class Sample {
 
     public abstract Builder setRegionTag(RegionTag regionTag);
 
+    public abstract Builder setIsCanonical(boolean isCanonical);
+
     abstract Builder setName(String name);
 
     abstract Sample autoBuild();
 
     abstract RegionTag regionTag();
 
+    abstract boolean isCanonical();
+
     public final Sample build() {
+      if (isCanonical() && !regionTag().overloadDisambiguation().isEmpty()) {
+        //  don't set overload on canonical samples
+        setRegionTag(regionTag().withOverloadDisambiguation(""));
+      }
       setName(generateSampleClassName(regionTag()));
       return autoBuild();
     }
@@ -79,5 +94,13 @@ public abstract class Sample {
     return (regionTag.isAsynchronous() ? "Async" : "Sync")
         + regionTag.rpcName()
         + regionTag.overloadDisambiguation();
+  }
+
+  public String generateSampleFileName() {
+    String name = (regionTag().isAsynchronous() ? "Async" : "Sync") + regionTag().rpcName();
+    if (!regionTag().overloadDisambiguation().isEmpty()) {
+      name += "_" + regionTag().overloadDisambiguation();
+    }
+    return name;
   }
 }

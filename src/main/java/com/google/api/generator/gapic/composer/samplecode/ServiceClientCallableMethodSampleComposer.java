@@ -59,6 +59,232 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientCallableMethodSampleComposer {
+  private static Sample composeUnaryOrLroCallableSample(
+      Method method, VariableExpr clientVarExpr, VariableExpr requestVarExpr) {
+    List<Statement> bodyStatements = new ArrayList<>();
+    // Create api future variable expression, and assign it with a value by invoking callable
+    // method.
+    // e.g. ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
+    TypeNode apiFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(
+                    method.hasLro()
+                        ? ConcreteReference.withClazz(Operation.class)
+                        : method.outputType().reference())
+                .build());
+    VariableExpr apiFutureVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("future").setType(apiFutureType).build());
+    MethodInvocationExpr callableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    callableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(callableMethodInvocationExpr)
+            .setMethodName("futureCall")
+            .setArguments(requestVarExpr)
+            .setReturnType(apiFutureType)
+            .build();
+    AssignmentExpr futureAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(callableMethodInvocationExpr)
+            .build();
+    bodyStatements.add(ExprStatement.withExpr(futureAssignmentExpr));
+    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
+
+    MethodInvocationExpr getMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(apiFutureVarExpr)
+            .setMethodName("get")
+            .setReturnType(method.outputType())
+            .build();
+    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(methodOutputType);
+    if (returnsVoid) {
+      bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
+    } else {
+      VariableExpr responseVarExpr =
+          VariableExpr.builder()
+              .setVariable(
+                  Variable.builder().setType(method.outputType()).setName("response").build())
+              .setIsDecl(true)
+              .build();
+      AssignmentExpr responseAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(responseVarExpr)
+              .setValueExpr(getMethodInvocationExpr)
+              .build();
+      bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
+    }
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setIsAsynchronous(true)
+            .build();
+    return Sample.builder()
+        .setBody(bodyStatements)
+        .setRegionTag(regionTag)
+        .setIsCanonical(true)
+        .build();
+  }
+
+  private static Sample composePagedCallableSample(
+      Method method,
+      VariableExpr clientVarExpr,
+      VariableExpr requestVarExpr,
+      Map<String, Message> messageTypes) {
+    // Find the repeated field.
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
+    Preconditions.checkNotNull(
+        repeatedPagedResultsField,
+        String.format(
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
+    TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+
+    // Assign future variable by invoking paged callable method.
+    // e.g. ApiFuture<PagedExpandPagedResponse> future =
+    // echoClient.pagedExpandCallable().futureCall(request);
+    VariableExpr responseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("response").setType(method.outputType()).build());
+    MethodInvocationExpr pagedCallableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    pagedCallableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(pagedCallableMethodInvocationExpr)
+            .setMethodName("call")
+            .setArguments(requestVarExpr)
+            .setReturnType(method.outputType())
+            .build();
+    AssignmentExpr responseAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(pagedCallableMethodInvocationExpr)
+            .build();
+    List<Statement> whileBodyStatements = new ArrayList<>();
+    whileBodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
+
+    // For-loop on repeated response elements.
+    // e.g. for (EchoResponse element : response.getResponsesList()) {
+    //        // doThingsWith(element);
+    //      }
+    VariableExpr repeatedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("element").setType(repeatedResponseType).build());
+    MethodInvocationExpr getResponseListMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseVarExpr)
+            .setMethodName("getResponsesList")
+            .build();
+    ForStatement responseForStatements =
+        ForStatement.builder()
+            .setLocalVariableExpr(repeatedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(getResponseListMethodInvocationExpr)
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("doThingsWith(element);"))))
+            .build();
+    whileBodyStatements.add(responseForStatements);
+
+    // Create nextPageToken variable expression and assign it with a value by invoking
+    // getNextPageToken method.
+    // e.g. String nextPageToken = response.getNextPageToken();
+    VariableExpr nextPageTokenVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("nextPageToken").setType(TypeNode.STRING).build());
+    MethodInvocationExpr getNextPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseVarExpr)
+            .setMethodName("getNextPageToken")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr nextPageTokenAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(nextPageTokenVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getNextPageTokenMethodInvocationExpr)
+            .build();
+    whileBodyStatements.add(ExprStatement.withExpr(nextPageTokenAssignmentExpr));
+
+    // If nextPageToken variable expression is not null or empty, assign request variable with a
+    // value by invoking setPageToken method.
+    // if (!Strings.isNullOrEmpty(nextPageToken)) {
+    //   request =  request.toBuilder().setPageToken(nextPageToken).build();
+    // } else {
+    //   break;
+    // }
+    Expr conditionExpr =
+        UnaryOperationExpr.logicalNotWithExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
+                .setMethodName("isNullOrEmpty")
+                .setArguments(nextPageTokenVarExpr)
+                .setReturnType(TypeNode.BOOLEAN)
+                .build());
+    MethodInvocationExpr setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName("toBuilder")
+            .build();
+    setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
+            .setMethodName("setPageToken")
+            .setArguments(nextPageTokenVarExpr)
+            .build();
+    setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
+            .setMethodName("build")
+            .setReturnType(method.inputType())
+            .build();
+    AssignmentExpr requestReAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr)
+            .setValueExpr(setPageTokenMethodInvocationExpr)
+            .build();
+    IfStatement nextPageTokenIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(conditionExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(requestReAssignmentExpr)))
+            .setElseBody(Arrays.asList(BreakStatement.create()))
+            .build();
+    whileBodyStatements.add(nextPageTokenIfStatement);
+
+    WhileStatement pagedWhileStatement =
+        WhileStatement.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
+            .setBody(whileBodyStatements)
+            .build();
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName(method.name())
+            .setOverloadDisambiguation("Paged")
+            .setIsAsynchronous(true)
+            .build();
+    return Sample.builder()
+        .setBody(Arrays.asList(pagedWhileStatement))
+        .setRegionTag(regionTag)
+        .build();
+  }
+
   // Compose sample code for the method where it is CallableMethodKind.LRO.
   public static Sample composeLroCallableMethod(
       Method method,
@@ -167,7 +393,7 @@ public class ServiceClientCallableMethodSampleComposer {
             .setServiceName(clientType.reference().name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
-            .setOverloadDisambiguation("OperationCallable")
+            .setOverloadDisambiguation("LRO")
             .build();
     List<Statement> body =
         Arrays.asList(
@@ -304,7 +530,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setServiceName(clientType.reference().name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
-            .setOverloadDisambiguation("PagedCallable")
             .build();
     return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
@@ -491,7 +716,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
-            .setOverloadDisambiguation("StreamServer")
             .build();
     return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
@@ -571,7 +795,6 @@ public class ServiceClientCallableMethodSampleComposer {
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
-            .setOverloadDisambiguation("StreamBidi")
             .build();
     return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
   }
@@ -704,232 +927,10 @@ public class ServiceClientCallableMethodSampleComposer {
             .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
-            .setOverloadDisambiguation("StreamClient")
             .build();
     return Sample.builder()
         .setBody(
             bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
-        .setRegionTag(regionTag)
-        .build();
-  }
-
-  private static Sample composeUnaryOrLroCallableSample(
-      Method method, VariableExpr clientVarExpr, VariableExpr requestVarExpr) {
-    List<Statement> bodyStatements = new ArrayList<>();
-    // Create api future variable expression, and assign it with a value by invoking callable
-    // method.
-    // e.g. ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
-    TypeNode apiFutureType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ApiFuture.class)
-                .setGenerics(
-                    method.hasLro()
-                        ? ConcreteReference.withClazz(Operation.class)
-                        : method.outputType().reference())
-                .build());
-    VariableExpr apiFutureVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("future").setType(apiFutureType).build());
-    MethodInvocationExpr callableMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientVarExpr)
-            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
-            .build();
-    callableMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(callableMethodInvocationExpr)
-            .setMethodName("futureCall")
-            .setArguments(requestVarExpr)
-            .setReturnType(apiFutureType)
-            .build();
-    AssignmentExpr futureAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(callableMethodInvocationExpr)
-            .build();
-    bodyStatements.add(ExprStatement.withExpr(futureAssignmentExpr));
-    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
-
-    MethodInvocationExpr getMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(apiFutureVarExpr)
-            .setMethodName("get")
-            .setReturnType(method.outputType())
-            .build();
-    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
-    boolean returnsVoid = SampleComposerUtil.isProtoEmptyType(methodOutputType);
-    if (returnsVoid) {
-      bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
-    } else {
-      VariableExpr responseVarExpr =
-          VariableExpr.builder()
-              .setVariable(
-                  Variable.builder().setType(method.outputType()).setName("response").build())
-              .setIsDecl(true)
-              .build();
-      AssignmentExpr responseAssignmentExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(responseVarExpr)
-              .setValueExpr(getMethodInvocationExpr)
-              .build();
-      bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
-    }
-
-    RegionTag regionTag =
-        RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
-            .setRpcName(method.name())
-            .setIsAsynchronous(true)
-            .build();
-    return Sample.builder().setBody(bodyStatements).setRegionTag(regionTag).build();
-  }
-
-  private static Sample composePagedCallableSample(
-      Method method,
-      VariableExpr clientVarExpr,
-      VariableExpr requestVarExpr,
-      Map<String, Message> messageTypes) {
-    // Find the repeated field.
-    Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
-    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
-    Preconditions.checkNotNull(
-        repeatedPagedResultsField,
-        String.format(
-            "No repeated field found on message %s for method %s",
-            methodOutputMessage.name(), method.name()));
-    TypeNode repeatedResponseType = repeatedPagedResultsField.type();
-
-    // Assign future variable by invoking paged callable method.
-    // e.g. ApiFuture<PagedExpandPagedResponse> future =
-    // echoClient.pagedExpandCallable().futureCall(request);
-    VariableExpr responseVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("response").setType(method.outputType()).build());
-    MethodInvocationExpr pagedCallableMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientVarExpr)
-            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
-            .build();
-    pagedCallableMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(pagedCallableMethodInvocationExpr)
-            .setMethodName("call")
-            .setArguments(requestVarExpr)
-            .setReturnType(method.outputType())
-            .build();
-    AssignmentExpr responseAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(pagedCallableMethodInvocationExpr)
-            .build();
-    List<Statement> whileBodyStatements = new ArrayList<>();
-    whileBodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
-
-    // For-loop on repeated response elements.
-    // e.g. for (EchoResponse element : response.getResponsesList()) {
-    //        // doThingsWith(element);
-    //      }
-    VariableExpr repeatedResponseVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("element").setType(repeatedResponseType).build());
-    MethodInvocationExpr getResponseListMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(responseVarExpr)
-            .setMethodName("getResponsesList")
-            .build();
-    ForStatement responseForStatements =
-        ForStatement.builder()
-            .setLocalVariableExpr(repeatedResponseVarExpr.toBuilder().setIsDecl(true).build())
-            .setCollectionExpr(getResponseListMethodInvocationExpr)
-            .setBody(
-                Arrays.asList(
-                    CommentStatement.withComment(
-                        LineComment.withComment("doThingsWith(element);"))))
-            .build();
-    whileBodyStatements.add(responseForStatements);
-
-    // Create nextPageToken variable expression and assign it with a value by invoking
-    // getNextPageToken method.
-    // e.g. String nextPageToken = response.getNextPageToken();
-    VariableExpr nextPageTokenVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("nextPageToken").setType(TypeNode.STRING).build());
-    MethodInvocationExpr getNextPageTokenMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(responseVarExpr)
-            .setMethodName("getNextPageToken")
-            .setReturnType(TypeNode.STRING)
-            .build();
-    AssignmentExpr nextPageTokenAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(nextPageTokenVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(getNextPageTokenMethodInvocationExpr)
-            .build();
-    whileBodyStatements.add(ExprStatement.withExpr(nextPageTokenAssignmentExpr));
-
-    // If nextPageToken variable expression is not null or empty, assign request variable with a
-    // value by invoking setPageToken method.
-    // if (!Strings.isNullOrEmpty(nextPageToken)) {
-    //   request =  request.toBuilder().setPageToken(nextPageToken).build();
-    // } else {
-    //   break;
-    // }
-    Expr conditionExpr =
-        UnaryOperationExpr.logicalNotWithExpr(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(
-                    TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
-                .setMethodName("isNullOrEmpty")
-                .setArguments(nextPageTokenVarExpr)
-                .setReturnType(TypeNode.BOOLEAN)
-                .build());
-    MethodInvocationExpr setPageTokenMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(requestVarExpr)
-            .setMethodName("toBuilder")
-            .build();
-    setPageTokenMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
-            .setMethodName("setPageToken")
-            .setArguments(nextPageTokenVarExpr)
-            .build();
-    setPageTokenMethodInvocationExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
-            .setMethodName("build")
-            .setReturnType(method.inputType())
-            .build();
-    AssignmentExpr requestReAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(requestVarExpr)
-            .setValueExpr(setPageTokenMethodInvocationExpr)
-            .build();
-    IfStatement nextPageTokenIfStatement =
-        IfStatement.builder()
-            .setConditionExpr(conditionExpr)
-            .setBody(Arrays.asList(ExprStatement.withExpr(requestReAssignmentExpr)))
-            .setElseBody(Arrays.asList(BreakStatement.create()))
-            .build();
-    whileBodyStatements.add(nextPageTokenIfStatement);
-
-    WhileStatement pagedWhileStatement =
-        WhileStatement.builder()
-            .setConditionExpr(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
-            .setBody(whileBodyStatements)
-            .build();
-
-    RegionTag regionTag =
-        RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
-            .setRpcName(method.name())
-            .setOverloadDisambiguation("Paged")
-            .build();
-    return Sample.builder()
-        .setBody(Arrays.asList(pagedWhileStatement))
         .setRegionTag(regionTag)
         .build();
   }
