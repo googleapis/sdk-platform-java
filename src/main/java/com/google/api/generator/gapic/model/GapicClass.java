@@ -18,8 +18,6 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class GapicClass {
@@ -64,56 +62,6 @@ public abstract class GapicClass {
 
     abstract Builder setSamples(List<Sample> samples);
 
-    abstract GapicClass autoBuild();
-
-    abstract List<Sample> samples();
-
-    public final GapicClass build() {
-      setSamples(handleDuplicateSamples(samples()));
-      return autoBuild();
-    }
-  }
-
-  private static List<Sample> handleDuplicateSamples(List<Sample> samples) {
-    //  filter out any duplicate samples and group by sample name
-    Map<String, List<Sample>> distinctSamplesGroupedByName =
-        samples.stream().distinct().collect(Collectors.groupingBy(s -> s.name()));
-
-    // grab unique samples
-    List<Sample> uniqueSamples =
-        distinctSamplesGroupedByName.entrySet().stream()
-            .filter(entry -> entry.getValue().size() < 2)
-            .map(entry -> entry.getValue().get(0))
-            .collect(Collectors.toList());
-
-    if (uniqueSamples.size() == distinctSamplesGroupedByName.size()) {
-      return uniqueSamples;
-    }
-
-    // grab distinct samples with same name - similar version of same sample
-    List<Map.Entry<String, List<Sample>>> duplicateDistinctSamples =
-        distinctSamplesGroupedByName.entrySet().stream()
-            .filter(entry -> entry.getValue().size() > 1)
-            .collect(Collectors.toList());
-
-    // update similar samples regionTag/name so filesname/regiontag are unique
-    for (Map.Entry<String, List<Sample>> entry : duplicateDistinctSamples) {
-      int sampleNum = 0;
-      for (Sample sample : entry.getValue()) {
-        //  first sample will be canonical, not updating disambiguation
-        Sample uniqueSample = sample;
-        if (sampleNum != 0) {
-          uniqueSample =
-              sample.withRegionTag(
-                  sample
-                      .regionTag()
-                      .withOverloadDisambiguation(
-                          sample.regionTag().overloadDisambiguation() + sampleNum));
-        }
-        uniqueSamples.add(uniqueSample);
-        sampleNum++;
-      }
-    }
-    return uniqueSamples;
+    abstract GapicClass build();
   }
 }

@@ -998,7 +998,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
       // fixing region tag after formatting
       // formatter splits long region tags on multiple lines and moves the end tag up - doesn't meet
-      // tag requirements
+      // tag requirements. See https://github.com/google/google-java-format/issues/137
       if (classDefinition.regionTag() != null) {
         formattedClazz =
             formattedClazz.replaceAll(regionTagReplace, classDefinition.regionTag().generate());

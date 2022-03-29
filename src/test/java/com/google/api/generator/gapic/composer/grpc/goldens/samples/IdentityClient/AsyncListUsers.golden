@@ -16,29 +16,33 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_wait_operationcallable_async]
-import com.google.api.gax.longrunning.OperationFuture;
-import com.google.showcase.v1beta1.EchoClient;
-import com.google.showcase.v1beta1.WaitMetadata;
-import com.google.showcase.v1beta1.WaitRequest;
-import com.google.showcase.v1beta1.WaitResponse;
+// [START goldensample_generated_identityclient_listusers_async]
+import com.google.api.core.ApiFuture;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.ListUsersRequest;
+import com.google.showcase.v1beta1.User;
 
-public class AsyncWaitOperationCallable {
+public class AsyncListUsers {
 
   public static void main(String[] args) throws Exception {
-    asyncWaitOperationCallable();
+    asyncListUsers();
   }
 
-  public static void asyncWaitOperationCallable() throws Exception {
+  public static void asyncListUsers() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
-    try (EchoClient echoClient = EchoClient.create()) {
-      WaitRequest request = WaitRequest.newBuilder().build();
-      OperationFuture<WaitResponse, WaitMetadata> future =
-          echoClient.waitOperationCallable().futureCall(request);
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      ListUsersRequest request =
+          ListUsersRequest.newBuilder()
+              .setPageSize(883849137)
+              .setPageToken("pageToken873572522")
+              .build();
+      ApiFuture<User> future = identityClient.listUsersPagedCallable().futureCall(request);
       // Do something.
-      WaitResponse response = future.get();
+      for (User element : future.get().iterateAll()) {
+        // doThingsWith(element);
+      }
     }
   }
 }
-// [END goldensample_generated_echoclient_wait_operationcallable_async]
+// [END goldensample_generated_identityclient_listusers_async]

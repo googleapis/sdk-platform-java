@@ -16,29 +16,38 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_expand_streamserver_async]
-import com.google.api.gax.rpc.ServerStream;
+// [START goldensample_generated_echoclient_chat_async]
+import com.google.api.gax.rpc.BidiStream;
 import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.Foobar;
+import com.google.showcase.v1beta1.FoobarName;
+import com.google.showcase.v1beta1.Severity;
 
-public class AsyncExpandStreamServer {
+public class AsyncChat {
 
   public static void main(String[] args) throws Exception {
-    asyncExpandStreamServer();
+    asyncChat();
   }
 
-  public static void asyncExpandStreamServer() throws Exception {
+  public static void asyncChat() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (EchoClient echoClient = EchoClient.create()) {
-      ExpandRequest request =
-          ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
-      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
-      for (EchoResponse response : stream) {
+      BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFoobar(Foobar.newBuilder().build())
+              .build();
+      bidiStream.send(request);
+      for (EchoResponse response : bidiStream) {
         // Do something when a response is received.
       }
     }
   }
 }
-// [END goldensample_generated_echoclient_expand_streamserver_async]
+// [END goldensample_generated_echoclient_chat_async]

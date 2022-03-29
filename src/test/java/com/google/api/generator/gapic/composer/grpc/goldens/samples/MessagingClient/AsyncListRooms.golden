@@ -16,35 +16,33 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_simplepagedexpand_pagedcallable_async]
+// [START goldensample_generated_messagingclient_listrooms_async]
 import com.google.api.core.ApiFuture;
-import com.google.showcase.v1beta1.EchoClient;
-import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.PagedExpandRequest;
+import com.google.showcase.v1beta1.ListRoomsRequest;
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.Room;
 
-public class AsyncSimplePagedExpandPagedCallable {
+public class AsyncListRooms {
 
   public static void main(String[] args) throws Exception {
-    asyncSimplePagedExpandPagedCallable();
+    asyncListRooms();
   }
 
-  public static void asyncSimplePagedExpandPagedCallable() throws Exception {
+  public static void asyncListRooms() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
-    try (EchoClient echoClient = EchoClient.create()) {
-      PagedExpandRequest request =
-          PagedExpandRequest.newBuilder()
-              .setContent("content951530617")
+    try (MessagingClient messagingClient = MessagingClient.create()) {
+      ListRoomsRequest request =
+          ListRoomsRequest.newBuilder()
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();
-      ApiFuture<EchoResponse> future =
-          echoClient.simplePagedExpandPagedCallable().futureCall(request);
+      ApiFuture<Room> future = messagingClient.listRoomsPagedCallable().futureCall(request);
       // Do something.
-      for (EchoResponse element : future.get().iterateAll()) {
+      for (Room element : future.get().iterateAll()) {
         // doThingsWith(element);
       }
     }
   }
 }
-// [END goldensample_generated_echoclient_simplepagedexpand_pagedcallable_async]
+// [END goldensample_generated_messagingclient_listrooms_async]

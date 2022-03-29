@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_sendblurbs_streamclient_async]
+// [START goldensample_generated_messagingclient_sendblurbs_async]
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
@@ -24,13 +24,13 @@ import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
 import com.google.showcase.v1beta1.SendBlurbsResponse;
 
-public class AsyncSendBlurbsStreamClient {
+public class AsyncSendBlurbs {
 
   public static void main(String[] args) throws Exception {
-    asyncSendBlurbsStreamClient();
+    asyncSendBlurbs();
   }
 
-  public static void asyncSendBlurbsStreamClient() throws Exception {
+  public static void asyncSendBlurbs() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (MessagingClient messagingClient = MessagingClient.create()) {
@@ -62,4 +62,4 @@ public class AsyncSendBlurbsStreamClient {
     }
   }
 }
-// [END goldensample_generated_messagingclient_sendblurbs_streamclient_async]
+// [END goldensample_generated_messagingclient_sendblurbs_async]

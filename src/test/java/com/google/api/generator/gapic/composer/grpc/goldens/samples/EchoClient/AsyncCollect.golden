@@ -16,8 +16,8 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_chat_streambidi_async]
-import com.google.api.gax.rpc.BidiStream;
+// [START goldensample_generated_echoclient_collect_async]
+import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -25,17 +25,35 @@ import com.google.showcase.v1beta1.Foobar;
 import com.google.showcase.v1beta1.FoobarName;
 import com.google.showcase.v1beta1.Severity;
 
-public class AsyncChatStreamBidi {
+public class AsyncCollect {
 
   public static void main(String[] args) throws Exception {
-    asyncChatStreamBidi();
+    asyncCollect();
   }
 
-  public static void asyncChatStreamBidi() throws Exception {
+  public static void asyncCollect() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (EchoClient echoClient = EchoClient.create()) {
-      BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+      ApiStreamObserver<EchoRequest> responseObserver =
+          new ApiStreamObserver<EchoRequest>() {
+            @Override
+            public void onNext(EchoResponse response) {
+              // Do something when a response is received.
+            }
+
+            @Override
+            public void onError(Throwable t) {
+              // Add error-handling
+            }
+
+            @Override
+            public void onCompleted() {
+              // Do something when complete.
+            }
+          };
+      ApiStreamObserver<EchoRequest> requestObserver =
+          echoClient.collect().clientStreamingCall(responseObserver);
       EchoRequest request =
           EchoRequest.newBuilder()
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
@@ -43,11 +61,8 @@ public class AsyncChatStreamBidi {
               .setSeverity(Severity.forNumber(0))
               .setFoobar(Foobar.newBuilder().build())
               .build();
-      bidiStream.send(request);
-      for (EchoResponse response : bidiStream) {
-        // Do something when a response is received.
-      }
+      requestObserver.onNext(request);
     }
   }
 }
-// [END goldensample_generated_echoclient_chat_streambidi_async]
+// [END goldensample_generated_echoclient_collect_async]
