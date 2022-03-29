@@ -79,7 +79,7 @@ public class Assert {
 
       String sampleString = SampleCodeWriter.writeExecutableSample(sample, packkage + ".samples");
 
-      Utils.saveSampleCodegenToFile(clazz, sampleDirName, fileName, sampleString);
+      Utils.saveSampleCodegenToFile(clazz, sampleDirName.toLowerCase(), fileName, sampleString);
       assertCodeEquals(goldenFilePath, sampleString);
     }
   }
