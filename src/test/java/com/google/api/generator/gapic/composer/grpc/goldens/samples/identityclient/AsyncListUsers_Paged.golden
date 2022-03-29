@@ -16,33 +16,31 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_listblurbs_paged_sync]
+// [START goldensample_generated_identityclient_listusers_paged_async]
 import com.google.common.base.Strings;
-import com.google.showcase.v1beta1.Blurb;
-import com.google.showcase.v1beta1.ListBlurbsRequest;
-import com.google.showcase.v1beta1.ListBlurbsResponse;
-import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.ListUsersRequest;
+import com.google.showcase.v1beta1.ListUsersResponse;
+import com.google.showcase.v1beta1.User;
 
-public class SyncListBlurbsPaged {
+public class AsyncListUsersPaged {
 
   public static void main(String[] args) throws Exception {
-    syncListBlurbsPaged();
+    asyncListUsersPaged();
   }
 
-  public static void syncListBlurbsPaged() throws Exception {
+  public static void asyncListUsersPaged() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
-    try (MessagingClient messagingClient = MessagingClient.create()) {
-      ListBlurbsRequest request =
-          ListBlurbsRequest.newBuilder()
-              .setParent(ProfileName.of("[USER]").toString())
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      ListUsersRequest request =
+          ListUsersRequest.newBuilder()
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();
       while (true) {
-        ListBlurbsResponse response = messagingClient.listBlurbsCallable().call(request);
-        for (Blurb element : response.getResponsesList()) {
+        ListUsersResponse response = identityClient.listUsersCallable().call(request);
+        for (User element : response.getResponsesList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();
@@ -55,4 +53,4 @@ public class SyncListBlurbsPaged {
     }
   }
 }
-// [END goldensample_generated_messagingclient_listblurbs_paged_sync]
+// [END goldensample_generated_identityclient_listusers_paged_async]

@@ -16,33 +16,34 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_listusers_pagedcallable_async]
+// [START goldensample_generated_echoclient_pagedexpand_async]
 import com.google.api.core.ApiFuture;
-import com.google.showcase.v1beta1.IdentityClient;
-import com.google.showcase.v1beta1.ListUsersRequest;
-import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.PagedExpandRequest;
 
-public class AsyncListUsersPagedCallable {
+public class AsyncPagedExpand {
 
   public static void main(String[] args) throws Exception {
-    asyncListUsersPagedCallable();
+    asyncPagedExpand();
   }
 
-  public static void asyncListUsersPagedCallable() throws Exception {
+  public static void asyncPagedExpand() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
-    try (IdentityClient identityClient = IdentityClient.create()) {
-      ListUsersRequest request =
-          ListUsersRequest.newBuilder()
+    try (EchoClient echoClient = EchoClient.create()) {
+      PagedExpandRequest request =
+          PagedExpandRequest.newBuilder()
+              .setContent("content951530617")
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();
-      ApiFuture<User> future = identityClient.listUsersPagedCallable().futureCall(request);
+      ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);
       // Do something.
-      for (User element : future.get().iterateAll()) {
+      for (EchoResponse element : future.get().iterateAll()) {
         // doThingsWith(element);
       }
     }
   }
 }
-// [END goldensample_generated_identityclient_listusers_pagedcallable_async]
+// [END goldensample_generated_echoclient_pagedexpand_async]

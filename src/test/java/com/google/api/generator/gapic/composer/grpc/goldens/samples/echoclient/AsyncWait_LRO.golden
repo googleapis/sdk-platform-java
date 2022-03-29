@@ -16,31 +16,29 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_simplepagedexpand_1_sync]
+// [START goldensample_generated_echoclient_wait_lro_async]
+import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.EchoClient;
-import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.PagedExpandRequest;
+import com.google.showcase.v1beta1.WaitMetadata;
+import com.google.showcase.v1beta1.WaitRequest;
+import com.google.showcase.v1beta1.WaitResponse;
 
-public class SyncSimplePagedExpand1 {
+public class AsyncWaitLRO {
 
   public static void main(String[] args) throws Exception {
-    syncSimplePagedExpand1();
+    asyncWaitLRO();
   }
 
-  public static void syncSimplePagedExpand1() throws Exception {
+  public static void asyncWaitLRO() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (EchoClient echoClient = EchoClient.create()) {
-      PagedExpandRequest request =
-          PagedExpandRequest.newBuilder()
-              .setContent("content951530617")
-              .setPageSize(883849137)
-              .setPageToken("pageToken873572522")
-              .build();
-      for (EchoResponse element : echoClient.simplePagedExpand(request).iterateAll()) {
-        // doThingsWith(element);
-      }
+      WaitRequest request = WaitRequest.newBuilder().build();
+      OperationFuture<WaitResponse, WaitMetadata> future =
+          echoClient.waitOperationCallable().futureCall(request);
+      // Do something.
+      WaitResponse response = future.get();
     }
   }
 }
-// [END goldensample_generated_echoclient_simplepagedexpand_1_sync]
+// [END goldensample_generated_echoclient_wait_lro_async]

@@ -16,33 +16,36 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_listrooms_pagedcallable_async]
-import com.google.api.core.ApiFuture;
-import com.google.showcase.v1beta1.ListRoomsRequest;
+// [START goldensample_generated_messagingclient_searchblurbs_lro_async]
+import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.Room;
+import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.SearchBlurbsMetadata;
+import com.google.showcase.v1beta1.SearchBlurbsRequest;
+import com.google.showcase.v1beta1.SearchBlurbsResponse;
 
-public class AsyncListRoomsPagedCallable {
+public class AsyncSearchBlurbsLRO {
 
   public static void main(String[] args) throws Exception {
-    asyncListRoomsPagedCallable();
+    asyncSearchBlurbsLRO();
   }
 
-  public static void asyncListRoomsPagedCallable() throws Exception {
+  public static void asyncSearchBlurbsLRO() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (MessagingClient messagingClient = MessagingClient.create()) {
-      ListRoomsRequest request =
-          ListRoomsRequest.newBuilder()
+      SearchBlurbsRequest request =
+          SearchBlurbsRequest.newBuilder()
+              .setQuery("query107944136")
+              .setParent(ProfileName.of("[USER]").toString())
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();
-      ApiFuture<Room> future = messagingClient.listRoomsPagedCallable().futureCall(request);
+      OperationFuture<SearchBlurbsResponse, SearchBlurbsMetadata> future =
+          messagingClient.searchBlurbsOperationCallable().futureCall(request);
       // Do something.
-      for (Room element : future.get().iterateAll()) {
-        // doThingsWith(element);
-      }
+      SearchBlurbsResponse response = future.get();
     }
   }
 }
-// [END goldensample_generated_messagingclient_listrooms_pagedcallable_async]
+// [END goldensample_generated_messagingclient_searchblurbs_lro_async]

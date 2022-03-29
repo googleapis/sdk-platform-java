@@ -16,30 +16,31 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_connect_streambidi_async]
-import com.google.api.gax.rpc.BidiStream;
-import com.google.showcase.v1beta1.ConnectRequest;
+// [START goldensample_generated_messagingclient_streamblurbs_async]
+import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.StreamBlurbsRequest;
 import com.google.showcase.v1beta1.StreamBlurbsResponse;
 
-public class AsyncConnectStreamBidi {
+public class AsyncStreamBlurbs {
 
   public static void main(String[] args) throws Exception {
-    asyncConnectStreamBidi();
+    asyncStreamBlurbs();
   }
 
-  public static void asyncConnectStreamBidi() throws Exception {
+  public static void asyncStreamBlurbs() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (MessagingClient messagingClient = MessagingClient.create()) {
-      BidiStream<ConnectRequest, StreamBlurbsResponse> bidiStream =
-          messagingClient.connectCallable().call();
-      ConnectRequest request = ConnectRequest.newBuilder().build();
-      bidiStream.send(request);
-      for (StreamBlurbsResponse response : bidiStream) {
+      StreamBlurbsRequest request =
+          StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
+      ServerStream<StreamBlurbsResponse> stream =
+          messagingClient.streamBlurbsCallable().call(request);
+      for (StreamBlurbsResponse response : stream) {
         // Do something when a response is received.
       }
     }
   }
 }
-// [END goldensample_generated_messagingclient_connect_streambidi_async]
+// [END goldensample_generated_messagingclient_streamblurbs_async]

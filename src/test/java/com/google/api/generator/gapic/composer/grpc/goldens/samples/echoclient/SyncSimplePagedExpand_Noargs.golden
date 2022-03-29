@@ -16,33 +16,24 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_echo_sync]
+// [START goldensample_generated_echoclient_simplepagedexpand_noargs_sync]
 import com.google.showcase.v1beta1.EchoClient;
-import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.Foobar;
-import com.google.showcase.v1beta1.FoobarName;
-import com.google.showcase.v1beta1.Severity;
 
-public class SyncEcho {
+public class SyncSimplePagedExpandNoargs {
 
   public static void main(String[] args) throws Exception {
-    syncEcho();
+    syncSimplePagedExpandNoargs();
   }
 
-  public static void syncEcho() throws Exception {
+  public static void syncSimplePagedExpandNoargs() throws Exception {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (EchoClient echoClient = EchoClient.create()) {
-      EchoRequest request =
-          EchoRequest.newBuilder()
-              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-              .setSeverity(Severity.forNumber(0))
-              .setFoobar(Foobar.newBuilder().build())
-              .build();
-      EchoResponse response = echoClient.echo(request);
+      for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {
+        // doThingsWith(element);
+      }
     }
   }
 }
-// [END goldensample_generated_echoclient_echo_sync]
+// [END goldensample_generated_echoclient_simplepagedexpand_noargs_sync]
