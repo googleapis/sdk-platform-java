@@ -34,6 +34,16 @@ public class Utils {
    */
   public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
+    saveCodeToFile(relativeGoldenDir, fileName, codegen);
+  }
+
+  public static void saveSampleCodegenToFile(
+      Class<?> clazz, String sampleDir, String fileName, String codegen) {
+    String relativeGoldenDir = getTestoutGoldenDir(clazz) + "/samples/" + sampleDir;
+    saveCodeToFile(relativeGoldenDir, fileName, codegen);
+  }
+
+  private static void saveCodeToFile(String relativeGoldenDir, String fileName, String codegen) {
     Path testOutputDir = Paths.get("src", "test", "java", relativeGoldenDir);
 
     // Auto-detect project workspace when running `bazel run //:update_TargetTest`.

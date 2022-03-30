@@ -42,7 +42,7 @@ public abstract class RegionTag {
         .setIsAsynchronous(false);
   }
 
-  abstract RegionTag.Builder toBuilder();
+  public abstract RegionTag.Builder toBuilder();
 
   public final RegionTag withApiVersion(String apiVersion) {
     return toBuilder().setApiVersion(apiVersion).build();

@@ -44,7 +44,7 @@ public class Differ {
     return diffTwoStringLists(original, revised);
   }
 
-  private static List<String> diffTwoStringLists(List<String> original, List<String> revised) {
+  static List<String> diffTwoStringLists(List<String> original, List<String> revised) {
     Patch<String> diff = null;
     try {
       diff = DiffUtils.diff(original, revised);

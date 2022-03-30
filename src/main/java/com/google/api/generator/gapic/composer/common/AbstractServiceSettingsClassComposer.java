@@ -50,7 +50,9 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
-import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
+import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
@@ -59,6 +61,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -100,12 +103,13 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getServiceSettingsClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
-
+    List<Sample> samples = new ArrayList<>();
+    List<CommentStatement> classHeaderComments =
+        createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(
-                createClassHeaderComments(service, typeStore.get(className)))
+            .setHeaderCommentStatements(classHeaderComments)
             .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -122,11 +126,11 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .setMethods(createClassMethods(service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
-    return GapicClass.create(kind, classDef);
+    return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples));
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode classType) {
+      Service service, TypeNode classType, List<Sample> samples) {
     // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
@@ -139,15 +143,22 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     .orElse(service.methods().get(0)));
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
-    Optional<String> sampleCodeOpt =
-        SettingsSampleCodeComposer.composeSampleCode(
+    Optional<Sample> sampleCode =
+        SettingsSampleComposer.composeSettingsSample(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+
+    Optional<String> docSampleCode = Optional.empty();
+    if (sampleCode.isPresent()) {
+      samples.add(sampleCode.get());
+      docSampleCode = Optional.of(SampleCodeWriter.writeInlineSample(sampleCode.get().body()));
+    }
+
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceClientClassName(service),
         service.defaultHost(),
         service.isDeprecated(),
         methodNameOpt,
-        sampleCodeOpt,
+        docSampleCode,
         classType);
   }
 

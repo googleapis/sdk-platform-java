@@ -16,6 +16,8 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
  *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
  *   deprecatedServiceClient.fastFibonacci(request);
@@ -52,6 +54,8 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * DeprecatedServiceSettings deprecatedServiceSettings =
  *     DeprecatedServiceSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -63,6 +67,8 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * DeprecatedServiceSettings deprecatedServiceSettings =
  *     DeprecatedServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  * DeprecatedServiceClient deprecatedServiceClient =
@@ -132,6 +138,8 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *   deprecatedServiceClient.fastFibonacci(request);
@@ -150,6 +158,8 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *   ApiFuture<Empty> future = deprecatedServiceClient.fastFibonacciCallable().futureCall(request);
@@ -167,6 +177,8 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *   deprecatedServiceClient.slowFibonacci(request);
@@ -187,6 +199,8 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
    * try (DeprecatedServiceClient deprecatedServiceClient = DeprecatedServiceClient.create()) {
    *   FibonacciRequest request = FibonacciRequest.newBuilder().setValue(111972721).build();
    *   ApiFuture<Empty> future = deprecatedServiceClient.slowFibonacciCallable().futureCall(request);

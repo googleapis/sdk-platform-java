@@ -89,6 +89,8 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getBucket to 30 seconds:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * ConfigSettings.Builder configSettingsBuilder = ConfigSettings.newBuilder();
  * configSettingsBuilder
  *     .getBucketSettings()
