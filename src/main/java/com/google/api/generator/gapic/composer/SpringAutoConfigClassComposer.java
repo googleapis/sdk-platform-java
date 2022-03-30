@@ -97,7 +97,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName("ConditionalOnProperty")
                 .setPakkage("org.springframework.boot.autoconfigure.condition")
                 .build());
-    // AnnotationNode description only accepts String for now. need to extend to params
+    // TODO: AnnotationNode description only accepts String for now. need to extend to params
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
             .setType(conditionalOnPropertyType)
@@ -135,6 +135,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     // build expressions
     MethodInvocationExpr lhsExpr =
         MethodInvocationExpr.builder()
+            // TODO: might need to use newBuilder().build() if options needed.
+            // read more in client composer:
+            // src/main/java/com/google/api/generator/gapic/composer/common/AbstractServiceClientClassComposer.java#L277-L292
             .setMethodName("create")
             .setStaticReferenceType(clientType)
             .setReturnType(clientType)
