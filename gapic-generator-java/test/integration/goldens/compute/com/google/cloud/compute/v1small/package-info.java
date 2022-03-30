@@ -26,6 +26,8 @@
  * <p>Sample for AddressesClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (AddressesClient addressesClient = AddressesClient.create()) {
  *   String project = "project-309310695";
  *   for (Map.Entry<String, AddressesScopedList> element :
@@ -42,6 +44,8 @@
  * <p>Sample for RegionOperationsClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (RegionOperationsClient regionOperationsClient = RegionOperationsClient.create()) {
  *   String project = "project-309310695";
  *   String region = "region-934795532";

@@ -16,6 +16,8 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.auto.value.AutoValue;
+import java.util.Collections;
+import java.util.List;
 
 @AutoValue
 public abstract class GapicClass {
@@ -31,12 +33,25 @@ public abstract class GapicClass {
 
   public abstract ClassDefinition classDefinition();
 
+  public abstract List<Sample> samples();
+
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
   }
 
+  public static GapicClass create(
+      Kind kind, ClassDefinition classDefinition, List<Sample> samples) {
+    return builder().setKind(kind).setClassDefinition(classDefinition).setSamples(samples).build();
+  }
+
   static Builder builder() {
-    return new AutoValue_GapicClass.Builder();
+    return new AutoValue_GapicClass.Builder().setSamples(Collections.emptyList());
+  }
+
+  abstract Builder toBuilder();
+
+  public final GapicClass withSamples(List<Sample> samples) {
+    return toBuilder().setSamples(samples).build();
   }
 
   @AutoValue.Builder
@@ -44,6 +59,8 @@ public abstract class GapicClass {
     abstract Builder setKind(Kind kind);
 
     abstract Builder setClassDefinition(ClassDefinition classDefinition);
+
+    abstract Builder setSamples(List<Sample> samples);
 
     abstract GapicClass build();
   }

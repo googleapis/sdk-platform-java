@@ -45,6 +45,8 @@
  * <p>Sample for IAMPolicyClient:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated for illustrative purposes only.
+ * // It may require modifications to work in your environment.
  * try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
  *   SetIamPolicyRequest request =
  *       SetIamPolicyRequest.newBuilder()
