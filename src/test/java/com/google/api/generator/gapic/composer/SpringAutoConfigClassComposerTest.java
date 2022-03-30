@@ -61,7 +61,7 @@ public class SpringAutoConfigClassComposerTest {
 
   @Test
   public void writeMethodDefinition_constructor() {
-    // ignore: practice AST grammar here.
+    // To be deleted, please ignore: practice AST grammar here.
     JavaWriterVisitor writerVisitor = new JavaWriterVisitor();
 
     // header
