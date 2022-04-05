@@ -21,6 +21,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_srcjar_name = ctx.label.name
     output_main = ctx.outputs.main
     output_test = ctx.outputs.test
+    output_samples = ctx.outputs.samples
     output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
 
@@ -58,11 +59,16 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     cd $WORKING_DIR/{output_dir_path}/src/test/java
     zip -r $WORKING_DIR/{output_srcjar_name}-tests.srcjar ./
 
+    # Sample source files.
+    cd $WORKING_DIR/{output_dir_path}/samples/snippets/generated/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}-samples.srcjar ./
+
     cd $WORKING_DIR
 
     mv {output_srcjar_name}.srcjar {output_main}
     mv {output_srcjar_name}-resource-name.srcjar {output_resource_name}
     mv {output_srcjar_name}-tests.srcjar {output_test}
+    mv {output_srcjar_name}-samples.srcjar {output_samples}
     """.format(
         gapic_srcjar = gapic_srcjar.path,
         output_srcjar_name = output_srcjar_name,
@@ -72,13 +78,14 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
         output_main = output_main.path,
         output_resource_name = output_resource_name.path,
         output_test = output_test.path,
+        output_samples = output_samples.path,
     )
 
     ctx.actions.run_shell(
         inputs = [gapic_srcjar],
         tools = [formatter],
         command = script,
-        outputs = [output_main, output_resource_name, output_test],
+        outputs = [output_main, output_resource_name, output_test, output_samples],
     )
 
 _java_gapic_postprocess_srcjar = rule(
@@ -94,6 +101,7 @@ _java_gapic_postprocess_srcjar = rule(
         "main": "%{name}.srcjar",
         "resource_name": "%{name}-resource-name.srcjar",
         "test": "%{name}-test.srcjar",
+        "samples": "%{name}-samples.srcjar",
     },
     implementation = _java_gapic_postprocess_srcjar_impl,
 )
