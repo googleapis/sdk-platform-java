@@ -32,10 +32,12 @@ import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComp
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +47,7 @@ public class Composer {
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(clazzes);
+    return addApacheLicense(composeSamples(clazzes, context.gapicMetadata().getProtoPackage()));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
@@ -186,6 +188,39 @@ public class Composer {
     return clazzes;
   }
 
+  private static List<GapicClass> composeSamples(List<GapicClass> clazzes, String protoPackage) {
+    //  parse protoPackage for apiVersion and apiShortName
+    String[] pakkage = protoPackage.split("\\.");
+    String apiVersion;
+    String apiShortName;
+    //  e.g. v1, v2, v1beta1
+    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
+      apiVersion = pakkage[pakkage.length - 1];
+      apiShortName = pakkage[pakkage.length - 2];
+    } else {
+      apiVersion = "";
+      apiShortName = pakkage[pakkage.length - 1];
+    }
+    //  Include license header, apiShortName, and apiVersion
+    return clazzes.stream()
+        .map(
+            gapicClass -> {
+              List<Sample> samples =
+                  gapicClass.samples().stream()
+                      .map(sample -> updateSample(sample, apiShortName, apiVersion))
+                      .collect(Collectors.toList());
+              return gapicClass.withSamples(samples);
+            })
+        .collect(Collectors.toList());
+  }
+
+  private static Sample updateSample(Sample sample, String apiShortName, String apiVersion) {
+    return sample
+        .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
+        .withRegionTag(
+            sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
+  }
+
   @VisibleForTesting
   protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
     return gapicClassList.stream()
@@ -197,7 +232,7 @@ public class Composer {
                       .toBuilder()
                       .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
                       .build();
-              return GapicClass.create(gapicClass.kind(), classWithHeader);
+              return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
             })
         .collect(Collectors.toList());
   }
