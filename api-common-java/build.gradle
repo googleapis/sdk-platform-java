@@ -46,7 +46,7 @@ ext {
       auto_value_annotations: 'com.google.auto.value:auto-value-annotations:1.9',
       guava: 'com.google.guava:guava:31.1-jre',
       jsr305: 'com.google.code.findbugs:jsr305:3.0.2',
-      error_prone_annotations: 'com.google.errorprone:error_prone_annotations:2.11.0',
+      error_prone_annotations: 'com.google.errorprone:error_prone_annotations:2.12.1',
 
       // Testing
       junit: 'junit:junit:4.13.2',
