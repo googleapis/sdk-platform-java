@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.2](https://github.com/googleapis/java-common-protos/compare/v2.8.1...v2.8.2) (2022-04-11)
+
+
+### Dependencies
+
+* revert protobuf to 3.19 ([#348](https://github.com/googleapis/java-common-protos/issues/348)) ([80b5ef6](https://github.com/googleapis/java-common-protos/commit/80b5ef6221a4bce5a15f4bde7ae0f964ab72452a))
+
 ### [2.8.1](https://github.com/googleapis/java-common-protos/compare/v2.8.0...v2.8.1) (2022-04-07)
 
 
