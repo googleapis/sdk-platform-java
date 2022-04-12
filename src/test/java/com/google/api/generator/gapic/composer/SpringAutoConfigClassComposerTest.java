@@ -182,6 +182,7 @@ public class SpringAutoConfigClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    System.out.println(visitor.write());
     assertEquals(EXPECTED_CLASS_STRING, visitor.write());
   }
 
@@ -191,12 +192,14 @@ public class SpringAutoConfigClassComposerTest {
           + "import com.google.showcase.v1beta1.EchoClient;\n"
           + "import java.io.IOException;\n"
           + "import javax.annotation.Generated;\n"
+          + "import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;\n"
           + "import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;\n"
           + "import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;\n"
           + "import org.springframework.context.annotation.Bean;\n"
           + "\n"
           + "@Generated(\"by gapic-generator-java\")\n"
           + "@ConditionalOnProperty(\"value = \\\"spring.cloud.gcp.language.enabled\\\", matchIfMissing = false\")\n"
+          + "@ConditionalOnClass(\"value = Echo\")\n"
           + "public class EchoDemo {\n"
           + "\n"
           + "  @Bean\n"

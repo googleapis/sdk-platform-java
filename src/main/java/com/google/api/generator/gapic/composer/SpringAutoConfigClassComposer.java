@@ -85,30 +85,44 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
             .setMethods(Arrays.asList(createBeanMethod(service)))
-            .setAnnotations(createClassAnnotations())
+            .setAnnotations(createClassAnnotations(service.name()))
             .build();
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations() {
+  private static List<AnnotationNode> createClassAnnotations(String serviceName) {
     TypeNode conditionalOnPropertyType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("ConditionalOnProperty")
                 .setPakkage("org.springframework.boot.autoconfigure.condition")
                 .build());
+    TypeNode conditionalOnClass =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("ConditionalOnClass")
+                .setPakkage("org.springframework.boot.autoconfigure.condition")
+                .build());
+
     // TODO: AnnotationNode description only accepts String for now. need to extend to params
+    // and classes.
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
             .setType(conditionalOnPropertyType)
             .setDescription("value = \"spring.cloud.gcp.language.enabled\", matchIfMissing = false")
+            .build();
+    AnnotationNode conditionalOnClassNode =
+        AnnotationNode.builder()
+            .setType(conditionalOnClass)
+            .setDescription("value = " + serviceName) // need to produce XXX.class
             .build();
     return Arrays.asList(
         AnnotationNode.builder()
             .setType(staticTypes.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build(),
-        conditionalOnPropertyNode);
+        conditionalOnPropertyNode,
+        conditionalOnClassNode);
   }
 
   private static MethodDefinition createBeanMethod(Service service) {
