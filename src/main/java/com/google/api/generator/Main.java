@@ -25,7 +25,9 @@ public class Main {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
-    CodeGeneratorResponse response = Generator.generateGapic(request);
-    response.writeTo(System.out);
+    CodeGeneratorResponse response1 = Generator.generateGapic(request);
+    CodeGeneratorResponse response2 = Generator.generateSpring(request);
+    response1.writeTo(System.out);
+    response2.writeTo(System.out);
   }
 }
