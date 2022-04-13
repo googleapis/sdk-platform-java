@@ -75,6 +75,11 @@ def _gapic_pkg_tar_impl(ctx):
         tar -xzpf $dep -C {package_dir_path}
     done
     cd {package_dir_path}/{tar_cd_suffix}
+
+    if [ -d "{package_dir}/samples" ]; then
+        mv {package_dir}/samples {tar_prefix}
+    fi
+
     tar -zchpf {tar_prefix}/{package_dir}.tar.gz {tar_prefix}/*
     cd -
     mv {package_dir_path}/{package_dir}.tar.gz {pkg}
@@ -256,6 +261,10 @@ def _java_gapic_srcs_pkg_impl(ctx):
         # Remove empty files. If there are no resource names, one such file might have
         # been created. See java_gapic.bzl.
         rm $(find {package_dir_path}/src/main/java -size 0)
+
+        if [ -d {package_dir_path}/src/main/java/samples ]; then
+            mv {package_dir_path}/src/main/java/samples {package_dir_path}
+        fi
     done
     for proto_src in {proto_srcs}; do
         mkdir -p {package_dir_path}/src/main/proto
