@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
-  private static final String CLASS_NAME_PATTERN = "%sDemo";
+  private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
   private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
   private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
 
@@ -69,7 +69,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(GapicContext ignore, Service service) {
-    String packageName = service.pakkage() + ".demo";
+    String packageName = service.pakkage() + ".spring";
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
     String className = getThisClassName(service.name());
     GapicClass.Kind kind = Kind.MAIN;
