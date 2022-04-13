@@ -108,7 +108,7 @@ public class Writer {
                   clazzPath,
                   sample.regionTag().serviceName().toLowerCase(),
                   sample.regionTag().rpcName().toLowerCase(),
-                  sample.generateSampleFileName()));
+                  sample.name()));
       String executableSampleCode = SampleCodeWriter.writeExecutableSample(sample, pakkage);
       try {
         jos.putNextEntry(jarEntry);

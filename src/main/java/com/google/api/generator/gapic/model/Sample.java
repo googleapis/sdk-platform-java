@@ -95,12 +95,4 @@ public abstract class Sample {
         + regionTag.rpcName()
         + regionTag.overloadDisambiguation();
   }
-
-  public String generateSampleFileName() {
-    String name = (regionTag().isAsynchronous() ? "Async" : "Sync") + regionTag().rpcName();
-    if (!regionTag().overloadDisambiguation().isEmpty()) {
-      name += "_" + regionTag().overloadDisambiguation();
-    }
-    return name;
-  }
 }
