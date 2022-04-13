@@ -187,7 +187,7 @@ public class SpringAutoConfigClassComposerTest {
   }
 
   private static final String EXPECTED_CLASS_STRING =
-      "package com.google.showcase.v1beta1.demo;\n"
+      "package com.google.showcase.v1beta1.spring;\n"
           + "\n"
           + "import com.google.showcase.v1beta1.EchoClient;\n"
           + "import java.io.IOException;\n"
@@ -200,7 +200,7 @@ public class SpringAutoConfigClassComposerTest {
           + "@Generated(\"by gapic-generator-java\")\n"
           + "@ConditionalOnProperty(\"value = \\\"spring.cloud.gcp.language.enabled\\\", matchIfMissing = false\")\n"
           + "@ConditionalOnClass(\"value = Echo\")\n"
-          + "public class EchoDemo {\n"
+          + "public class EchoSpringAutoConfiguration {\n"
           + "\n"
           + "  @Bean\n"
           + "  @ConditionalOnMissingBean\n"
