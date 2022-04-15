@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
+import com.google.common.collect.ImmutableList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -65,7 +66,10 @@ public class ComposerTest {
   @Test
   public void composeSamples_showcase() {
     for (Sample sample : samples) {
-      assertEquals("File header will be empty before composing samples", sample.fileHeader(), "");
+      assertEquals(
+          "File header will be empty before composing samples",
+          sample.fileHeader(),
+          ImmutableList.of());
       assertEquals(
           "ApiShortName will be empty before composing samples",
           sample.regionTag().apiShortName(),
