@@ -63,6 +63,11 @@ def _gapic_pkg_tar_impl(ctx):
         for f in dep.files.to_list():
             deps.append(f)
 
+    samples =[]
+    for s in ctx.attr.samples:
+        for f in s.files.to_list():
+            samples.append(f)
+
     paths = _construct_package_dir_paths(
         ctx.attr.package_dir,
         ctx.outputs.pkg,
@@ -70,15 +75,16 @@ def _gapic_pkg_tar_impl(ctx):
     )
 
     script = """
+    for s in {samples}; do
+        mkdir -p {package_dir_path}/{tar_cd_suffix}/{tar_prefix}/samples/snippets/generated/
+        unzip -q ./$s -d {package_dir_path}/{tar_cd_suffix}/{tar_prefix}/samples/snippets/generated/
+    done
+
     mkdir -p {package_dir_path}
     for dep in {deps}; do
         tar -xzpf $dep -C {package_dir_path}
     done
     cd {package_dir_path}/{tar_cd_suffix}
-
-    if [ -d "{package_dir}/samples" ]; then
-        mv {package_dir}/samples {tar_prefix}
-    fi
 
     tar -zchpf {tar_prefix}/{package_dir}.tar.gz {tar_prefix}/*
     cd -
@@ -88,13 +94,14 @@ def _gapic_pkg_tar_impl(ctx):
         deps = " ".join(["'%s'" % d.path for d in deps]),
         package_dir_path = paths.package_dir_path,
         package_dir = paths.package_dir,
+        samples = " ".join(["'%s'" % s.path for s in samples]),
         pkg = ctx.outputs.pkg.path,
         tar_cd_suffix = paths.tar_cd_suffix,
         tar_prefix = paths.tar_prefix,
     )
 
     ctx.actions.run_shell(
-        inputs = deps,
+        inputs = deps + samples,
         command = script,
         outputs = [ctx.outputs.pkg],
     )
@@ -106,6 +113,7 @@ def _gapic_pkg_tar_impl(ctx):
 gapic_pkg_tar = rule(
     attrs = {
         "deps": attr.label_list(mandatory = True),
+        "samples": attr.label_list(mandatory = False),
         "package_dir": attr.string(mandatory = False, default = ""),
         "extension": attr.string(mandatory = False, default = "tar.gz"),
     },
@@ -328,11 +336,14 @@ def java_gapic_assembly_gradle_pkg(
     client_test_deps = []
     grpc_deps = []
     proto_deps = []
+    samples = []
 
     processed_deps = {}  #there is no proper Set in Starlark
     for dep in deps:
         # Use contains instead of endswith since microgenerator testing may use differently-named targets.
-        if "_java_gapic" in dep:
+        if "samples" in dep:
+            samples.append(dep)
+        elif "_java_gapic" in dep:
             _put_dep_in_a_bucket(dep, client_deps, processed_deps)
             _put_dep_in_a_bucket("%s_test" % dep, client_test_deps, processed_deps)
             _put_dep_in_a_bucket("%s_resource_name" % dep, proto_deps, processed_deps)
@@ -380,6 +391,7 @@ def java_gapic_assembly_gradle_pkg(
         name = name,
         assembly_name = package_dir,
         deps = proto_target_dep + grpc_target_dep + client_target_dep,
+        samples = samples,
     )
 
 def _java_gapic_gradle_pkg(
@@ -425,7 +437,7 @@ def _java_gapic_gradle_pkg(
         **kwargs
     )
 
-def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, visibility = None):
+def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, samples = None, visibility = None):
     resource_target_name = "%s-resources" % assembly_name
     java_gapic_build_configs_pkg(
         name = resource_target_name,
@@ -443,6 +455,7 @@ def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, visibility = None
             Label("//rules_java_gapic:gradlew"),
             resource_target_name,
         ] + deps,
+        samples = samples,
         package_dir = assembly_name,
         visibility = visibility,
     )
