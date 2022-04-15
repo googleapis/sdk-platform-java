@@ -188,7 +188,8 @@ public class Composer {
     return clazzes;
   }
 
-  private static List<GapicClass> composeSamples(List<GapicClass> clazzes, String protoPackage) {
+  @VisibleForTesting
+  static List<GapicClass> composeSamples(List<GapicClass> clazzes, String protoPackage) {
     //  parse protoPackage for apiVersion and apiShortName
     String[] pakkage = protoPackage.split("\\.");
     String apiVersion;
