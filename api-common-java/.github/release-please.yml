@@ -14,3 +14,7 @@ branches:
     bumpMinorPreMajor: true
     handleGHRelease: true
     branch: 2.0.x
+  - releaseType: java-backport
+    bumpMinorPreMajor: true
+    handleGHRelease: true
+    branch: 2.1.x

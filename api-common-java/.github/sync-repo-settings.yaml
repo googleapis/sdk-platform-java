@@ -38,6 +38,15 @@ branchProtectionRules:
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
     requiresStrictStatusChecks: true
+  - pattern: 2.1.x
+    isAdminEnforced: true
+    requiredStatusCheckContexts:
+      - units
+      - format
+      - cla/google
+    requiredApprovingReviewCount: 1
+    requiresCodeOwnerReviews: true
+    requiresStrictStatusChecks: true
 permissionRules:
   - team: Googlers
     permission: pull
