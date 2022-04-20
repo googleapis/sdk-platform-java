@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class HttpJsonServiceStubClassComposerTest {
   @Test
-  public void generateHttpJsonServiceStubClass_simple() {
+  public void generateServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseCompliance();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =

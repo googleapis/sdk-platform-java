@@ -55,6 +55,8 @@ public class ServiceClientCommentComposer {
       "To customize credentials:";
   private static final String SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING =
       "To customize the endpoint:";
+  private static final String SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING =
+      "To use %s transport (instead of %s) for sending an receiving requests over the wire:";
 
   private static final String SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING =
       "Please refer to the GitHub repository's samples for more quickstart code snippets.";
@@ -112,7 +114,10 @@ public class ServiceClientCommentComposer {
       Service service,
       String classMethodSampleCode,
       String credentialsSampleCode,
-      String endpointSampleCode) {
+      String endpointSampleCode,
+      String transportStample,
+      String primaryTransport,
+      String secondaryTransport) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -146,6 +151,12 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
+    if (transportStample != null) {
+      classHeaderJavadocBuilder.addParagraph(
+          String.format(
+              SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING, secondaryTransport, primaryTransport));
+      classHeaderJavadocBuilder.addSampleCode(transportStample);
+    }
 
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING);
 

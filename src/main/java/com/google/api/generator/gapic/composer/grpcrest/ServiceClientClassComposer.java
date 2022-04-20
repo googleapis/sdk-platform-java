@@ -14,7 +14,21 @@
 
 package com.google.api.generator.gapic.composer.grpcrest;
 
+import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
 import com.google.api.generator.gapic.composer.common.AbstractServiceClientClassComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
+import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.Service;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class ServiceClientClassComposer extends AbstractServiceClientClassComposer {
   private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
@@ -25,5 +39,38 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
 
   public static ServiceClientClassComposer instance() {
     return INSTANCE;
+  }
+
+  @Override
+  protected List<CommentStatement> createClassHeaderComments(
+      Service service,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      List<Sample> samples) {
+    TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
+    TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
+    Sample classMethodSampleCode =
+        ServiceClientHeaderSampleComposer.composeClassHeaderSample(
+            service, clientType, resourceNames, messageTypes);
+    Sample credentialsSampleCode =
+        ServiceClientHeaderSampleComposer.composeSetCredentialsSample(clientType, settingsType);
+    Sample endpointSampleCode =
+        ServiceClientHeaderSampleComposer.composeSetEndpointSample(clientType, settingsType);
+    Sample transportSampleCode =
+        ServiceClientHeaderSampleComposer.composeTransportSample(
+            clientType, settingsType, "defaultHttpJsonTransportProviderBuilder");
+    samples.addAll(
+        Arrays.asList(
+            classMethodSampleCode, credentialsSampleCode, endpointSampleCode, transportSampleCode));
+
+    return ServiceClientCommentComposer.createClassHeaderComments(
+        service,
+        SampleCodeWriter.writeInlineSample(classMethodSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(credentialsSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(endpointSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(transportSampleCode.body()),
+        "gRPC",
+        "REST (HTTP1.1/JSON)");
   }
 }
