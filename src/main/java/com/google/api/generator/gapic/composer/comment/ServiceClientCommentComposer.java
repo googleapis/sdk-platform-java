@@ -115,7 +115,7 @@ public class ServiceClientCommentComposer {
       String classMethodSampleCode,
       String credentialsSampleCode,
       String endpointSampleCode,
-      String transportStample,
+      String transportSampleCode,
       String primaryTransport,
       String secondaryTransport) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
@@ -151,11 +151,11 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
-    if (transportStample != null) {
+    if (transportSampleCode != null) {
       classHeaderJavadocBuilder.addParagraph(
           String.format(
               SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING, secondaryTransport, primaryTransport));
-      classHeaderJavadocBuilder.addSampleCode(transportStample);
+      classHeaderJavadocBuilder.addSampleCode(transportSampleCode);
     }
 
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING);

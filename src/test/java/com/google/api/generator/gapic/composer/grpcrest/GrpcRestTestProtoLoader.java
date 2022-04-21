@@ -54,7 +54,7 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     FileDescriptor echoFileDescriptor = EchoGrpcrest.getDescriptor();
 
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoServiceDescriptor.getName(), "Echo");
+    assertEquals("Echo", echoServiceDescriptor.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, Message> operationMessageTypes =
