@@ -277,6 +277,76 @@ public class ServiceClientHeaderSampleComposer {
     return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
   }
 
+  public static Sample composeTransportSample(
+      TypeNode clientType, TypeNode settingsType, String transportProviderMethod) {
+    String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
+    String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(settingsName).setType(settingsType).build());
+    MethodInvocationExpr newBuilderMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(settingsType)
+            .setMethodName("newBuilder")
+            .build();
+    MethodInvocationExpr transportChannelProviderArg =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(settingsType)
+                    .setMethodName(transportProviderMethod)
+                    .build())
+            .setMethodName("build")
+            .build();
+    MethodInvocationExpr credentialsMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderMethodExpr)
+            .setArguments(transportChannelProviderArg)
+            .setMethodName("setTransportChannelProvider")
+            .build();
+    MethodInvocationExpr buildMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credentialsMethodExpr)
+            .setReturnType(settingsType)
+            .setMethodName("build")
+            .build();
+    Expr initSettingsVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(buildMethodExpr)
+            .build();
+
+    // Initialized client with create() method.
+    // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(clientName).setType(clientType).build());
+    MethodInvocationExpr createMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(clientType)
+            .setArguments(settingsVarExpr)
+            .setMethodName("create")
+            .setReturnType(clientType)
+            .build();
+    String rpcName = createMethodExpr.methodIdentifier().name();
+    Expr initClientVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(createMethodExpr)
+            .build();
+
+    List<Statement> sampleBody =
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientName)
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation("setCredentialsProvider")
+            .build();
+    return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
+  }
+
   // Create a list of RPC method arguments' variable expressions.
   private static List<VariableExpr> createArgumentVariableExprs(List<MethodArgument> arguments) {
     return arguments.stream()
