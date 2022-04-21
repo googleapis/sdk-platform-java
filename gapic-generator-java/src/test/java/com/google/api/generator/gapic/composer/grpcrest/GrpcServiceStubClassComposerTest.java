@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.rest;
+package com.google.api.generator.gapic.composer.grpcrest;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
@@ -24,19 +25,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
 
-public class ServiceStubSettingsClassComposerTest {
+public class GrpcServiceStubClassComposerTest {
   @Test
   public void generateServiceClasses() {
-    GapicContext context = RestTestProtoLoader.instance().parseCompliance();
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "ComplianceStubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "ComplianceStubSettings.golden");
+    Utils.saveCodegenToFile(this.getClass(), "GrpcEchoStub.golden", visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcEchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
