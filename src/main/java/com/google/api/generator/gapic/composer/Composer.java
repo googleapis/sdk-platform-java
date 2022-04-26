@@ -208,14 +208,16 @@ public class Composer {
             gapicClass -> {
               List<Sample> samples =
                   gapicClass.samples().stream()
-                      .map(sample -> addRegionTagAndHeaderToSample(sample, apiShortName, apiVersion))
+                      .map(
+                          sample -> addRegionTagAndHeaderToSample(sample, apiShortName, apiVersion))
                       .collect(Collectors.toList());
               return gapicClass.withSamples(samples);
             })
         .collect(Collectors.toList());
   }
 
-  private static Sample addRegionTagAndHeaderToSample(Sample sample, String apiShortName, String apiVersion) {
+  private static Sample addRegionTagAndHeaderToSample(
+      Sample sample, String apiShortName, String apiVersion) {
     return sample
         .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
         .withRegionTag(

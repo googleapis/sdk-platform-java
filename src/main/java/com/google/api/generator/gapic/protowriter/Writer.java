@@ -36,6 +36,10 @@ public class Writer {
     public GapicWriterException(String errorMessage) {
       super(errorMessage);
     }
+
+    public GapicWriterException(String errorMessage, Throwable cause) {
+      super(errorMessage, cause);
+    }
   }
 
   public static CodeGeneratorResponse write(
@@ -49,7 +53,7 @@ public class Writer {
     try {
       jos = new JarOutputStream(output);
     } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage());
+      throw new GapicWriterException(e.getMessage(), e);
     }
 
     for (GapicClass gapicClazz : clazzes) {
@@ -63,7 +67,7 @@ public class Writer {
       jos.finish();
       jos.flush();
     } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage());
+      throw new GapicWriterException(e.getMessage(), e);
     }
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
@@ -93,7 +97,8 @@ public class Writer {
       throw new GapicWriterException(
           String.format(
               "Could not write code for class %s.%s: %s",
-              clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()));
+              clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()),
+          e);
     }
     return path;
   }
@@ -117,7 +122,8 @@ public class Writer {
         throw new GapicWriterException(
             String.format(
                 "Could not write sample code for %s/%s.: %s",
-                clazzPath, sample.name(), e.getMessage()));
+                clazzPath, sample.name(), e.getMessage()),
+            e);
       }
     }
   }
@@ -135,7 +141,7 @@ public class Writer {
       jos.putNextEntry(jarEntry);
       jos.write(code.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
-      throw new GapicWriterException("Could not write code for package-info.java");
+      throw new GapicWriterException("Could not write code for package-info.java", e);
     }
     return packagePath;
   }
@@ -148,7 +154,7 @@ public class Writer {
         jos.write(
             JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
       } catch (IOException e) {
-        throw new GapicWriterException("Could not write gapic_metadata.json");
+        throw new GapicWriterException("Could not write gapic_metadata.json", e);
       }
     }
   }
