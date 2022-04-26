@@ -42,6 +42,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientMethodSampleComposer {
+  public static Sample composeEmptySample(TypeNode clientType) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+
+    List<Statement> bodyStatements = new ArrayList<>();
+
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setRpcName("emtpy")
+            .build();
+
+    List<Statement> body =
+        Arrays.asList(
+            TryCatchStatement.builder()
+                .setTryResourceExpr(
+                    SampleComposerUtil.assignClientVariableWithCreateMethodExpr(clientVarExpr))
+                .setTryBody(bodyStatements)
+                .setIsSampleCode(true)
+                .build());
+    return Sample.builder().setBody(body).setRegionTag(regionTag).setIsCanonical(true).build();
+  }
+
   public static Sample composeCanonicalSample(
       Method method,
       TypeNode clientType,

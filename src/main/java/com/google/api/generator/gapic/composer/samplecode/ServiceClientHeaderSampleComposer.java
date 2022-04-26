@@ -52,10 +52,7 @@ public class ServiceClientHeaderSampleComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     if (service.methods().isEmpty()) {
-      RegionTag regionTag =
-          RegionTag.builder().setServiceName(service.name()).setRpcName("emtpy").build();
-
-      return Sample.builder().setRegionTag(regionTag).build();
+      return ServiceClientMethodSampleComposer.composeEmptySample(clientType);
     }
 
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
