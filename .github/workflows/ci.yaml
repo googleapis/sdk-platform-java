@@ -99,6 +99,6 @@ jobs:
           go-version: '^1.13.1'
       - name: License Header Check
         run: |
-          go get -u github.com/google/addlicense
+          go install github.com/google/addlicense@latest
           addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java')
 
