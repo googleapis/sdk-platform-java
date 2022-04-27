@@ -78,7 +78,7 @@ public class ComposerTest {
           "ApiVersion will be empty before composing samples", sample.regionTag().apiVersion(), "");
     }
 
-    List<Sample> composedSamples = Composer.composeSamples(clazzes, protoPackage).get(0).samples();
+    List<Sample> composedSamples = Composer.prepareExecutableSamples(clazzes, protoPackage).get(0).samples();
 
     for (Sample sample : composedSamples) {
       assertEquals(
@@ -94,7 +94,7 @@ public class ComposerTest {
   @Test
   public void composeSamples_parseProtoPackage() {
     String protoPack = "google.cloud.accessapproval.v1";
-    List<Sample> composedSamples = Composer.composeSamples(clazzes, protoPack).get(0).samples();
+    List<Sample> composedSamples = Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
 
     for (Sample sample : composedSamples) {
       assertEquals(
@@ -105,14 +105,14 @@ public class ComposerTest {
     }
 
     protoPack = "google.cloud.vision.v1p1beta1";
-    composedSamples = Composer.composeSamples(clazzes, protoPack).get(0).samples();
+    composedSamples = Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
     for (Sample sample : composedSamples) {
       assertEquals("ApiShortName should be vision", sample.regionTag().apiShortName(), "vision");
       assertEquals("ApiVersion should be v1p1beta1", sample.regionTag().apiVersion(), "v1p1beta1");
     }
 
     protoPack = "google.cloud.vision";
-    composedSamples = Composer.composeSamples(clazzes, protoPack).get(0).samples();
+    composedSamples = Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
     for (Sample sample : composedSamples) {
       assertEquals("ApiShortName should be vision", sample.regionTag().apiShortName(), "vision");
       assertEquals("ApiVersion should be empty", sample.regionTag().apiVersion(), "");
