@@ -21,8 +21,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 
 /**
- * This model represents a code sample region tag. Matching region start and end region tag
- * comments are used to determine the boundaries of code snippets to be used in documentation.
+ * This model represents a code sample region tag. Matching region start and end region tag comments
+ * are used to determine the boundaries of code snippets to be used in documentation.
  */
 @AutoValue
 public abstract class RegionTag {
