@@ -188,7 +188,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return Arrays.asList(typeStore.get("BackgroundResource"));
   }
 
-  private static List<CommentStatement> createClassHeaderComments(
+  protected List<CommentStatement> createClassHeaderComments(
       Service service,
       TypeStore typeStore,
       Map<String, ResourceName> resourceNames,
@@ -208,7 +208,10 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         service,
         SampleCodeWriter.writeInlineSample(classMethodSampleCode.body()),
         SampleCodeWriter.writeInlineSample(credentialsSampleCode.body()),
-        SampleCodeWriter.writeInlineSample(endpointSampleCode.body()));
+        SampleCodeWriter.writeInlineSample(endpointSampleCode.body()),
+        null,
+        null,
+        null);
   }
 
   private List<MethodDefinition> createClassMethods(
