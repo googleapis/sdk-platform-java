@@ -47,7 +47,8 @@ public class Composer {
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(prepareExecutableSamples(clazzes, context.gapicMetadata().getProtoPackage()));
+    return addApacheLicense(
+        prepareExecutableSamples(clazzes, context.gapicMetadata().getProtoPackage()));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {

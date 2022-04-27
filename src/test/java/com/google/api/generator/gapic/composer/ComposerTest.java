@@ -78,7 +78,8 @@ public class ComposerTest {
           "ApiVersion will be empty before composing samples", sample.regionTag().apiVersion(), "");
     }
 
-    List<Sample> composedSamples = Composer.prepareExecutableSamples(clazzes, protoPackage).get(0).samples();
+    List<Sample> composedSamples =
+        Composer.prepareExecutableSamples(clazzes, protoPackage).get(0).samples();
 
     for (Sample sample : composedSamples) {
       assertEquals(
@@ -94,7 +95,8 @@ public class ComposerTest {
   @Test
   public void composeSamples_parseProtoPackage() {
     String protoPack = "google.cloud.accessapproval.v1";
-    List<Sample> composedSamples = Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
+    List<Sample> composedSamples =
+        Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
 
     for (Sample sample : composedSamples) {
       assertEquals(

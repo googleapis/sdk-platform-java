@@ -21,6 +21,10 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
+/**
+ * This model represents a generated code sample. It contains the information needed to generate a
+ * sample file.
+ */
 @AutoValue
 public abstract class Sample {
   public abstract List<Statement> body();
@@ -45,10 +49,22 @@ public abstract class Sample {
 
   public abstract Builder toBuilder();
 
+  /**
+   * Helper method to easily update Sample's license header.
+   *
+   * @param header List of {@link CommentStatement} to replace Sample's header
+   * @return Sample with updated header
+   */
   public final Sample withHeader(List<CommentStatement> header) {
     return toBuilder().setFileHeader(header).build();
   }
 
+  /**
+   * Helper method to easily update Sample's region tag.
+   *
+   * @param regionTag {@link RegionTag} to replace Sample's header
+   * @return Sample with updated region tag.
+   */
   public final Sample withRegionTag(RegionTag regionTag) {
     if (isCanonical() && !regionTag.overloadDisambiguation().isEmpty()) {
       //  don't set overload on canonical samples

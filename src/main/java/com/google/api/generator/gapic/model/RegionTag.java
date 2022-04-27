@@ -20,6 +20,10 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 
+/**
+ * This model represents a code sample region tag. Matching region start and end region tag
+ * comments are used to determine the boundaries of code snippets to be used in documentation.
+ */
 @AutoValue
 public abstract class RegionTag {
   public abstract String apiShortName();
@@ -44,14 +48,32 @@ public abstract class RegionTag {
 
   public abstract RegionTag.Builder toBuilder();
 
+  /**
+   * Helper method to easily update region tag apiVersion.
+   *
+   * @param apiVersion String to replace region tag apiVersion
+   * @return RegionTag with updated apiVersion
+   */
   public final RegionTag withApiVersion(String apiVersion) {
     return toBuilder().setApiVersion(apiVersion).build();
   }
 
+  /**
+   * Helper method to easily update region tag apiShortName.
+   *
+   * @param apiShortName String to replace region tag apiShortName
+   * @return RegionTag with updated apiShortName
+   */
   public final RegionTag withApiShortName(String apiShortName) {
     return toBuilder().setApiShortName(apiShortName).build();
   }
 
+  /**
+   * Helper method to easily update region tag overloadDisambiguation.
+   *
+   * @param overloadDisambiguation String to replace region tag overloadDisambiguation
+   * @return RegionTag with updated overloadDisambiguation
+   */
   public final RegionTag withOverloadDisambiguation(String overloadDisambiguation) {
     return toBuilder().setOverloadDisambiguation(overloadDisambiguation).build();
   }
@@ -101,6 +123,11 @@ public abstract class RegionTag {
     END
   }
 
+  /**
+   * Method to generate region tag comment text
+   *
+   * @return region tag comment text
+   */
   public String generate() {
     Preconditions.checkState(!apiShortName().isEmpty(), "apiShortName can't be empty");
     Preconditions.checkState(!serviceName().isEmpty(), "serviceName can't be empty");
