@@ -52,7 +52,7 @@ public class ServiceClientHeaderSampleComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     if (service.methods().isEmpty()) {
-      return ServiceClientMethodSampleComposer.composeEmptySample(clientType);
+      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType);
     }
 
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use

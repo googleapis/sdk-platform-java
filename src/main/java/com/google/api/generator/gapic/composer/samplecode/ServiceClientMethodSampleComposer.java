@@ -42,7 +42,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientMethodSampleComposer {
-  public static Sample composeEmptySample(TypeNode clientType) {
+  // Creates an example for an empty service (no API methods), which is a corner case but can
+  // happen. Generated example will only show how to instantiate the client class but will not call
+  // any API methods (because there are no API methods).
+  public static Sample composeEmptyServiceSample(TypeNode clientType) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
