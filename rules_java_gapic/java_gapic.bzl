@@ -21,6 +21,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_srcjar_name = ctx.label.name
     output_main = ctx.outputs.main
     output_test = ctx.outputs.test
+    output_samples = ctx.outputs.samples
     output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
 
@@ -58,11 +59,16 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     cd $WORKING_DIR/{output_dir_path}/src/test/java
     zip -r $WORKING_DIR/{output_srcjar_name}-tests.srcjar ./
 
+    # Sample source files.
+    cd $WORKING_DIR/{output_dir_path}/samples/snippets/generated/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}-samples.srcjar ./
+
     cd $WORKING_DIR
 
     mv {output_srcjar_name}.srcjar {output_main}
     mv {output_srcjar_name}-resource-name.srcjar {output_resource_name}
     mv {output_srcjar_name}-tests.srcjar {output_test}
+    mv {output_srcjar_name}-samples.srcjar {output_samples}
     """.format(
         gapic_srcjar = gapic_srcjar.path,
         output_srcjar_name = output_srcjar_name,
@@ -72,13 +78,14 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
         output_main = output_main.path,
         output_resource_name = output_resource_name.path,
         output_test = output_test.path,
+        output_samples = output_samples.path,
     )
 
     ctx.actions.run_shell(
         inputs = [gapic_srcjar],
         tools = [formatter],
         command = script,
-        outputs = [output_main, output_resource_name, output_test],
+        outputs = [output_main, output_resource_name, output_test, output_samples],
     )
 
 _java_gapic_postprocess_srcjar = rule(
@@ -94,8 +101,64 @@ _java_gapic_postprocess_srcjar = rule(
         "main": "%{name}.srcjar",
         "resource_name": "%{name}-resource-name.srcjar",
         "test": "%{name}-test.srcjar",
+        "samples": "%{name}-samples.srcjar",
     },
     implementation = _java_gapic_postprocess_srcjar_impl,
+)
+
+def _java_gapic_samples_srcjar_impl(ctx):
+    gapic_srcjar = ctx.file.gapic_srcjar
+    output_srcjar_name = ctx.label.name
+    output_samples = ctx.outputs.samples
+    formatter = ctx.executable.formatter
+
+    output_dir_name = ctx.label.name
+    output_dir_path = "%s/%s" % (output_samples.dirname, output_dir_name)
+
+    script = """
+    unzip -q {gapic_srcjar}
+    # Sync'd to the output file name in Writer.java.
+    unzip -q temp-codegen.srcjar -d {output_dir_path}
+    # This may fail if there are spaces and/or too many files (exceed max length of command length).
+    {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
+    WORKING_DIR=`pwd`
+
+    # Sample source files.
+    cd $WORKING_DIR/{output_dir_path}/samples/snippets/generated/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}-samples.srcjar ./
+
+    cd $WORKING_DIR
+
+    mv {output_srcjar_name}-samples.srcjar {output_samples}
+    """.format(
+        gapic_srcjar = gapic_srcjar.path,
+        output_srcjar_name = output_srcjar_name,
+        formatter = formatter,
+        output_dir_name = output_dir_name,
+        output_dir_path = output_dir_path,
+        output_samples = output_samples.path,
+    )
+
+    ctx.actions.run_shell(
+        inputs = [gapic_srcjar],
+        tools = [formatter],
+        command = script,
+        outputs = [output_samples],
+    )
+
+_java_gapic_samples_srcjar = rule(
+    attrs = {
+        "gapic_srcjar": attr.label(mandatory = True, allow_single_file = True),
+        "formatter": attr.label(
+            default = Label("//:google_java_format_binary"),
+            executable = True,
+            cfg = "host",
+        ),
+    },
+    outputs = {
+        "samples": "%{name}-samples.srcjar",
+    },
+    implementation = _java_gapic_samples_srcjar_impl,
 )
 
 def _extract_common_proto_dep(dep):
@@ -194,6 +257,12 @@ def java_gapic_library(
 
     _java_gapic_postprocess_srcjar(
         name = srcjar_name,
+        gapic_srcjar = "%s.srcjar" % raw_srcjar_name,
+        **kwargs
+    )
+
+    _java_gapic_samples_srcjar(
+        name = "%s_samples" % name,
         gapic_srcjar = "%s.srcjar" % raw_srcjar_name,
         **kwargs
     )
