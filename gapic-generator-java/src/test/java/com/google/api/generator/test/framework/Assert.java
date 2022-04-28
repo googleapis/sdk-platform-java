@@ -68,7 +68,7 @@ public class Assert {
   public static void assertGoldenSamples(
       Class<?> clazz, String sampleDirName, String packkage, List<Sample> samples) {
     for (Sample sample : samples) {
-      String fileName = sample.generateSampleFileName() + ".golden";
+      String fileName = sample.name() + ".golden";
       String goldenSampleDir =
           Utils.getGoldenDir(clazz) + "/samples/" + sampleDirName.toLowerCase() + "/";
       Path goldenFilePath = Paths.get(goldenSampleDir, fileName);
