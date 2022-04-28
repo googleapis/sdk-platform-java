@@ -186,6 +186,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -664,6 +666,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
+     *     See google/api/metric.proto;l=36
      * @return The enum numeric value on the wire for launchStage.
      */
     @java.lang.Deprecated
@@ -677,6 +681,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
+     *     See google/api/metric.proto;l=36
      * @return The launchStage.
      */
     @java.lang.Deprecated
@@ -867,6 +873,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -901,6 +909,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
+     *     See google/api/metric.proto;l=36
      * @return The enum numeric value on the wire for launchStage.
      */
     @java.lang.Override
@@ -917,6 +927,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
+     *     See google/api/metric.proto;l=36
      * @return The launchStage.
      */
     @java.lang.Override
@@ -1426,6 +1438,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
+       * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
+       *     deprecated. See google/api/metric.proto;l=36
        * @return The enum numeric value on the wire for launchStage.
        */
       @java.lang.Override
@@ -1442,6 +1456,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
+       * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
+       *     deprecated. See google/api/metric.proto;l=36
        * @param value The enum numeric value on the wire for launchStage to set.
        * @return This builder for chaining.
        */
@@ -1461,6 +1477,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
+       * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
+       *     deprecated. See google/api/metric.proto;l=36
        * @return The launchStage.
        */
       @java.lang.Override
@@ -1479,6 +1497,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
+       * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
+       *     deprecated. See google/api/metric.proto;l=36
        * @param value The launchStage to set.
        * @return This builder for chaining.
        */
@@ -1501,6 +1521,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
+       * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
+       *     deprecated. See google/api/metric.proto;l=36
        * @return This builder for chaining.
        */
       @java.lang.Deprecated

@@ -129,6 +129,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -298,6 +300,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -2062,8 +2066,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       } else {
         if (kindCase_ == 2) {
           shortCodeBuilder_.mergeFrom(value);
+        } else {
+          shortCodeBuilder_.setMessage(value);
         }
-        shortCodeBuilder_.setMessage(value);
       }
       kindCase_ = 2;
       return this;

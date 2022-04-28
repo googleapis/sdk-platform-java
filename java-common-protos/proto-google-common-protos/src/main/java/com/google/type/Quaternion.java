@@ -141,6 +141,8 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -247,16 +249,16 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (x_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(x_) != 0) {
       output.writeDouble(1, x_);
     }
-    if (y_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(y_) != 0) {
       output.writeDouble(2, y_);
     }
-    if (z_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(z_) != 0) {
       output.writeDouble(3, z_);
     }
-    if (w_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(w_) != 0) {
       output.writeDouble(4, w_);
     }
     unknownFields.writeTo(output);
@@ -268,16 +270,16 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (x_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(x_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(1, x_);
     }
-    if (y_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(y_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(2, y_);
     }
-    if (z_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(z_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(3, z_);
     }
-    if (w_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(w_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(4, w_);
     }
     size += unknownFields.getSerializedSize();

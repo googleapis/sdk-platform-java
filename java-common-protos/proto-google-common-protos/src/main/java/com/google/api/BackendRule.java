@@ -118,8 +118,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
             }
           case 64:
             {
-              authenticationCase_ = 8;
               authentication_ = input.readBool();
+              authenticationCase_ = 8;
               break;
             }
           case 74:
@@ -140,6 +140,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -836,13 +838,13 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, address_);
     }
-    if (deadline_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(deadline_) != 0) {
       output.writeDouble(3, deadline_);
     }
-    if (minDeadline_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(minDeadline_) != 0) {
       output.writeDouble(4, minDeadline_);
     }
-    if (operationDeadline_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(operationDeadline_) != 0) {
       output.writeDouble(5, operationDeadline_);
     }
     if (pathTranslation_
@@ -873,13 +875,13 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, address_);
     }
-    if (deadline_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(deadline_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(3, deadline_);
     }
-    if (minDeadline_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(minDeadline_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(4, minDeadline_);
     }
-    if (operationDeadline_ != 0D) {
+    if (java.lang.Double.doubleToRawLongBits(operationDeadline_) != 0) {
       size += com.google.protobuf.CodedOutputStream.computeDoubleSize(5, operationDeadline_);
     }
     if (pathTranslation_

@@ -256,6 +256,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -985,6 +987,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
+   * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
+   *     google/cloud/audit/audit_log.proto;l=104
    * @return Whether the serviceData field is set.
    */
   @java.lang.Override
@@ -1003,6 +1007,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
+   * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
+   *     google/cloud/audit/audit_log.proto;l=104
    * @return The serviceData.
    */
   @java.lang.Override
@@ -4130,6 +4136,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      *
+     * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
+     *     google/cloud/audit/audit_log.proto;l=104
      * @return Whether the serviceData field is set.
      */
     @java.lang.Deprecated
@@ -4147,6 +4155,8 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      *
+     * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
+     *     google/cloud/audit/audit_log.proto;l=104
      * @return The serviceData.
      */
     @java.lang.Deprecated

@@ -136,6 +136,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -1384,8 +1386,9 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       } else {
         if (resultCase_ == 4) {
           errorBuilder_.mergeFrom(value);
+        } else {
+          errorBuilder_.setMessage(value);
         }
-        errorBuilder_.setMessage(value);
       }
       resultCase_ = 4;
       return this;
@@ -1621,8 +1624,9 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       } else {
         if (resultCase_ == 5) {
           responseBuilder_.mergeFrom(value);
+        } else {
+          responseBuilder_.setMessage(value);
         }
-        responseBuilder_.setMessage(value);
       }
       resultCase_ = 5;
       return this;

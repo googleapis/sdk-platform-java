@@ -534,6 +534,8 @@ public interface AuditLogOrBuilder
    *
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
+   * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
+   *     google/cloud/audit/audit_log.proto;l=104
    * @return Whether the serviceData field is set.
    */
   @java.lang.Deprecated
@@ -549,6 +551,8 @@ public interface AuditLogOrBuilder
    *
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
+   * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
+   *     google/cloud/audit/audit_log.proto;l=104
    * @return The serviceData.
    */
   @java.lang.Deprecated

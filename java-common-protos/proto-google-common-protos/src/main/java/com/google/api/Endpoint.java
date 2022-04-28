@@ -126,6 +126,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -213,6 +215,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
    * @return A list containing the aliases.
    */
   @java.lang.Deprecated
@@ -232,6 +235,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
    * @return The count of aliases.
    */
   @java.lang.Deprecated
@@ -251,6 +255,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
    * @param index The index of the element to return.
    * @return The aliases at the given index.
    */
@@ -271,6 +276,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
    * @param index The index of the value to return.
    * @return The bytes of the aliases at the given index.
    */
@@ -876,6 +882,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @return A list containing the aliases.
      */
     @java.lang.Deprecated
@@ -895,6 +902,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @return The count of aliases.
      */
     @java.lang.Deprecated
@@ -914,6 +922,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @param index The index of the element to return.
      * @return The aliases at the given index.
      */
@@ -934,6 +943,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @param index The index of the value to return.
      * @return The bytes of the aliases at the given index.
      */
@@ -954,6 +964,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @param index The index to set the value at.
      * @param value The aliases to set.
      * @return This builder for chaining.
@@ -981,6 +992,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @param value The aliases to add.
      * @return This builder for chaining.
      */
@@ -1007,6 +1019,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @param values The aliases to add.
      * @return This builder for chaining.
      */
@@ -1030,6 +1043,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @return This builder for chaining.
      */
     @java.lang.Deprecated
@@ -1052,6 +1066,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
      * @param value The bytes of the aliases to add.
      * @return This builder for chaining.
      */

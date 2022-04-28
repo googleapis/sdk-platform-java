@@ -216,6 +216,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -327,7 +329,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
-    java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue);
+
+    /* nullable */
+    java.lang.String getLabelsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue);
     /**
      *
      *
@@ -507,6 +514,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -645,7 +654,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       return internalGetLabels().getMap().containsKey(key);
     }
@@ -681,7 +690,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -698,7 +707,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       if (!map.containsKey(key)) {
@@ -1422,7 +1431,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public boolean containsLabels(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         return internalGetLabels().getMap().containsKey(key);
       }
@@ -1458,7 +1467,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getLabelsOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -1475,7 +1484,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public java.lang.String getLabelsOrThrow(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
         if (!map.containsKey(key)) {
@@ -1499,7 +1508,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder removeLabels(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         internalGetMutableLabels().getMutableMap().remove(key);
         return this;
@@ -1520,11 +1529,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder putLabels(java.lang.String key, java.lang.String value) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         if (value == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map value");
         }
+
         internalGetMutableLabels().getMutableMap().put(key, value);
         return this;
       }
@@ -2039,6 +2049,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -3569,6 +3581,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -5588,7 +5602,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
-    java.lang.String getHeadersOrDefault(java.lang.String key, java.lang.String defaultValue);
+
+    /* nullable */
+    java.lang.String getHeadersOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue);
     /**
      *
      *
@@ -6031,6 +6050,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -6206,7 +6227,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public boolean containsHeaders(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       return internalGetHeaders().getMap().containsKey(key);
     }
@@ -6246,7 +6267,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getHeadersOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -6265,7 +6286,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public java.lang.String getHeadersOrThrow(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
       if (!map.containsKey(key)) {
@@ -7510,7 +7531,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public boolean containsHeaders(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         return internalGetHeaders().getMap().containsKey(key);
       }
@@ -7550,7 +7571,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getHeadersOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -7569,7 +7590,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public java.lang.String getHeadersOrThrow(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
         if (!map.containsKey(key)) {
@@ -7595,7 +7616,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder removeHeaders(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         internalGetMutableHeaders().getMutableMap().remove(key);
         return this;
@@ -7618,11 +7639,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder putHeaders(java.lang.String key, java.lang.String value) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         if (value == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map value");
         }
+
         internalGetMutableHeaders().getMutableMap().put(key, value);
         return this;
       }
@@ -8869,7 +8891,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
-    java.lang.String getHeadersOrDefault(java.lang.String key, java.lang.String defaultValue);
+
+    /* nullable */
+    java.lang.String getHeadersOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue);
     /**
      *
      *
@@ -9083,6 +9110,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -9192,7 +9221,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public boolean containsHeaders(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       return internalGetHeaders().getMap().containsKey(key);
     }
@@ -9232,7 +9261,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getHeadersOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -9251,7 +9280,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public java.lang.String getHeadersOrThrow(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
       if (!map.containsKey(key)) {
@@ -9948,7 +9977,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public boolean containsHeaders(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         return internalGetHeaders().getMap().containsKey(key);
       }
@@ -9988,7 +10017,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getHeadersOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -10007,7 +10036,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public java.lang.String getHeadersOrThrow(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
         if (!map.containsKey(key)) {
@@ -10033,7 +10062,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder removeHeaders(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         internalGetMutableHeaders().getMutableMap().remove(key);
         return this;
@@ -10056,11 +10085,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder putHeaders(java.lang.String key, java.lang.String value) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         if (value == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map value");
         }
+
         internalGetMutableHeaders().getMutableMap().put(key, value);
         return this;
       }
@@ -10683,7 +10713,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
-    java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue);
+
+    /* nullable */
+    java.lang.String getLabelsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue);
     /**
      *
      *
@@ -10783,7 +10818,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; annotations = 6;</code>
      */
-    java.lang.String getAnnotationsOrDefault(java.lang.String key, java.lang.String defaultValue);
+
+    /* nullable */
+    java.lang.String getAnnotationsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue);
     /**
      *
      *
@@ -11202,6 +11242,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -11449,7 +11491,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       return internalGetLabels().getMap().containsKey(key);
     }
@@ -11487,7 +11529,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -11505,7 +11547,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       if (!map.containsKey(key)) {
@@ -11613,7 +11655,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public boolean containsAnnotations(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       return internalGetAnnotations().getMap().containsKey(key);
     }
@@ -11655,7 +11697,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getAnnotationsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -11675,7 +11717,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public java.lang.String getAnnotationsOrThrow(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
       if (!map.containsKey(key)) {
@@ -12991,7 +13033,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public boolean containsLabels(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         return internalGetLabels().getMap().containsKey(key);
       }
@@ -13029,7 +13071,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getLabelsOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -13047,7 +13089,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public java.lang.String getLabelsOrThrow(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
         if (!map.containsKey(key)) {
@@ -13072,7 +13114,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder removeLabels(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         internalGetMutableLabels().getMutableMap().remove(key);
         return this;
@@ -13094,11 +13136,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder putLabels(java.lang.String key, java.lang.String value) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         if (value == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map value");
         }
+
         internalGetMutableLabels().getMutableMap().put(key, value);
         return this;
       }
@@ -13286,7 +13329,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public boolean containsAnnotations(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         return internalGetAnnotations().getMap().containsKey(key);
       }
@@ -13328,7 +13371,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getAnnotationsOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -13348,7 +13391,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public java.lang.String getAnnotationsOrThrow(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
         if (!map.containsKey(key)) {
@@ -13375,7 +13418,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder removeAnnotations(java.lang.String key) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         internalGetMutableAnnotations().getMutableMap().remove(key);
         return this;
@@ -13399,11 +13442,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       public Builder putAnnotations(java.lang.String key, java.lang.String value) {
         if (key == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map key");
         }
         if (value == null) {
-          throw new java.lang.NullPointerException();
+          throw new NullPointerException("map value");
         }
+
         internalGetMutableAnnotations().getMutableMap().put(key, value);
         return this;
       }

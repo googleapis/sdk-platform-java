@@ -136,6 +136,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -309,6 +311,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -1258,6 +1262,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
       } finally {
@@ -2819,8 +2825,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       } else {
         if (authorityCase_ == 1) {
           firstPartyPrincipalBuilder_.mergeFrom(value);
+        } else {
+          firstPartyPrincipalBuilder_.setMessage(value);
         }
-        firstPartyPrincipalBuilder_.setMessage(value);
       }
       authorityCase_ = 1;
       return this;
@@ -3063,8 +3070,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       } else {
         if (authorityCase_ == 2) {
           thirdPartyPrincipalBuilder_.mergeFrom(value);
+        } else {
+          thirdPartyPrincipalBuilder_.setMessage(value);
         }
-        thirdPartyPrincipalBuilder_.setMessage(value);
       }
       authorityCase_ = 2;
       return this;

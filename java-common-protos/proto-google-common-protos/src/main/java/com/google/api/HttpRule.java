@@ -387,6 +387,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
@@ -2834,8 +2836,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       } else {
         if (patternCase_ == 8) {
           customBuilder_.mergeFrom(value);
+        } else {
+          customBuilder_.setMessage(value);
         }
-        customBuilder_.setMessage(value);
       }
       patternCase_ = 8;
       return this;
