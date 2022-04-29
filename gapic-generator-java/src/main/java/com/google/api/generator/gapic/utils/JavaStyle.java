@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.utils;
 
+import com.google.api.generator.engine.lexicon.Keyword;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Strings;
 import java.util.stream.IntStream;
@@ -32,8 +33,13 @@ public class JavaStyle {
       s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
     }
 
-    return capitalizeLettersAfterDigits(
-        String.format("%s%s", s.substring(0, 1).toLowerCase(), s.substring(1)));
+    String name =
+        capitalizeLettersAfterDigits(
+            String.format("%s%s", s.substring(0, 1).toLowerCase(), s.substring(1)));
+
+    // Some APIs use legit java keywords as method names. Both protobuf and gGRPC add an underscore
+    // in generated stubs to resolve name conflict, so we need to do the same.
+    return Keyword.isKeyword(name) ? name + '_' : name;
   }
 
   public static String toUpperCamelCase(String s) {
