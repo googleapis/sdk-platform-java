@@ -392,8 +392,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
                     .orElse(service.methods().get(0)));
-    Optional<String> methodNameOpt =
-        methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
+    Optional<String> methodNameOpt = methodOpt.map(Method::name);
     Optional<Sample> sampleCode =
         SettingsSampleComposer.composeSettingsSample(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
@@ -437,7 +436,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
           !Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method);
       TypeNode settingsType =
           getCallSettingsType(method, typeStore, hasBatchingSettings, isNestedClass);
-      String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
+      String varName = String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
       if (method.isDeprecated()) {
         deprecatedSettingVarNames.add(varName);
       }

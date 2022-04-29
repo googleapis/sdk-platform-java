@@ -51,6 +51,10 @@ public class ServiceClientHeaderSampleComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    if (service.methods().isEmpty()) {
+      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType);
+    }
+
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
     // the first method in the service's methods list.
     Method method =
@@ -58,6 +62,7 @@ public class ServiceClientHeaderSampleComposer {
             .filter(m -> m.stream() == Method.Stream.NONE && !m.hasLro() && !m.isPaged())
             .findFirst()
             .orElse(service.methods().get(0));
+
     if (method.stream() == Method.Stream.NONE) {
       if (method.methodSignatures().isEmpty()) {
         return ServiceClientMethodSampleComposer.composeCanonicalSample(

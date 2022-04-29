@@ -122,6 +122,11 @@ service Echo {
   }
 }
 
+// Generator should not fail when encounter a service without methods
+service EchoEmpy {
+  option (google.api.default_host) = "localhost:7469";
+}
+
 // A severity enum used to test enum capabilities in GAPIC surfaces
 enum Severity {
   UNNECESSARY = 0;
