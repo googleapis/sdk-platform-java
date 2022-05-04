@@ -340,18 +340,11 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                 .setType(typeStore.get(ClassNames.getServiceStubClassName(service)))
                 .setName("stub")
                 .build());
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(typeStore.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build();
     methods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
                 ServiceClientCommentComposer.createCreateMethodStubArgComment(
                     ClassNames.getServiceClientClassName(service), settingsVarExpr.type()))
-            .setAnnotations(Arrays.asList(betaAnnotation))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -448,15 +441,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     if (hasLroClient) {
       ctorAssignmentExprs.addAll(operationsClientAssignExprs);
     }
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(typeStore.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build();
     methods.add(
         MethodDefinition.constructorBuilder()
-            .setAnnotations(Arrays.asList(betaAnnotation))
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(thisClassType)
             .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
@@ -534,12 +520,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         methodNameToTypes.put(opClientMethodName, opClientTypesIt.next());
       }
     }
-    AnnotationNode betaStubAnnotation =
-        AnnotationNode.builder()
-            .setType(typeStore.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build();
 
     return methodNameToTypes.entrySet().stream()
         .map(
@@ -554,10 +534,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                         ServiceClientCommentComposer.GET_OPERATIONS_CLIENT_METHOD_COMMENT);
               }
               return methodBuilder
-                  .setAnnotations(
-                      methodName.equals("getStub")
-                          ? Arrays.asList(betaStubAnnotation)
-                          : Collections.emptyList())
                   .setScope(ScopeNode.PUBLIC)
                   .setName(methodName)
                   .setIsFinal(!methodName.equals("getStub"))

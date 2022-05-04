@@ -494,7 +494,6 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
     return updateCmekSettingsSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public ConfigServiceV2Stub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

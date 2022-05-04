@@ -269,16 +269,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Expr returnExpr =
           initializeTransportProviderBuilder(transportChannelProviderBuilderExpr, returnType);
 
+      List<AnnotationNode> annotations = new ArrayList<>();
+      if (!methods.isEmpty()) {
+        annotations.add(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
+      }
       MethodDefinition method =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
+              .setAnnotations(annotations)
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
               .setReturnType(returnType)
               .setName(builderNamesIt.next())
               .setReturnExpr(returnExpr)
               .build();
+
       methods.add(method);
     }
 
@@ -1086,15 +1092,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     // Put the method together.
     TypeNode returnType = typeStore.get(ClassNames.getServiceStubClassName(service));
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName("createStub")

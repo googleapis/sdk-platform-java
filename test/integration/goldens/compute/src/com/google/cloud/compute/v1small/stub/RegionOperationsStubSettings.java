@@ -100,7 +100,6 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
     return waitSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public RegionOperationsStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

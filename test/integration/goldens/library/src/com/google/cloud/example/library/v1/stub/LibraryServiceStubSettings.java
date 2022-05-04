@@ -284,7 +284,6 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
     return moveBookSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public LibraryServiceStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

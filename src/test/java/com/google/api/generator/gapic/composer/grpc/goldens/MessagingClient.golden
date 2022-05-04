@@ -115,7 +115,6 @@ public class MessagingClient implements BackgroundResource {
    * Constructs an instance of MessagingClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(MessagingSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final MessagingClient create(MessagingStub stub) {
     return new MessagingClient(stub);
   }
@@ -130,7 +129,6 @@ public class MessagingClient implements BackgroundResource {
     this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected MessagingClient(MessagingStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -141,7 +139,6 @@ public class MessagingClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public MessagingStub getStub() {
     return stub;
   }

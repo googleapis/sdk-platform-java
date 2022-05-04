@@ -16,7 +16,6 @@
 
 package com.google.cloud.compute.v1small;
 
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1small.stub.RegionOperationsStub;
@@ -119,7 +118,6 @@ public class RegionOperationsClient implements BackgroundResource {
    * Constructs an instance of RegionOperationsClient, using the given stub for making calls. This
    * is for advanced usage - prefer using create(RegionOperationsSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final RegionOperationsClient create(RegionOperationsStub stub) {
     return new RegionOperationsClient(stub);
   }
@@ -134,7 +132,6 @@ public class RegionOperationsClient implements BackgroundResource {
     this.stub = ((RegionOperationsStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected RegionOperationsClient(RegionOperationsStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -144,7 +141,6 @@ public class RegionOperationsClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public RegionOperationsStub getStub() {
     return stub;
   }

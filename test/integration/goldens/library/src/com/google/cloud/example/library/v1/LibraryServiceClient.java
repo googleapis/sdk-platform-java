@@ -18,7 +18,6 @@ package com.google.cloud.example.library.v1;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
@@ -148,7 +147,6 @@ public class LibraryServiceClient implements BackgroundResource {
    * Constructs an instance of LibraryServiceClient, using the given stub for making calls. This is
    * for advanced usage - prefer using create(LibraryServiceSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final LibraryServiceClient create(LibraryServiceStub stub) {
     return new LibraryServiceClient(stub);
   }
@@ -163,7 +161,6 @@ public class LibraryServiceClient implements BackgroundResource {
     this.stub = ((LibraryServiceStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected LibraryServiceClient(LibraryServiceStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -173,7 +170,6 @@ public class LibraryServiceClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public LibraryServiceStub getStub() {
     return stub;
   }
