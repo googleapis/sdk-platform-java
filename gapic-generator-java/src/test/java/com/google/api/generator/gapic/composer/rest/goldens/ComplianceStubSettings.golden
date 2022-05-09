@@ -103,7 +103,6 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
     return repeatDataPathTrailingResourceSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public ComplianceStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

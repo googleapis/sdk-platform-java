@@ -129,7 +129,6 @@ public class AddressesClient implements BackgroundResource {
    * Constructs an instance of AddressesClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(AddressesSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final AddressesClient create(AddressesStub stub) {
     return new AddressesClient(stub);
   }
@@ -143,7 +142,6 @@ public class AddressesClient implements BackgroundResource {
     this.stub = ((AddressesStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected AddressesClient(AddressesStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -153,7 +151,6 @@ public class AddressesClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public AddressesStub getStub() {
     return stub;
   }

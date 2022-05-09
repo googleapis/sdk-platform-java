@@ -105,7 +105,6 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
     return testIamPermissionsSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public IAMPolicyStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

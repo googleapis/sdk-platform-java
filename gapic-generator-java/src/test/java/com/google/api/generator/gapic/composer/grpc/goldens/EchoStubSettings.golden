@@ -271,7 +271,6 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return collideNameSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public EchoStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

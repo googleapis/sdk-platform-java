@@ -106,7 +106,6 @@ public class EchoEmpyClient implements BackgroundResource {
    * Constructs an instance of EchoEmpyClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(EchoEmpySettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final EchoEmpyClient create(EchoEmpyStub stub) {
     return new EchoEmpyClient(stub);
   }
@@ -120,7 +119,6 @@ public class EchoEmpyClient implements BackgroundResource {
     this.stub = ((EchoEmpyStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected EchoEmpyClient(EchoEmpyStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -130,7 +128,6 @@ public class EchoEmpyClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public EchoEmpyStub getStub() {
     return stub;
   }

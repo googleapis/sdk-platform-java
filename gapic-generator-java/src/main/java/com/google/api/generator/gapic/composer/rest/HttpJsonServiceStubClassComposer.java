@@ -240,12 +240,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   protected List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = super.createClassAnnotations(service);
 
-    annotations.add(
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build());
+    TypeNode betaApiType = FIXED_TYPESTORE.get("BetaApi");
+
+    if (annotations.stream().noneMatch(a -> betaApiType.equals(a.type()))) {
+      annotations.add(AnnotationNode.builder().setType(betaApiType).build());
+    }
+
     return annotations;
   }
 

@@ -249,12 +249,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         getTransportContext().instantiatingChannelProviderBuilderClasses().iterator();
     Iterator<String> builderNamesIt =
         getTransportContext().defaultTransportProviderBuilderNames().iterator();
+    Iterator<String> transportNamesIt = getTransportContext().transportNames().iterator();
 
     List<MethodDefinition> methods = new ArrayList<>();
 
     while (providerClassIt.hasNext()
         && providerBuilderClassIt.hasNext()
-        && builderNamesIt.hasNext()) {
+        && builderNamesIt.hasNext()
+        && transportNamesIt.hasNext()) {
       TypeNode returnType =
           TypeNode.withReference(ConcreteReference.withClazz(providerBuilderClassIt.next()));
       TypeNode channelProviderType =
@@ -269,16 +271,29 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Expr returnExpr =
           initializeTransportProviderBuilder(transportChannelProviderBuilderExpr, returnType);
 
+      List<AnnotationNode> annotations = new ArrayList<>();
+      if (!methods.isEmpty()) {
+        annotations.add(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
+      }
+      CommentStatement commentStatement =
+          SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
+      if (getTransportContext().transportNames().size() > 1) {
+        commentStatement =
+            new SettingsCommentComposer(transportNamesIt.next())
+                .getTransportProviderBuilderMethodComment();
+      }
+
       MethodDefinition method =
           MethodDefinition.builder()
-              .setHeaderCommentStatements(
-                  SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
+              .setHeaderCommentStatements(commentStatement)
+              .setAnnotations(annotations)
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
               .setReturnType(returnType)
               .setName(builderNamesIt.next())
               .setReturnExpr(returnExpr)
               .build();
+
       methods.add(method);
     }
 
@@ -981,7 +996,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
-    javaMethods.addAll(createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
+    javaMethods.addAll(
+        createNewBuilderMethods(
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
     return javaMethods;
@@ -1086,15 +1107,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     // Put the method together.
     TypeNode returnType = typeStore.get(ClassNames.getServiceStubClassName(service));
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName("createStub")
@@ -1186,12 +1200,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service,
       TypeStore typeStore,
       String newBuilderMethodName,
-      String createDefaultMethodName) {
+      String createDefaultMethodName,
+      CommentStatement methodComment) {
     // Create the newBuilder() method.
     final TypeNode builderReturnType = typeStore.get(NESTED_BUILDER_CLASS_NAME);
     return ImmutableList.of(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(methodComment)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)
