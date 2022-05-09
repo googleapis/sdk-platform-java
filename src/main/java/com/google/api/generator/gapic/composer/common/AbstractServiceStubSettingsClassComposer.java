@@ -275,7 +275,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       if (!methods.isEmpty()) {
         annotations.add(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
       }
-      CommentStatement commentStatement = SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
+      CommentStatement commentStatement =
+          SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
       if (getTransportContext().transportNames().size() > 1) {
         commentStatement =
             new SettingsCommentComposer(transportNamesIt.next())
@@ -483,7 +484,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR
+            .toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -833,7 +835,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr.toBuilder()
+            pagedListDescVarExpr
+                .toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -972,7 +975,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr.toBuilder()
+            pagedListResponseFactoryVarExpr
+                .toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
