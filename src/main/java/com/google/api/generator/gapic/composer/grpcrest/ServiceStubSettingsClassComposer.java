@@ -18,6 +18,7 @@ import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -35,6 +36,7 @@ import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ServiceStubSettingsClassComposer extends AbstractServiceStubSettingsClassComposer {
@@ -188,13 +190,26 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
       Service service,
       TypeStore typeStore,
       String newBuilderMethodName,
-      String createDefaultMethodName) {
+      String createDefaultMethodName,
+      CommentStatement methodComment) {
     List<MethodDefinition> methods = new ArrayList<>();
-    methods.addAll(
-        super.createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
+    Iterator<String> transportNames = getTransportContext().transportNames().iterator();
     methods.addAll(
         super.createNewBuilderMethods(
-            service, typeStore, "newHttpJsonBuilder", "createHttpJsonDefault"));
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            new SettingsCommentComposer(transportNames.next())
+                .getNewTransportBuilderMethodComment()));
+    methods.addAll(
+        super.createNewBuilderMethods(
+            service,
+            typeStore,
+            "newHttpJsonBuilder",
+            "createHttpJsonDefault",
+            new SettingsCommentComposer(transportNames.next())
+                .getNewTransportBuilderMethodComment()));
     return methods;
   }
 }

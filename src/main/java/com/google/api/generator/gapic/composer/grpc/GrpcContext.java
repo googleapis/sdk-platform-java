@@ -34,7 +34,7 @@ public abstract class GrpcContext extends TransportContext {
       GrpcContext.builder()
           .setClassNames(new ClassNames("Grpc"))
           .setTransport(Transport.GRPC)
-          .setTransportName("gRPC")
+          .setTransportNames(ImmutableList.of("gRPC"))
           // For grpc.GrpcServiceStubClassComposer
           .setCallSettingsClass(GrpcCallSettings.class)
           .setStubCallableFactoryType(classToType(GrpcStubCallableFactory.class))

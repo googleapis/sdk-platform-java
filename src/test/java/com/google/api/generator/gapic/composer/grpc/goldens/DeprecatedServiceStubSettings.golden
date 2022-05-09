@@ -88,7 +88,6 @@ public class DeprecatedServiceStubSettings extends StubSettings<DeprecatedServic
     return slowFibonacciSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public DeprecatedServiceStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

@@ -50,7 +50,6 @@ import javax.annotation.Generated;
  */
 @BetaApi
 @Generated("by gapic-generator-java")
-@BetaApi("A restructuring of stub classes is planned, so this may break in the future")
 public class HttpJsonEchoStub extends EchoStub {
   private static final TypeRegistry typeRegistry =
       TypeRegistry.newBuilder()

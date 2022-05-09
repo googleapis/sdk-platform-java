@@ -127,7 +127,6 @@ public class EchoClient implements BackgroundResource {
    * Constructs an instance of EchoClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(EchoSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final EchoClient create(EchoStub stub) {
     return new EchoClient(stub);
   }
@@ -144,7 +143,6 @@ public class EchoClient implements BackgroundResource {
     this.httpJsonOperationsClient = OperationsClient.create(this.stub.getHttpJsonOperationsStub());
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected EchoClient(EchoStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -157,7 +155,6 @@ public class EchoClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public EchoStub getStub() {
     return stub;
   }

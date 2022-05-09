@@ -275,7 +275,6 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
     return listSettings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public AddressesStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()

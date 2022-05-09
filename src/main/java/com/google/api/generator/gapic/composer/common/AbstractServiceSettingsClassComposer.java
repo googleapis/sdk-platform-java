@@ -85,7 +85,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
-  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+  protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private final TransportContext transportContext;
 
@@ -185,7 +185,14 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
     javaMethods.add(createCreatorMethod(service, typeStore));
     javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
-    javaMethods.addAll(createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
+    javaMethods.addAll(
+        createNewBuilderMethods(
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            ImmutableList.of(),
+            SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
@@ -370,13 +377,37 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         getTransportContext().defaultTransportProviderBuilderNames().iterator();
     Iterator<Class<?>> channelProviderClassesIt =
         getTransportContext().instantiatingChannelProviderBuilderClasses().iterator();
-    while (providerBuilderNamesIt.hasNext() && channelProviderClassesIt.hasNext()) {
+    Iterator<String> transportNamesIt = getTransportContext().transportNames().iterator();
+
+    boolean secondaryTransportProviderBuilder = false;
+    while (providerBuilderNamesIt.hasNext()
+        && channelProviderClassesIt.hasNext()
+        && transportNamesIt.hasNext()) {
+      List<AnnotationNode> annotations = ImmutableList.of();
+
+      // For clients supporting multiple transports (mainly grpc+rest case) make secondary transport
+      // declared as @BetaApi for now.
+      if (secondaryTransportProviderBuilder) {
+        annotations =
+            Arrays.asList(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
+      }
+      CommentStatement commentStatement =
+          SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
+      if (getTransportContext().transportNames().size() > 1) {
+        commentStatement =
+            new SettingsCommentComposer(transportNamesIt.next())
+                .getTransportProviderBuilderMethodComment();
+      }
+
       javaMethods.add(
           methodMakerFn.apply(
-              methodStarterFn.apply(
-                  providerBuilderNamesIt.next(),
-                  typeMakerFn.apply(channelProviderClassesIt.next())),
-              SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+              methodStarterFn
+                  .apply(
+                      providerBuilderNamesIt.next(),
+                      typeMakerFn.apply(channelProviderClassesIt.next()))
+                  .setAnnotations(annotations),
+              commentStatement));
+      secondaryTransportProviderBuilder = true;
     }
 
     javaMethods.add(
@@ -408,11 +439,14 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
       Service service,
       TypeStore typeStore,
       String newBuilderMethodName,
-      String createDefaultMethodName) {
+      String createDefaultMethodName,
+      List<AnnotationNode> annotations,
+      CommentStatement comment) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     return ImmutableList.of(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(comment)
+            .setAnnotations(annotations)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderType)
@@ -500,7 +534,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createNestedBuilderConstructorMethods(service, typeStore));
     javaMethods.addAll(
-        createNestedBuilderCreatorMethods(service, typeStore, "newBuilder", "createDefault"));
+        createNestedBuilderCreatorMethods(
+            service, typeStore, "newBuilder", "createDefault", ImmutableList.of()));
     javaMethods.add(createNestedBuilderStubSettingsBuilderMethod(service, typeStore));
     javaMethods.add(createNestedBuilderApplyToAllUnaryMethod(service, typeStore));
     javaMethods.addAll(createNestedBuilderSettingsGetterMethods(service, typeStore));
@@ -591,7 +626,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
       Service service,
       TypeStore typeStore,
       String newBuilderMethodName,
-      String createDefaultMethodName) {
+      String createDefaultMethodName,
+      List<AnnotationNode> annotations) {
     MethodInvocationExpr ctorArg =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -602,6 +638,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     return ImmutableList.of(
         MethodDefinition.builder()
+            .setAnnotations(annotations)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
             .setReturnType(builderType)

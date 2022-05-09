@@ -16,7 +16,6 @@
 
 package com.google.iam.v1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.iam.v1.stub.IAMPolicyStub;
@@ -138,7 +137,6 @@ public class IAMPolicyClient implements BackgroundResource {
    * Constructs an instance of IAMPolicyClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(IAMPolicySettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final IAMPolicyClient create(IAMPolicyStub stub) {
     return new IAMPolicyClient(stub);
   }
@@ -152,7 +150,6 @@ public class IAMPolicyClient implements BackgroundResource {
     this.stub = ((IAMPolicyStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected IAMPolicyClient(IAMPolicyStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -162,7 +159,6 @@ public class IAMPolicyClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public IAMPolicyStub getStub() {
     return stub;
   }

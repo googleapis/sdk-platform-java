@@ -200,6 +200,7 @@ GOLDEN_UPDATING_UNIT_TESTS = [
     "com.google.api.generator.gapic.composer.grpcrest.ServiceClientClassComposerTest",
     "com.google.api.generator.gapic.composer.grpcrest.ServiceClientTestClassComposerTest",
     "com.google.api.generator.gapic.composer.grpcrest.ServiceSettingsClassComposerTest",
+    "com.google.api.generator.gapic.composer.grpcrest.ServiceStubSettingsClassComposerTest",
     "com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposerTest",
     "com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposerTest",
     "com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComposerTest",

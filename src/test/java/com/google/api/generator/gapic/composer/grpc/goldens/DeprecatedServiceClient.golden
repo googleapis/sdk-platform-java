@@ -1,6 +1,5 @@
 package com.google.testdata.v1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.protobuf.Empty;
@@ -103,7 +102,6 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * Constructs an instance of DeprecatedServiceClient, using the given stub for making calls. This
    * is for advanced usage - prefer using create(DeprecatedServiceSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final DeprecatedServiceClient create(DeprecatedServiceStub stub) {
     return new DeprecatedServiceClient(stub);
   }
@@ -118,7 +116,6 @@ public class DeprecatedServiceClient implements BackgroundResource {
     this.stub = ((DeprecatedServiceStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected DeprecatedServiceClient(DeprecatedServiceStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -128,7 +125,6 @@ public class DeprecatedServiceClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public DeprecatedServiceStub getStub() {
     return stub;
   }

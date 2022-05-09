@@ -190,7 +190,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             messageTypes);
 
     StubCommentComposer commentComposer =
-        new StubCommentComposer(getTransportContext().transportName());
+        new StubCommentComposer(getTransportContext().transportNames().get(0));
 
     ClassDefinition classDef =
         ClassDefinition.builder()
