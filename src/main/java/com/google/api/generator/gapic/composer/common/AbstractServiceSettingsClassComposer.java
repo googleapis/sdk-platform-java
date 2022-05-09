@@ -384,6 +384,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         && channelProviderClassesIt.hasNext()
         && transportNamesIt.hasNext()) {
       List<AnnotationNode> annotations = ImmutableList.of();
+
+      // For clients supporting multiple transports (mainly grpc+rest case) make secondary transport
+      // declared as @BetaApi for now.
       if (secondaryTransportProviderBuilder) {
         annotations =
             Arrays.asList(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
