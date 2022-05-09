@@ -249,12 +249,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         getTransportContext().instantiatingChannelProviderBuilderClasses().iterator();
     Iterator<String> builderNamesIt =
         getTransportContext().defaultTransportProviderBuilderNames().iterator();
+    Iterator<String> transportNamesIt = getTransportContext().transportNames().iterator();
 
     List<MethodDefinition> methods = new ArrayList<>();
 
     while (providerClassIt.hasNext()
         && providerBuilderClassIt.hasNext()
-        && builderNamesIt.hasNext()) {
+        && builderNamesIt.hasNext()
+        && transportNamesIt.hasNext()) {
       TypeNode returnType =
           TypeNode.withReference(ConcreteReference.withClazz(providerBuilderClassIt.next()));
       TypeNode channelProviderType =
@@ -273,10 +275,16 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       if (!methods.isEmpty()) {
         annotations.add(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
       }
+      CommentStatement commentStatement = SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
+      if (getTransportContext().transportNames().size() > 1) {
+        commentStatement =
+            new SettingsCommentComposer(transportNamesIt.next())
+                .getTransportProviderBuilderMethodComment();
+      }
+
       MethodDefinition method =
           MethodDefinition.builder()
-              .setHeaderCommentStatements(
-                  SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
+              .setHeaderCommentStatements(commentStatement)
               .setAnnotations(annotations)
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
@@ -475,8 +483,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR
-            .toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -826,8 +833,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr
-                .toBuilder()
+            pagedListDescVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -966,8 +972,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr
-                .toBuilder()
+            pagedListResponseFactoryVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -987,7 +992,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
-    javaMethods.addAll(createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
+    javaMethods.addAll(
+        createNewBuilderMethods(
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
     return javaMethods;
@@ -1185,12 +1196,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service,
       TypeStore typeStore,
       String newBuilderMethodName,
-      String createDefaultMethodName) {
+      String createDefaultMethodName,
+      CommentStatement methodComment) {
     // Create the newBuilder() method.
     final TypeNode builderReturnType = typeStore.get(NESTED_BUILDER_CLASS_NAME);
     return ImmutableList.of(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(methodComment)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)

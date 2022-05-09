@@ -34,7 +34,7 @@ public abstract class RestContext extends TransportContext {
       RestContext.builder()
           .setClassNames(new ClassNames("HttpJson"))
           .setTransport(Transport.REST)
-          .setTransportName("REST")
+          .setTransportNames(ImmutableList.of("REST"))
           // For httpjson.HttpJsonServiceStubClassComposer
           .setCallSettingsClass(HttpJsonCallSettings.class)
           .setStubCallableFactoryType(classToType(HttpJsonStubCallableFactory.class))

@@ -187,7 +187,12 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
     javaMethods.addAll(
         createNewBuilderMethods(
-            service, typeStore, "newBuilder", "createDefault", ImmutableList.of()));
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            ImmutableList.of(),
+            SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
@@ -372,13 +377,25 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         getTransportContext().defaultTransportProviderBuilderNames().iterator();
     Iterator<Class<?>> channelProviderClassesIt =
         getTransportContext().instantiatingChannelProviderBuilderClasses().iterator();
+    Iterator<String> transportNamesIt = getTransportContext().transportNames().iterator();
+
     boolean secondaryTransportProviderBuilder = false;
-    while (providerBuilderNamesIt.hasNext() && channelProviderClassesIt.hasNext()) {
+    while (providerBuilderNamesIt.hasNext()
+        && channelProviderClassesIt.hasNext()
+        && transportNamesIt.hasNext()) {
       List<AnnotationNode> annotations = ImmutableList.of();
       if (secondaryTransportProviderBuilder) {
         annotations =
             Arrays.asList(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
       }
+      CommentStatement commentStatement =
+          SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
+      if (getTransportContext().transportNames().size() > 1) {
+        commentStatement =
+            new SettingsCommentComposer(transportNamesIt.next())
+                .getTransportProviderBuilderMethodComment();
+      }
+
       javaMethods.add(
           methodMakerFn.apply(
               methodStarterFn
@@ -386,7 +403,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                       providerBuilderNamesIt.next(),
                       typeMakerFn.apply(channelProviderClassesIt.next()))
                   .setAnnotations(annotations),
-              SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+              commentStatement));
       secondaryTransportProviderBuilder = true;
     }
 
@@ -420,11 +437,12 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
       TypeStore typeStore,
       String newBuilderMethodName,
       String createDefaultMethodName,
-      List<AnnotationNode> annotations) {
+      List<AnnotationNode> annotations,
+      CommentStatement comment) {
     TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     return ImmutableList.of(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(comment)
             .setAnnotations(annotations)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)

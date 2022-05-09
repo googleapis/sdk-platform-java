@@ -15,12 +15,15 @@
 package com.google.api.generator.gapic.composer.grpcrest;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.common.AbstractServiceSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassComposer {
@@ -68,15 +71,24 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
       TypeStore typeStore,
       String newBuilderMethodName,
       String createDefaultMethodName,
-      List<AnnotationNode> annotations) {
+      List<AnnotationNode> annotations,
+      CommentStatement comment) {
     List<MethodDefinition> methods = new ArrayList<>();
 
     AnnotationNode betaApiAnnotaiton =
         AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build();
 
+    Iterator<String> transportNames = getTransportContext().transportNames().iterator();
+
     methods.addAll(
         super.createNewBuilderMethods(
-            service, typeStore, "newBuilder", "createDefault", annotations));
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            annotations,
+            new SettingsCommentComposer(transportNames.next())
+                .getNewTransportBuilderMethodComment()));
     methods.addAll(
         super.createNewBuilderMethods(
             service,
@@ -86,7 +98,9 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
             ImmutableList.<AnnotationNode>builder()
                 .addAll(annotations)
                 .add(betaApiAnnotaiton)
-                .build()));
+                .build(),
+            new SettingsCommentComposer(transportNames.next())
+                .getNewTransportBuilderMethodComment()));
 
     return methods;
   }
