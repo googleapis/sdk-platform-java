@@ -907,7 +907,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =
-            String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+            (i < descendantFields.length - 1 || !httpBindingFieldName.isRepeated())
+                ? String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName))
+                : String.format("get%sList", JavaStyle.toUpperCamelCase(currFieldName));
         requestFieldGetterExprBuilder =
             requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
 
