@@ -33,7 +33,7 @@ public class MethodTest {
           .build();
   private static final HttpBindings HTTP_BINDINGS =
       HttpBindings.builder()
-          .setPathParameters(ImmutableSet.of(HttpBinding.create("table", true, "")))
+          .setPathParameters(ImmutableSet.of(HttpBinding.create("table", true, false, "")))
           .setPattern("/pattern/test")
           .setIsAsteriskBody(false)
           .setHttpVerb(HttpVerb.GET)

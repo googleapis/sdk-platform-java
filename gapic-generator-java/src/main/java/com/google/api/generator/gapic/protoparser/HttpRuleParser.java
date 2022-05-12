@@ -128,7 +128,7 @@ public class HttpRuleParser {
           patternSampleValues != null ? patternSampleValues.get(paramName) : null;
       String[] subFields = paramName.split("\\.");
       if (inputMessage == null) {
-        httpBindings.add(HttpBinding.create(paramName, false, patternSampleValue));
+        httpBindings.add(HttpBinding.create(paramName, false, false, patternSampleValue));
         continue;
       }
       Message nestedMessage = inputMessage;
@@ -150,7 +150,8 @@ public class HttpRuleParser {
           }
           Field field = nestedMessage.fieldMap().get(subFieldName);
           httpBindings.add(
-              HttpBinding.create(paramName, field.isProto3Optional(), patternSampleValue));
+              HttpBinding.create(
+                  paramName, field.isProto3Optional(), field.isRepeated(), patternSampleValue));
         }
       }
     }
