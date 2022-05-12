@@ -40,12 +40,15 @@ public abstract class HttpBindings {
 
     public abstract boolean isOptional();
 
+    public abstract boolean isRepeated();
+
     @Nullable
     public abstract String valuePattern();
 
-    public static HttpBinding create(String name, boolean isOptional, String valuePattern) {
+    public static HttpBinding create(
+        String name, boolean isOptional, boolean isRepeated, String valuePattern) {
       return new AutoValue_HttpBindings_HttpBinding(
-          name, JavaStyle.toLowerCamelCase(name), isOptional, valuePattern);
+          name, JavaStyle.toLowerCamelCase(name), isOptional, isRepeated, valuePattern);
     }
 
     // Do not forget to keep it in sync with equals() implementation.

@@ -407,7 +407,10 @@ public class EchoClient implements BackgroundResource {
    * // It may require modifications to work in your environment.
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ExpandRequest request =
-   *       ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+   *       ExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .addAllInfo(new ArrayList<String>())
+   *           .build();
    *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
    *   for (EchoResponse response : stream) {
    *     // Do something when a response is received.

@@ -108,11 +108,12 @@ public class HttpJsonEchoStub extends EchoStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<ExpandRequest> serializer =
                             ProtoRestSerializer.create();
+                        serializer.putQueryParam(fields, "content", request.getContent());
+                        serializer.putQueryParam(fields, "info", request.getInfoList());
                         return fields;
                       })
                   .setRequestBodyExtractor(
-                      request ->
-                          ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                      request -> ProtoRestSerializer.create().toBody("error", request.getError()))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<EchoResponse>newBuilder()

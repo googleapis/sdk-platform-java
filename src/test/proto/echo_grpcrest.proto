@@ -65,7 +65,7 @@ service Echo {
   rpc Expand(ExpandRequest) returns (stream EchoResponse) {
     option (google.api.http) = {
       post: "/v1beta1/echo:expand"
-      body: "*"
+      body: "error"
     };
     option (google.api.method_signature) = "content,error";
   }
@@ -202,7 +202,7 @@ message ExpandRequest {
   // The error that is thrown after all words are sent on the stream.
   google.rpc.Status error = 2;
 
-  string info = 3;
+  repeated string info = 3;
 }
 
 // The request for the PagedExpand method.
