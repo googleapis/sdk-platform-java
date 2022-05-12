@@ -145,9 +145,10 @@ public class DefaultValueComposer {
       String nestedFieldName = field.name();
       Map<String, String> nestedValuePatterns = new HashMap<>();
       for (Map.Entry<String, String> entry : valuePatterns.entrySet()) {
-        if (entry.getKey().startsWith(nestedFieldName + '.')) {
+        String lowerCamelNestedFieldName = JavaStyle.toLowerCamelCase(nestedFieldName);
+        if (entry.getKey().startsWith(lowerCamelNestedFieldName + '.')) {
           nestedValuePatterns.put(
-              entry.getKey().substring(nestedFieldName.length() + 1), entry.getValue());
+              entry.getKey().substring(lowerCamelNestedFieldName.length() + 1), entry.getValue());
         }
       }
 

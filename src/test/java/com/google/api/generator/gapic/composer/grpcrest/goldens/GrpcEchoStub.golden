@@ -12,6 +12,7 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.grpcrest.v1beta1.BlockRequest;
@@ -28,6 +29,7 @@ import com.google.showcase.grpcrest.v1beta1.WaitResponse;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -100,6 +102,14 @@ public class GrpcEchoStub extends EchoStub {
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<EchoRequest, Object> nestedBindingMethodDescriptor =
+      MethodDescriptor.<EchoRequest, Object>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/NestedBinding")
+          .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -112,6 +122,7 @@ public class GrpcEchoStub extends EchoStub {
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
   private final UnaryCallable<EchoRequest, Object> collideNameCallable;
+  private final UnaryCallable<EchoRequest, Object> nestedBindingCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -179,6 +190,16 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
             .build();
+    GrpcCallSettings<EchoRequest, Object> nestedBindingTransportSettings =
+        GrpcCallSettings.<EchoRequest, Object>newBuilder()
+            .setMethodDescriptor(nestedBindingMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("foo_bar.name", String.valueOf(request.getFooBar().getName()));
+                  return params.build();
+                })
+            .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -214,6 +235,9 @@ public class GrpcEchoStub extends EchoStub {
     this.collideNameCallable =
         callableFactory.createUnaryCallable(
             collideNameTransportSettings, settings.collideNameSettings(), clientContext);
+    this.nestedBindingCallable =
+        callableFactory.createUnaryCallable(
+            nestedBindingTransportSettings, settings.nestedBindingSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -272,6 +296,11 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, Object> collideNameCallable() {
     return collideNameCallable;
+  }
+
+  @Override
+  public UnaryCallable<EchoRequest, Object> nestedBindingCallable() {
+    return nestedBindingCallable;
   }
 
   @Override

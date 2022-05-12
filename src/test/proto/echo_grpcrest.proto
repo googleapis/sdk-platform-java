@@ -120,6 +120,13 @@ service Echo {
       body: "*"
     };
   }
+
+  rpc NestedBinding(EchoRequest) returns (Object) {
+    option (google.api.http) = {
+      post: "/v1beta1/{foo_bar.name=projects/*/foobars/*}/echo:foo"
+      body: "*"
+    };
+  }
 }
 
 // Generator should not fail when encounter a service without methods
@@ -176,7 +183,7 @@ message EchoRequest {
   // The severity to be echoed by the server.
   Severity severity = 3;
 
-  Foobar foobar = 4;
+  Foobar foo_bar = 4;
 }
 
 // The response message for the Echo methods.
