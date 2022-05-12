@@ -360,7 +360,7 @@ public class EchoClient implements BackgroundResource {
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
+   *           .setFooBar(Foobar.newBuilder().build())
    *           .build();
    *   EchoResponse response = echoClient.echo(request);
    * }
@@ -386,7 +386,7 @@ public class EchoClient implements BackgroundResource {
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
+   *           .setFooBar(Foobar.newBuilder().build())
    *           .build();
    *   ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
    *   // Do something.
@@ -772,7 +772,7 @@ public class EchoClient implements BackgroundResource {
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
+   *           .setFooBar(Foobar.newBuilder().build())
    *           .build();
    *   Object response = echoClient.collideName(request);
    * }
@@ -798,7 +798,7 @@ public class EchoClient implements BackgroundResource {
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setSeverity(Severity.forNumber(0))
-   *           .setFoobar(Foobar.newBuilder().build())
+   *           .setFooBar(Foobar.newBuilder().build())
    *           .build();
    *   ApiFuture<Object> future = echoClient.collideNameCallable().futureCall(request);
    *   // Do something.
@@ -808,6 +808,57 @@ public class EchoClient implements BackgroundResource {
    */
   public final UnaryCallable<EchoRequest, Object> collideNameCallable() {
     return stub.collideNameCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFooBar(Foobar.newBuilder().build())
+   *           .build();
+   *   Object response = echoClient.nestedBinding(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Object nestedBinding(EchoRequest request) {
+    return nestedBindingCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFooBar(Foobar.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Object> future = echoClient.nestedBindingCallable().futureCall(request);
+   *   // Do something.
+   *   Object response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<EchoRequest, Object> nestedBindingCallable() {
+    return stub.nestedBindingCallable();
   }
 
   @Override

@@ -106,7 +106,7 @@ public class EchoClientHttpJsonTest {
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setSeverity(Severity.forNumber(0))
-              .setFoobar(Foobar.newBuilder().build())
+              .setFooBar(Foobar.newBuilder().build())
               .build();
       client.echo(request);
       Assert.fail("No exception raised");
@@ -702,7 +702,7 @@ public class EchoClientHttpJsonTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setSeverity(Severity.forNumber(0))
-            .setFoobar(Foobar.newBuilder().build())
+            .setFooBar(Foobar.newBuilder().build())
             .build();
 
     Object actualResponse = client.collideName(request);
@@ -736,9 +736,70 @@ public class EchoClientHttpJsonTest {
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setSeverity(Severity.forNumber(0))
-              .setFoobar(Foobar.newBuilder().build())
+              .setFooBar(Foobar.newBuilder().build())
               .build();
       client.collideName(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void nestedBindingTest() throws Exception {
+    Object expectedResponse = Object.newBuilder().setContent("content951530617").build();
+    mockService.addResponse(expectedResponse);
+
+    EchoRequest request =
+        EchoRequest.newBuilder()
+            .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
+            .setFooBar(
+                Foobar.newBuilder()
+                    .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+                    .setInfo("info3237038")
+                    .build())
+            .build();
+
+    Object actualResponse = client.nestedBinding(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void nestedBindingExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFooBar(
+                  Foobar.newBuilder()
+                      .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+                      .setInfo("info3237038")
+                      .build())
+              .build();
+      client.nestedBinding(request);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
