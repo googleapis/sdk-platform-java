@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.2.0](https://github.com/googleapis/api-common-java/compare/v2.1.5...v2.2.0) (2022-04-18)
+
+
+### Features
+
+* next release from main branch is 2.2.0 ([#355](https://github.com/googleapis/api-common-java/issues/355)) ([75f57bc](https://github.com/googleapis/api-common-java/commit/75f57bca521495a91fd7e55447c60e2b8955ef06))
+
+
+### Dependencies
+
+* update dependency com.google.errorprone:error_prone_annotations to v2.12.1 ([#350](https://github.com/googleapis/api-common-java/issues/350)) ([2e6de4f](https://github.com/googleapis/api-common-java/commit/2e6de4f0ce7bbbbbcb066e9986a8d7bd04ab043c))
+* update dependency com.google.errorprone:error_prone_annotations to v2.13.0 ([#353](https://github.com/googleapis/api-common-java/issues/353)) ([2954859](https://github.com/googleapis/api-common-java/commit/2954859afe658b07ac76773e056b1b48fe81182b))
+* update dependency com.google.errorprone:error_prone_annotations to v2.13.1 ([#354](https://github.com/googleapis/api-common-java/issues/354)) ([ca94cf9](https://github.com/googleapis/api-common-java/commit/ca94cf901e15765d24a5abaaa9707a74f134cfec))
+
 ### [2.1.5](https://github.com/googleapis/api-common-java/compare/v2.1.4...v2.1.5) (2022-03-23)
 
 
