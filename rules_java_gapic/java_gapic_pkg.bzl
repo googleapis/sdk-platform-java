@@ -317,6 +317,7 @@ java_gapic_srcs_pkg = rule(
 def java_gapic_assembly_gradle_pkg(
         name,
         deps,
+        includeSamples = False,
         assembly_name = None,
         transport = None,
         **kwargs):
@@ -341,9 +342,9 @@ def java_gapic_assembly_gradle_pkg(
     processed_deps = {}  #there is no proper Set in Starlark
     for dep in deps:
         # Use contains instead of endswith since microgenerator testing may use differently-named targets.
-        if "samples" in dep:
-            samples.append(dep)
-        elif "_java_gapic" in dep:
+        if "_java_gapic" in dep:
+            if includeSamples:
+                samples.append(dep + "_samples")
             _put_dep_in_a_bucket(dep, client_deps, processed_deps)
             _put_dep_in_a_bucket("%s_test" % dep, client_test_deps, processed_deps)
             _put_dep_in_a_bucket("%s_resource_name" % dep, proto_deps, processed_deps)
