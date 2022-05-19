@@ -18,8 +18,10 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -63,6 +65,8 @@ public abstract class HttpBindings {
 
   public abstract String pattern();
 
+  public abstract List<String> additionalPatterns();
+
   public abstract Set<HttpBinding> pathParameters();
 
   public abstract Set<HttpBinding> queryParameters();
@@ -84,8 +88,18 @@ public abstract class HttpBindings {
   //   in .proto file: "/global/instanceTemplates/{instance_template=*}"
   //   in .java file:  "/global/instanceTemplates/{instanceTemplate=*}"
   public String lowerCamelPattern() {
-    String lowerCamelPattern = pattern();
-    for (HttpBinding pathParam : pathParameters()) {
+    return lowerCamelPattern(pattern(), pathParameters());
+  }
+
+  public List<String> lowerCamelAdditionalPatterns() {
+    return additionalPatterns().stream()
+        .map(a -> lowerCamelPattern(a, pathParameters()))
+        .collect(Collectors.toList());
+  }
+
+  private static String lowerCamelPattern(String originalPattern, Set<HttpBinding> pathParameters) {
+    String lowerCamelPattern = originalPattern;
+    for (HttpBinding pathParam : pathParameters) {
       lowerCamelPattern =
           lowerCamelPattern.replaceAll(
               "\\{" + pathParam.name(), "{" + JavaStyle.toLowerCamelCase(pathParam.name()));
@@ -106,6 +120,8 @@ public abstract class HttpBindings {
     public abstract HttpBindings.Builder setHttpVerb(HttpVerb httpVerb);
 
     public abstract HttpBindings.Builder setPattern(String pattern);
+
+    public abstract HttpBindings.Builder setAdditionalPatterns(List<String> additionalPatterns);
 
     abstract String pattern();
 
