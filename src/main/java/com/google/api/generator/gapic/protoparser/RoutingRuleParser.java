@@ -49,7 +49,7 @@ public class RoutingRuleParser {
         key = fieldName;
         pathTemplate = String.format("{%s=**}", key);
       } else {
-        Set<String> namedSegments = PatternParser.getPattenBindings(pathTemplate);
+        Set<String> namedSegments = PatternParser.getPatternBindings(pathTemplate);
         Preconditions.checkArgument(
             namedSegments.size() == 1,
             String.format(

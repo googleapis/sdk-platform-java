@@ -21,6 +21,7 @@ import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.HttpBindings.HttpVerb;
 import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import com.google.common.collect.ImmutableSet;
+import java.util.Arrays;
 import org.junit.Test;
 
 public class MethodTest {
@@ -35,6 +36,7 @@ public class MethodTest {
       HttpBindings.builder()
           .setPathParameters(ImmutableSet.of(HttpBinding.create("table", true, false, "")))
           .setPattern("/pattern/test")
+          .setAdditionalPatterns(Arrays.asList("/extra_pattern/test", "/extra_pattern/hey"))
           .setIsAsteriskBody(false)
           .setHttpVerb(HttpVerb.GET)
           .build();

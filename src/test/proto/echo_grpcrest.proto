@@ -125,6 +125,14 @@ service Echo {
     option (google.api.http) = {
       post: "/v1beta1/{foo_bar.name=projects/*/foobars/*}/echo:foo"
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/{foo_bar.name=cats/*/dogs/*}/echo:foo"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v1beta1/{foo_bar.name=turtles/*/parrots/*}/echo:foo"
+        body: "*"
+      }
     };
   }
 }

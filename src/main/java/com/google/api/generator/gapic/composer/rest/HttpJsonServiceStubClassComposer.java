@@ -348,6 +348,16 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         "putPathParam")))
             .apply(expr);
 
+    if (!protoMethod.httpBindings().lowerCamelAdditionalPatterns().isEmpty()) {
+      expr =
+          methodMaker
+              .apply(
+                  "setAdditionalPaths",
+                  protoMethod.httpBindings().lowerCamelAdditionalPatterns().stream()
+                      .map(a -> ValueExpr.withValue(StringObjectValue.withValue(a)))
+                      .collect(Collectors.toList()))
+              .apply(expr);
+    }
     TypeNode fieldsVarGenericType =
         TypeNode.withReference(
             ConcreteReference.builder()
