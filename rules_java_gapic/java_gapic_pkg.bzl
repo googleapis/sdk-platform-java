@@ -317,7 +317,7 @@ java_gapic_srcs_pkg = rule(
 def java_gapic_assembly_gradle_pkg(
         name,
         deps,
-        includeSamples = False,
+        include_samples = False,
         assembly_name = None,
         transport = None,
         **kwargs):
@@ -343,7 +343,7 @@ def java_gapic_assembly_gradle_pkg(
     for dep in deps:
         # Use contains instead of endswith since microgenerator testing may use differently-named targets.
         if "_java_gapic" in dep:
-            if includeSamples:
+            if include_samples:
                 samples.append(dep + "_samples")
             _put_dep_in_a_bucket(dep, client_deps, processed_deps)
             _put_dep_in_a_bucket("%s_test" % dep, client_test_deps, processed_deps)
