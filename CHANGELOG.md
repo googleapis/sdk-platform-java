@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.8.0](https://github.com/googleapis/gapic-generator-java/compare/v2.7.0...v2.8.0) (2022-05-21)
+
+
+### Features
+
+* Add support for additional_bindings ([#993](https://github.com/googleapis/gapic-generator-java/issues/993)) ([ce58c18](https://github.com/googleapis/gapic-generator-java/commit/ce58c181691d0be826634d1bd8373f07c1295156))
+
+
+### Bug Fixes
+
+* [REGAPIC] Fix repeated fields handling for query parameters ([#989](https://github.com/googleapis/gapic-generator-java/issues/989)) ([f7ceab9](https://github.com/googleapis/gapic-generator-java/commit/f7ceab9ee53b34b2114b77bb4bebb693ad6989a7))
+* [REGAPIC] Fix snake_case nested resource names in generated unit tests ([#990](https://github.com/googleapis/gapic-generator-java/issues/990)) ([b8e3ae4](https://github.com/googleapis/gapic-generator-java/commit/b8e3ae4c0ebe98d757acb079987d96b281aec1f5))
+* **deps:** update dependency com.google.cloud:google-cloud-shared-dependencies to v2.11.0 ([#995](https://github.com/googleapis/gapic-generator-java/issues/995)) ([df7e08e](https://github.com/googleapis/gapic-generator-java/commit/df7e08ebdf76b8dfb4b9961d3c8670f8e95c788c))
+* **deps:** update dependency com.google.cloud:google-cloud-shared-dependencies to v2.12.0 ([#996](https://github.com/googleapis/gapic-generator-java/issues/996)) ([4673e52](https://github.com/googleapis/gapic-generator-java/commit/4673e5206b4535d2e691b5c0b8cffaa5b35c4ca1))
+* Fix `BetaApi` annotaiton usage for REST transport and clean `BetaApi` for default stubs in all transports ([#987](https://github.com/googleapis/gapic-generator-java/issues/987)) ([d22b966](https://github.com/googleapis/gapic-generator-java/commit/d22b966703644ea150b9ceee6df39cde17cf8df4))
+
 ## [2.7.0](https://github.com/googleapis/gapic-generator-java/compare/v2.6.1...v2.7.0) (2022-04-29)
 
 
