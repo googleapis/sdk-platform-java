@@ -147,6 +147,7 @@ java_binary(
     name = "code_generator_request_file_to_gapic_main",
     main_class = "com.google.api.generator.debug.CodeGeneratorRequestFileToGapicMain",
     runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + MAIN_DEPS_DEBUG_RUNTIME_ONLY,
+    data = [":google/pubsub/v1/pubsub_v1.yaml"],
 )
 
 # another test resource

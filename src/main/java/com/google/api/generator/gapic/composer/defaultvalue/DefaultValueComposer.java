@@ -255,7 +255,7 @@ public class DefaultValueComposer {
       for (ResourceName resname : resnames) {
         unexaminedResnames.remove(resname);
         if (!resname.isOnlyWildcard()
-            && (bindingPattern == null || resname.matchesBinding(bindingPattern))) {
+            && (bindingPattern == null || resname.getMatchingPattern(bindingPattern) != null)) {
           return createResourceHelperValue(
               resname, false, unexaminedResnames, fieldOrMessageName, null);
         }
@@ -279,15 +279,22 @@ public class DefaultValueComposer {
     if (containsOnlyDeletedTopic) {
       ofMethodName = "ofDeletedTopic";
     } else {
-      for (String pattern : resourceName.patterns()) {
-        if (pattern.equals(ResourceNameConstants.WILDCARD_PATTERN)
-            || pattern.equals(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
-          continue;
-        }
-        patternPlaceholderTokens.addAll(
-            ResourceNameTokenizer.parseTokenHierarchy(Arrays.asList(pattern)).get(0));
-        break;
+      String matchingPattern = null;
+      if (bindingPattern != null) {
+        matchingPattern = resourceName.getMatchingPattern(bindingPattern);
       }
+      if (matchingPattern == null) {
+        for (String pattern : resourceName.patterns()) {
+          if (pattern.equals(ResourceNameConstants.WILDCARD_PATTERN)
+              || pattern.equals(ResourceNameConstants.DELETED_TOPIC_LITERAL)) {
+            continue;
+          }
+          matchingPattern = pattern;
+          break;
+        }
+      }
+      patternPlaceholderTokens.addAll(
+          ResourceNameTokenizer.parseTokenHierarchy(Arrays.asList(matchingPattern)).get(0));
     }
 
     boolean hasOnePattern = resourceName.patterns().size() == 1;

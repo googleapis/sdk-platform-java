@@ -57,23 +57,29 @@ public abstract class ResourceName {
 
   public abstract boolean isOnlyWildcard();
 
-  public boolean matchesBinding(String binding) {
-    String resNamePattern = patterns().get(0);
-    PathTemplate restNamePatternTemplate = PathTemplate.create(resNamePattern);
-    ImmutableMap.Builder<String, String> mb = ImmutableMap.builder();
-    for (String var : restNamePatternTemplate.vars()) {
-      mb.put(var, var + (var.hashCode() % 100));
-    }
-
-    String resNameValue = restNamePatternTemplate.instantiate(mb.build());
+  @Nullable
+  public String getMatchingPattern(String binding) {
     PathTemplate bindingTemplate = PathTemplate.create(binding);
-    mb = ImmutableMap.builder();
-    for (String var : bindingTemplate.vars()) {
-      mb.put(var, resNameValue);
-    }
 
-    String url = bindingTemplate.instantiate(mb.build());
-    return bindingTemplate.matches(url);
+    for (String resNamePattern : patterns()) {
+      PathTemplate restNamePatternTemplate = PathTemplate.create(resNamePattern);
+      ImmutableMap.Builder<String, String> mb = ImmutableMap.builder();
+      for (String var : restNamePatternTemplate.vars()) {
+        mb.put(var, var + (var.hashCode() % 100));
+      }
+
+      String resNameValue = restNamePatternTemplate.instantiate(mb.build());
+      mb = ImmutableMap.builder();
+      for (String var : bindingTemplate.vars()) {
+        mb.put(var, resNameValue);
+      }
+
+      String url = bindingTemplate.instantiate(mb.build());
+      if (bindingTemplate.matches(url)) {
+        return resNamePattern;
+      }
+    }
+    return null;
   }
 
   // The message in which this resource was defined. Optional.
