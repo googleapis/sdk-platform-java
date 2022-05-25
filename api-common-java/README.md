@@ -50,7 +50,7 @@ and probably not then.
 License
 -------
 
-BSD - See [LICENSE] for more information.
+BSD 3-Clause - See [LICENSE] for more information.
 
 Build and Test
 --------------
