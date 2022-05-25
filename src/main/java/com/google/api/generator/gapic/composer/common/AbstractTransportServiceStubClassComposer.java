@@ -217,6 +217,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return GapicClass.create(kind, classDef);
   }
 
+  protected boolean isSupportedMethod(Method method) {
+    return true;
+  }
+
   protected abstract Statement createMethodDescriptorVariableDecl(
       Service service,
       Method protoMethod,
@@ -299,6 +303,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
       Map<String, Message> messageTypes) {
     return service.methods().stream()
+        .filter(this::isSupportedMethod)
         .map(
             m ->
                 createMethodDescriptorVariableDecl(
@@ -323,6 +328,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   protected Map<String, VariableExpr> createProtoMethodNameToDescriptorClassMembers(
       Service service, Class<?> descriptorClass) {
     return service.methods().stream()
+        .filter(this::isSupportedMethod)
         .collect(
             Collectors.toMap(
                 Method::name,
@@ -354,6 +360,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     Map<String, VariableExpr> callableClassMembers = new LinkedHashMap<>();
     // Using a for-loop because the output cardinality is not a 1:1 mapping to the input set.
     for (Method protoMethod : service.methods()) {
+      if (!isSupportedMethod(protoMethod)) {
+        continue;
+      }
       String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
       String callableName = String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
       callableClassMembers.put(
@@ -643,6 +652,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     // Transport settings local variables.
     Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs =
         service.methods().stream()
+            .filter(this::isSupportedMethod)
             .collect(
                 Collectors.toMap(
                     m -> JavaStyle.toLowerCamelCase(m.name()),
@@ -666,6 +676,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
     secondCtorExprs.addAll(
         service.methods().stream()
+            .filter(this::isSupportedMethod)
             .map(
                 m ->
                     createTransportSettingsInitExpr(
@@ -1035,7 +1046,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private boolean checkOperationPollingMethod(Service service) {
-    return service.methods().stream().anyMatch(Method::isOperationPollingMethod);
+    return service.methods().stream()
+        .filter(this::isSupportedMethod)
+        .anyMatch(Method::isOperationPollingMethod);
   }
 
   protected List<MethodDefinition> createLongRunningClientGetters() {
@@ -1073,6 +1086,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     typeStore.putAll(
         service.pakkage(),
         service.methods().stream()
+            .filter(this::isSupportedMethod)
             .filter(Method::isPaged)
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),

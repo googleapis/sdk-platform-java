@@ -41,7 +41,9 @@ import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
@@ -108,7 +110,7 @@ public class AssetServiceClientTest {
 
     ExportAssetsRequest request =
         ExportAssetsRequest.newBuilder()
-            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+            .setParent("ExportAssetsRequest-846449128".toString())
             .setReadTime(Timestamp.newBuilder().build())
             .addAllAssetTypes(new ArrayList<String>())
             .setContentType(ContentType.forNumber(0))
@@ -144,7 +146,7 @@ public class AssetServiceClientTest {
     try {
       ExportAssetsRequest request =
           ExportAssetsRequest.newBuilder()
-              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+              .setParent("ExportAssetsRequest-846449128".toString())
               .setReadTime(Timestamp.newBuilder().build())
               .addAllAssetTypes(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))
@@ -170,7 +172,20 @@ public class AssetServiceClientTest {
             .build();
     mockAssetService.addResponse(expectedResponse);
 
-    ResourceName parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+    ResourceName parent =
+        new ResourceName() {
+          @Override
+          public Map<String, String> getFieldValuesMap() {
+            Map<String, String> fieldValuesMap = new HashMap<>();
+            fieldValuesMap.put("parent", "parent-995424086");
+            return fieldValuesMap;
+          }
+
+          @Override
+          public String getFieldValue(String fieldName) {
+            return getFieldValuesMap().get(fieldName);
+          }
+        };
 
     ListAssetsPagedResponse pagedListResponse = client.listAssets(parent);
 
@@ -196,7 +211,20 @@ public class AssetServiceClientTest {
     mockAssetService.addException(exception);
 
     try {
-      ResourceName parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+      ResourceName parent =
+          new ResourceName() {
+            @Override
+            public Map<String, String> getFieldValuesMap() {
+              Map<String, String> fieldValuesMap = new HashMap<>();
+              fieldValuesMap.put("parent", "parent-995424086");
+              return fieldValuesMap;
+            }
+
+            @Override
+            public String getFieldValue(String fieldName) {
+              return getFieldValuesMap().get(fieldName);
+            }
+          };
       client.listAssets(parent);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -258,7 +286,7 @@ public class AssetServiceClientTest {
 
     BatchGetAssetsHistoryRequest request =
         BatchGetAssetsHistoryRequest.newBuilder()
-            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+            .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
             .addAllAssetNames(new ArrayList<String>())
             .setContentType(ContentType.forNumber(0))
             .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -293,7 +321,7 @@ public class AssetServiceClientTest {
     try {
       BatchGetAssetsHistoryRequest request =
           BatchGetAssetsHistoryRequest.newBuilder()
-              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+              .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
               .addAllAssetNames(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))
               .setReadTimeWindow(TimeWindow.newBuilder().build())

@@ -22,7 +22,7 @@ import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.GetPolicyOptions;
 import com.google.iam.v1.Policy;
-import com.google.pubsub.v1.ProjectName;
+import com.google.pubsub.v1.TopicName;
 
 public class AsyncGetIamPolicy {
 
@@ -36,7 +36,7 @@ public class AsyncGetIamPolicy {
     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       ApiFuture<Policy> future = schemaServiceClient.getIamPolicyCallable().futureCall(request);

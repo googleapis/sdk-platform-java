@@ -1193,7 +1193,7 @@ public class TopicAdminClient implements BackgroundResource {
    * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
+   *           .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .build();
    *   Policy response = topicAdminClient.setIamPolicy(request);
@@ -1221,7 +1221,7 @@ public class TopicAdminClient implements BackgroundResource {
    * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
+   *           .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
@@ -1247,7 +1247,7 @@ public class TopicAdminClient implements BackgroundResource {
    * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
+   *           .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = topicAdminClient.getIamPolicy(request);
@@ -1274,7 +1274,7 @@ public class TopicAdminClient implements BackgroundResource {
    * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
+   *           .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = topicAdminClient.getIamPolicyCallable().futureCall(request);
@@ -1304,7 +1304,7 @@ public class TopicAdminClient implements BackgroundResource {
    * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
+   *           .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = topicAdminClient.testIamPermissions(request);
@@ -1335,7 +1335,7 @@ public class TopicAdminClient implements BackgroundResource {
    * try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(ProjectName.of("[PROJECT]").toString())
+   *           .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =

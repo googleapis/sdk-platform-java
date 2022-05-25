@@ -20,7 +20,6 @@ package com.google.cloud.asset.v1.samples;
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ContentType;
-import com.google.cloud.asset.v1.FeedName;
 import com.google.cloud.asset.v1.ListAssetsRequest;
 import com.google.protobuf.Timestamp;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class SyncListAssets {
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
       ListAssetsRequest request =
           ListAssetsRequest.newBuilder()
-              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+              .setParent("ListAssetsRequest-221586066".toString())
               .setReadTime(Timestamp.newBuilder().build())
               .addAllAssetTypes(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))

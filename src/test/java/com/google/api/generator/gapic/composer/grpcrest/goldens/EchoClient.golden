@@ -9,6 +9,7 @@ import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
+import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.ServerStreamingCallable;
@@ -859,6 +860,33 @@ public class EchoClient implements BackgroundResource {
    */
   public final UnaryCallable<EchoRequest, Object> nestedBindingCallable() {
     return stub.nestedBindingCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFooBar(Foobar.newBuilder().build())
+   *           .build();
+   *   bidiStream.send(request);
+   *   for (EchoResponse response : bidiStream) {
+   *     // Do something when a response is received.
+   *   }
+   * }
+   * }</pre>
+   */
+  public final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
+    return stub.chatCallable();
   }
 
   @Override

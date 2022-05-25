@@ -308,7 +308,7 @@ public class ServiceClientCallableMethodSampleComposer {
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes);
+            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
@@ -429,7 +429,7 @@ public class ServiceClientCallableMethodSampleComposer {
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes);
+            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
@@ -558,7 +558,7 @@ public class ServiceClientCallableMethodSampleComposer {
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes);
+            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
@@ -615,7 +615,7 @@ public class ServiceClientCallableMethodSampleComposer {
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes);
+            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())

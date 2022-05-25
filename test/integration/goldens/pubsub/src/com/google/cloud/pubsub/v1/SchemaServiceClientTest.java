@@ -45,6 +45,8 @@ import com.google.pubsub.v1.ListSchemasResponse;
 import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.Schema;
 import com.google.pubsub.v1.SchemaName;
+import com.google.pubsub.v1.SubscriptionName;
+import com.google.pubsub.v1.TopicName;
 import com.google.pubsub.v1.ValidateMessageRequest;
 import com.google.pubsub.v1.ValidateMessageResponse;
 import com.google.pubsub.v1.ValidateSchemaRequest;
@@ -565,7 +567,7 @@ public class SchemaServiceClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(ProjectName.of("[PROJECT]").toString())
+            .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
             .setPolicy(Policy.newBuilder().build())
             .build();
 
@@ -592,7 +594,7 @@ public class SchemaServiceClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setPolicy(Policy.newBuilder().build())
               .build();
       client.setIamPolicy(request);
@@ -614,7 +616,7 @@ public class SchemaServiceClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(ProjectName.of("[PROJECT]").toString())
+            .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -641,7 +643,7 @@ public class SchemaServiceClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -659,7 +661,7 @@ public class SchemaServiceClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(ProjectName.of("[PROJECT]").toString())
+            .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -686,7 +688,7 @@ public class SchemaServiceClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

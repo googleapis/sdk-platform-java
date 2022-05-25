@@ -91,7 +91,7 @@ public class ServiceClientHeaderSampleComposer {
     // Assign method's arguments variable with the default values.
     List<VariableExpr> rpcMethodArgVarExprs = createArgumentVariableExprs(arguments);
     List<Expr> rpcMethodArgDefaultValueExprs =
-        createArgumentDefaultValueExprs(arguments, resourceNames);
+        createArgumentDefaultValueExprs(arguments, resourceNames, method.httpBindingPattern());
     List<Expr> rpcMethodArgAssignmentExprs =
         createAssignmentsForVarExprsWithValueExprs(
             rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
@@ -367,7 +367,9 @@ public class ServiceClientHeaderSampleComposer {
 
   // Create a list of RPC method arguments' default value expression.
   private static List<Expr> createArgumentDefaultValueExprs(
-      List<MethodArgument> arguments, Map<String, ResourceName> resourceNames) {
+      List<MethodArgument> arguments,
+      Map<String, ResourceName> resourceNames,
+      String bindingPattern) {
     List<ResourceName> resourceNameList =
         resourceNames.values().stream().collect(Collectors.toList());
     Function<MethodArgument, MethodInvocationExpr> stringResourceNameDefaultValueExpr =
@@ -378,7 +380,8 @@ public class ServiceClientHeaderSampleComposer {
                         resourceNames.get(arg.field().resourceReference().resourceTypeString()),
                         arg.field().resourceReference().isChildType(),
                         resourceNameList,
-                        arg.field().name()))
+                        arg.field().name(),
+                        null))
                 .setMethodName("toString")
                 .setReturnType(TypeNode.STRING)
                 .build();
@@ -387,7 +390,11 @@ public class ServiceClientHeaderSampleComposer {
             arg ->
                 !SampleComposerUtil.isStringTypedResourceName(arg, resourceNames)
                     ? DefaultValueComposer.createMethodArgValue(
-                        arg, resourceNames, Collections.emptyMap(), Collections.emptyMap())
+                        arg,
+                        resourceNames,
+                        Collections.emptyMap(),
+                        Collections.emptyMap(),
+                        bindingPattern)
                     : stringResourceNameDefaultValueExpr.apply(arg))
         .collect(Collectors.toList());
   }

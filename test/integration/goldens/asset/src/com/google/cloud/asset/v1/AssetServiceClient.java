@@ -51,7 +51,7 @@ import javax.annotation.Generated;
  * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
  *   BatchGetAssetsHistoryRequest request =
  *       BatchGetAssetsHistoryRequest.newBuilder()
- *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+ *           .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
  *           .addAllAssetNames(new ArrayList<String>())
  *           .setContentType(ContentType.forNumber(0))
  *           .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -190,7 +190,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request =
    *       ExportAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("ExportAssetsRequest-846449128".toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -228,7 +228,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request =
    *       ExportAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("ExportAssetsRequest-846449128".toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -266,7 +266,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request =
    *       ExportAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("ExportAssetsRequest-846449128".toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -293,7 +293,20 @@ public class AssetServiceClient implements BackgroundResource {
    * // This snippet has been automatically generated for illustrative purposes only.
    * // It may require modifications to work in your environment.
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ResourceName parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   ResourceName parent =
+   *       new ResourceName() {
+   *         {@literal @}Override
+   *         public Map<String, String> getFieldValuesMap() {
+   *           Map<String, String> fieldValuesMap = new HashMap<>();
+   *           fieldValuesMap.put("parent", "parent-995424086");
+   *           return fieldValuesMap;
+   *         }
+   *
+   *         {@literal @}Override
+   *         public String getFieldValue(String fieldName) {
+   *           return getFieldValuesMap().get(fieldName);
+   *         }
+   *       };
    *   for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -352,7 +365,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ListAssetsRequest request =
    *       ListAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("ListAssetsRequest-221586066".toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -385,7 +398,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ListAssetsRequest request =
    *       ListAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("ListAssetsRequest-221586066".toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -417,7 +430,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ListAssetsRequest request =
    *       ListAssetsRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("ListAssetsRequest-221586066".toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -460,7 +473,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   BatchGetAssetsHistoryRequest request =
    *       BatchGetAssetsHistoryRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
    *           .addAllAssetNames(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
    *           .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -494,7 +507,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   BatchGetAssetsHistoryRequest request =
    *       BatchGetAssetsHistoryRequest.newBuilder()
-   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
    *           .addAllAssetNames(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
    *           .setReadTimeWindow(TimeWindow.newBuilder().build())

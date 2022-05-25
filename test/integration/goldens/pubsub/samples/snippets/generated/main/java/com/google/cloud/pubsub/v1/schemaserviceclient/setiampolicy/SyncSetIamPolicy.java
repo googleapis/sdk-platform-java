@@ -20,7 +20,7 @@ package com.google.cloud.pubsub.v1.samples;
 import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
-import com.google.pubsub.v1.ProjectName;
+import com.google.pubsub.v1.TopicName;
 
 public class SyncSetIamPolicy {
 
@@ -34,7 +34,7 @@ public class SyncSetIamPolicy {
     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setPolicy(Policy.newBuilder().build())
               .build();
       Policy response = schemaServiceClient.setIamPolicy(request);

@@ -21,7 +21,7 @@ import com.google.cloud.pubsub.v1.SchemaServiceClient;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.GetPolicyOptions;
 import com.google.iam.v1.Policy;
-import com.google.pubsub.v1.ProjectName;
+import com.google.pubsub.v1.TopicName;
 
 public class SyncGetIamPolicy {
 
@@ -35,7 +35,7 @@ public class SyncGetIamPolicy {
     try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       Policy response = schemaServiceClient.getIamPolicy(request);

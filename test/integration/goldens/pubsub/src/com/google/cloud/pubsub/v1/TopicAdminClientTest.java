@@ -810,7 +810,7 @@ public class TopicAdminClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(ProjectName.of("[PROJECT]").toString())
+            .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
             .setPolicy(Policy.newBuilder().build())
             .build();
 
@@ -837,7 +837,7 @@ public class TopicAdminClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setPolicy(Policy.newBuilder().build())
               .build();
       client.setIamPolicy(request);
@@ -859,7 +859,7 @@ public class TopicAdminClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(ProjectName.of("[PROJECT]").toString())
+            .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -886,7 +886,7 @@ public class TopicAdminClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -904,7 +904,7 @@ public class TopicAdminClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(ProjectName.of("[PROJECT]").toString())
+            .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -931,7 +931,7 @@ public class TopicAdminClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

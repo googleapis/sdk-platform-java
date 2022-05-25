@@ -20,8 +20,10 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
@@ -54,6 +56,25 @@ public abstract class ResourceName {
   public abstract TypeNode type();
 
   public abstract boolean isOnlyWildcard();
+
+  public boolean matchesBinding(String binding) {
+    String resNamePattern = patterns().get(0);
+    PathTemplate restNamePatternTemplate = PathTemplate.create(resNamePattern);
+    ImmutableMap.Builder<String, String> mb = ImmutableMap.builder();
+    for (String var : restNamePatternTemplate.vars()) {
+      mb.put(var, var + (var.hashCode() % 100));
+    }
+
+    String resNameValue = restNamePatternTemplate.instantiate(mb.build());
+    PathTemplate bindingTemplate = PathTemplate.create(binding);
+    mb = ImmutableMap.builder();
+    for (String var : bindingTemplate.vars()) {
+      mb.put(var, resNameValue);
+    }
+
+    String url = bindingTemplate.instantiate(mb.build());
+    return bindingTemplate.matches(url);
+  }
 
   // The message in which this resource was defined. Optional.
   // This is expected to be empty for file-level definitions.

@@ -163,7 +163,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals("BillingAccountName.of(\"[BILLING_ACCOUNT]\")", writerVisitor.write());
   }
@@ -180,7 +181,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals(
         "FolderName.ofProjectFolderName(\"[PROJECT]\", \"[FOLDER]\")", writerVisitor.write());
@@ -198,7 +200,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals("DocumentName.ofDocumentName(\"[DOCUMENT]\")", writerVisitor.write());
   }
@@ -221,7 +224,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals("TopicName.ofDeletedTopic()", writerVisitor.write());
   }
@@ -243,7 +247,8 @@ public class DefaultValueComposerTest {
             false,
             Collections.emptyList(),
             fallbackField,
-            /* allowAnonResourceNameClass = */ false);
+            /* allowAnonResourceNameClass = */ false,
+            null);
     expr.accept(writerVisitor);
     assertEquals(
         String.format("\"%s%s\"", fallbackField, fallbackField.hashCode()), writerVisitor.write());
@@ -262,7 +267,7 @@ public class DefaultValueComposerTest {
     String fallbackField = "foobar";
     Expr expr =
         DefaultValueComposer.createResourceHelperValue(
-            resourceName, false, Collections.emptyList(), fallbackField);
+            resourceName, false, Collections.emptyList(), fallbackField, null);
     expr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(
@@ -292,7 +297,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.Foobar");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals(
         "Foobar.newBuilder().setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\")"
@@ -309,7 +314,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals(
         "EchoRequest.newBuilder().setName("
@@ -329,7 +334,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.PagedExpandResponse");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals(
         "PagedExpandResponse.newBuilder().addAllResponses(new ArrayList<EchoResponse>())"
@@ -346,7 +351,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.WaitRequest");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals("WaitRequest.newBuilder().build()", writerVisitor.write());
   }

@@ -10,6 +10,8 @@ import com.google.api.gax.grpc.testing.MockGrpcService;
 import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.grpc.testing.MockStreamObserver;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.ApiStreamObserver;
+import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
@@ -770,6 +772,64 @@ public class EchoClientTest {
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
+    }
+  }
+
+  @Test
+  public void chatTest() throws Exception {
+    EchoResponse expectedResponse =
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
+    mockEcho.addResponse(expectedResponse);
+    EchoRequest request =
+        EchoRequest.newBuilder()
+            .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
+            .setFooBar(Foobar.newBuilder().build())
+            .build();
+
+    MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
+    BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatCallable();
+    ApiStreamObserver<EchoRequest> requestObserver = callable.bidiStreamingCall(responseObserver);
+
+    requestObserver.onNext(request);
+    requestObserver.onCompleted();
+
+    List<EchoResponse> actualResponses = responseObserver.future().get();
+    Assert.assertEquals(1, actualResponses.size());
+    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+  }
+
+  @Test
+  public void chatExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+    EchoRequest request =
+        EchoRequest.newBuilder()
+            .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
+            .setFooBar(Foobar.newBuilder().build())
+            .build();
+
+    MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
+    BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatCallable();
+    ApiStreamObserver<EchoRequest> requestObserver = callable.bidiStreamingCall(responseObserver);
+
+    requestObserver.onNext(request);
+
+    try {
+      List<EchoResponse> actualResponses = responseObserver.future().get();
+      Assert.fail("No exception thrown");
+    } catch (ExecutionException e) {
+      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
+      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 }

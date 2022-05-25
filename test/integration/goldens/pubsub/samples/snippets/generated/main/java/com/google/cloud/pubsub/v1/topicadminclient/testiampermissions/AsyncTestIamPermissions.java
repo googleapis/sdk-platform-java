@@ -21,7 +21,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.pubsub.v1.ProjectName;
+import com.google.pubsub.v1.SubscriptionName;
 import java.util.ArrayList;
 
 public class AsyncTestIamPermissions {
@@ -36,7 +36,7 @@ public class AsyncTestIamPermissions {
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
+              .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       ApiFuture<TestIamPermissionsResponse> future =

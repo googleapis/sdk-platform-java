@@ -65,7 +65,8 @@ public class DefaultValueComposer {
       MethodArgument methodArg,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
-      Map<String, String> valuePatterns) {
+      Map<String, String> valuePatterns,
+      String bindingPattern) {
     if (methodArg.isResourceNameHelper()) {
       Preconditions.checkState(
           methodArg.field().hasResourceReference(),
@@ -84,7 +85,8 @@ public class DefaultValueComposer {
               resourceName,
               methodArg.field().resourceReference().isChildType(),
               resourceNames.values().stream().collect(Collectors.toList()),
-              methodArg.field().name());
+              methodArg.field().name(),
+              bindingPattern);
 
       if (!methodArg.isResourceNameHelper() && methodArg.field().hasResourceReference()) {
         defValue =
@@ -156,7 +158,7 @@ public class DefaultValueComposer {
         Message nestedMessage = messageTypes.get(field.type().reference().fullName());
         if (nestedMessage != null) {
           return createSimpleMessageBuilderValue(
-              nestedMessage, resourceNames, messageTypes, nestedValuePatterns);
+              nestedMessage, resourceNames, messageTypes, nestedValuePatterns, null);
         }
       }
 
@@ -209,8 +211,10 @@ public class DefaultValueComposer {
       ResourceName resourceName,
       boolean isChildType,
       List<ResourceName> resnames,
-      String fieldOrMessageName) {
-    return createResourceHelperValue(resourceName, isChildType, resnames, fieldOrMessageName, true);
+      String fieldOrMessageName,
+      String patternBinding) {
+    return createResourceHelperValue(
+        resourceName, isChildType, resnames, fieldOrMessageName, true, patternBinding);
   }
 
   private static Optional<ResourceName> findParentResource(
@@ -239,7 +243,8 @@ public class DefaultValueComposer {
       boolean isChildType,
       List<ResourceName> resnames,
       String fieldOrMessageName,
-      boolean allowAnonResourceNameClass) {
+      boolean allowAnonResourceNameClass,
+      String bindingPattern) {
 
     if (isChildType) {
       resourceName = findParentResource(resourceName, resnames).orElse(resourceName);
@@ -249,8 +254,10 @@ public class DefaultValueComposer {
       List<ResourceName> unexaminedResnames = new ArrayList<>(resnames);
       for (ResourceName resname : resnames) {
         unexaminedResnames.remove(resname);
-        if (!resname.isOnlyWildcard()) {
-          return createResourceHelperValue(resname, false, unexaminedResnames, fieldOrMessageName);
+        if (!resname.isOnlyWildcard()
+            && (bindingPattern == null || resname.matchesBinding(bindingPattern))) {
+          return createResourceHelperValue(
+              resname, false, unexaminedResnames, fieldOrMessageName, null);
         }
       }
 
@@ -312,16 +319,20 @@ public class DefaultValueComposer {
   }
 
   public static Expr createSimpleMessageBuilderValue(
-      Message message, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
+      Message message,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      String bindingPattern) {
     return createSimpleMessageBuilderValue(
-        message, resourceNames, messageTypes, Collections.emptyMap());
+        message, resourceNames, messageTypes, Collections.emptyMap(), bindingPattern);
   }
 
   public static Expr createSimpleMessageBuilderValue(
       Message message,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
-      Map<String, String> valuePatterns) {
+      Map<String, String> valuePatterns,
+      String bindingPattern) {
     MethodInvocationExpr builderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(message.type())
@@ -350,7 +361,8 @@ public class DefaultValueComposer {
                 field.resourceReference().isChildType(),
                 resourceNames.values().stream().collect(Collectors.toList()),
                 message.name(),
-                /* allowAnonResourceNameClass = */ false);
+                /* allowAnonResourceNameClass = */ false,
+                bindingPattern);
         defaultExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(defaultExpr)
