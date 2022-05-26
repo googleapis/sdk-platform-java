@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameTokenizer;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -66,7 +67,7 @@ public class DefaultValueComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
       Map<String, String> valuePatterns,
-      String bindingPattern) {
+      HttpBindings bindings) {
     if (methodArg.isResourceNameHelper()) {
       Preconditions.checkState(
           methodArg.field().hasResourceReference(),
@@ -86,7 +87,7 @@ public class DefaultValueComposer {
               methodArg.field().resourceReference().isChildType(),
               resourceNames.values().stream().collect(Collectors.toList()),
               methodArg.field().name(),
-              bindingPattern);
+              bindings);
 
       if (!methodArg.isResourceNameHelper() && methodArg.field().hasResourceReference()) {
         defValue =
@@ -212,9 +213,9 @@ public class DefaultValueComposer {
       boolean isChildType,
       List<ResourceName> resnames,
       String fieldOrMessageName,
-      String patternBinding) {
+      HttpBindings bindings) {
     return createResourceHelperValue(
-        resourceName, isChildType, resnames, fieldOrMessageName, true, patternBinding);
+        resourceName, isChildType, resnames, fieldOrMessageName, true, bindings);
   }
 
   private static Optional<ResourceName> findParentResource(
@@ -244,7 +245,7 @@ public class DefaultValueComposer {
       List<ResourceName> resnames,
       String fieldOrMessageName,
       boolean allowAnonResourceNameClass,
-      String bindingPattern) {
+      HttpBindings bindings) {
 
     if (isChildType) {
       resourceName = findParentResource(resourceName, resnames).orElse(resourceName);
@@ -255,14 +256,14 @@ public class DefaultValueComposer {
       for (ResourceName resname : resnames) {
         unexaminedResnames.remove(resname);
         if (!resname.isOnlyWildcard()
-            && (bindingPattern == null || resname.getMatchingPattern(bindingPattern) != null)) {
+            && (bindings == null || resname.getMatchingPattern(bindings) != null)) {
           return createResourceHelperValue(
               resname, false, unexaminedResnames, fieldOrMessageName, null);
         }
       }
 
       return allowAnonResourceNameClass
-          ? createAnonymousResourceNameClassValue(fieldOrMessageName)
+          ? createAnonymousResourceNameClassValue(fieldOrMessageName, bindings)
           : ValueExpr.withValue(
               StringObjectValue.withValue(
                   String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
@@ -280,8 +281,8 @@ public class DefaultValueComposer {
       ofMethodName = "ofDeletedTopic";
     } else {
       String matchingPattern = null;
-      if (bindingPattern != null) {
-        matchingPattern = resourceName.getMatchingPattern(bindingPattern);
+      if (bindings != null) {
+        matchingPattern = resourceName.getMatchingPattern(bindings);
       }
       if (matchingPattern == null) {
         for (String pattern : resourceName.patterns()) {
@@ -329,9 +330,9 @@ public class DefaultValueComposer {
       Message message,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
-      String bindingPattern) {
+      HttpBindings bindings) {
     return createSimpleMessageBuilderValue(
-        message, resourceNames, messageTypes, Collections.emptyMap(), bindingPattern);
+        message, resourceNames, messageTypes, Collections.emptyMap(), bindings);
   }
 
   public static Expr createSimpleMessageBuilderValue(
@@ -339,7 +340,7 @@ public class DefaultValueComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
       Map<String, String> valuePatterns,
-      String bindingPattern) {
+      HttpBindings bindings) {
     MethodInvocationExpr builderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(message.type())
@@ -369,7 +370,7 @@ public class DefaultValueComposer {
                 resourceNames.values().stream().collect(Collectors.toList()),
                 message.name(),
                 /* allowAnonResourceNameClass = */ false,
-                bindingPattern);
+                bindings);
         defaultExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(defaultExpr)
@@ -526,7 +527,8 @@ public class DefaultValueComposer {
   }
 
   @VisibleForTesting
-  static AnonymousClassExpr createAnonymousResourceNameClassValue(String fieldOrMessageName) {
+  static AnonymousClassExpr createAnonymousResourceNameClassValue(
+      String fieldOrMessageName, HttpBindings matchedBindings) {
     TypeNode stringMapType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -544,12 +546,18 @@ public class DefaultValueComposer {
     //   fieldValuesMap.put("resource", "resource-12345");
     //   return fieldValuesMap;
     // }
+
+    String toStringValue = String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode());
+    if (matchedBindings != null) {
+      Map<String, String> valuePatterns = matchedBindings.getPathParametersValuePatterns();
+      toStringValue =
+          constructValueMatchingPattern(fieldOrMessageName, valuePatterns.get(fieldOrMessageName));
+    }
+
     VariableExpr fieldValuesMapVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(stringMapType).setName("fieldValuesMap").build());
-    StringObjectValue fieldOrMessageStringValue =
-        StringObjectValue.withValue(
-            String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode()));
+    StringObjectValue fieldOrMessageStringValue = StringObjectValue.withValue(toStringValue);
 
     List<Expr> bodyExprs =
         Arrays.asList(
@@ -605,15 +613,24 @@ public class DefaultValueComposer {
                     .build())
             .build();
 
+    MethodDefinition toStringMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.STRING)
+            .setName("toString")
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue(toStringValue)))
+            .build();
+
     return AnonymousClassExpr.builder()
         .setType(
             TypeNode.withReference(
                 ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class)))
-        .setMethods(Arrays.asList(getFieldValuesMapMethod, getFieldValueMethod))
+        .setMethods(Arrays.asList(getFieldValuesMapMethod, getFieldValueMethod, toStringMethod))
         .build();
   }
 
-  private static String constructValueMatchingPattern(String fieldName, String pattern) {
+  public static String constructValueMatchingPattern(String fieldName, String pattern) {
     if (pattern == null || pattern.isEmpty()) {
       return fieldName + fieldName.hashCode();
     }

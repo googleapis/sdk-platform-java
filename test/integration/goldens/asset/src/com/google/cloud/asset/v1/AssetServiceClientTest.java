@@ -177,13 +177,18 @@ public class AssetServiceClientTest {
           @Override
           public Map<String, String> getFieldValuesMap() {
             Map<String, String> fieldValuesMap = new HashMap<>();
-            fieldValuesMap.put("parent", "parent-995424086");
+            fieldValuesMap.put("parent", "parent-4715/parent-4715");
             return fieldValuesMap;
           }
 
           @Override
           public String getFieldValue(String fieldName) {
             return getFieldValuesMap().get(fieldName);
+          }
+
+          @Override
+          public String toString() {
+            return "parent-4715/parent-4715";
           }
         };
 
@@ -216,13 +221,18 @@ public class AssetServiceClientTest {
             @Override
             public Map<String, String> getFieldValuesMap() {
               Map<String, String> fieldValuesMap = new HashMap<>();
-              fieldValuesMap.put("parent", "parent-995424086");
+              fieldValuesMap.put("parent", "parent-4715/parent-4715");
               return fieldValuesMap;
             }
 
             @Override
             public String getFieldValue(String fieldName) {
               return getFieldValuesMap().get(fieldName);
+            }
+
+            @Override
+            public String toString() {
+              return "parent-4715/parent-4715";
             }
           };
       client.listAssets(parent);

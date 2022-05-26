@@ -96,7 +96,7 @@ public class ServiceClientMethodSampleComposer {
             "Could not find the message type %s.", method.inputType().reference().fullName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
+            requestMessage, resourceNames, messageTypes, method.httpBindings());
     AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())

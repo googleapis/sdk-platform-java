@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
@@ -91,7 +92,7 @@ public class ServiceClientHeaderSampleComposer {
     // Assign method's arguments variable with the default values.
     List<VariableExpr> rpcMethodArgVarExprs = createArgumentVariableExprs(arguments);
     List<Expr> rpcMethodArgDefaultValueExprs =
-        createArgumentDefaultValueExprs(arguments, resourceNames, method.httpBindingPattern());
+        createArgumentDefaultValueExprs(arguments, resourceNames, method.httpBindings());
     List<Expr> rpcMethodArgAssignmentExprs =
         createAssignmentsForVarExprsWithValueExprs(
             rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
@@ -369,7 +370,7 @@ public class ServiceClientHeaderSampleComposer {
   private static List<Expr> createArgumentDefaultValueExprs(
       List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames,
-      String bindingPattern) {
+      HttpBindings bindings) {
     List<ResourceName> resourceNameList =
         resourceNames.values().stream().collect(Collectors.toList());
     Function<MethodArgument, MethodInvocationExpr> stringResourceNameDefaultValueExpr =
@@ -394,7 +395,7 @@ public class ServiceClientHeaderSampleComposer {
                         resourceNames,
                         Collections.emptyMap(),
                         Collections.emptyMap(),
-                        bindingPattern)
+                        bindings)
                     : stringResourceNameDefaultValueExpr.apply(arg))
         .collect(Collectors.toList());
   }

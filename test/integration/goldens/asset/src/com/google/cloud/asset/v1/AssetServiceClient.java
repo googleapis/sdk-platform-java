@@ -298,13 +298,18 @@ public class AssetServiceClient implements BackgroundResource {
    *         {@literal @}Override
    *         public Map<String, String> getFieldValuesMap() {
    *           Map<String, String> fieldValuesMap = new HashMap<>();
-   *           fieldValuesMap.put("parent", "parent-995424086");
+   *           fieldValuesMap.put("parent", "parent-4715/parent-4715");
    *           return fieldValuesMap;
    *         }
    *
    *         {@literal @}Override
    *         public String getFieldValue(String fieldName) {
    *           return getFieldValuesMap().get(fieldName);
+   *         }
+   *
+   *         {@literal @}Override
+   *         public String toString() {
+   *           return "parent-4715/parent-4715";
    *         }
    *       };
    *   for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {

@@ -552,7 +552,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
               messageTypes.get(methodOutputType.reference().fullName()),
               resourceNames,
               messageTypes,
-              method.httpBindingPattern());
+              method.httpBindings());
     } else {
       // Wrap this in a field so we don't have to split the helper into lots of different methods,
       // or duplicate it for VariableExpr.
@@ -609,7 +609,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
+            requestMessage, resourceNames, messageTypes, method.httpBindings());
     methodExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
@@ -882,7 +882,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            requestMessage, resourceNames, messageTypes, method.httpBindingPattern());
+            requestMessage, resourceNames, messageTypes, method.httpBindings());
 
     List<Statement> statements = new ArrayList<>();
     statements.add(

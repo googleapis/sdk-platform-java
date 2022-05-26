@@ -20,7 +20,7 @@ package com.google.cloud.pubsub.v1.samples;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.pubsub.v1.SubscriptionName;
+import com.google.pubsub.v1.SnapshotName;
 import java.util.ArrayList;
 
 public class SyncTestIamPermissions {
@@ -35,7 +35,7 @@ public class SyncTestIamPermissions {
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       TestIamPermissionsResponse response = topicAdminClient.testIamPermissions(request);

@@ -17,7 +17,7 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -108,7 +108,7 @@ public abstract class HttpBindings {
   }
 
   public Map<String, String> getPathParametersValuePatterns() {
-    Map<String, String> valuePatterns = new HashMap<>();
+    Map<String, String> valuePatterns = new LinkedHashMap<>();
     for (HttpBinding pathParameter : pathParameters()) {
       valuePatterns.put(pathParameter.lowerCamelName(), pathParameter.valuePattern());
     }

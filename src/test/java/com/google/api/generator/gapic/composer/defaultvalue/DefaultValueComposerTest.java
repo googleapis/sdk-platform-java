@@ -284,6 +284,11 @@ public class DefaultValueComposerTest {
             "return getFieldValuesMap().get(fieldName);\n",
             "}\n",
             "\n",
+            "@Override\n",
+            "public String toString() {\n",
+            "return \"foobar-1268878963\";\n",
+            "}\n",
+            "\n",
             "}");
     assertEquals(expected, writerVisitor.write());
   }
@@ -358,7 +363,7 @@ public class DefaultValueComposerTest {
 
   @Test
   public void createAnonymousResourceNameClass() {
-    Expr expr = DefaultValueComposer.createAnonymousResourceNameClassValue("resource");
+    Expr expr = DefaultValueComposer.createAnonymousResourceNameClassValue("resource", null);
     expr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(
@@ -373,6 +378,11 @@ public class DefaultValueComposerTest {
             "@Override\n",
             "public String getFieldValue(String fieldName) {\n",
             "return getFieldValuesMap().get(fieldName);\n",
+            "}\n",
+            "\n",
+            "@Override\n",
+            "public String toString() {\n",
+            "return \"resource-341064690\";\n",
             "}\n",
             "\n",
             "}");

@@ -56,6 +56,7 @@ import com.google.pubsub.v1.PublishRequest;
 import com.google.pubsub.v1.PublishResponse;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.SchemaSettings;
+import com.google.pubsub.v1.SnapshotName;
 import com.google.pubsub.v1.SubscriptionName;
 import com.google.pubsub.v1.Topic;
 import com.google.pubsub.v1.TopicName;
@@ -810,7 +811,7 @@ public class TopicAdminClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setPolicy(Policy.newBuilder().build())
             .build();
 
@@ -837,7 +838,7 @@ public class TopicAdminClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
               .setPolicy(Policy.newBuilder().build())
               .build();
       client.setIamPolicy(request);
@@ -859,7 +860,7 @@ public class TopicAdminClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -886,7 +887,7 @@ public class TopicAdminClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -904,7 +905,7 @@ public class TopicAdminClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -931,7 +932,7 @@ public class TopicAdminClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
+              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

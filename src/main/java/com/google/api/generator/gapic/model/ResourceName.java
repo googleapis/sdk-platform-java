@@ -58,25 +58,32 @@ public abstract class ResourceName {
   public abstract boolean isOnlyWildcard();
 
   @Nullable
-  public String getMatchingPattern(String binding) {
-    PathTemplate bindingTemplate = PathTemplate.create(binding);
+  public String getMatchingPattern(HttpBindings bindings) {
+    List<String> bindingPatterns =
+        ImmutableList.<String>builder()
+            .add(bindings.pattern())
+            .addAll(bindings.additionalPatterns())
+            .build();
 
-    for (String resNamePattern : patterns()) {
-      PathTemplate restNamePatternTemplate = PathTemplate.create(resNamePattern);
-      ImmutableMap.Builder<String, String> mb = ImmutableMap.builder();
-      for (String var : restNamePatternTemplate.vars()) {
-        mb.put(var, var + (var.hashCode() % 100));
-      }
+    for (String bindingPattern : bindingPatterns) {
+      PathTemplate bindingTemplate = PathTemplate.create(bindingPattern);
+      for (String resNamePattern : patterns()) {
+        PathTemplate restNamePatternTemplate = PathTemplate.create(resNamePattern);
+        ImmutableMap.Builder<String, String> mb = ImmutableMap.builder();
+        for (String var : restNamePatternTemplate.vars()) {
+          mb.put(var, var + (var.hashCode() % 100));
+        }
 
-      String resNameValue = restNamePatternTemplate.instantiate(mb.build());
-      mb = ImmutableMap.builder();
-      for (String var : bindingTemplate.vars()) {
-        mb.put(var, resNameValue);
-      }
+        String resNameValue = restNamePatternTemplate.instantiate(mb.build());
+        mb = ImmutableMap.builder();
+        for (String var : bindingTemplate.vars()) {
+          mb.put(var, resNameValue);
+        }
 
-      String url = bindingTemplate.instantiate(mb.build());
-      if (bindingTemplate.matches(url)) {
-        return resNamePattern;
+        String url = bindingTemplate.instantiate(mb.build());
+        if (bindingTemplate.matches(url)) {
+          return resNamePattern;
+        }
       }
     }
     return null;

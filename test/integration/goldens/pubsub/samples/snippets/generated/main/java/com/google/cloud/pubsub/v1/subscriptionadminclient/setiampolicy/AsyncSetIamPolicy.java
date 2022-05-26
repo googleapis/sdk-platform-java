@@ -21,7 +21,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
-import com.google.pubsub.v1.TopicName;
+import com.google.pubsub.v1.SnapshotName;
 
 public class AsyncSetIamPolicy {
 
@@ -35,7 +35,7 @@ public class AsyncSetIamPolicy {
     try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
+              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
               .setPolicy(Policy.newBuilder().build())
               .build();
       ApiFuture<Policy> future = subscriptionAdminClient.setIamPolicyCallable().futureCall(request);

@@ -396,7 +396,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                 messageTypes.get(methodOutputType.reference().fullName()),
                 resourceNames,
                 messageTypes,
-                method.httpBindingPattern());
+                method.httpBindings());
       } else {
         // Wrap this in a field so we don't have to split the helper into lots of different methods,
         // or duplicate it for VariableExpr.
@@ -476,7 +476,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               resourceNames,
               messageTypes,
               pathParamValuePatterns,
-              method.httpBindingPattern());
+              method.httpBindings());
       methodExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
@@ -495,7 +495,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         argExprs.add(varExpr);
         Expr valExpr =
             DefaultValueComposer.createMethodArgValue(
-                methodArg, resourceNames, messageTypes, valuePatterns, method.httpBindingPattern());
+                methodArg, resourceNames, messageTypes, valuePatterns, method.httpBindings());
         methodExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -783,11 +783,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       }
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderValue(
-              requestMessage,
-              resourceNames,
-              messageTypes,
-              valuePatterns,
-              method.httpBindingPattern());
+              requestMessage, resourceNames, messageTypes, valuePatterns, method.httpBindings());
       tryBodyExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -806,7 +802,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         argVarExprs.add(varExpr);
         Expr valExpr =
             DefaultValueComposer.createMethodArgValue(
-                methodArg, resourceNames, messageTypes, valuePatterns, method.httpBindingPattern());
+                methodArg, resourceNames, messageTypes, valuePatterns, method.httpBindings());
         tryBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
