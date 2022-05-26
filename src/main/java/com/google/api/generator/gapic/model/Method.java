@@ -63,11 +63,6 @@ public abstract class Method {
   public abstract HttpBindings httpBindings();
 
   @Nullable
-  public String httpBindingPattern() {
-    return httpBindings() != null ? httpBindings().pattern() : null;
-  }
-
-  @Nullable
   public abstract RoutingHeaderRule routingHeaderRule();
 
   // Example from Expand in echo.proto: Thet TypeNodes that map to
