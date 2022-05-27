@@ -57,15 +57,6 @@ def gapic_generator_java_repositories():
     )
 
     _maybe(
-        http_archive,
-        name = "com_google_googleapis",
-        strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
-        urls = [
-            "https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip",
-        ],
-    )
-
-    _maybe(
         native.bind,
         name = "guava",
         actual = "@com_google_guava_guava//jar",
