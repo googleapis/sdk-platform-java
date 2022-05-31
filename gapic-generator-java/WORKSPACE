@@ -52,6 +52,14 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
+http_archive(
+        name = "com_google_googleapis",
+        strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
+        urls = [
+            "https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip",
+        ],
+    )
+
 load("//:repositories.bzl", "gapic_generator_java_repositories")
 
 gapic_generator_java_repositories()
