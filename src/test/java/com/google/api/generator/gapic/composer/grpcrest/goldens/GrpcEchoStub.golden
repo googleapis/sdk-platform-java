@@ -119,6 +119,14 @@ public class GrpcEchoStub extends EchoStub {
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<EchoRequest, EchoResponse> noBindingMethodDescriptor =
+      MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/NoBinding")
+          .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -133,6 +141,7 @@ public class GrpcEchoStub extends EchoStub {
   private final UnaryCallable<EchoRequest, Object> collideNameCallable;
   private final UnaryCallable<EchoRequest, Object> nestedBindingCallable;
   private final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable;
+  private final UnaryCallable<EchoRequest, EchoResponse> noBindingCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -214,6 +223,10 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(chatMethodDescriptor)
             .build();
+    GrpcCallSettings<EchoRequest, EchoResponse> noBindingTransportSettings =
+        GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
+            .setMethodDescriptor(noBindingMethodDescriptor)
+            .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -255,6 +268,9 @@ public class GrpcEchoStub extends EchoStub {
     this.chatCallable =
         callableFactory.createBidiStreamingCallable(
             chatTransportSettings, settings.chatSettings(), clientContext);
+    this.noBindingCallable =
+        callableFactory.createUnaryCallable(
+            noBindingTransportSettings, settings.noBindingSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -323,6 +339,11 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
     return chatCallable;
+  }
+
+  @Override
+  public UnaryCallable<EchoRequest, EchoResponse> noBindingCallable() {
+    return noBindingCallable;
   }
 
   @Override

@@ -889,6 +889,57 @@ public class EchoClient implements BackgroundResource {
     return stub.chatCallable();
   }
 
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFooBar(Foobar.newBuilder().build())
+   *           .build();
+   *   EchoResponse response = echoClient.noBinding(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse noBinding(EchoRequest request) {
+    return noBindingCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated for illustrative purposes only.
+   * // It may require modifications to work in your environment.
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFooBar(Foobar.newBuilder().build())
+   *           .build();
+   *   ApiFuture<EchoResponse> future = echoClient.noBindingCallable().futureCall(request);
+   *   // Do something.
+   *   EchoResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<EchoRequest, EchoResponse> noBindingCallable() {
+    return stub.noBindingCallable();
+  }
+
   @Override
   public final void close() {
     stub.close();

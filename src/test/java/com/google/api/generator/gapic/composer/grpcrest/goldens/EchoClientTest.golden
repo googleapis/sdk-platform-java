@@ -832,4 +832,60 @@ public class EchoClientTest {
       Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
+
+  @Test
+  public void noBindingTest() throws Exception {
+    EchoResponse expectedResponse =
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
+    mockEcho.addResponse(expectedResponse);
+
+    EchoRequest request =
+        EchoRequest.newBuilder()
+            .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
+            .setFooBar(Foobar.newBuilder().build())
+            .build();
+
+    EchoResponse actualResponse = client.noBinding(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(request.getParent(), actualRequest.getParent());
+    Assert.assertEquals(request.getContent(), actualRequest.getContent());
+    Assert.assertEquals(request.getError(), actualRequest.getError());
+    Assert.assertEquals(request.getSeverity(), actualRequest.getSeverity());
+    Assert.assertEquals(request.getFooBar(), actualRequest.getFooBar());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void noBindingExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+
+    try {
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
+              .setFooBar(Foobar.newBuilder().build())
+              .build();
+      client.noBinding(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
 }

@@ -114,6 +114,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return ((EchoStubSettings) getStubSettings()).chatSettings();
   }
 
+  /** Returns the object with the settings used for calls to noBinding. */
+  public UnaryCallSettings<EchoRequest, EchoResponse> noBindingSettings() {
+    return ((EchoStubSettings) getStubSettings()).noBindingSettings();
+  }
+
   public static final EchoSettings create(EchoStubSettings stub) throws IOException {
     return new EchoSettings.Builder(stub.toBuilder()).build();
   }
@@ -281,6 +286,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     /** Returns the builder for the settings used for calls to chat. */
     public StreamingCallSettings.Builder<EchoRequest, EchoResponse> chatSettings() {
       return getStubSettingsBuilder().chatSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to noBinding. */
+    public UnaryCallSettings.Builder<EchoRequest, EchoResponse> noBindingSettings() {
+      return getStubSettingsBuilder().noBindingSettings();
     }
 
     @Override

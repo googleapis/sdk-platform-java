@@ -47,7 +47,9 @@ public class HttpJsonServiceClientTestClassComposer extends ServiceClientTestCla
   }
 
   protected boolean isSupportedMethod(Method method) {
-    return method.stream() != Stream.BIDI && method.stream() != Stream.CLIENT;
+    return method.httpBindings() != null
+        && method.stream() != Stream.BIDI
+        && method.stream() != Stream.CLIENT;
   }
 
   @Override

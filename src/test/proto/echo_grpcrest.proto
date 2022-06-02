@@ -136,7 +136,14 @@ service Echo {
     };
   }
 
-  rpc Chat(stream EchoRequest) returns (stream EchoResponse);
+  rpc Chat(stream EchoRequest) returns (stream EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/chat:chat"
+      body: "error"
+    };
+  }
+
+  rpc NoBinding(EchoRequest) returns (EchoResponse);
 }
 
 // Generator should not fail when encounter a service without methods
