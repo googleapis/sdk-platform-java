@@ -34,9 +34,7 @@ public class SyncGetBlurb {
     try (MessagingClient messagingClient = MessagingClient.create()) {
       GetBlurbRequest request =
           GetBlurbRequest.newBuilder()
-              .setName(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .build();
       Blurb response = messagingClient.getBlurb(request);
     }

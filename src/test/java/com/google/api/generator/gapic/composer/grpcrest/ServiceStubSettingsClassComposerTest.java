@@ -29,7 +29,8 @@ public class ServiceStubSettingsClassComposerTest {
   public void generateServiceClasses() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
-    GapicClass clazz = ServiceSettingsClassComposer.instance().generate(context, echoProtoService);
+    GapicClass clazz =
+        ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

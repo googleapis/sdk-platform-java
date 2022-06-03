@@ -21,6 +21,8 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.HttpBindings;
+import com.google.api.generator.gapic.model.HttpBindings.HttpVerb;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.protoparser.Parser;
@@ -29,6 +31,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -163,7 +166,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals("BillingAccountName.of(\"[BILLING_ACCOUNT]\")", writerVisitor.write());
   }
@@ -180,7 +184,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals(
         "FolderName.ofProjectFolderName(\"[PROJECT]\", \"[FOLDER]\")", writerVisitor.write());
@@ -198,7 +203,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals("DocumentName.ofDocumentName(\"[DOCUMENT]\")", writerVisitor.write());
   }
@@ -221,7 +227,8 @@ public class DefaultValueComposerTest {
             resourceName,
             false,
             typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-            "ignored");
+            "ignored",
+            null);
     expr.accept(writerVisitor);
     assertEquals("TopicName.ofDeletedTopic()", writerVisitor.write());
   }
@@ -243,7 +250,85 @@ public class DefaultValueComposerTest {
             false,
             Collections.emptyList(),
             fallbackField,
-            /* allowAnonResourceNameClass = */ false);
+            /* allowAnonResourceNameClass = */ false,
+            null);
+    expr.accept(writerVisitor);
+    assertEquals(
+        String.format("\"%s%s\"", fallbackField, fallbackField.hashCode()), writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameWithOnlyWildcards_matchingBinding() {
+    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(lockerServiceFileDescriptor);
+    ResourceName resourceName =
+        typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
+    String fallbackField = "foobar";
+
+    ResourceName extraResourceName =
+        ResourceName.builder()
+            .setVariableName("topic")
+            .setPakkage("com.google.pubsub.v1")
+            .setResourceTypeString("pubsub.googleapis.com/Topic")
+            .setPatterns(Arrays.asList("_deleted-topic_", "projects/{project}/topics/{topic}"))
+            .setParentMessageName("com.google.pubsub.v1.Topic")
+            .build();
+
+    HttpBindings bindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.PUT)
+            .setPattern("/v1/{name=projects/*/topics/*}")
+            .setAdditionalPatterns(Collections.emptyList())
+            .setIsAsteriskBody(true)
+            .build();
+
+    Expr expr =
+        DefaultValueComposer.createResourceHelperValue(
+            resourceName,
+            false,
+            Arrays.asList(resourceName, extraResourceName),
+            fallbackField,
+            /* allowAnonResourceNameClass = */ false,
+            bindings);
+    expr.accept(writerVisitor);
+    assertEquals("TopicName.ofProjectTopicName(\"[PROJECT]\", \"[TOPIC]\")", writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameWithOnlyWildcards_mismatchingBinding() {
+    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(lockerServiceFileDescriptor);
+    ResourceName resourceName =
+        typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
+    String fallbackField = "foobar";
+
+    ResourceName extraResourceName =
+        ResourceName.builder()
+            .setVariableName("topic")
+            .setPakkage("com.google.pubsub.v1")
+            .setResourceTypeString("pubsub.googleapis.com/Topic")
+            .setPatterns(Arrays.asList("_deleted-topic_", "projects/{project}/topics/{topic}"))
+            .setParentMessageName("com.google.pubsub.v1.Topic")
+            .build();
+
+    HttpBindings bindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.PUT)
+            .setPattern("/v1/{name=projects/*/subscriptions/*}")
+            .setAdditionalPatterns(Collections.emptyList())
+            .setIsAsteriskBody(true)
+            .build();
+
+    Expr expr =
+        DefaultValueComposer.createResourceHelperValue(
+            resourceName,
+            false,
+            Arrays.asList(resourceName, extraResourceName),
+            fallbackField,
+            /* allowAnonResourceNameClass = */ false,
+            bindings);
     expr.accept(writerVisitor);
     assertEquals(
         String.format("\"%s%s\"", fallbackField, fallbackField.hashCode()), writerVisitor.write());
@@ -262,7 +347,7 @@ public class DefaultValueComposerTest {
     String fallbackField = "foobar";
     Expr expr =
         DefaultValueComposer.createResourceHelperValue(
-            resourceName, false, Collections.emptyList(), fallbackField);
+            resourceName, false, Collections.emptyList(), fallbackField, null);
     expr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(
@@ -279,6 +364,11 @@ public class DefaultValueComposerTest {
             "return getFieldValuesMap().get(fieldName);\n",
             "}\n",
             "\n",
+            "@Override\n",
+            "public String toString() {\n",
+            "return \"foobar-1268878963\";\n",
+            "}\n",
+            "\n",
             "}");
     assertEquals(expected, writerVisitor.write());
   }
@@ -292,7 +382,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.Foobar");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals(
         "Foobar.newBuilder().setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\")"
@@ -309,7 +399,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals(
         "EchoRequest.newBuilder().setName("
@@ -329,7 +419,7 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.PagedExpandResponse");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals(
         "PagedExpandResponse.newBuilder().addAllResponses(new ArrayList<EchoResponse>())"
@@ -346,14 +436,14 @@ public class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.WaitRequest");
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes);
+            message, typeStringsToResourceNames, messageTypes, null);
     expr.accept(writerVisitor);
     assertEquals("WaitRequest.newBuilder().build()", writerVisitor.write());
   }
 
   @Test
   public void createAnonymousResourceNameClass() {
-    Expr expr = DefaultValueComposer.createAnonymousResourceNameClassValue("resource");
+    Expr expr = DefaultValueComposer.createAnonymousResourceNameClassValue("resource", null);
     expr.accept(writerVisitor);
     String expected =
         LineFormatter.lines(
@@ -368,6 +458,11 @@ public class DefaultValueComposerTest {
             "@Override\n",
             "public String getFieldValue(String fieldName) {\n",
             "return getFieldValuesMap().get(fieldName);\n",
+            "}\n",
+            "\n",
+            "@Override\n",
+            "public String toString() {\n",
+            "return \"resource-341064690\";\n",
             "}\n",
             "\n",
             "}");

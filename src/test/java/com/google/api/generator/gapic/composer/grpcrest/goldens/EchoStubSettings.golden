@@ -1,32 +1,63 @@
-package com.google.showcase.grpcrest.v1beta1;
+package com.google.showcase.grpcrest.v1beta1.stub;
 
 import static com.google.showcase.grpcrest.v1beta1.EchoClient.PagedExpandPagedResponse;
 import static com.google.showcase.grpcrest.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
 import com.google.api.core.ApiFunction;
+import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
+import com.google.api.gax.grpc.GaxGrpcProperties;
+import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
+import com.google.api.gax.grpc.ProtoOperationTransformers;
+import com.google.api.gax.httpjson.GaxHttpJsonProperties;
+import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
+import com.google.api.gax.longrunning.OperationSnapshot;
+import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
+import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.ClientSettings;
 import com.google.api.gax.rpc.OperationCallSettings;
+import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
+import com.google.api.gax.rpc.PagedListDescriptor;
+import com.google.api.gax.rpc.PagedListResponseFactory;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
-import com.google.showcase.grpcrest.v1beta1.stub.EchoStubSettings;
+import com.google.showcase.grpcrest.v1beta1.BlockRequest;
+import com.google.showcase.grpcrest.v1beta1.BlockResponse;
+import com.google.showcase.grpcrest.v1beta1.EchoRequest;
+import com.google.showcase.grpcrest.v1beta1.EchoResponse;
+import com.google.showcase.grpcrest.v1beta1.ExpandRequest;
+import com.google.showcase.grpcrest.v1beta1.Object;
+import com.google.showcase.grpcrest.v1beta1.PagedExpandRequest;
+import com.google.showcase.grpcrest.v1beta1.PagedExpandResponse;
+import com.google.showcase.grpcrest.v1beta1.WaitMetadata;
+import com.google.showcase.grpcrest.v1beta1.WaitRequest;
+import com.google.showcase.grpcrest.v1beta1.WaitResponse;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;
+import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * Settings class to configure an instance of {@link EchoClient}.
+ * Settings class to configure an instance of {@link EchoStub}.
  *
  * <p>The default instance has everything set to sensible defaults:
  *
@@ -44,7 +75,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * // This snippet has been automatically generated for illustrative purposes only.
  * // It may require modifications to work in your environment.
- * EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
+ * EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();
  * echoSettingsBuilder
  *     .echoSettings()
  *     .setRetrySettings(
@@ -54,103 +85,274 @@ import javax.annotation.Generated;
  *             .toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
- * EchoSettings echoSettings = echoSettingsBuilder.build();
+ * EchoStubSettings echoSettings = echoSettingsBuilder.build();
  * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")
-public class EchoSettings extends ClientSettings<EchoSettings> {
+public class EchoStubSettings extends StubSettings<EchoStubSettings> {
+  /** The default scopes of the service. */
+  private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
+      ImmutableList.<String>builder().add("https://www.googleapis.com/auth/cloud-platform").build();
+
+  private final UnaryCallSettings<EchoRequest, EchoResponse> echoSettings;
+  private final ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings;
+  private final PagedCallSettings<PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
+      pagedExpandSettings;
+  private final PagedCallSettings<
+          PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+      simplePagedExpandSettings;
+  private final UnaryCallSettings<WaitRequest, Operation> waitSettings;
+  private final OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata>
+      waitOperationSettings;
+  private final UnaryCallSettings<BlockRequest, BlockResponse> blockSettings;
+  private final UnaryCallSettings<EchoRequest, Object> collideNameSettings;
+  private final UnaryCallSettings<EchoRequest, Object> nestedBindingSettings;
+  private final StreamingCallSettings<EchoRequest, EchoResponse> chatSettings;
+  private final UnaryCallSettings<EchoRequest, EchoResponse> noBindingSettings;
+
+  private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
+      PAGED_EXPAND_PAGE_STR_DESC =
+          new PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public PagedExpandRequest injectToken(PagedExpandRequest payload, String token) {
+              return PagedExpandRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public PagedExpandRequest injectPageSize(PagedExpandRequest payload, int pageSize) {
+              return PagedExpandRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(PagedExpandRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(PagedExpandResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
+              return payload.getResponsesList() == null
+                  ? ImmutableList.<EchoResponse>of()
+                  : payload.getResponsesList();
+            }
+          };
+
+  private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
+      SIMPLE_PAGED_EXPAND_PAGE_STR_DESC =
+          new PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public PagedExpandRequest injectToken(PagedExpandRequest payload, String token) {
+              return PagedExpandRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public PagedExpandRequest injectPageSize(PagedExpandRequest payload, int pageSize) {
+              return PagedExpandRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(PagedExpandRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(PagedExpandResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
+              return payload.getResponsesList() == null
+                  ? ImmutableList.<EchoResponse>of()
+                  : payload.getResponsesList();
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
+      PAGED_EXPAND_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>() {
+            @Override
+            public ApiFuture<PagedExpandPagedResponse> getFuturePagedResponse(
+                UnaryCallable<PagedExpandRequest, PagedExpandResponse> callable,
+                PagedExpandRequest request,
+                ApiCallContext context,
+                ApiFuture<PagedExpandResponse> futureResponse) {
+              PageContext<PagedExpandRequest, PagedExpandResponse, EchoResponse> pageContext =
+                  PageContext.create(callable, PAGED_EXPAND_PAGE_STR_DESC, request, context);
+              return PagedExpandPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+      SIMPLE_PAGED_EXPAND_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>() {
+            @Override
+            public ApiFuture<SimplePagedExpandPagedResponse> getFuturePagedResponse(
+                UnaryCallable<PagedExpandRequest, PagedExpandResponse> callable,
+                PagedExpandRequest request,
+                ApiCallContext context,
+                ApiFuture<PagedExpandResponse> futureResponse) {
+              PageContext<PagedExpandRequest, PagedExpandResponse, EchoResponse> pageContext =
+                  PageContext.create(callable, SIMPLE_PAGED_EXPAND_PAGE_STR_DESC, request, context);
+              return SimplePagedExpandPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
 
   /** Returns the object with the settings used for calls to echo. */
   public UnaryCallSettings<EchoRequest, EchoResponse> echoSettings() {
-    return ((EchoStubSettings) getStubSettings()).echoSettings();
+    return echoSettings;
   }
 
   /** Returns the object with the settings used for calls to expand. */
   public ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings() {
-    return ((EchoStubSettings) getStubSettings()).expandSettings();
+    return expandSettings;
   }
 
   /** Returns the object with the settings used for calls to pagedExpand. */
   public PagedCallSettings<PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
       pagedExpandSettings() {
-    return ((EchoStubSettings) getStubSettings()).pagedExpandSettings();
+    return pagedExpandSettings;
   }
 
   /** Returns the object with the settings used for calls to simplePagedExpand. */
   public PagedCallSettings<PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
       simplePagedExpandSettings() {
-    return ((EchoStubSettings) getStubSettings()).simplePagedExpandSettings();
+    return simplePagedExpandSettings;
   }
 
   /** Returns the object with the settings used for calls to wait. */
   public UnaryCallSettings<WaitRequest, Operation> waitSettings() {
-    return ((EchoStubSettings) getStubSettings()).waitSettings();
+    return waitSettings;
   }
 
   /** Returns the object with the settings used for calls to wait. */
   public OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata> waitOperationSettings() {
-    return ((EchoStubSettings) getStubSettings()).waitOperationSettings();
+    return waitOperationSettings;
   }
 
   /** Returns the object with the settings used for calls to block. */
   public UnaryCallSettings<BlockRequest, BlockResponse> blockSettings() {
-    return ((EchoStubSettings) getStubSettings()).blockSettings();
+    return blockSettings;
   }
 
   /** Returns the object with the settings used for calls to collideName. */
   public UnaryCallSettings<EchoRequest, Object> collideNameSettings() {
-    return ((EchoStubSettings) getStubSettings()).collideNameSettings();
+    return collideNameSettings;
   }
 
   /** Returns the object with the settings used for calls to nestedBinding. */
   public UnaryCallSettings<EchoRequest, Object> nestedBindingSettings() {
-    return ((EchoStubSettings) getStubSettings()).nestedBindingSettings();
+    return nestedBindingSettings;
   }
 
-  public static final EchoSettings create(EchoStubSettings stub) throws IOException {
-    return new EchoSettings.Builder(stub.toBuilder()).build();
+  /** Returns the object with the settings used for calls to chat. */
+  public StreamingCallSettings<EchoRequest, EchoResponse> chatSettings() {
+    return chatSettings;
+  }
+
+  /** Returns the object with the settings used for calls to noBinding. */
+  public UnaryCallSettings<EchoRequest, EchoResponse> noBindingSettings() {
+    return noBindingSettings;
+  }
+
+  public EchoStub createStub() throws IOException {
+    if (getTransportChannelProvider()
+        .getTransportName()
+        .equals(GrpcTransportChannel.getGrpcTransportName())) {
+      return GrpcEchoStub.create(this);
+    }
+    if (getTransportChannelProvider()
+        .getTransportName()
+        .equals(HttpJsonTransportChannel.getHttpJsonTransportName())) {
+      return HttpJsonEchoStub.create(this);
+    }
+    throw new UnsupportedOperationException(
+        String.format(
+            "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
-    return EchoStubSettings.defaultExecutorProviderBuilder();
+    return InstantiatingExecutorProvider.newBuilder();
   }
 
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
-    return EchoStubSettings.getDefaultEndpoint();
+    return "localhost:7469";
+  }
+
+  /** Returns the default mTLS service endpoint. */
+  public static String getDefaultMtlsEndpoint() {
+    return "localhost:7469";
   }
 
   /** Returns the default service scopes. */
   public static List<String> getDefaultServiceScopes() {
-    return EchoStubSettings.getDefaultServiceScopes();
+    return DEFAULT_SERVICE_SCOPES;
   }
 
   /** Returns a builder for the default credentials for this service. */
   public static GoogleCredentialsProvider.Builder defaultCredentialsProviderBuilder() {
-    return EchoStubSettings.defaultCredentialsProviderBuilder();
+    return GoogleCredentialsProvider.newBuilder()
+        .setScopesToApply(DEFAULT_SERVICE_SCOPES)
+        .setUseJwtAccessWithScope(true);
   }
 
   /** Returns a builder for the default gRPC ChannelProvider for this service. */
   public static InstantiatingGrpcChannelProvider.Builder defaultGrpcTransportProviderBuilder() {
-    return EchoStubSettings.defaultGrpcTransportProviderBuilder();
+    return InstantiatingGrpcChannelProvider.newBuilder()
+        .setMaxInboundMessageSize(Integer.MAX_VALUE);
   }
 
   /** Returns a builder for the default REST ChannelProvider for this service. */
   @BetaApi
   public static InstantiatingHttpJsonChannelProvider.Builder
       defaultHttpJsonTransportProviderBuilder() {
-    return EchoStubSettings.defaultHttpJsonTransportProviderBuilder();
+    return InstantiatingHttpJsonChannelProvider.newBuilder();
   }
 
   public static TransportChannelProvider defaultTransportChannelProvider() {
-    return EchoStubSettings.defaultTransportChannelProvider();
+    return defaultGrpcTransportProviderBuilder().build();
   }
 
   @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
+  public static ApiClientHeaderProvider.Builder defaultGrpcApiClientHeaderProviderBuilder() {
+    return ApiClientHeaderProvider.newBuilder()
+        .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
+        .setTransportToken(
+            GaxGrpcProperties.getGrpcTokenName(), GaxGrpcProperties.getGrpcVersion());
+  }
+
+  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
+  public static ApiClientHeaderProvider.Builder defaultHttpJsonApiClientHeaderProviderBuilder() {
+    return ApiClientHeaderProvider.newBuilder()
+        .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
+        .setTransportToken(
+            GaxHttpJsonProperties.getHttpJsonTokenName(),
+            GaxHttpJsonProperties.getHttpJsonVersion());
+  }
+
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
-    return EchoStubSettings.defaultApiClientHeaderProviderBuilder();
+    return EchoStubSettings.defaultGrpcApiClientHeaderProviderBuilder();
   }
 
   /** Returns a new gRPC builder for this class. */
@@ -159,7 +361,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -174,40 +375,216 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return new Builder(this);
   }
 
-  protected EchoSettings(Builder settingsBuilder) throws IOException {
+  protected EchoStubSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
+
+    echoSettings = settingsBuilder.echoSettings().build();
+    expandSettings = settingsBuilder.expandSettings().build();
+    pagedExpandSettings = settingsBuilder.pagedExpandSettings().build();
+    simplePagedExpandSettings = settingsBuilder.simplePagedExpandSettings().build();
+    waitSettings = settingsBuilder.waitSettings().build();
+    waitOperationSettings = settingsBuilder.waitOperationSettings().build();
+    blockSettings = settingsBuilder.blockSettings().build();
+    collideNameSettings = settingsBuilder.collideNameSettings().build();
+    nestedBindingSettings = settingsBuilder.nestedBindingSettings().build();
+    chatSettings = settingsBuilder.chatSettings().build();
+    noBindingSettings = settingsBuilder.noBindingSettings().build();
   }
 
-  /** Builder for EchoSettings. */
-  public static class Builder extends ClientSettings.Builder<EchoSettings, Builder> {
+  /** Builder for EchoStubSettings. */
+  public static class Builder extends StubSettings.Builder<EchoStubSettings, Builder> {
+    private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
+    private final UnaryCallSettings.Builder<EchoRequest, EchoResponse> echoSettings;
+    private final ServerStreamingCallSettings.Builder<ExpandRequest, EchoResponse> expandSettings;
+    private final PagedCallSettings.Builder<
+            PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
+        pagedExpandSettings;
+    private final PagedCallSettings.Builder<
+            PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+        simplePagedExpandSettings;
+    private final UnaryCallSettings.Builder<WaitRequest, Operation> waitSettings;
+    private final OperationCallSettings.Builder<WaitRequest, WaitResponse, WaitMetadata>
+        waitOperationSettings;
+    private final UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings;
+    private final UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings;
+    private final UnaryCallSettings.Builder<EchoRequest, Object> nestedBindingSettings;
+    private final StreamingCallSettings.Builder<EchoRequest, EchoResponse> chatSettings;
+    private final UnaryCallSettings.Builder<EchoRequest, EchoResponse> noBindingSettings;
+    private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
+        RETRYABLE_CODE_DEFINITIONS;
 
-    protected Builder() throws IOException {
+    static {
+      ImmutableMap.Builder<String, ImmutableSet<StatusCode.Code>> definitions =
+          ImmutableMap.builder();
+      definitions.put("no_retry_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
+      RETRYABLE_CODE_DEFINITIONS = definitions.build();
+    }
+
+    private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
+
+    static {
+      ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();
+      RetrySettings settings = null;
+      settings = RetrySettings.newBuilder().setRpcTimeoutMultiplier(1.0).build();
+      definitions.put("no_retry_params", settings);
+      RETRY_PARAM_DEFINITIONS = definitions.build();
+    }
+
+    protected Builder() {
       this(((ClientContext) null));
     }
 
     protected Builder(ClientContext clientContext) {
-      super(EchoStubSettings.newBuilder(clientContext));
+      super(clientContext);
+
+      echoSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      expandSettings = ServerStreamingCallSettings.newBuilder();
+      pagedExpandSettings = PagedCallSettings.newBuilder(PAGED_EXPAND_PAGE_STR_FACT);
+      simplePagedExpandSettings = PagedCallSettings.newBuilder(SIMPLE_PAGED_EXPAND_PAGE_STR_FACT);
+      waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      waitOperationSettings = OperationCallSettings.newBuilder();
+      blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      collideNameSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      nestedBindingSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      chatSettings = StreamingCallSettings.newBuilder();
+      noBindingSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+
+      unaryMethodSettingsBuilders =
+          ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
+              echoSettings,
+              pagedExpandSettings,
+              simplePagedExpandSettings,
+              waitSettings,
+              blockSettings,
+              collideNameSettings,
+              nestedBindingSettings,
+              noBindingSettings);
+      initDefaults(this);
     }
 
-    protected Builder(EchoSettings settings) {
-      super(settings.getStubSettings().toBuilder());
-    }
+    protected Builder(EchoStubSettings settings) {
+      super(settings);
 
-    protected Builder(EchoStubSettings.Builder stubSettings) {
-      super(stubSettings);
+      echoSettings = settings.echoSettings.toBuilder();
+      expandSettings = settings.expandSettings.toBuilder();
+      pagedExpandSettings = settings.pagedExpandSettings.toBuilder();
+      simplePagedExpandSettings = settings.simplePagedExpandSettings.toBuilder();
+      waitSettings = settings.waitSettings.toBuilder();
+      waitOperationSettings = settings.waitOperationSettings.toBuilder();
+      blockSettings = settings.blockSettings.toBuilder();
+      collideNameSettings = settings.collideNameSettings.toBuilder();
+      nestedBindingSettings = settings.nestedBindingSettings.toBuilder();
+      chatSettings = settings.chatSettings.toBuilder();
+      noBindingSettings = settings.noBindingSettings.toBuilder();
+
+      unaryMethodSettingsBuilders =
+          ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
+              echoSettings,
+              pagedExpandSettings,
+              simplePagedExpandSettings,
+              waitSettings,
+              blockSettings,
+              collideNameSettings,
+              nestedBindingSettings,
+              noBindingSettings);
     }
 
     private static Builder createDefault() {
-      return new Builder(EchoStubSettings.newBuilder());
+      Builder builder = new Builder(((ClientContext) null));
+
+      builder.setTransportChannelProvider(defaultTransportChannelProvider());
+      builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
+      builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
+      builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setSwitchToMtlsEndpointAllowed(true);
+
+      return initDefaults(builder);
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
-      return new Builder(EchoStubSettings.newHttpJsonBuilder());
+      Builder builder = new Builder(((ClientContext) null));
+
+      builder.setTransportChannelProvider(defaultHttpJsonTransportProviderBuilder().build());
+      builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
+      builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
+      builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setSwitchToMtlsEndpointAllowed(true);
+
+      return initDefaults(builder);
     }
 
-    public EchoStubSettings.Builder getStubSettingsBuilder() {
-      return ((EchoStubSettings.Builder) getStubSettings());
+    private static Builder initDefaults(Builder builder) {
+      builder
+          .echoSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .expandSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .pagedExpandSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .simplePagedExpandSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .waitSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .blockSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .collideNameSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .nestedBindingSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .noBindingSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .waitOperationSettings()
+          .setInitialCallSettings(
+              UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
+                  .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+                  .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"))
+                  .build())
+          .setResponseTransformer(
+              ProtoOperationTransformers.ResponseTransformer.create(WaitResponse.class))
+          .setMetadataTransformer(
+              ProtoOperationTransformers.MetadataTransformer.create(WaitMetadata.class))
+          .setPollingAlgorithm(
+              OperationTimedPollAlgorithm.create(
+                  RetrySettings.newBuilder()
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
+                      .setRetryDelayMultiplier(1.5)
+                      .setMaxRetryDelay(Duration.ofMillis(45000L))
+                      .setInitialRpcTimeout(Duration.ZERO)
+                      .setRpcTimeoutMultiplier(1.0)
+                      .setMaxRpcTimeout(Duration.ZERO)
+                      .setTotalTimeout(Duration.ofMillis(300000L))
+                      .build()));
+
+      return builder;
     }
 
     /**
@@ -217,64 +594,79 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
      */
     public Builder applyToAllUnaryMethods(
         ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) {
-      super.applyToAllUnaryMethods(
-          getStubSettingsBuilder().unaryMethodSettingsBuilders(), settingsUpdater);
+      super.applyToAllUnaryMethods(unaryMethodSettingsBuilders, settingsUpdater);
       return this;
+    }
+
+    public ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders() {
+      return unaryMethodSettingsBuilders;
     }
 
     /** Returns the builder for the settings used for calls to echo. */
     public UnaryCallSettings.Builder<EchoRequest, EchoResponse> echoSettings() {
-      return getStubSettingsBuilder().echoSettings();
+      return echoSettings;
     }
 
     /** Returns the builder for the settings used for calls to expand. */
     public ServerStreamingCallSettings.Builder<ExpandRequest, EchoResponse> expandSettings() {
-      return getStubSettingsBuilder().expandSettings();
+      return expandSettings;
     }
 
     /** Returns the builder for the settings used for calls to pagedExpand. */
     public PagedCallSettings.Builder<
             PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
         pagedExpandSettings() {
-      return getStubSettingsBuilder().pagedExpandSettings();
+      return pagedExpandSettings;
     }
 
     /** Returns the builder for the settings used for calls to simplePagedExpand. */
     public PagedCallSettings.Builder<
             PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
         simplePagedExpandSettings() {
-      return getStubSettingsBuilder().simplePagedExpandSettings();
+      return simplePagedExpandSettings;
     }
 
     /** Returns the builder for the settings used for calls to wait. */
     public UnaryCallSettings.Builder<WaitRequest, Operation> waitSettings() {
-      return getStubSettingsBuilder().waitSettings();
+      return waitSettings;
     }
 
     /** Returns the builder for the settings used for calls to wait. */
+    @BetaApi(
+        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<WaitRequest, WaitResponse, WaitMetadata>
         waitOperationSettings() {
-      return getStubSettingsBuilder().waitOperationSettings();
+      return waitOperationSettings;
     }
 
     /** Returns the builder for the settings used for calls to block. */
     public UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings() {
-      return getStubSettingsBuilder().blockSettings();
+      return blockSettings;
     }
 
     /** Returns the builder for the settings used for calls to collideName. */
     public UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings() {
-      return getStubSettingsBuilder().collideNameSettings();
+      return collideNameSettings;
     }
 
     /** Returns the builder for the settings used for calls to nestedBinding. */
     public UnaryCallSettings.Builder<EchoRequest, Object> nestedBindingSettings() {
-      return getStubSettingsBuilder().nestedBindingSettings();
+      return nestedBindingSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to chat. */
+    public StreamingCallSettings.Builder<EchoRequest, EchoResponse> chatSettings() {
+      return chatSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to noBinding. */
+    public UnaryCallSettings.Builder<EchoRequest, EchoResponse> noBindingSettings() {
+      return noBindingSettings;
     }
 
     @Override
-    public EchoSettings build() throws IOException {
-      return new EchoSettings(this);
+    public EchoStubSettings build() throws IOException {
+      return new EchoStubSettings(this);
     }
   }
 }
