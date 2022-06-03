@@ -56,6 +56,7 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -111,6 +112,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             ProtoMessageResponseParser.class,
             ProtoRestSerializer.class,
             TypeRegistry.class));
+  }
+
+  protected boolean isSupportedMethod(Method method) {
+    return method.httpBindings() != null
+        && method.stream() != Stream.BIDI
+        && method.stream() != Stream.CLIENT;
   }
 
   @Override

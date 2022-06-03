@@ -20,7 +20,8 @@ package com.google.cloud.asset.v1.samples;
 import com.google.api.resourcenames.ResourceName;
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
-import com.google.cloud.asset.v1.FeedName;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SyncListAssetsResourcename {
 
@@ -32,7 +33,25 @@ public class SyncListAssetsResourcename {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-      ResourceName parent = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+      ResourceName parent =
+          new ResourceName() {
+            @Override
+            public Map<String, String> getFieldValuesMap() {
+              Map<String, String> fieldValuesMap = new HashMap<>();
+              fieldValuesMap.put("parent", "parent-4715/parent-4715");
+              return fieldValuesMap;
+            }
+
+            @Override
+            public String getFieldValue(String fieldName) {
+              return getFieldValuesMap().get(fieldName);
+            }
+
+            @Override
+            public String toString() {
+              return "parent-4715/parent-4715";
+            }
+          };
       for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
         // doThingsWith(element);
       }

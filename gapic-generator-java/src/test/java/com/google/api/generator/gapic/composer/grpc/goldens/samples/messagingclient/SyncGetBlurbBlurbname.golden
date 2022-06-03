@@ -31,7 +31,7 @@ public class SyncGetBlurbBlurbname {
     // This snippet has been automatically generated for illustrative purposes only.
     // It may require modifications to work in your environment.
     try (MessagingClient messagingClient = MessagingClient.create()) {
-      BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
+      BlurbName name = BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]");
       Blurb response = messagingClient.getBlurb(name);
     }
   }

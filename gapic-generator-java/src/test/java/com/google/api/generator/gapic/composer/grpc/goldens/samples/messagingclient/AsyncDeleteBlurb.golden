@@ -35,9 +35,7 @@ public class AsyncDeleteBlurb {
     try (MessagingClient messagingClient = MessagingClient.create()) {
       DeleteBlurbRequest request =
           DeleteBlurbRequest.newBuilder()
-              .setName(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .build();
       ApiFuture<Empty> future = messagingClient.deleteBlurbCallable().futureCall(request);
       // Do something.

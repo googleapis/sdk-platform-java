@@ -728,7 +728,7 @@ public class MessagingClient implements BackgroundResource {
    * // This snippet has been automatically generated for illustrative purposes only.
    * // It may require modifications to work in your environment.
    * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
+   *   BlurbName name = BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]");
    *   Blurb response = messagingClient.getBlurb(name);
    * }
    * }</pre>
@@ -774,9 +774,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   GetBlurbRequest request =
    *       GetBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .build();
    *   Blurb response = messagingClient.getBlurb(request);
    * }
@@ -799,9 +797,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   GetBlurbRequest request =
    *       GetBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .build();
    *   ApiFuture<Blurb> future = messagingClient.getBlurbCallable().futureCall(request);
    *   // Do something.
@@ -862,7 +858,7 @@ public class MessagingClient implements BackgroundResource {
    * // This snippet has been automatically generated for illustrative purposes only.
    * // It may require modifications to work in your environment.
    * try (MessagingClient messagingClient = MessagingClient.create()) {
-   *   BlurbName name = BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]");
+   *   BlurbName name = BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]");
    *   messagingClient.deleteBlurb(name);
    * }
    * }</pre>
@@ -908,9 +904,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   DeleteBlurbRequest request =
    *       DeleteBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .build();
    *   messagingClient.deleteBlurb(request);
    * }
@@ -933,9 +927,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   DeleteBlurbRequest request =
    *       DeleteBlurbRequest.newBuilder()
-   *           .setName(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .build();
    *   ApiFuture<Empty> future = messagingClient.deleteBlurbCallable().futureCall(request);
    *   // Do something.
