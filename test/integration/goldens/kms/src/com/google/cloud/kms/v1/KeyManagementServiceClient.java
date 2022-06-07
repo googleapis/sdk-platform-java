@@ -320,7 +320,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListKeyRingsResponse response =
    *         keyManagementServiceClient.listKeyRingsCallable().call(request);
-   *     for (KeyRing element : response.getResponsesList()) {
+   *     for (KeyRing element : response.getKeyRingsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -481,7 +481,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListCryptoKeysResponse response =
    *         keyManagementServiceClient.listCryptoKeysCallable().call(request);
-   *     for (CryptoKey element : response.getResponsesList()) {
+   *     for (CryptoKey element : response.getCryptoKeysList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -656,7 +656,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListCryptoKeyVersionsResponse response =
    *         keyManagementServiceClient.listCryptoKeyVersionsCallable().call(request);
-   *     for (CryptoKeyVersion element : response.getResponsesList()) {
+   *     for (CryptoKeyVersion element : response.getCryptoKeyVersionsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -818,7 +818,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListImportJobsResponse response =
    *         keyManagementServiceClient.listImportJobsCallable().call(request);
-   *     for (ImportJob element : response.getResponsesList()) {
+   *     for (ImportJob element : response.getImportJobsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -3476,7 +3476,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListLocationsResponse response =
    *         keyManagementServiceClient.listLocationsCallable().call(request);
-   *     for (Location element : response.getResponsesList()) {
+   *     for (Location element : response.getLocationsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

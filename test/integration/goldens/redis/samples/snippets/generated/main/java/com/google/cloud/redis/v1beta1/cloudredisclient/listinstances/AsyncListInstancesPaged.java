@@ -42,7 +42,7 @@ public class AsyncListInstancesPaged {
               .build();
       while (true) {
         ListInstancesResponse response = cloudRedisClient.listInstancesCallable().call(request);
-        for (Instance element : response.getResponsesList()) {
+        for (Instance element : response.getInstancesList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

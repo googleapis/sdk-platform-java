@@ -48,7 +48,7 @@ public class AsyncListAssetsPaged {
               .build();
       while (true) {
         ListAssetsResponse response = assetServiceClient.listAssetsCallable().call(request);
-        for (Asset element : response.getResponsesList()) {
+        for (Asset element : response.getAssetsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

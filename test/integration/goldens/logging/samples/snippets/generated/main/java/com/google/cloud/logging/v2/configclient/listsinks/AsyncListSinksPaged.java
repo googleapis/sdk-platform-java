@@ -42,7 +42,7 @@ public class AsyncListSinksPaged {
               .build();
       while (true) {
         ListSinksResponse response = configClient.listSinksCallable().call(request);
-        for (LogSink element : response.getResponsesList()) {
+        for (LogSink element : response.getSinksList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

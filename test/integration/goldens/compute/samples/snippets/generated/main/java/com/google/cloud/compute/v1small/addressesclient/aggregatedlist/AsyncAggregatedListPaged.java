@@ -45,7 +45,7 @@ public class AsyncAggregatedListPaged {
               .build();
       while (true) {
         AddressAggregatedList response = addressesClient.aggregatedListCallable().call(request);
-        for (Map.Entry<String, AddressesScopedList> element : response.getResponsesList()) {
+        for (Map.Entry<String, AddressesScopedList> element : response.getItemsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

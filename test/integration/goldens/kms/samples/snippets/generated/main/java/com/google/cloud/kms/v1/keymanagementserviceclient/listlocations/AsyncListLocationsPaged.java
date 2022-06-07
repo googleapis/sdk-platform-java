@@ -44,7 +44,7 @@ public class AsyncListLocationsPaged {
       while (true) {
         ListLocationsResponse response =
             keyManagementServiceClient.listLocationsCallable().call(request);
-        for (Location element : response.getResponsesList()) {
+        for (Location element : response.getLocationsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

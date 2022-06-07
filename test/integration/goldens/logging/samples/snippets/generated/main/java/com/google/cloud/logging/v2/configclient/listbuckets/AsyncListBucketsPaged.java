@@ -42,7 +42,7 @@ public class AsyncListBucketsPaged {
               .build();
       while (true) {
         ListBucketsResponse response = configClient.listBucketsCallable().call(request);
-        for (LogBucket element : response.getResponsesList()) {
+        for (LogBucket element : response.getBucketsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

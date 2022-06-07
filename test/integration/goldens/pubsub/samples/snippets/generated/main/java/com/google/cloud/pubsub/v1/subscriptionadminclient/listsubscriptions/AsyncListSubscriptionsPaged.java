@@ -43,7 +43,7 @@ public class AsyncListSubscriptionsPaged {
       while (true) {
         ListSubscriptionsResponse response =
             subscriptionAdminClient.listSubscriptionsCallable().call(request);
-        for (Subscription element : response.getResponsesList()) {
+        for (Subscription element : response.getSubscriptionsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

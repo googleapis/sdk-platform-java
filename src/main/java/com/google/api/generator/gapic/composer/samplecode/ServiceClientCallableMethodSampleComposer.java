@@ -186,7 +186,11 @@ public class ServiceClientCallableMethodSampleComposer {
     MethodInvocationExpr getResponseListMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(responseVarExpr)
-            .setMethodName("getResponsesList")
+            .setMethodName(
+                "get"
+                    + JavaStyle.toUpperCamelCase(
+                        String.format("%s", repeatedPagedResultsField.name()))
+                    + "List")
             .build();
     ForStatement responseForStatements =
         ForStatement.builder()

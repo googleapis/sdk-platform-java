@@ -42,7 +42,7 @@ public class AsyncListLogMetricsPaged {
               .build();
       while (true) {
         ListLogMetricsResponse response = metricsClient.listLogMetricsCallable().call(request);
-        for (LogMetric element : response.getResponsesList()) {
+        for (LogMetric element : response.getMetricsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

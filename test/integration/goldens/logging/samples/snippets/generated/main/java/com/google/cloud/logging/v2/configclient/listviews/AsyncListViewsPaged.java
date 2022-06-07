@@ -41,7 +41,7 @@ public class AsyncListViewsPaged {
               .build();
       while (true) {
         ListViewsResponse response = configClient.listViewsCallable().call(request);
-        for (LogView element : response.getResponsesList()) {
+        for (LogView element : response.getViewsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();
