@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.protobuf.StructProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
@@ -407,6 +408,28 @@ public class DefaultValueComposerTest {
             + ".setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
             + ".setSeverity(Severity.forNumber(0))"
             + ".setFoobar(Foobar.newBuilder().build()).build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  public void createSimpleMessage_valueField() {
+    FileDescriptor echoFileDescriptor =
+        com.google.showcase.grpcrest.v1beta1.EchoGrpcrest.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(echoFileDescriptor);
+    Message message = messageTypes.get("com.google.showcase.grpcrest.v1beta1.EchoResponse");
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderValue(
+            message, typeStringsToResourceNames, messageTypes, null);
+    expr.accept(writerVisitor);
+    assertEquals(
+        "EchoResponse.newBuilder()"
+            + ".setContent(\"content951530617\")"
+            + ".setSeverity(Severity.forNumber(0))"
+            + ".setValueField(Value.newBuilder().setBoolValue(true).build())"
+            + ".build()",
         writerVisitor.write());
   }
 

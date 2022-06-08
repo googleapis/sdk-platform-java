@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.longrunning.OperationsProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.StructProto;
 import com.google.showcase.grpcrest.v1beta1.EchoGrpcrest;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,9 +58,9 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     assertEquals("Echo", echoServiceDescriptor.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, Message> operationMessageTypes =
-        Parser.parseMessages(OperationsProto.getDescriptor());
-    messageTypes.putAll(operationMessageTypes);
+    messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
+    messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
+
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
