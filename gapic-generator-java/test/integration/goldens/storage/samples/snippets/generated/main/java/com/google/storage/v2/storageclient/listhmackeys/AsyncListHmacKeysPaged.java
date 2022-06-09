@@ -46,7 +46,7 @@ public class AsyncListHmacKeysPaged {
               .build();
       while (true) {
         ListHmacKeysResponse response = storageClient.listHmacKeysCallable().call(request);
-        for (HmacKeyMetadata element : response.getResponsesList()) {
+        for (HmacKeyMetadata element : response.getHmacKeysList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

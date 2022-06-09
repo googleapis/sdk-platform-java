@@ -46,7 +46,7 @@ public class AsyncListImportJobsPaged {
       while (true) {
         ListImportJobsResponse response =
             keyManagementServiceClient.listImportJobsCallable().call(request);
-        for (ImportJob element : response.getResponsesList()) {
+        for (ImportJob element : response.getImportJobsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

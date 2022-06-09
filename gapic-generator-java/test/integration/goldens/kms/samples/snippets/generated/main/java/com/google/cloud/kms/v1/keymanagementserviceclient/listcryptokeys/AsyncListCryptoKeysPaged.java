@@ -46,7 +46,7 @@ public class AsyncListCryptoKeysPaged {
       while (true) {
         ListCryptoKeysResponse response =
             keyManagementServiceClient.listCryptoKeysCallable().call(request);
-        for (CryptoKey element : response.getResponsesList()) {
+        for (CryptoKey element : response.getCryptoKeysList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

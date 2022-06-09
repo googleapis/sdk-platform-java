@@ -44,7 +44,7 @@ public class AsyncListSchemasPaged {
               .build();
       while (true) {
         ListSchemasResponse response = schemaServiceClient.listSchemasCallable().call(request);
-        for (Schema element : response.getResponsesList()) {
+        for (Schema element : response.getSchemasList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

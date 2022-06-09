@@ -269,7 +269,7 @@ public class AddressesClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     AddressAggregatedList response = addressesClient.aggregatedListCallable().call(request);
-   *     for (Map.Entry<String, AddressesScopedList> element : response.getResponsesList()) {
+   *     for (Map.Entry<String, AddressesScopedList> element : response.getItemsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -649,7 +649,7 @@ public class AddressesClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     AddressList response = addressesClient.listCallable().call(request);
-   *     for (Address element : response.getResponsesList()) {
+   *     for (Address element : response.getItemsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

@@ -42,7 +42,7 @@ public class AsyncListBlurbsPaged {
               .build();
       while (true) {
         ListBlurbsResponse response = messagingClient.listBlurbsCallable().call(request);
-        for (Blurb element : response.getResponsesList()) {
+        for (Blurb element : response.getBlurbsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

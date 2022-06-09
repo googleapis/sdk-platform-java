@@ -42,7 +42,7 @@ public class AsyncListTopicsPaged {
               .build();
       while (true) {
         ListTopicsResponse response = topicAdminClient.listTopicsCallable().call(request);
-        for (Topic element : response.getResponsesList()) {
+        for (Topic element : response.getTopicsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

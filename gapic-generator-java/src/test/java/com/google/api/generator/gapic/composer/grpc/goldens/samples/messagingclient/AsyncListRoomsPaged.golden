@@ -40,7 +40,7 @@ public class AsyncListRoomsPaged {
               .build();
       while (true) {
         ListRoomsResponse response = messagingClient.listRoomsCallable().call(request);
-        for (Room element : response.getResponsesList()) {
+        for (Room element : response.getRoomsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

@@ -41,7 +41,7 @@ public class AsyncListMonitoredResourceDescriptorsPaged {
       while (true) {
         ListMonitoredResourceDescriptorsResponse response =
             loggingClient.listMonitoredResourceDescriptorsCallable().call(request);
-        for (MonitoredResourceDescriptor element : response.getResponsesList()) {
+        for (MonitoredResourceDescriptor element : response.getResourceDescriptorsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

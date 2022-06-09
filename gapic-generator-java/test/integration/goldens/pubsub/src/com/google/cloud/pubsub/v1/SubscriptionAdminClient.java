@@ -849,7 +849,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *   while (true) {
    *     ListSubscriptionsResponse response =
    *         subscriptionAdminClient.listSubscriptionsCallable().call(request);
-   *     for (Subscription element : response.getResponsesList()) {
+   *     for (Subscription element : response.getSubscriptionsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -1891,7 +1891,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *   while (true) {
    *     ListSnapshotsResponse response =
    *         subscriptionAdminClient.listSnapshotsCallable().call(request);
-   *     for (Snapshot element : response.getResponsesList()) {
+   *     for (Snapshot element : response.getSnapshotsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

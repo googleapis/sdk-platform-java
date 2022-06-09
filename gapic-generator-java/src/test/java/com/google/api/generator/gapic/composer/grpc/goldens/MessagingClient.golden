@@ -494,7 +494,7 @@ public class MessagingClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListRoomsResponse response = messagingClient.listRoomsCallable().call(request);
-   *     for (Room element : response.getResponsesList()) {
+   *     for (Room element : response.getRoomsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -1079,7 +1079,7 @@ public class MessagingClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListBlurbsResponse response = messagingClient.listBlurbsCallable().call(request);
-   *     for (Blurb element : response.getResponsesList()) {
+   *     for (Blurb element : response.getBlurbsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

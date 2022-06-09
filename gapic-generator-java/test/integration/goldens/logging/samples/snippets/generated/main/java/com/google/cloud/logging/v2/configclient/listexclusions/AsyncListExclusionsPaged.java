@@ -42,7 +42,7 @@ public class AsyncListExclusionsPaged {
               .build();
       while (true) {
         ListExclusionsResponse response = configClient.listExclusionsCallable().call(request);
-        for (LogExclusion element : response.getResponsesList()) {
+        for (LogExclusion element : response.getExclusionsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

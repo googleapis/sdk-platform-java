@@ -46,7 +46,7 @@ public class AsyncListKeyRingsPaged {
       while (true) {
         ListKeyRingsResponse response =
             keyManagementServiceClient.listKeyRingsCallable().call(request);
-        for (KeyRing element : response.getResponsesList()) {
+        for (KeyRing element : response.getKeyRingsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();
