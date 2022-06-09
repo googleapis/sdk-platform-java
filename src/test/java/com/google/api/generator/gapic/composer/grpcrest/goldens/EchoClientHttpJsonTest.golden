@@ -18,6 +18,7 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
 import com.google.protobuf.Duration;
 import com.google.protobuf.Timestamp;
+import com.google.protobuf.Value;
 import com.google.rpc.Status;
 import com.google.showcase.grpcrest.v1beta1.stub.HttpJsonEchoStub;
 import java.io.IOException;
@@ -72,6 +73,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -121,6 +123,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -166,6 +169,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -211,6 +215,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -256,6 +261,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -301,6 +307,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -346,6 +353,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -391,6 +399,7 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setValueField(Value.newBuilder().setBoolValue(true).build())
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -804,5 +813,17 @@ public class EchoClientHttpJsonTest {
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
+  }
+
+  @Test
+  public void chatUnsupportedMethodTest() throws Exception {
+    // The chat() method is not supported in REST transport.
+    // This empty test is generated for technical reasons.
+  }
+
+  @Test
+  public void noBindingUnsupportedMethodTest() throws Exception {
+    // The noBinding() method is not supported in REST transport.
+    // This empty test is generated for technical reasons.
   }
 }
