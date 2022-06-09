@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.8.1](https://github.com/googleapis/gapic-generator-java/compare/v2.8.0...v2.8.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* More REST transport fixes ([#1003](https://github.com/googleapis/gapic-generator-java/issues/1003)) ([2bed7cf](https://github.com/googleapis/gapic-generator-java/commit/2bed7cf4f4168977ccb413125c6bcb43422061fd))
+* Multiple REST transport related fixes ([#997](https://github.com/googleapis/gapic-generator-java/issues/997)) ([61e2e96](https://github.com/googleapis/gapic-generator-java/commit/61e2e9660fa62536163982f3241fcc479973e163))
+* use correct paginated field name ([#1001](https://github.com/googleapis/gapic-generator-java/issues/1001)) ([7f186b5](https://github.com/googleapis/gapic-generator-java/commit/7f186b551f14cc14a503b552ef73c52d9e491628))
+
 ## [2.8.0](https://github.com/googleapis/gapic-generator-java/compare/v2.7.0...v2.8.0) (2022-05-21)
 
 
