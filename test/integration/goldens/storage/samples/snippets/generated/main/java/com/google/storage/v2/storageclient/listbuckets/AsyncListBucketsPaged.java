@@ -47,7 +47,7 @@ public class AsyncListBucketsPaged {
               .build();
       while (true) {
         ListBucketsResponse response = storageClient.listBucketsCallable().call(request);
-        for (Bucket element : response.getResponsesList()) {
+        for (Bucket element : response.getBucketsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

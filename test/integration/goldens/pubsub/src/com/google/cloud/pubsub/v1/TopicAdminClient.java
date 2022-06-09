@@ -676,7 +676,7 @@ public class TopicAdminClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListTopicsResponse response = topicAdminClient.listTopicsCallable().call(request);
-   *     for (Topic element : response.getResponsesList()) {
+   *     for (Topic element : response.getTopicsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -828,7 +828,7 @@ public class TopicAdminClient implements BackgroundResource {
    *   while (true) {
    *     ListTopicSubscriptionsResponse response =
    *         topicAdminClient.listTopicSubscriptionsCallable().call(request);
-   *     for (String element : response.getResponsesList()) {
+   *     for (String element : response.getSubscriptionsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -996,7 +996,7 @@ public class TopicAdminClient implements BackgroundResource {
    *   while (true) {
    *     ListTopicSnapshotsResponse response =
    *         topicAdminClient.listTopicSnapshotsCallable().call(request);
-   *     for (String element : response.getResponsesList()) {
+   *     for (String element : response.getSnapshotsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

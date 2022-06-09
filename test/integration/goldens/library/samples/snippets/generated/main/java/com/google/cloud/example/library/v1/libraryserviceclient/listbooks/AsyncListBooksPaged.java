@@ -42,7 +42,7 @@ public class AsyncListBooksPaged {
               .build();
       while (true) {
         ListBooksResponse response = libraryServiceClient.listBooksCallable().call(request);
-        for (Book element : response.getResponsesList()) {
+        for (Book element : response.getBooksList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

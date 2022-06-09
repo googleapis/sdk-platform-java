@@ -640,7 +640,7 @@ public class StorageClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListBucketsResponse response = storageClient.listBucketsCallable().call(request);
-   *     for (Bucket element : response.getResponsesList()) {
+   *     for (Bucket element : response.getBucketsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -1654,7 +1654,7 @@ public class StorageClient implements BackgroundResource {
    *   while (true) {
    *     ListNotificationsResponse response =
    *         storageClient.listNotificationsCallable().call(request);
-   *     for (Notification element : response.getResponsesList()) {
+   *     for (Notification element : response.getNotificationsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -2349,7 +2349,7 @@ public class StorageClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListObjectsResponse response = storageClient.listObjectsCallable().call(request);
-   *     for (Object element : response.getResponsesList()) {
+   *     for (Object element : response.getObjectsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -3200,7 +3200,7 @@ public class StorageClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListHmacKeysResponse response = storageClient.listHmacKeysCallable().call(request);
-   *     for (HmacKeyMetadata element : response.getResponsesList()) {
+   *     for (HmacKeyMetadata element : response.getHmacKeysList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

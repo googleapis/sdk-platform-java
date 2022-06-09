@@ -44,7 +44,7 @@ public class AsyncListLogEntriesPaged {
               .build();
       while (true) {
         ListLogEntriesResponse response = loggingClient.listLogEntriesCallable().call(request);
-        for (LogEntry element : response.getResponsesList()) {
+        for (LogEntry element : response.getEntriesList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

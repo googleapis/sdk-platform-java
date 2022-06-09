@@ -410,7 +410,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListShelvesResponse response = libraryServiceClient.listShelvesCallable().call(request);
-   *     for (Shelf element : response.getResponsesList()) {
+   *     for (Shelf element : response.getShelvesList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -1047,7 +1047,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListBooksResponse response = libraryServiceClient.listBooksCallable().call(request);
-   *     for (Book element : response.getResponsesList()) {
+   *     for (Book element : response.getBooksList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

@@ -52,7 +52,7 @@ public class AsyncListObjectsPaged {
               .build();
       while (true) {
         ListObjectsResponse response = storageClient.listObjectsCallable().call(request);
-        for (Object element : response.getResponsesList()) {
+        for (Object element : response.getObjectsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

@@ -48,7 +48,7 @@ public class AsyncSearchAllResourcesPaged {
       while (true) {
         SearchAllResourcesResponse response =
             assetServiceClient.searchAllResourcesCallable().call(request);
-        for (ResourceSearchResult element : response.getResponsesList()) {
+        for (ResourceSearchResult element : response.getResultsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

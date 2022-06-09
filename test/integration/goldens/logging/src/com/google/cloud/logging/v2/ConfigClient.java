@@ -438,7 +438,7 @@ public class ConfigClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListBucketsResponse response = configClient.listBucketsCallable().call(request);
-   *     for (LogBucket element : response.getResponsesList()) {
+   *     for (LogBucket element : response.getBucketsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -849,7 +849,7 @@ public class ConfigClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListViewsResponse response = configClient.listViewsCallable().call(request);
-   *     for (LogView element : response.getResponsesList()) {
+   *     for (LogView element : response.getViewsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -1298,7 +1298,7 @@ public class ConfigClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListSinksResponse response = configClient.listSinksCallable().call(request);
-   *     for (LogSink element : response.getResponsesList()) {
+   *     for (LogSink element : response.getSinksList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -2239,7 +2239,7 @@ public class ConfigClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListExclusionsResponse response = configClient.listExclusionsCallable().call(request);
-   *     for (LogExclusion element : response.getResponsesList()) {
+   *     for (LogExclusion element : response.getExclusionsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

@@ -43,7 +43,7 @@ public class AsyncListLogsPaged {
               .build();
       while (true) {
         ListLogsResponse response = loggingClient.listLogsCallable().call(request);
-        for (String element : response.getResponsesList()) {
+        for (String element : response.getLogNamesList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

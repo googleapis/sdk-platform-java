@@ -44,7 +44,7 @@ public class AsyncListPaged {
               .build();
       while (true) {
         AddressList response = addressesClient.listCallable().call(request);
-        for (Address element : response.getResponsesList()) {
+        for (Address element : response.getItemsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

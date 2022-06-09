@@ -40,7 +40,7 @@ public class AsyncListShelvesPaged {
               .build();
       while (true) {
         ListShelvesResponse response = libraryServiceClient.listShelvesCallable().call(request);
-        for (Shelf element : response.getResponsesList()) {
+        for (Shelf element : response.getShelvesList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();

@@ -43,7 +43,7 @@ public class AsyncListNotificationsPaged {
       while (true) {
         ListNotificationsResponse response =
             storageClient.listNotificationsCallable().call(request);
-        for (Notification element : response.getResponsesList()) {
+        for (Notification element : response.getNotificationsList()) {
           // doThingsWith(element);
         }
         String nextPageToken = response.getNextPageToken();
