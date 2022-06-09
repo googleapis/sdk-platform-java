@@ -168,6 +168,20 @@ public class DefaultValueComposer {
               .setStaticReferenceType(field.type())
               .setMethodName("newBuilder")
               .build();
+      if (field.type().equals(TypeNode.VALUE)) {
+        newBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(newBuilderExpr)
+                .setMethodName("setBoolValue")
+                .setArguments(
+                    ValueExpr.withValue(
+                        PrimitiveValue.builder()
+                            .setType(TypeNode.BOOLEAN)
+                            .setValue("true")
+                            .build()))
+                .build();
+      }
+
       return MethodInvocationExpr.builder()
           .setExprReferenceExpr(newBuilderExpr)
           .setMethodName("build")

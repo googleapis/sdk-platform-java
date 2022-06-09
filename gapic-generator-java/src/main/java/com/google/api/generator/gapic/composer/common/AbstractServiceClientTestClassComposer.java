@@ -230,6 +230,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (!isSupportedMethod(method)) {
+        javaMethods.add(createUnsupportedTestMethod(method));
         continue;
       }
       Service matchingService = service;
@@ -759,6 +760,31 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes);
+
+  protected MethodDefinition createUnsupportedTestMethod(Method method) {
+    String javaMethodName = JavaStyle.toLowerCamelCase(method.name());
+    String exceptionTestMethodName = String.format("%sUnsupportedMethodTest", javaMethodName);
+
+    List<Statement> methodBody =
+        Collections.singletonList(
+            CommentStatement.withComment(
+                LineComment.withComment(
+                    "The "
+                        + javaMethodName
+                        + "() method is not supported in "
+                        + String.join("+", getTransportContext().transportNames())
+                        + " transport.\n"
+                        + "This empty test is generated for technical reasons.")));
+
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(exceptionTestMethodName)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(methodBody)
+        .build();
+  }
 
   protected List<Statement> createRpcExceptionTestStatements(
       Method method,
