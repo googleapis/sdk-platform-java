@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.9.0](https://github.com/googleapis/java-common-protos/compare/v2.8.3...v2.9.0) (2022-06-06)
+
+
+### Features
+
+* add build scripts for native image testing in Java 17 ([#1440](https://github.com/googleapis/java-common-protos/issues/1440)) ([#368](https://github.com/googleapis/java-common-protos/issues/368)) ([0b58c8c](https://github.com/googleapis/java-common-protos/commit/0b58c8c234513f82e7057ad7aa0c1d82b6bb9761))
+* next release from main branch is 2.9.0 ([#354](https://github.com/googleapis/java-common-protos/issues/354)) ([1858e4f](https://github.com/googleapis/java-common-protos/commit/1858e4f90299ab6ae2fa937cd9c033c238540336))
+
+
+### Dependencies
+
+* update dependency com.google.protobuf:protobuf-bom to v3.20.1 ([#360](https://github.com/googleapis/java-common-protos/issues/360)) ([83fc812](https://github.com/googleapis/java-common-protos/commit/83fc812f71ca8870d3875f6fab3cdc4a3d91f8df))
+* update dependency com.google.protobuf:protobuf-bom to v3.21.0 ([#369](https://github.com/googleapis/java-common-protos/issues/369)) ([b011a05](https://github.com/googleapis/java-common-protos/commit/b011a055c437395aac5fdf3fa32208f6dd958d69))
+* update dependency com.google.protobuf:protobuf-bom to v3.21.1 ([#371](https://github.com/googleapis/java-common-protos/issues/371)) ([5f5c43a](https://github.com/googleapis/java-common-protos/commit/5f5c43a1ebc96a862b5881545f676b297526dde6))
+* update dependency com.google.protobuf:protobuf-java to v3.20.1 ([#361](https://github.com/googleapis/java-common-protos/issues/361)) ([2423c08](https://github.com/googleapis/java-common-protos/commit/2423c08c1726ecfeba02edf19a9da4c8e4c9426f))
+* update dependency com.google.protobuf:protobuf-java to v3.21.0 ([#370](https://github.com/googleapis/java-common-protos/issues/370)) ([de8d5f1](https://github.com/googleapis/java-common-protos/commit/de8d5f1a6486b01b5145460391161e8882f18b68))
+* update dependency com.google.protobuf:protobuf-java to v3.21.1 ([#372](https://github.com/googleapis/java-common-protos/issues/372)) ([c9723c5](https://github.com/googleapis/java-common-protos/commit/c9723c5b6dd2ab386672b737ca26349c6a4e7731))
+* update dependency io.grpc:grpc-bom to v1.46.0 ([#362](https://github.com/googleapis/java-common-protos/issues/362)) ([8222c0f](https://github.com/googleapis/java-common-protos/commit/8222c0ff268d2bbdaa1f591f0b840f099f421c5e))
+* update dependency io.grpc:grpc-bom to v1.47.0 ([#373](https://github.com/googleapis/java-common-protos/issues/373)) ([71d07af](https://github.com/googleapis/java-common-protos/commit/71d07afa1ebb52d0cb95fac0529d343501a5c7a3))
+* update dependency io.grpc:grpc-protobuf to v1.46.0 ([#363](https://github.com/googleapis/java-common-protos/issues/363)) ([c03a2b7](https://github.com/googleapis/java-common-protos/commit/c03a2b77a3bb7e637f8cce961fa23322bc977a29))
+* update dependency io.grpc:grpc-protobuf to v1.47.0 ([#374](https://github.com/googleapis/java-common-protos/issues/374)) ([003fae8](https://github.com/googleapis/java-common-protos/commit/003fae815194859bae8724123925ab55774ba475))
+* update dependency io.grpc:grpc-stub to v1.46.0 ([#364](https://github.com/googleapis/java-common-protos/issues/364)) ([0bc45a5](https://github.com/googleapis/java-common-protos/commit/0bc45a5254a21cd5eb0582abf9fe2fc7a54d45c7))
+* update dependency io.grpc:grpc-stub to v1.47.0 ([#375](https://github.com/googleapis/java-common-protos/issues/375)) ([c27d218](https://github.com/googleapis/java-common-protos/commit/c27d218b4684ab378e631b3da4970f433929db68))
+
 ### [2.8.3](https://github.com/googleapis/java-common-protos/compare/v2.8.2...v2.8.3) (2022-04-12)
 
 
