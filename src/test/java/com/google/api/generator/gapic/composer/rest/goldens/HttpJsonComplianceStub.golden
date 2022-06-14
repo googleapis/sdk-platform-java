@@ -1,6 +1,5 @@
 package com.google.showcase.v1beta1.stub;
 
-import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -39,7 +38,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
       repeatDataBodyMethodDescriptor =
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBody")
-              .setHttpMethod(HttpMethods.POST)
+              .setHttpMethod("POST")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
@@ -73,7 +72,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
       repeatDataBodyInfoMethodDescriptor =
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBodyInfo")
-              .setHttpMethod(HttpMethods.POST)
+              .setHttpMethod("POST")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
@@ -109,7 +108,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
       repeatDataQueryMethodDescriptor =
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataQuery")
-              .setHttpMethod(HttpMethods.GET)
+              .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
@@ -145,7 +144,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
       repeatDataSimplePathMethodDescriptor =
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataSimplePath")
-              .setHttpMethod(HttpMethods.GET)
+              .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
@@ -193,7 +192,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
       repeatDataPathResourceMethodDescriptor =
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathResource")
-              .setHttpMethod(HttpMethods.GET)
+              .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
@@ -240,7 +239,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
           ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
               .setFullMethodName(
                   "google.showcase.v1beta1.Compliance/RepeatDataPathTrailingResource")
-              .setHttpMethod(HttpMethods.GET)
+              .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()

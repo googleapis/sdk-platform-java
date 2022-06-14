@@ -16,7 +16,6 @@
 
 package com.google.cloud.compute.v1small.stub;
 
-import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -62,7 +61,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
       getMethodDescriptor =
           ApiMethodDescriptor.<GetRegionOperationRequest, Operation>newBuilder()
               .setFullMethodName("google.cloud.compute.v1small.RegionOperations/Get")
-              .setHttpMethod(HttpMethods.GET)
+              .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<GetRegionOperationRequest>newBuilder()
@@ -117,7 +116,7 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
       waitMethodDescriptor =
           ApiMethodDescriptor.<WaitRegionOperationRequest, Operation>newBuilder()
               .setFullMethodName("google.cloud.compute.v1small.RegionOperations/Wait")
-              .setHttpMethod(HttpMethods.POST)
+              .setHttpMethod("POST")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<WaitRegionOperationRequest>newBuilder()

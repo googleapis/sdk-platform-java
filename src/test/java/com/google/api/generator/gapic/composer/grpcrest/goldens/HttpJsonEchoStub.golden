@@ -3,7 +3,6 @@ package com.google.showcase.grpcrest.v1beta1.stub;
 import static com.google.showcase.grpcrest.v1beta1.EchoClient.PagedExpandPagedResponse;
 import static com.google.showcase.grpcrest.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
-import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -60,7 +59,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private static final ApiMethodDescriptor<EchoRequest, EchoResponse> echoMethodDescriptor =
       ApiMethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Echo")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<EchoRequest>newBuilder()
@@ -91,7 +90,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private static final ApiMethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
       ApiMethodDescriptor.<ExpandRequest, EchoResponse>newBuilder()
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Expand")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.SERVER_STREAMING)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<ExpandRequest>newBuilder()
@@ -126,7 +125,7 @@ public class HttpJsonEchoStub extends EchoStub {
       pagedExpandMethodDescriptor =
           ApiMethodDescriptor.<PagedExpandRequest, PagedExpandResponse>newBuilder()
               .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/PagedExpand")
-              .setHttpMethod(HttpMethods.POST)
+              .setHttpMethod("POST")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<PagedExpandRequest>newBuilder()
@@ -160,7 +159,7 @@ public class HttpJsonEchoStub extends EchoStub {
       simplePagedExpandMethodDescriptor =
           ApiMethodDescriptor.<PagedExpandRequest, PagedExpandResponse>newBuilder()
               .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/SimplePagedExpand")
-              .setHttpMethod(HttpMethods.POST)
+              .setHttpMethod("POST")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<PagedExpandRequest>newBuilder()
@@ -193,7 +192,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private static final ApiMethodDescriptor<WaitRequest, Operation> waitMethodDescriptor =
       ApiMethodDescriptor.<WaitRequest, Operation>newBuilder()
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Wait")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<WaitRequest>newBuilder()
@@ -227,7 +226,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private static final ApiMethodDescriptor<BlockRequest, BlockResponse> blockMethodDescriptor =
       ApiMethodDescriptor.<BlockRequest, BlockResponse>newBuilder()
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Block")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<BlockRequest>newBuilder()
@@ -258,7 +257,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private static final ApiMethodDescriptor<EchoRequest, Object> collideNameMethodDescriptor =
       ApiMethodDescriptor.<EchoRequest, Object>newBuilder()
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/CollideName")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<EchoRequest>newBuilder()
@@ -289,7 +288,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private static final ApiMethodDescriptor<EchoRequest, Object> nestedBindingMethodDescriptor =
       ApiMethodDescriptor.<EchoRequest, Object>newBuilder()
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/NestedBinding")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<EchoRequest>newBuilder()
