@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.8.2](https://github.com/googleapis/gapic-generator-java/compare/v2.8.1...v2.8.2) (2022-06-14)
+
+
+### Bug Fixes
+
+* Fix typo in generated comment ([#1006](https://github.com/googleapis/gapic-generator-java/issues/1006)) ([14e76e7](https://github.com/googleapis/gapic-generator-java/commit/14e76e73802ec05f2fe4a820ab10c2dbf7321c6d))
+* Remove HttpMethod compile time dependency from genrated HttpJson stubs ([#1004](https://github.com/googleapis/gapic-generator-java/issues/1004)) ([e5988a0](https://github.com/googleapis/gapic-generator-java/commit/e5988a0e4900efd1943e942f445f1e86fdd6b05c))
+
 ## [2.8.1](https://github.com/googleapis/gapic-generator-java/compare/v2.8.0...v2.8.1) (2022-06-09)
 
 
