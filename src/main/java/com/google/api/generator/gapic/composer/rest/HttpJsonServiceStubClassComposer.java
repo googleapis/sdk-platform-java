@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.client.http.HttpMethods;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
@@ -991,14 +990,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   private List<Expr> getHttpMethodTypeExpr(Method protoMethod) {
-    EnumRefExpr expr =
-        EnumRefExpr.builder()
-            .setName(protoMethod.httpBindings().httpVerb().toString())
-            .setType(
-                TypeNode.withReference(
-                    ConcreteReference.builder().setClazz(HttpMethods.class).build()))
-            .build();
-    return Collections.singletonList(expr);
+    return Collections.singletonList(
+        ValueExpr.withValue(
+            StringObjectValue.withValue(protoMethod.httpBindings().httpVerb().toString())));
   }
 
   private List<Expr> getMethodTypeExpr(Method protoMethod) {
