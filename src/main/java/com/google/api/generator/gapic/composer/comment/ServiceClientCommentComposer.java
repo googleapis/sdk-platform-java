@@ -56,7 +56,7 @@ public class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING =
       "To customize the endpoint:";
   private static final String SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING =
-      "To use %s transport (instead of %s) for sending an receiving requests over the wire:";
+      "To use %s transport (instead of %s) for sending and receiving requests over the wire:";
 
   private static final String SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING =
       "Please refer to the GitHub repository's samples for more quickstart code snippets.";

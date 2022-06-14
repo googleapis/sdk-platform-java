@@ -67,7 +67,7 @@ import javax.annotation.Generated;
  * EchoEmpyClient echoEmpyClient = EchoEmpyClient.create(echoEmpySettings);
  * }</pre>
  *
- * <p>To use REST (HTTP1.1/JSON) transport (instead of gRPC) for sending an receiving requests over
+ * <p>To use REST (HTTP1.1/JSON) transport (instead of gRPC) for sending and receiving requests over
  * the wire:
  *
  * <pre>{@code
