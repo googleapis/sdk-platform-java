@@ -19,7 +19,6 @@ package com.google.cloud.compute.v1small.stub;
 import static com.google.cloud.compute.v1small.AddressesClient.AggregatedListPagedResponse;
 import static com.google.cloud.compute.v1small.AddressesClient.ListPagedResponse;
 
-import com.google.api.client.http.HttpMethods;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -68,7 +67,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
       aggregatedListMethodDescriptor =
           ApiMethodDescriptor.<AggregatedListAddressesRequest, AddressAggregatedList>newBuilder()
               .setFullMethodName("google.cloud.compute.v1small.Addresses/AggregatedList")
-              .setHttpMethod(HttpMethods.GET)
+              .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<AggregatedListAddressesRequest>newBuilder()
@@ -117,7 +116,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private static final ApiMethodDescriptor<DeleteAddressRequest, Operation> deleteMethodDescriptor =
       ApiMethodDescriptor.<DeleteAddressRequest, Operation>newBuilder()
           .setFullMethodName("google.cloud.compute.v1small.Addresses/Delete")
-          .setHttpMethod(HttpMethods.DELETE)
+          .setHttpMethod("DELETE")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<DeleteAddressRequest>newBuilder()
@@ -167,7 +166,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private static final ApiMethodDescriptor<InsertAddressRequest, Operation> insertMethodDescriptor =
       ApiMethodDescriptor.<InsertAddressRequest, Operation>newBuilder()
           .setFullMethodName("google.cloud.compute.v1small.Addresses/Insert")
-          .setHttpMethod(HttpMethods.POST)
+          .setHttpMethod("POST")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<InsertAddressRequest>newBuilder()
@@ -219,7 +218,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
   private static final ApiMethodDescriptor<ListAddressesRequest, AddressList> listMethodDescriptor =
       ApiMethodDescriptor.<ListAddressesRequest, AddressList>newBuilder()
           .setFullMethodName("google.cloud.compute.v1small.Addresses/List")
-          .setHttpMethod(HttpMethods.GET)
+          .setHttpMethod("GET")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<ListAddressesRequest>newBuilder()
