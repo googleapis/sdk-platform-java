@@ -621,6 +621,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
       javaMethods.add(generatedMethod);
     }
+    javaMethods.add(CodelabComposer.createdARobustFunMethod());
     return javaMethods;
   }
 
