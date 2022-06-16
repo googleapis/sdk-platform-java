@@ -90,14 +90,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -507,17 +505,23 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         "getSettings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
     methodNameToTypes.put("getStub", typeStore.get(ClassNames.getServiceStubClassName(service)));
 
-    Set<String> getOperationsClientMethodNames = new HashSet<>();
+    Map<String, List<AnnotationNode>> getOperationsClientMethod = new HashMap<>();
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder().setType(typeStore.get("BetaApi")).build();
 
     if (hasLroClient) {
       Iterator<String> opClientNamesIt = getTransportContext().operationsClientNames().iterator();
       Iterator<TypeNode> opClientTypesIt = getTransportContext().operationsClientTypes().iterator();
-
+      List<AnnotationNode> operationClientGetterAnnotations = new ArrayList<>();
       while (opClientNamesIt.hasNext() && opClientTypesIt.hasNext()) {
         String opClientMethodName =
             String.format("get%s", JavaStyle.toUpperCamelCase(opClientNamesIt.next()));
-        getOperationsClientMethodNames.add(opClientMethodName);
+        getOperationsClientMethod.put(opClientMethodName, operationClientGetterAnnotations);
         methodNameToTypes.put(opClientMethodName, opClientTypesIt.next());
+        // Only first (default transport) getter is non-beta, all others are
+        if (operationClientGetterAnnotations.isEmpty()) {
+          operationClientGetterAnnotations = Collections.singletonList(betaAnnotation);
+        }
       }
     }
 
@@ -528,10 +532,12 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
               TypeNode methodReturnType = e.getValue();
               String returnVariableName = JavaStyle.toLowerCamelCase(methodName.substring(3));
               MethodDefinition.Builder methodBuilder = MethodDefinition.builder();
-              if (getOperationsClientMethodNames.contains(methodName)) {
+              List<AnnotationNode> annotations = getOperationsClientMethod.get(methodName);
+              if (annotations != null) {
                 methodBuilder =
                     methodBuilder.setHeaderCommentStatements(
                         ServiceClientCommentComposer.GET_OPERATIONS_CLIENT_METHOD_COMMENT);
+                methodBuilder.setAnnotations(annotations);
               }
               return methodBuilder
                   .setScope(ScopeNode.PUBLIC)
