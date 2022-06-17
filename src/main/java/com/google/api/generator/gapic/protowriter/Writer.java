@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.SampleMetadata;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -46,6 +47,7 @@ public class Writer {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
+      SampleMetadata sampleMetadata,
       String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
@@ -62,6 +64,8 @@ public class Writer {
     }
 
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+
+    writeSampleMetadataFile(sampleMetadata, jos);
 
     try {
       jos.finish();
@@ -159,7 +163,12 @@ public class Writer {
     }
   }
 
-  private static String getPath(String pakkage, String className) {
+  private static void writeSampleMetadataFile(
+      SampleMetadata sampleMetadata, JarOutputStream jarOutputStream) {
+    // TODO: write SampleMetadata to write json file - likely use gson to json on the object
+  }
+
+  public static String getPath(String pakkage, String className) {
     String path = pakkage.replaceAll("\\.", "/");
     if (className.startsWith("Mock") || className.endsWith("Test")) {
       path = "src/test/java/" + path;

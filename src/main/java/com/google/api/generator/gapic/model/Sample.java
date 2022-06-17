@@ -17,6 +17,8 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
@@ -38,6 +40,10 @@ public abstract class Sample {
   public abstract String name();
 
   public abstract boolean isCanonical();
+
+  public abstract List<VariableExpr> arguments();
+
+  public abstract TypeNode resultType();
 
   public static Builder builder() {
     return new AutoValue_Sample.Builder()
@@ -87,6 +93,10 @@ public abstract class Sample {
     public abstract Builder setRegionTag(RegionTag regionTag);
 
     public abstract Builder setIsCanonical(boolean isCanonical);
+
+    public abstract Builder setArguments(List<VariableExpr> arguments);
+
+    public abstract Builder setResultType(TypeNode resultType);
 
     abstract Builder setName(String name);
 

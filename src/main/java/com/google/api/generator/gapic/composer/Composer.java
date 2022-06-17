@@ -29,10 +29,12 @@ import com.google.api.generator.gapic.composer.grpcrest.HttpJsonServiceClientTes
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleMetadataComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.SampleMetadata;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
@@ -62,6 +64,13 @@ public class Composer {
     clazzes.addAll(generateMockClasses(context, context.services()));
     clazzes.addAll(generateTestClasses(context));
     return clazzes;
+  }
+
+  public static SampleMetadata composeSampleMetadata(List<GapicClass> gapicClasses) {
+    return new SampleMetadata(
+        SampleMetadataComposer.composeClientLibraryName(),
+        SampleMetadataComposer.composeApiList(),
+        gapicClasses);
   }
 
   public static List<GapicClass> generateResourceNameHelperClasses(GapicContext context) {
