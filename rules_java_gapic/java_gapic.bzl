@@ -22,6 +22,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_main = ctx.outputs.main
     output_test = ctx.outputs.test
     output_samples = ctx.outputs.samples
+    output_spring = ctx.outputs.spring
     output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
 
@@ -65,10 +66,21 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
 
     cd $WORKING_DIR
 
+    unzip -q temp-codegen-spring.srcjar -d {output_dir_path}/spring
+    # This may fail if there are spaces and/or too many files (exceed max length of command length).
+    {formatter} --replace $(find {output_dir_path}/spring -type f -printf "%p ")
+
+    # Spring source files.
+    cd {output_dir_path}/spring/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}-spring.srcjar ./
+
+    cd $WORKING_DIR
+
     mv {output_srcjar_name}.srcjar {output_main}
     mv {output_srcjar_name}-resource-name.srcjar {output_resource_name}
     mv {output_srcjar_name}-tests.srcjar {output_test}
     mv {output_srcjar_name}-samples.srcjar {output_samples}
+    mv {output_srcjar_name}-spring.srcjar {output_spring}
     """.format(
         gapic_srcjar = gapic_srcjar.path,
         output_srcjar_name = output_srcjar_name,
@@ -79,13 +91,14 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
         output_resource_name = output_resource_name.path,
         output_test = output_test.path,
         output_samples = output_samples.path,
+        output_spring = output_spring.path,
     )
 
     ctx.actions.run_shell(
         inputs = [gapic_srcjar],
         tools = [formatter],
         command = script,
-        outputs = [output_main, output_resource_name, output_test, output_samples],
+        outputs = [output_main, output_resource_name, output_test, output_samples, output_spring],
     )
 
 _java_gapic_postprocess_srcjar = rule(
@@ -102,6 +115,7 @@ _java_gapic_postprocess_srcjar = rule(
         "resource_name": "%{name}-resource-name.srcjar",
         "test": "%{name}-test.srcjar",
         "samples": "%{name}-samples.srcjar",
+        "spring": "%{name}-spring.srcjar",
     },
     implementation = _java_gapic_postprocess_srcjar_impl,
 )
@@ -160,6 +174,21 @@ _java_gapic_samples_srcjar = rule(
     },
     implementation = _java_gapic_samples_srcjar_impl,
 )
+
+#_java_gapic_spring_srcjar = rule(
+#    attrs = {
+#        "gapic_srcjar": attr.label(mandatory = True, allow_single_file = True),
+#        "formatter": attr.label(
+#            default = Label("//:google_java_format_binary"),
+#            executable = True,
+#            cfg = "host",
+#        ),
+#    },
+#    outputs = {
+#        "spring": "%{name}-spring.srcjar",
+#    },
+#    implementation = _java_gapic_samples_srcjar_impl,
+#)
 
 def _extract_common_proto_dep(dep):
     return dep[dep.index("/"):] if "//google" in dep else dep
@@ -267,6 +296,8 @@ def java_gapic_library(
         **kwargs
     )
 
+    print("postprocessing done.\n")
+
     resource_name_name = "%s_resource_name" % name
     resource_name_deps = [resource_name_name]
     native.java_library(
@@ -365,6 +396,18 @@ def java_gapic_library(
         deps = [":%s" % name] + actual_test_deps,
         **kwargs
     )
+#    print("everything else packed, now try to pack spring.\n")
+#    spring_deps = actual_deps + [
+#
+#    ]
+#    #    see if this works? no spring dependencies.
+#    native.java_library(
+#        name = "%s_spring" % name,
+#        srcs =  ["%s-spring.srcjar" % srcjar_name],
+#        deps = actual_deps,
+#        **kwargs
+#    )
+#    print("java_gapic_library is done done.")
 
 def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
     for test_class in test_classes:

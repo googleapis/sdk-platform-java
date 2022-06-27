@@ -26,6 +26,8 @@ public class Main {
     ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
     CodeGeneratorResponse response = Generator.generateGapic(request);
+    CodeGeneratorResponse springResponse = Generator.generateSpring(request);
     response.writeTo(System.out);
+    springResponse.writeTo(System.out);
   }
 }
