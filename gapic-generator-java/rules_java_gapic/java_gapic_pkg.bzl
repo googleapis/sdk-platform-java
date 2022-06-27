@@ -131,6 +131,7 @@ def _construct_extra_deps(scope_to_deps, versions_map):
         "iam_java_proto": "maven.com_google_api_grpc_proto_google_iam_v1",
         "iam_java_grpc": "maven.com_google_api_grpc_grpc_google_iam_v1",
         "iam_policy_java_grpc": "maven.com_google_api_grpc_grpc_google_iam_v1",
+        "location_java_grpc": "maven.com_google_api_grpc_grpc_google_common_protos",
     }
     extra_deps = {}
     for scope, deps in scope_to_deps.items():
