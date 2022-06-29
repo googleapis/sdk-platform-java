@@ -68,6 +68,11 @@ def _gapic_pkg_tar_impl(ctx):
         for f in s.files.to_list():
             samples.append(f)
 
+    spring =[]
+    for s in ctx.attr.spring:
+        for f in s.files.to_list():
+            spring.append(f)
+
     paths = _construct_package_dir_paths(
         ctx.attr.package_dir,
         ctx.outputs.pkg,
@@ -78,6 +83,11 @@ def _gapic_pkg_tar_impl(ctx):
     for s in {samples}; do
         mkdir -p {package_dir_path}/{tar_cd_suffix}/{tar_prefix}/samples/snippets/generated/
         unzip -q ./$s -d {package_dir_path}/{tar_cd_suffix}/{tar_prefix}/samples/snippets/generated/
+    done
+
+    for s in {spring}; do
+        mkdir -p {package_dir_path}/{tar_cd_suffix}/{tar_prefix}/spring/
+        unzip -q ./$s -d {package_dir_path}/{tar_cd_suffix}/{tar_prefix}/spring/
     done
 
     mkdir -p {package_dir_path}
@@ -95,13 +105,14 @@ def _gapic_pkg_tar_impl(ctx):
         package_dir_path = paths.package_dir_path,
         package_dir = paths.package_dir,
         samples = " ".join(["'%s'" % s.path for s in samples]),
+        spring = " ".join(["'%s'" % s.path for s in spring]),
         pkg = ctx.outputs.pkg.path,
         tar_cd_suffix = paths.tar_cd_suffix,
         tar_prefix = paths.tar_prefix,
     )
 
     ctx.actions.run_shell(
-        inputs = deps + samples,
+        inputs = deps + samples + spring,
         command = script,
         outputs = [ctx.outputs.pkg],
     )
@@ -114,6 +125,7 @@ gapic_pkg_tar = rule(
     attrs = {
         "deps": attr.label_list(mandatory = True),
         "samples": attr.label_list(mandatory = False),
+        "spring": attr.label_list(mandatory = False),
         "package_dir": attr.string(mandatory = False, default = ""),
         "extension": attr.string(mandatory = False, default = "tar.gz"),
     },
@@ -273,6 +285,10 @@ def _java_gapic_srcs_pkg_impl(ctx):
         if [ -d {package_dir_path}/src/main/java/samples ]; then
             mv {package_dir_path}/src/main/java/samples {package_dir_path}
         fi
+
+        if [ -d {package_dir_path}/src/main/java/spring ]; then
+            mv {package_dir_path}/src/main/java/spring {package_dir_path}
+        fi
     done
     for proto_src in {proto_srcs}; do
         mkdir -p {package_dir_path}/src/main/proto
@@ -318,6 +334,7 @@ def java_gapic_assembly_gradle_pkg(
         name,
         deps,
         include_samples = False,
+        include_spring = False,
         assembly_name = None,
         transport = None,
         **kwargs):
@@ -338,6 +355,7 @@ def java_gapic_assembly_gradle_pkg(
     grpc_deps = []
     proto_deps = []
     samples = []
+    spring = []
 
     processed_deps = {}  #there is no proper Set in Starlark
     for dep in deps:
@@ -345,6 +363,8 @@ def java_gapic_assembly_gradle_pkg(
         if "_java_gapic" in dep:
             if include_samples:
                 samples.append(dep + "_samples")
+            if include_spring:
+                spring.append(dep + "_spring")
             _put_dep_in_a_bucket(dep, client_deps, processed_deps)
             _put_dep_in_a_bucket("%s_test" % dep, client_test_deps, processed_deps)
             _put_dep_in_a_bucket("%s_resource_name" % dep, proto_deps, processed_deps)
@@ -392,7 +412,8 @@ def java_gapic_assembly_gradle_pkg(
         name = name,
         assembly_name = package_dir,
         deps = proto_target_dep + grpc_target_dep + client_target_dep,
-        samples = samples,
+        samples = samples, # :vision_java_gapic_samples
+        spring = spring, # :vision_java_gapic_spring
     )
 
 def _java_gapic_gradle_pkg(
@@ -438,7 +459,7 @@ def _java_gapic_gradle_pkg(
         **kwargs
     )
 
-def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, samples = None, visibility = None):
+def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, samples = None, spring = None, visibility = None):
     resource_target_name = "%s-resources" % assembly_name
     java_gapic_build_configs_pkg(
         name = resource_target_name,
@@ -458,5 +479,6 @@ def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, samples = None, v
         ] + deps,
         samples = samples,
         package_dir = assembly_name,
+        spring = spring,
         visibility = visibility,
     )
