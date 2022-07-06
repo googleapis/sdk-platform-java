@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class LambdaExpr implements Expr {
-  @Override
-  public abstract TypeNode type();
 
   public abstract ImmutableList<VariableExpr> arguments();
 
