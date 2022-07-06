@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ClazzValue;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
@@ -152,10 +153,48 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withDescription() {
+  public void writeAnnotation_withStringDescription() {
     AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
     annotation.accept(writerVisitor);
     assertEquals("@SuppressWarnings(\"all\")\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeAnnotation_withNamedDescriptions() {
+    TypeNode conditionalOnPropertyType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("ConditionalOnProperty")
+                .setPakkage("org.springframework.boot.autoconfigure.condition")
+                .build());
+
+    AssignmentExpr matchIfMissing =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("matchIfMissing").setType(TypeNode.BOOLEAN).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
+            .build();
+    AssignmentExpr valueString =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("value").setType(TypeNode.STRING).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue("spring.cloud.gcp.language.enabled")))
+            .build();
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(conditionalOnPropertyType)
+            .setDescriptions(Arrays.asList(valueString, matchIfMissing))
+            .build();
+    annotation.accept(writerVisitor);
+    assertEquals(
+        "@ConditionalOnProperty(value = \"spring.cloud.gcp.language.enabled\", matchIfMissing = false)\n",
+        writerVisitor.write());
   }
 
   @Test
@@ -735,6 +774,22 @@ public class JavaWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
+  }
+
+  @Test
+  public void writeAssignmentExpr_clazzValue() {
+    TypeNode clazz = TypeNode.withReference(ConcreteReference.withClazz(List.class));
+
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("value").setType(clazz).build());
+
+    ValueExpr valueExpr = ValueExpr.withValue(ClazzValue.builder().setType(clazz).build());
+
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertEquals("value = List.class", writerVisitor.write());
   }
 
   @Test
