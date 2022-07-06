@@ -2346,6 +2346,23 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeLambdaExpr_assignToVariable() {
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("word").setType(TypeNode.STRING).build()))
+            .setValueExpr(lambdaExpr)
+            .build();
+    assignmentExpr.accept(writerVisitor);
+    assertEquals("word = () -> \"foo\"", writerVisitor.write());
+  }
+
+  @Test
   public void writeLambdaExpr_oneParameter() {
     VariableExpr argVarExpr =
         VariableExpr.builder()
