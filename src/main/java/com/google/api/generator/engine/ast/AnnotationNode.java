@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import java.util.Arrays;
+import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -31,10 +33,8 @@ public abstract class AnnotationNode implements AstNode {
 
   public abstract TypeNode type();
 
-  // TODO(unsupported): Any args that do not consist of a single string. However, this can easily be
-  // extended to enable such support.
   @Nullable
-  public abstract Expr descriptionExpr();
+  public abstract List<Expr> descriptionExprs();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -43,6 +43,10 @@ public abstract class AnnotationNode implements AstNode {
 
   public static AnnotationNode withTypeAndDescription(TypeNode type, String description) {
     return AnnotationNode.builder().setType(type).setDescription(description).build();
+  }
+
+  public static AnnotationNode withTypeAndDescription(TypeNode type, List<Expr> exprList) {
+    return AnnotationNode.builder().setType(type).setDescriptions(exprList).build();
   }
 
   public static AnnotationNode withSuppressWarnings(String description) {
@@ -62,12 +66,16 @@ public abstract class AnnotationNode implements AstNode {
     public abstract Builder setType(TypeNode type);
 
     public Builder setDescription(String description) {
-      return setDescriptionExpr(ValueExpr.withValue(StringObjectValue.withValue(description)));
+      return setDescriptionExprs(
+          Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(description))));
     }
 
-    // This will never be anything other than a ValueExpr-wrapped StringObjectValue because
-    // this setter is private, and called only by setDescription above.
-    abstract Builder setDescriptionExpr(Expr descriptionExpr);
+    public Builder setDescriptions(List<Expr> exprList) {
+      return setDescriptionExprs(exprList);
+    }
+
+    // this setter is private, and called only by setDescription() and setDescriptions() above.
+    abstract Builder setDescriptionExprs(List<Expr> descriptionExprs);
 
     abstract AnnotationNode autoBuild();
 

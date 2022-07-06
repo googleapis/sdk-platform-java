@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -169,9 +169,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(AnnotationNode annotation) {
     buffer.append(AT);
     annotation.type().accept(this);
-    if (annotation.descriptionExpr() != null) {
+    if (annotation.descriptionExprs() != null) {
       leftParen();
-      annotation.descriptionExpr().accept(this);
+      for (int i = 0; i < annotation.descriptionExprs().size(); i++) {
+        annotation.descriptionExprs().get(i).accept(this);
+        if (i < annotation.descriptionExprs().size() - 1) {
+          buffer.append(COMMA);
+          buffer.append(SPACE);
+        }
+      }
       rightParen();
     }
     newline();
