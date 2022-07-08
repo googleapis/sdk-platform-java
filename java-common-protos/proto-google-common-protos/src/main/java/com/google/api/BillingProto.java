@@ -44,22 +44,18 @@ public final class BillingProto {
 
   static {
     java.lang.String[] descriptorData = {
-      "\n\030google/api/billing.proto\022\ngoogle.api\032\027"
-          + "google/api/metric.proto\"\223\001\n\007Billing\022E\n\025c"
-          + "onsumer_destinations\030\010 \003(\0132&.google.api."
-          + "Billing.BillingDestination\032A\n\022BillingDes"
-          + "tination\022\032\n\022monitored_resource\030\001 \001(\t\022\017\n\007"
-          + "metrics\030\002 \003(\tBn\n\016com.google.apiB\014Billing"
-          + "ProtoP\001ZEgoogle.golang.org/genproto/goog"
-          + "leapis/api/serviceconfig;serviceconfig\242\002"
-          + "\004GAPIb\006proto3"
+      "\n\030google/api/billing.proto\022\ngoogle.api\"\223"
+          + "\001\n\007Billing\022E\n\025consumer_destinations\030\010 \003("
+          + "\0132&.google.api.Billing.BillingDestinatio"
+          + "n\032A\n\022BillingDestination\022\032\n\022monitored_res"
+          + "ource\030\001 \001(\t\022\017\n\007metrics\030\002 \003(\tBn\n\016com.goog"
+          + "le.apiB\014BillingProtoP\001ZEgoogle.golang.or"
+          + "g/genproto/googleapis/api/serviceconfig;"
+          + "serviceconfig\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-            descriptorData,
-            new com.google.protobuf.Descriptors.FileDescriptor[] {
-              com.google.api.MetricProto.getDescriptor(),
-            });
+            descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[] {});
     internal_static_google_api_Billing_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_google_api_Billing_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
@@ -75,7 +71,6 @@ public final class BillingProto {
             new java.lang.String[] {
               "MonitoredResource", "Metrics",
             });
-    com.google.api.MetricProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
