@@ -26,7 +26,9 @@ import java.util.stream.Collectors;
 @AutoValue
 public abstract class LambdaExpr implements Expr {
   @Override
-  public abstract TypeNode type();
+  public TypeNode type() {
+    return returnExpr().expr().type();
+  }
 
   public abstract ImmutableList<VariableExpr> arguments();
 
@@ -42,21 +44,16 @@ public abstract class LambdaExpr implements Expr {
   public static Builder builder() {
     return new AutoValue_LambdaExpr.Builder()
         .setArguments(Collections.emptyList())
-        .setBody(Collections.emptyList())
-        .setType(TypeNode.VOID);
+        .setBody(Collections.emptyList());
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    abstract Builder setType(TypeNode type);
-
     public Builder setArguments(VariableExpr... arguments) {
       return setArguments(Arrays.asList(arguments));
     }
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
-
-    abstract ReturnExpr returnExpr();
 
     public abstract Builder setBody(List<Statement> body);
 
@@ -69,13 +66,10 @@ public abstract class LambdaExpr implements Expr {
     public abstract LambdaExpr autoBuild();
 
     public LambdaExpr build() {
-      Preconditions.checkState(
-          !returnExpr().expr().type().equals(TypeNode.VOID),
-          "Lambdas cannot return void-typed expressions.");
-
-      setType(returnExpr().expr().type());
-
       LambdaExpr lambdaExpr = autoBuild();
+      Preconditions.checkState(
+          !lambdaExpr.returnExpr().expr().type().equals(TypeNode.VOID),
+          "Lambdas cannot return void-typed expressions.");
       // Must be a declaration.
       lambdaExpr.arguments().stream()
           .forEach(
