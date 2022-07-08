@@ -16,7 +16,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class ClazzValue implements Value {
+public abstract class ClazzValue implements ObjectValue {
   @Override
   public abstract TypeNode type();
 
