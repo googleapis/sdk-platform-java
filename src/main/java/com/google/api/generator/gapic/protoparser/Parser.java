@@ -203,7 +203,12 @@ public class Parser {
 
     return GapicContext.builder()
         .setServices(services)
-        .setMixinServices(mixinServices)
+        .setMixinServices(
+            // Mixin classes must share the package with the service they are mixed in, instead of
+            // their original package
+            mixinServices.stream()
+                .map(s -> s.toBuilder().setPakkage(services.get(0).pakkage()).build())
+                .collect(Collectors.toList()))
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)

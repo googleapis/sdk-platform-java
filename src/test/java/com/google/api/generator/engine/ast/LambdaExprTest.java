@@ -14,10 +14,10 @@
 
 package com.google.api.generator.engine.ast;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class LambdaExprTest {
@@ -29,13 +29,12 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void validLamdaExpr_setType() {
+  public void validLambdaExpr_inferTypeFromReturnExpr() {
     LambdaExpr lambdaExpr =
         LambdaExpr.builder()
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
-            .setType(TypeNode.STRING)
             .build();
-    Assert.assertEquals(lambdaExpr.type(), TypeNode.STRING);
+    assertEquals(TypeNode.STRING, lambdaExpr.type());
   }
 
   @Test

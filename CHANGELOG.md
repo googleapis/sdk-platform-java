@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.8.3](https://github.com/googleapis/gapic-generator-java/compare/v2.8.2...v2.8.3) (2022-06-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.google.cloud:google-cloud-shared-dependencies to v2.13.0 ([#1009](https://github.com/googleapis/gapic-generator-java/issues/1009)) ([9dcc470](https://github.com/googleapis/gapic-generator-java/commit/9dcc4705ba429ed63468033711b2043386ab5dd3))
+* Fix mixin mock service and gradle build generation ([#1010](https://github.com/googleapis/gapic-generator-java/issues/1010)) ([d896e6e](https://github.com/googleapis/gapic-generator-java/commit/d896e6e1b052a9da5ef1304220ec88017a24991d))
+* make `BetaApi` the `getHttpJsonOperationsClient()` in case of multitransport clients ([#1007](https://github.com/googleapis/gapic-generator-java/issues/1007)) ([badd554](https://github.com/googleapis/gapic-generator-java/commit/badd5544d1cd7e03e8c1b282aac4954acb1bb5f0))
+
 ## [2.8.2](https://github.com/googleapis/gapic-generator-java/compare/v2.8.1...v2.8.2) (2022-06-14)
 
 
