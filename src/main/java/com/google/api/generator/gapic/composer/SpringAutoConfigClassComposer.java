@@ -312,11 +312,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         RelationalOperationExpr.notEqualToWithExprs(getProjectIdExpr, ValueExpr.createNullExpr());
 
     // () -> clientProperties.getProjectId();
-    LambdaExpr lambdaExpr =
-        LambdaExpr.builder()
-            .setReturnExpr(getProjectIdExpr)
-            .setType(types.get("GcpProjectIdProvider"))
-            .build();
+    LambdaExpr lambdaExpr = LambdaExpr.builder().setReturnExpr(getProjectIdExpr).build();
 
     // this.projectIdProvider = () -> clientProperties.getProjectId();
     AssignmentExpr projectIdProviderAssignExpr =
@@ -326,7 +322,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(lambdaExpr)
+            .setValueExpr(
+                CastExpr.builder()
+                    .setExpr(lambdaExpr)
+                    .setType(types.get("GcpProjectIdProvider"))
+                    .build())
             .build();
 
     IfStatement projectIdProviderIfStatement =
