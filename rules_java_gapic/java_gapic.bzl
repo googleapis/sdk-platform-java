@@ -71,7 +71,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     {formatter} --replace $(find {output_dir_path}/spring -type f -printf "%p ")
 
     # Spring source files.
-    cd {output_dir_path}/spring/src/main/java
+    cd {output_dir_path}/spring
     zip -r $WORKING_DIR/{output_srcjar_name}-spring.srcjar ./
 
     cd $WORKING_DIR
@@ -194,7 +194,7 @@ def _java_gapic_spring_srcjar_impl(ctx):
     WORKING_DIR=`pwd`
 
     # Spring source files.
-    cd $WORKING_DIR/{output_dir_path}/src/main/java
+    cd $WORKING_DIR/{output_dir_path}
     zip -r $WORKING_DIR/{output_srcjar_name}-spring.srcjar ./
 
     cd $WORKING_DIR
