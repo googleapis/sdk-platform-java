@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Expr;
@@ -260,8 +261,7 @@ public class SpringAutoConfigClassComposerTest {
         RelationalOperationExpr.notEqualToWithExprs(getProjectIdExpr, ValueExpr.createNullExpr());
 
     // this.projectIdProvider = () -> clientProperties.getProjectId();
-    LambdaExpr lambdaExpr =
-        LambdaExpr.builder().setReturnExpr(getProjectIdExpr).setType(gcpProjectIdProvider).build();
+    LambdaExpr lambdaExpr = LambdaExpr.builder().setReturnExpr(getProjectIdExpr).build();
 
     // this.projectIdProvider = () -> clientProperties.getProjectId();
     AssignmentExpr projectIdProviderAssignExpr =
@@ -271,7 +271,8 @@ public class SpringAutoConfigClassComposerTest {
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(lambdaExpr)
+            .setValueExpr(
+                CastExpr.builder().setExpr(lambdaExpr).setType(gcpProjectIdProvider).build())
             .build();
 
     IfStatement ifStatement =
@@ -383,7 +384,7 @@ public class SpringAutoConfigClassComposerTest {
           + "      this.credentialsProvider = ((CredentialsProvider) coreProjectIdProvider);\n"
           + "    }\n"
           + "    if (clientProperties.getProjectId() != null) {\n"
-          + "      this.projectIdProvider = () -> clientProperties.getProjectId();\n"
+          + "      this.projectIdProvider = ((GcpProjectIdProvider) () -> clientProperties.getProjectId());\n"
           + "    } else {\n"
           + "      this.projectIdProvider = coreProjectIdProvider;\n"
           + "    }\n"
