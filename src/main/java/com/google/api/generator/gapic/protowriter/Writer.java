@@ -28,6 +28,7 @@ import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
@@ -46,7 +47,8 @@ public class Writer {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
-      String outputFilePath) {
+      String outputFilePath,
+      boolean isSpringContent) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos;
@@ -61,7 +63,9 @@ public class Writer {
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
-    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    if (isSpringContent) {
+      writeSpringFactories(context, jos);
+    }
 
     try {
       jos.finish();
@@ -156,6 +160,26 @@ public class Writer {
       } catch (IOException e) {
         throw new GapicWriterException("Could not write gapic_metadata.json", e);
       }
+    }
+  }
+
+  private static void writeSpringFactories(GapicContext context, JarOutputStream jos) {
+    String path = "src/main/resources/META-INF";
+    JarEntry jarEntry = new JarEntry(String.format("%s/spring.factories", path));
+    try {
+      jos.putNextEntry(jarEntry);
+      StringJoiner sb =
+          new StringJoiner(
+              ",\\\n", "org.springframework.boot.autoconfigure.EnableAutoConfiguration=\\\n", "");
+      context
+          .services()
+          .forEach(
+              service ->
+                  sb.add(String.format("com.sample.autoconfig.%sAutoConfig", service.name())));
+
+      jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write spring.factories", e);
     }
   }
 
