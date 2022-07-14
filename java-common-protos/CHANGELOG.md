@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.2](https://github.com/googleapis/java-common-protos/compare/v2.9.1...v2.9.2) (2022-07-13)
+
+
+### Bug Fixes
+
+* enable longpaths support for windows test ([#1485](https://github.com/googleapis/java-common-protos/issues/1485)) ([#386](https://github.com/googleapis/java-common-protos/issues/386)) ([fec7bed](https://github.com/googleapis/java-common-protos/commit/fec7bedbd0c3ac1d02de851616222b7189e5ed98))
+
 ## [2.9.1](https://github.com/googleapis/java-common-protos/compare/v2.9.0...v2.9.1) (2022-06-27)
 
 
