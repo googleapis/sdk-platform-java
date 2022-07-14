@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.0](https://github.com/googleapis/gapic-generator-java/compare/v2.8.3...v2.9.0) (2022-07-11)
+
+
+### Features
+
+* **ast:** add support for LambdaExpr to infer type from return expr type ([#1011](https://github.com/googleapis/gapic-generator-java/issues/1011)) ([a179558](https://github.com/googleapis/gapic-generator-java/commit/a1795582948d6c721544b920c86a4642df3b39a0))
+
 ## [2.8.3](https://github.com/googleapis/gapic-generator-java/compare/v2.8.2...v2.8.3) (2022-06-27)
 
 
