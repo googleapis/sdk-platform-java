@@ -16,6 +16,7 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
@@ -27,7 +28,6 @@ import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.ClazzValue;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
@@ -160,7 +160,52 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withNamedDescriptions() {
+  public void writeAnnotation_withValueDescription() {
+    TypeNode fakeAnnotationType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(fakeAnnotationType)
+            .setDescription(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("12").setType(TypeNode.INT).build()))
+            .build();
+    annotation.accept(writerVisitor);
+    assertEquals("@FakeAnnotation(12)\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeAnnotation_withVariableExprDescription() {
+    TypeNode conditionalOnPropertyType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("ConditionalOnClass")
+                .setPakkage("org.springframework.boot.autoconfigure.condition")
+                .build());
+    TypeNode clazzType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("VisionServiceClient")
+                .setPakkage("com.foo.bar")
+                .build());
+
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(conditionalOnPropertyType)
+            .setDescription(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(clazzType)
+                    .build())
+            .build();
+    annotation.accept(writerVisitor);
+    assertEquals("@ConditionalOnClass(VisionServiceClient.class)\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeAnnotation_withMultipleNamedDescriptions() {
     TypeNode conditionalOnPropertyType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -189,12 +234,91 @@ public class JavaWriterVisitorTest {
     AnnotationNode annotation =
         AnnotationNode.builder()
             .setType(conditionalOnPropertyType)
-            .setDescriptions(Arrays.asList(valueString, matchIfMissing))
+            .addDescription(valueString)
+            .addDescription(matchIfMissing)
             .build();
     annotation.accept(writerVisitor);
     assertEquals(
         "@ConditionalOnProperty(value = \"spring.cloud.gcp.language.enabled\", matchIfMissing = false)\n",
         writerVisitor.write());
+  }
+
+  @Test
+  public void writeAnnotation_withInvalidDescriptions() {
+    TypeNode fakeAnnotationType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
+    String stringA = "a string";
+    String stringB = "another string";
+
+    IllegalStateException exceptionForSetDescription =
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+              AnnotationNode.builder()
+                  .setType(fakeAnnotationType)
+                  .setDescription(stringA)
+                  .setDescription(
+                      ValueExpr.withValue(
+                          PrimitiveValue.builder().setValue("12").setType(TypeNode.INT).build()))
+                  .build();
+            });
+    assertThat(exceptionForSetDescription)
+        .hasMessageThat()
+        .contains("Single parameter with no name cannot be set multiple times");
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          AnnotationNode.builder()
+              .setType(fakeAnnotationType)
+              .setDescription(stringA)
+              .setDescription(stringB)
+              .build();
+        });
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          AnnotationNode.builder()
+              .setType(fakeAnnotationType)
+              .setDescription(stringA)
+              .setDescription(
+                  VariableExpr.builder()
+                      .setVariable(
+                          Variable.builder()
+                              .setType(TypeNode.CLASS_OBJECT)
+                              .setName("class")
+                              .build())
+                      .setStaticReferenceType(TypeNode.LONG)
+                      .build())
+              .build();
+        });
+
+    AssignmentExpr valueString =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("value").setType(TypeNode.STRING).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue("spring.cloud.gcp.language.enabled")))
+            .build();
+    IllegalStateException exceptionForAddDescription =
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+              AnnotationNode.builder()
+                  .setType(fakeAnnotationType)
+                  .setDescription(
+                      ValueExpr.withValue(
+                          PrimitiveValue.builder().setValue("12").setType(TypeNode.INT).build()))
+                  .addDescription(valueString)
+                  .build();
+            });
+    assertThat(exceptionForAddDescription)
+        .hasMessageThat()
+        .contains("Multiple parameters must have names");
   }
 
   @Test
@@ -774,22 +898,6 @@ public class JavaWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
-  }
-
-  @Test
-  public void writeAssignmentExpr_clazzValue() {
-    TypeNode clazz = TypeNode.withReference(ConcreteReference.withClazz(List.class));
-
-    VariableExpr variableExpr =
-        VariableExpr.withVariable(Variable.builder().setName("value").setType(clazz).build());
-
-    ValueExpr valueExpr = ValueExpr.withValue(ClazzValue.builder().setType(clazz).build());
-
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-
-    assignExpr.accept(writerVisitor);
-    assertEquals("value = List.class", writerVisitor.write());
   }
 
   @Test

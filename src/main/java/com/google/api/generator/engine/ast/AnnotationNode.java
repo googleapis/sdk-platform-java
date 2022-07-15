@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -63,15 +64,76 @@ public abstract class AnnotationNode implements AstNode {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    private static final String REPEAT_SINGLE_EXCEPTION_MESSAGE =
+        "Single parameter with no name cannot be set multiple times";
+
+    private static final String MULTIPLE_AFTER_SINGLE_EXCEPTION_MESSAGE =
+        "Multiple parameters must have names";
+
+    abstract List<Expr> descriptionExprs();
+
     public abstract Builder setType(TypeNode type);
 
+    /**
+     * To set single String as description.
+     *
+     * @param description
+     * @return Builder
+     */
     public Builder setDescription(String description) {
+      Preconditions.checkState(descriptionExprs() == null, REPEAT_SINGLE_EXCEPTION_MESSAGE);
       return setDescriptionExprs(
           Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(description))));
     }
 
-    public Builder setDescriptions(List<Expr> exprList) {
+    /**
+     * To set single ValueExpr as description.
+     *
+     * @param valueExpr
+     * @return Builder
+     */
+    public Builder setDescription(ValueExpr valueExpr) {
+      Preconditions.checkState(descriptionExprs() == null, REPEAT_SINGLE_EXCEPTION_MESSAGE);
+      return setDescriptionExprs(Arrays.asList(valueExpr));
+    }
+
+    /**
+     * To set single VariableExpr as description.
+     *
+     * @param variableExpr
+     * @return Builder
+     */
+    public Builder setDescription(VariableExpr variableExpr) {
+      Preconditions.checkState(descriptionExprs() == null, REPEAT_SINGLE_EXCEPTION_MESSAGE);
+      return setDescriptionExprs(Arrays.asList(variableExpr));
+    }
+
+    /**
+     * To add an AssignmentExpr as parameter. Can be used repeatedly to add multiple parameters.
+     *
+     * @param assignmentExpr
+     * @return Builder
+     */
+    public Builder addDescription(AssignmentExpr assignmentExpr) {
+      return addDescriptionToList(assignmentExpr);
+    }
+
+    private Builder setDescriptions(List<Expr> exprList) {
       return setDescriptionExprs(exprList);
+    }
+
+    // this method is private, and called only by addDescription(AssignmentExpr expr)
+    private Builder addDescriptionToList(Expr expr) {
+      List<Expr> exprList = descriptionExprs();
+      // avoid when single parameter is already set.
+      Preconditions.checkState(
+          exprList == null || exprList instanceof ArrayList,
+          MULTIPLE_AFTER_SINGLE_EXCEPTION_MESSAGE);
+      if (exprList == null) {
+        exprList = new ArrayList<>();
+      }
+      exprList.add(expr);
+      return setDescriptions(exprList);
     }
 
     // this setter is private, and called only by setDescription() and setDescriptions() above.
