@@ -250,52 +250,19 @@ public class JavaWriterVisitorTest {
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
     String stringA = "a string";
     String stringB = "another string";
+    ValueExpr valueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("12").setType(TypeNode.INT).build());
 
-    IllegalStateException exceptionForSetDescription =
-        assertThrows(
-            IllegalStateException.class,
-            () -> {
-              AnnotationNode.builder()
-                  .setType(fakeAnnotationType)
-                  .setDescription(stringA)
-                  .setDescription(
-                      ValueExpr.withValue(
-                          PrimitiveValue.builder().setValue("12").setType(TypeNode.INT).build()))
-                  .build();
-            });
-    assertThat(exceptionForSetDescription)
-        .hasMessageThat()
-        .contains("Single parameter with no name cannot be set multiple times");
-
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          AnnotationNode.builder()
-              .setType(fakeAnnotationType)
-              .setDescription(stringA)
-              .setDescription(stringB)
-              .build();
-        });
-
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          AnnotationNode.builder()
-              .setType(fakeAnnotationType)
-              .setDescription(stringA)
-              .setDescription(
-                  VariableExpr.builder()
-                      .setVariable(
-                          Variable.builder()
-                              .setType(TypeNode.CLASS_OBJECT)
-                              .setName("class")
-                              .build())
-                      .setStaticReferenceType(TypeNode.LONG)
-                      .build())
-              .build();
-        });
-
-    AssignmentExpr valueString =
+    VariableExpr clazzVariableExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foobar")
+                    .setReturnType(TypeNode.INT_OBJECT)
+                    .build())
+            .build();
+    AssignmentExpr valueStringAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
                 VariableExpr.withVariable(
@@ -304,17 +271,37 @@ public class JavaWriterVisitorTest {
                 ValueExpr.withValue(
                     StringObjectValue.withValue("spring.cloud.gcp.language.enabled")))
             .build();
+
+    AnnotationNode.Builder annotationBuilder =
+        AnnotationNode.builder().setType(fakeAnnotationType).setDescription(stringA);
+
+    IllegalStateException exceptionForSetDescription =
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+              annotationBuilder.setDescription(valueExpr);
+            });
+    assertThat(exceptionForSetDescription)
+        .hasMessageThat()
+        .contains("Single parameter with no name cannot be set multiple times");
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          annotationBuilder.setDescription(stringB);
+        });
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          annotationBuilder.setDescription(clazzVariableExpr);
+        });
+
     IllegalStateException exceptionForAddDescription =
         assertThrows(
             IllegalStateException.class,
             () -> {
-              AnnotationNode.builder()
-                  .setType(fakeAnnotationType)
-                  .setDescription(
-                      ValueExpr.withValue(
-                          PrimitiveValue.builder().setValue("12").setType(TypeNode.INT).build()))
-                  .addDescription(valueString)
-                  .build();
+              annotationBuilder.addDescription(valueStringAssignmentExpr);
             });
     assertThat(exceptionForAddDescription)
         .hasMessageThat()
