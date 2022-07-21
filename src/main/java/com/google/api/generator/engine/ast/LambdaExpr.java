@@ -67,9 +67,6 @@ public abstract class LambdaExpr implements Expr {
 
     public LambdaExpr build() {
       LambdaExpr lambdaExpr = autoBuild();
-      Preconditions.checkState(
-          !lambdaExpr.returnExpr().expr().type().equals(TypeNode.VOID),
-          "Lambdas cannot return void-typed expressions.");
       // Must be a declaration.
       lambdaExpr.arguments().stream()
           .forEach(
