@@ -2658,8 +2658,8 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
      *
-     * @param index The index of the value to return.
-     * @return The enum numeric value on the wire of style at the given index.
+     * @param index The index to set the value at.
+     * @param value The enum numeric value on the wire for style to set.
      * @return This builder for chaining.
      */
     public Builder setStyleValue(int index, int value) {
