@@ -95,7 +95,8 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
       Service service,
       Method protoMethod,
       VariableExpr methodDescriptorVarExpr,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      boolean restNumericEnumsEnabled) {
     MethodInvocationExpr methodDescriptorMaker =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
