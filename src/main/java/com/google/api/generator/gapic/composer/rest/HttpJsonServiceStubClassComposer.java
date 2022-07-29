@@ -913,6 +913,15 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
     for (HttpBinding httpBindingFieldName : httpBindingFieldNames) {
+      TypeNode httpBindingType = httpBindingFieldName.type();
+      boolean isComplexObject =
+          !httpBindingType.isPrimitiveType() && !httpBindingType.equals(TypeNode.STRING);
+      if (isComplexObject) {
+        throw new IllegalArgumentException(
+            String.format(
+                "Cannot create fieldExtractorClassInstance for complex object binding \"%s\"",
+                httpBindingFieldName.name()));
+      }
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
           MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);

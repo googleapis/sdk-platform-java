@@ -160,7 +160,7 @@ public class HttpRuleParser {
           httpBindings.add(
               HttpBinding.create(
                   paramName,
-                  nestedMessage.type(),
+                  field.type(),
                   field.isProto3Optional(),
                   field.isRepeated(),
                   patternSampleValue));
