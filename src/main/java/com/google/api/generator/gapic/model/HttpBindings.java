@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
@@ -38,6 +39,8 @@ public abstract class HttpBindings {
   public abstract static class HttpBinding implements Comparable<HttpBinding> {
     public abstract String name();
 
+    public abstract TypeNode type();
+
     abstract String lowerCamelName();
 
     public abstract boolean isOptional();
@@ -48,9 +51,9 @@ public abstract class HttpBindings {
     public abstract String valuePattern();
 
     public static HttpBinding create(
-        String name, boolean isOptional, boolean isRepeated, String valuePattern) {
+        String name, TypeNode type, boolean isOptional, boolean isRepeated, String valuePattern) {
       return new AutoValue_HttpBindings_HttpBinding(
-          name, JavaStyle.toLowerCamelCase(name), isOptional, isRepeated, valuePattern);
+          name, type, JavaStyle.toLowerCamelCase(name), isOptional, isRepeated, valuePattern);
     }
 
     // Do not forget to keep it in sync with equals() implementation.

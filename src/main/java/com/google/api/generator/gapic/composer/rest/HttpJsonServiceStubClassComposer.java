@@ -912,7 +912,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-
     for (HttpBinding httpBindingFieldName : httpBindingFieldNames) {
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =

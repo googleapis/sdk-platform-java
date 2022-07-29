@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.protoparser;
 import com.google.api.AnnotationsProto;
 import com.google.api.HttpRule;
 import com.google.api.HttpRule.PatternCase;
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
@@ -134,7 +135,8 @@ public class HttpRuleParser {
           patternSampleValues != null ? patternSampleValues.get(paramName) : null;
       String[] subFields = paramName.split("\\.");
       if (inputMessage == null) {
-        httpBindings.add(HttpBinding.create(paramName, false, false, patternSampleValue));
+        httpBindings.add(
+            HttpBinding.create(paramName, TypeNode.NULL, false, false, patternSampleValue));
         continue;
       }
       Message nestedMessage = inputMessage;
@@ -157,7 +159,11 @@ public class HttpRuleParser {
           Field field = nestedMessage.fieldMap().get(subFieldName);
           httpBindings.add(
               HttpBinding.create(
-                  paramName, field.isProto3Optional(), field.isRepeated(), patternSampleValue));
+                  paramName,
+                  nestedMessage.type(),
+                  field.isProto3Optional(),
+                  field.isRepeated(),
+                  patternSampleValue));
         }
       }
     }
