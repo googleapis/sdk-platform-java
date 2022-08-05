@@ -51,9 +51,9 @@ def gapic_generator_java_repositories():
     _maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "bbccf674aa441c266df9894182d80de104cabd19be98be002f6d478aaa31574d",
-        strip_prefix = "bazel-skylib-2169ae1c374aab4a09aa90e65efe1a3aad4e279b",
-        urls = ["https://github.com/bazelbuild/bazel-skylib/archive/2169ae1c374aab4a09aa90e65efe1a3aad4e279b.tar.gz"],
+        sha256 = "18ae58793e9036305e02333f6d59c9e0ea73e6d066d874c04bb83a1c5c9ac4a7",
+        strip_prefix = "bazel-skylib-872e9b06e18ae8ba2897cb65b9aaa172aa6279f3",
+        urls = ["https://github.com/bazelbuild/bazel-skylib/archive/872e9b06e18ae8ba2897cb65b9aaa172aa6279f3.tar.gz"],
     )
 
     _maybe(
