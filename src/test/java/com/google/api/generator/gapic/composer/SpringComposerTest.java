@@ -14,18 +14,25 @@
 
 package com.google.api.generator.gapic.composer;
 
+import static org.junit.Assert.assertTrue;
+
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +80,12 @@ public class SpringComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
+    String jsonFilename = "retrying_grpc_service_config.json";
+    Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
     context =
         GapicContext.builder()
             .setMessages(messageTypes)
@@ -80,6 +93,7 @@ public class SpringComposerTest {
             .setServices(services)
             .setHelperResourceNames(outputResourceNames)
             .setTransport(Transport.GRPC)
+            .setServiceConfig(serviceConfig)
             .build();
   }
 
