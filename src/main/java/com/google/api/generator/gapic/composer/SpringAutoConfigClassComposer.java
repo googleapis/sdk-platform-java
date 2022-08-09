@@ -18,6 +18,7 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
@@ -27,6 +28,7 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
+import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -48,11 +50,14 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.ClassComposer;
+import com.google.api.generator.gapic.composer.common.RetrySettingsComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import io.grpc.MethodDescriptor;
@@ -70,10 +75,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
   private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
   private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
+  private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
 
   private static final SpringAutoConfigClassComposer INSTANCE = new SpringAutoConfigClassComposer();
 
   private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+
+  private static final VariableExpr NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR =
+      createNestedRetryParamDefinitionsVarExpr();
 
   private SpringAutoConfigClassComposer() {}
 
@@ -82,11 +91,37 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(GapicContext ignore, Service service) {
+  public GapicClass generate(GapicContext context, Service service) {
     String packageName = service.pakkage() + ".spring";
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
     String className = getThisClassName(service.name());
     GapicClass.Kind kind = Kind.MAIN;
+
+    GapicServiceConfig gapicServiceConfig = context.serviceConfig();
+    //
+    // for (Method method : service.methods()) {
+    //   // do retry settings.
+    //
+    //   Method.Stream streamKind = method.stream();
+    //   if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
+    //     continue;
+    //   }
+    //   if (!Objects.isNull(gapicServiceConfig) && gapicServiceConfig.hasBatchingSetting(service,
+    // method)) {
+    //     Optional<GapicBatchingSettings> batchingSettingOpt =
+    //         gapicServiceConfig.getBatchingSetting(service, method);
+    //     Preconditions.checkState(
+    //         batchingSettingOpt.isPresent(),
+    //         String.format(
+    //             "No batching setting found for service %s, method %s",
+    //             service.name(), method.name()));
+    //     String settingsGetterMethodName =
+    //         String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
+    //     // bodyStatement.add();
+    //
+    //     String retryParamName = gapicServiceConfig.getRetryParamsName(service, method);
+    //   }
+    // }
 
     types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
 
@@ -100,7 +135,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setStatements(createMemberVariables(service.name(), packageName, types))
+            .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
                     createConstructor(service.name(), className, types), createBeanMethod(service)))
@@ -109,9 +144,28 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<Statement> createMemberVariables(
-      String serviceName, String packageName, Map<String, TypeNode> types) {
+  private static VariableExpr createNestedRetryParamDefinitionsVarExpr() {
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.STRING, staticTypes.get("RetrySettings")).stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
 
+    return VariableExpr.withVariable(
+        Variable.builder().setType(varType).setName(RETRY_PARAM_DEFINITIONS_VAR_NAME).build());
+  }
+
+  private static List<Statement> createMemberVariables(
+      Service service,
+      String packageName,
+      Map<String, TypeNode> types,
+      GapicServiceConfig serviceConfig) {
+
+    String serviceName = service.name();
     // private final CredentialsProvider credentialsProvider;
     Variable credentialsProviderVar =
         Variable.builder()
@@ -158,8 +212,27 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement projectIdProviderStatement = ExprStatement.withExpr(projectIdProviderVarExpr);
 
+    // Declare the RETRY_PARAM_DEFINITIONS map.
+    ExprStatement retryPramStatement =
+        ExprStatement.withExpr(
+            NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR
+                .toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build());
+
+    BlockStatement retryParamDefinitionsBlock =
+        RetrySettingsComposer.createRetryParamDefinitionsBlock(
+            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR);
+
     return Arrays.asList(
-        credentialsProviderVarStatement, clientPropertiesStatement, projectIdProviderStatement);
+        credentialsProviderVarStatement,
+        clientPropertiesStatement,
+        projectIdProviderStatement,
+        retryPramStatement,
+        retryParamDefinitionsBlock);
   }
 
   private static MethodDefinition createConstructor(
@@ -458,7 +531,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             ProtoUtils.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
-            UnaryCallable.class);
+            UnaryCallable.class,
+            RetrySettings.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(

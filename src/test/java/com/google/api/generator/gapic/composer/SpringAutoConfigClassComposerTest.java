@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -37,17 +38,22 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -330,6 +336,12 @@ public class SpringAutoConfigClassComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
+    String jsonFilename = "retrying_grpc_service_config.json";
+    Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
     GapicContext context =
         GapicContext.builder()
             .setMessages(messageTypes)
@@ -337,6 +349,7 @@ public class SpringAutoConfigClassComposerTest {
             .setServices(services)
             .setHelperResourceNames(outputResourceNames)
             .setTransport(Transport.GRPC)
+            .setServiceConfig(serviceConfig)
             .build();
 
     Service echoProtoService = services.get(0);
@@ -352,9 +365,11 @@ public class SpringAutoConfigClassComposerTest {
       "package com.google.showcase.v1beta1.spring;\n"
           + "\n"
           + "import com.google.api.gax.core.CredentialsProvider;\n"
+          + "import com.google.api.gax.retrying.RetrySettings;\n"
           + "import com.google.cloud.spring.core.Credentials;\n"
           + "import com.google.cloud.spring.core.DefaultCredentialsProvider;\n"
           + "import com.google.cloud.spring.core.GcpProjectIdProvider;\n"
+          + "import com.google.common.collect.ImmutableMap;\n"
           + "import com.google.showcase.v1beta1.EchoClient;\n"
           + "import java.io.IOException;\n"
           + "import javax.annotation.Generated;\n"
@@ -370,6 +385,15 @@ public class SpringAutoConfigClassComposerTest {
           + "  private final CredentialsProvider credentialsProvider;\n"
           + "  private final EchoProperties clientProperties;\n"
           + "  private final GcpProjectIdProvider projectIdProvider;\n"
+          + "  private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;\n"
+          + "\n"
+          + "  static {\n"
+          + "    ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n"
+          + "    RetrySettings settings = null;\n"
+          + "    settings = RetrySettings.newBuilder().setRpcTimeoutMultiplier(1.0).build();\n"
+          + "    definitions.put(\"no_retry_params\", settings);\n"
+          + "    RETRY_PARAM_DEFINITIONS = definitions.build();\n"
+          + "  }\n"
           + "\n"
           + "  protected EchoSpringAutoConfiguration(\n"
           + "      CredentialsProvider coreCredentialsProvider,\n"
