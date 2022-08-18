@@ -136,7 +136,7 @@ public class HttpRuleParser {
       String[] subFields = paramName.split("\\.");
       if (inputMessage == null) {
         httpBindings.add(
-            HttpBinding.create(paramName, TypeNode.NULL, false, false, patternSampleValue));
+            HttpBinding.create(paramName, TypeNode.NULL, false, false, false, patternSampleValue));
         continue;
       }
       Message nestedMessage = inputMessage;
@@ -163,6 +163,7 @@ public class HttpRuleParser {
                   field.type(),
                   field.isProto3Optional(),
                   field.isRepeated(),
+                  field.isEnum(),
                   patternSampleValue));
         }
       }

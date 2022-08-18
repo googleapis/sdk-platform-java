@@ -52,12 +52,9 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.model.*;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
-import com.google.api.generator.gapic.model.OperationResponse;
-import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
@@ -913,21 +910,24 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
     for (HttpBinding httpBindingFieldName : httpBindingFieldNames) {
-      TypeNode httpBindingType = httpBindingFieldName.type();
-      boolean isComplexObject =
-          !httpBindingType.isPrimitiveType() && !httpBindingType.equals(TypeNode.STRING);
-      if (isComplexObject) {
-        throw new IllegalArgumentException(
-            String.format(
-                "Cannot create fieldExtractorClassInstance for complex object binding \"%s\"",
-                httpBindingFieldName.name()));
-      }
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
-          MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+              MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
       MethodInvocationExpr.Builder requestFieldHasExprBuilder =
-          MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+              MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
       String[] descendantFields = httpBindingFieldName.name().split("\\.");
+
+//      TypeNode httpBindingType = httpBindingFieldName.type();
+//      boolean isComplexObject =
+//          !httpBindingType.isProtoPrimitiveType() && !httpBindingFieldName.isEnum();
+//      ImmutableList<List<MethodArgument>> ms = method.methodSignatures();
+//      if (isComplexObject) {
+//        throw new IllegalArgumentException(
+//            String.format(
+//                "Cannot create fieldExtractorClassInstance for complex object binding \"%s\"",
+//                httpBindingFieldName.name()));
+//      }
+
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =

@@ -41,19 +41,22 @@ public abstract class HttpBindings {
 
     public abstract TypeNode type();
 
+
     abstract String lowerCamelName();
 
     public abstract boolean isOptional();
 
     public abstract boolean isRepeated();
 
+    public abstract boolean isEnum();
+
     @Nullable
     public abstract String valuePattern();
 
     public static HttpBinding create(
-        String name, TypeNode type, boolean isOptional, boolean isRepeated, String valuePattern) {
+        String name, TypeNode type, boolean isOptional, boolean isRepeated, boolean isEnum, String valuePattern) {
       return new AutoValue_HttpBindings_HttpBinding(
-          name, type, JavaStyle.toLowerCamelCase(name), isOptional, isRepeated, valuePattern);
+          name, type, JavaStyle.toLowerCamelCase(name), isOptional, isRepeated, isEnum, valuePattern);
     }
 
     // Do not forget to keep it in sync with equals() implementation.

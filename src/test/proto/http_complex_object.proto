@@ -1,0 +1,105 @@
+// Copyright 2021 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/cloud/extended_operations.proto";
+
+package google.showcase.v1beta1;
+
+option go_package = "github.com/googleapis/gapic-showcase/server/genproto";
+option java_package = "com.google.showcase.v1beta1";
+option java_multiple_files = true;
+
+// This service represents a definition that should fail at compile time
+// due to query/path parameters specified to be non-primitive objects
+service ComplexObjectService {
+
+
+  // This method is exposed in a way such that the expected query params are to be received as object.
+  // This should fail at generation time
+  rpc RepeatDataQuery(ComplexObjectRequest) returns (ComplexObjectResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/repeat:query"
+    };
+  }
+
+  // This method is exposed in a way such that the expected path params are to be received as object.
+  // This should fail at generation time
+  rpc RepeatDataSimplePath(ComplexObjectRequest) returns (ComplexObjectResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/repeat/{info}:simplepath"
+    };
+  }
+}
+
+message ComplexObjectRequest {
+  string name = 1;
+  ComplexObject info = 2;
+}
+
+message ComplexObjectResponse {
+  ComplexObject info = 1;
+}
+
+
+// ComplextObject is a message used for testing REST transcoding of
+// different data types.
+message ComplexObject {
+  enum Color {
+    COLOR_UNSPECIFIED = 0;
+    BLUE = 1;
+    RED = 2;
+    YELLOW = 3;
+    GREEN = 4;
+}
+  // scalar types
+
+  string f_string = 1;
+
+  int32 f_int32 = 2;
+  sint32 f_sint32 = 3;
+  sfixed32 f_sfixed32 = 4;
+
+  uint32 f_uint32 = 5;
+  fixed32 f_fixed32 = 6;
+
+  int64 f_int64 = 7;
+  sint64 f_sint64 = 8;
+  sfixed64 f_sfixed64 = 9;
+
+  uint64 f_uint64 = 10;
+  fixed64 f_fixed64 = 11;
+
+  double f_double = 12;
+  float f_float = 13;
+
+  optional bool f_bool = 14;
+
+  bytes f_bytes = 15;
+
+  Color f_color = 22;
+
+
+  // optional fields
+
+  optional string p_string = 17;
+  optional int32 p_int32 = 18;
+  optional double p_double = 19;
+  optional bool p_bool = 20;
+  optional Color p_color = 23;
+}
+
