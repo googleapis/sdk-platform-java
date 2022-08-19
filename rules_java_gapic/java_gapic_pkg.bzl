@@ -269,7 +269,7 @@ def _java_gapic_srcs_pkg_impl(ctx):
 
         # Remove empty files. If there are no resource names, one such file might have
         # been created. See java_gapic.bzl.
-        rm $(find {package_dir_path}/src/main/java -size 0)
+        find {package_dir_path}/src/main/java -type f -size 0 | while read f; do rm -f $f; done
 
         if [ -d {package_dir_path}/src/main/java/samples ]; then
             mv {package_dir_path}/src/main/java/samples {package_dir_path}
