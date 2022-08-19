@@ -87,7 +87,7 @@ def _gapic_pkg_tar_impl(ctx):
     cd {package_dir_path}/{tar_cd_suffix}
 
     tar -zchpf {tar_prefix}/{package_dir}.tar.gz {tar_prefix}/*
-    cd -
+    cd - > /dev/null
     mv {package_dir_path}/{package_dir}.tar.gz {pkg}
     rm -rf {package_dir_path}
     """.format(
@@ -213,7 +213,7 @@ def _java_gapic_build_configs_pkg_impl(ctx):
     chmod 644 {package_dir_path}/*
     cd {package_dir_path}/{tar_cd_suffix}
     tar -zchpf {tar_prefix}/{package_dir}.tar.gz {tar_prefix}/*
-    cd -
+    cd - > /dev/null
     mv {package_dir_path}/{package_dir}.tar.gz {pkg}
     """.format(
         templates = " ".join(["'%s'" % f.path for f in expanded_templates]),
@@ -286,7 +286,7 @@ def _java_gapic_srcs_pkg_impl(ctx):
     done
     cd {package_dir_path}/{tar_cd_suffix}
     tar -zchpf {tar_prefix}/{package_dir}.tar.gz {tar_prefix}/*
-    cd -
+    cd - > /dev/null
     mv {package_dir_path}/{package_dir}.tar.gz {pkg}
     """.format(
         srcs = " ".join(["'%s'" % f.path for f in srcs]),
