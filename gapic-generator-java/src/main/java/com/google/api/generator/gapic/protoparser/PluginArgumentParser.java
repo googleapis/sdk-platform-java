@@ -29,6 +29,7 @@ public class PluginArgumentParser {
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
   @VisibleForTesting static final String KEY_GAPIC_CONFIG = "gapic-config";
   @VisibleForTesting static final String KEY_METADATA = "metadata";
+  @VisibleForTesting static final String KEY_NUMERIC_ENUM = "rest-numeric-enums";
   @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "api-service-config";
   @VisibleForTesting static final String KEY_TRANSPORT = "transport";
 
@@ -53,7 +54,11 @@ public class PluginArgumentParser {
   }
 
   static boolean hasMetadataFlag(CodeGeneratorRequest request) {
-    return hasMetadataFlag(request.getParameter());
+    return hasFlag(request.getParameter(), KEY_METADATA);
+  }
+
+  static boolean hasNumericEnumFlag(CodeGeneratorRequest request) {
+    return hasFlag(request.getParameter(), KEY_NUMERIC_ENUM);
   }
 
   /** Expects a comma-separated list of file paths. */
@@ -89,8 +94,8 @@ public class PluginArgumentParser {
   }
 
   @VisibleForTesting
-  static boolean hasMetadataFlag(String pluginProtocArgument) {
-    return Arrays.stream(pluginProtocArgument.split(COMMA)).anyMatch(s -> s.equals(KEY_METADATA));
+  static boolean hasFlag(String pluginProtocArgument, String flagKey) {
+    return Arrays.stream(pluginProtocArgument.split(COMMA)).anyMatch(s -> s.equals(flagKey));
   }
 
   private static Optional<String> parseFileArgument(

@@ -14,10 +14,13 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_METADATA;
+import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_NUMERIC_ENUM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -226,26 +229,44 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseMetadataFlag_noneFound() {
+  public void hasMetadataFlag() {
+    CodeGeneratorRequest request =
+        CodeGeneratorRequest.newBuilder()
+            .setParameter(String.join(",", KEY_METADATA, "does-not-matter"))
+            .build();
+    assertTrue(PluginArgumentParser.hasMetadataFlag(request));
+  }
+
+  @Test
+  public void hasNumericEnumFlag() {
+    CodeGeneratorRequest request =
+        CodeGeneratorRequest.newBuilder()
+            .setParameter(String.join(",", KEY_NUMERIC_ENUM, "does-not-matter"))
+            .build();
+    assertTrue(PluginArgumentParser.hasNumericEnumFlag(request));
+  }
+
+  @Test
+  public void hasFlag_noneFound() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =
         String.join(",", Arrays.asList(createGrpcServiceConfig(jsonPath), gapicPath));
-    assertFalse(PluginArgumentParser.hasMetadataFlag(rawArgument));
+    assertFalse(PluginArgumentParser.hasFlag(rawArgument, KEY_METADATA));
 
     // Wrong casing.
     rawArgument =
         String.join(",", Arrays.asList("Metadata", createGrpcServiceConfig(jsonPath), gapicPath));
-    assertFalse(PluginArgumentParser.hasMetadataFlag(rawArgument));
+    assertFalse(PluginArgumentParser.hasFlag(rawArgument, KEY_METADATA));
   }
 
   @Test
-  public void parseMetadataFlag_flagFound() {
+  public void hasFlag_flagFound() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =
         String.join(",", Arrays.asList("metadata", createGrpcServiceConfig(jsonPath), gapicPath));
-    assertTrue(PluginArgumentParser.hasMetadataFlag(rawArgument));
+    assertTrue(PluginArgumentParser.hasFlag(rawArgument, KEY_METADATA));
   }
 
   private static String createGrpcServiceConfig(String path) {

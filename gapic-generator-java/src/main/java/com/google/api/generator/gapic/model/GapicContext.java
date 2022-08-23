@@ -47,6 +47,8 @@ public abstract class GapicContext {
 
   public abstract boolean gapicMetadataEnabled();
 
+  public abstract boolean restNumericEnumsEnabled();
+
   public GapicMetadata gapicMetadata() {
     return gapicMetadata;
   }
@@ -81,7 +83,8 @@ public abstract class GapicContext {
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder()
         .setMixinServices(Collections.emptyList())
-        .setGapicMetadataEnabled(false);
+        .setGapicMetadataEnabled(false)
+        .setRestNumericEnumsEnabled(false);
   }
 
   @AutoValue.Builder
@@ -107,6 +110,8 @@ public abstract class GapicContext {
     public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
 
     public abstract Builder setGapicMetadataEnabled(boolean gapicMetadataEnabled);
+
+    public abstract Builder setRestNumericEnumsEnabled(boolean restNumericEnumsEnabled);
 
     public abstract Builder setTransport(Transport transport);
 

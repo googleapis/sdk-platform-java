@@ -73,6 +73,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
+        .setRestNumericEnumsEnabled(true)
         .build();
   }
 }
