@@ -361,6 +361,44 @@ public class SpringAutoConfigClassComposerTest {
     assertEquals(EXPECTED_CLASS_STRING, visitor.write());
   }
 
+  @Test
+  public void generatePropertiesTest() {
+
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+
+    List<Service> services =
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    GapicContext context =
+        GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setHelperResourceNames(outputResourceNames)
+            .setTransport(Transport.GRPC)
+            .setServiceConfig(serviceConfig)
+            .build();
+
+    Service echoProtoService = services.get(0);
+
+    GapicClass clazz = SpringPropertiesClassComposer.instance().generate(context, echoProtoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    // TODO: print out to check results for now. Need to convert to assert.
+    System.out.println(visitor.write());
+  }
+
   protected static final String EXPECTED_CLASS_STRING =
       "package com.google.showcase.v1beta1.spring;\n"
           + "\n"
@@ -383,7 +421,7 @@ public class SpringAutoConfigClassComposerTest {
           + "@ConditionalOnClass(\"value = Echo\")\n"
           + "public class EchoSpringAutoConfiguration {\n"
           + "  private final CredentialsProvider credentialsProvider;\n"
-          + "  private final EchoProperties clientProperties;\n"
+          + "  private final EchoSpringProperties clientProperties;\n"
           + "  private final GcpProjectIdProvider projectIdProvider;\n"
           + "  private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;\n"
           + "\n"
@@ -398,7 +436,7 @@ public class SpringAutoConfigClassComposerTest {
           + "  protected EchoSpringAutoConfiguration(\n"
           + "      CredentialsProvider coreCredentialsProvider,\n"
           + "      GcpProjectIdProvider coreProjectIdProvider,\n"
-          + "      EchoProperties clientProperties)\n"
+          + "      EchoSpringProperties clientProperties)\n"
           + "      throws IOException {\n"
           + "    this.clientProperties = clientProperties;\n"
           + "    if (clientProperties.getCredentials().hasKey()) {\n"
