@@ -129,7 +129,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       Service service,
       Method protoMethod,
       VariableExpr methodDescriptorVarExpr,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      boolean restNumericEnumsEnabled) {
     MethodInvocationExpr expr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
@@ -152,7 +153,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     expr = methodMaker.apply("setHttpMethod", getHttpMethodTypeExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setType", getMethodTypeExpr(protoMethod)).apply(expr);
     expr =
-        methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
+        methodMaker
+            .apply(
+                "setRequestFormatter",
+                getRequestFormatterExpr(protoMethod, restNumericEnumsEnabled))
+            .apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
 
     if (protoMethod.isOperationPollingMethod() || protoMethod.hasLro()) {
@@ -320,7 +325,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .build();
   }
 
-  private List<Expr> getRequestFormatterExpr(Method protoMethod) {
+  private List<Expr> getRequestFormatterExpr(Method protoMethod, boolean restNumericEnumsEnabled) {
     BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>>
         methodMaker = getMethodMaker();
 
@@ -351,7 +356,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         protoMethod,
                         extractorVarType,
                         protoMethod.httpBindings().pathParameters(),
-                        "putPathParam")))
+                        "putPathParam",
+                        restNumericEnumsEnabled)))
             .apply(expr);
 
     if (!protoMethod.httpBindings().lowerCamelAdditionalPatterns().isEmpty()) {
@@ -387,7 +393,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         protoMethod,
                         extractorVarType,
                         protoMethod.httpBindings().queryParameters(),
-                        "putQueryParam")))
+                        "putQueryParam",
+                        restNumericEnumsEnabled)))
             .apply(expr);
 
     extractorVarType = TypeNode.STRING;
@@ -404,7 +411,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                             ? protoMethod.httpBindings().pathParameters()
                             : protoMethod.httpBindings().bodyParameters(),
                         "toBody",
-                        asteriskBody)))
+                        asteriskBody,
+                        restNumericEnumsEnabled)))
             .apply(expr);
     expr = methodMaker.apply("build", Collections.emptyList()).apply(expr);
 
@@ -771,7 +779,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
       String serializerMethodName,
-      boolean asteriskBody) {
+      boolean asteriskBody,
+      boolean restNumericEnumEnabled) {
     List<Statement> bodyStatements = new ArrayList<>();
 
     Expr returnExpr = null;
@@ -844,6 +853,13 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue(bodyParamName)));
       paramsPutArgs.add(prevExpr);
 
+      PrimitiveValue primitiveValue =
+          PrimitiveValue.builder()
+              .setType(TypeNode.BOOLEAN)
+              .setValue(String.valueOf(restNumericEnumEnabled))
+              .build();
+      paramsPutArgs.add(ValueExpr.withValue(primitiveValue));
+
       returnExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(serializerExpr)
@@ -866,7 +882,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       Method method,
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
-      String serializerMethodName) {
+      String serializerMethodName,
+      boolean restNumericEnumsEnabled) {
     List<Statement> bodyStatements = new ArrayList<>();
 
     VariableExpr fieldsVarExpr =
@@ -978,6 +995,23 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       } else {
         bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
       }
+    }
+
+    if (restNumericEnumsEnabled && serializerMethodName.equals("putQueryParam")) {
+      ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
+
+      paramsPutArgs.add(fieldsVarExpr);
+      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("$alt")));
+      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("json;enum-encoding=int")));
+
+      Expr paramsPutExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(serializerVarExpr)
+              .setMethodName(serializerMethodName)
+              .setArguments(paramsPutArgs.build())
+              .setReturnType(extractorReturnType)
+              .build();
+      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
     }
 
     // Overrides FieldsExtractor

@@ -78,7 +78,8 @@ public class HttpJsonEchoStub extends EchoStub {
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                          ProtoRestSerializer.create()
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<EchoResponse>newBuilder()
@@ -112,7 +113,8 @@ public class HttpJsonEchoStub extends EchoStub {
                         return fields;
                       })
                   .setRequestBodyExtractor(
-                      request -> ProtoRestSerializer.create().toBody("error", request.getError()))
+                      request ->
+                          ProtoRestSerializer.create().toBody("error", request.getError(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<EchoResponse>newBuilder()
@@ -146,7 +148,8 @@ public class HttpJsonEchoStub extends EchoStub {
                           })
                       .setRequestBodyExtractor(
                           request ->
-                              ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<PagedExpandResponse>newBuilder()
@@ -180,7 +183,8 @@ public class HttpJsonEchoStub extends EchoStub {
                           })
                       .setRequestBodyExtractor(
                           request ->
-                              ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<PagedExpandResponse>newBuilder()
@@ -211,7 +215,8 @@ public class HttpJsonEchoStub extends EchoStub {
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                          ProtoRestSerializer.create()
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Operation>newBuilder()
@@ -245,7 +250,8 @@ public class HttpJsonEchoStub extends EchoStub {
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                          ProtoRestSerializer.create()
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<BlockResponse>newBuilder()
@@ -276,7 +282,8 @@ public class HttpJsonEchoStub extends EchoStub {
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                          ProtoRestSerializer.create()
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Object>newBuilder()
@@ -312,7 +319,8 @@ public class HttpJsonEchoStub extends EchoStub {
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("*", request.toBuilder().build()))
+                          ProtoRestSerializer.create()
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Object>newBuilder()
