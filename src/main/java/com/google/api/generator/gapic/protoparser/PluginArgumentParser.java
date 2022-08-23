@@ -95,7 +95,7 @@ public class PluginArgumentParser {
 
   @VisibleForTesting
   static boolean hasFlag(String pluginProtocArgument, String flagKey) {
-    return Arrays.asList(pluginProtocArgument.split(COMMA)).contains(flagKey);
+    return Arrays.stream(pluginProtocArgument.split(COMMA)).anyMatch(s -> s.equals(flagKey));
   }
 
   private static Optional<String> parseFileArgument(

@@ -796,6 +796,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             Variable.builder().setType(method.inputType()).setName("request").build());
     Expr bodyRequestExpr = requestVarExpr;
     String requestMethodPrefix = "get";
+    String bodyParamName = null;
 
     if (asteriskBody) {
       bodyRequestExpr =
@@ -813,6 +814,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       // Handle foo.bar cases by descending into the subfields.
       MethodInvocationExpr.Builder requestFieldMethodExprBuilder =
           MethodInvocationExpr.builder().setExprReferenceExpr(prevExpr);
+      bodyParamName = JavaStyle.toLowerCamelCase(httpBindingFieldName.name());
       String[] descendantFields = httpBindingFieldName.name().split("\\.");
       if (asteriskBody && descendantFields.length > 1) {
         // This is the `body: "*"` case, do not clean nested body fields as it a very rare, not
@@ -846,7 +848,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .setExprReferenceExpr(prevExpr)
                 .setMethodName("build")
                 .build();
+        bodyParamName = "*";
       }
+      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue(bodyParamName)));
       paramsPutArgs.add(prevExpr);
 
       PrimitiveValue primitiveValue =
