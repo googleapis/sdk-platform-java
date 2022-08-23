@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
@@ -101,7 +102,8 @@ public class HttpRuleParser {
       queryParamNames =
           Sets.difference(inputMessageOpt.get().fieldMap().keySet(), bodyBinidngsUnion);
     }
-
+    validateQueryParameters(queryParamNames, inputMessageOpt);
+    validatePathParameters(pathParamNames, inputMessageOpt, messageTypes);
     Message message = inputMessageOpt.orElse(null);
     return HttpBindings.builder()
         .setHttpVerb(HttpBindings.HttpVerb.valueOf(httpRule.getPatternCase().toString()))
@@ -119,6 +121,60 @@ public class HttpRuleParser {
             validateAndConstructHttpBindings(bodyParamNames, message, messageTypes, null))
         .setIsAsteriskBody(body.equals(ASTERISK))
         .build();
+  }
+
+  private static void validatePathParameters(
+      Set<String> pathParamNames,
+      Optional<Message> inputMessageOpt,
+      Map<String, Message> messageTypes) {
+    for (String pathParam : pathParamNames) {
+      String[] fieldNavigator = pathParam.split("\\.");
+      Field rootField = inputMessageOpt.get().fieldMap().get(fieldNavigator[0]);
+      if (rootField.isMessage()) {
+        Function<Field, String> getMessageKey =
+            f ->
+                String.format("%s.%s", f.type().reference().pakkage(), f.type().reference().name());
+        Message currentMsg = messageTypes.get(getMessageKey.apply(rootField));
+        Field currentField = null;
+        for (int i = 1; i < fieldNavigator.length; i++) {
+          currentField = currentMsg.fieldMap().get(fieldNavigator[i]);
+          if (currentField.isMessage()) {
+            currentMsg = messageTypes.get(getMessageKey.apply(currentField));
+          }
+        }
+        Preconditions.checkState(
+            currentField != null,
+            String.format("Field \"%s\" of type Message cannot be used as path param", pathParam));
+        Preconditions.checkState(
+            currentField.type().isProtoPrimitiveType() || currentField.isEnum(),
+            String.format(
+                "Path param \"%s\" of type %s cannot be used as path param",
+                pathParam, currentField.type().typeKind()));
+      } else {
+        Preconditions.checkState(
+            fieldNavigator.length == 1,
+            String.format(
+                "Found path param \"%s\" with navigator of more than one level for a primitive path param (e.g. primitive.property",
+                pathParam));
+        Preconditions.checkState(
+            rootField.type().isProtoPrimitiveType() || rootField.isEnum(),
+            String.format(
+                "Path param \"%s\" of type %s cannot be used as path param",
+                pathParam, rootField.type().typeKind()));
+      }
+    }
+  }
+
+  private static void validateQueryParameters(
+      Set<String> queryParamNames, Optional<Message> inputMessageOpt) {
+    for (String queryParam : queryParamNames) {
+      Field field = inputMessageOpt.get().fieldMap().get(queryParam);
+      Preconditions.checkState(
+          field.type().isProtoPrimitiveType() || field.isEnum(),
+          String.format(
+              "Query param \"%s\" of type %s cannot be used as query param",
+              queryParam, field.type().typeKind()));
+    }
   }
 
   private static Set<HttpBinding> validateAndConstructHttpBindings(

@@ -51,14 +51,6 @@ service Compliance {
   }
 
   // This method echoes the ComplianceData request. This method exercises
-  // sending all request fields as query parameters.
-  rpc RepeatDataQuery(RepeatRequest) returns (RepeatResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/repeat:query"
-    };
-  }
-
-  // This method echoes the ComplianceData request. This method exercises
   // sending some parameters as "simple" path variables (i.e., of the form
   // "/bar/{foo}" rather than "/{foo=bar/*}"), and the rest as query parameters.
   rpc RepeatDataSimplePath(RepeatRequest) returns (RepeatResponse) {
