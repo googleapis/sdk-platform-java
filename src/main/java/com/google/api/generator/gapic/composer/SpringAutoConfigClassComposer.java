@@ -98,7 +98,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     GapicClass.Kind kind = Kind.MAIN;
 
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
-    //
+
+    // WIP: retry settings.
     // for (Method method : service.methods()) {
     //   // do retry settings.
     //
@@ -106,8 +107,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     //   if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
     //     continue;
     //   }
-    //   if (!Objects.isNull(gapicServiceConfig) && gapicServiceConfig.hasBatchingSetting(service,
-    // method)) {
+    //   if (!Objects.isNull(gapicServiceConfig)
+    //       && gapicServiceConfig.hasBatchingSetting(service, method)) {
     //     Optional<GapicBatchingSettings> batchingSettingOpt =
     //         gapicServiceConfig.getBatchingSetting(service, method);
     //     Preconditions.checkState(
@@ -561,7 +562,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     TypeNode clientProperties =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(service.name() + "Properties")
+                .setName(service.name() + "SpringProperties")
                 .setPakkage(packageName)
                 .build());
 
