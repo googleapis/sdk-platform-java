@@ -72,6 +72,16 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
 
+    // TODO: this is the prefix user will use to set properties, may need to change depending on
+    // branding.
+    AnnotationNode classAnnotationNode =
+        AnnotationNode.builder()
+            .setType(types.get("ConfigurationProperties"))
+            .setDescription(
+                "google.cloud.spring.autoconfig."
+                    + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()))
+            .build();
+
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(packageName)
@@ -79,6 +89,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(createGetterSetters(service, types, gapicServiceConfig))
+            .setAnnotations(Arrays.asList(classAnnotationNode))
+            .setImplementsTypes(Arrays.asList(types.get("CredentialsSupplier")))
             .build();
     return GapicClass.create(Kind.MAIN, classDef);
     // return null;
@@ -141,6 +153,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
                     .collect(Collectors.toList()))
             .build();
+    // TODO: credentials field needs annotation.
     ExprStatement credentialsStatement =
         createMemberVarStatement(
             "credentials", types.get("Credentials"), true, defaultCredentialScopes);
@@ -193,9 +206,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     List<Statement> statements =
         retrySettings.stream().map(x -> (Statement) x).collect(Collectors.toList());
-    statements.add(credentialsStatement);
-    statements.add(quotaProjectIdVarStatement);
-    statements.add(executorThreadCountVarStatement);
+    statements.add(0, executorThreadCountVarStatement);
+    statements.add(0, quotaProjectIdVarStatement);
+    statements.add(0, credentialsStatement);
     return statements;
   }
 
@@ -324,6 +337,29 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 .setPakkage("com.google.cloud.spring.core")
                 .build());
 
+    // import com.google.cloud.spring.core.CredentialsSupplier;
+    TypeNode credentialsSupplier =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("CredentialsSupplier")
+                .setPakkage("com.google.cloud.spring.core")
+                .build());
+    // import org.springframework.boot.context.properties.ConfigurationProperties;
+    TypeNode configurationProperties =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("ConfigurationProperties")
+                .setPakkage("org.springframework.boot.context.properties")
+                .build());
+
+    // import org.springframework.boot.context.properties.NestedConfigurationProperty;
+    TypeNode nestedConfigurationProperty =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NestedConfigurationProperty")
+                .setPakkage("org.springframework.boot.context.properties")
+                .build());
+
     // import org.threeten.bp.Duration;
     TypeNode duration =
         TypeNode.withReference(
@@ -332,6 +368,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put("Credentials", credentials);
     typeMap.put("Duration", duration);
+    typeMap.put("CredentialsSupplier", credentialsSupplier);
+    typeMap.put("ConfigurationProperties", configurationProperties);
+    typeMap.put("NestedConfigurationProperty", nestedConfigurationProperty);
 
     return typeMap;
   }
