@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
@@ -123,6 +124,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 Arrays.asList(
                     createConstructor(service.name(), className, types),
                     createCredentialsProviderBeanMethod(service, className, types),
+                    createTransportChannelProviderBeanMethod(service, types),
                     createBeanMethod(service, types)))
             .setAnnotations(createClassAnnotations(service, types))
             .build();
@@ -500,6 +502,35 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .build();
   }
 
+  private static MethodDefinition createTransportChannelProviderBeanMethod(
+      Service service, Map<String, TypeNode> types) {
+
+    //   @Bean
+    //   @ConditionalOnMissingBean
+    //   public TransportChannelProvider defaultLanguageTransportChannelProvider() {
+    //     return LanguageServiceSettings.defaultTransportChannelProvider();
+    //   }
+    // build expressions
+    MethodInvocationExpr returnExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("defaultTransportChannelProvider")
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+            .build();
+
+    String methodName = "default" + service.name() + "TransportChannelProvider";
+    return MethodDefinition.builder()
+        .setName(methodName)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+        .setAnnotations(
+            Arrays.asList(
+                AnnotationNode.withType(types.get("Bean")),
+                AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
   private static MethodDefinition createBeanMethod(Service service, Map<String, TypeNode> types) {
     // build expressions
     MethodInvocationExpr lhsExpr =
@@ -548,7 +579,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             // ServerStreamingCallable.class,
             // TimeUnit.class,
             // UnaryCallable.class,
-            RetrySettings.class);
+            RetrySettings.class,
+            TransportChannelProvider.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
@@ -617,6 +649,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName(ClassNames.getServiceClientClassName(service))
                 .setPakkage(service.pakkage())
                 .build());
+    TypeNode serviceSettings =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(ClassNames.getServiceSettingsClassName(service))
+                .setPakkage(service.pakkage())
+                .build());
 
     TypeNode bean =
         TypeNode.withReference(
@@ -662,6 +700,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("Credentials", credentials);
     typeMap.put("DefaultCredentialsProvider", defaultCredentialsProvider);
     typeMap.put("ServiceClient", serviceClient);
+    typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("Bean", bean);
     typeMap.put("Configuration", configuration);
     typeMap.put("EnableConfigurationProperties", enableConfigurationProperties);
