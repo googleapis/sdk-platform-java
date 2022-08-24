@@ -60,8 +60,16 @@ public class CommentComposer {
       Arrays.asList(
           CommentStatement.withComment(
               LineComment.withComment(
-                  "This snippet has been automatically generated for illustrative purposes only.")),
+                  "This snippet has been automatically generated and should be regarded as a code template only.")),
+          CommentStatement.withComment(
+              LineComment.withComment("It will require modifications to work:")),
           CommentStatement.withComment(
               LineComment.withComment(
-                  "It may require modifications to work in your environment.")));
+                  "- It may require correct/in-range values for request initialization.")),
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "- It may require specifying regional endpoints when creating the service client as shown in")),
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library")));
 }
