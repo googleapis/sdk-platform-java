@@ -107,8 +107,11 @@ public class SampleCodeWriterTest {
     String result = SampleCodeWriter.writeInlineSample(testingSampleStatements);
     String expected =
         LineFormatter.lines(
-            "// This snippet has been automatically generated for illustrative purposes only.\n",
-            "// It may require modifications to work in your environment.\n",
+            "// This snippet has been automatically generated and should be regarded as a code template only.\n",
+            "// It will require modifications to work:\n",
+            "// - It may require correct/in-range values for request initialization.\n",
+            "// - It may require specifying regional endpoints when creating the service client as shown in\n",
+            "// https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library\n",
             "ClientSettings clientSettings = ClientSettings.newBuilder().build();\n",
             "try (boolean aBool = false) {\n",
             "  int x = 3;\n",
@@ -139,8 +142,11 @@ public class SampleCodeWriterTest {
             "  }\n",
             "\n",
             "  public static void syncWriteExecutableSample() throws Exception {\n",
-            "    // This snippet has been automatically generated for illustrative purposes only.\n",
-            "    // It may require modifications to work in your environment.\n",
+            "    // This snippet has been automatically generated and should be regarded as a code template only.\n",
+            "    // It will require modifications to work:\n",
+            "    // - It may require correct/in-range values for request initialization.\n",
+            "    // - It may require specifying regional endpoints when creating the service client as shown in\n",
+            "    // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library\n",
             "    ClientSettings clientSettings = ClientSettings.newBuilder().build();\n",
             "    try (boolean aBool = false) {\n",
             "      int x = 3;\n",
