@@ -18,6 +18,8 @@ import com.google.api.generator.engine.lexicon.Keyword;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -42,6 +44,9 @@ public abstract class VariableExpr implements Expr {
   public abstract boolean isFinal();
 
   public abstract boolean isVolatile();
+
+  // Optional
+  public abstract ImmutableList<AnnotationNode> annotations();
 
   // Please use this only in conjunction with methods.
   // Supports only parameterized types like Map<K, V>.
@@ -77,7 +82,8 @@ public abstract class VariableExpr implements Expr {
         .setIsStatic(false)
         .setIsVolatile(false)
         .setScope(ScopeNode.LOCAL)
-        .setTemplateObjects(ImmutableList.of());
+        .setTemplateObjects(ImmutableList.of())
+        .setAnnotations(Collections.emptyList());
   }
 
   public abstract Builder toBuilder();
@@ -101,6 +107,10 @@ public abstract class VariableExpr implements Expr {
     public abstract Builder setIsFinal(boolean isFinal);
 
     public abstract Builder setIsVolatile(boolean isVolatile);
+
+    public abstract Builder setAnnotations(List<AnnotationNode> annotations);
+
+    abstract ImmutableList<AnnotationNode> annotations();
 
     // This should be used only for method arguments.
     public abstract Builder setTemplateObjects(List<Object> objects);
@@ -133,7 +143,20 @@ public abstract class VariableExpr implements Expr {
                   })
               .collect(Collectors.toList()));
 
+      // Remove duplicates while maintaining insertion order.
+      ImmutableList<AnnotationNode> processedAnnotations = annotations();
+      setAnnotations(
+          new LinkedHashSet<>(processedAnnotations).stream().collect(Collectors.toList()));
+
       VariableExpr variableExpr = autoBuild();
+
+      // TODO: should match on AnnotationNode @Target of ElementType.FIELD
+      if (!variableExpr.isDecl()) {
+        Preconditions.checkState(
+            variableExpr.annotations().isEmpty(),
+            "Annotation can only be added to variable declaration.");
+      }
+
       if (variableExpr.isDecl() || variableExpr.exprReferenceExpr() != null) {
         Preconditions.checkState(
             variableExpr.isDecl() ^ (variableExpr.exprReferenceExpr() != null),

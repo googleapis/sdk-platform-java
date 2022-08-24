@@ -259,6 +259,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     // VariableExpr will handle isDecl and exprReferenceExpr edge cases.
     if (variableExpr.isDecl()) {
+      // Annotations, if any.
+      annotations(variableExpr.annotations());
+
       if (!scope.equals(ScopeNode.LOCAL)) {
         scope.accept(this);
         space();

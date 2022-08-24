@@ -888,6 +888,25 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeAssignmentExpr_variableDeclarationWithAnnotation() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setAnnotations(Arrays.asList(AnnotationNode.DEPRECATED, AnnotationNode.DEPRECATED))
+            .build();
+
+    Value value = StringObjectValue.withValue("Hi! World. \n");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("@Deprecated\nString x = \"Hi! World. \\n\"");
+  }
+
+  @Test
   public void writeMethodInvocationExpr_basic() {
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder().setMethodName("foobar").build();
