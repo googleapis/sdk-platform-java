@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -26,6 +27,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThisObjectValue;
@@ -120,6 +122,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethods(
                 Arrays.asList(
                     createConstructor(service.name(), className, types),
+                    createCredentialsProviderBeanMethod(service, className, types),
                     createBeanMethod(service, types)))
             .setAnnotations(createClassAnnotations(service, types))
             .build();
@@ -451,6 +454,50 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         conditionalOnClassNode,
         conditionalOnPropertyNode,
         enableConfigurationPropertiesNode);
+  }
+
+  private static MethodDefinition createCredentialsProviderBeanMethod(
+      Service service, String className, Map<String, TypeNode> types) {
+    // @Bean
+    // @ConditionalOnMissingBean
+    // public CredentialsProvider googleCredentials() throws IOException {
+    //   return new DefaultCredentialsProvider(this.clientProperties);
+    // }
+
+    Variable clientPropertiesVar =
+        Variable.builder()
+            .setName("clientProperties")
+            .setType(types.get(service.name() + "Properties"))
+            .build();
+
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+    VariableExpr thisClientProperties =
+        VariableExpr.withVariable(clientPropertiesVar)
+            .toBuilder()
+            .setExprReferenceExpr(thisExpr)
+            .build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setExpr(
+                NewObjectExpr.builder()
+                    .setType(types.get("DefaultCredentialsProvider"))
+                    .setArguments(thisClientProperties)
+                    .build())
+            .setType(types.get("CredentialsProvider"))
+            .build();
+
+    String methodName = "googleCredentials";
+    return MethodDefinition.builder()
+        .setName(methodName)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(types.get("CredentialsProvider"))
+        .setAnnotations(
+            Arrays.asList(
+                AnnotationNode.withType(types.get("Bean")),
+                AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
+        .setReturnExpr(castExpr)
+        .build();
   }
 
   private static MethodDefinition createBeanMethod(Service service, Map<String, TypeNode> types) {
