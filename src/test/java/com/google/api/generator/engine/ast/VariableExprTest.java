@@ -312,13 +312,11 @@ public class VariableExprTest {
   @Test
   public void invalidVariableExpr_annotationNoDeclaration() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            VariableExpr.builder()
-                .setVariable(variable)
-                .setIsDecl(false)
-                .setAnnotations(Arrays.asList(AnnotationNode.DEPRECATED))
-                .build());
+    VariableExpr.Builder variableExprBuilder =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(false)
+            .setAnnotations(Arrays.asList(AnnotationNode.DEPRECATED));
+    assertThrows(IllegalStateException.class, () -> variableExprBuilder.build());
   }
 }
