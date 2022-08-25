@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
@@ -26,9 +27,11 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThisObjectValue;
@@ -126,7 +129,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     createConstructor(service.name(), className, types),
                     createCredentialsProviderBeanMethod(service, className, types),
                     createTransportChannelProviderBeanMethod(service, types),
-                    createClientBeanMethod(service, types)))
+                    createClientBeanMethod(service, className, types)))
             .setAnnotations(createClassAnnotations(service, types))
             .build();
     return GapicClass.create(kind, classDef);
@@ -532,37 +535,18 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .build();
   }
 
+  private static IfStatement createIfStatement(
+      Expr conditionExpr, List<Statement> ifBody, List<Statement> elseBody) {
+    IfStatement.Builder credentialIfStatement =
+        IfStatement.builder().setConditionExpr(conditionExpr).setBody(ifBody);
+    if (elseBody != null) {
+      credentialIfStatement.setElseBody(elseBody);
+    }
+    return credentialIfStatement.build();
+  }
+
   private static MethodDefinition createClientBeanMethod(
-      Service service, Map<String, TypeNode> types) {
-    // @Bean
-    // @ConditionalOnMissingBean
-    // public LanguageServiceClient languageServiceClient(CredentialsProvider credentialsProvider,
-    //     TransportChannelProvider defaultTransportChannelProvider)
-    //   throws IOException {
-    //
-    //   LanguageServiceSettings.Builder clientSettingsBuilder =
-    //       LanguageServiceSettings.newBuilder()
-    //           .setCredentialsProvider(credentialsProvider)
-    //           .setTransportChannelProvider(defaultTransportChannelProvider)
-    //           .setHeaderProvider(
-    //               new UserAgentHeaderProvider(this.getClass()));
-    //   if (clientProperties.getQuotaProjectId() != null) {
-    //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
-    //     LOGGER.info("Quota project id set to: " + clientProperties.getQuotaProjectId()
-    //         + ", this overrides project id from credentials.");
-    //   }
-    //
-    //   if (clientProperties.getExecutorThreadCount() != null) {
-    //     ExecutorProvider executorProvider =
-    // LanguageServiceSettings.defaultExecutorProviderBuilder()
-    //         .setExecutorThreadCount(clientProperties.getExecutorThreadCount()).build();
-    //     clientSettingsBuilder
-    //         .setBackgroundExecutorProvider(executorProvider);
-    //   }
-    //   if (clientProperties.isUseRest()) {
-    //     clientSettingsBuilder.setTransportChannelProvider(
-    //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
-    //   }
+      Service service, String className, Map<String, TypeNode> types) {
 
     // argument variables:
     VariableExpr credentialsProviderVariableExpr =
@@ -626,6 +610,114 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setValueExpr(settingsBuilderExpr)
             .build();
 
+    //   if (this.clientProperties.getQuotaProjectId() != null) {
+    //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
+    //     LOGGER.info("Quota project id set to: " + clientProperties.getQuotaProjectId()
+    //         + ", this overrides project id from credentials.");
+    //   }
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+    Variable clientPropertiesVar =
+        Variable.builder()
+            .setName("clientProperties")
+            .setType(types.get(service.name() + "Properties"))
+            .build();
+
+    VariableExpr thisClientPropertiesVarExpr =
+        VariableExpr.withVariable(clientPropertiesVar)
+            .toBuilder()
+            .setExprReferenceExpr(thisExpr)
+            .build();
+    MethodInvocationExpr getQuotaProjectId =
+        MethodInvocationExpr.builder()
+            .setMethodName("getQuotaProjectId")
+            .setReturnType(TypeNode.STRING)
+            .setExprReferenceExpr(thisClientPropertiesVarExpr)
+            .build();
+    RelationalOperationExpr projectIdIsNull =
+        RelationalOperationExpr.notEqualToWithExprs(getQuotaProjectId, ValueExpr.createNullExpr());
+
+    //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
+    MethodInvocationExpr setQuotaProjectId =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
+            .setMethodName("setQuotaProjectId")
+            .setArguments(getQuotaProjectId)
+            .build();
+
+    IfStatement ifStatement =
+        createIfStatement(
+            projectIdIsNull,
+            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId)), // TODO add logger info
+            null);
+    //   if (this.clientProperties.getExecutorThreadCount() != null) {
+    //     ExecutorProvider executorProvider =
+    // LanguageServiceSettings.defaultExecutorProviderBuilder()
+    //         .setExecutorThreadCount(clientProperties.getExecutorThreadCount()).build();
+    //     clientSettingsBuilder
+    //         .setBackgroundExecutorProvider(executorProvider);
+    //   }
+
+    MethodInvocationExpr getExecutorThreadCount =
+        MethodInvocationExpr.builder()
+            .setMethodName("getExecutorThreadCount")
+            .setReturnType(TypeNode.INT_OBJECT)
+            .setExprReferenceExpr(thisClientPropertiesVarExpr)
+            .build();
+    RelationalOperationExpr executorThreadCountIsNull =
+        RelationalOperationExpr.notEqualToWithExprs(
+            getExecutorThreadCount, ValueExpr.createNullExpr());
+    VariableExpr executorProviderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("ExecutorProvider"))
+                .setName("executorProvider")
+                .build());
+
+    MethodInvocationExpr chainedMethodToSetExecutorProvider =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setMethodName("defaultExecutorProviderBuilder")
+            .build();
+    chainedMethodToSetExecutorProvider =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(chainedMethodToSetExecutorProvider)
+            .setMethodName("setExecutorThreadCount")
+            .setArguments(getExecutorThreadCount)
+            .build();
+    chainedMethodToSetExecutorProvider =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(chainedMethodToSetExecutorProvider)
+            .setMethodName("build")
+            .setReturnType(STATIC_TYPES.get("ExecutorProvider"))
+            .build();
+    AssignmentExpr executorProviderAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(executorProviderVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(chainedMethodToSetExecutorProvider)
+            .build();
+    MethodInvocationExpr setBackgroundExecutorProvider =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
+            .setMethodName("setBackgroundExecutorProvider")
+            .setArguments(executorProviderVarExpr)
+            .build();
+
+    IfStatement ifStatement2 =
+        createIfStatement(
+            executorThreadCountIsNull,
+            Arrays.asList(
+                ExprStatement.withExpr(executorProviderAssignExpr),
+                ExprStatement.withExpr(setBackgroundExecutorProvider)), // TODO add logger info
+            null);
+
+    // TODO: more if statements
+    //   if (clientProperties.getUseRest()) {
+    //     clientSettingsBuilder.setTransportChannelProvider(
+    //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
+    //   }
+
+    // TODO: retry settings for each method
+
     // return expressions
     MethodInvocationExpr serviceSettingsBuilt =
         MethodInvocationExpr.builder()
@@ -647,8 +739,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
 
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(settingCreateExpr);
+    List<Statement> bodyExprs = new ArrayList<>();
+    bodyExprs.add(ExprStatement.withExpr(settingCreateExpr));
+    bodyExprs.add(ifStatement);
+    bodyExprs.add(ifStatement2);
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
@@ -663,34 +757,18 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(returnExpr)
-        .setBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(bodyExprs)
+        // bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
-            // BackgroundResource.class,
-            // BackgroundResourceAggregation.class,
-            // BidiStreamingCallable.class,
-            // ClientContext.class,
-            // ClientStreamingCallable.class,
             Generated.class,
-            // GrpcCallSettings.class,
-            // GrpcOperationsStub.class,
-            // GrpcStubCallableFactory.class,
-            // InterruptedException.class,
-            // IOException.class,
-            // MethodDescriptor.class,
-            // Operation.class,
-            // OperationCallable.class,
-            // ProtoUtils.class,
-            // ServerStreamingCallable.class,
-            // TimeUnit.class,
-            // UnaryCallable.class,
             RetrySettings.class,
-            TransportChannelProvider.class);
+            TransportChannelProvider.class,
+            ExecutorProvider.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
