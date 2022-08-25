@@ -474,8 +474,16 @@ public class SpringAutoConfigClassComposerTest {
           + "\n"
           + "  @Bean\n"
           + "  @ConditionalOnMissingBean\n"
-          + "  public EchoClient echoClient() throws IOException {\n"
-          + "    return EchoClient.create();\n"
+          + "  public EchoClient echoClient(\n"
+          + "      CredentialsProvider credentialsProvider,\n"
+          + "      TransportChannelProvider defaultTransportChannelProvider)\n"
+          + "      throws IOException {\n"
+          + "    EchoSettings.Builder clientSettingsBuilder =\n"
+          + "        EchoSettings.newBuilder()\n"
+          + "            .setCredentialsProvider(credentialsProvider)\n"
+          + "            .setTransportChannelProvider(defaultTransportChannelProvider)\n"
+          + "            .setHeaderProvider();\n"
+          + "    return EchoClient.create(clientSettingsBuilder.build());\n"
           + "  }\n"
           + "}\n";
 }

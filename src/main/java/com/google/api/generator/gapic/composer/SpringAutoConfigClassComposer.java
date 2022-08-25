@@ -48,6 +48,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +126,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     createConstructor(service.name(), className, types),
                     createCredentialsProviderBeanMethod(service, className, types),
                     createTransportChannelProviderBeanMethod(service, types),
-                    createBeanMethod(service, types)))
+                    createClientBeanMethod(service, types)))
             .setAnnotations(createClassAnnotations(service, types))
             .build();
     return GapicClass.create(kind, classDef);
@@ -531,9 +532,108 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .build();
   }
 
-  private static MethodDefinition createBeanMethod(Service service, Map<String, TypeNode> types) {
-    // build expressions
-    MethodInvocationExpr lhsExpr =
+  private static MethodDefinition createClientBeanMethod(
+      Service service, Map<String, TypeNode> types) {
+    // @Bean
+    // @ConditionalOnMissingBean
+    // public LanguageServiceClient languageServiceClient(CredentialsProvider credentialsProvider,
+    //     TransportChannelProvider defaultTransportChannelProvider)
+    //   throws IOException {
+    //
+    //   LanguageServiceSettings.Builder clientSettingsBuilder =
+    //       LanguageServiceSettings.newBuilder()
+    //           .setCredentialsProvider(credentialsProvider)
+    //           .setTransportChannelProvider(defaultTransportChannelProvider)
+    //           .setHeaderProvider(
+    //               new UserAgentHeaderProvider(this.getClass()));
+    //   if (clientProperties.getQuotaProjectId() != null) {
+    //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
+    //     LOGGER.info("Quota project id set to: " + clientProperties.getQuotaProjectId()
+    //         + ", this overrides project id from credentials.");
+    //   }
+    //
+    //   if (clientProperties.getExecutorThreadCount() != null) {
+    //     ExecutorProvider executorProvider =
+    // LanguageServiceSettings.defaultExecutorProviderBuilder()
+    //         .setExecutorThreadCount(clientProperties.getExecutorThreadCount()).build();
+    //     clientSettingsBuilder
+    //         .setBackgroundExecutorProvider(executorProvider);
+    //   }
+    //   if (clientProperties.isUseRest()) {
+    //     clientSettingsBuilder.setTransportChannelProvider(
+    //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
+    //   }
+
+    // argument variables:
+    VariableExpr credentialsProviderVariableExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("credentialsProvider")
+                .setType(types.get("CredentialsProvider"))
+                .build());
+    VariableExpr transportChannelProviderVariableExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("defaultTransportChannelProvider")
+                .setType(STATIC_TYPES.get("TransportChannelProvider"))
+                .build());
+
+    //   LanguageServiceSettings.Builder clientSettingsBuilder =
+    //       LanguageServiceSettings.newBuilder()
+    //           .setCredentialsProvider(credentialsProvider)
+    //           .setTransportChannelProvider(defaultTransportChannelProvider)
+    //           .setHeaderProvider(
+    //               new UserAgentHeaderProvider(this.getClass()));
+    Variable settingBuilderVariable =
+        Variable.builder()
+            .setName("clientSettingsBuilder")
+            .setType(types.get("ServiceSettingsBuilder"))
+            .build();
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(settingBuilderVariable).toBuilder().setIsDecl(true).build();
+    Expr settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setMethodName("newBuilder")
+            .build();
+
+    settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingsBuilderExpr)
+            .setMethodName("setCredentialsProvider")
+            .setArguments(credentialsProviderVariableExpr)
+            .build();
+    //           .setTransportChannelProvider(defaultTransportChannelProvider)
+    settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingsBuilderExpr)
+            .setMethodName("setTransportChannelProvider")
+            .setArguments(transportChannelProviderVariableExpr)
+            .build();
+    //           .setHeaderProvider(
+    //               new UserAgentHeaderProvider(this.getClass()));
+    settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingsBuilderExpr)
+            .setMethodName("setHeaderProvider")
+            // .setArguments() //TODO add augument here to create new obj. Caveat: decide where to
+            // UserAgentHeaderProvider class first.
+            .setReturnType(settingBuilderVariable.type())
+            .build();
+    AssignmentExpr settingCreateExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr)
+            .setValueExpr(settingsBuilderExpr)
+            .build();
+
+    // return expressions
+    MethodInvocationExpr serviceSettingsBuilt =
+        MethodInvocationExpr.builder()
+            .setMethodName("build")
+            .setExprReferenceExpr(settingsVarExpr.toBuilder().setIsDecl(false).build())
+            .setReturnType(types.get("ServiceSettings"))
+            .build();
+    MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             // TODO: might need to use newBuilder().build() if options needed.
             // read more in client composer:
@@ -541,20 +641,30 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethodName("create")
             .setStaticReferenceType(types.get("ServiceClient"))
             .setReturnType(types.get("ServiceClient"))
+            .setArguments(serviceSettingsBuilt)
             .build();
 
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(settingCreateExpr);
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
+        .setArguments(
+            Arrays.asList(
+                credentialsProviderVariableExpr.toBuilder().setIsDecl(true).build(),
+                transportChannelProviderVariableExpr.toBuilder().setIsDecl(true).build()))
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),
                 AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
-        .setReturnExpr(lhsExpr)
+        .setReturnExpr(returnExpr)
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
 
@@ -655,6 +765,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName(ClassNames.getServiceSettingsClassName(service))
                 .setPakkage(service.pakkage())
                 .build());
+    TypeNode serviceSettingsBuilder =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setPakkage(service.pakkage())
+                .setName("Builder")
+                .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
+                .build());
 
     TypeNode bean =
         TypeNode.withReference(
@@ -701,6 +818,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("DefaultCredentialsProvider", defaultCredentialsProvider);
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
+    typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("Bean", bean);
     typeMap.put("Configuration", configuration);
     typeMap.put("EnableConfigurationProperties", enableConfigurationProperties);
