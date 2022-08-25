@@ -206,6 +206,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     List<Statement> statements =
         retrySettings.stream().map(x -> (Statement) x).collect(Collectors.toList());
+
+    statements.add(0, useRestVarStatement);
     statements.add(0, executorThreadCountVarStatement);
     statements.add(0, quotaProjectIdVarStatement);
     statements.add(0, credentialsStatement);
