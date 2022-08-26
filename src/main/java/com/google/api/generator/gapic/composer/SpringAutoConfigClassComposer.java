@@ -563,6 +563,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setType(STATIC_TYPES.get("TransportChannelProvider"))
                 .build());
 
+    List<Statement> bodyStatements = new ArrayList<>();
     //   LanguageServiceSettings.Builder clientSettingsBuilder =
     //       LanguageServiceSettings.newBuilder()
     //           .setCredentialsProvider(credentialsProvider)
@@ -611,6 +612,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setValueExpr(settingsBuilderExpr)
             .build();
 
+    bodyStatements.add(ExprStatement.withExpr(settingCreateExpr));
+
     //   if (this.clientProperties.getQuotaProjectId() != null) {
     //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
     //     LOGGER.info("Quota project id set to: " + clientProperties.getQuotaProjectId()
@@ -622,12 +625,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setName("clientProperties")
             .setType(types.get(service.name() + "Properties"))
             .build();
-
     VariableExpr thisClientPropertiesVarExpr =
         VariableExpr.withVariable(clientPropertiesVar)
             .toBuilder()
             .setExprReferenceExpr(thisExpr)
             .build();
+
     MethodInvocationExpr getQuotaProjectId =
         MethodInvocationExpr.builder()
             .setMethodName("getQuotaProjectId")
@@ -645,11 +648,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(getQuotaProjectId)
             .build();
 
-    IfStatement ifStatement =
+    IfStatement setQuotaProjectIdStatement =
         createIfStatement(
             projectIdIsNull,
             Arrays.asList(ExprStatement.withExpr(setQuotaProjectId)), // TODO add logger info
             null);
+
+    bodyStatements.add(setQuotaProjectIdStatement);
+
     //   if (this.clientProperties.getExecutorThreadCount() != null) {
     //     ExecutorProvider executorProvider =
     // LanguageServiceSettings.defaultExecutorProviderBuilder()
@@ -667,6 +673,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     RelationalOperationExpr executorThreadCountIsNull =
         RelationalOperationExpr.notEqualToWithExprs(
             getExecutorThreadCount, ValueExpr.createNullExpr());
+
     VariableExpr executorProviderVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -703,13 +710,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
-    IfStatement ifStatement2 =
+    IfStatement setBackgroundExecutorProviderStatement =
         createIfStatement(
             executorThreadCountIsNull,
             Arrays.asList(
                 ExprStatement.withExpr(executorProviderAssignExpr),
                 ExprStatement.withExpr(setBackgroundExecutorProvider)), // TODO add logger info
             null);
+
+    bodyStatements.add(setBackgroundExecutorProviderStatement);
 
     //   if (clientProperties.getUseRest()) {
     //     clientSettingsBuilder.setTransportChannelProvider(
@@ -742,14 +751,27 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethodName("setTransportChannelProvider")
             .setArguments(defaultTransportProviderBuider)
             .build();
-    IfStatement ifStatement3 =
+    IfStatement setTransportChannelProviderStatement =
         createIfStatement(
-            getUseRest,
-            Arrays.asList(
-                ExprStatement.withExpr(setTransportProvider)),
-            null);
+            getUseRest, Arrays.asList(ExprStatement.withExpr(setTransportProvider)), null);
 
+    bodyStatements.add(setTransportChannelProviderStatement);
     // TODO: retry settings for each method
+
+    //     RetrySettings annotateTextSettingsRetrySettings =
+    // clientSettingsBuilder.annotateTextSettings()
+    //         .getRetrySettings()
+    //         .toBuilder()
+    //         .setInitialRetryDelay(this.clientProperties.getAnnotateTextMaxRetryDelay())
+    //         .setRetryDelayMultiplier(this.clientProperties.getAnnotateTextRpcTimeoutMultiplier())
+    //         .setMaxRetryDelay(this.clientProperties.getAnnotateTextMaxRetryDelay())
+    //         .setInitialRpcTimeout(this.clientProperties.getAnnotateTextInitialRpcTimeout())
+    //         .setRpcTimeoutMultiplier(this.clientProperties.getAnnotateTextRpcTimeoutMultiplier())
+    //         .setMaxRpcTimeout(this.clientProperties.getAnnotateTextMaxRpcTimeout())
+    //         .setTotalTimeout(this.clientProperties.getAnnotateTextTotalTimeout())
+    //         .build();
+    //     clientSettingsBuilder.annotateTextSettings()
+    //         .setRetrySettings(annotateTextSettingsRetrySettings);
 
     // return expressions
     MethodInvocationExpr serviceSettingsBuilt =
@@ -772,11 +794,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
 
-    List<Statement> bodyExprs = new ArrayList<>();
-    bodyExprs.add(ExprStatement.withExpr(settingCreateExpr));
-    bodyExprs.add(ifStatement);
-    bodyExprs.add(ifStatement2);
-    bodyExprs.add(ifStatement3);
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
@@ -791,7 +808,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(returnExpr)
-        .setBody(bodyExprs)
+        .setBody(bodyStatements)
         // bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
