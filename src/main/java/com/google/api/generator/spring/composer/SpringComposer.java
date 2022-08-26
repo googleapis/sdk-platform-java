@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.spring.composer;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
@@ -39,6 +39,7 @@ public class SpringComposer {
             s -> {
               if (context.transport() == Transport.GRPC) {
                 clazzes.add(SpringAutoConfigClassComposer.instance().generate(context, s));
+                // clazzes.add(SpringPropertiesClassComposer.instance().generate(context, s));
               }
             });
     return clazzes;
