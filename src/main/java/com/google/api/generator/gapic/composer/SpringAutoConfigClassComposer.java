@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
@@ -710,11 +711,43 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 ExprStatement.withExpr(setBackgroundExecutorProvider)), // TODO add logger info
             null);
 
-    // TODO: more if statements
     //   if (clientProperties.getUseRest()) {
     //     clientSettingsBuilder.setTransportChannelProvider(
     //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
     //   }
+
+    MethodInvocationExpr getUseRest =
+        MethodInvocationExpr.builder()
+            .setMethodName("getUseRest")
+            .setReturnType(TypeNode.BOOLEAN)
+            .setExprReferenceExpr(thisClientPropertiesVarExpr)
+            .build();
+
+    // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
+    Expr defaultTransportProviderBuider =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setMethodName("defaultHttpJsonTransportProviderBuilder")
+            .build();
+    defaultTransportProviderBuider =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(defaultTransportProviderBuider)
+            .setMethodName("build")
+            .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
+            .build();
+
+    MethodInvocationExpr setTransportProvider =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
+            .setMethodName("setTransportChannelProvider")
+            .setArguments(defaultTransportProviderBuider)
+            .build();
+    IfStatement ifStatement3 =
+        createIfStatement(
+            getUseRest,
+            Arrays.asList(
+                ExprStatement.withExpr(setTransportProvider)),
+            null);
 
     // TODO: retry settings for each method
 
@@ -743,6 +776,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     bodyExprs.add(ExprStatement.withExpr(settingCreateExpr));
     bodyExprs.add(ifStatement);
     bodyExprs.add(ifStatement2);
+    bodyExprs.add(ifStatement3);
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
@@ -768,6 +802,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             Generated.class,
             RetrySettings.class,
             TransportChannelProvider.class,
+            // import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
+            InstantiatingHttpJsonChannelProvider.class,
             ExecutorProvider.class);
     return concreteClazzes.stream()
         .collect(
