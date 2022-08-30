@@ -24,7 +24,6 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
@@ -45,7 +44,6 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -59,7 +57,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -465,76 +462,6 @@ public class RetrySettingsComposer {
         .setMethodName("setBatchingSettings")
         .setArguments(batchingSettingsBuilderExpr)
         .build();
-  }
-
-  public static List<? extends AstNode> processRetrySettings(
-      Service service,
-      GapicServiceConfig gapicServiceConfig,
-      TypeNode thisClassType,
-      BiFunction<String, Expr, List<? extends AstNode>> processFunc) {
-    List resultList = new ArrayList<>();
-    for (Method method : service.methods()) {
-      String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
-      String retryParamName = gapicServiceConfig.getRetryParamsName(service, method);
-      // follow logic in:
-      // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createRetrySettingsExprs
-      // Build the settings object for each config.
-
-      String settingsName = retryParamName;
-      GapicRetrySettings settings =
-          gapicServiceConfig.getAllGapicRetrySettings(service).get(retryParamName);
-      RetryPolicy retryPolicy = settings.retryPolicy();
-      if (settings.kind().equals(GapicRetrySettings.Kind.FULL)) {
-        Preconditions.checkState(
-            retryPolicy.hasInitialBackoff(),
-            String.format("initialBackoff not found for setting %s", settingsName));
-
-        resultList.addAll(
-            processFunc.apply(
-                methodName + "InitialRetryDelay",
-                createDurationOfMillisExpr(toValExpr(retryPolicy.getInitialBackoff()))));
-
-        resultList.addAll(
-            processFunc.apply(
-                methodName + "RetryDelayMultiplier",
-                toValExpr(retryPolicy.getBackoffMultiplier())));
-
-        Preconditions.checkState(
-            retryPolicy.hasMaxBackoff(),
-            String.format("maxBackoff not found for setting %s", settingsName));
-
-        resultList.addAll(
-            processFunc.apply(
-                methodName + "MaxRetryDelay",
-                createDurationOfMillisExpr(toValExpr(retryPolicy.getMaxBackoff()))));
-      }
-
-      if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
-
-        resultList.addAll(
-            processFunc.apply(
-                methodName + "InitialRpcTimeout",
-                createDurationOfMillisExpr(toValExpr(settings.timeout()))));
-      }
-
-      // This will always be done, no matter the type of the retry settings object.
-      resultList.addAll(
-          processFunc.apply(
-              methodName + "RpcTimeoutMultiplier",
-              ValueExpr.withValue(
-                  PrimitiveValue.builder().setType(TypeNode.DOUBLE).setValue("1.0").build())));
-
-      if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
-        for (String setterMethodName : Arrays.asList("MaxRpcTimeout", "TotalTimeout")) {
-
-          resultList.addAll(
-              processFunc.apply(
-                  methodName + setterMethodName,
-                  createDurationOfMillisExpr(toValExpr(settings.timeout()))));
-        }
-      }
-    }
-    return resultList;
   }
 
   private static Expr createRetryCodeDefinitionExpr(

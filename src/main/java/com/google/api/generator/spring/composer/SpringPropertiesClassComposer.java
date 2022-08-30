@@ -36,7 +36,6 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.ClassComposer;
-import com.google.api.generator.gapic.composer.common.RetrySettingsComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -191,7 +190,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // declare each retry settings with its default value.
     TypeNode thisClassType = types.get(service.name() + "Properties");
     List<? extends AstNode> retrySettings =
-        RetrySettingsComposer.processRetrySettings(
+        Utils.processRetrySettings(
             service,
             serviceConfig,
             thisClassType,
@@ -236,7 +235,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
     List retrySettings =
-        RetrySettingsComposer.processRetrySettings(
+        Utils.processRetrySettings(
             service,
             gapicServiceConfig,
             thisClassType,
