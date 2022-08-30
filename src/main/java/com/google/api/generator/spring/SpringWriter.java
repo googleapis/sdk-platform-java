@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.protowriter;
+package com.google.api.generator.spring;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.gapic.model.Sample;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
-public class Writer {
+public class SpringWriter {
   static class GapicWriterException extends RuntimeException {
-    public GapicWriterException(String errorMessage) {
-      super(errorMessage);
-    }
 
     public GapicWriterException(String errorMessage, Throwable cause) {
       super(errorMessage, cause);
@@ -46,7 +42,8 @@ public class Writer {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
-      String outputFilePath) {
+      String outputFilePath,
+      boolean isSpringContent) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos;
@@ -58,9 +55,13 @@ public class Writer {
 
     for (GapicClass gapicClazz : clazzes) {
       String classPath = writeClazz(gapicClazz, codeWriter, jos);
-      writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
+      // writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
+    // write spring.factories file
+    writeSpringFactories(context, jos);
+
+    // TODO: metadata and package info not custimized for Spring
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
 
     try {
@@ -103,31 +104,6 @@ public class Writer {
     return path;
   }
 
-  private static void writeSamples(
-      GapicClass gapicClazz, String pakkage, String clazzPath, JarOutputStream jos) {
-    for (Sample sample : gapicClazz.samples()) {
-      JarEntry jarEntry =
-          new JarEntry(
-              String.format(
-                  "samples/snippets/generated/%s/%s/%s/%s.java",
-                  clazzPath,
-                  sample.regionTag().serviceName().toLowerCase(),
-                  sample.regionTag().rpcName().toLowerCase(),
-                  sample.name()));
-      String executableSampleCode = SampleCodeWriter.writeExecutableSample(sample, pakkage);
-      try {
-        jos.putNextEntry(jarEntry);
-        jos.write(executableSampleCode.getBytes(StandardCharsets.UTF_8));
-      } catch (IOException e) {
-        throw new GapicWriterException(
-            String.format(
-                "Could not write sample code for %s/%s.: %s",
-                clazzPath, sample.name(), e.getMessage()),
-            e);
-      }
-    }
-  }
-
   private static String writePackageInfo(
       GapicPackageInfo gapicPackageInfo, JavaWriterVisitor codeWriter, JarOutputStream jos) {
     PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
@@ -156,6 +132,26 @@ public class Writer {
       } catch (IOException e) {
         throw new GapicWriterException("Could not write gapic_metadata.json", e);
       }
+    }
+  }
+
+  private static void writeSpringFactories(GapicContext context, JarOutputStream jos) {
+    String path = "src/main/resources/META-INF";
+    JarEntry jarEntry = new JarEntry(String.format("%s/spring.factories", path));
+    try {
+      jos.putNextEntry(jarEntry);
+      StringJoiner sb =
+          new StringJoiner(
+              ",\\\n", "org.springframework.boot.autoconfigure.EnableAutoConfiguration=\\\n", "");
+      context
+          .services()
+          .forEach(
+              service ->
+                  sb.add(String.format("com.sample.autoconfig.%sAutoConfig", service.name())));
+
+      jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write spring.factories", e);
     }
   }
 
