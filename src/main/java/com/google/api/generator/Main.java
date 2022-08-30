@@ -15,6 +15,7 @@
 package com.google.api.generator;
 
 import com.google.api.generator.gapic.Generator;
+import com.google.api.generator.spring.SpringGenerator;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
@@ -26,7 +27,7 @@ public class Main {
     ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
     CodeGeneratorResponse response = Generator.generateGapic(request);
-    CodeGeneratorResponse springResponse = Generator.generateSpring(request);
+    CodeGeneratorResponse springResponse = SpringGenerator.generateSpring(request);
     response.writeTo(System.out);
     springResponse.writeTo(System.out);
   }
