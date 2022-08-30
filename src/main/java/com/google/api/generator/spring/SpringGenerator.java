@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic;
+package com.google.api.generator.spring;
 
 import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -20,16 +20,17 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protowriter.Writer;
+import com.google.api.generator.spring.composer.SpringComposer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.util.List;
 
-public class Generator {
-  public static CodeGeneratorResponse generateGapic(CodeGeneratorRequest request) {
+public class SpringGenerator {
+  public static CodeGeneratorResponse generateSpring(CodeGeneratorRequest request) {
     GapicContext context = Parser.parse(request);
-    List<GapicClass> clazzes = Composer.composeServiceClasses(context);
+    List<GapicClass> clazzes = SpringComposer.composeServiceAutoConfigClasses(context);
     GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
-    String outputFilename = "temp-codegen.srcjar";
-    return Writer.write(context, clazzes, packageInfo, outputFilename, false);
+    String outputFilename = "temp-codegen-spring.srcjar";
+    return Writer.write(context, clazzes, packageInfo, outputFilename, true);
   }
 }
