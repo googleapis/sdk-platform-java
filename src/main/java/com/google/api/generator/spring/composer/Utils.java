@@ -93,6 +93,8 @@ public class Utils {
           processFunc.apply(
               methodName + "RpcTimeoutMultiplier",
               ValueExpr.withValue(
+                  // this value is hardcoded in, risk of gapic- changes in future?
+                  // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createRetrySettingsExprs
                   PrimitiveValue.builder().setType(TypeNode.DOUBLE).setValue("1.0").build())));
 
       if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {

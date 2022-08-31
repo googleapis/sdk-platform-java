@@ -42,7 +42,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
-import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,8 +54,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static final Map<String, TypeNode> staticTypes = createStaticTypes();
   private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
-  private static final VariableExpr NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR =
-      createNestedRetryParamDefinitionsVarExpr();
 
   private static final SpringPropertiesClassComposer INSTANCE = new SpringPropertiesClassComposer();
 
@@ -93,21 +90,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             .build();
     return GapicClass.create(Kind.MAIN, classDef);
     // return null;
-  }
-
-  private static VariableExpr createNestedRetryParamDefinitionsVarExpr() {
-    TypeNode varType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ImmutableMap.class)
-                .setGenerics(
-                    Arrays.asList(TypeNode.STRING, staticTypes.get("RetrySettings")).stream()
-                        .map(t -> t.reference())
-                        .collect(Collectors.toList()))
-                .build());
-
-    return VariableExpr.withVariable(
-        Variable.builder().setType(varType).setName(RETRY_PARAM_DEFINITIONS_VAR_NAME).build());
   }
 
   private static ExprStatement createMemberVarStatement(
@@ -172,22 +154,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     //
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
 
-    // // Declare the RETRY_PARAM_DEFINITIONS map.
-    // ExprStatement retryPramStatement =
-    //     ExprStatement.withExpr(
-    //         NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR
-    //             .toBuilder()
-    //             .setIsDecl(true)
-    //             .setScope(ScopeNode.PRIVATE)
-    //             .setIsStatic(true)
-    //             .setIsFinal(true)
-    //             .build());
-    //
-    // BlockStatement retryParamDefinitionsBlock =
-    //     RetrySettingsComposer.createRetryParamDefinitionsBlock(
-    //         service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR);
-
-    // declare each retry settings with its default value.
+    // declare each retry settings with its default value. use defaults from serviceConfig
     TypeNode thisClassType = types.get(service.name() + "Properties");
     List<? extends AstNode> retrySettings =
         Utils.processRetrySettings(

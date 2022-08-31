@@ -87,31 +87,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
 
-    // WIP: retry settings.
-    // for (Method method : service.methods()) {
-    //   // do retry settings.
-    //
-    //   Method.Stream streamKind = method.stream();
-    //   if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
-    //     continue;
-    //   }
-    //   if (!Objects.isNull(gapicServiceConfig)
-    //       && gapicServiceConfig.hasBatchingSetting(service, method)) {
-    //     Optional<GapicBatchingSettings> batchingSettingOpt =
-    //         gapicServiceConfig.getBatchingSetting(service, method);
-    //     Preconditions.checkState(
-    //         batchingSettingOpt.isPresent(),
-    //         String.format(
-    //             "No batching setting found for service %s, method %s",
-    //             service.name(), method.name()));
-    //     String settingsGetterMethodName =
-    //         String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
-    //     // bodyStatement.add();
-    //
-    //     String retryParamName = gapicServiceConfig.getRetryParamsName(service, method);
-    //   }
-    // }
-
     types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
 
     // header -- not used, add later
