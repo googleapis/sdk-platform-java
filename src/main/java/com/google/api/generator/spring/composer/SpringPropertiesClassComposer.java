@@ -41,6 +41,8 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.cloud.spring.core.Credentials;
+import com.google.cloud.spring.core.CredentialsSupplier;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
@@ -90,7 +92,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 createMemberVariables(service, packageName, dynamicTypes, gapicServiceConfig))
             .setMethods(createGetterSetters(service, dynamicTypes, gapicServiceConfig))
             .setAnnotations(Arrays.asList(classAnnotationNode))
-            .setImplementsTypes(Arrays.asList(dynamicTypes.get("CredentialsSupplier")))
+            .setImplementsTypes(Arrays.asList(STATIC_TYPES.get("CredentialsSupplier")))
             .build();
     return GapicClass.create(Kind.MAIN, classDef);
     // return null;
@@ -132,7 +134,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // Credentials("https://www.googleapis.com/auth/cloud-language");
     NewObjectExpr defaultCredentialScopes =
         builder()
-            .setType(types.get("Credentials"))
+            .setType(STATIC_TYPES.get("Credentials"))
             .setArguments(
                 service.oauthScopes().stream()
                     .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
@@ -141,7 +143,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // TODO: credentials field needs annotation.
     ExprStatement credentialsStatement =
         createMemberVarStatement(
-            "credentials", types.get("Credentials"), true, defaultCredentialScopes);
+            "credentials", STATIC_TYPES.get("Credentials"), true, defaultCredentialScopes);
 
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
@@ -159,7 +161,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
 
     // declare each retry settings with its default value. use defaults from serviceConfig
-    TypeNode thisClassType = types.get(service.name() + "Properties");
+    TypeNode thisClassType = types.get(service.name() + "SpringProperties");
     List<? extends AstNode> retrySettings =
         Utils.processRetrySettings(
             service,
@@ -194,14 +196,14 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   private static List<MethodDefinition> createGetterSetters(
       Service service, Map<String, TypeNode> types, GapicServiceConfig gapicServiceConfig) {
 
-    TypeNode thisClassType = types.get(service.name() + "Properties");
+    TypeNode thisClassType = types.get(service.name() + "SpringProperties");
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
 
     methodDefinitions.add(
         createGetterMethod(
             thisClassType,
             "credentials",
-            types.get("Credentials"),
+            STATIC_TYPES.get("Credentials"),
             Arrays.asList(AnnotationNode.OVERRIDE)));
     methodDefinitions.add(
         createGetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING, null));
@@ -307,33 +309,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                                 .setName(String.format(p, service.name()))
                                 .setPakkage(packageName)
                                 .build())));
-    TypeNode clientProperties =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(service.name() + "SpringProperties")
-                .setPakkage(packageName)
-                .build());
-
-    // import com.google.cloud.spring.core.Credentials;
-    TypeNode credentials =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Credentials")
-                .setPakkage("com.google.cloud.spring.core")
-                .build());
-
-    // import com.google.cloud.spring.core.CredentialsSupplier;
-    TypeNode credentialsSupplier =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("CredentialsSupplier")
-                .setPakkage("com.google.cloud.spring.core")
-                .build());
-
-    typeMap.put(service.name() + "Properties", clientProperties);
-    typeMap.put("Credentials", credentials);
-    typeMap.put("CredentialsSupplier", credentialsSupplier);
-
     return typeMap;
   }
 
@@ -343,7 +318,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             RetrySettings.class,
             org.threeten.bp.Duration.class,
             ConfigurationProperties.class,
-            NestedConfigurationProperty.class);
+            NestedConfigurationProperty.class,
+            CredentialsSupplier.class,
+            Credentials.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(

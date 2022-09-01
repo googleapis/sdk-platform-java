@@ -52,7 +52,7 @@ SPING_DEPS = [
     "@maven//:org_springframework_boot_spring_boot_autoconfigure",
     "@maven//:org_springframework_boot_spring_boot",
     "@maven//:org_springframework_spring_context",
-    "@maven//:com_google_cloud_spring_cloud_gcp_core"
+    "@maven//:com_google_cloud_spring_cloud_gcp_core",
 ]
 
 proto_library(
