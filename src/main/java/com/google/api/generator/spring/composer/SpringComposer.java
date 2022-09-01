@@ -27,7 +27,6 @@ public class SpringComposer {
   public static List<GapicClass> composeServiceAutoConfigClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateClientAutoConfig(context));
-    // TODO: from context, explore if any property settings needed.
     return addApacheLicense(clazzes);
   }
 

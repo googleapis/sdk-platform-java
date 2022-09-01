@@ -82,6 +82,7 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 SRING_MAVEN_ARTIFACTS = [
     "org.springframework.boot:spring-boot-starter:2.6.9",
+    "com.google.cloud:spring-cloud-gcp-core:3.3.0",
 ]
 
 maven_install(

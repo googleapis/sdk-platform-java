@@ -21,11 +21,9 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -50,6 +48,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
@@ -64,6 +63,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
@@ -96,15 +97,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     STATIC_TYPES
         .get("CredentialsProvider")
-        .isSupertypeOrEquals(dynamicTypes.get("DefaultCredentialsProvider"));
-
-    // header -- not used, add later
-    List<CommentStatement> fileHeader =
-        Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
+        .isSupertypeOrEquals(STATIC_TYPES.get("DefaultCredentialsProvider"));
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            // .setFileHeader(fileHeader)
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
@@ -427,7 +423,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder()
-            .setType(types.get("Configuration"))
+            .setType(STATIC_TYPES.get("Configuration"))
             .setDescription("proxyBeanMethods = false") // TODO: change to parameters
             .build();
     AnnotationNode enableConfigurationPropertiesNode =
@@ -472,7 +468,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         CastExpr.builder()
             .setExpr(
                 NewObjectExpr.builder()
-                    .setType(types.get("DefaultCredentialsProvider"))
+                    .setType(STATIC_TYPES.get("DefaultCredentialsProvider"))
                     .setArguments(thisClientProperties)
                     .build())
             .setType(STATIC_TYPES.get("CredentialsProvider"))
@@ -485,7 +481,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setReturnType(STATIC_TYPES.get("CredentialsProvider"))
         .setAnnotations(
             Arrays.asList(
-                AnnotationNode.withType(types.get("Bean")),
+                AnnotationNode.withType(STATIC_TYPES.get("Bean")),
                 AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(castExpr)
@@ -515,7 +511,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
         .setAnnotations(
             Arrays.asList(
-                AnnotationNode.withType(types.get("Bean")),
+                AnnotationNode.withType(STATIC_TYPES.get("Bean")),
                 AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setReturnExpr(returnExpr)
         .build();
@@ -911,7 +907,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 transportChannelProviderVariableExpr.toBuilder().setIsDecl(true).build()))
         .setAnnotations(
             Arrays.asList(
-                AnnotationNode.withType(types.get("Bean")),
+                AnnotationNode.withType(STATIC_TYPES.get("Bean")),
                 AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(returnExpr)
@@ -933,7 +929,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             ConditionalOnProperty.class,
             ConditionalOnMissingBean.class,
             EnableConfigurationProperties.class,
-            CredentialsProvider.class);
+            CredentialsProvider.class,
+            Configuration.class,
+            Bean.class,
+            // GcpProjectIdProvider.class,
+            // Credentials.class,
+            DefaultCredentialsProvider.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
@@ -987,49 +988,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
                 .build());
 
-    TypeNode gcpProjectIdProvider =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("GcpProjectIdProvider")
-                .setPakkage("com.google.cloud.spring.core")
-                .build());
-
-    // import com.google.cloud.spring.core.Credentials;
-    TypeNode credentials =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Credentials")
-                .setPakkage("com.google.cloud.spring.core")
-                .build());
-
-    // import com.google.cloud.spring.core.DefaultCredentialsProvider;
-    TypeNode defaultCredentialsProvider =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("DefaultCredentialsProvider")
-                .setPakkage("com.google.cloud.spring.core")
-                // TODO: this supre class info is not used, workaround by casting for now. look into
-                // VaporReference.isSupertypeOrEquals()
-                .setSupertypeReference(
-                    VaporReference.builder()
-                        .setName("CredentialsProvider")
-                        .setPakkage("com.google.api.gax.core")
-                        .build())
-                .build());
-
-    TypeNode bean =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Bean")
-                .setPakkage("org.springframework.context.annotation")
-                .build());
-    TypeNode configuration =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Configuration")
-                .setPakkage("org.springframework.context.annotation")
-                .build());
-
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put(service.name() + "AutoConfig", clientAutoconfig);
     typeMap.put("GcpProjectIdProvider", gcpProjectIdProvider);
@@ -1038,8 +996,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
-    typeMap.put("Bean", bean);
-    typeMap.put("Configuration", configuration);
 
     return typeMap;
   }
