@@ -47,6 +47,12 @@ TEST_DEPS = [
     "@io_github_java_diff_utils//jar",
 ]
 
+SPING_DEPS = [
+    "@maven//:org_springframework_boot_spring_boot_starter",
+    "@maven//:org_springframework_boot_spring_boot_autoconfigure",
+    "@maven//:org_springframework_boot_spring_boot",
+]
+
 proto_library(
     name = "service_config_proto",
     srcs = ["src/main/proto/service_config.proto"],
@@ -100,7 +106,7 @@ java_library(
     name = "gapic_generator_java",
     srcs = glob(["src/main/java/**/*.java"]),
     plugins = [":autovalue_plugin"],
-    deps = MAIN_DEPS,
+    deps = MAIN_DEPS + SPING_DEPS,
 )
 
 java_library(
@@ -112,7 +118,7 @@ java_library(
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + SPING_DEPS,
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk

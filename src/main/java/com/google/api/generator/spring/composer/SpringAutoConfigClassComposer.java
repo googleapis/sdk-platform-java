@@ -14,6 +14,7 @@
 
 package com.google.api.generator.spring.composer;
 
+import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
@@ -59,6 +60,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
@@ -82,14 +87,16 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     String packageName = service.pakkage() + ".spring";
-    Map<String, TypeNode> types = createDynamicTypes(service, packageName);
+    Map<String, TypeNode> dynamicTypes = createDynamicTypes(service, packageName);
     String className = getThisClassName(service.name());
     String libName = Utils.getLibName(context);
     GapicClass.Kind kind = Kind.MAIN;
 
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
 
-    types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
+    STATIC_TYPES
+        .get("CredentialsProvider")
+        .isSupertypeOrEquals(dynamicTypes.get("DefaultCredentialsProvider"));
 
     // header -- not used, add later
     List<CommentStatement> fileHeader =
@@ -101,14 +108,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
+            .setStatements(
+                createMemberVariables(service, packageName, dynamicTypes, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
-                    createConstructor(service.name(), className, types),
-                    createCredentialsProviderBeanMethod(service, className, types),
-                    createTransportChannelProviderBeanMethod(service, types),
-                    createClientBeanMethod(service, className, types, gapicServiceConfig)))
-            .setAnnotations(createClassAnnotations(service, types, libName))
+                    createConstructor(service.name(), className, dynamicTypes),
+                    createCredentialsProviderBeanMethod(service, className, dynamicTypes),
+                    createTransportChannelProviderBeanMethod(service, dynamicTypes),
+                    createClientBeanMethod(service, className, dynamicTypes, gapicServiceConfig)))
+            .setAnnotations(createClassAnnotations(service, dynamicTypes, libName))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -405,15 +413,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     // and classes.
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
-            .setType(types.get("ConditionalOnProperty"))
-            .setDescription(
-                "value = \""
-                    + Utils.springPropertyPrefix(libName, service.name())
-                    + ".enabled\", matchIfMissing = false")
+            .setType(STATIC_TYPES.get("ConditionalOnProperty"))
+            .setDescription("value = \"spring.cloud.gcp.language.enabled\", matchIfMissing = false")
             .build();
     AnnotationNode conditionalOnClassNode =
         AnnotationNode.builder()
-            .setType(types.get("ConditionalOnClass"))
+            .setType(STATIC_TYPES.get("ConditionalOnClass"))
             .setDescription(
                 "value = "
                     + ClassNames.getServiceClientClassName(service)
@@ -427,7 +432,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     AnnotationNode enableConfigurationPropertiesNode =
         AnnotationNode.builder()
-            .setType(types.get("EnableConfigurationProperties"))
+            .setType(STATIC_TYPES.get("EnableConfigurationProperties"))
             .setDescription(
                 types.get(service.name() + "Properties").reference().name()
                     + ".Class") // TODO: change to parameters
@@ -470,18 +475,18 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     .setType(types.get("DefaultCredentialsProvider"))
                     .setArguments(thisClientProperties)
                     .build())
-            .setType(types.get("CredentialsProvider"))
+            .setType(STATIC_TYPES.get("CredentialsProvider"))
             .build();
 
     String methodName = "googleCredentials";
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
-        .setReturnType(types.get("CredentialsProvider"))
+        .setReturnType(STATIC_TYPES.get("CredentialsProvider"))
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),
-                AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
+                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(castExpr)
         .build();
@@ -511,7 +516,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),
-                AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
+                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setReturnExpr(returnExpr)
         .build();
   }
@@ -608,7 +613,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("credentialsProvider")
-                .setType(types.get("CredentialsProvider"))
+                .setType(STATIC_TYPES.get("CredentialsProvider"))
                 .build());
     VariableExpr transportChannelProviderVariableExpr =
         VariableExpr.withVariable(
@@ -907,7 +912,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),
-                AnnotationNode.withType(types.get("ConditionalOnMissingBean"))))
+                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(returnExpr)
         .setBody(bodyStatements)
@@ -922,9 +927,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             RetrySettings.Builder
                 .class, // name will be just Builder. consider change of more than one builder here.
             TransportChannelProvider.class,
-            // import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
             InstantiatingHttpJsonChannelProvider.class,
-            ExecutorProvider.class);
+            ExecutorProvider.class,
+            ConditionalOnClass.class,
+            ConditionalOnProperty.class,
+            ConditionalOnMissingBean.class,
+            EnableConfigurationProperties.class,
+            CredentialsProvider.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
@@ -944,12 +953,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                                 .setName(String.format(p, service.name()))
                                 .setPakkage(packageName)
                                 .build())));
-    TypeNode credentialsProvider =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("CredentialsProvider")
-                .setPakkage("com.google.api.gax.core")
-                .build());
+
     TypeNode clientProperties =
         TypeNode.withReference(
             VaporReference.builder()
@@ -962,6 +966,25 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             VaporReference.builder()
                 .setName(service.name() + "SpringAutoConfig")
                 .setPakkage(packageName)
+
+    TypeNode serviceClient =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(ClassNames.getServiceClientClassName(service))
+                .setPakkage(service.pakkage())
+                .build());
+    TypeNode serviceSettings =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(ClassNames.getServiceSettingsClassName(service))
+                .setPakkage(service.pakkage())
+                .build());
+    TypeNode serviceSettingsBuilder =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setPakkage(service.pakkage())
+                .setName("Builder")
+                .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
                 .build());
 
     TypeNode gcpProjectIdProvider =
@@ -994,26 +1017,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         .build())
                 .build());
 
-    TypeNode serviceClient =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(ClassNames.getServiceClientClassName(service))
-                .setPakkage(service.pakkage())
-                .build());
-    TypeNode serviceSettings =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(ClassNames.getServiceSettingsClassName(service))
-                .setPakkage(service.pakkage())
-                .build());
-    TypeNode serviceSettingsBuilder =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setPakkage(service.pakkage())
-                .setName("Builder")
-                .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
-                .build());
-
     TypeNode bean =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1026,33 +1029,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName("Configuration")
                 .setPakkage("org.springframework.context.annotation")
                 .build());
-    TypeNode enableConfigurationProperties =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("EnableConfigurationProperties")
-                .setPakkage("org.springframework.boot.context.properties")
-                .build());
-    TypeNode conditionalOnMissingBean =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("ConditionalOnMissingBean")
-                .setPakkage("org.springframework.boot.autoconfigure.condition")
-                .build());
 
-    TypeNode conditionalOnProperty =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("ConditionalOnProperty")
-                .setPakkage("org.springframework.boot.autoconfigure.condition")
-                .build());
-    TypeNode conditionalOnClass =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("ConditionalOnClass")
-                .setPakkage("org.springframework.boot.autoconfigure.condition")
-                .build());
-
-    typeMap.put("CredentialsProvider", credentialsProvider);
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put(service.name() + "AutoConfig", clientAutoconfig);
     typeMap.put("GcpProjectIdProvider", gcpProjectIdProvider);
@@ -1063,10 +1040,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("Bean", bean);
     typeMap.put("Configuration", configuration);
-    typeMap.put("EnableConfigurationProperties", enableConfigurationProperties);
-    typeMap.put("ConditionalOnMissingBean", conditionalOnMissingBean);
-    typeMap.put("ConditionalOnProperty", conditionalOnProperty);
-    typeMap.put("ConditionalOnClass", conditionalOnClass);
 
     return typeMap;
   }

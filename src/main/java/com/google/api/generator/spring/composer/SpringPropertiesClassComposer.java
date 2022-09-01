@@ -49,11 +49,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 public class SpringPropertiesClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringProperties";
 
-  private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
   private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
 
   private static final SpringPropertiesClassComposer INSTANCE = new SpringPropertiesClassComposer();
@@ -67,14 +69,16 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     String packageName = service.pakkage() + ".spring";
     String className = String.format(CLASS_NAME_PATTERN, service.name());
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
-    Map<String, TypeNode> types = createDynamicTypes(service, packageName);
+    Map<String, TypeNode> dynamicTypes = createDynamicTypes(service, packageName);
 
     // TODO: this is the prefix user will use to set properties, may need to change depending on
     // branding.
     AnnotationNode classAnnotationNode =
         AnnotationNode.builder()
-            .setType(types.get("ConfigurationProperties"))
-            .setDescription(Utils.springPropertyPrefix(Utils.getLibName(context), service.name()))
+            .setType(STATIC_TYPES.get("ConfigurationProperties"))
+            .setDescription(
+                "google.cloud.spring.autoconfig."
+                    + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()))
             .build();
 
     ClassDefinition classDef =
@@ -82,10 +86,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
-            .setMethods(createGetterSetters(service, types, gapicServiceConfig))
+            .setStatements(
+                createMemberVariables(service, packageName, dynamicTypes, gapicServiceConfig))
+            .setMethods(createGetterSetters(service, dynamicTypes, gapicServiceConfig))
             .setAnnotations(Arrays.asList(classAnnotationNode))
-            .setImplementsTypes(Arrays.asList(types.get("CredentialsSupplier")))
+            .setImplementsTypes(Arrays.asList(dynamicTypes.get("CredentialsSupplier")))
             .build();
     return GapicClass.create(Kind.MAIN, classDef);
     // return null;
@@ -324,40 +329,21 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 .setName("CredentialsSupplier")
                 .setPakkage("com.google.cloud.spring.core")
                 .build());
-    // import org.springframework.boot.context.properties.ConfigurationProperties;
-    TypeNode configurationProperties =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("ConfigurationProperties")
-                .setPakkage("org.springframework.boot.context.properties")
-                .build());
-
-    // import org.springframework.boot.context.properties.NestedConfigurationProperty;
-    TypeNode nestedConfigurationProperty =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("NestedConfigurationProperty")
-                .setPakkage("org.springframework.boot.context.properties")
-                .build());
-
-    // import org.threeten.bp.Duration;
-    TypeNode duration =
-        TypeNode.withReference(
-            VaporReference.builder().setName("Duration").setPakkage("org.threeten.bp").build());
 
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put("Credentials", credentials);
-    typeMap.put("Duration", duration);
     typeMap.put("CredentialsSupplier", credentialsSupplier);
-    typeMap.put("ConfigurationProperties", configurationProperties);
-    typeMap.put("NestedConfigurationProperty", nestedConfigurationProperty);
 
     return typeMap;
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
-        Arrays.asList(RetrySettings.class, org.threeten.bp.Duration.class);
+        Arrays.asList(
+            RetrySettings.class,
+            org.threeten.bp.Duration.class,
+            ConfigurationProperties.class,
+            NestedConfigurationProperty.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(

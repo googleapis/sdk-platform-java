@@ -79,8 +79,13 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "pr
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
+
+SRING_MAVEN_ARTIFACTS = [
+    "org.springframework.boot:spring-boot-starter:2.6.9",
+]
+
 maven_install(
-    artifacts = PROTOBUF_MAVEN_ARTIFACTS,
+    artifacts = PROTOBUF_MAVEN_ARTIFACTS + SRING_MAVEN_ARTIFACTS,
     generate_compat_repositories = True,
     repositories = [
         "https://repo.maven.apache.org/maven2/",
