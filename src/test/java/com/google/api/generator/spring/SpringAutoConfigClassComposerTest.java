@@ -50,6 +50,9 @@ public class SpringAutoConfigClassComposerTest {
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
+
+    ServiceDescriptor serviceDescriptor = echoFileDescriptor.getServices().get(0);
+    // Assert.assertEquals(serviceDescriptor.getName(), "Bookshop");
     echoService = echoFileDescriptor.getServices().get(0);
     assertEquals(echoService.getName(), "Echo");
   }
@@ -86,7 +89,7 @@ public class SpringAutoConfigClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_CLASS_STRING, visitor.write());
+    assertEquals(EXPECTED_AUTOCONFIG_CLASS_STRING, visitor.write());
   }
 
   @Test
@@ -126,7 +129,7 @@ public class SpringAutoConfigClassComposerTest {
     assertEquals(EXPECTED_PROPERTY_CLASS_STRING, visitor.write());
   }
 
-  protected static final String EXPECTED_CLASS_STRING =
+  protected static final String EXPECTED_AUTOCONFIG_CLASS_STRING =
       "package com.google.showcase.v1beta1.spring;\n"
           + "\n"
           + "import com.google.api.gax.core.CredentialsProvider;\n"
@@ -150,7 +153,8 @@ public class SpringAutoConfigClassComposerTest {
           + "@Generated(\"by gapic-generator-java\")\n"
           + "@Configuration(\"proxyBeanMethods = false\")\n"
           + "@ConditionalOnClass(\"value = EchoClient.class\")\n"
-          + "@ConditionalOnProperty(\"value = \\\"spring.cloud.gcp.language.enabled\\\", matchIfMissing = false\")\n"
+          + "@ConditionalOnProperty(\n"
+          + "    \"value = \\\"spring.cloud.gcp.autoconfig.showcase.echo.enabled\\\", matchIfMissing = false\")\n"
           + "@EnableConfigurationProperties(\"EchoSpringProperties.Class\")\n"
           + "public class EchoSpringAutoConfiguration {\n"
           + "  private final EchoSpringProperties clientProperties;\n"
@@ -218,7 +222,7 @@ public class SpringAutoConfigClassComposerTest {
           + "import org.springframework.boot.context.properties.ConfigurationProperties;\n"
           + "import org.threeten.bp.Duration;\n"
           + "\n"
-          + "@ConfigurationProperties(\"google.cloud.spring.autoconfig.echo\")\n"
+          + "@ConfigurationProperties(\"spring.cloud.gcp.autoconfig.showcase.echo\")\n"
           + "public class EchoSpringProperties implements CredentialsSupplier {\n"
           + "  private final Credentials credentials =\n"
           + "      new Credentials(\"https://www.googleapis.com/auth/cloud-platform\");\n"
