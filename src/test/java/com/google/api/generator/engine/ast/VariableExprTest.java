@@ -174,6 +174,26 @@ public class VariableExprTest {
   }
 
   @Test
+  public void validVariableExpr_declarationWithAnnotations() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withSuppressWarnings("all"),
+                    AnnotationNode.DEPRECATED,
+                    AnnotationNode.DEPRECATED))
+            .build();
+    assertThat(variableExpr.variable()).isEqualTo(variable);
+    assertThat(variableExpr.type()).isEqualTo(TypeNode.VOID);
+    assertThat(variableExpr.isDecl()).isTrue();
+    assertThat(variableExpr.annotations())
+        .containsExactly(AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED);
+  }
+
+  @Test
   public void invalidVariableExpr_templatedArgInMethodHasNonStringNonTypeNodeObject() {
     Variable variable =
         Variable.builder()
@@ -287,5 +307,16 @@ public class VariableExprTest {
                         .setReturnType(TypeNode.INT)
                         .build())
                 .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_annotationNoDeclaration() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr.Builder variableExprBuilder =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(false)
+            .setAnnotations(Arrays.asList(AnnotationNode.DEPRECATED));
+    assertThrows(IllegalStateException.class, () -> variableExprBuilder.build());
   }
 }
