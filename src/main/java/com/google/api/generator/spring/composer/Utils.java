@@ -21,12 +21,14 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 import com.google.protobuf.Duration;
 import com.google.protobuf.util.Durations;
 import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
@@ -37,6 +39,24 @@ import java.util.function.BiFunction;
 
 public class Utils {
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+
+  private static final String BRAND_NAME = "spring.cloud.gcp";
+
+  public static String getLibName(GapicContext context) {
+    String pakkageName = context.services().get(0).pakkage();
+    List<String> pakkagePhrases = Splitter.on(".").splitToList(pakkageName);
+    // TODO: confirm if this is guaranteed pattern: xx.[...].xx.lib-name.v[version]
+    // eg. for vision proto: "com.google.cloud.vision.v1"
+    // https://github.com/googleapis/java-vision/blob/main/proto-google-cloud-vision-v1/src/main/proto/google/cloud/vision/v1/image_annotator.proto#L36
+    return pakkagePhrases.get(pakkagePhrases.size() - 2);
+  }
+
+  public static String springPropertyPrefix(String libName, String serviceName) {
+    return "spring.cloud.gcp.autoconfig."
+        + CaseFormat.LOWER_HYPHEN.to(CaseFormat.LOWER_HYPHEN, libName)
+        + "."
+        + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
+  }
 
   public static List<? extends AstNode> processRetrySettings(
       Service service,

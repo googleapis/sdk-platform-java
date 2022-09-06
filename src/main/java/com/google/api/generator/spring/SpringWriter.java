@@ -20,6 +20,7 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.spring.composer.Utils;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -60,6 +61,7 @@ public class SpringWriter {
 
     // write spring.factories file
     writeSpringFactories(context, jos);
+    writeSpringAdditionalMetadataJson(context, jos);
 
     // TODO: metadata and package info not custimized for Spring
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
@@ -148,6 +150,35 @@ public class SpringWriter {
           .forEach(
               service ->
                   sb.add(String.format("com.sample.autoconfig.%sAutoConfig", service.name())));
+
+      jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write spring.factories", e);
+    }
+  }
+
+  private static void writeSpringAdditionalMetadataJson(GapicContext context, JarOutputStream jos) {
+    String path = "src/main/resources/META-INF";
+    JarEntry jarEntry =
+        new JarEntry(String.format("%s/additional-spring-configuration-metadata.json", path));
+    String libName = Utils.getLibName(context);
+    try {
+      jos.putNextEntry(jarEntry);
+      StringJoiner sb = new StringJoiner(",\n", "\n{\n    \"properties\": [\n", "\n    ]\n" + "}");
+      context
+          .services()
+          .forEach(
+              service ->
+                  sb.add(
+                      String.format(
+                          "        {\n"
+                              + "            \"name\": \"%s.enabled\",\n"
+                              + "            \"type\": \"java.lang.Boolean\",\n"
+                              + "            \"description\": \"Auto-configure Google Cloud %s components.\",\n"
+                              + "            \"defaultValue\": true\n"
+                              + "        }",
+                          Utils.springPropertyPrefix(libName, service.name()),
+                          libName + "/" + service.name())));
 
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {

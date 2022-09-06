@@ -63,7 +63,7 @@ public class SpringComposerTest {
           + " * limitations under the License.\n"
           + " */\n"
           + "\n"
-          + SpringAutoConfigClassComposerTest.EXPECTED_CLASS_STRING;
+          + SpringAutoConfigClassComposerTest.EXPECTED_AUTOCONFIG_CLASS_STRING;
 
   @Before
   public void setUp() {

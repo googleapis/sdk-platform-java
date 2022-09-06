@@ -83,6 +83,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String packageName = service.pakkage() + ".spring";
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
     String className = getThisClassName(service.name());
+    String libName = Utils.getLibName(context);
     GapicClass.Kind kind = Kind.MAIN;
 
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
@@ -106,7 +107,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     createCredentialsProviderBeanMethod(service, className, types),
                     createTransportChannelProviderBeanMethod(service, types),
                     createClientBeanMethod(service, className, types)))
-            .setAnnotations(createClassAnnotations(service, types))
+            .setAnnotations(createClassAnnotations(service, types, libName))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -392,7 +393,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static List<AnnotationNode> createClassAnnotations(
-      Service service, Map<String, TypeNode> types) {
+      Service service, Map<String, TypeNode> types, String libName) {
     // @Generated("by gapic-generator-java")
     // @Configuration(proxyBeanMethods = false)
     // @ConditionalOnClass(LanguageServiceClient.class)
@@ -404,7 +405,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
             .setType(types.get("ConditionalOnProperty"))
-            .setDescription("value = \"spring.cloud.gcp.language.enabled\", matchIfMissing = false")
+            .setDescription(
+                "value = \""
+                    + Utils.springPropertyPrefix(libName, service.name())
+                    + ".enabled\", matchIfMissing = false")
             .build();
     AnnotationNode conditionalOnClassNode =
         AnnotationNode.builder()
