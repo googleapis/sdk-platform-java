@@ -42,6 +42,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -159,14 +160,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             service,
             serviceConfig,
             thisClassType,
-            (String propertyName, Expr defaultVal) -> {
+            (String propertyName) -> new ArrayList<>(),
+            (List<String> methodAndPropertyName, Expr defaultVal) -> {
               List<Statement> getterAndSetter = new ArrayList<>();
               TypeNode propertyType = defaultVal.type();
+              String propertyName = Joiner.on("").join(methodAndPropertyName);
               ExprStatement retrySettingsStatement =
                   createMemberVarStatement(propertyName, propertyType, false, defaultVal);
               getterAndSetter.add(retrySettingsStatement);
               return getterAndSetter;
-            });
+            },
+            (String propertyName) -> new ArrayList<>());
 
     List<Statement> statements =
         retrySettings.stream().map(x -> (Statement) x).collect(Collectors.toList());
@@ -204,14 +208,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             service,
             gapicServiceConfig,
             thisClassType,
-            (String propertyName, Expr defaultVal) -> {
+            (String propertyName) -> new ArrayList<>(),
+            (List<String> methodAndPropertyName, Expr defaultVal) -> {
               List<MethodDefinition> getterAndSetter = new ArrayList<>();
               TypeNode propertyType = defaultVal.type();
+              String propertyName = Joiner.on("").join(methodAndPropertyName);
               getterAndSetter.add(
                   createGetterMethod(thisClassType, propertyName, propertyType, null));
               getterAndSetter.add(createSetterMethod(thisClassType, propertyName, propertyType));
               return getterAndSetter;
-            });
+            },
+            (String propertyName) -> new ArrayList<>());
 
     methodDefinitions.addAll(retrySettings);
     // TODO: This can be for future stages. for long running operations:
