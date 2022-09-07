@@ -149,7 +149,9 @@ public class SpringWriter {
           .services()
           .forEach(
               service ->
-                  sb.add(String.format("com.sample.autoconfig.%sAutoConfig", service.name())));
+                  sb.add(
+                      String.format(
+                          "%s.spring.%sSpringAutoConfig", service.pakkage(), service.name())));
 
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {

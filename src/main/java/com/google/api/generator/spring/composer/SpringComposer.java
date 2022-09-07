@@ -37,7 +37,8 @@ public class SpringComposer {
         .services()
         .forEach(
             s -> {
-              if (context.transport() == Transport.GRPC) {
+              if (context.transport() == Transport.GRPC
+                  || context.transport() == Transport.GRPC_REST) {
                 clazzes.add(SpringAutoConfigClassComposer.instance().generate(context, s));
                 // clazzes.add(SpringPropertiesClassComposer.instance().generate(context, s));
               }
