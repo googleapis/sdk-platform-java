@@ -164,9 +164,13 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             (List<String> methodAndPropertyName, Expr defaultVal) -> {
               List<Statement> getterAndSetter = new ArrayList<>();
               TypeNode propertyType = defaultVal.type();
+              // TODO: safer cast?
+              if (propertyType.equals(TypeNode.DOUBLE)) {
+                propertyType = TypeNode.DOUBLE_OBJECT;
+              }
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               ExprStatement retrySettingsStatement =
-                  createMemberVarStatement(propertyName, propertyType, false, defaultVal);
+                  createMemberVarStatement(propertyName, propertyType, false, null);
               getterAndSetter.add(retrySettingsStatement);
               return getterAndSetter;
             },

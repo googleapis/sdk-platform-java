@@ -569,18 +569,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     //     clientSettingsBuilder.annotateTextSettings()
     //         .setRetrySettings(annotateTextRetrySettingsBuilder.build());
 
-    // RetrySettings.Builder annotateTextRetrySettingsBuilder =
-    // clientSettingsBuilder.annotateTextSettings()
-    //     .getRetrySettings()
-    //     .toBuilder();
-    // Variable retrySettingBuilderVariable =
-    //     Variable.builder()
-    //         .setName(String.format("%sRetrySettingBuilder", methodName))
-    //         .setType(STATIC_TYPES.get("Builder"))
-    //         .build();
-    // VariableExpr retrySettingsVarExpr =
-    //
-    // VariableExpr.withVariable(retrySettingBuilderVariable).toBuilder().setIsDecl(true).build();
     MethodInvocationExpr clientSettingBuilderChain =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
@@ -605,18 +593,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethodName("setRetrySettings")
             .setArguments(retrySettingsBuilderChain)
             .build();
-
-    // clientSettingBuilderChain =
-    //     MethodInvocationExpr.builder()
-    //         .setExprReferenceExpr(clientSettingBuilderChain)
-    //         .setMethodName("toBuilder")
-    //         .setReturnType(STATIC_TYPES.get("Builder"))
-    //         .build();
-    // AssignmentExpr retrySettingCreateExpr =
-    //     AssignmentExpr.builder()
-    //         .setVariableExpr(retrySettingsVarExpr)
-    //         .setValueExpr(clientSettingBuilderChain)
-    //         .build();
 
     return ExprStatement.withExpr(clientSettingBuilderChain);
   }
@@ -691,44 +667,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     bodyStatements.add(ExprStatement.withExpr(settingCreateExpr));
-
-    // [RetrySettings.Builder methodNameRetrySettingBuilder =
-    //     clientSettingsBuilder.methodNameSettings().getRetrySettings().toBuilder();
-    // bodyStatements.add(createRetrySettingBuilderForMethod("methodName", settingBuilderVariable));
-    // // RetrySettings.Builder annotateTextRetrySettingsBuilder =
-    // clientSettingsBuilder.annotateTextSettings()
-    // //     .getRetrySettings()
-    // //     .toBuilder();
-    // Variable retrySettingBuilderVariable =
-    //     Variable.builder()
-    //         .setName(String.format("%sRetrySettingBuilder", "methodName"))
-    //         .setType(STATIC_TYPES.get("Builder"))
-    //         .build();
-    // VariableExpr retrySettingsVarExpr =
-    //
-    // VariableExpr.withVariable(retrySettingBuilderVariable).toBuilder().setIsDecl(true).build();
-    // MethodInvocationExpr clientSettingBuilderChain =
-    //     MethodInvocationExpr.builder()
-    //         .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-    //         .setMethodName(String.format("%sSettings", "methodName"))
-    //         .build();
-    // clientSettingBuilderChain =
-    //     MethodInvocationExpr.builder()
-    //         .setExprReferenceExpr(clientSettingBuilderChain)
-    //         .setMethodName("getRetrySettings")
-    //         .build();
-    // clientSettingBuilderChain =
-    //     MethodInvocationExpr.builder()
-    //         .setExprReferenceExpr(clientSettingBuilderChain)
-    //         .setMethodName("toBuilder")
-    //         .setReturnType(STATIC_TYPES.get("Builder"))
-    //         .build();
-    // AssignmentExpr retrySettingCreateExpr =
-    //     AssignmentExpr.builder()
-    //         .setVariableExpr(retrySettingsVarExpr)
-    //         .setValueExpr(clientSettingBuilderChain)
-    //         .build();
-    // bodyStatements.add(ExprStatement.withExpr(retrySettingCreateExpr));
 
     //   if (this.clientProperties.getQuotaProjectId() != null) {
     //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
@@ -872,26 +810,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             getUseRest, Arrays.asList(ExprStatement.withExpr(setTransportProvider)), null);
 
     bodyStatements.add(setTransportChannelProviderStatement);
-    // TODO: retry settings for each method
 
-    //     // safer (in case of version mismatch b/w spring-autoconfig & client lib)
-    //     // to not set defaults in properties, only modify value if property is set.
-    //     RetrySettings.Builder annotateTextRetrySettingsBuilder =
-    // clientSettingsBuilder.annotateTextSettings()
-    //         .getRetrySettings()
-    //         .toBuilder();
-    //
-    //     if (this.clientProperties.getAnnotateTextInitialRetryDelay() != null) {
-    //
-    // annotateTextRetrySettingsBuilder.setInitialRetryDelay(this.clientProperties.getAnnotateTextInitialRetryDelay());
-    //     }
-    //     if (this.clientProperties.getAnnotateTextRetryDelayMultiplier() != null) {
-    //
-    // annotateTextRetrySettingsBuilder.setRetryDelayMultiplier(this.clientProperties.getAnnotateTextRetryDelayMultiplier());
-    //     }
-    //     // ...
-    //     clientSettingsBuilder.annotateTextSettings()
-    //         .setRetrySettings(annotateTextRetrySettingsBuilder.build());
+    // retry settings for each method
     TypeNode thisClassType = types.get(service.name() + "AutoConfig");
     List retrySettings =
         Utils.processRetrySettings(
@@ -912,19 +832,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               String propertyName =
                   CaseFormat.LOWER_CAMEL.to(
                       CaseFormat.UPPER_CAMEL, Joiner.on("").join(methodAndPropertyName));
-              //     if (this.clientProperties.getAnnotateTextInitialRetryDelay() != null) {
-              //
-              // annotateTextRetrySettingsBuilder.setInitialRetryDelay(this.clientProperties.getAnnotateTextInitialRetryDelay());
-              //     }
-
-              // this.clientProperties.getQuotaProjectId() != null
 
               TypeNode propertyType = defaultVal.type();
               if (propertyType.equals(TypeNode.DOUBLE)) {
                 propertyType = TypeNode.DOUBLE_OBJECT;
               }
-              // String methodName = "get" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL,
-              // propertyName);
               MethodInvocationExpr currentRetrySettingProperty =
                   MethodInvocationExpr.builder()
                       .setMethodName(String.format("get%s", propertyName))
@@ -949,14 +861,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                       .setArguments(currentRetrySettingProperty)
                       .build();
 
-              //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
-              // MethodInvocationExpr setQuotaProjectId =
-              //     MethodInvocationExpr.builder()
-              //         .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-              //         .setMethodName("setQuotaProjectId")
-              //         .setArguments(getQuotaProjectId)
-              //         .build();
-
               IfStatement currentRetrySettingPropertyIfStatement =
                   createIfStatement(
                       currentRetrySettingPropertyIsNull,
@@ -964,87 +868,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                       null);
               statements.add(currentRetrySettingPropertyIfStatement);
               return statements;
-              // //   if (this.clientProperties.getQuotaProjectId() != null) {
-              // //
-              // clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
-              // //     LOGGER.info("Quota project id set to: " +
-              // clientProperties.getQuotaProjectId()
-              // //         + ", this overrides project id from credentials.");
-              // //   }
-              // Expr thisExpr =
-              // ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
-              // Variable clientPropertiesVar =
-              //     Variable.builder()
-              //         .setName("clientProperties")
-              //         .setType(types.get(service.name() + "Properties"))
-              //         .build();
-              // VariableExpr thisClientPropertiesVarExpr =
-              //     VariableExpr.withVariable(clientPropertiesVar)
-              //         .toBuilder()
-              //         .setExprReferenceExpr(thisExpr)
-              //         .build();
-              //
-              // MethodInvocationExpr getQuotaProjectId =
-              //     MethodInvocationExpr.builder()
-              //         .setMethodName("getQuotaProjectId")
-              //         .setReturnType(TypeNode.STRING)
-              //         .setExprReferenceExpr(thisClientPropertiesVarExpr)
-              //         .build();
-              // RelationalOperationExpr projectIdIsNull =
-              //     RelationalOperationExpr.notEqualToWithExprs(getQuotaProjectId,
-              // ValueExpr.createNullExpr());
-              //
-              // //
-              // clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
-              // MethodInvocationExpr setQuotaProjectId =
-              //     MethodInvocationExpr.builder()
-              //         .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-              //         .setMethodName("setQuotaProjectId")
-              //         .setArguments(getQuotaProjectId)
-              //         .build();
-              //
-              // IfStatement setQuotaProjectIdStatement =
-              //     createIfStatement(
-              //         projectIdIsNull,
-              //         Arrays.asList(ExprStatement.withExpr(setQuotaProjectId)), // TODO add
-              // logger info
-              //         null);
-
-              // List<MethodDefinition> getterAndSetter = new ArrayList<>();
-              // TypeNode propertyType = defaultVal.type();
-              // Variable propertyVar =
-              // Variable.builder().setName(propertyName).setType(propertyType).build();
-              // Expr thisExpr1 = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
-              //
-              // VariableExpr propertyVariableExpr =
-              //
-              // VariableExpr.withVariable(propertyVar).toBuilder().setExprReferenceExpr(thisExpr1).build();
-              //
-              // String methodName = "get" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL,
-              // propertyName);
-              //
-              // getterAndSetter.add( MethodDefinition.builder()
-              //     .setName(methodName)
-              //     .setScope(ScopeNode.PUBLIC)
-              //     .setReturnType(propertyType)
-              //     .setReturnExpr(propertyVariableExpr)
-              //     .build());
-              // // getterAndSetter.add(
-              // //
-              // //     createGetterMethod(thisClassType, propertyName, propertyType, null));
-              // // getterAndSetter.add(createSetterMethod(thisClassType, propertyName,
-              // propertyType));
-              // return getterAndSetter;
             },
-            //
-            //     clientSettingsBuilder.annotateTextSettings()
-            //         .setRetrySettings(annotateTextRetrySettingsBuilder.build());
             (String methodName) -> {
               List<Statement> statements = new ArrayList<>();
               statements.add(setRetrySettingsForMethod(methodName, settingBuilderVariable));
               return statements;
             });
     bodyStatements.addAll(retrySettings);
+
     // return expressions
     MethodInvocationExpr serviceSettingsBuilt =
         MethodInvocationExpr.builder()
@@ -1054,7 +885,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
-            // TODO: might need to use newBuilder().build() if options needed.
             // read more in client composer:
             // src/main/java/com/google/api/generator/gapic/composer/common/AbstractServiceClientClassComposer.java#L277-L292
             .setMethodName("create")
@@ -1081,7 +911,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(returnExpr)
         .setBody(bodyStatements)
-        // bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
 
