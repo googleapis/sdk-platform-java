@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class Utils {
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
@@ -62,11 +63,14 @@ public class Utils {
       Service service,
       GapicServiceConfig gapicServiceConfig,
       TypeNode thisClassType,
-      BiFunction<String, Expr, List<? extends AstNode>> processFunc) {
+      Function<String, List<? extends AstNode>> perMethodFuncBeforeSettings,
+      BiFunction<List<String>, Expr, List<? extends AstNode>> processFunc,
+      Function<String, List<? extends AstNode>> perMethodFuncAfterSettings) {
     List resultList = new ArrayList<>();
     for (Method method : service.methods()) {
       String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
       String retryParamName = gapicServiceConfig.getRetryParamsName(service, method);
+      resultList.addAll(perMethodFuncBeforeSettings.apply(methodName));
       // follow logic in:
       // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createRetrySettingsExprs
       // Build the settings object for each config.
@@ -82,12 +86,12 @@ public class Utils {
 
         resultList.addAll(
             processFunc.apply(
-                methodName + "InitialRetryDelay",
+                Arrays.asList(methodName, "InitialRetryDelay"),
                 createDurationOfMillisExpr(toValExpr(retryPolicy.getInitialBackoff()))));
 
         resultList.addAll(
             processFunc.apply(
-                methodName + "RetryDelayMultiplier",
+                Arrays.asList(methodName, "RetryDelayMultiplier"),
                 toValExpr(retryPolicy.getBackoffMultiplier())));
 
         Preconditions.checkState(
@@ -96,7 +100,7 @@ public class Utils {
 
         resultList.addAll(
             processFunc.apply(
-                methodName + "MaxRetryDelay",
+                Arrays.asList(methodName, "MaxRetryDelay"),
                 createDurationOfMillisExpr(toValExpr(retryPolicy.getMaxBackoff()))));
       }
 
@@ -104,14 +108,14 @@ public class Utils {
 
         resultList.addAll(
             processFunc.apply(
-                methodName + "InitialRpcTimeout",
+                Arrays.asList(methodName, "InitialRpcTimeout"),
                 createDurationOfMillisExpr(toValExpr(settings.timeout()))));
       }
 
       // This will always be done, no matter the type of the retry settings object.
       resultList.addAll(
           processFunc.apply(
-              methodName + "RpcTimeoutMultiplier",
+              Arrays.asList(methodName, "RpcTimeoutMultiplier"),
               ValueExpr.withValue(
                   // this value is hardcoded in, risk of gapic- changes in future?
                   // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createRetrySettingsExprs
@@ -122,10 +126,12 @@ public class Utils {
 
           resultList.addAll(
               processFunc.apply(
-                  methodName + setterMethodName,
+                  Arrays.asList(methodName, setterMethodName),
                   createDurationOfMillisExpr(toValExpr(settings.timeout()))));
         }
       }
+
+      resultList.addAll(perMethodFuncAfterSettings.apply(methodName));
     }
     return resultList;
   }
