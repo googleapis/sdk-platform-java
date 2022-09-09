@@ -85,17 +85,16 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void invalidLambdaExpr_returnsVoid() {
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            LambdaExpr.builder()
-                .setReturnExpr(
-                    MethodInvocationExpr.builder()
-                        .setMethodName("foo")
-                        .setReturnType(TypeNode.VOID)
-                        .build())
-                .build());
+  public void validLambdaExpr_returnsVoid() {
+    LambdaExpr voidLambda =
+        LambdaExpr.builder()
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foo")
+                    .setReturnType(TypeNode.VOID)
+                    .build())
+            .build();
+    assertEquals(TypeNode.VOID, voidLambda.returnExpr().type());
   }
 
   @Test

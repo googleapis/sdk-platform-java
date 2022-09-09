@@ -193,7 +193,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("addressResource", request.getAddressResource()))
+                              .toBody("addressResource", request.getAddressResource(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Operation>newBuilder()

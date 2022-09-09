@@ -187,7 +187,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             protoMethodNameToDescriptorVarExprs,
             callableClassMemberVarExprs,
             classMemberVarExprs,
-            messageTypes);
+            messageTypes,
+            context.restNumericEnumsEnabled());
 
     StubCommentComposer commentComposer =
         new StubCommentComposer(getTransportContext().transportNames().get(0));
@@ -225,7 +226,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Service service,
       Method protoMethod,
       VariableExpr methodDescriptorVarExpr,
-      Map<String, Message> messageTypes);
+      Map<String, Message> messageTypes,
+      boolean restNumericEnumsEnabled);
 
   protected boolean generateOperationsStubLogic(Service service) {
     return true;
@@ -274,7 +276,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      boolean restNumericEnumsEnabled) {
     List<Statement> classStatements = new ArrayList<>();
 
     classStatements.addAll(createTypeRegistry(service));
@@ -284,7 +287,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
     for (Statement statement :
         createMethodDescriptorVariableDecls(
-            service, protoMethodNameToDescriptorVarExprs, messageTypes)) {
+            service, protoMethodNameToDescriptorVarExprs, messageTypes, restNumericEnumsEnabled)) {
       classStatements.add(statement);
       classStatements.add(EMPTY_LINE_STATEMENT);
     }
@@ -301,13 +304,18 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   protected List<Statement> createMethodDescriptorVariableDecls(
       Service service,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      boolean restNumericEnumsEnabled) {
     return service.methods().stream()
         .filter(this::isSupportedMethod)
         .map(
             m ->
                 createMethodDescriptorVariableDecl(
-                    service, m, protoMethodNameToDescriptorVarExprs.get(m.name()), messageTypes))
+                    service,
+                    m,
+                    protoMethodNameToDescriptorVarExprs.get(m.name()),
+                    messageTypes,
+                    restNumericEnumsEnabled))
         .collect(Collectors.toList());
   }
 

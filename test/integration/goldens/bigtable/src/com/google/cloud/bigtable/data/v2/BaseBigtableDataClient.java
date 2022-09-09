@@ -51,8 +51,11 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
- * // This snippet has been automatically generated for illustrative purposes only.
- * // It may require modifications to work in your environment.
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
  *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
  *   ByteString rowKey = ByteString.EMPTY;
@@ -91,8 +94,11 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * // This snippet has been automatically generated for illustrative purposes only.
- * // It may require modifications to work in your environment.
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * BaseBigtableDataSettings baseBigtableDataSettings =
  *     BaseBigtableDataSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -104,8 +110,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * // This snippet has been automatically generated for illustrative purposes only.
- * // It may require modifications to work in your environment.
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * BaseBigtableDataSettings baseBigtableDataSettings =
  *     BaseBigtableDataSettings.newBuilder().setEndpoint(myEndpoint).build();
  * BaseBigtableDataClient baseBigtableDataClient =
@@ -174,8 +183,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   ReadRowsRequest request =
    *       ReadRowsRequest.newBuilder()
@@ -206,8 +218,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   SampleRowKeysRequest request =
    *       SampleRowKeysRequest.newBuilder()
@@ -235,8 +250,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
    *   ByteString rowKey = ByteString.EMPTY;
@@ -273,8 +291,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   String tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]").toString();
    *   ByteString rowKey = ByteString.EMPTY;
@@ -311,8 +332,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
    *   ByteString rowKey = ByteString.EMPTY;
@@ -354,8 +378,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   String tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]").toString();
    *   ByteString rowKey = ByteString.EMPTY;
@@ -397,8 +424,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   MutateRowRequest request =
    *       MutateRowRequest.newBuilder()
@@ -426,8 +456,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   MutateRowRequest request =
    *       MutateRowRequest.newBuilder()
@@ -455,8 +488,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   MutateRowsRequest request =
    *       MutateRowsRequest.newBuilder()
@@ -483,8 +519,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
    *   ByteString rowKey = ByteString.EMPTY;
@@ -538,8 +577,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   String tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]").toString();
    *   ByteString rowKey = ByteString.EMPTY;
@@ -593,8 +635,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
    *   ByteString rowKey = ByteString.EMPTY;
@@ -653,8 +698,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   String tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]").toString();
    *   ByteString rowKey = ByteString.EMPTY;
@@ -713,8 +761,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   CheckAndMutateRowRequest request =
    *       CheckAndMutateRowRequest.newBuilder()
@@ -743,8 +794,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   CheckAndMutateRowRequest request =
    *       CheckAndMutateRowRequest.newBuilder()
@@ -777,8 +831,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
    *   ByteString rowKey = ByteString.EMPTY;
@@ -819,8 +876,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   String tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]").toString();
    *   ByteString rowKey = ByteString.EMPTY;
@@ -861,8 +921,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   TableName tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]");
    *   ByteString rowKey = ByteString.EMPTY;
@@ -910,8 +973,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   String tableName = TableName.of("[PROJECT]", "[INSTANCE]", "[TABLE]").toString();
    *   ByteString rowKey = ByteString.EMPTY;
@@ -956,8 +1022,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   ReadModifyWriteRowRequest request =
    *       ReadModifyWriteRowRequest.newBuilder()
@@ -987,8 +1056,11 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
-   * // This snippet has been automatically generated for illustrative purposes only.
-   * // It may require modifications to work in your environment.
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
    *   ReadModifyWriteRowRequest request =
    *       ReadModifyWriteRowRequest.newBuilder()
