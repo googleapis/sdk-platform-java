@@ -60,6 +60,7 @@ public class SpringWriter {
     // write spring.factories file
     writeAutoConfigRegistration(context, jos);
     writeSpringAdditionalMetadataJson(context, jos);
+    writePom(context, jos);
 
     // TODO: metadata and package info not custimized for Spring
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
@@ -185,6 +186,83 @@ public class SpringWriter {
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException("Could not write spring.factories", e);
+    }
+  }
+
+  // write pom file. start with static string
+  // next: inject versions; change client library names
+  private static void writePom(GapicContext context, JarOutputStream jos) {
+    JarEntry jarEntry = new JarEntry("pom.xml");
+    try {
+      jos.putNextEntry(jarEntry);
+      StringJoiner sb = new StringJoiner(",\\\n");
+
+      sb.add(
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+              + "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+              + "  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n"
+              + "  <modelVersion>4.0.0</modelVersion>\n"
+              + "\n"
+              + "  <groupId>com.sample</groupId>\n"
+              + "  <artifactId>cloud-language</artifactId>\n"
+              + "  <version>0.0.1-SNAPSHOT</version>\n"
+              + "  <name>autoconfig</name>\n"
+              + "  <description>autoconfig poc project for Spring Boot</description>\n"
+              + "\n"
+              + "\n"
+              + "<!--  Depend on the specific client library directly. Avoids dependency on libraries bom-->\n"
+              + "  <dependencies>\n"
+              + "    <dependency>\n"
+              + "      <groupId>com.google.cloud</groupId>\n"
+              + "<!--   //safe to parse from package name? com.google.cloud.language   -->\n"
+              + "      <artifactId>google-cloud-language</artifactId>\n"
+              + "      <version>2.3.0</version>\n"
+              + "    </dependency>\n"
+              + "\n"
+              + "    <dependency>\n"
+              + "      <groupId>org.springframework.boot</groupId>\n"
+              + "      <artifactId>spring-boot-starter</artifactId>\n"
+              + "      <version>2.6.3</version>\n"
+              + "    </dependency>\n"
+              + "\n"
+              + "<!--this dependency only needed for a few util classes. Can be moved to shared location-->\n"
+              + "  <dependency>\n"
+              + "    <groupId>com.google.cloud</groupId>\n"
+              + "    <artifactId>spring-cloud-gcp-core</artifactId>\n"
+              + "    <version>3.2.1</version>\n"
+              + "  </dependency>\n"
+              + "</dependencies>\n"
+              + "  <build>\n"
+              + "    <pluginManagement>\n"
+              + "      <plugins>\n"
+              + "        <plugin>\n"
+              + "          <groupId>org.apache.maven.plugins</groupId>\n"
+              + "          <artifactId>maven-jar-plugin</artifactId>\n"
+              + "          <version>3.2.2</version>\n"
+              + "        </plugin>\n"
+              + "      </plugins>\n"
+              + "    </pluginManagement>\n"
+              + "\n"
+              + "    <plugins>\n"
+              + "      <plugin>\n"
+              + "        <groupId>org.apache.maven.plugins</groupId>\n"
+              + "        <artifactId>maven-jar-plugin</artifactId>\n"
+              + "        <configuration>\n"
+              + "          <archive>\n"
+              + "            <manifest>\n"
+              + "              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n"
+              + "            </manifest>\n"
+              + "          </archive>\n"
+              + "        </configuration>\n"
+              + "      </plugin>\n"
+              + "    </plugins>\n"
+              + "  </build>\n"
+              + "\n"
+              + "</project>");
+
+      jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write pom.xml", e);
     }
   }
 
