@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START iam_v1_generated_iampolicysettings_setiampolicy_sync]
+// [START api_v1_generated_iampolicysettings_setiampolicy_sync]
 import com.google.iam.v1.IAMPolicySettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncSetIamPolicy {
     IAMPolicySettings iAMPolicySettings = iAMPolicySettingsBuilder.build();
   }
 }
-// [END iam_v1_generated_iampolicysettings_setiampolicy_sync]
+// [END api_v1_generated_iampolicysettings_setiampolicy_sync]

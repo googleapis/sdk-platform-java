@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START iam_v1_generated_iampolicyclient_setiampolicy_sync]
+// [START api_v1_generated_iampolicyclient_setiampolicy_sync]
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
@@ -43,4 +43,4 @@ public class SyncSetIamPolicy {
     }
   }
 }
-// [END iam_v1_generated_iampolicyclient_setiampolicy_sync]
+// [END api_v1_generated_iampolicyclient_setiampolicy_sync]

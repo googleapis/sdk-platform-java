@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_listbooks_paged_async]
+// [START example_v1_generated_libraryserviceclient_listbooks_paged_async]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.common.base.Strings;
 import com.google.example.library.v1.Book;
@@ -58,4 +58,4 @@ public class AsyncListBooksPaged {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_listbooks_paged_async]
+// [END example_v1_generated_libraryserviceclient_listbooks_paged_async]

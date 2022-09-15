@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_getshelf_async]
+// [START example_v1_generated_libraryserviceclient_getshelf_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.GetShelfRequest;
@@ -44,4 +44,4 @@ public class AsyncGetShelf {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_getshelf_async]
+// [END example_v1_generated_libraryserviceclient_getshelf_async]
