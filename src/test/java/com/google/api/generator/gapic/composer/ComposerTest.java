@@ -14,22 +14,17 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.*;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcTestProtoLoader;
-import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.*;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
-import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Sample;
-import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import com.google.common.collect.ImmutableList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -42,8 +37,13 @@ public class ComposerTest {
   private final List<GapicClass> clazzes =
       Arrays.asList(
           GrpcServiceCallableFactoryClassComposer.instance().generate(context, echoProtoService));
-  private final String protoPackage = context.gapicMetadata().getProtoPackage();
-  private final List<Sample> samples = clazzes.get(0).samples();
+  private final Sample sample =
+      Sample.builder()
+          .setRegionTag(
+              RegionTag.builder().setServiceName("servicename").setRpcName("rpcname").build())
+          .build();
+  private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
+  private final String protoPackage = echoProtoService.protoPakkage();
 
   @Test
   public void gapicClass_addApacheLicense() {
@@ -65,58 +65,94 @@ public class ComposerTest {
 
   @Test
   public void composeSamples_showcase() {
-    for (Sample sample : samples) {
-      assertEquals(
-          "File header will be empty before composing samples",
-          sample.fileHeader(),
-          ImmutableList.of());
-      assertEquals(
-          "ApiShortName will be empty before composing samples",
-          sample.regionTag().apiShortName(),
-          "");
-      assertEquals(
-          "ApiVersion will be empty before composing samples", sample.regionTag().apiVersion(), "");
-    }
+    GapicClass testClass = clazzes.get(0).withSamples(ListofSamples);
+    List<GapicClass> testClassList = Arrays.asList(new GapicClass[] {testClass});
 
     List<Sample> composedSamples =
-        Composer.prepareExecutableSamples(clazzes, protoPackage).get(0).samples();
+        Composer.prepareExecutableSamples(testClassList, protoPackage).get(0).samples();
 
+    // Assert.assertCodeEquals(composedSamples.toString(), "egg");
+    assertFalse(composedSamples.isEmpty());
     for (Sample sample : composedSamples) {
       assertEquals(
-          "File header should be apache",
-          sample.fileHeader(),
-          Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT));
+          "File header should be APACHE",
+          Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT),
+          sample.fileHeader());
       assertEquals(
-          "ApiShortName should be showcase", sample.regionTag().apiShortName(), "showcase");
-      assertEquals("ApiVersion should be v1beta1", sample.regionTag().apiVersion(), "v1beta1");
+          "ApiShortName should be Localhost7469",
+          "Localhost7469",
+          sample.regionTag().apiShortName());
+      assertEquals("ApiVersion should be V1beta1", "V1Beta1", sample.regionTag().apiVersion());
     }
   }
 
   @Test
+  public void parseDefaultHostTest() {
+    String defaultHost = "us-east1-pubsub.googleapis.com";
+    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    org.junit.Assert.assertEquals("pubsub", apiShortName);
+
+    defaultHost = "logging.googleapis.com";
+    apiShortName = Composer.parseDefaultHost(defaultHost);
+    org.junit.Assert.assertEquals("logging", apiShortName);
+
+    defaultHost = "localhost:7469";
+    apiShortName = Composer.parseDefaultHost(defaultHost);
+    org.junit.Assert.assertEquals("localhost:7469", apiShortName);
+  }
+
+  @Test
+  public void gapicClass_addRegionTagAndHeaderToSample() {
+    Sample testSample;
+    testSample = Composer.addRegionTagAndHeaderToSample(sample, "showcase", "v1");
+    org.junit.Assert.assertEquals("Showcase", testSample.regionTag().apiShortName());
+    org.junit.Assert.assertEquals("V1", testSample.regionTag().apiVersion());
+    org.junit.Assert.assertEquals(
+        Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT), testSample.fileHeader());
+  }
+
+  @Test
   public void composeSamples_parseProtoPackage() {
+
+    String defaultHost = "accessapproval.googleapis.com:443";
+    GapicClass testClass = clazzes.get(0).withSamples(ListofSamples).withDefaultHost(defaultHost);
+    List<GapicClass> testClassList = Arrays.asList(new GapicClass[] {testClass});
     String protoPack = "google.cloud.accessapproval.v1";
+
     List<Sample> composedSamples =
-        Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
+        Composer.prepareExecutableSamples(testClassList, protoPack).get(0).samples();
+
+    // If samples is empty, the test automatically passes without checking.
+    assertFalse(composedSamples.isEmpty());
 
     for (Sample sample : composedSamples) {
       assertEquals(
-          "ApiShortName should be accessapproval",
+          "ApiShortName should be Accessapproval",
           sample.regionTag().apiShortName(),
-          "accessapproval");
-      assertEquals("ApiVersion should be v1", sample.regionTag().apiVersion(), "v1");
+          "Accessapproval");
+      assertEquals("ApiVersion should be V1", sample.regionTag().apiVersion(), "V1");
     }
 
     protoPack = "google.cloud.vision.v1p1beta1";
-    composedSamples = Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
+    defaultHost = "vision.googleapis.com";
+    testClass = clazzes.get(0).withSamples(ListofSamples).withDefaultHost(defaultHost);
+    testClassList = Arrays.asList(new GapicClass[] {testClass});
+    composedSamples = Composer.prepareExecutableSamples(testClassList, protoPack).get(0).samples();
+    // If samples is empty, the test automatically passes without checking.
+    assertFalse(composedSamples.isEmpty());
+
     for (Sample sample : composedSamples) {
-      assertEquals("ApiShortName should be vision", sample.regionTag().apiShortName(), "vision");
-      assertEquals("ApiVersion should be v1p1beta1", sample.regionTag().apiVersion(), "v1p1beta1");
+      assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
+      assertEquals("ApiVersion should be V1P1Beta1", sample.regionTag().apiVersion(), "V1P1Beta1");
     }
 
     protoPack = "google.cloud.vision";
-    composedSamples = Composer.prepareExecutableSamples(clazzes, protoPack).get(0).samples();
+    composedSamples = Composer.prepareExecutableSamples(testClassList, protoPack).get(0).samples();
+    // If samples is empty, the test automatically passes without checking.
+    assertFalse(composedSamples.isEmpty());
+
     for (Sample sample : composedSamples) {
-      assertEquals("ApiShortName should be vision", sample.regionTag().apiShortName(), "vision");
+      assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
       assertEquals("ApiVersion should be empty", sample.regionTag().apiVersion(), "");
     }
   }

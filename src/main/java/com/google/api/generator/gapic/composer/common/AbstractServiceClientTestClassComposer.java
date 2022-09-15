@@ -127,7 +127,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             .setMethods(
                 createClassMethods(service, context, classMemberVarExprs, typeStore, resourceNames))
             .build();
-    return GapicClass.create(kind, classDef);
+    return GapicClass.create(kind, classDef, service.defaultHost());
   }
 
   protected boolean isSupportedMethod(Method method) {

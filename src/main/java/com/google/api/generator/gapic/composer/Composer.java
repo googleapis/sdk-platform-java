@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
@@ -29,16 +30,12 @@ import com.google.api.generator.gapic.composer.grpcrest.HttpJsonServiceClientTes
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComposer;
-import com.google.api.generator.gapic.model.GapicClass;
-import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.gapic.model.Sample;
-import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.gapic.model.*;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Composer {
@@ -191,17 +188,14 @@ public class Composer {
 
   @VisibleForTesting
   static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes, String protoPackage) {
-    //  parse protoPackage for apiVersion and apiShortName
+    //  parse protoPackage for apiVersion
     String[] pakkage = protoPackage.split("\\.");
     String apiVersion;
-    String apiShortName;
     //  e.g. v1, v2, v1beta1
     if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
       apiVersion = pakkage[pakkage.length - 1];
-      apiShortName = pakkage[pakkage.length - 2];
     } else {
       apiVersion = "";
-      apiShortName = pakkage[pakkage.length - 1];
     }
     //  Include license header, apiShortName, and apiVersion
     return clazzes.stream()
@@ -210,17 +204,48 @@ public class Composer {
               List<Sample> samples =
                   gapicClass.samples().stream()
                       .map(
-                          sample -> addRegionTagAndHeaderToSample(sample, apiShortName, apiVersion))
+                          sample ->
+                              addRegionTagAndHeaderToSample(
+                                  sample, parseDefaultHost(gapicClass.defaultHost()), apiVersion))
                       .collect(Collectors.toList());
               return gapicClass.withSamples(samples);
             })
         .collect(Collectors.toList());
   }
 
-  private static Sample addRegionTagAndHeaderToSample(
+  // Parse defaultHost for apiShortName. Need to account for regional default endpoints like
+  // "us-east1-pubsub.googleapis.com".
+  // Will keep backup name parsed from proto package for now.
+  @VisibleForTesting
+  protected static String parseDefaultHost(String defaultHost) {
+    String apiShortName;
+    String apiShortNameHelper;
+    // If the defaultHost is of the format "**.googleapis.com", take the name before the first
+    // period.
+    Pattern standardApiHost = Pattern.compile("\\.");
+    // If the defaultHost is of the format "**-**-**.googleapis.com", take the section before the
+    // first period and after the last dash to follow CSharp's implementation here:
+    // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
+    Pattern regionalApiHost = Pattern.compile("-");
+    apiShortNameHelper = standardApiHost.split(defaultHost)[0];
+    apiShortName = defaultHost;
+    if (standardApiHost.split(defaultHost).length > 1
+        && regionalApiHost.split(defaultHost).length > 1) {
+      apiShortName =
+          regionalApiHost
+              .split(apiShortNameHelper)[regionalApiHost.split(apiShortNameHelper).length - 1];
+    } else {
+      apiShortName = apiShortNameHelper;
+    }
+    return apiShortName;
+  }
+
+  @VisibleForTesting
+  protected static Sample addRegionTagAndHeaderToSample(
       Sample sample, String apiShortName, String apiVersion) {
+    final List<CommentStatement> header = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
     return sample
-        .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
+        .withHeader(header)
         .withRegionTag(
             sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
   }

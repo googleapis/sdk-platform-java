@@ -83,7 +83,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
             .setMethods(createClassMethods(service, typeStore))
             .setScope(ScopeNode.PUBLIC)
             .build();
-    return GapicClass.create(kind, classDef);
+    return GapicClass.create(kind, classDef, service.defaultHost());
   }
 
   protected List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {

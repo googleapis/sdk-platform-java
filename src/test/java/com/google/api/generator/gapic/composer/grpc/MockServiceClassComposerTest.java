@@ -47,5 +47,6 @@ public class MockServiceClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertEmptySamples(clazz.samples());
+    Assert.assertCodeEquals(clazz.defaultHost(), "localhost:7469");
   }
 }
