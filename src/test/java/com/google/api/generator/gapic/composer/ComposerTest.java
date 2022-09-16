@@ -40,7 +40,7 @@ public class ComposerTest {
   private final Sample sample =
       Sample.builder()
           .setRegionTag(
-              RegionTag.builder().setServiceName("servicename").setRpcName("rpcname").build())
+              RegionTag.builder().setServiceName("serviceName").setRpcName("rpcName").build())
           .build();
   private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
   private final String protoPackage = echoProtoService.protoPakkage();
