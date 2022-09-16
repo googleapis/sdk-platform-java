@@ -30,7 +30,12 @@ import com.google.api.generator.gapic.composer.grpcrest.HttpJsonServiceClientTes
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameHelperClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComposer;
-import com.google.api.generator.gapic.model.*;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.Arrays;
