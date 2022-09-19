@@ -71,17 +71,13 @@ public class ComposerTest {
     List<Sample> composedSamples =
         Composer.prepareExecutableSamples(testClassList, protoPackage).get(0).samples();
 
-    // Assert.assertCodeEquals(composedSamples.toString(), "egg");
     assertFalse(composedSamples.isEmpty());
     for (Sample sample : composedSamples) {
       assertEquals(
           "File header should be APACHE",
           Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT),
           sample.fileHeader());
-      assertEquals(
-          "ApiShortName should be Localhost7469",
-          "Localhost7469",
-          sample.regionTag().apiShortName());
+      assertEquals("ApiShortName should be empty", "", sample.regionTag().apiShortName());
       assertEquals("ApiVersion should be V1beta1", "V1Beta1", sample.regionTag().apiVersion());
     }
   }

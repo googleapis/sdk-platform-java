@@ -37,10 +37,11 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Composer {
@@ -223,25 +224,14 @@ public class Composer {
   // Will keep backup name parsed from proto package for now.
   @VisibleForTesting
   protected static String parseDefaultHost(String defaultHost) {
-    String apiShortName;
-    String apiShortNameHelper;
     // If the defaultHost is of the format "**.googleapis.com", take the name before the first
     // period.
-    Pattern standardApiHost = Pattern.compile("\\.");
+    String apiShortName = Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
     // If the defaultHost is of the format "**-**-**.googleapis.com", take the section before the
     // first period and after the last dash to follow CSharp's implementation here:
     // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
-    Pattern regionalApiHost = Pattern.compile("-");
-    apiShortNameHelper = standardApiHost.split(defaultHost)[0];
-    apiShortName = defaultHost;
-    if (standardApiHost.split(defaultHost).length > 1
-        && regionalApiHost.split(defaultHost).length > 1) {
-      apiShortName =
-          regionalApiHost
-              .split(apiShortNameHelper)[regionalApiHost.split(apiShortNameHelper).length - 1];
-    } else {
-      apiShortName = apiShortNameHelper;
-    }
+    apiShortName = Iterables.getLast(Splitter.on("-").split(apiShortName), defaultHost);
+    // TODO: alicejli will need to handle special case for `iam-meta-api` service
     return apiShortName;
   }
 

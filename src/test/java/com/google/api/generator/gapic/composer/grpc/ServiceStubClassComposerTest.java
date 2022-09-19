@@ -31,12 +31,8 @@ public class ServiceStubClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {"EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), "localhost:7469"},
-          {
-            "DeprecatedServiceStub",
-            TestProtoLoader.instance().parseDeprecatedService(),
-            "localhost:7469"
-          }
+          {"EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), ""},
+          {"DeprecatedServiceStub", TestProtoLoader.instance().parseDeprecatedService(), ""}
         });
   }
 

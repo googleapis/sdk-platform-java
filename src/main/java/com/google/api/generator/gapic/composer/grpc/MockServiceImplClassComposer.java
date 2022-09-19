@@ -126,7 +126,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
             .setStatements(createFieldDeclarations())
             .setMethods(createClassMethods(service, typeStore))
             .build();
-    return GapicClass.create(kind, classDef, service.defaultHost());
+    return GapicClass.create(kind, classDef).withDefaultHost(service.defaultHost());
   }
 
   private static List<Statement> createFieldDeclarations() {

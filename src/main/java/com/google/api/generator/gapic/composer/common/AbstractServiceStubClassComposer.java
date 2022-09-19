@@ -87,7 +87,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
             .setMethods(createClassMethods(service, messageTypes, typeStore))
             .setScope(ScopeNode.PUBLIC)
             .build();
-    return GapicClass.create(kind, classDef, service.defaultHost());
+    return GapicClass.create(kind, classDef);
   }
 
   private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {

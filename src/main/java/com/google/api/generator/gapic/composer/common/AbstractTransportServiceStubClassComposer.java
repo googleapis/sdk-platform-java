@@ -215,7 +215,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                     classStatements))
             .setStatements(classStatements)
             .build();
-    return GapicClass.create(kind, classDef, service.defaultHost());
+    return GapicClass.create(kind, classDef);
   }
 
   protected boolean isSupportedMethod(Method method) {

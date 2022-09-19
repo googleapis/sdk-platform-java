@@ -46,24 +46,6 @@ public abstract class GapicClass {
     return builder().setKind(kind).setClassDefinition(classDefinition).setSamples(samples).build();
   }
 
-  public static GapicClass create(Kind kind, ClassDefinition classDefinition, String defaultHost) {
-    return builder()
-        .setKind(kind)
-        .setClassDefinition(classDefinition)
-        .setDefaultHost(defaultHost)
-        .build();
-  }
-
-  public static GapicClass create(
-      Kind kind, ClassDefinition classDefinition, List<Sample> samples, String defaultHost) {
-    return builder()
-        .setKind(kind)
-        .setClassDefinition(classDefinition)
-        .setSamples(samples)
-        .setDefaultHost(defaultHost)
-        .build();
-  }
-
   static Builder builder() {
     return new AutoValue_GapicClass.Builder()
         .setSamples(Collections.emptyList())
