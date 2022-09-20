@@ -232,9 +232,9 @@ public class Composer {
     // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
     apiShortName = Iterables.getLast(Splitter.on("-").split(apiShortName), defaultHost);
     // `iam-meta-api` service is an exceptional case and is handled as a one-off
-      if(defaultHost.contains("iam-meta-api")){
-          apiShortName="iam";
-      }
+    if (defaultHost.contains("iam-meta-api")) {
+      apiShortName = "iam";
+    }
     return apiShortName;
   }
 
