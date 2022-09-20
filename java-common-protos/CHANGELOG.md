@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.9.3](https://github.com/googleapis/java-common-protos/compare/v2.9.2...v2.9.3) (2022-09-20)
+
+
+### Dependencies
+
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.3 ([#393](https://github.com/googleapis/java-common-protos/issues/393)) ([f056dbe](https://github.com/googleapis/java-common-protos/commit/f056dbea9d92c92af9d4bffb8442704e4f3480e4))
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.4 ([#397](https://github.com/googleapis/java-common-protos/issues/397)) ([35f20b9](https://github.com/googleapis/java-common-protos/commit/35f20b942487f0500fa7919ddd9dd34e2a98da68))
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.5 ([#402](https://github.com/googleapis/java-common-protos/issues/402)) ([5279823](https://github.com/googleapis/java-common-protos/commit/5279823ab40a011b38003859d888ea48799bf86f))
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.6 ([#410](https://github.com/googleapis/java-common-protos/issues/410)) ([2ae81dc](https://github.com/googleapis/java-common-protos/commit/2ae81dcfe53630b422ab3d81785f9cab4ccd997e))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.3 ([#394](https://github.com/googleapis/java-common-protos/issues/394)) ([ada3199](https://github.com/googleapis/java-common-protos/commit/ada31991b01ff3bcc342b9c8f7e0aaf95b21ab66))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.4 ([#398](https://github.com/googleapis/java-common-protos/issues/398)) ([f6be516](https://github.com/googleapis/java-common-protos/commit/f6be516c23202d2502c25473ccf8bba009948cde))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.5 ([#403](https://github.com/googleapis/java-common-protos/issues/403)) ([89f8ae8](https://github.com/googleapis/java-common-protos/commit/89f8ae82df4fe608f58c6190324a3cec7441cf81))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.6 ([#411](https://github.com/googleapis/java-common-protos/issues/411)) ([764e5d9](https://github.com/googleapis/java-common-protos/commit/764e5d94828b6f4d02bc5d646496340fdada0f25))
+* Update dependency io.grpc:grpc-bom to v1.49.0 and guava to 31.1-android ([#390](https://github.com/googleapis/java-common-protos/issues/390)) ([08d00ec](https://github.com/googleapis/java-common-protos/commit/08d00ec4ab8f9979f4a6b92f76e9666f045f9953))
+* Update dependency io.grpc:grpc-bom to v1.49.1 ([#412](https://github.com/googleapis/java-common-protos/issues/412)) ([d4b66a0](https://github.com/googleapis/java-common-protos/commit/d4b66a03b49b16069ee0c0922448748620cc5745))
+* Update dependency io.grpc:grpc-protobuf to v1.48.0 ([#391](https://github.com/googleapis/java-common-protos/issues/391)) ([171b4bf](https://github.com/googleapis/java-common-protos/commit/171b4bf8bd69ebd8111b0a2b6896282dbfa0525f))
+* Update dependency io.grpc:grpc-protobuf to v1.48.1 ([#400](https://github.com/googleapis/java-common-protos/issues/400)) ([7c96c90](https://github.com/googleapis/java-common-protos/commit/7c96c908a819eef24c92cf9d65966e04825708d3))
+* Update dependency io.grpc:grpc-protobuf to v1.49.0 ([#406](https://github.com/googleapis/java-common-protos/issues/406)) ([da8e116](https://github.com/googleapis/java-common-protos/commit/da8e116d60c17322c2a01de78a42f8e9d4498035))
+* Update dependency io.grpc:grpc-protobuf to v1.49.1 ([#413](https://github.com/googleapis/java-common-protos/issues/413)) ([ab55975](https://github.com/googleapis/java-common-protos/commit/ab5597592c9eb86e4dcc81fa61a67a43d5edcb2a))
+* Update dependency io.grpc:grpc-stub to v1.48.0 ([#392](https://github.com/googleapis/java-common-protos/issues/392)) ([7d404a0](https://github.com/googleapis/java-common-protos/commit/7d404a051ee53933c9f64a7e77cca589a2fd7ceb))
+* Update dependency io.grpc:grpc-stub to v1.48.1 ([#401](https://github.com/googleapis/java-common-protos/issues/401)) ([60ae3bc](https://github.com/googleapis/java-common-protos/commit/60ae3bc53f0a3b2afc32e9b7be8789efb2b551da))
+* Update dependency io.grpc:grpc-stub to v1.49.0 ([#407](https://github.com/googleapis/java-common-protos/issues/407)) ([bedb226](https://github.com/googleapis/java-common-protos/commit/bedb226200ab92d1336652c2c02101796d7c7262))
+* Update dependency io.grpc:grpc-stub to v1.49.1 ([#414](https://github.com/googleapis/java-common-protos/issues/414)) ([d209727](https://github.com/googleapis/java-common-protos/commit/d20972705f275919eef3bc69f99f2d1cbfb7d026))
+
 ## [2.9.2](https://github.com/googleapis/java-common-protos/compare/v2.9.1...v2.9.2) (2022-07-13)
 
 
