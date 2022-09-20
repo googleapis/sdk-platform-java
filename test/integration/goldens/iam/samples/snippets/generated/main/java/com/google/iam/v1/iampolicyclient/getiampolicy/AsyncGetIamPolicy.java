@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START api_v1_generated_iampolicyclient_getiampolicy_async]
+// [START iam_v1_generated_iampolicyclient_getiampolicy_async]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.GetPolicyOptions;
@@ -47,4 +47,4 @@ public class AsyncGetIamPolicy {
     }
   }
 }
-// [END api_v1_generated_iampolicyclient_getiampolicy_async]
+// [END iam_v1_generated_iampolicyclient_getiampolicy_async]

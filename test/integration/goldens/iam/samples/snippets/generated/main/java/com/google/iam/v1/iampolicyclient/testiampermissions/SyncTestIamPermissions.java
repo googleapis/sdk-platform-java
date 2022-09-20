@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START api_v1_generated_iampolicyclient_testiampermissions_sync]
+// [START iam_v1_generated_iampolicyclient_testiampermissions_sync]
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
@@ -44,4 +44,4 @@ public class SyncTestIamPermissions {
     }
   }
 }
-// [END api_v1_generated_iampolicyclient_testiampermissions_sync]
+// [END iam_v1_generated_iampolicyclient_testiampermissions_sync]

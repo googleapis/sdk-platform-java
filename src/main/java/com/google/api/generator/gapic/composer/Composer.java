@@ -231,7 +231,10 @@ public class Composer {
     // first period and after the last dash to follow CSharp's implementation here:
     // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
     apiShortName = Iterables.getLast(Splitter.on("-").split(apiShortName), defaultHost);
-    // TODO: alicejli will need to handle special case for `iam-meta-api` service
+    // `iam-meta-api` service is an exceptional case and is handled as a one-off
+      if(defaultHost.contains("iam-meta-api")){
+          apiShortName="iam";
+      }
     return apiShortName;
   }
 

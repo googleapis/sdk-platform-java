@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START api_v1_generated_iampolicyclient_create_setendpoint_sync]
+// [START iam_v1_generated_iampolicyclient_create_setendpoint_sync]
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.IAMPolicySettings;
 import com.google.iam.v1.myEndpoint;
@@ -38,4 +38,4 @@ public class SyncCreateSetEndpoint {
     IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create(iAMPolicySettings);
   }
 }
-// [END api_v1_generated_iampolicyclient_create_setendpoint_sync]
+// [END iam_v1_generated_iampolicyclient_create_setendpoint_sync]

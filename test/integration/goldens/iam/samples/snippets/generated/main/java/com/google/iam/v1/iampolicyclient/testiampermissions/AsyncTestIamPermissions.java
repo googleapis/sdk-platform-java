@@ -16,7 +16,7 @@
 
 package com.google.iam.v1.samples;
 
-// [START api_v1_generated_iampolicyclient_testiampermissions_async]
+// [START iam_v1_generated_iampolicyclient_testiampermissions_async]
 import com.google.api.core.ApiFuture;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.TestIamPermissionsRequest;
@@ -48,4 +48,4 @@ public class AsyncTestIamPermissions {
     }
   }
 }
-// [END api_v1_generated_iampolicyclient_testiampermissions_async]
+// [END iam_v1_generated_iampolicyclient_testiampermissions_async]
