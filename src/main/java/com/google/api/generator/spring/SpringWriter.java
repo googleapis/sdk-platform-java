@@ -202,10 +202,10 @@ public class SpringWriter {
           "com.google.cloud"; // it this always true? if not how to get this info
       String clientLibraryName =
           Splitter.on(".").limit(2).splitToList(pakkageName).get(1); // is this safe to assume?
-      String clientLibraryVersion = "2.3.0"; // to pass in
+      String clientLibraryVersion = "{{client-library-version}}"; // to pass in
       pakkageName = pakkageName.replace('.', '-');
       String clientLibraryTitle = context.serviceYamlProto().getTitle();
-      String version = "0.0.1-SNAPSHOT"; // to pass in
+      String version = "{{starter-version}}"; // to pass in
       sb.add(
           String.format(
               "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
