@@ -22,12 +22,16 @@ import static org.junit.Assert.assertTrue;
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
+import com.google.common.truth.Truth;
+import com.google.http.rule.parser.HttpRuleParserTestingOuterClass;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.TestingOuterClass;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class HttpRuleParserTest {
@@ -90,5 +94,84 @@ public class HttpRuleParserTest {
     Message inputMessage = messages.get("com.google.showcase.v1beta1.CreateSessionRequest");
     assertThrows(
         IllegalStateException.class, () -> HttpRuleParser.parse(rpcMethod, inputMessage, messages));
+  }
+
+  @Test
+  public void
+      parseHttpAnnotation_shouldPutAllFieldsIntoQueryParamsIfPathParamAndBodyAreNotConfigured() {
+    FileDescriptor fileDescriptor = HttpRuleParserTestingOuterClass.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals("HttpRuleParserTesting", serviceDescriptor.getName());
+
+    Map<String, Message> messages = Parser.parseMessages(fileDescriptor);
+
+    MethodDescriptor rpcMethod =
+        serviceDescriptor.getMethods().stream()
+            .filter(
+                methodDescriptor -> methodDescriptor.getName().equals("QueryParamHappyPathTest"))
+            .findAny()
+            .get();
+    Message inputMessage = messages.get("com.google.http.rule.parser.QueryParamRequest");
+    HttpBindings actual = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
+
+    HttpBinding expected1 =
+        HttpBinding.builder().setName("name").setField(inputMessage.fieldMap().get("name")).build();
+    HttpBinding expected2 =
+        HttpBinding.builder()
+            .setName("nested_object")
+            .setField(inputMessage.fieldMap().get("nested_object"))
+            .build();
+    Truth.assertThat(new HashSet<>(actual.queryParameters())).containsExactly(expected1, expected2);
+  }
+
+  @Ignore
+  @Test
+  //               request
+  //             /         \
+  //     nested_object     name
+  //     /          \
+  //  name       continent
+  // Given a request above, if nested_object.name is configured as path param, we should only
+  // include nested_object.continent and name as query param.
+  // However, the current logic put the name and the whole nested_object as query params, gax-java
+  // will then serialize all sub fields to query params.
+  // We need to either traverse all the leaf level fields and exclude field in the generator or pass
+  // the excluded fields to gax-java. Re-enable this test once
+  // https://github.com/googleapis/gapic-generator-java/issues/1041 is fixed
+  public void parseHttpAnnotation_shouldExcludeFieldsFromQueryParamsIfPathParamsAreConfigured() {
+    FileDescriptor fileDescriptor = HttpRuleParserTestingOuterClass.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals("HttpRuleParserTesting", serviceDescriptor.getName());
+
+    Map<String, Message> messages = Parser.parseMessages(fileDescriptor);
+
+    MethodDescriptor rpcMethod =
+        serviceDescriptor.getMethods().stream()
+            .filter(
+                methodDescriptor ->
+                    methodDescriptor.getName().equals("ExcludePathParamsQueryParamTest"))
+            .findAny()
+            .get();
+    Message inputMessage = messages.get("com.google.http.rule.parser.QueryParamRequest");
+
+    HttpBindings actual = HttpRuleParser.parse(rpcMethod, inputMessage, messages);
+
+    Message nestedObjectMessage = messages.get("com.google.http.rule.parser.NestedObject");
+
+    HttpBinding expected1 =
+        HttpBinding.builder().setName("name").setField(inputMessage.fieldMap().get("name")).build();
+    HttpBinding expected2 =
+        HttpBinding.builder()
+            .setName("nested_object.continent")
+            .setField(nestedObjectMessage.fieldMap().get("continent"))
+            .build();
+    HttpBinding expectedPathParam =
+        HttpBinding.builder()
+            .setName("nested_object.name")
+            .setField(nestedObjectMessage.fieldMap().get("name"))
+            .build();
+
+    Truth.assertThat(new HashSet<>(actual.queryParameters())).containsExactly(expected1, expected2);
+    Truth.assertThat(new HashSet<>(actual.pathParameters())).containsExactly(expectedPathParam);
   }
 }
