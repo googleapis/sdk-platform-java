@@ -37,7 +37,7 @@ public abstract class HttpBindings {
   @AutoValue
   public abstract static class HttpBinding implements Comparable<HttpBinding> {
 
-    // The full qualified name of the field. e.g. request.complex_object.another_object.name
+    // The fully qualified name of the field. e.g. request.complex_object.another_object.name
     public abstract String name();
 
     abstract String lowerCamelName();
