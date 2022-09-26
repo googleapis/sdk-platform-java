@@ -139,13 +139,14 @@ public class SpringWriter {
   }
 
   private static void writeSpringFactories(GapicContext context, JarOutputStream jos) {
-    String path = "src/main/resources/META-INF";
-    JarEntry jarEntry = new JarEntry(String.format("%s/spring.factories", path));
+    String path = "src/main/resources/META-INF/spring";
+    JarEntry jarEntry =
+        new JarEntry(
+            String.format(
+                "%s/org.springframework.boot.autoconfigure.AutoConfiguration.imports", path));
     try {
       jos.putNextEntry(jarEntry);
-      StringJoiner sb =
-          new StringJoiner(
-              ",\\\n", "org.springframework.boot.autoconfigure.EnableAutoConfiguration=\\\n", "");
+      StringJoiner sb = new StringJoiner("\n", "", "");
       context
           .services()
           .forEach(
