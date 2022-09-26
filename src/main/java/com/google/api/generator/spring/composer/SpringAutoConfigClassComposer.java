@@ -32,9 +32,11 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -401,37 +403,84 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     // @ConditionalOnProperty(value = "spring.cloud.gcp.language.enabled", matchIfMissing = true)
     // @EnableConfigurationProperties(LanguageProperties.class)
 
-    // TODO: AnnotationNode description only accepts String for now. need to extend to params
-    // and classes.
+    AssignmentExpr valueStringAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("value").setType(TypeNode.STRING).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(
+                        Utils.springPropertyPrefix(libName, service.name()) + ".enabled")))
+            .build();
+    AssignmentExpr matchIfMissingAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("matchIfMissing").setType(TypeNode.BOOLEAN).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
+            .build();
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
             .setType(types.get("ConditionalOnProperty"))
-            .setDescription(
-                "value = \""
-                    + Utils.springPropertyPrefix(libName, service.name())
-                    + ".enabled\", matchIfMissing = false")
+            .addDescription(valueStringAssignmentExpr)
+            .addDescription(matchIfMissingAssignmentExpr)
+            .build();
+
+    TypeNode clazzType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(ClassNames.getServiceClientClassName(service))
+                .setPakkage(service.pakkage())
+                .build());
+    VariableExpr conditionalOnClassVariableExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+            .setStaticReferenceType(clazzType)
             .build();
     AnnotationNode conditionalOnClassNode =
         AnnotationNode.builder()
             .setType(types.get("ConditionalOnClass"))
-            .setDescription(
-                "value = "
-                    + ClassNames.getServiceClientClassName(service)
-                    + ".class") // TODO: change after annotation feature merged. need to produce
-            // XXX.class
+            .setDescription(conditionalOnClassVariableExpr)
+            .build();
+
+    AssignmentExpr proxyBeanMethodsAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder()
+                        .setName("proxyBeanMethods")
+                        .setType(TypeNode.BOOLEAN)
+                        .build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
             .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder()
             .setType(types.get("Configuration"))
-            .setDescription("proxyBeanMethods = false") // TODO: change to parameters
+            .addDescription(proxyBeanMethodsAssignmentExpr)
+            .build();
+
+    TypeNode propertiesClazzType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(types.get(service.name() + "Properties").reference().name())
+                .setPakkage(service.pakkage())
+                .build());
+    VariableExpr propertiesClassVariableExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+            .setStaticReferenceType(propertiesClazzType)
             .build();
     AnnotationNode enableConfigurationPropertiesNode =
         AnnotationNode.builder()
             .setType(types.get("EnableConfigurationProperties"))
-            .setDescription(
-                types.get(service.name() + "Properties").reference().name()
-                    + ".Class") // TODO: change to parameters
+            .setDescription(propertiesClassVariableExpr)
             .build();
+
     return Arrays.asList(
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("Generated"))
