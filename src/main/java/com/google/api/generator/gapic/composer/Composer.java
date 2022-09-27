@@ -222,7 +222,6 @@ public class Composer {
 
   // Parse defaultHost for apiShortName. Need to account for regional default endpoints like
   // "us-east1-pubsub.googleapis.com".
-  // Will keep backup name parsed from proto package for now.
   @VisibleForTesting
   protected static String parseDefaultHost(String defaultHost) {
     // If the defaultHost is of the format "**.googleapis.com", take the name before the first
