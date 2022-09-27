@@ -14,15 +14,21 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-import com.google.api.generator.engine.ast.*;
+import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcTestProtoLoader;
-import com.google.api.generator.gapic.model.*;
+import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.RegionTag;
+import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
