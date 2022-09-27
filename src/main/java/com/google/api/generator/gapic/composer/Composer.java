@@ -203,20 +203,21 @@ public class Composer {
     } else {
       apiVersion = "";
     }
-    //  Include license header, apiShortName, and apiVersion
-    return clazzes.stream()
-        .map(
-            gapicClass -> {
-              List<Sample> samples =
-                  gapicClass.samples().stream()
-                      .map(
-                          sample ->
-                              addRegionTagAndHeaderToSample(
-                                  sample, parseDefaultHost(gapicClass.defaultHost()), apiVersion))
-                      .collect(Collectors.toList());
-              return gapicClass.withSamples(samples);
-            })
-        .collect(Collectors.toList());
+    // Include license header, apiShortName, and apiVersion
+    List<GapicClass> clazzesWithSamples = new ArrayList<>();
+    clazzes.forEach(
+        gapicClass -> {
+          List<Sample> samples = new ArrayList<>();
+          gapicClass
+              .samples()
+              .forEach(
+                  sample ->
+                      samples.add(
+                          addRegionTagAndHeaderToSample(
+                              sample, parseDefaultHost(gapicClass.defaultHost()), apiVersion)));
+          clazzesWithSamples.add(gapicClass.withSamples(samples));
+        });
+    return clazzesWithSamples;
   }
 
   // Parse defaultHost for apiShortName. Need to account for regional default endpoints like
