@@ -225,13 +225,19 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("ConditionalOnProperty"))
-            .setDescription("value = \"spring.cloud.gcp.language.enabled\", matchIfMissing = false")
+            .setDescription(
+                "value = \""
+                    + Utils.springPropertyPrefix(libName, service.name())
+                    + ".enabled\", matchIfMissing = false")
             .build();
     AnnotationNode conditionalOnClassNode =
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("ConditionalOnClass"))
-            // TODO: change after annotation feature merged. need to produce XXX.class
-            .setDescription("value = " + ClassNames.getServiceClientClassName(service) + ".class")
+            .setDescription(
+                "value = "
+                    + ClassNames.getServiceClientClassName(service)
+                    + ".class") // TODO: change after annotation feature merged. need to produce
+            // XXX.class
             .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder()
@@ -778,6 +784,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             VaporReference.builder()
                 .setName(service.name() + "SpringAutoConfig")
                 .setPakkage(packageName)
+                .build());
 
     TypeNode serviceClient =
         TypeNode.withReference(
@@ -801,9 +808,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put(service.name() + "AutoConfig", clientAutoconfig);
-    typeMap.put("GcpProjectIdProvider", gcpProjectIdProvider);
-    typeMap.put("Credentials", credentials);
-    typeMap.put("DefaultCredentialsProvider", defaultCredentialsProvider);
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);

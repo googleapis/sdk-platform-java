@@ -78,9 +78,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     AnnotationNode classAnnotationNode =
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("ConfigurationProperties"))
-            .setDescription(
-                "google.cloud.spring.autoconfig."
-                    + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()))
+            .setDescription(Utils.springPropertyPrefix(Utils.getLibName(context), service.name()))
             .build();
 
     ClassDefinition classDef =
