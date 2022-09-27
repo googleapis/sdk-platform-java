@@ -38,7 +38,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isOptional_shouldReturnFalseIfFieldExistAndIsOptionalIsFalse() {
+  public void isOptional_shouldReturnFalseIfFieldExistsAndIsOptionalIsFalse() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsProto3Optional(false).build()).build();
 
@@ -46,7 +46,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isOptional_shouldReturnTrueIfFieldExistAndIsOptionalIsTue() {
+  public void isOptional_shouldReturnTrueIfFieldExistsAndIsOptionalIsTue() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsProto3Optional(true).build()).build();
 
@@ -60,7 +60,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isRepeated_shouldReturnFalseIfFieldExistAndIsRepeatedIsFalse() {
+  public void isRepeated_shouldReturnFalseIfFieldExistsAndIsRepeatedIsFalse() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsRepeated(false).build()).build();
 
@@ -68,7 +68,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isRepeated_shouldReturnTrueIfFieldExistAndIsRepeatedIsTue() {
+  public void isRepeated_shouldReturnTrueIfFieldExistsAndIsRepeatedIsTue() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsRepeated(true).build()).build();
 
@@ -82,7 +82,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isEnum_shouldReturnFalseIfFieldExistAndIsEnumIsFalse() {
+  public void isEnum_shouldReturnFalseIfFieldExistsAndIsEnumIsFalse() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsEnum(false).build()).build();
 
@@ -90,7 +90,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isEnum_shouldReturnTrueIfFieldExistAndIsEnumIsTue() {
+  public void isEnum_shouldReturnTrueIfFieldExistsAndIsEnumIsTue() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsEnum(true).build()).build();
 
