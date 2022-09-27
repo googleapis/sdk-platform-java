@@ -89,7 +89,7 @@ public class ComposerTest {
   }
 
   @Test
-  public void parseDefaultHostTest() {
+  public void parseDefaultHost_returnsApiShortName() {
     String defaultHost = "us-east1-pubsub.googleapis.com";
     String apiShortName = Composer.parseDefaultHost(defaultHost);
     org.junit.Assert.assertEquals("pubsub", apiShortName);
