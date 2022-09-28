@@ -429,21 +429,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .addDescription(matchIfMissingAssignmentExpr)
             .build();
 
-    TypeNode clazzType =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(ClassNames.getServiceClientClassName(service))
-                .setPakkage(service.pakkage())
-                .build());
-    VariableExpr conditionalOnClassVariableExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
-            .setStaticReferenceType(clazzType)
-            .build();
     AnnotationNode conditionalOnClassNode =
         AnnotationNode.builder()
             .setType(types.get("ConditionalOnClass"))
-            .setDescription(conditionalOnClassVariableExpr)
+            .setDescription(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get("ServiceClient"))
+                    .build())
             .build();
 
     AssignmentExpr proxyBeanMethodsAssignmentExpr =
@@ -464,21 +458,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .addDescription(proxyBeanMethodsAssignmentExpr)
             .build();
 
-    TypeNode propertiesClazzType =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(types.get(service.name() + "Properties").reference().name())
-                .setPakkage(service.pakkage())
-                .build());
-    VariableExpr propertiesClassVariableExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
-            .setStaticReferenceType(propertiesClazzType)
-            .build();
     AnnotationNode enableConfigurationPropertiesNode =
         AnnotationNode.builder()
             .setType(types.get("EnableConfigurationProperties"))
-            .setDescription(propertiesClassVariableExpr)
+            .setDescription(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get(service.name() + "Properties"))
+                    .build())
             .build();
 
     return Arrays.asList(
