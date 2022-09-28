@@ -92,12 +92,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   }
 
   private static ExprStatement createMemberVarStatement(
-      String varName, TypeNode varType, boolean isFinal, Expr defaultVal) {
+      String varName,
+      TypeNode varType,
+      boolean isFinal,
+      Expr defaultVal,
+      List<AnnotationNode> annotationNodes) {
     Variable memberVar = Variable.builder().setName(varName).setType(varType).build();
     VariableExpr memberVarExpr =
         VariableExpr.builder()
             .setVariable(memberVar)
             .setScope(ScopeNode.PRIVATE)
+            .setAnnotations(annotationNodes == null ? Collections.emptyList() : annotationNodes)
             .setIsDecl(true)
             .setIsFinal(isFinal)
             .build();
@@ -133,22 +138,30 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
                     .collect(Collectors.toList()))
             .build();
-    // TODO: credentials field needs annotation.
+    // Note that the annotations are set on the VariableExpr rather than the ExprStatement.
+    // The single annotation works fine here,
+    // but multiple annotations would be written to the same line
+    List<AnnotationNode> credentialsAnnotations =
+        Arrays.asList(AnnotationNode.withType(types.get("NestedConfigurationProperty")));
     ExprStatement credentialsStatement =
         createMemberVarStatement(
-            "credentials", types.get("Credentials"), true, defaultCredentialScopes);
+            "credentials",
+            types.get("Credentials"),
+            true,
+            defaultCredentialScopes,
+            credentialsAnnotations);
 
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
-        createMemberVarStatement("quotaProjectId", TypeNode.STRING, false, null);
+        createMemberVarStatement("quotaProjectId", TypeNode.STRING, false, null, null);
 
     //   private Integer executorThreadCount;
     ExprStatement executorThreadCountVarStatement =
-        createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null);
+        createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
 
     //   private boolean useRest = false;
     ExprStatement useRestVarStatement =
-        createMemberVarStatement("useRest", TypeNode.BOOLEAN, false, null);
+        createMemberVarStatement("useRest", TypeNode.BOOLEAN, false, null, null);
 
     //
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
@@ -170,7 +183,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               }
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               ExprStatement retrySettingsStatement =
-                  createMemberVarStatement(propertyName, propertyType, false, null);
+                  createMemberVarStatement(propertyName, propertyType, false, null, null);
               getterAndSetter.add(retrySettingsStatement);
               return getterAndSetter;
             },
