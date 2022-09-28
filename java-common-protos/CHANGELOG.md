@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.9.4](https://github.com/googleapis/java-common-protos/compare/v2.9.3...v2.9.4) (2022-09-28)
+
+
+### Dependencies
+
+* Update dependency certifi to v2022.9.24 ([#418](https://github.com/googleapis/java-common-protos/issues/418)) ([40f5dec](https://github.com/googleapis/java-common-protos/commit/40f5decf9cab5294b1e3d7622fd15beb6c5f34c5))
+* Update dependency charset-normalizer to v2.1.1 ([#420](https://github.com/googleapis/java-common-protos/issues/420)) ([db48320](https://github.com/googleapis/java-common-protos/commit/db48320fb793522eb57dddab71576b6851d09bf4))
+* Update dependency googleapis-common-protos to v1.56.4 ([#419](https://github.com/googleapis/java-common-protos/issues/419)) ([ca70ae5](https://github.com/googleapis/java-common-protos/commit/ca70ae5b1d7f9c2d3f2a631074acd7e80873f552))
+
 ## [2.9.3](https://github.com/googleapis/java-common-protos/compare/v2.9.2...v2.9.3) (2022-09-20)
 
 
