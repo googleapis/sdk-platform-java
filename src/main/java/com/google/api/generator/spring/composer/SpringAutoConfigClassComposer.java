@@ -945,14 +945,35 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
 
+    String transportChannelProviderName = "default" + service.name() + "TransportChannelProvider";
+    String credentialsProviderName = "googleCredentials";
+
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
         .setArguments(
             Arrays.asList(
-                credentialsProviderVariableExpr.toBuilder().setIsDecl(true).build(),
-                transportChannelProviderVariableExpr.toBuilder().setIsDecl(true).build()))
+                credentialsProviderVariableExpr
+                    .toBuilder()
+                    .setIsDecl(true)
+                    .setAnnotations(
+                        Arrays.asList(
+                            AnnotationNode.builder()
+                                .setType(types.get("Qualifier"))
+                                .setDescription(credentialsProviderName)
+                                .build()))
+                    .build(),
+                transportChannelProviderVariableExpr
+                    .toBuilder()
+                    .setIsDecl(true)
+                    .setAnnotations(
+                        Arrays.asList(
+                            AnnotationNode.builder()
+                                .setType(types.get("Qualifier"))
+                                .setDescription(transportChannelProviderName)
+                                .build()))
+                    .build()))
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),
@@ -1101,6 +1122,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage("org.springframework.boot.autoconfigure.condition")
                 .build());
 
+    TypeNode qualifier =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Qualifier")
+                .setPakkage("org.springframework.beans.factory.annotation")
+                .build());
+
     typeMap.put("CredentialsProvider", credentialsProvider);
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put(service.name() + "AutoConfig", clientAutoconfig);
@@ -1116,6 +1144,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ConditionalOnMissingBean", conditionalOnMissingBean);
     typeMap.put("ConditionalOnProperty", conditionalOnProperty);
     typeMap.put("ConditionalOnClass", conditionalOnClass);
+    typeMap.put("Qualifier", qualifier);
 
     return typeMap;
   }
