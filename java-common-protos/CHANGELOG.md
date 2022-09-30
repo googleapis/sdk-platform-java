@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.9.5](https://github.com/googleapis/java-common-protos/compare/v2.9.4...v2.9.5) (2022-09-30)
+
+
+### Dependencies
+
+* Update dependency cachetools to v5 ([#439](https://github.com/googleapis/java-common-protos/issues/439)) ([d06e7f3](https://github.com/googleapis/java-common-protos/commit/d06e7f32a38d8cc6bf53da73d3a2516502525afb))
+* Update dependency click to v8.1.3 ([#425](https://github.com/googleapis/java-common-protos/issues/425)) ([52e0472](https://github.com/googleapis/java-common-protos/commit/52e0472c4040b8e7be4f5c6f08f9cd93a86a69f6))
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.7 ([#444](https://github.com/googleapis/java-common-protos/issues/444)) ([bd3cc8e](https://github.com/googleapis/java-common-protos/commit/bd3cc8e46144d0e6d3fab60d9c0250749b81e5e9))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.7 ([#445](https://github.com/googleapis/java-common-protos/issues/445)) ([b649c95](https://github.com/googleapis/java-common-protos/commit/b649c95a455763bb71569cc111dbee842e39caae))
+* Update dependency gcp-releasetool to v1.8.8 ([#423](https://github.com/googleapis/java-common-protos/issues/423)) ([48f448f](https://github.com/googleapis/java-common-protos/commit/48f448f711e3079339576d0b4b7940ae41bd6662))
+* Update dependency google-api-core to v2.10.1 ([#426](https://github.com/googleapis/java-common-protos/issues/426)) ([ba6479a](https://github.com/googleapis/java-common-protos/commit/ba6479a7bfb37cfa11035ed904ed70b80b4555cb))
+* Update dependency google-auth to v2.12.0 ([#427](https://github.com/googleapis/java-common-protos/issues/427)) ([db61fd7](https://github.com/googleapis/java-common-protos/commit/db61fd720ee9ac4aa27348344d6331bfb36259d6))
+* Update dependency google-cloud-core to v2.3.2 ([#424](https://github.com/googleapis/java-common-protos/issues/424)) ([67c3c5b](https://github.com/googleapis/java-common-protos/commit/67c3c5bab83a33bfc5bf2f5918141389788eadbc))
+* Update dependency google-cloud-storage to v2.5.0 ([#428](https://github.com/googleapis/java-common-protos/issues/428)) ([c84f880](https://github.com/googleapis/java-common-protos/commit/c84f8809a856854dcc21db3a16e4dea13b8ce51e))
+* Update dependency google-crc32c to v1.5.0 ([#429](https://github.com/googleapis/java-common-protos/issues/429)) ([f296a84](https://github.com/googleapis/java-common-protos/commit/f296a8456f09606f1889bfd50f332b6149712058))
+* Update dependency importlib-metadata to v4.12.0 ([#430](https://github.com/googleapis/java-common-protos/issues/430)) ([3065768](https://github.com/googleapis/java-common-protos/commit/3065768cd1b045f69a188eaa3fb2124a570a6872))
+* Update dependency jeepney to v0.8.0 ([#431](https://github.com/googleapis/java-common-protos/issues/431)) ([05adbf4](https://github.com/googleapis/java-common-protos/commit/05adbf42df18e6dacd19bc4f2f375a83f5aa9507))
+* Update dependency jinja2 to v3.1.2 ([#432](https://github.com/googleapis/java-common-protos/issues/432)) ([d04dedd](https://github.com/googleapis/java-common-protos/commit/d04dedd8b5f185ad59d2fccad28510e9c9bd1d1a))
+* Update dependency keyring to v23.9.3 ([#442](https://github.com/googleapis/java-common-protos/issues/442)) ([8fe91e7](https://github.com/googleapis/java-common-protos/commit/8fe91e7c0a8c5d24e79c11ab997c01915690ba15))
+* Update dependency markupsafe to v2.1.1 ([#433](https://github.com/googleapis/java-common-protos/issues/433)) ([ac10325](https://github.com/googleapis/java-common-protos/commit/ac10325a3ef909d8c60f185c5b327894995ab23e))
+* Update dependency protobuf to v3.20.2 ([#434](https://github.com/googleapis/java-common-protos/issues/434)) ([2ee3681](https://github.com/googleapis/java-common-protos/commit/2ee3681fef9bf7e1d6fce2fe6112d16a8780bb97))
+* Update dependency protobuf to v4 ([#440](https://github.com/googleapis/java-common-protos/issues/440)) ([8a5b536](https://github.com/googleapis/java-common-protos/commit/8a5b53679997ec03c0f9696dbed290a36f7a2200))
+* Update dependency pyjwt to v2.5.0 ([#435](https://github.com/googleapis/java-common-protos/issues/435)) ([a1428ad](https://github.com/googleapis/java-common-protos/commit/a1428ad3bcc985646101b5593e08f1c633338c0d))
+* Update dependency requests to v2.28.1 ([#436](https://github.com/googleapis/java-common-protos/issues/436)) ([05f5abf](https://github.com/googleapis/java-common-protos/commit/05f5abfc0f8746546ffef4cb1d008b32ad09c612))
+* Update dependency typing-extensions to v4.3.0 ([#437](https://github.com/googleapis/java-common-protos/issues/437)) ([8980eb2](https://github.com/googleapis/java-common-protos/commit/8980eb2056c7472a7ca9afb6d2ecb8fa77b8b493))
+* Update dependency zipp to v3.8.1 ([#438](https://github.com/googleapis/java-common-protos/issues/438)) ([a5e5fbc](https://github.com/googleapis/java-common-protos/commit/a5e5fbcde2252aa5a694e880387bc65171ac4070))
+
 ## [2.9.4](https://github.com/googleapis/java-common-protos/compare/v2.9.3...v2.9.4) (2022-09-28)
 
 
