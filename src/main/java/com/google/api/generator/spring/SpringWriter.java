@@ -60,7 +60,7 @@ public class SpringWriter {
     }
 
     // write spring.factories file
-    writeSpringFactories(context, jos);
+    writeAutoConfigRegistration(context, jos);
     writeSpringAdditionalMetadataJson(context, jos);
 
     // TODO: metadata and package info not custimized for Spring
@@ -138,7 +138,7 @@ public class SpringWriter {
     }
   }
 
-  private static void writeSpringFactories(GapicContext context, JarOutputStream jos) {
+  private static void writeAutoConfigRegistration(GapicContext context, JarOutputStream jos) {
     String path = "src/main/resources/META-INF/spring";
     JarEntry jarEntry =
         new JarEntry(
