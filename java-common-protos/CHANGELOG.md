@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.9.6](https://github.com/googleapis/java-common-protos/compare/v2.9.5...v2.9.6) (2022-10-02)
+
+
+### Dependencies
+
+* Update dependency io.grpc:grpc-bom to v1.49.2 ([#448](https://github.com/googleapis/java-common-protos/issues/448)) ([70b435b](https://github.com/googleapis/java-common-protos/commit/70b435b006ec2b00b86491f10a6f53e689b9739c))
+* Update dependency io.grpc:grpc-protobuf to v1.49.2 ([#449](https://github.com/googleapis/java-common-protos/issues/449)) ([fddd7a9](https://github.com/googleapis/java-common-protos/commit/fddd7a932c46462e1d7845d95260523aa10a9b8a))
+* Update dependency io.grpc:grpc-stub to v1.49.2 ([#450](https://github.com/googleapis/java-common-protos/issues/450)) ([abbe6cc](https://github.com/googleapis/java-common-protos/commit/abbe6cc897a555d0a3814b9f4bf959fc5856333e))
+
 ## [2.9.5](https://github.com/googleapis/java-common-protos/compare/v2.9.4...v2.9.5) (2022-09-30)
 
 
