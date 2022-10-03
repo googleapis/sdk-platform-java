@@ -229,6 +229,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             (List<String> methodAndPropertyName, Expr defaultVal) -> {
               List<MethodDefinition> getterAndSetter = new ArrayList<>();
               TypeNode propertyType = defaultVal.type();
+              if (propertyType.equals(TypeNode.DOUBLE)) {
+                propertyType = TypeNode.DOUBLE_OBJECT;
+              }
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               getterAndSetter.add(
                   createGetterMethod(thisClassType, propertyName, propertyType, null));
