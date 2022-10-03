@@ -396,7 +396,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations(
       Service service, Map<String, TypeNode> types, String libName) {
     // @Generated("by gapic-generator-java")
-    // @Configuration(proxyBeanMethods = false)
+    // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value = "spring.cloud.gcp.language.enabled", matchIfMissing = true)
     // @EnableConfigurationProperties(LanguageProperties.class)
@@ -421,10 +421,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             // XXX.class
             .build();
     AnnotationNode configurationNode =
-        AnnotationNode.builder()
-            .setType(types.get("Configuration"))
-            .setDescription("proxyBeanMethods = false") // TODO: change to parameters
-            .build();
+        AnnotationNode.builder().setType(types.get("AutoConfiguration")).build();
     AnnotationNode enableConfigurationPropertiesNode =
         AnnotationNode.builder()
             .setType(types.get("EnableConfigurationProperties"))
@@ -1020,11 +1017,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName("Bean")
                 .setPakkage("org.springframework.context.annotation")
                 .build());
-    TypeNode configuration =
+    TypeNode autoConfiguration =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName("Configuration")
-                .setPakkage("org.springframework.context.annotation")
+                .setName("AutoConfiguration")
+                .setPakkage("org.springframework.boot.autoconfigure")
                 .build());
     TypeNode enableConfigurationProperties =
         TypeNode.withReference(
@@ -1062,7 +1059,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("Bean", bean);
-    typeMap.put("Configuration", configuration);
+    typeMap.put("AutoConfiguration", autoConfiguration);
     typeMap.put("EnableConfigurationProperties", enableConfigurationProperties);
     typeMap.put("ConditionalOnMissingBean", conditionalOnMissingBean);
     typeMap.put("ConditionalOnProperty", conditionalOnProperty);
