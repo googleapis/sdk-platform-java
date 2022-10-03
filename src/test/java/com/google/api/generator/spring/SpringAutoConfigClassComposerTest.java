@@ -17,7 +17,6 @@ package com.google.api.generator.spring;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -30,7 +29,6 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.spring.composer.SpringAutoConfigClassComposer;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -88,12 +86,7 @@ public class SpringAutoConfigClassComposerTest {
     Service echoProtoService = services.get(0);
     GapicClass clazz = SpringAutoConfigClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "SpringAutoConfigClass.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "SpringAutoConfigClass.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "SpringAutoConfigClass.golden");
   }
 
   // TODO: Remove this string once SpringComposer is refactored
