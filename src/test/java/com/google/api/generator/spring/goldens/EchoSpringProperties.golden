@@ -1,0 +1,146 @@
+/*
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.showcase.v1beta1.spring;
+
+import com.google.cloud.spring.core.Credentials;
+import com.google.cloud.spring.core.CredentialsSupplier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties("spring.cloud.gcp.autoconfig.showcase.echo")
+public class EchoSpringProperties implements CredentialsSupplier {
+  private final Credentials credentials =
+      new Credentials("https://www.googleapis.com/auth/cloud-platform");
+  private String quotaProjectId;
+  private Integer executorThreadCount;
+  private boolean useRest;
+  private Double echoRpcTimeoutMultiplier;
+  private Double expandRpcTimeoutMultiplier;
+  private Double collectRpcTimeoutMultiplier;
+  private Double chatRpcTimeoutMultiplier;
+  private Double chatAgainRpcTimeoutMultiplier;
+  private Double pagedExpandRpcTimeoutMultiplier;
+  private Double simplePagedExpandRpcTimeoutMultiplier;
+  private Double waitRpcTimeoutMultiplier;
+  private Double blockRpcTimeoutMultiplier;
+  private Double collideNameRpcTimeoutMultiplier;
+
+  @Override
+  public Credentials getCredentials() {
+    return this.credentials;
+  }
+
+  public String getQuotaProjectId() {
+    return this.quotaProjectId;
+  }
+
+  public void setQuotaProjectId(String quotaProjectId) {
+    this.quotaProjectId = quotaProjectId;
+  }
+
+  public boolean getUseRest() {
+    return this.useRest;
+  }
+
+  public Integer getExecutorThreadCount() {
+    return this.executorThreadCount;
+  }
+
+  public void setExecutorThreadCount(Integer executorThreadCount) {
+    this.executorThreadCount = executorThreadCount;
+  }
+
+  public Double getEchoRpcTimeoutMultiplier() {
+    return this.echoRpcTimeoutMultiplier;
+  }
+
+  public void setEchoRpcTimeoutMultiplier(Double echoRpcTimeoutMultiplier) {
+    this.echoRpcTimeoutMultiplier = echoRpcTimeoutMultiplier;
+  }
+
+  public Double getExpandRpcTimeoutMultiplier() {
+    return this.expandRpcTimeoutMultiplier;
+  }
+
+  public void setExpandRpcTimeoutMultiplier(Double expandRpcTimeoutMultiplier) {
+    this.expandRpcTimeoutMultiplier = expandRpcTimeoutMultiplier;
+  }
+
+  public Double getCollectRpcTimeoutMultiplier() {
+    return this.collectRpcTimeoutMultiplier;
+  }
+
+  public void setCollectRpcTimeoutMultiplier(Double collectRpcTimeoutMultiplier) {
+    this.collectRpcTimeoutMultiplier = collectRpcTimeoutMultiplier;
+  }
+
+  public Double getChatRpcTimeoutMultiplier() {
+    return this.chatRpcTimeoutMultiplier;
+  }
+
+  public void setChatRpcTimeoutMultiplier(Double chatRpcTimeoutMultiplier) {
+    this.chatRpcTimeoutMultiplier = chatRpcTimeoutMultiplier;
+  }
+
+  public Double getChatAgainRpcTimeoutMultiplier() {
+    return this.chatAgainRpcTimeoutMultiplier;
+  }
+
+  public void setChatAgainRpcTimeoutMultiplier(Double chatAgainRpcTimeoutMultiplier) {
+    this.chatAgainRpcTimeoutMultiplier = chatAgainRpcTimeoutMultiplier;
+  }
+
+  public Double getPagedExpandRpcTimeoutMultiplier() {
+    return this.pagedExpandRpcTimeoutMultiplier;
+  }
+
+  public void setPagedExpandRpcTimeoutMultiplier(Double pagedExpandRpcTimeoutMultiplier) {
+    this.pagedExpandRpcTimeoutMultiplier = pagedExpandRpcTimeoutMultiplier;
+  }
+
+  public Double getSimplePagedExpandRpcTimeoutMultiplier() {
+    return this.simplePagedExpandRpcTimeoutMultiplier;
+  }
+
+  public void setSimplePagedExpandRpcTimeoutMultiplier(
+      Double simplePagedExpandRpcTimeoutMultiplier) {
+    this.simplePagedExpandRpcTimeoutMultiplier = simplePagedExpandRpcTimeoutMultiplier;
+  }
+
+  public Double getWaitRpcTimeoutMultiplier() {
+    return this.waitRpcTimeoutMultiplier;
+  }
+
+  public void setWaitRpcTimeoutMultiplier(Double waitRpcTimeoutMultiplier) {
+    this.waitRpcTimeoutMultiplier = waitRpcTimeoutMultiplier;
+  }
+
+  public Double getBlockRpcTimeoutMultiplier() {
+    return this.blockRpcTimeoutMultiplier;
+  }
+
+  public void setBlockRpcTimeoutMultiplier(Double blockRpcTimeoutMultiplier) {
+    this.blockRpcTimeoutMultiplier = blockRpcTimeoutMultiplier;
+  }
+
+  public Double getCollideNameRpcTimeoutMultiplier() {
+    return this.collideNameRpcTimeoutMultiplier;
+  }
+
+  public void setCollideNameRpcTimeoutMultiplier(Double collideNameRpcTimeoutMultiplier) {
+    this.collideNameRpcTimeoutMultiplier = collideNameRpcTimeoutMultiplier;
+  }
+}

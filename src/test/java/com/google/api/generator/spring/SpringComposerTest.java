@@ -14,10 +14,10 @@
 
 package com.google.api.generator.spring;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.spring.composer.SpringComposer;
+import com.google.api.generator.test.framework.Assert;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -39,38 +40,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class SpringComposerTest {
   private GapicContext context;
 
-  private String EXPECTED_CODE =
-      "/*\n"
-          + " * Copyright 2022 Google LLC\n"
-          + " *\n"
-          + " * Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-          + " * you may not use this file except in compliance with the License.\n"
-          + " * You may obtain a copy of the License at\n"
-          + " *\n"
-          + " *      https://www.apache.org/licenses/LICENSE-2.0\n"
-          + " *\n"
-          + " * Unless required by applicable law or agreed to in writing, software\n"
-          + " * distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-          + " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
-          + " * See the License for the specific language governing permissions and\n"
-          + " * limitations under the License.\n"
-          + " */\n"
-          + "\n"
-          + SpringAutoConfigClassComposerTest.EXPECTED_AUTOCONFIG_CLASS_STRING;
-
   @Before
   public void setUp() {
 
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
-    Assert.assertEquals(echoService.getName(), "Echo");
+    assertEquals(echoService.getName(), "Echo");
 
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
 
@@ -104,17 +85,12 @@ public class SpringComposerTest {
     List<GapicClass> gapicClasses = SpringComposer.composeServiceAutoConfigClasses(context);
 
     // write to verify result for now
-    StringBuilder codeForAllClasses = new StringBuilder();
-    JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     for (GapicClass gapicClazz : gapicClasses) {
       ClassDefinition clazz = gapicClazz.classDefinition();
-
-      clazz.accept(codeWriter);
-      String code = codeWriter.write();
-      codeForAllClasses.append(code);
-      codeWriter.clear();
+      String fileName = clazz.classIdentifier() + ".golden";
+      // Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), fileName);
+      // System.out.println(goldenFilePath);
+      Assert.assertGoldenClass(this.getClass(), gapicClazz, fileName);
     }
-
-    // Assert.assertEquals(codeForAllClasses.toString(), EXPECTED_CODE);
   }
 }

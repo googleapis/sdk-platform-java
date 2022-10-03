@@ -210,6 +210,7 @@ GOLDEN_UPDATING_UNIT_TESTS = [
     "com.google.api.generator.gapic.composer.rest.ServiceStubSettingsClassComposerTest",
     "com.google.api.generator.spring.SpringAutoConfigClassComposerTest",
     "com.google.api.generator.spring.SpringPropertiesClassComposerTest",
+    "com.google.api.generator.spring.SpringComposerTest"
 ]
 
 # Manually runs a single JUnit test for the tests that generate and save .golden
