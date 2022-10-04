@@ -21,7 +21,6 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
-import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -42,7 +41,6 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.ClassComposer;
-import com.google.api.generator.gapic.composer.common.RetrySettingsComposer;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -182,22 +180,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     //         .build();
     // ExprStatement projectIdProviderStatement = ExprStatement.withExpr(projectIdProviderVarExpr);
 
-    // Declare the RETRY_PARAM_DEFINITIONS map.
-    ExprStatement retryPramStatement =
-        ExprStatement.withExpr(
-            NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR
-                .toBuilder()
-                .setIsDecl(true)
-                .setScope(ScopeNode.PRIVATE)
-                .setIsStatic(true)
-                .setIsFinal(true)
-                .build());
-
-    BlockStatement retryParamDefinitionsBlock =
-        RetrySettingsComposer.createRetryParamDefinitionsBlock(
-            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR);
-
-    return Arrays.asList(clientPropertiesStatement, retryPramStatement, retryParamDefinitionsBlock);
+    return Arrays.asList(clientPropertiesStatement);
   }
 
   private static MethodDefinition createConstructor(
