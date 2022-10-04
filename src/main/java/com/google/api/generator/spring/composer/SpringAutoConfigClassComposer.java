@@ -29,9 +29,11 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -210,24 +212,54 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     // @ConditionalOnProperty(value = "spring.cloud.gcp.language.enabled", matchIfMissing = true)
     // @EnableConfigurationProperties(LanguageProperties.class)
 
-    // TODO: AnnotationNode description only accepts String for now. need to extend to params
-    // and classes.
+    AssignmentExpr valueStringAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("value").setType(TypeNode.STRING).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(
+                        Utils.springPropertyPrefix(libName, service.name()) + ".enabled")))
+            .build();
+    AssignmentExpr matchIfMissingAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("matchIfMissing").setType(TypeNode.BOOLEAN).build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
+            .build();
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
             .setType(types.get("ConditionalOnProperty"))
-            .setDescription(
-                "value = \""
-                    + Utils.springPropertyPrefix(libName, service.name())
-                    + ".enabled\", matchIfMissing = false")
+            .addDescription(valueStringAssignmentExpr)
+            .addDescription(matchIfMissingAssignmentExpr)
             .build();
+
     AnnotationNode conditionalOnClassNode =
         AnnotationNode.builder()
             .setType(types.get("ConditionalOnClass"))
             .setDescription(
-                "value = "
-                    + ClassNames.getServiceClientClassName(service)
-                    + ".class") // TODO: change after annotation feature merged. need to produce
-            // XXX.class
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get("ServiceClient"))
+                    .build())
+            .build();
+
+    AssignmentExpr proxyBeanMethodsAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder()
+                        .setName("proxyBeanMethods")
+                        .setType(TypeNode.BOOLEAN)
+                        .build()))
+            .setValueExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
             .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder().setType(types.get("AutoConfiguration")).build();
@@ -235,9 +267,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         AnnotationNode.builder()
             .setType(types.get("EnableConfigurationProperties"))
             .setDescription(
-                types.get(service.name() + "Properties").reference().name()
-                    + ".Class") // TODO: change to parameters
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get(service.name() + "Properties"))
+                    .build())
             .build();
+
     return Arrays.asList(
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("Generated"))
@@ -702,14 +738,35 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
 
+    String transportChannelProviderName = "default" + service.name() + "TransportChannelProvider";
+    String credentialsProviderName = "googleCredentials";
+
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
         .setArguments(
             Arrays.asList(
-                credentialsProviderVariableExpr.toBuilder().setIsDecl(true).build(),
-                transportChannelProviderVariableExpr.toBuilder().setIsDecl(true).build()))
+                credentialsProviderVariableExpr
+                    .toBuilder()
+                    .setIsDecl(true)
+                    .setAnnotations(
+                        Arrays.asList(
+                            AnnotationNode.builder()
+                                .setType(types.get("Qualifier"))
+                                .setDescription(credentialsProviderName)
+                                .build()))
+                    .build(),
+                transportChannelProviderVariableExpr
+                    .toBuilder()
+                    .setIsDecl(true)
+                    .setAnnotations(
+                        Arrays.asList(
+                            AnnotationNode.builder()
+                                .setType(types.get("Qualifier"))
+                                .setDescription(transportChannelProviderName)
+                                .build()))
+                    .build()))
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),
@@ -858,6 +915,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage("org.springframework.boot.autoconfigure.condition")
                 .build());
 
+    TypeNode qualifier =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Qualifier")
+                .setPakkage("org.springframework.beans.factory.annotation")
+                .build());
+
     typeMap.put("CredentialsProvider", credentialsProvider);
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put(service.name() + "AutoConfig", clientAutoconfig);
@@ -873,6 +937,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ConditionalOnMissingBean", conditionalOnMissingBean);
     typeMap.put("ConditionalOnProperty", conditionalOnProperty);
     typeMap.put("ConditionalOnClass", conditionalOnClass);
+    typeMap.put("Qualifier", qualifier);
 
     return typeMap;
   }

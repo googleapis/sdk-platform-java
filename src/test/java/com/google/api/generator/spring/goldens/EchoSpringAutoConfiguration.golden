@@ -36,10 +36,11 @@ import org.threeten.bp.Duration;
 
 @Generated("by gapic-generator-java")
 @AutoConfiguration
-@ConditionalOnClass("value = EchoClient.class")
+@ConditionalOnClass(EchoClient.class)
 @ConditionalOnProperty(
-    "value = \"spring.cloud.gcp.autoconfig.showcase.echo.enabled\", matchIfMissing = false")
-@EnableConfigurationProperties("EchoSpringProperties.Class")
+    value = "spring.cloud.gcp.autoconfig.showcase.echo.enabled",
+    matchIfMissing = false)
+@EnableConfigurationProperties(EchoSpringProperties.class)
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
 
@@ -62,8 +63,9 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(
-      CredentialsProvider credentialsProvider,
-      TransportChannelProvider defaultTransportChannelProvider)
+      @Qualifier("googleCredentials") CredentialsProvider credentialsProvider,
+      @Qualifier("defaultEchoTransportChannelProvider")
+          TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {
     EchoSettings.Builder clientSettingsBuilder =
         EchoSettings.newBuilder()

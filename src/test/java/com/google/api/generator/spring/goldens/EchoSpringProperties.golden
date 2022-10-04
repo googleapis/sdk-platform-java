@@ -23,8 +23,10 @@ import org.threeten.bp.Duration;
 
 @ConfigurationProperties("spring.cloud.gcp.autoconfig.showcase.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
+  @NestedConfigurationProperty
   private final Credentials credentials =
       new Credentials("https://www.googleapis.com/auth/cloud-platform");
+
   private String quotaProjectId;
   private Integer executorThreadCount;
   private boolean useRest;
