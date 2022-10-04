@@ -46,54 +46,15 @@ import org.junit.Test;
 public class SpringAutoConfigClassComposerTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
+  private GapicContext context;
+  private Service echoProtoService;
 
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
 
-    ServiceDescriptor serviceDescriptor = echoFileDescriptor.getServices().get(0);
-    // Assert.assertEquals(serviceDescriptor.getName(), "Bookshop");
     echoService = echoFileDescriptor.getServices().get(0);
     assertEquals(echoService.getName(), "Echo");
-  }
-
-  @Test
-  public void generateAutoConfigClasses() {
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-
-    List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-
-    String jsonFilename = "retrying_grpc_service_config.json";
-    Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(serviceConfigOpt.isPresent());
-    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
-
-    GapicContext context =
-        GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .setTransport(Transport.GRPC)
-            .setServiceConfig(serviceConfig)
-            .build();
-
-    Service echoProtoService = services.get(0);
-    GapicClass clazz = SpringAutoConfigClassComposer.instance().generate(context, echoProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_AUTOCONFIG_CLASS_STRING, visitor.write());
-  }
-
-  @Test
-  public void generatePropertiesTest() {
 
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
 
@@ -110,7 +71,7 @@ public class SpringAutoConfigClassComposerTest {
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
-    GapicContext context =
+    this.context =
         GapicContext.builder()
             .setMessages(messageTypes)
             .setResourceNames(resourceNames)
@@ -120,9 +81,24 @@ public class SpringAutoConfigClassComposerTest {
             .setServiceConfig(serviceConfig)
             .build();
 
-    Service echoProtoService = services.get(0);
+    this.echoProtoService = services.get(0);
+  }
 
-    GapicClass clazz = SpringPropertiesClassComposer.instance().generate(context, echoProtoService);
+  @Test
+  public void generateAutoConfigClazzTest() {
+    GapicClass clazz =
+        SpringAutoConfigClassComposer.instance().generate(this.context, this.echoProtoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    assertEquals(EXPECTED_AUTOCONFIG_CLASS_STRING, visitor.write());
+  }
+
+  @Test
+  public void generatePropertiesClazzTest() {
+
+    GapicClass clazz =
+        SpringPropertiesClassComposer.instance().generate(this.context, this.echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -150,6 +126,7 @@ public class SpringAutoConfigClassComposerTest {
           + "import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;\n"
           + "import org.springframework.boot.context.properties.EnableConfigurationProperties;\n"
           + "import org.springframework.context.annotation.Bean;\n"
+          + "import org.threeten.bp.Duration;\n"
           + "\n"
           + "@Generated(\"by gapic-generator-java\")\n"
           + "@AutoConfiguration\n"
@@ -164,8 +141,25 @@ public class SpringAutoConfigClassComposerTest {
           + "  static {\n"
           + "    ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n"
           + "    RetrySettings settings = null;\n"
-          + "    settings = RetrySettings.newBuilder().setRpcTimeoutMultiplier(1.0).build();\n"
-          + "    definitions.put(\"no_retry_params\", settings);\n"
+          + "    settings =\n"
+          + "        RetrySettings.newBuilder()\n"
+          + "            .setInitialRetryDelay(Duration.ofMillis(100L))\n"
+          + "            .setRetryDelayMultiplier(2.0)\n"
+          + "            .setMaxRetryDelay(Duration.ofMillis(3000L))\n"
+          + "            .setInitialRpcTimeout(Duration.ofMillis(10000L))\n"
+          + "            .setRpcTimeoutMultiplier(1.0)\n"
+          + "            .setMaxRpcTimeout(Duration.ofMillis(10000L))\n"
+          + "            .setTotalTimeout(Duration.ofMillis(10000L))\n"
+          + "            .build();\n"
+          + "    definitions.put(\"retry_policy_1_params\", settings);\n"
+          + "    settings =\n"
+          + "        RetrySettings.newBuilder()\n"
+          + "            .setInitialRpcTimeout(Duration.ofMillis(5000L))\n"
+          + "            .setRpcTimeoutMultiplier(1.0)\n"
+          + "            .setMaxRpcTimeout(Duration.ofMillis(5000L))\n"
+          + "            .setTotalTimeout(Duration.ofMillis(5000L))\n"
+          + "            .build();\n"
+          + "    definitions.put(\"no_retry_0_params\", settings);\n"
           + "    RETRY_PARAM_DEFINITIONS = definitions.build();\n"
           + "  }\n"
           + "\n"
@@ -213,78 +207,220 @@ public class SpringAutoConfigClassComposerTest {
           + "    }\n"
           + "    RetrySettings.Builder echoRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.echoSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getEchoInitialRetryDelay() != null) {\n"
+          + "      echoRetrySettingBuilder.setInitialRetryDelay(\n"
+          + "          this.clientProperties.getEchoInitialRetryDelay());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getEchoRetryDelayMultiplier() != null) {\n"
+          + "      echoRetrySettingBuilder.setRetryDelayMultiplier(\n"
+          + "          this.clientProperties.getEchoRetryDelayMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getEchoMaxRetryDelay() != null) {\n"
+          + "      echoRetrySettingBuilder.setMaxRetryDelay(this.clientProperties.getEchoMaxRetryDelay());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getEchoInitialRpcTimeout() != null) {\n"
+          + "      echoRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getEchoInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getEchoRpcTimeoutMultiplier() != null) {\n"
           + "      echoRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getEchoRpcTimeoutMultiplier());\n"
           + "    }\n"
+          + "    if (this.clientProperties.getEchoMaxRpcTimeout() != null) {\n"
+          + "      echoRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getEchoMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getEchoTotalTimeout() != null) {\n"
+          + "      echoRetrySettingBuilder.setTotalTimeout(this.clientProperties.getEchoTotalTimeout());\n"
+          + "    }\n"
           + "    clientSettingsBuilder.echoSettings().setRetrySettings(echoRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder expandRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.expandSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getExpandInitialRetryDelay() != null) {\n"
+          + "      expandRetrySettingBuilder.setInitialRetryDelay(\n"
+          + "          this.clientProperties.getExpandInitialRetryDelay());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getExpandRetryDelayMultiplier() != null) {\n"
+          + "      expandRetrySettingBuilder.setRetryDelayMultiplier(\n"
+          + "          this.clientProperties.getExpandRetryDelayMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getExpandMaxRetryDelay() != null) {\n"
+          + "      expandRetrySettingBuilder.setMaxRetryDelay(this.clientProperties.getExpandMaxRetryDelay());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getExpandInitialRpcTimeout() != null) {\n"
+          + "      expandRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getExpandInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getExpandRpcTimeoutMultiplier() != null) {\n"
           + "      expandRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getExpandRpcTimeoutMultiplier());\n"
           + "    }\n"
+          + "    if (this.clientProperties.getExpandMaxRpcTimeout() != null) {\n"
+          + "      expandRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getExpandMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getExpandTotalTimeout() != null) {\n"
+          + "      expandRetrySettingBuilder.setTotalTimeout(this.clientProperties.getExpandTotalTimeout());\n"
+          + "    }\n"
           + "    clientSettingsBuilder.expandSettings().setRetrySettings(expandRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder collectRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.collectSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getCollectInitialRpcTimeout() != null) {\n"
+          + "      collectRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getCollectInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getCollectRpcTimeoutMultiplier() != null) {\n"
           + "      collectRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getCollectRpcTimeoutMultiplier());\n"
           + "    }\n"
+          + "    if (this.clientProperties.getCollectMaxRpcTimeout() != null) {\n"
+          + "      collectRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getCollectMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getCollectTotalTimeout() != null) {\n"
+          + "      collectRetrySettingBuilder.setTotalTimeout(this.clientProperties.getCollectTotalTimeout());\n"
+          + "    }\n"
           + "    clientSettingsBuilder.collectSettings().setRetrySettings(collectRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder chatRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.chatSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getChatInitialRpcTimeout() != null) {\n"
+          + "      chatRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getChatInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getChatRpcTimeoutMultiplier() != null) {\n"
           + "      chatRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getChatRpcTimeoutMultiplier());\n"
           + "    }\n"
+          + "    if (this.clientProperties.getChatMaxRpcTimeout() != null) {\n"
+          + "      chatRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getChatMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getChatTotalTimeout() != null) {\n"
+          + "      chatRetrySettingBuilder.setTotalTimeout(this.clientProperties.getChatTotalTimeout());\n"
+          + "    }\n"
           + "    clientSettingsBuilder.chatSettings().setRetrySettings(chatRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder chatAgainRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.chatAgainSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getChatAgainInitialRpcTimeout() != null) {\n"
+          + "      chatAgainRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getChatAgainInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getChatAgainRpcTimeoutMultiplier() != null) {\n"
           + "      chatAgainRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getChatAgainRpcTimeoutMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getChatAgainMaxRpcTimeout() != null) {\n"
+          + "      chatAgainRetrySettingBuilder.setMaxRpcTimeout(\n"
+          + "          this.clientProperties.getChatAgainMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getChatAgainTotalTimeout() != null) {\n"
+          + "      chatAgainRetrySettingBuilder.setTotalTimeout(\n"
+          + "          this.clientProperties.getChatAgainTotalTimeout());\n"
           + "    }\n"
           + "    clientSettingsBuilder\n"
           + "        .chatAgainSettings()\n"
           + "        .setRetrySettings(chatAgainRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder pagedExpandRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.pagedExpandSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getPagedExpandInitialRetryDelay() != null) {\n"
+          + "      pagedExpandRetrySettingBuilder.setInitialRetryDelay(\n"
+          + "          this.clientProperties.getPagedExpandInitialRetryDelay());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getPagedExpandRetryDelayMultiplier() != null) {\n"
+          + "      pagedExpandRetrySettingBuilder.setRetryDelayMultiplier(\n"
+          + "          this.clientProperties.getPagedExpandRetryDelayMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getPagedExpandMaxRetryDelay() != null) {\n"
+          + "      pagedExpandRetrySettingBuilder.setMaxRetryDelay(\n"
+          + "          this.clientProperties.getPagedExpandMaxRetryDelay());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getPagedExpandInitialRpcTimeout() != null) {\n"
+          + "      pagedExpandRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getPagedExpandInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getPagedExpandRpcTimeoutMultiplier() != null) {\n"
           + "      pagedExpandRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getPagedExpandRpcTimeoutMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getPagedExpandMaxRpcTimeout() != null) {\n"
+          + "      pagedExpandRetrySettingBuilder.setMaxRpcTimeout(\n"
+          + "          this.clientProperties.getPagedExpandMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getPagedExpandTotalTimeout() != null) {\n"
+          + "      pagedExpandRetrySettingBuilder.setTotalTimeout(\n"
+          + "          this.clientProperties.getPagedExpandTotalTimeout());\n"
           + "    }\n"
           + "    clientSettingsBuilder\n"
           + "        .pagedExpandSettings()\n"
           + "        .setRetrySettings(pagedExpandRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder simplePagedExpandRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.simplePagedExpandSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getSimplePagedExpandInitialRpcTimeout() != null) {\n"
+          + "      simplePagedExpandRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getSimplePagedExpandInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getSimplePagedExpandRpcTimeoutMultiplier() != null) {\n"
           + "      simplePagedExpandRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getSimplePagedExpandRpcTimeoutMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getSimplePagedExpandMaxRpcTimeout() != null) {\n"
+          + "      simplePagedExpandRetrySettingBuilder.setMaxRpcTimeout(\n"
+          + "          this.clientProperties.getSimplePagedExpandMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getSimplePagedExpandTotalTimeout() != null) {\n"
+          + "      simplePagedExpandRetrySettingBuilder.setTotalTimeout(\n"
+          + "          this.clientProperties.getSimplePagedExpandTotalTimeout());\n"
           + "    }\n"
           + "    clientSettingsBuilder\n"
           + "        .simplePagedExpandSettings()\n"
           + "        .setRetrySettings(simplePagedExpandRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder waitRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.waitSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getWaitInitialRpcTimeout() != null) {\n"
+          + "      waitRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getWaitInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getWaitRpcTimeoutMultiplier() != null) {\n"
           + "      waitRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getWaitRpcTimeoutMultiplier());\n"
           + "    }\n"
+          + "    if (this.clientProperties.getWaitMaxRpcTimeout() != null) {\n"
+          + "      waitRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getWaitMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getWaitTotalTimeout() != null) {\n"
+          + "      waitRetrySettingBuilder.setTotalTimeout(this.clientProperties.getWaitTotalTimeout());\n"
+          + "    }\n"
           + "    clientSettingsBuilder.waitSettings().setRetrySettings(waitRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder blockRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.blockSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getBlockInitialRpcTimeout() != null) {\n"
+          + "      blockRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getBlockInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getBlockRpcTimeoutMultiplier() != null) {\n"
           + "      blockRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getBlockRpcTimeoutMultiplier());\n"
           + "    }\n"
+          + "    if (this.clientProperties.getBlockMaxRpcTimeout() != null) {\n"
+          + "      blockRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getBlockMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getBlockTotalTimeout() != null) {\n"
+          + "      blockRetrySettingBuilder.setTotalTimeout(this.clientProperties.getBlockTotalTimeout());\n"
+          + "    }\n"
           + "    clientSettingsBuilder.blockSettings().setRetrySettings(blockRetrySettingBuilder.build());\n"
           + "    RetrySettings.Builder collideNameRetrySettingBuilder =\n"
           + "        clientSettingsBuilder.collideNameSettings().getRetrySettings().toBuilder();\n"
+          + "    if (this.clientProperties.getCollideNameInitialRpcTimeout() != null) {\n"
+          + "      collideNameRetrySettingBuilder.setInitialRpcTimeout(\n"
+          + "          this.clientProperties.getCollideNameInitialRpcTimeout());\n"
+          + "    }\n"
           + "    if (this.clientProperties.getCollideNameRpcTimeoutMultiplier() != null) {\n"
           + "      collideNameRetrySettingBuilder.setRpcTimeoutMultiplier(\n"
           + "          this.clientProperties.getCollideNameRpcTimeoutMultiplier());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getCollideNameMaxRpcTimeout() != null) {\n"
+          + "      collideNameRetrySettingBuilder.setMaxRpcTimeout(\n"
+          + "          this.clientProperties.getCollideNameMaxRpcTimeout());\n"
+          + "    }\n"
+          + "    if (this.clientProperties.getCollideNameTotalTimeout() != null) {\n"
+          + "      collideNameRetrySettingBuilder.setTotalTimeout(\n"
+          + "          this.clientProperties.getCollideNameTotalTimeout());\n"
           + "    }\n"
           + "    clientSettingsBuilder\n"
           + "        .collideNameSettings()\n"
