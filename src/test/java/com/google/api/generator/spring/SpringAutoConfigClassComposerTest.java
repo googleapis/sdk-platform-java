@@ -45,19 +45,16 @@ import org.junit.Test;
 public class SpringAutoConfigClassComposerTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
+  private GapicContext context;
+  private Service echoProtoService;
 
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
 
-    ServiceDescriptor serviceDescriptor = echoFileDescriptor.getServices().get(0);
-    // Assert.assertEquals(serviceDescriptor.getName(), "Bookshop");
     echoService = echoFileDescriptor.getServices().get(0);
     assertEquals(echoService.getName(), "Echo");
-  }
 
-  @Test
-  public void generateAutoConfigClasses() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
 
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -67,13 +64,13 @@ public class SpringAutoConfigClassComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-    String jsonFilename = "retrying_grpc_service_config.json";
+    String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
-    GapicContext context =
+    this.context =
         GapicContext.builder()
             .setMessages(messageTypes)
             .setResourceNames(resourceNames)
@@ -83,9 +80,13 @@ public class SpringAutoConfigClassComposerTest {
             .setServiceConfig(serviceConfig)
             .build();
 
-    Service echoProtoService = services.get(0);
-    GapicClass clazz = SpringAutoConfigClassComposer.instance().generate(context, echoProtoService);
+    this.echoProtoService = services.get(0);
+  }
 
+  @Test
+  public void generateAutoConfigClazzTest() {
+    GapicClass clazz =
+        SpringAutoConfigClassComposer.instance().generate(this.context, this.echoProtoService);
     Assert.assertGoldenClass(this.getClass(), clazz, "SpringAutoConfigClass.golden");
   }
 }

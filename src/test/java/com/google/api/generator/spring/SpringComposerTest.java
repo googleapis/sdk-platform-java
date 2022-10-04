@@ -62,7 +62,7 @@ public class SpringComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-    String jsonFilename = "retrying_grpc_service_config.json";
+    String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(serviceConfigOpt.isPresent());

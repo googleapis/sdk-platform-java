@@ -45,19 +45,15 @@ import org.junit.Test;
 public class SpringPropertiesClassComposerTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
+  private GapicContext context;
+  private Service echoProtoService;
 
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
 
-    ServiceDescriptor serviceDescriptor = echoFileDescriptor.getServices().get(0);
-    // Assert.assertEquals(serviceDescriptor.getName(), "Bookshop");
     echoService = echoFileDescriptor.getServices().get(0);
     assertEquals(echoService.getName(), "Echo");
-  }
-
-  @Test
-  public void generatePropertiesTest() {
 
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
 
@@ -74,7 +70,7 @@ public class SpringPropertiesClassComposerTest {
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
-    GapicContext context =
+    this.context =
         GapicContext.builder()
             .setMessages(messageTypes)
             .setResourceNames(resourceNames)
@@ -84,9 +80,13 @@ public class SpringPropertiesClassComposerTest {
             .setServiceConfig(serviceConfig)
             .build();
 
-    Service echoProtoService = services.get(0);
-    GapicClass clazz = SpringPropertiesClassComposer.instance().generate(context, echoProtoService);
+    this.echoProtoService = services.get(0);
+  }
 
+  @Test
+  public void generateAutoConfigClazzTest() {
+    GapicClass clazz =
+        SpringPropertiesClassComposer.instance().generate(this.context, this.echoProtoService);
     Assert.assertGoldenClass(this.getClass(), clazz, "SpringPropertiesClass.golden");
   }
 }
