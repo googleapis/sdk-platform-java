@@ -43,8 +43,7 @@ public class SpringWriter {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
-      String outputFilePath,
-      boolean isSpringContent) {
+      String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos;
@@ -55,8 +54,7 @@ public class SpringWriter {
     }
 
     for (GapicClass gapicClazz : clazzes) {
-      String classPath = writeClazz(gapicClazz, codeWriter, jos);
-      // writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
+      writeClazz(gapicClazz, codeWriter, jos);
     }
 
     // write spring.factories file

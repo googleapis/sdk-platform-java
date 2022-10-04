@@ -30,6 +30,6 @@ public class SpringGenerator {
     List<GapicClass> clazzes = SpringComposer.composeServiceAutoConfigClasses(context);
     GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
     String outputFilename = "temp-codegen-spring.srcjar";
-    return SpringWriter.write(context, clazzes, packageInfo, outputFilename, true);
+    return SpringWriter.write(context, clazzes, packageInfo, outputFilename);
   }
 }

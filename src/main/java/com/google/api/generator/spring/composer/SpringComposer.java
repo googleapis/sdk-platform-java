@@ -26,12 +26,11 @@ import java.util.stream.Collectors;
 public class SpringComposer {
   public static List<GapicClass> composeServiceAutoConfigClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.addAll(generateClientAutoConfig(context));
-    // TODO: from context, explore if any property settings needed.
+    clazzes.addAll(generatePerServiceClasses(context));
     return addApacheLicense(clazzes);
   }
 
-  protected static List<GapicClass> generateClientAutoConfig(GapicContext context) {
+  protected static List<GapicClass> generatePerServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
     context
         .services()
@@ -40,7 +39,7 @@ public class SpringComposer {
               if (context.transport() == Transport.GRPC
                   || context.transport() == Transport.GRPC_REST) {
                 clazzes.add(SpringAutoConfigClassComposer.instance().generate(context, s));
-                // clazzes.add(SpringPropertiesClassComposer.instance().generate(context, s));
+                clazzes.add(SpringPropertiesClassComposer.instance().generate(context, s));
               }
             });
     return clazzes;
