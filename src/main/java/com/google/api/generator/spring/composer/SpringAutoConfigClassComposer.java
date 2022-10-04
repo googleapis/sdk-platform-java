@@ -20,10 +20,8 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -89,13 +87,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
 
-    // header -- not used, add later
-    List<CommentStatement> fileHeader =
-        Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
-
     ClassDefinition classDef =
         ClassDefinition.builder()
-            // .setFileHeader(fileHeader)
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
@@ -133,22 +126,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       GapicServiceConfig serviceConfig) {
 
     String serviceName = service.name();
-    // TODO create CredentialsProvider bean instead.
-    // // private final CredentialsProvider credentialsProvider;
-    // Variable credentialsProviderVar =
-    //     Variable.builder()
-    //         .setName("credentialsProvider")
-    //         .setType(types.get("CredentialsProvider"))
-    //         .build();
-    // VariableExpr credentialsProviderVarExpr =
-    //     VariableExpr.builder()
-    //         .setVariable(credentialsProviderVar)
-    //         .setScope(ScopeNode.PRIVATE)
-    //         .setIsFinal(true)
-    //         .setIsDecl(true)
-    //         .build();
-    // ExprStatement credentialsProviderVarStatement =
-    //     ExprStatement.withExpr(credentialsProviderVarExpr);
 
     // private final LanguageProperties clientProperties;
     Variable clientPropertiesVar =
@@ -164,21 +141,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setIsDecl(true)
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
-
-    // // private final GcpProjectIdProvider projectIdProvider;
-    // Variable projectIdProviderVar =
-    //     Variable.builder()
-    //         .setName("projectIdProvider")
-    //         .setType(types.get("GcpProjectIdProvider"))
-    //         .build();
-    // VariableExpr projectIdProviderVarExpr =
-    //     VariableExpr.builder()
-    //         .setVariable(projectIdProviderVar)
-    //         .setScope(ScopeNode.PRIVATE)
-    //         .setIsFinal(true)
-    //         .setIsDecl(true)
-    //         .build();
-    // ExprStatement projectIdProviderStatement = ExprStatement.withExpr(projectIdProviderVarExpr);
 
     return Arrays.asList(clientPropertiesStatement);
   }
@@ -232,147 +194,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     ExprStatement thisPropertiesAssignmentStatement =
         ExprStatement.withExpr(thisPropertiesAssignmentExpr);
 
-    // /**
-    //  * if (properties.getCredentials().hasKey()) { this.credentialsProvider = new
-    //  * DefaultCredentialsProvider(properties); } else { this.credentialsProvider =
-    //  * coreCredentialsProvider; }
-    //  */
-    //
-    // // expr: properties.getCredentials().hasKey()
-    //
-    // MethodInvocationExpr getCredentialsExpr =
-    //     MethodInvocationExpr.builder()
-    //         .setMethodName("getCredentials")
-    //         .setExprReferenceExpr(propertiesVarExpr)
-    //         .setReturnType(types.get("Credentials"))
-    //         .build();
-    // MethodInvocationExpr hasKeyExpr =
-    //     MethodInvocationExpr.builder()
-    //         .setMethodName("hasKey")
-    //         .setExprReferenceExpr(getCredentialsExpr)
-    //         .setReturnType(TypeNode.BOOLEAN)
-    //         .build();
-    //
-    // // if body: this.credentialsProvider = new DefaultCredentialsProvider(properties)
-    // CastExpr castExpr =
-    //     CastExpr.builder()
-    //         .setExpr(
-    //             NewObjectExpr.builder()
-    //                 .setType(types.get("DefaultCredentialsProvider"))
-    //                 .setArguments(propertiesVarExpr)
-    //                 .build())
-    //         .setType(types.get("CredentialsProvider"))
-    //         .build();
-    // Variable credentialsProviderVar =
-    //     Variable.builder()
-    //         .setName("credentialsProvider")
-    //         .setType(types.get("CredentialsProvider"))
-    //         .build();
-    // AssignmentExpr credentialsProviderssignExpr =
-    //     AssignmentExpr.builder()
-    //         .setVariableExpr(
-    //             VariableExpr.withVariable(credentialsProviderVar)
-    //                 .toBuilder()
-    //                 .setExprReferenceExpr(thisExpr)
-    //                 .build())
-    //         .setValueExpr(castExpr)
-    //         .build();
-    //
-    // // else body: this.credentialsProvider = coreCredentialsProvider;
-    // List<Expr> coreCredentialsProviderAssignmentExprs = new ArrayList<>();
-    // coreCredentialsProviderAssignmentExprs.add(
-    //     AssignmentExpr.builder()
-    //         .setVariableExpr(
-    //             VariableExpr.withVariable(credentialsProviderVar)
-    //                 .toBuilder()
-    //                 .setExprReferenceExpr(thisExpr)
-    //                 .build())
-    //         .setValueExpr(
-    //             CastExpr.builder()
-    //                 .setExpr(coreProjectIdProviderVarExpr)
-    //                 .setType(types.get("CredentialsProvider"))
-    //                 .build())
-    //         .build());
-    //
-    // IfStatement credentialIfStatement =
-    //     IfStatement.builder()
-    //         .setConditionExpr(hasKeyExpr)
-    //         .setBody(Arrays.asList(ExprStatement.withExpr(credentialsProviderssignExpr)))
-    //         .setElseBody(
-    //             coreCredentialsProviderAssignmentExprs.stream()
-    //                 .map(e -> ExprStatement.withExpr(e))
-    //                 .collect(Collectors.toList()))
-    //         .build();
-    //
-    // /**
-    //  * if (clientProperties.getProjectId() != null) { this.projectIdProvider =
-    //  * clientProperties::getProjectId; } else { this.projectIdProvider = coreProjectIdProvider; }
-    //  */
-    // // else body: this.projectIdProvider = coreProjectIdProvider;
-    // List<Expr> ctorAssignmentExprs = new ArrayList<>();
-    // ctorAssignmentExprs.add(
-    //     AssignmentExpr.builder()
-    //         .setVariableExpr(
-    //             VariableExpr.withVariable(projectIdProviderVar)
-    //                 .toBuilder()
-    //                 .setExprReferenceExpr(thisExpr)
-    //                 .build())
-    //         .setValueExpr(coreProjectIdProviderVarExpr)
-    //         .build());
-    //
-    // // expr: clientProperties.getProjectId() != null
-    // MethodInvocationExpr getProjectIdExpr =
-    //     MethodInvocationExpr.builder()
-    //         .setMethodName("getProjectId")
-    //         .setExprReferenceExpr(
-    //             VariableExpr.withVariable(clientPropertiesVar).toBuilder().build())
-    //         // .setStaticReferenceType(clientType)
-    //         .setReturnType(types.get("CredentialsProvider")) // fake it
-    //         .build();
-    // RelationalOperationExpr notEqualSentence =
-    //     RelationalOperationExpr.notEqualToWithExprs(getProjectIdExpr,
-    // ValueExpr.createNullExpr());
-    //
-    // // () -> clientProperties.getProjectId();
-    // LambdaExpr lambdaExpr = LambdaExpr.builder().setReturnExpr(getProjectIdExpr).build();
-    //
-    // // this.projectIdProvider = () -> clientProperties.getProjectId();
-    // AssignmentExpr projectIdProviderAssignExpr =
-    //     AssignmentExpr.builder()
-    //         .setVariableExpr(
-    //             VariableExpr.withVariable(projectIdProviderVar)
-    //                 .toBuilder()
-    //                 .setExprReferenceExpr(thisExpr)
-    //                 .build())
-    //         .setValueExpr(
-    //             CastExpr.builder()
-    //                 .setExpr(lambdaExpr)
-    //                 .setType(types.get("GcpProjectIdProvider"))
-    //                 .build())
-    //         .build();
-    //
-    // IfStatement projectIdProviderIfStatement =
-    //     IfStatement.builder()
-    //         .setConditionExpr(notEqualSentence)
-    //         .setBody(Arrays.asList(ExprStatement.withExpr(projectIdProviderAssignExpr)))
-    //         .setElseBody(
-    //             ctorAssignmentExprs.stream()
-    //                 .map(e -> ExprStatement.withExpr(e))
-    //                 .collect(Collectors.toList()))
-    //         .build();
-
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(types.get(className))
-        .setArguments(
-            Arrays.asList(
-                // credentialsProviderBuilderVarExpr.toBuilder().setIsDecl(true).build(),
-                // coreProjectIdProviderVarExpr.toBuilder().setIsDecl(true).build(),
-                propertiesVarExpr.toBuilder().setIsDecl(true).build()))
+        .setArguments(Arrays.asList(propertiesVarExpr.toBuilder().setIsDecl(true).build()))
         .setBody(Arrays.asList(thisPropertiesAssignmentStatement))
-        // credentialIfStatement,
-        // projectIdProviderIfStatement))
-        // .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .build();
   }
 
