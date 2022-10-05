@@ -57,6 +57,7 @@ public class RetrySettingsUtils {
         .setStaticReferenceType(FIXED_TYPESTORE.get("Duration"))
         .setMethodName("ofMillis")
         .setArguments(valExpr)
+        .setReturnType(FIXED_TYPESTORE.get("Duration"))
         .build();
   }
 
