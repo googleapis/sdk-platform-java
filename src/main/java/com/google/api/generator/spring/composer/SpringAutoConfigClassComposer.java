@@ -289,7 +289,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       Service service, String className, Map<String, TypeNode> types) {
     // @Bean
     // @ConditionalOnMissingBean
-    // public CredentialsProvider googleCredentials() throws IOException {
+    // public CredentialsProvider languageServiceCredentials() throws IOException {
     //   return new DefaultCredentialsProvider(this.clientProperties);
     // }
 
@@ -315,7 +315,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setType(types.get("CredentialsProvider"))
             .build();
 
-    String methodName = "googleCredentials";
+    String methodName =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Credentials";
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
@@ -738,8 +739,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
 
+    String credentialsProviderName =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Credentials";
     String transportChannelProviderName = "default" + service.name() + "TransportChannelProvider";
-    String credentialsProviderName = "googleCredentials";
 
     return MethodDefinition.builder()
         .setName(methodName)
