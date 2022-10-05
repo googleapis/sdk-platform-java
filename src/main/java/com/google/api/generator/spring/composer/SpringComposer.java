@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Transport;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class SpringComposer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generatePerServiceClasses(context));
     return addApacheLicense(clazzes);
+  }
+
+  public static GapicPackageInfo composePackageInfo(GapicContext context) {
+    return addApacheLicense(SpringPackageInfoComposer.generatePackageInfo(context));
   }
 
   protected static List<GapicClass> generatePerServiceClasses(GapicContext context) {
@@ -58,5 +63,14 @@ public class SpringComposer {
               return GapicClass.create(gapicClass.kind(), classWithHeader);
             })
         .collect(Collectors.toList());
+  }
+
+  private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
+    return GapicPackageInfo.with(
+        gapicPackageInfo
+            .packageInfo()
+            .toBuilder()
+            .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
+            .build());
   }
 }
