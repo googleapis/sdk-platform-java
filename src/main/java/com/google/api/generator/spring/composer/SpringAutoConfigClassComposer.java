@@ -47,6 +47,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
@@ -55,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
@@ -94,6 +96,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
+            .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClassHeaderComments(className, false,
+                Optional.empty(), Optional.empty(), types.get(service.name() + "SpringAutoConfig")))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
