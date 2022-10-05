@@ -14,6 +14,9 @@
 
 package com.google.api.generator.gapic.composer.common;
 
+import static com.google.api.generator.gapic.composer.utils.RetrySettingsUtils.createDurationOfMillisExpr;
+import static com.google.api.generator.gapic.composer.utils.RetrySettingsUtils.toValExpr;
+
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;
 import com.google.api.gax.batching.FlowController;
@@ -48,8 +51,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.protobuf.Duration;
-import com.google.protobuf.util.Durations;
 import com.google.rpc.Code;
 import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
 import java.util.ArrayList;
@@ -676,38 +677,6 @@ public class RetrySettingsComposer {
 
   private static EnumRefExpr toStatusCodeEnumRefExpr(Code code) {
     return EnumRefExpr.builder().setType(STATUS_CODE_CODE_TYPE).setName(code.name()).build();
-  }
-
-  private static ValueExpr toValExpr(long longValue) {
-    return ValueExpr.withValue(
-        PrimitiveValue.builder()
-            .setType(TypeNode.LONG)
-            .setValue(String.format("%dL", longValue))
-            .build());
-  }
-
-  private static ValueExpr toValExpr(float floatValue) {
-    return toValExpr((double) floatValue);
-  }
-
-  private static ValueExpr toValExpr(double val) {
-    return ValueExpr.withValue(
-        PrimitiveValue.builder()
-            .setType(TypeNode.DOUBLE)
-            .setValue(String.format("%.1f", val))
-            .build());
-  }
-
-  private static ValueExpr toValExpr(Duration duration) {
-    return toValExpr(Durations.toMillis(duration));
-  }
-
-  private static MethodInvocationExpr createDurationOfMillisExpr(ValueExpr valExpr) {
-    return MethodInvocationExpr.builder()
-        .setStaticReferenceType(FIXED_TYPESTORE.get("Duration"))
-        .setMethodName("ofMillis")
-        .setArguments(valExpr)
-        .build();
   }
 
   private static TypeStore createStaticTypes() {
