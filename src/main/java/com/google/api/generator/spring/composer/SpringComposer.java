@@ -19,6 +19,7 @@ import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class SpringComposer {
     return clazzes;
   }
 
+  @VisibleForTesting
   protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
     return gapicClassList.stream()
         .map(

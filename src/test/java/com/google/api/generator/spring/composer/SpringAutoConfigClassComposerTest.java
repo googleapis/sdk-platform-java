@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.spring;
+package com.google.api.generator.spring.composer;
 
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.spring.composer.SpringAutoConfigClassComposer;
 import com.google.api.generator.test.framework.Assert;
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,6 +37,10 @@ public class SpringAutoConfigClassComposerTest {
   public void generateAutoConfigClazzTest() {
     GapicClass clazz =
         SpringAutoConfigClassComposer.instance().generate(this.context, this.echoProtoService);
-    Assert.assertGoldenClass(this.getClass(), clazz, "SpringAutoConfigClass.golden");
+    GapicClass clazzWithHeader = SpringComposer.addApacheLicense(Arrays.asList(clazz)).get(0);
+    Assert.assertGoldenClass(
+        this.getClass(),
+        clazzWithHeader,
+        clazzWithHeader.classDefinition().classIdentifier() + ".golden");
   }
 }
