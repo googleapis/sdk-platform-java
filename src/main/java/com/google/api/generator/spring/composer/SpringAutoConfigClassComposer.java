@@ -160,7 +160,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
-
     Statement loggerStatement =
         LoggerUtils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
     return Arrays.asList(clientPropertiesStatement, loggerStatement);
