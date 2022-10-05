@@ -48,6 +48,8 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.spring.utils.LoggerUtils;
+import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
@@ -158,39 +160,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
-    // // private final GcpProjectIdProvider projectIdProvider;
-    // Variable projectIdProviderVar =
-    //     Variable.builder()
-    //         .setName("projectIdProvider")
-    //         .setType(types.get("GcpProjectIdProvider"))
-    //         .build();
-    // VariableExpr projectIdProviderVarExpr =
-    //     VariableExpr.builder()
-    //         .setVariable(projectIdProviderVar)
-    //         .setScope(ScopeNode.PRIVATE)
-    //         .setIsFinal(true)
-    //         .setIsDecl(true)
-    //         .build();
-    // ExprStatement projectIdProviderStatement = ExprStatement.withExpr(projectIdProviderVarExpr);
 
-    // Declare the RETRY_PARAM_DEFINITIONS map.
-    ExprStatement retryPramStatement =
-        ExprStatement.withExpr(
-            NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR
-                .toBuilder()
-                .setIsDecl(true)
-                .setScope(ScopeNode.PRIVATE)
-                .setIsStatic(true)
-                .setIsFinal(true)
-                .build());
-
-    BlockStatement retryParamDefinitionsBlock =
-        RetrySettingsComposer.createRetryParamDefinitionsBlock(
-            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR);
-
-    Statement loggerStatement = Utils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
-    return Arrays.asList(
-        clientPropertiesStatement, retryPramStatement, retryParamDefinitionsBlock, loggerStatement);
+    Statement loggerStatement =
+        LoggerUtils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
+    return Arrays.asList(clientPropertiesStatement, loggerStatement);
   }
 
   private static MethodDefinition createConstructor(
@@ -593,14 +566,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     ExprStatement projectIdLoggerStatement =
-        Utils.createLoggerStatement(
-            ArithmeticOperationExpr.concatWithExprs(
-                ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to X")),
-                ArithmeticOperationExpr.concatWithExprs(
-                    getQuotaProjectId,
-                    ValueExpr.withValue(
-                        StringObjectValue.withValue(
-                            ", this overrides project id from credentials.")))),
+        LoggerUtils.createLoggerStatement(
+            LoggerUtils.concatManyWithExprs(
+                ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to ")),
+                getQuotaProjectId,
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(", this overrides project id from credentials."))),
             types);
 
     IfStatement setQuotaProjectIdStatement =
@@ -665,22 +636,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
-    MethodInvocationExpr getExecutorNameExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(executorProviderVarExpr)
-            .setMethodName("getClass")
-            .build();
-    getExecutorNameExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(getExecutorNameExpr)
-            .setMethodName("getName")
-            .setReturnType(TypeNode.STRING)
-            .build();
     ExprStatement backgroundExecutorLoggerStatement =
-        Utils.createLoggerStatement(
+        LoggerUtils.createLoggerStatement(
             ArithmeticOperationExpr.concatWithExprs(
-                ValueExpr.withValue(StringObjectValue.withValue("Background executor set to ")),
-                getExecutorNameExpr),
+                ValueExpr.withValue(
+                    StringObjectValue.withValue("Background executor thread count is ")),
+                getExecutorThreadCount),
             types);
     IfStatement setBackgroundExecutorProviderStatement =
         createIfStatement(
@@ -726,7 +687,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     IfStatement setTransportChannelProviderStatement =
         createIfStatement(
-            getUseRest, Arrays.asList(ExprStatement.withExpr(setTransportProvider)), null);
+            getUseRest,
+            Arrays.asList(
+                ExprStatement.withExpr(setTransportProvider),
+                LoggerUtils.createLoggerStatement(
+                    ValueExpr.withValue(
+                        StringObjectValue.withValue("Using HTTP transport channel")),
+                    types)),
+            null);
 
     bodyStatements.add(setTransportChannelProviderStatement);
 
@@ -783,7 +751,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               IfStatement currentRetrySettingPropertyIfStatement =
                   createIfStatement(
                       currentRetrySettingPropertyIsNull,
-                      Arrays.asList(ExprStatement.withExpr(retrySettingsBuilderChain)),
+                      Arrays.asList(
+                          ExprStatement.withExpr(retrySettingsBuilderChain),
+                          LoggerUtils.createLoggerStatement(
+                              LoggerUtils.concatManyWithExprs(
+                                  ValueExpr.withValue(
+                                      StringObjectValue.withValue(propertyName + " set to ")),
+                                  currentRetrySettingProperty),
+                              types)),
                       null);
               statements.add(currentRetrySettingPropertyIfStatement);
               return statements;
@@ -1009,6 +984,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ConditionalOnProperty", conditionalOnProperty);
     typeMap.put("ConditionalOnClass", conditionalOnClass);
     typeMap.put("Qualifier", qualifier);
+    typeMap.put("Log", LoggerUtils.getLoggerType());
+    typeMap.put("LogFactory", LoggerUtils.getLoggerFactoryType());
 
     return typeMap;
   }
