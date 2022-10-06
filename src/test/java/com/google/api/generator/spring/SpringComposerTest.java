@@ -14,7 +14,6 @@
 
 package com.google.api.generator.spring;
 
-import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -39,8 +38,7 @@ public class SpringComposerTest {
 
     // write to verify result for now
     for (GapicClass gapicClazz : gapicClasses) {
-      ClassDefinition clazz = gapicClazz.classDefinition();
-      String fileName = clazz.classIdentifier() + ".golden";
+      String fileName = gapicClazz.classDefinition().classIdentifier() + "Full.golden";
       Assert.assertGoldenClass(this.getClass(), gapicClazz, fileName);
     }
   }

@@ -37,6 +37,7 @@ public class SpringAutoConfigClassComposerTest {
   public void generateAutoConfigClazzTest() {
     GapicClass clazz =
         SpringAutoConfigClassComposer.instance().generate(this.context, this.echoProtoService);
-    Assert.assertGoldenClass(this.getClass(), clazz, "SpringAutoConfigClass.golden");
+    String fileName = clazz.classDefinition().classIdentifier() + ".golden";
+    Assert.assertGoldenClass(this.getClass(), clazz, fileName);
   }
 }

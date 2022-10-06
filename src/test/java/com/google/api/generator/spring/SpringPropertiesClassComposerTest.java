@@ -37,6 +37,7 @@ public class SpringPropertiesClassComposerTest {
   public void generateAutoConfigClazzTest() {
     GapicClass clazz =
         SpringPropertiesClassComposer.instance().generate(this.context, this.echoProtoService);
-    Assert.assertGoldenClass(this.getClass(), clazz, "SpringPropertiesClass.golden");
+    String fileName = clazz.classDefinition().classIdentifier() + ".golden";
+    Assert.assertGoldenClass(this.getClass(), clazz, fileName);
   }
 }
