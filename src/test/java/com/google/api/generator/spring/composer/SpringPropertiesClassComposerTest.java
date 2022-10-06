@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.spring;
+package com.google.api.generator.spring.composer;
 
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.spring.composer.SpringAutoConfigClassComposer;
 import com.google.api.generator.test.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SpringAutoConfigClassComposerTest {
+public class SpringPropertiesClassComposerTest {
   private GapicContext context;
   private Service echoProtoService;
 
@@ -36,7 +35,7 @@ public class SpringAutoConfigClassComposerTest {
   @Test
   public void generateAutoConfigClazzTest() {
     GapicClass clazz =
-        SpringAutoConfigClassComposer.instance().generate(this.context, this.echoProtoService);
+        SpringPropertiesClassComposer.instance().generate(this.context, this.echoProtoService);
     String fileName = clazz.classDefinition().classIdentifier() + ".golden";
     Assert.assertGoldenClass(this.getClass(), clazz, fileName);
   }

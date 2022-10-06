@@ -12,32 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.spring;
+package com.google.api.generator.spring.composer;
 
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.spring.composer.SpringPropertiesClassComposer;
 import com.google.api.generator.test.framework.Assert;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SpringPropertiesClassComposerTest {
+public class SpringComposerTest {
   private GapicContext context;
-  private Service echoProtoService;
 
   @Before
   public void setUp() {
     this.context = TestProtoLoader.instance().parseShowcaseEcho();
-    this.echoProtoService = this.context.services().get(0);
   }
 
   @Test
-  public void generateAutoConfigClazzTest() {
-    GapicClass clazz =
-        SpringPropertiesClassComposer.instance().generate(this.context, this.echoProtoService);
-    String fileName = clazz.classDefinition().classIdentifier() + ".golden";
-    Assert.assertGoldenClass(this.getClass(), clazz, fileName);
+  public void spring_composer_test() {
+
+    List<GapicClass> gapicClasses = SpringComposer.composeServiceAutoConfigClasses(context);
+
+    // write to verify result for now
+    for (GapicClass gapicClazz : gapicClasses) {
+      String fileName = gapicClazz.classDefinition().classIdentifier() + "Full.golden";
+      Assert.assertGoldenClass(this.getClass(), gapicClazz, fileName);
+    }
   }
 }
