@@ -23,7 +23,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import javax.annotation.Generated;
 
 public class SpringPackageInfoComposer {
@@ -51,12 +50,16 @@ public class SpringPackageInfoComposer {
 
   private static CommentStatement createPackageInfoJavadoc(GapicContext context) {
     JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
-    if (context.hasServiceYamlProto()
-        && !Strings.isNullOrEmpty(context.serviceYamlProto().getTitle())) {
-      javaDocCommentBuilder =
-          javaDocCommentBuilder.addComment(
-              String.format(PACKAGE_INFO_TITLE_PATTERN, context.serviceYamlProto().getTitle()));
-    }
+    // TODO: Can context.serviceYamlProto().getTitle() be available in context and used here?
+    // if (context.hasServiceYamlProto()
+    //     && !Strings.isNullOrEmpty(context.serviceYamlProto().getTitle())) {
+    //   javaDocCommentBuilder =
+    //       javaDocCommentBuilder.addComment(
+    //           String.format(PACKAGE_INFO_TITLE_PATTERN, context.serviceYamlProto().getTitle()));
+    // }
+    javaDocCommentBuilder =
+        javaDocCommentBuilder.addComment(
+            String.format(PACKAGE_INFO_TITLE_PATTERN, Utils.getLibName(context)));
     return CommentStatement.withComment(javaDocCommentBuilder.build());
   }
 }

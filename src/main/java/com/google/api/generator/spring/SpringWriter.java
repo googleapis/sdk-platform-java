@@ -110,8 +110,7 @@ public class SpringWriter {
     String code = codeWriter.write();
     codeWriter.clear();
 
-    String packagePath =
-        "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/") + "/spring";
+    String packagePath = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
     JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", packagePath));
     try {
       jos.putNextEntry(jarEntry);
