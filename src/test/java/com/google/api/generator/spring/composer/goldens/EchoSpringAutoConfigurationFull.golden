@@ -50,7 +50,7 @@ public class EchoSpringAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public CredentialsProvider googleCredentials() throws IOException {
+  public CredentialsProvider echoCredentials() throws IOException {
     return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
   }
 
@@ -63,7 +63,7 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(
-      @Qualifier("googleCredentials") CredentialsProvider credentialsProvider,
+      @Qualifier("echoCredentials") CredentialsProvider credentialsProvider,
       @Qualifier("defaultEchoTransportChannelProvider")
           TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {

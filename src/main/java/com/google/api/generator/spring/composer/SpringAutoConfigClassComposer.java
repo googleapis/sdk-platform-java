@@ -81,8 +81,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   public GapicClass generate(GapicContext context, Service service) {
     String packageName = service.pakkage() + ".spring";
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
-    String className = getThisClassName(service.name());
+    String serviceName = service.name();
+    String serviceNameLowerCamel = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
+    String className = getThisClassName(serviceName);
     String libName = Utils.getLibName(context);
+    String credentialsProviderName = serviceNameLowerCamel + "Credentials";
+    String transportChannelProviderName = "default" + serviceName + "TransportChannelProvider";
+    String clientName = serviceNameLowerCamel + "Client";
     GapicClass.Kind kind = Kind.MAIN;
 
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
@@ -98,9 +103,18 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethods(
                 Arrays.asList(
                     createConstructor(service.name(), className, types),
-                    createCredentialsProviderBeanMethod(service, className, types),
-                    createTransportChannelProviderBeanMethod(service, types),
-                    createClientBeanMethod(service, className, types, gapicServiceConfig)))
+                    createCredentialsProviderBeanMethod(
+                        service, className, credentialsProviderName, types),
+                    createTransportChannelProviderBeanMethod(
+                        service, transportChannelProviderName, types),
+                    createClientBeanMethod(
+                        service,
+                        className,
+                        credentialsProviderName,
+                        transportChannelProviderName,
+                        clientName,
+                        types,
+                        gapicServiceConfig)))
             .setAnnotations(createClassAnnotations(service, types, libName))
             .build();
     return GapicClass.create(kind, classDef);
@@ -286,10 +300,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createCredentialsProviderBeanMethod(
-      Service service, String className, Map<String, TypeNode> types) {
+      Service service, String className, String methodName, Map<String, TypeNode> types) {
     // @Bean
     // @ConditionalOnMissingBean
-    // public CredentialsProvider googleCredentials() throws IOException {
+    // public CredentialsProvider languageServiceCredentials() throws IOException {
     //   return new DefaultCredentialsProvider(this.clientProperties);
     // }
 
@@ -315,7 +329,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setType(types.get("CredentialsProvider"))
             .build();
 
-    String methodName = "googleCredentials";
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
@@ -330,7 +343,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createTransportChannelProviderBeanMethod(
-      Service service, Map<String, TypeNode> types) {
+      Service service, String methodName, Map<String, TypeNode> types) {
 
     //   @Bean
     //   @ConditionalOnMissingBean
@@ -345,7 +358,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
             .build();
 
-    String methodName = "default" + service.name() + "TransportChannelProvider";
     return MethodDefinition.builder()
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
@@ -442,9 +454,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static MethodDefinition createClientBeanMethod(
       Service service,
       String className,
+      String credentialsProviderName,
+      String transportChannelProviderName,
+      String clientName,
       Map<String, TypeNode> types,
       GapicServiceConfig gapicServiceConfig) {
-
     // argument variables:
     VariableExpr credentialsProviderVariableExpr =
         VariableExpr.withVariable(
@@ -735,14 +749,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(serviceSettingsBuilt)
             .build();
 
-    String methodName =
-        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
-
-    String transportChannelProviderName = "default" + service.name() + "TransportChannelProvider";
-    String credentialsProviderName = "googleCredentials";
-
     return MethodDefinition.builder()
-        .setName(methodName)
+        .setName(clientName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
         .setArguments(
