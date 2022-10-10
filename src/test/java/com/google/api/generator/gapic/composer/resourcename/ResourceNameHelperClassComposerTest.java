@@ -110,7 +110,6 @@ public class ResourceNameHelperClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "FoobarName.golden", visitor.write());
     Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "FoobarName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
-    Assert.assertCodeEquals(clazz.defaultHost(), "localhost:7469");
   }
 
   @Test
@@ -155,9 +154,7 @@ public class ResourceNameHelperClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "BillingAccountLocationName.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(Utils.getGoldenDir(this.getClass()), "BillingAccountLocationName.golden");
-    // TODO: line 159 fails - https://github.com/googleapis/gapic-generator-java/issues/805
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
-    Assert.assertCodeEquals(clazz.defaultHost(), "logging.googleapis.com:443");
   }
 
   @Test
@@ -184,7 +181,6 @@ public class ResourceNameHelperClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "SessionName.golden", visitor.write());
     Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "SessionName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
-    Assert.assertCodeEquals(clazz.defaultHost(), "localhost:7469");
   }
 
   @Test
@@ -211,7 +207,6 @@ public class ResourceNameHelperClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "TestName.golden", visitor.write());
     Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "TestName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
-    Assert.assertCodeEquals(clazz.defaultHost(), "localhost:7469");
   }
 
   @Test
@@ -236,6 +231,5 @@ public class ResourceNameHelperClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "AgentName.golden", visitor.write());
     Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "AgentName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
-    Assert.assertCodeEquals(clazz.defaultHost(), "localhost:7469");
   }
 }

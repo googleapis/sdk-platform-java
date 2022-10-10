@@ -30,12 +30,8 @@ public class MockServiceImplClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {"MockEchoImpl", GrpcTestProtoLoader.instance().parseShowcaseEcho(), "localhost:7469"},
-          {
-            "MockDeprecatedServiceImpl",
-            GrpcTestProtoLoader.instance().parseDeprecatedService(),
-            "localhost:7469"
-          }
+          {"MockEchoImpl", GrpcTestProtoLoader.instance().parseShowcaseEcho()},
+          {"MockDeprecatedServiceImpl", GrpcTestProtoLoader.instance().parseDeprecatedService()}
         });
   }
 
@@ -44,9 +40,6 @@ public class MockServiceImplClassComposerTest {
   @Parameterized.Parameter(1)
   public GapicContext context;
 
-  @Parameterized.Parameter(2)
-  public String defaultHostExpected;
-
   @Test
   public void generateMockServiceImplClasses() {
     Service service = context.services().get(0);
@@ -54,6 +47,5 @@ public class MockServiceImplClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), defaultHostExpected);
   }
 }

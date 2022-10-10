@@ -149,8 +149,7 @@ public class ResourceNameHelperClassComposer {
                 createNestedBuilderClasses(
                     resourceName, tokenHierarchies, templateFinalVarExprs, typeStore))
             .build();
-    return GapicClass.create(GapicClass.Kind.PROTO, classDef)
-        .withDefaultHost(context.services().get(0).defaultHost());
+    return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
 
   private static List<AnnotationNode> createClassAnnotations() {

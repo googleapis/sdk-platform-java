@@ -35,6 +35,8 @@ public abstract class GapicClass {
 
   public abstract List<Sample> samples();
 
+  // Represents the host URL for the service. May or may not contain a regional endpoint. Only used
+  // for generating the region tag for samples; therefore only used in select Composers.
   public abstract String defaultHost();
 
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
