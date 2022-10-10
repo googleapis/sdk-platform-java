@@ -30,7 +30,6 @@ public class GrpcServiceCallableFactoryClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcEchoCallableFactory.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 
   @Test
@@ -42,6 +41,5 @@ public class GrpcServiceCallableFactoryClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcDeprecatedServiceCallableFactory.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 }

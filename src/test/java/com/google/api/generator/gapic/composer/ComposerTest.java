@@ -89,28 +89,40 @@ public class ComposerTest {
   }
 
   @Test
-  public void parseDefaultHost_returnsApiShortName() {
+  public void parseDefaultHost_shouldReturnApiShortNameIfHostContainsRegionalEndpoint() {
     String defaultHost = "us-east1-pubsub.googleapis.com";
     String apiShortName = Composer.parseDefaultHost(defaultHost);
-    org.junit.Assert.assertEquals("pubsub", apiShortName);
+    assertEquals("pubsub", apiShortName);
+  }
 
-    defaultHost = "logging.googleapis.com";
-    apiShortName = Composer.parseDefaultHost(defaultHost);
-    org.junit.Assert.assertEquals("logging", apiShortName);
+  @Test
+  public void parseDefaultHost_shouldReturnApiShortName() {
+    String defaultHost = "logging.googleapis.com";
+    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    assertEquals("logging", apiShortName);
+  }
 
-    defaultHost = "localhost:7469";
-    apiShortName = Composer.parseDefaultHost(defaultHost);
-    org.junit.Assert.assertEquals("localhost:7469", apiShortName);
+  @Test
+  public void parseDefaultHost_shouldReturnApiShortNameForIam() {
+    String defaultHost = "iam-meta-api.googleapis.com";
+    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    assertEquals("iam", apiShortName);
+  }
+
+  @Test
+  public void parseDefaultHost_shouldReturnHostIfNoPeriods() {
+    String defaultHost = "logging:7469";
+    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    assertEquals("logging:7469", apiShortName);
   }
 
   @Test
   public void gapicClass_addRegionTagAndHeaderToSample() {
     Sample testSample;
     testSample = Composer.addRegionTagAndHeaderToSample(sample, "showcase", "v1");
-    org.junit.Assert.assertEquals("Showcase", testSample.regionTag().apiShortName());
-    org.junit.Assert.assertEquals("V1", testSample.regionTag().apiVersion());
-    org.junit.Assert.assertEquals(
-        Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT), testSample.fileHeader());
+    assertEquals("Showcase", testSample.regionTag().apiShortName());
+    assertEquals("V1", testSample.regionTag().apiVersion());
+    assertEquals(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT), testSample.fileHeader());
   }
 
   @Test

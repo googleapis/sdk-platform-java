@@ -30,16 +30,15 @@ public class ServiceClientTestClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {"EchoClientTest", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0, ""},
+          {"EchoClientTest", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0},
           {
             "DeprecatedServiceClientTest",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
-            0,
-            ""
+            0
           },
-          {"TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0, ""},
-          {"SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1, ""},
-          {"LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0, ""},
+          {"TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0},
+          {"SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1},
+          {"LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0},
         });
   }
 
@@ -51,9 +50,6 @@ public class ServiceClientTestClassComposerTest {
   @Parameterized.Parameter(2)
   public int serviceIndex;
 
-  @Parameterized.Parameter(3)
-  public String defaultHostExpected;
-
   @Test
   public void generateServiceClientTestClasses() {
     Service echoProtoService = context.services().get(serviceIndex);
@@ -62,6 +58,5 @@ public class ServiceClientTestClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), defaultHostExpected);
   }
 }

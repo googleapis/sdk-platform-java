@@ -29,7 +29,6 @@ public class GrpcServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcEchoStub.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 
   @Test
@@ -40,7 +39,6 @@ public class GrpcServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcDeprecatedServiceStub.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 
   @Test
@@ -51,7 +49,6 @@ public class GrpcServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcTestingStub.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 
   @Test
@@ -63,7 +60,6 @@ public class GrpcServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcRoutingHeadersStub.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 
   @Test
@@ -74,7 +70,6 @@ public class GrpcServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcPublisherStub.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 
   @Test
@@ -85,6 +80,5 @@ public class GrpcServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcLoggingStub.golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), "");
   }
 }
