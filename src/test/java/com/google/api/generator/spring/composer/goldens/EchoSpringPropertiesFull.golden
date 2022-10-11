@@ -1,0 +1,500 @@
+/*
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.showcase.v1beta1.spring;
+
+import com.google.cloud.spring.core.Credentials;
+import com.google.cloud.spring.core.CredentialsSupplier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.threeten.bp.Duration;
+
+@ConfigurationProperties("spring.cloud.gcp.autoconfig.showcase.echo")
+public class EchoSpringProperties implements CredentialsSupplier {
+  @NestedConfigurationProperty
+  private final Credentials credentials =
+      new Credentials("https://www.googleapis.com/auth/cloud-platform");
+
+  private String quotaProjectId;
+  private Integer executorThreadCount;
+  private boolean useRest;
+  private Duration echoInitialRetryDelay;
+  private Double echoRetryDelayMultiplier;
+  private Duration echoMaxRetryDelay;
+  private Duration echoInitialRpcTimeout;
+  private Double echoRpcTimeoutMultiplier;
+  private Duration echoMaxRpcTimeout;
+  private Duration echoTotalTimeout;
+  private Duration expandInitialRetryDelay;
+  private Double expandRetryDelayMultiplier;
+  private Duration expandMaxRetryDelay;
+  private Duration expandInitialRpcTimeout;
+  private Double expandRpcTimeoutMultiplier;
+  private Duration expandMaxRpcTimeout;
+  private Duration expandTotalTimeout;
+  private Duration collectInitialRpcTimeout;
+  private Double collectRpcTimeoutMultiplier;
+  private Duration collectMaxRpcTimeout;
+  private Duration collectTotalTimeout;
+  private Duration chatInitialRpcTimeout;
+  private Double chatRpcTimeoutMultiplier;
+  private Duration chatMaxRpcTimeout;
+  private Duration chatTotalTimeout;
+  private Duration chatAgainInitialRpcTimeout;
+  private Double chatAgainRpcTimeoutMultiplier;
+  private Duration chatAgainMaxRpcTimeout;
+  private Duration chatAgainTotalTimeout;
+  private Duration pagedExpandInitialRetryDelay;
+  private Double pagedExpandRetryDelayMultiplier;
+  private Duration pagedExpandMaxRetryDelay;
+  private Duration pagedExpandInitialRpcTimeout;
+  private Double pagedExpandRpcTimeoutMultiplier;
+  private Duration pagedExpandMaxRpcTimeout;
+  private Duration pagedExpandTotalTimeout;
+  private Duration simplePagedExpandInitialRpcTimeout;
+  private Double simplePagedExpandRpcTimeoutMultiplier;
+  private Duration simplePagedExpandMaxRpcTimeout;
+  private Duration simplePagedExpandTotalTimeout;
+  private Duration waitInitialRpcTimeout;
+  private Double waitRpcTimeoutMultiplier;
+  private Duration waitMaxRpcTimeout;
+  private Duration waitTotalTimeout;
+  private Duration blockInitialRpcTimeout;
+  private Double blockRpcTimeoutMultiplier;
+  private Duration blockMaxRpcTimeout;
+  private Duration blockTotalTimeout;
+  private Duration collideNameInitialRpcTimeout;
+  private Double collideNameRpcTimeoutMultiplier;
+  private Duration collideNameMaxRpcTimeout;
+  private Duration collideNameTotalTimeout;
+
+  @Override
+  public Credentials getCredentials() {
+    return this.credentials;
+  }
+
+  public String getQuotaProjectId() {
+    return this.quotaProjectId;
+  }
+
+  public void setQuotaProjectId(String quotaProjectId) {
+    this.quotaProjectId = quotaProjectId;
+  }
+
+  public boolean getUseRest() {
+    return this.useRest;
+  }
+
+  public Integer getExecutorThreadCount() {
+    return this.executorThreadCount;
+  }
+
+  public void setExecutorThreadCount(Integer executorThreadCount) {
+    this.executorThreadCount = executorThreadCount;
+  }
+
+  public Duration getEchoInitialRetryDelay() {
+    return this.echoInitialRetryDelay;
+  }
+
+  public void setEchoInitialRetryDelay(Duration echoInitialRetryDelay) {
+    this.echoInitialRetryDelay = echoInitialRetryDelay;
+  }
+
+  public Double getEchoRetryDelayMultiplier() {
+    return this.echoRetryDelayMultiplier;
+  }
+
+  public void setEchoRetryDelayMultiplier(Double echoRetryDelayMultiplier) {
+    this.echoRetryDelayMultiplier = echoRetryDelayMultiplier;
+  }
+
+  public Duration getEchoMaxRetryDelay() {
+    return this.echoMaxRetryDelay;
+  }
+
+  public void setEchoMaxRetryDelay(Duration echoMaxRetryDelay) {
+    this.echoMaxRetryDelay = echoMaxRetryDelay;
+  }
+
+  public Duration getEchoInitialRpcTimeout() {
+    return this.echoInitialRpcTimeout;
+  }
+
+  public void setEchoInitialRpcTimeout(Duration echoInitialRpcTimeout) {
+    this.echoInitialRpcTimeout = echoInitialRpcTimeout;
+  }
+
+  public Double getEchoRpcTimeoutMultiplier() {
+    return this.echoRpcTimeoutMultiplier;
+  }
+
+  public void setEchoRpcTimeoutMultiplier(Double echoRpcTimeoutMultiplier) {
+    this.echoRpcTimeoutMultiplier = echoRpcTimeoutMultiplier;
+  }
+
+  public Duration getEchoMaxRpcTimeout() {
+    return this.echoMaxRpcTimeout;
+  }
+
+  public void setEchoMaxRpcTimeout(Duration echoMaxRpcTimeout) {
+    this.echoMaxRpcTimeout = echoMaxRpcTimeout;
+  }
+
+  public Duration getEchoTotalTimeout() {
+    return this.echoTotalTimeout;
+  }
+
+  public void setEchoTotalTimeout(Duration echoTotalTimeout) {
+    this.echoTotalTimeout = echoTotalTimeout;
+  }
+
+  public Duration getExpandInitialRetryDelay() {
+    return this.expandInitialRetryDelay;
+  }
+
+  public void setExpandInitialRetryDelay(Duration expandInitialRetryDelay) {
+    this.expandInitialRetryDelay = expandInitialRetryDelay;
+  }
+
+  public Double getExpandRetryDelayMultiplier() {
+    return this.expandRetryDelayMultiplier;
+  }
+
+  public void setExpandRetryDelayMultiplier(Double expandRetryDelayMultiplier) {
+    this.expandRetryDelayMultiplier = expandRetryDelayMultiplier;
+  }
+
+  public Duration getExpandMaxRetryDelay() {
+    return this.expandMaxRetryDelay;
+  }
+
+  public void setExpandMaxRetryDelay(Duration expandMaxRetryDelay) {
+    this.expandMaxRetryDelay = expandMaxRetryDelay;
+  }
+
+  public Duration getExpandInitialRpcTimeout() {
+    return this.expandInitialRpcTimeout;
+  }
+
+  public void setExpandInitialRpcTimeout(Duration expandInitialRpcTimeout) {
+    this.expandInitialRpcTimeout = expandInitialRpcTimeout;
+  }
+
+  public Double getExpandRpcTimeoutMultiplier() {
+    return this.expandRpcTimeoutMultiplier;
+  }
+
+  public void setExpandRpcTimeoutMultiplier(Double expandRpcTimeoutMultiplier) {
+    this.expandRpcTimeoutMultiplier = expandRpcTimeoutMultiplier;
+  }
+
+  public Duration getExpandMaxRpcTimeout() {
+    return this.expandMaxRpcTimeout;
+  }
+
+  public void setExpandMaxRpcTimeout(Duration expandMaxRpcTimeout) {
+    this.expandMaxRpcTimeout = expandMaxRpcTimeout;
+  }
+
+  public Duration getExpandTotalTimeout() {
+    return this.expandTotalTimeout;
+  }
+
+  public void setExpandTotalTimeout(Duration expandTotalTimeout) {
+    this.expandTotalTimeout = expandTotalTimeout;
+  }
+
+  public Duration getCollectInitialRpcTimeout() {
+    return this.collectInitialRpcTimeout;
+  }
+
+  public void setCollectInitialRpcTimeout(Duration collectInitialRpcTimeout) {
+    this.collectInitialRpcTimeout = collectInitialRpcTimeout;
+  }
+
+  public Double getCollectRpcTimeoutMultiplier() {
+    return this.collectRpcTimeoutMultiplier;
+  }
+
+  public void setCollectRpcTimeoutMultiplier(Double collectRpcTimeoutMultiplier) {
+    this.collectRpcTimeoutMultiplier = collectRpcTimeoutMultiplier;
+  }
+
+  public Duration getCollectMaxRpcTimeout() {
+    return this.collectMaxRpcTimeout;
+  }
+
+  public void setCollectMaxRpcTimeout(Duration collectMaxRpcTimeout) {
+    this.collectMaxRpcTimeout = collectMaxRpcTimeout;
+  }
+
+  public Duration getCollectTotalTimeout() {
+    return this.collectTotalTimeout;
+  }
+
+  public void setCollectTotalTimeout(Duration collectTotalTimeout) {
+    this.collectTotalTimeout = collectTotalTimeout;
+  }
+
+  public Duration getChatInitialRpcTimeout() {
+    return this.chatInitialRpcTimeout;
+  }
+
+  public void setChatInitialRpcTimeout(Duration chatInitialRpcTimeout) {
+    this.chatInitialRpcTimeout = chatInitialRpcTimeout;
+  }
+
+  public Double getChatRpcTimeoutMultiplier() {
+    return this.chatRpcTimeoutMultiplier;
+  }
+
+  public void setChatRpcTimeoutMultiplier(Double chatRpcTimeoutMultiplier) {
+    this.chatRpcTimeoutMultiplier = chatRpcTimeoutMultiplier;
+  }
+
+  public Duration getChatMaxRpcTimeout() {
+    return this.chatMaxRpcTimeout;
+  }
+
+  public void setChatMaxRpcTimeout(Duration chatMaxRpcTimeout) {
+    this.chatMaxRpcTimeout = chatMaxRpcTimeout;
+  }
+
+  public Duration getChatTotalTimeout() {
+    return this.chatTotalTimeout;
+  }
+
+  public void setChatTotalTimeout(Duration chatTotalTimeout) {
+    this.chatTotalTimeout = chatTotalTimeout;
+  }
+
+  public Duration getChatAgainInitialRpcTimeout() {
+    return this.chatAgainInitialRpcTimeout;
+  }
+
+  public void setChatAgainInitialRpcTimeout(Duration chatAgainInitialRpcTimeout) {
+    this.chatAgainInitialRpcTimeout = chatAgainInitialRpcTimeout;
+  }
+
+  public Double getChatAgainRpcTimeoutMultiplier() {
+    return this.chatAgainRpcTimeoutMultiplier;
+  }
+
+  public void setChatAgainRpcTimeoutMultiplier(Double chatAgainRpcTimeoutMultiplier) {
+    this.chatAgainRpcTimeoutMultiplier = chatAgainRpcTimeoutMultiplier;
+  }
+
+  public Duration getChatAgainMaxRpcTimeout() {
+    return this.chatAgainMaxRpcTimeout;
+  }
+
+  public void setChatAgainMaxRpcTimeout(Duration chatAgainMaxRpcTimeout) {
+    this.chatAgainMaxRpcTimeout = chatAgainMaxRpcTimeout;
+  }
+
+  public Duration getChatAgainTotalTimeout() {
+    return this.chatAgainTotalTimeout;
+  }
+
+  public void setChatAgainTotalTimeout(Duration chatAgainTotalTimeout) {
+    this.chatAgainTotalTimeout = chatAgainTotalTimeout;
+  }
+
+  public Duration getPagedExpandInitialRetryDelay() {
+    return this.pagedExpandInitialRetryDelay;
+  }
+
+  public void setPagedExpandInitialRetryDelay(Duration pagedExpandInitialRetryDelay) {
+    this.pagedExpandInitialRetryDelay = pagedExpandInitialRetryDelay;
+  }
+
+  public Double getPagedExpandRetryDelayMultiplier() {
+    return this.pagedExpandRetryDelayMultiplier;
+  }
+
+  public void setPagedExpandRetryDelayMultiplier(Double pagedExpandRetryDelayMultiplier) {
+    this.pagedExpandRetryDelayMultiplier = pagedExpandRetryDelayMultiplier;
+  }
+
+  public Duration getPagedExpandMaxRetryDelay() {
+    return this.pagedExpandMaxRetryDelay;
+  }
+
+  public void setPagedExpandMaxRetryDelay(Duration pagedExpandMaxRetryDelay) {
+    this.pagedExpandMaxRetryDelay = pagedExpandMaxRetryDelay;
+  }
+
+  public Duration getPagedExpandInitialRpcTimeout() {
+    return this.pagedExpandInitialRpcTimeout;
+  }
+
+  public void setPagedExpandInitialRpcTimeout(Duration pagedExpandInitialRpcTimeout) {
+    this.pagedExpandInitialRpcTimeout = pagedExpandInitialRpcTimeout;
+  }
+
+  public Double getPagedExpandRpcTimeoutMultiplier() {
+    return this.pagedExpandRpcTimeoutMultiplier;
+  }
+
+  public void setPagedExpandRpcTimeoutMultiplier(Double pagedExpandRpcTimeoutMultiplier) {
+    this.pagedExpandRpcTimeoutMultiplier = pagedExpandRpcTimeoutMultiplier;
+  }
+
+  public Duration getPagedExpandMaxRpcTimeout() {
+    return this.pagedExpandMaxRpcTimeout;
+  }
+
+  public void setPagedExpandMaxRpcTimeout(Duration pagedExpandMaxRpcTimeout) {
+    this.pagedExpandMaxRpcTimeout = pagedExpandMaxRpcTimeout;
+  }
+
+  public Duration getPagedExpandTotalTimeout() {
+    return this.pagedExpandTotalTimeout;
+  }
+
+  public void setPagedExpandTotalTimeout(Duration pagedExpandTotalTimeout) {
+    this.pagedExpandTotalTimeout = pagedExpandTotalTimeout;
+  }
+
+  public Duration getSimplePagedExpandInitialRpcTimeout() {
+    return this.simplePagedExpandInitialRpcTimeout;
+  }
+
+  public void setSimplePagedExpandInitialRpcTimeout(Duration simplePagedExpandInitialRpcTimeout) {
+    this.simplePagedExpandInitialRpcTimeout = simplePagedExpandInitialRpcTimeout;
+  }
+
+  public Double getSimplePagedExpandRpcTimeoutMultiplier() {
+    return this.simplePagedExpandRpcTimeoutMultiplier;
+  }
+
+  public void setSimplePagedExpandRpcTimeoutMultiplier(
+      Double simplePagedExpandRpcTimeoutMultiplier) {
+    this.simplePagedExpandRpcTimeoutMultiplier = simplePagedExpandRpcTimeoutMultiplier;
+  }
+
+  public Duration getSimplePagedExpandMaxRpcTimeout() {
+    return this.simplePagedExpandMaxRpcTimeout;
+  }
+
+  public void setSimplePagedExpandMaxRpcTimeout(Duration simplePagedExpandMaxRpcTimeout) {
+    this.simplePagedExpandMaxRpcTimeout = simplePagedExpandMaxRpcTimeout;
+  }
+
+  public Duration getSimplePagedExpandTotalTimeout() {
+    return this.simplePagedExpandTotalTimeout;
+  }
+
+  public void setSimplePagedExpandTotalTimeout(Duration simplePagedExpandTotalTimeout) {
+    this.simplePagedExpandTotalTimeout = simplePagedExpandTotalTimeout;
+  }
+
+  public Duration getWaitInitialRpcTimeout() {
+    return this.waitInitialRpcTimeout;
+  }
+
+  public void setWaitInitialRpcTimeout(Duration waitInitialRpcTimeout) {
+    this.waitInitialRpcTimeout = waitInitialRpcTimeout;
+  }
+
+  public Double getWaitRpcTimeoutMultiplier() {
+    return this.waitRpcTimeoutMultiplier;
+  }
+
+  public void setWaitRpcTimeoutMultiplier(Double waitRpcTimeoutMultiplier) {
+    this.waitRpcTimeoutMultiplier = waitRpcTimeoutMultiplier;
+  }
+
+  public Duration getWaitMaxRpcTimeout() {
+    return this.waitMaxRpcTimeout;
+  }
+
+  public void setWaitMaxRpcTimeout(Duration waitMaxRpcTimeout) {
+    this.waitMaxRpcTimeout = waitMaxRpcTimeout;
+  }
+
+  public Duration getWaitTotalTimeout() {
+    return this.waitTotalTimeout;
+  }
+
+  public void setWaitTotalTimeout(Duration waitTotalTimeout) {
+    this.waitTotalTimeout = waitTotalTimeout;
+  }
+
+  public Duration getBlockInitialRpcTimeout() {
+    return this.blockInitialRpcTimeout;
+  }
+
+  public void setBlockInitialRpcTimeout(Duration blockInitialRpcTimeout) {
+    this.blockInitialRpcTimeout = blockInitialRpcTimeout;
+  }
+
+  public Double getBlockRpcTimeoutMultiplier() {
+    return this.blockRpcTimeoutMultiplier;
+  }
+
+  public void setBlockRpcTimeoutMultiplier(Double blockRpcTimeoutMultiplier) {
+    this.blockRpcTimeoutMultiplier = blockRpcTimeoutMultiplier;
+  }
+
+  public Duration getBlockMaxRpcTimeout() {
+    return this.blockMaxRpcTimeout;
+  }
+
+  public void setBlockMaxRpcTimeout(Duration blockMaxRpcTimeout) {
+    this.blockMaxRpcTimeout = blockMaxRpcTimeout;
+  }
+
+  public Duration getBlockTotalTimeout() {
+    return this.blockTotalTimeout;
+  }
+
+  public void setBlockTotalTimeout(Duration blockTotalTimeout) {
+    this.blockTotalTimeout = blockTotalTimeout;
+  }
+
+  public Duration getCollideNameInitialRpcTimeout() {
+    return this.collideNameInitialRpcTimeout;
+  }
+
+  public void setCollideNameInitialRpcTimeout(Duration collideNameInitialRpcTimeout) {
+    this.collideNameInitialRpcTimeout = collideNameInitialRpcTimeout;
+  }
+
+  public Double getCollideNameRpcTimeoutMultiplier() {
+    return this.collideNameRpcTimeoutMultiplier;
+  }
+
+  public void setCollideNameRpcTimeoutMultiplier(Double collideNameRpcTimeoutMultiplier) {
+    this.collideNameRpcTimeoutMultiplier = collideNameRpcTimeoutMultiplier;
+  }
+
+  public Duration getCollideNameMaxRpcTimeout() {
+    return this.collideNameMaxRpcTimeout;
+  }
+
+  public void setCollideNameMaxRpcTimeout(Duration collideNameMaxRpcTimeout) {
+    this.collideNameMaxRpcTimeout = collideNameMaxRpcTimeout;
+  }
+
+  public Duration getCollideNameTotalTimeout() {
+    return this.collideNameTotalTimeout;
+  }
+
+  public void setCollideNameTotalTimeout(Duration collideNameTotalTimeout) {
+    this.collideNameTotalTimeout = collideNameTotalTimeout;
+  }
+}
