@@ -31,8 +31,8 @@ public interface AuthenticationInfoOrBuilder
    * of third party principal) making the request. For third party identity
    * callers, the `principal_subject` field is populated instead of this field.
    * For privacy reasons, the principal email address is sometimes redacted.
-   * For more information, see
-   * https://cloud.google.com/logging/docs/audit#user-id.
+   * For more information, see [Caller identities in audit
+   * logs](https://cloud.google.com/logging/docs/audit#user-id).
    * </pre>
    *
    * <code>string principal_email = 1;</code>
@@ -48,8 +48,8 @@ public interface AuthenticationInfoOrBuilder
    * of third party principal) making the request. For third party identity
    * callers, the `principal_subject` field is populated instead of this field.
    * For privacy reasons, the principal email address is sometimes redacted.
-   * For more information, see
-   * https://cloud.google.com/logging/docs/audit#user-id.
+   * For more information, see [Caller identities in audit
+   * logs](https://cloud.google.com/logging/docs/audit#user-id).
    * </pre>
    *
    * <code>string principal_email = 1;</code>

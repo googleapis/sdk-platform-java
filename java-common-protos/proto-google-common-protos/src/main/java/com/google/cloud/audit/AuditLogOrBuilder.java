@@ -354,6 +354,47 @@ public interface AuditLogOrBuilder
    *
    *
    * <pre>
+   * Indicates the policy violations for this request. If the request
+   * is denied by the policy, violation information will be logged
+   * here.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+   *
+   * @return Whether the policyViolationInfo field is set.
+   */
+  boolean hasPolicyViolationInfo();
+  /**
+   *
+   *
+   * <pre>
+   * Indicates the policy violations for this request. If the request
+   * is denied by the policy, violation information will be logged
+   * here.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+   *
+   * @return The policyViolationInfo.
+   */
+  com.google.cloud.audit.PolicyViolationInfo getPolicyViolationInfo();
+  /**
+   *
+   *
+   * <pre>
+   * Indicates the policy violations for this request. If the request
+   * is denied by the policy, violation information will be logged
+   * here.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+   */
+  com.google.cloud.audit.PolicyViolationInfoOrBuilder getPolicyViolationInfoOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
    * Metadata about the operation.
    * </pre>
    *
@@ -535,7 +576,7 @@ public interface AuditLogOrBuilder
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
-   *     google/cloud/audit/audit_log.proto;l=104
+   *     google/cloud/audit/audit_log.proto;l=110
    * @return Whether the serviceData field is set.
    */
   @java.lang.Deprecated
@@ -552,7 +593,7 @@ public interface AuditLogOrBuilder
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
-   *     google/cloud/audit/audit_log.proto;l=104
+   *     google/cloud/audit/audit_log.proto;l=110
    * @return The serviceData.
    */
   @java.lang.Deprecated

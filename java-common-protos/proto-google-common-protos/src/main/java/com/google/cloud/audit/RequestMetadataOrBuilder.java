@@ -28,14 +28,16 @@ public interface RequestMetadataOrBuilder
    *
    * <pre>
    * The IP address of the caller.
-   * For caller from internet, this will be public IPv4 or IPv6 address.
-   * For caller from a Compute Engine VM with external IP address, this
-   * will be the VM's external IP address. For caller from a Compute
-   * Engine VM without external IP address, if the VM is in the same
-   * organization (or project) as the accessed resource, `caller_ip` will
-   * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
-   * redacted to "gce-internal-ip".
-   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * For a caller from the internet, this will be the public IPv4 or IPv6
+   * address. For calls made from inside Google's internal production network
+   * from one GCP service to another, `caller_ip` will be redacted to "private".
+   * For a caller from a Compute Engine VM with a external IP address,
+   * `caller_ip` will be the VM's external IP address. For a caller from a
+   * Compute Engine VM without a external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will be the
+   * VM's internal IPv4 address, otherwise `caller_ip` will be redacted to
+   * "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+   * information.
    * </pre>
    *
    * <code>string caller_ip = 1;</code>
@@ -48,14 +50,16 @@ public interface RequestMetadataOrBuilder
    *
    * <pre>
    * The IP address of the caller.
-   * For caller from internet, this will be public IPv4 or IPv6 address.
-   * For caller from a Compute Engine VM with external IP address, this
-   * will be the VM's external IP address. For caller from a Compute
-   * Engine VM without external IP address, if the VM is in the same
-   * organization (or project) as the accessed resource, `caller_ip` will
-   * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
-   * redacted to "gce-internal-ip".
-   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * For a caller from the internet, this will be the public IPv4 or IPv6
+   * address. For calls made from inside Google's internal production network
+   * from one GCP service to another, `caller_ip` will be redacted to "private".
+   * For a caller from a Compute Engine VM with a external IP address,
+   * `caller_ip` will be the VM's external IP address. For a caller from a
+   * Compute Engine VM without a external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will be the
+   * VM's internal IPv4 address, otherwise `caller_ip` will be redacted to
+   * "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+   * information.
    * </pre>
    *
    * <code>string caller_ip = 1;</code>

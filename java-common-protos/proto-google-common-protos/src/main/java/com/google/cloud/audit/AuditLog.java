@@ -541,6 +541,60 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     return authorizationInfo_.get(index);
   }
 
+  public static final int POLICY_VIOLATION_INFO_FIELD_NUMBER = 25;
+  private com.google.cloud.audit.PolicyViolationInfo policyViolationInfo_;
+  /**
+   *
+   *
+   * <pre>
+   * Indicates the policy violations for this request. If the request
+   * is denied by the policy, violation information will be logged
+   * here.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+   *
+   * @return Whether the policyViolationInfo field is set.
+   */
+  @java.lang.Override
+  public boolean hasPolicyViolationInfo() {
+    return policyViolationInfo_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Indicates the policy violations for this request. If the request
+   * is denied by the policy, violation information will be logged
+   * here.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+   *
+   * @return The policyViolationInfo.
+   */
+  @java.lang.Override
+  public com.google.cloud.audit.PolicyViolationInfo getPolicyViolationInfo() {
+    return policyViolationInfo_ == null
+        ? com.google.cloud.audit.PolicyViolationInfo.getDefaultInstance()
+        : policyViolationInfo_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Indicates the policy violations for this request. If the request
+   * is denied by the policy, violation information will be logged
+   * here.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+   */
+  @java.lang.Override
+  public com.google.cloud.audit.PolicyViolationInfoOrBuilder getPolicyViolationInfoOrBuilder() {
+    return getPolicyViolationInfo();
+  }
+
   public static final int REQUEST_METADATA_FIELD_NUMBER = 4;
   private com.google.cloud.audit.RequestMetadata requestMetadata_;
   /**
@@ -774,7 +828,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
-   *     google/cloud/audit/audit_log.proto;l=104
+   *     google/cloud/audit/audit_log.proto;l=110
    * @return Whether the serviceData field is set.
    */
   @java.lang.Override
@@ -794,7 +848,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
    *
    * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
-   *     google/cloud/audit/audit_log.proto;l=104
+   *     google/cloud/audit/audit_log.proto;l=110
    * @return The serviceData.
    */
   @java.lang.Override
@@ -875,6 +929,9 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (resourceLocation_ != null) {
       output.writeMessage(20, getResourceLocation());
     }
+    if (policyViolationInfo_ != null) {
+      output.writeMessage(25, getPolicyViolationInfo());
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -928,6 +985,10 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (resourceLocation_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(20, getResourceLocation());
     }
+    if (policyViolationInfo_ != null) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(25, getPolicyViolationInfo());
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -964,6 +1025,10 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       if (!getAuthenticationInfo().equals(other.getAuthenticationInfo())) return false;
     }
     if (!getAuthorizationInfoList().equals(other.getAuthorizationInfoList())) return false;
+    if (hasPolicyViolationInfo() != other.hasPolicyViolationInfo()) return false;
+    if (hasPolicyViolationInfo()) {
+      if (!getPolicyViolationInfo().equals(other.getPolicyViolationInfo())) return false;
+    }
     if (hasRequestMetadata() != other.hasRequestMetadata()) return false;
     if (hasRequestMetadata()) {
       if (!getRequestMetadata().equals(other.getRequestMetadata())) return false;
@@ -1022,6 +1087,10 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (getAuthorizationInfoCount() > 0) {
       hash = (37 * hash) + AUTHORIZATION_INFO_FIELD_NUMBER;
       hash = (53 * hash) + getAuthorizationInfoList().hashCode();
+    }
+    if (hasPolicyViolationInfo()) {
+      hash = (37 * hash) + POLICY_VIOLATION_INFO_FIELD_NUMBER;
+      hash = (53 * hash) + getPolicyViolationInfo().hashCode();
     }
     if (hasRequestMetadata()) {
       hash = (37 * hash) + REQUEST_METADATA_FIELD_NUMBER;
@@ -1218,6 +1287,12 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
         authorizationInfoBuilder_.clear();
       }
       bitField0_ = (bitField0_ & ~0x00000001);
+      if (policyViolationInfoBuilder_ == null) {
+        policyViolationInfo_ = null;
+      } else {
+        policyViolationInfo_ = null;
+        policyViolationInfoBuilder_ = null;
+      }
       if (requestMetadataBuilder_ == null) {
         requestMetadata_ = null;
       } else {
@@ -1307,6 +1382,11 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
         result.authorizationInfo_ = authorizationInfo_;
       } else {
         result.authorizationInfo_ = authorizationInfoBuilder_.build();
+      }
+      if (policyViolationInfoBuilder_ == null) {
+        result.policyViolationInfo_ = policyViolationInfo_;
+      } else {
+        result.policyViolationInfo_ = policyViolationInfoBuilder_.build();
       }
       if (requestMetadataBuilder_ == null) {
         result.requestMetadata_ = requestMetadata_;
@@ -1435,6 +1515,9 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
             authorizationInfoBuilder_.addAllMessages(other.authorizationInfo_);
           }
         }
+      }
+      if (other.hasPolicyViolationInfo()) {
+        mergePolicyViolationInfo(other.getPolicyViolationInfo());
       }
       if (other.hasRequestMetadata()) {
         mergeRequestMetadata(other.getRequestMetadata());
@@ -1571,6 +1654,13 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
 
                 break;
               } // case 162
+            case 202:
+              {
+                input.readMessage(
+                    getPolicyViolationInfoFieldBuilder().getBuilder(), extensionRegistry);
+
+                break;
+              } // case 202
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -3183,6 +3273,210 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       return authorizationInfoBuilder_;
     }
 
+    private com.google.cloud.audit.PolicyViolationInfo policyViolationInfo_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.cloud.audit.PolicyViolationInfo,
+            com.google.cloud.audit.PolicyViolationInfo.Builder,
+            com.google.cloud.audit.PolicyViolationInfoOrBuilder>
+        policyViolationInfoBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     *
+     * @return Whether the policyViolationInfo field is set.
+     */
+    public boolean hasPolicyViolationInfo() {
+      return policyViolationInfoBuilder_ != null || policyViolationInfo_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     *
+     * @return The policyViolationInfo.
+     */
+    public com.google.cloud.audit.PolicyViolationInfo getPolicyViolationInfo() {
+      if (policyViolationInfoBuilder_ == null) {
+        return policyViolationInfo_ == null
+            ? com.google.cloud.audit.PolicyViolationInfo.getDefaultInstance()
+            : policyViolationInfo_;
+      } else {
+        return policyViolationInfoBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    public Builder setPolicyViolationInfo(com.google.cloud.audit.PolicyViolationInfo value) {
+      if (policyViolationInfoBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        policyViolationInfo_ = value;
+        onChanged();
+      } else {
+        policyViolationInfoBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    public Builder setPolicyViolationInfo(
+        com.google.cloud.audit.PolicyViolationInfo.Builder builderForValue) {
+      if (policyViolationInfoBuilder_ == null) {
+        policyViolationInfo_ = builderForValue.build();
+        onChanged();
+      } else {
+        policyViolationInfoBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    public Builder mergePolicyViolationInfo(com.google.cloud.audit.PolicyViolationInfo value) {
+      if (policyViolationInfoBuilder_ == null) {
+        if (policyViolationInfo_ != null) {
+          policyViolationInfo_ =
+              com.google.cloud.audit.PolicyViolationInfo.newBuilder(policyViolationInfo_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          policyViolationInfo_ = value;
+        }
+        onChanged();
+      } else {
+        policyViolationInfoBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    public Builder clearPolicyViolationInfo() {
+      if (policyViolationInfoBuilder_ == null) {
+        policyViolationInfo_ = null;
+        onChanged();
+      } else {
+        policyViolationInfo_ = null;
+        policyViolationInfoBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    public com.google.cloud.audit.PolicyViolationInfo.Builder getPolicyViolationInfoBuilder() {
+
+      onChanged();
+      return getPolicyViolationInfoFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    public com.google.cloud.audit.PolicyViolationInfoOrBuilder getPolicyViolationInfoOrBuilder() {
+      if (policyViolationInfoBuilder_ != null) {
+        return policyViolationInfoBuilder_.getMessageOrBuilder();
+      } else {
+        return policyViolationInfo_ == null
+            ? com.google.cloud.audit.PolicyViolationInfo.getDefaultInstance()
+            : policyViolationInfo_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Indicates the policy violations for this request. If the request
+     * is denied by the policy, violation information will be logged
+     * here.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.cloud.audit.PolicyViolationInfo,
+            com.google.cloud.audit.PolicyViolationInfo.Builder,
+            com.google.cloud.audit.PolicyViolationInfoOrBuilder>
+        getPolicyViolationInfoFieldBuilder() {
+      if (policyViolationInfoBuilder_ == null) {
+        policyViolationInfoBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.cloud.audit.PolicyViolationInfo,
+                com.google.cloud.audit.PolicyViolationInfo.Builder,
+                com.google.cloud.audit.PolicyViolationInfoOrBuilder>(
+                getPolicyViolationInfo(), getParentForChildren(), isClean());
+        policyViolationInfo_ = null;
+      }
+      return policyViolationInfoBuilder_;
+    }
+
     private com.google.cloud.audit.RequestMetadata requestMetadata_;
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.cloud.audit.RequestMetadata,
@@ -4023,7 +4317,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      *
      * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
-     *     google/cloud/audit/audit_log.proto;l=104
+     *     google/cloud/audit/audit_log.proto;l=110
      * @return Whether the serviceData field is set.
      */
     @java.lang.Deprecated
@@ -4042,7 +4336,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
      *
      * @deprecated google.cloud.audit.AuditLog.service_data is deprecated. See
-     *     google/cloud/audit/audit_log.proto;l=104
+     *     google/cloud/audit/audit_log.proto;l=110
      * @return The serviceData.
      */
     @java.lang.Deprecated
