@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommentComposer {
+  protected static final String CLASS_HEADER_SUMMARY_PATTERN =
+      "Settings class to configure an instance of {@link %s}.";
   private static final String APACHE_LICENSE_STRING =
       "Copyright 2022 Google LLC\n\n"
           + "Licensed under the Apache License, Version 2.0 (the \"License\");\n"

@@ -757,9 +757,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
     String propertiesClassName = service.name() + "Properties";
 
-    String transportChannelProviderName = "default" + service.name() + "TransportChannelProvider";
-    String credentialsProviderName = "googleCredentials";
-
     return MethodDefinition.builder()
         .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClientBeanComment(
             service.name(), propertiesClassName, transportChannelProviderName

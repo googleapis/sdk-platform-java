@@ -5,6 +5,12 @@ import com.google.cloud.spring.core.CredentialsSupplier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.threeten.bp.Duration;
 
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * Settings class to configure an instance of {@link EchoSpringProperties}.
+ *
+ * <p>Provides default configuration values for Echo client
+ */
 @ConfigurationProperties("spring.cloud.gcp.autoconfig.showcase.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
   @NestedConfigurationProperty

@@ -18,6 +18,20 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.threeten.bp.Duration;
 
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * Settings class to configure an instance of {@link EchoSpringAutoConfiguration}.
+ *
+ * <p>Provides auto-configuration for Spring Boot
+ *
+ * <p>The default instance has everything set to sensible defaults:
+ *
+ * <ul>
+ *   <li>The default transport provider is used.
+ *   <li>Credentials are acquired automatically through Application Default Credentials.
+ *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.
+ * </ul>
+ */
 @Generated("by gapic-generator-java")
 @AutoConfiguration
 @ConditionalOnClass(EchoClient.class)
@@ -32,18 +46,36 @@ public class EchoSpringAutoConfiguration {
     this.clientProperties = clientProperties;
   }
 
+  /**
+   * Obtains the default credentials provider. The used key will be obtained from
+   * application.properties
+   */
   @Bean
   @ConditionalOnMissingBean
   public CredentialsProvider echoCredentials() throws IOException {
     return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
   }
 
+  /**
+   * Returns the default channel provider. The default is gRPC and will default to it unless the
+   * useRest option is provided to use HTTP transport instead
+   */
   @Bean
   @ConditionalOnMissingBean
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
     return EchoSettings.defaultTransportChannelProvider();
   }
 
+  /**
+   * Provides a Echo client configured to use the default credentials provider (obtained with
+   * googleCredentials()) and its defaulttransport channel provider
+   * (defaultEchoTransportChannelProvider()). It also configures the quota project ID if provided.
+   * It will configure an executor provider in case there is more than one thread configured in the
+   * client
+   *
+   * <p>Individual retry settings are configured as well. It will use the default retry settings
+   * obtained from EchoProperties when they are not specified
+   */
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(

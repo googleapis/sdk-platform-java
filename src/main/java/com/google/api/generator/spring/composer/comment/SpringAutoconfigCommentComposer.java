@@ -14,6 +14,8 @@
 
 package com.google.api.generator.spring.composer.comment;
 
+import static com.google.api.generator.spring.composer.comment.CommentComposer.CLASS_HEADER_SUMMARY_PATTERN;
+
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import java.util.Arrays;
@@ -21,19 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SpringAutoconfigCommentComposer {
-  private static final String COLON = ":";
-
-  private static final String BUILDER_CLASS_DOC_PATTERN = "Builder for %s.";
-  private static final String CALL_SETTINGS_METHOD_DOC_PATTERN =
-      "Returns the object with the settings used for calls to %s.";
-  private static final String CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN =
-      "Returns the builder for the settings used for calls to %s.";
-
-  // Class header patterns.
-  private static final String CLASS_HEADER_SUMMARY_PATTERN =
-      "Settings class to configure an instance of {@link %s}.";
-  private static final String CLASS_HEADER_SAMPLE_CODE_PATTERN =
-      "For example, to set the total timeout of %s to 30 seconds:";
 
   private static final String CLASS_HEADER_GENERAL_DESCRIPTION =
           "Provides auto-configuration for Spring Boot";
@@ -62,32 +51,7 @@ public class SpringAutoconfigCommentComposer {
       + "are configured as well. It will use the default retry settings obtained from %s when they "
       + "are not specified";
 
-
-
-
-  public SpringAutoconfigCommentComposer() {
-  }
-
-
-  public static CommentStatement createCallSettingsGetterComment(
-      String javaMethodName, boolean isMethodDeprecated) {
-    String methodComment = String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName);
-    return isMethodDeprecated
-        ? toDeprecatedSimpleComment(methodComment)
-        : toSimpleComment(methodComment);
-  }
-
-  public static CommentStatement createBuilderClassComment(String outerClassName) {
-    return toSimpleComment(String.format(BUILDER_CLASS_DOC_PATTERN, outerClassName));
-  }
-
-  public static CommentStatement createCallSettingsBuilderGetterComment(
-      String javaMethodName, boolean isMethodDeprecated) {
-    String methodComment = String.format(CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN, javaMethodName);
-    return isMethodDeprecated
-        ? toDeprecatedSimpleComment(methodComment)
-        : toSimpleComment(methodComment);
-  }
+  public SpringAutoconfigCommentComposer() {}
 
   public static List<CommentStatement> createClassHeaderComments(
       String configuredClassName) {
@@ -129,17 +93,5 @@ public class SpringAutoconfigCommentComposer {
         .addParagraph(String.format(CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
         .build()
     );
-  }
-
-  private static CommentStatement toSimpleComment(String comment) {
-    return CommentStatement.withComment(JavaDocComment.withComment(comment));
-  }
-
-  private static CommentStatement toDeprecatedSimpleComment(String comment) {
-    return CommentStatement.withComment(
-        JavaDocComment.builder()
-            .addComment(comment)
-            .setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING)
-            .build());
   }
 }

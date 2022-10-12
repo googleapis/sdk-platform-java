@@ -14,6 +14,7 @@
 
 package com.google.api.generator.spring.composer;
 
+
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
