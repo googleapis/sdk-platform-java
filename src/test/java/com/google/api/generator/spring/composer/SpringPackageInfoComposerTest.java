@@ -34,7 +34,7 @@ public class SpringPackageInfoComposerTest {
   }
 
   @Test
-  public void generateAutoConfigClazzTest() {
+  public void generateSpringPackageInfoTest() {
     GapicPackageInfo packageInfo = SpringPackageInfoComposer.generatePackageInfo(this.context);
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     packageInfo.packageInfo().accept(visitor);
