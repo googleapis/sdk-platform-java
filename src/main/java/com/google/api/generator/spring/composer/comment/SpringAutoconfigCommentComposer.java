@@ -16,11 +16,8 @@ package com.google.api.generator.spring.composer.comment;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SpringAutoconfigCommentComposer {
@@ -38,10 +35,6 @@ public class SpringAutoconfigCommentComposer {
   private static final String CLASS_HEADER_SAMPLE_CODE_PATTERN =
       "For example, to set the total timeout of %s to 30 seconds:";
 
-  private static final String CLASS_HEADER_BUILDER_DESCRIPTION =
-      "The builder of this class is recursive, so contained classes are themselves builders. When"
-          + " build() is called, the tree of builders is called to create the complete settings"
-          + " object.";
   private static final String CLASS_HEADER_GENERAL_DESCRIPTION =
           "Provides auto-configuration for Spring Boot";
   private static final String CLASS_HEADER_DEFAULTS_DESCRIPTION =
@@ -53,63 +46,28 @@ public class SpringAutoconfigCommentComposer {
   private static final String CLASS_HEADER_DEFAULTS_RETRIES_DESCRIPTION =
       "Retries are configured for idempotent methods but not for non-idempotent methods.";
 
-  public static final CommentStatement DEFAULT_SCOPES_COMMENT =
-      toSimpleComment("The default scopes of the service.");
+  public static final String CREDENTIALS_PROVIDER_GENERAL_DESCRIPTION =
+      "Obtains the default credentials provider. The used key will be obtained from application.properties";
 
-  public static final CommentStatement DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder for the default ExecutorProvider for this service.");
-  public static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
-      toSimpleComment("Returns the default service endpoint.");
-  public static final CommentStatement DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT =
-      toSimpleComment("Returns the default mTLS service endpoint.");
-  public static final CommentStatement DEFAULT_SERVICE_SCOPES_METHOD_COMMENT =
-      toSimpleComment("Returns the default service scopes.");
+  public static final String TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION =
+      "Returns the default channel provider. The default is gRPC and will default to it unless the "
+          + "useRest option is provided to use HTTP transport instead";
+  public static final String CLIENT_BEAN_GENERAL_DESCRIPTION = "Provides a %s client configured to "
+      + "use the default credentials provider (obtained with googleCredentials()) and its default"
+      + "transport channel provider (%s()). It also configures the quota project ID if provided. It "
+      + "will configure an executor provider in case there is more than one thread configured "
+      + "in the client ";
 
-  public static final CommentStatement DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder for the default credentials for this service.");
+  public static final String CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION = "Individual retry settings "
+      + "are configured as well. It will use the default retry settings obtained from %s when they "
+      + "are not specified";
 
-  public static final CommentStatement DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder for the default ChannelProvider for this service.");
 
-  public static final CommentStatement NEW_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a new builder for this class.");
 
-  public static final CommentStatement TO_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder containing all the values of this settings class.");
 
-  public static final List<CommentStatement> APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS =
-      Arrays.asList(
-              JavaDocComment.builder()
-                  .addComment(
-                      "Applies the given settings updater function to all of the unary API methods"
-                          + " in this service.")
-                  .addParagraph(
-                      "Note: This method does not support applying settings to streaming methods.")
-                  .build())
-          .stream()
-          .map(c -> CommentStatement.withComment(c))
-          .collect(Collectors.toList());
-
-  private final CommentStatement newTransportBuilderMethodComment;
-  private final CommentStatement transportProviderBuilderMethodComment;
-
-  public SpringAutoconfigCommentComposer(String transportPrefix) {
-    this.newTransportBuilderMethodComment =
-        toSimpleComment(String.format("Returns a new %s builder for this class.", transportPrefix));
-    this.transportProviderBuilderMethodComment =
-        toSimpleComment(
-            String.format(
-                "Returns a builder for the default %s ChannelProvider for this service.",
-                transportPrefix));
+  public SpringAutoconfigCommentComposer() {
   }
 
-  public CommentStatement getNewTransportBuilderMethodComment() {
-    return newTransportBuilderMethodComment;
-  }
-
-  public CommentStatement getTransportProviderBuilderMethodComment() {
-    return transportProviderBuilderMethodComment;
-  }
 
   public static CommentStatement createCallSettingsGetterComment(
       String javaMethodName, boolean isMethodDeprecated) {
@@ -132,11 +90,7 @@ public class SpringAutoconfigCommentComposer {
   }
 
   public static List<CommentStatement> createClassHeaderComments(
-      String configuredClassName,
-      boolean isDeprecated,
-      Optional<String> methodNameOpt,
-      Optional<String> sampleCodeOpt,
-      TypeNode classType) {
+      String configuredClassName) {
 
     JavaDocComment.Builder javaDocCommentBuilder =
         JavaDocComment.builder()
@@ -147,27 +101,34 @@ public class SpringAutoconfigCommentComposer {
                 Arrays.asList(
                     CLASS_HEADER_DEFAULTS_TRANSPORT_DESCRIPTION,
                     CLASS_HEADER_DEFAULTS_CREDENTIALS_DESCRIPTION,
-                    CLASS_HEADER_DEFAULTS_RETRIES_DESCRIPTION))
-            .addParagraph(CLASS_HEADER_BUILDER_DESCRIPTION);
-
-    if (methodNameOpt.isPresent() && sampleCodeOpt.isPresent()) {
-      javaDocCommentBuilder =
-          javaDocCommentBuilder
-              .addParagraph(
-                  String.format(
-                      CLASS_HEADER_SAMPLE_CODE_PATTERN,
-                      JavaStyle.toLowerCamelCase(methodNameOpt.get())))
-              .addSampleCode(sampleCodeOpt.get());
-    }
-
-    if (isDeprecated) {
-      javaDocCommentBuilder.setDeprecated(
-          CommentComposer.DEPRECATED_CLASS_STRING);
-    }
+                    CLASS_HEADER_DEFAULTS_RETRIES_DESCRIPTION));
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(javaDocCommentBuilder.build()));
+  }
+  public static CommentStatement createCredentialsProviderBeanComment() {
+    return CommentStatement.withComment(JavaDocComment.builder()
+            .addParagraph(CREDENTIALS_PROVIDER_GENERAL_DESCRIPTION)
+            .build()
+    );
+  }
+
+  public static CommentStatement createTransportChannelProviderComment() {
+    return CommentStatement.withComment(JavaDocComment.builder()
+        .addParagraph(TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION)
+        .build()
+    );
+  }
+  public static CommentStatement createClientBeanComment(
+      String serviceName,
+      String propertiesClazzName,
+      String channelProviderName) {
+    return CommentStatement.withComment(JavaDocComment.builder()
+        .addParagraph(String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, channelProviderName))
+        .addParagraph(String.format(CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
+        .build()
+    );
   }
 
   private static CommentStatement toSimpleComment(String comment) {

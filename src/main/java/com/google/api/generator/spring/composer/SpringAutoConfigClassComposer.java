@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
@@ -96,8 +95,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClassHeaderComments(className, false,
-                Optional.empty(), Optional.empty(), types.get(service.name() + "SpringAutoConfig")))
+            .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClassHeaderComments(className))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
@@ -322,6 +320,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName = "googleCredentials";
     return MethodDefinition.builder()
         .setName(methodName)
+        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("CredentialsProvider"))
         .setAnnotations(
@@ -351,6 +350,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     String methodName = "default" + service.name() + "TransportChannelProvider";
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
@@ -741,11 +741,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
+    String propertiesClassName = service.name() + "Properties";
 
     String transportChannelProviderName = "default" + service.name() + "TransportChannelProvider";
     String credentialsProviderName = "googleCredentials";
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClientBeanComment(
+            service.name(), propertiesClassName, transportChannelProviderName
+        ))
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))

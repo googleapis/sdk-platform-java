@@ -91,6 +91,7 @@ public class SpringAutoConfigClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    System.out.println(visitor.write());
     assertEquals(EXPECTED_AUTOCONFIG_CLASS_STRING, visitor.write());
   }
 
