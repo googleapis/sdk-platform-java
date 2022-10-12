@@ -163,7 +163,7 @@ public class SpringWriter {
     String path = "src/main/resources/META-INF";
     JarEntry jarEntry =
         new JarEntry(String.format("%s/additional-spring-configuration-metadata.json", path));
-    String libName = Utils.getLibName(context);
+    String packageName = context.services().get(0).pakkage();
     try {
       jos.putNextEntry(jarEntry);
       StringJoiner sb = new StringJoiner(",\n", "\n{\n    \"properties\": [\n", "\n    ]\n" + "}");
@@ -179,8 +179,8 @@ public class SpringWriter {
                               + "            \"description\": \"Auto-configure Google Cloud %s components.\",\n"
                               + "            \"defaultValue\": true\n"
                               + "        }",
-                          Utils.springPropertyPrefix(libName, service.name()),
-                          libName + "/" + service.name())));
+                          Utils.getSpringPropertyPrefix(packageName, service.name()),
+                          Utils.getLibName(context))));
 
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
