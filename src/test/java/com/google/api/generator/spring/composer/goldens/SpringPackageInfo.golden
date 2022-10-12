@@ -1,0 +1,5 @@
+/** Auto-configuration for showcase integration with Spring. */
+@Generated("by gapic-generator-java")
+package com.google.showcase.v1beta1.spring;
+
+import javax.annotation.Generated;
