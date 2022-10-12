@@ -220,7 +220,7 @@ public class Composer {
     return clazzesWithSamples;
   }
 
-  // Parse defaultHost for apiShortName. Need to account for regional default endpoints like
+  // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default endpoints like
   // "us-east1-pubsub.googleapis.com".
   @VisibleForTesting
   protected static String parseDefaultHost(String defaultHost) {
