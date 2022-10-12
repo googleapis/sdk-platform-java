@@ -81,8 +81,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setHeaderCommentStatements(SpringPropertiesCommentComposer.createClassHeaderComments(
-                className, service.name()))
+            .setHeaderCommentStatements(
+                SpringPropertiesCommentComposer.createClassHeaderComments(
+                    className, service.name()))
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)

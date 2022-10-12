@@ -101,7 +101,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClassHeaderComments(className))
+            .setHeaderCommentStatements(
+                SpringAutoconfigCommentComposer.createClassHeaderComments(className))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
@@ -333,7 +334,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setName(methodName)
-        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("CredentialsProvider"))
         .setAnnotations(
@@ -362,7 +364,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
-        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
@@ -789,9 +792,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String propertiesClassName = service.name() + "Properties";
 
     return MethodDefinition.builder()
-        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClientBeanComment(
-            service.name(), propertiesClassName, transportChannelProviderName
-        ))
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createClientBeanComment(
+                service.name(), propertiesClassName, transportChannelProviderName))
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))

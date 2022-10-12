@@ -12,8 +12,7 @@ public class SpringPropertiesCommentComposer {
       "Provides default configuration values for %s client";
 
   public static List<CommentStatement> createClassHeaderComments(
-      String configuredClassName,
-      String serviceName) {
+      String configuredClassName, String serviceName) {
 
     JavaDocComment.Builder javaDocCommentBuilder =
         JavaDocComment.builder()
