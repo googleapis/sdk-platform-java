@@ -55,27 +55,7 @@ public class SpringComposerTest {
           + " * limitations under the License.\n"
           + " */\n"
           + "\n"
-          + "package com.google.showcase.v1beta1.spring;\n"
-          + "\n"
-          + "import com.google.showcase.v1beta1.EchoClient;\n"
-          + "import java.io.IOException;\n"
-          + "import javax.annotation.Generated;\n"
-          + "import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;\n"
-          + "import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;\n"
-          + "import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;\n"
-          + "import org.springframework.context.annotation.Bean;\n"
-          + "\n"
-          + "@Generated(\"by gapic-generator-java\")\n"
-          + "@ConditionalOnProperty(\"value = \\\"spring.cloud.gcp.language.enabled\\\", matchIfMissing = false\")\n"
-          + "@ConditionalOnClass(\"value = Echo\")\n"
-          + "public class EchoSpringAutoConfiguration {\n"
-          + "\n"
-          + "  @Bean\n"
-          + "  @ConditionalOnMissingBean\n"
-          + "  public EchoClient echoClient() throws IOException {\n"
-          + "    return EchoClient.create();\n"
-          + "  }\n"
-          + "}\n";
+          + SpringAutoConfigClassComposerTest.EXPECTED_CLASS_STRING;
 
   @Before
   public void setUp() {

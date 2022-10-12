@@ -44,16 +44,22 @@ public abstract class LambdaExpr implements Expr {
   public static Builder builder() {
     return new AutoValue_LambdaExpr.Builder()
         .setArguments(Collections.emptyList())
-        .setBody(Collections.emptyList());
+        .setBody(Collections.emptyList())
+        .setType(TypeNode.VOID);
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract LambdaExpr.Builder setType(TypeNode type);
+
     public Builder setArguments(VariableExpr... arguments) {
       return setArguments(Arrays.asList(arguments));
     }
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
+
+    // Private accessors.
+    abstract TypeNode type();
 
     public abstract Builder setBody(List<Statement> body);
 

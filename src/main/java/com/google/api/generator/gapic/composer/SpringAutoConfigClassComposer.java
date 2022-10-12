@@ -25,15 +25,28 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.ClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -45,6 +58,7 @@ import com.google.longrunning.stub.GrpcOperationsStub;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +88,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String className = getThisClassName(service.name());
     GapicClass.Kind kind = Kind.MAIN;
 
+    types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
+
     // header -- not used, add later
     List<CommentStatement> fileHeader =
         Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
@@ -84,10 +100,260 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setMethods(Arrays.asList(createBeanMethod(service)))
+            .setStatements(createMemberVariables(service.name(), packageName, types))
+            .setMethods(
+                Arrays.asList(
+                    createConstructor(service.name(), className, types), createBeanMethod(service)))
             .setAnnotations(createClassAnnotations(service.name()))
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  private static List<Statement> createMemberVariables(
+      String serviceName, String packageName, Map<String, TypeNode> types) {
+
+    // private final CredentialsProvider credentialsProvider;
+    Variable credentialsProviderVar =
+        Variable.builder()
+            .setName("credentialsProvider")
+            .setType(types.get("CredentialsProvider"))
+            .build();
+    VariableExpr credentialsProviderVarExpr =
+        VariableExpr.builder()
+            .setVariable(credentialsProviderVar)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsFinal(true)
+            .setIsDecl(true)
+            .build();
+    ExprStatement credentialsProviderVarStatement =
+        ExprStatement.withExpr(credentialsProviderVarExpr);
+
+    // private final LanguageProperties clientProperties;
+    Variable clientPropertiesVar =
+        Variable.builder()
+            .setName("clientProperties")
+            .setType(types.get(serviceName + "Properties"))
+            .build();
+    VariableExpr clientPropertiesVarExpr =
+        VariableExpr.builder()
+            .setVariable(clientPropertiesVar)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsFinal(true)
+            .setIsDecl(true)
+            .build();
+    ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
+
+    // private final GcpProjectIdProvider projectIdProvider;
+    Variable projectIdProviderVar =
+        Variable.builder()
+            .setName("projectIdProvider")
+            .setType(types.get("GcpProjectIdProvider"))
+            .build();
+    VariableExpr projectIdProviderVarExpr =
+        VariableExpr.builder()
+            .setVariable(projectIdProviderVar)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsFinal(true)
+            .setIsDecl(true)
+            .build();
+    ExprStatement projectIdProviderStatement = ExprStatement.withExpr(projectIdProviderVarExpr);
+
+    return Arrays.asList(
+        credentialsProviderVarStatement, clientPropertiesStatement, projectIdProviderStatement);
+  }
+
+  private static MethodDefinition createConstructor(
+      String serviceName, String className, Map<String, TypeNode> types) {
+    /// constructor
+    VariableExpr credentialsProviderBuilderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("coreCredentialsProvider")
+                .setType(types.get("CredentialsProvider"))
+                .build());
+
+    VariableExpr coreProjectIdProviderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("coreProjectIdProvider")
+                .setType(types.get("GcpProjectIdProvider"))
+                .build());
+
+    VariableExpr propertiesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("clientProperties")
+                .setType(types.get(serviceName + "Properties"))
+                .build());
+    Variable projectIdProviderVar =
+        Variable.builder()
+            .setName("projectIdProvider")
+            .setType(types.get("GcpProjectIdProvider"))
+            .build();
+    Variable clientPropertiesVar =
+        Variable.builder()
+            .setName("clientProperties")
+            .setType(types.get(serviceName + "Properties"))
+            .build();
+
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+
+    // this.clientProperties = clientProperties;
+    AssignmentExpr thisPropertiesAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(clientPropertiesVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(propertiesVarExpr)
+            .build();
+    ExprStatement thisPropertiesAssignmentStatement =
+        ExprStatement.withExpr(thisPropertiesAssignmentExpr);
+
+    /**
+     * if (properties.getCredentials().hasKey()) { this.credentialsProvider = new
+     * DefaultCredentialsProvider(properties); } else { this.credentialsProvider =
+     * coreCredentialsProvider; }
+     */
+
+    // expr: properties.getCredentials().hasKey()
+
+    MethodInvocationExpr getCredentialsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getCredentials")
+            .setExprReferenceExpr(propertiesVarExpr)
+            .setReturnType(types.get("Credentials"))
+            .build();
+    MethodInvocationExpr hasKeyExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("hasKey")
+            .setExprReferenceExpr(getCredentialsExpr)
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    // if body: this.credentialsProvider = new DefaultCredentialsProvider(properties)
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setExpr(
+                NewObjectExpr.builder()
+                    .setType(types.get("DefaultCredentialsProvider"))
+                    .setArguments(propertiesVarExpr)
+                    .build())
+            .setType(types.get("CredentialsProvider"))
+            .build();
+    Variable credentialsProviderVar =
+        Variable.builder()
+            .setName("credentialsProvider")
+            .setType(types.get("CredentialsProvider"))
+            .build();
+    AssignmentExpr credentialsProviderssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(credentialsProviderVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(castExpr)
+            .build();
+
+    // else body: this.credentialsProvider = coreCredentialsProvider;
+    List<Expr> coreCredentialsProviderAssignmentExprs = new ArrayList<>();
+    coreCredentialsProviderAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(credentialsProviderVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(
+                CastExpr.builder()
+                    .setExpr(coreProjectIdProviderVarExpr)
+                    .setType(types.get("CredentialsProvider"))
+                    .build())
+            .build());
+
+    IfStatement credentialIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(hasKeyExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(credentialsProviderssignExpr)))
+            .setElseBody(
+                coreCredentialsProviderAssignmentExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build();
+
+    /**
+     * if (clientProperties.getProjectId() != null) { this.projectIdProvider =
+     * clientProperties::getProjectId; } else { this.projectIdProvider = coreProjectIdProvider; }
+     */
+    // else body: this.projectIdProvider = coreProjectIdProvider;
+    List<Expr> ctorAssignmentExprs = new ArrayList<>();
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(projectIdProviderVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(coreProjectIdProviderVarExpr)
+            .build());
+
+    // expr: clientProperties.getProjectId() != null
+    MethodInvocationExpr getProjectIdExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getProjectId")
+            .setExprReferenceExpr(
+                VariableExpr.withVariable(clientPropertiesVar).toBuilder().build())
+            // .setStaticReferenceType(clientType)
+            .setReturnType(types.get("CredentialsProvider")) // fake it
+            .build();
+    RelationalOperationExpr notEqualSentence =
+        RelationalOperationExpr.notEqualToWithExprs(getProjectIdExpr, ValueExpr.createNullExpr());
+
+    // () -> clientProperties.getProjectId();
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setReturnExpr(getProjectIdExpr)
+            .setType(types.get("GcpProjectIdProvider"))
+            .build();
+
+    // this.projectIdProvider = () -> clientProperties.getProjectId();
+    AssignmentExpr projectIdProviderAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(projectIdProviderVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(lambdaExpr)
+            .build();
+
+    IfStatement projectIdProviderIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(notEqualSentence)
+            .setBody(Arrays.asList(ExprStatement.withExpr(projectIdProviderAssignExpr)))
+            .setElseBody(
+                ctorAssignmentExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build();
+
+    return MethodDefinition.constructorBuilder()
+        .setScope(ScopeNode.PROTECTED)
+        .setReturnType(types.get(className))
+        .setArguments(
+            Arrays.asList(
+                credentialsProviderBuilderVarExpr.toBuilder().setIsDecl(true).build(),
+                coreProjectIdProviderVarExpr.toBuilder().setIsDecl(true).build(),
+                propertiesVarExpr.toBuilder().setIsDecl(true).build()))
+        .setBody(
+            Arrays.asList(
+                thisPropertiesAssignmentStatement,
+                credentialIfStatement,
+                projectIdProviderIfStatement))
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
+        .build();
   }
 
   private static List<AnnotationNode> createClassAnnotations(String serviceName) {
@@ -200,17 +466,68 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 
-  private static Map<String, TypeNode> createDynamicTypes(Service service, String stubPakkage) {
-    return Arrays.asList(CLASS_NAME_PATTERN).stream()
-        .collect(
-            Collectors.toMap(
-                p -> String.format(p, service.name()),
-                p ->
-                    TypeNode.withReference(
-                        VaporReference.builder()
-                            .setName(String.format(p, service.name()))
-                            .setPakkage(stubPakkage)
-                            .build())));
+  private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {
+    Map<String, TypeNode> typeMap =
+        Arrays.asList(CLASS_NAME_PATTERN).stream()
+            .collect(
+                Collectors.toMap(
+                    p -> String.format(p, service.name()),
+                    p ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(String.format(p, service.name()))
+                                .setPakkage(packageName)
+                                .build())));
+    TypeNode credentialsProvider =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("CredentialsProvider")
+                .setPakkage("com.google.api.gax.core")
+                .build());
+    TypeNode clientProperties =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(service.name() + "Properties")
+                .setPakkage(packageName)
+                .build());
+
+    TypeNode gcpProjectIdProvider =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("GcpProjectIdProvider")
+                .setPakkage("com.google.cloud.spring.core")
+                .build());
+
+    // import com.google.cloud.spring.core.Credentials;
+    TypeNode credentials =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Credentials")
+                .setPakkage("com.google.cloud.spring.core")
+                .build());
+
+    // import com.google.cloud.spring.core.DefaultCredentialsProvider;
+    TypeNode defaultCredentialsProvider =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("DefaultCredentialsProvider")
+                .setPakkage("com.google.cloud.spring.core")
+                // TODO: this supre class info is not used, workaround by casting for now. look into
+                // VaporReference.isSupertypeOrEquals()
+                .setSupertypeReference(
+                    VaporReference.builder()
+                        .setName("CredentialsProvider")
+                        .setPakkage("com.google.api.gax.core")
+                        .build())
+                .build());
+
+    typeMap.put("CredentialsProvider", credentialsProvider);
+    typeMap.put(service.name() + "Properties", clientProperties);
+    typeMap.put("GcpProjectIdProvider", gcpProjectIdProvider);
+    typeMap.put("Credentials", credentials);
+    typeMap.put("DefaultCredentialsProvider", defaultCredentialsProvider);
+
+    return typeMap;
   }
 
   private static String getThisClassName(String serviceName) {
