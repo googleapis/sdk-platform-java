@@ -102,7 +102,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
             .setHeaderCommentStatements(
-                SpringAutoconfigCommentComposer.createClassHeaderComments(className))
+                SpringAutoconfigCommentComposer.createClassHeaderComments(className, serviceName))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(

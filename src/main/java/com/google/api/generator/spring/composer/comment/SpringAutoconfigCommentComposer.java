@@ -14,15 +14,19 @@
 
 package com.google.api.generator.spring.composer.comment;
 
-import static com.google.api.generator.spring.composer.comment.CommentComposer.CLASS_HEADER_SUMMARY_PATTERN;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.gapic.composer.comment.CommentComposer;
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Joiner;
 import java.util.Arrays;
 import java.util.List;
 
 public class SpringAutoconfigCommentComposer {
 
+  private static final String CLASS_HEADER_SUMMARY_PATTERN =
+      "Auto-configuration for {@link %sClient}.";
   private static final String CLASS_HEADER_GENERAL_DESCRIPTION =
       "Provides auto-configuration for Spring Boot";
   private static final String CLASS_HEADER_DEFAULTS_DESCRIPTION =
@@ -35,30 +39,33 @@ public class SpringAutoconfigCommentComposer {
       "Retries are configured for idempotent methods but not for non-idempotent methods.";
 
   public static final String CREDENTIALS_PROVIDER_GENERAL_DESCRIPTION =
-      "Obtains the default credentials provider. The used key will be obtained from application.properties";
+      "Obtains the default credentials provider. The used key will be obtained from Spring Boot "
+          + "configuration data files.";
 
   public static final String TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION =
       "Returns the default channel provider. The default is gRPC and will default to it unless the "
           + "useRest option is provided to use HTTP transport instead";
   public static final String CLIENT_BEAN_GENERAL_DESCRIPTION =
-      "Provides a %s client configured to "
-          + "use the default credentials provider (obtained with googleCredentials()) and its default "
+      "Provides a %sClient bean configured to "
+          + "use the default credentials provider (obtained with %sCredentials()) and its default "
           + "transport channel provider (%s()). It also configures the quota project ID if provided. It "
           + "will configure an executor provider in case there is more than one thread configured "
           + "in the client ";
 
   public static final String CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION =
       "Individual retry settings "
-          + "are configured as well. It will use the default retry settings obtained from %s when they "
-          + "are not specified";
+          + "are configured as well. It will use the relevant client library's default retry "
+          + "settings when they are not specified in %s.";
 
   public SpringAutoconfigCommentComposer() {}
 
-  public static List<CommentStatement> createClassHeaderComments(String configuredClassName) {
+  public static List<CommentStatement> createClassHeaderComments(
+      String configuredClassName,
+      String serviceName) {
 
     JavaDocComment.Builder javaDocCommentBuilder =
         JavaDocComment.builder()
-            .addUnescapedComment(String.format(CLASS_HEADER_SUMMARY_PATTERN, configuredClassName))
+            .addUnescapedComment(String.format(CLASS_HEADER_SUMMARY_PATTERN, serviceName))
             .addParagraph(CLASS_HEADER_GENERAL_DESCRIPTION)
             .addParagraph(CLASS_HEADER_DEFAULTS_DESCRIPTION)
             .addUnorderedList(
@@ -86,10 +93,11 @@ public class SpringAutoconfigCommentComposer {
 
   public static CommentStatement createClientBeanComment(
       String serviceName, String propertiesClazzName, String channelProviderName) {
+    String credentialsBaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(
-                String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, channelProviderName))
+                String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, credentialsBaseName, channelProviderName))
             .addParagraph(
                 String.format(CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
             .build());

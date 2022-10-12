@@ -6,11 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
-/**
- * Settings class to configure an instance of {@link EchoSpringProperties}.
- *
- * <p>Provides default configuration values for Echo client
- */
+/** Provides default property values for Echo client bean */
 @ConfigurationProperties("com.google.showcase.v1beta1.spring.auto.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
   @NestedConfigurationProperty
