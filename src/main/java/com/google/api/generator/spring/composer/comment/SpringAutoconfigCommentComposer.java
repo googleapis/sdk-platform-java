@@ -42,7 +42,7 @@ public class SpringAutoconfigCommentComposer {
       "Returns the default channel provider. The default is gRPC and will default to it unless the "
           + "useRest option is provided to use HTTP transport instead";
   public static final String CLIENT_BEAN_GENERAL_DESCRIPTION = "Provides a %s client configured to "
-      + "use the default credentials provider (obtained with googleCredentials()) and its default"
+      + "use the default credentials provider (obtained with googleCredentials()) and its default "
       + "transport channel provider (%s()). It also configures the quota project ID if provided. It "
       + "will configure an executor provider in case there is more than one thread configured "
       + "in the client ";
