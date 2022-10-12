@@ -14,12 +14,19 @@
 
 package com.google.api.generator.spring.composer;
 
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicRetrySettings;
@@ -35,6 +42,7 @@ import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -166,6 +174,56 @@ public class Utils {
       resultList.addAll(perMethodFuncAfterSettings.apply(methodName));
     }
     return resultList;
+  }
+
+  public static Statement getLoggerDeclarationExpr(String className, Map<String, TypeNode> types) {
+
+    Variable loggerVar = Variable.builder().setName("LOGGER").setType(types.get("Logger")).build();
+    VariableExpr loggerExpr =
+        VariableExpr.builder()
+            .setVariable(loggerVar)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setIsDecl(true)
+            .build();
+
+    MethodInvocationExpr loggerValueExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("Logger"))
+            .setMethodName("getLogger")
+            .setArguments(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get(className))
+                    .build())
+            .setReturnType(types.get("Logger"))
+            .build();
+
+    AssignmentExpr loggerAssignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(loggerExpr).setValueExpr(loggerValueExpr).build();
+
+    return ExprStatement.withExpr(loggerAssignmentExpr);
+  }
+
+  public static ExprStatement createLoggerStatement(Expr value, Map<String, TypeNode> types) {
+    Variable loggerVariable =
+        Variable.builder().setName("LOGGER").setType(types.get("Logger")).build();
+    MethodInvocationExpr loggerCallExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
+            .setMethodName("info")
+            .setArguments(value)
+            .build();
+    return ExprStatement.withExpr(loggerCallExpr);
+  }
+
+  public static TypeNode getLoggerType() {
+    TypeNode loggerType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Logger").setPakkage("org.slf4j").build());
+    return loggerType;
   }
 
   private static ValueExpr toValExpr(long longValue) {

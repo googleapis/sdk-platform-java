@@ -19,6 +19,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -157,7 +158,39 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
-    return Arrays.asList(clientPropertiesStatement);
+    // // private final GcpProjectIdProvider projectIdProvider;
+    // Variable projectIdProviderVar =
+    //     Variable.builder()
+    //         .setName("projectIdProvider")
+    //         .setType(types.get("GcpProjectIdProvider"))
+    //         .build();
+    // VariableExpr projectIdProviderVarExpr =
+    //     VariableExpr.builder()
+    //         .setVariable(projectIdProviderVar)
+    //         .setScope(ScopeNode.PRIVATE)
+    //         .setIsFinal(true)
+    //         .setIsDecl(true)
+    //         .build();
+    // ExprStatement projectIdProviderStatement = ExprStatement.withExpr(projectIdProviderVarExpr);
+
+    // Declare the RETRY_PARAM_DEFINITIONS map.
+    ExprStatement retryPramStatement =
+        ExprStatement.withExpr(
+            NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR
+                .toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build());
+
+    BlockStatement retryParamDefinitionsBlock =
+        RetrySettingsComposer.createRetryParamDefinitionsBlock(
+            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR);
+
+    Statement loggerStatement = Utils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
+    return Arrays.asList(
+        clientPropertiesStatement, retryPramStatement, retryParamDefinitionsBlock, loggerStatement);
   }
 
   private static MethodDefinition createConstructor(
@@ -559,10 +592,21 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(getQuotaProjectId)
             .build();
 
+    ExprStatement projectIdLoggerStatement =
+        Utils.createLoggerStatement(
+            ArithmeticOperationExpr.concatWithExprs(
+                ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to X")),
+                ArithmeticOperationExpr.concatWithExprs(
+                    getQuotaProjectId,
+                    ValueExpr.withValue(
+                        StringObjectValue.withValue(
+                            ", this overrides project id from credentials.")))),
+            types);
+
     IfStatement setQuotaProjectIdStatement =
         createIfStatement(
             projectIdIsNull,
-            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId)), // TODO add logger info
+            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId), projectIdLoggerStatement),
             null);
 
     bodyStatements.add(setQuotaProjectIdStatement);
@@ -621,12 +665,30 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
+    MethodInvocationExpr getExecutorNameExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(executorProviderVarExpr)
+            .setMethodName("getClass")
+            .build();
+    getExecutorNameExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getExecutorNameExpr)
+            .setMethodName("getName")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ExprStatement backgroundExecutorLoggerStatement =
+        Utils.createLoggerStatement(
+            ArithmeticOperationExpr.concatWithExprs(
+                ValueExpr.withValue(StringObjectValue.withValue("Background executor set to ")),
+                getExecutorNameExpr),
+            types);
     IfStatement setBackgroundExecutorProviderStatement =
         createIfStatement(
             executorThreadCountIsNull,
             Arrays.asList(
                 ExprStatement.withExpr(executorProviderAssignExpr),
-                ExprStatement.withExpr(setBackgroundExecutorProvider)), // TODO add logger info
+                ExprStatement.withExpr(setBackgroundExecutorProvider),
+                backgroundExecutorLoggerStatement),
             null);
 
     bodyStatements.add(setBackgroundExecutorProviderStatement);
