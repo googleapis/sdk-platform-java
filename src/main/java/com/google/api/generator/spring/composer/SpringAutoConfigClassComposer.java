@@ -222,7 +222,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     // @Generated("by gapic-generator-java")
     // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
-    // @ConditionalOnProperty(value = "spring.cloud.gcp.language.enabled", matchIfMissing = true)
+    // @ConditionalOnProperty(value =
+    // "com.google.cloud.language.v1.spring.auto.language-service.enabled", matchIfMissing = true)
     // @EnableConfigurationProperties(LanguageProperties.class)
 
     AssignmentExpr valueStringAssignmentExpr =
