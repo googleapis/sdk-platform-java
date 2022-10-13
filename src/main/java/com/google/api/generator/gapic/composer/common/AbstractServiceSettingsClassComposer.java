@@ -126,7 +126,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .setMethods(createClassMethods(service, typeStore))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
-    return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples));
+    return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
+        .withDefaultHost(service.defaultHost());
   }
 
   private static List<CommentStatement> createClassHeaderComments(

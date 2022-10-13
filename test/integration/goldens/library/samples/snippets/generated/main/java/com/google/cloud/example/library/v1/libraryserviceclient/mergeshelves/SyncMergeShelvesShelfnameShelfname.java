@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_mergeshelves_shelfnameshelfname_sync]
+// [START example_v1_generated_libraryserviceclient_mergeshelves_shelfnameshelfname_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Shelf;
 import com.google.example.library.v1.ShelfName;
@@ -40,4 +40,4 @@ public class SyncMergeShelvesShelfnameShelfname {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_mergeshelves_shelfnameshelfname_sync]
+// [END example_v1_generated_libraryserviceclient_mergeshelves_shelfnameshelfname_sync]

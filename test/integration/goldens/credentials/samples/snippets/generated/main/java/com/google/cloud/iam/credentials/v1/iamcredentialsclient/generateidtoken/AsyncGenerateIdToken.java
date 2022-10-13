@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START credentials_v1_generated_iamcredentialsclient_generateidtoken_async]
+// [START iamcredentials_v1_generated_iamcredentialsclient_generateidtoken_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.GenerateIdTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
@@ -51,4 +51,4 @@ public class AsyncGenerateIdToken {
     }
   }
 }
-// [END credentials_v1_generated_iamcredentialsclient_generateidtoken_async]
+// [END iamcredentials_v1_generated_iamcredentialsclient_generateidtoken_async]
