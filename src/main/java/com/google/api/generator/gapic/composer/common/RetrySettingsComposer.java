@@ -14,8 +14,8 @@
 
 package com.google.api.generator.gapic.composer.common;
 
-import static com.google.api.generator.gapic.composer.utils.RetrySettingsUtils.createDurationOfMillisExpr;
-import static com.google.api.generator.gapic.composer.utils.RetrySettingsUtils.toValExpr;
+import static com.google.api.generator.gapic.composer.utils.ConvertToExprUtils.createDurationOfMillisExpr;
+import static com.google.api.generator.gapic.composer.utils.ConvertToExprUtils.toValExpr;
 
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;

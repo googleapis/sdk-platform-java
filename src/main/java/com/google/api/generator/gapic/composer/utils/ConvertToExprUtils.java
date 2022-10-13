@@ -24,8 +24,8 @@ import com.google.protobuf.util.Durations;
 import java.util.Arrays;
 import java.util.List;
 
-/** Common utility methods to expose */
-public class RetrySettingsUtils {
+/** Common utility methods to convert to AST Expr */
+public class ConvertToExprUtils {
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   public static ValueExpr toValExpr(long longValue) {
