@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_deletebook_bookname_sync]
+// [START example_v1_generated_libraryserviceclient_deletebook_bookname_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.BookName;
 import com.google.protobuf.Empty;
@@ -39,4 +39,4 @@ public class SyncDeleteBookBookname {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_deletebook_bookname_sync]
+// [END example_v1_generated_libraryserviceclient_deletebook_bookname_sync]
