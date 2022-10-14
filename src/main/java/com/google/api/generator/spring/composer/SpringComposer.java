@@ -14,20 +14,29 @@
 
 package com.google.api.generator.spring.composer;
 
+import com.google.api.core.BetaApi;
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
+import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Generated;
 
 public class SpringComposer {
+
+  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+
   public static List<GapicClass> composeServiceAutoConfigClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generatePerServiceClasses(context));
-    return addApacheLicense(clazzes);
+    return addBetaApiAnnotation(addApacheLicense(clazzes));
   }
 
   protected static List<GapicClass> generatePerServiceClasses(GapicContext context) {
@@ -58,5 +67,35 @@ public class SpringComposer {
               return GapicClass.create(gapicClass.kind(), classWithHeader);
             })
         .collect(Collectors.toList());
+  }
+
+  protected static List<GapicClass> addBetaApiAnnotation(List<GapicClass> gapicClassList) {
+    return gapicClassList.stream()
+        .map(
+            gapicClass -> {
+              ImmutableList<AnnotationNode> classAnnotations =
+                  gapicClass.classDefinition().annotations();
+              AnnotationNode betaAnnotation =
+                  AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi"));
+              ImmutableList<AnnotationNode> updatedAnnotations =
+                  ImmutableList.<AnnotationNode>builder()
+                      .add(betaAnnotation)
+                      .addAll(classAnnotations)
+                      .build();
+              ClassDefinition classWithUpdatedAnnotations =
+                  gapicClass
+                      .classDefinition()
+                      .toBuilder()
+                      .setAnnotations(updatedAnnotations)
+                      .build();
+
+              return GapicClass.create(gapicClass.kind(), classWithUpdatedAnnotations);
+            })
+        .collect(Collectors.toList());
+  }
+
+  private static TypeStore createStaticTypes() {
+    List<Class<?>> concreteClazzes = Arrays.asList(BetaApi.class, Generated.class);
+    return new TypeStore(concreteClazzes);
   }
 }

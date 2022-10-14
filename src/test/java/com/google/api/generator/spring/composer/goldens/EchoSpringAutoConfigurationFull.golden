@@ -16,6 +16,7 @@
 
 package com.google.showcase.v1beta1.spring;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
@@ -34,6 +35,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.threeten.bp.Duration;
 
+@BetaApi
 @Generated("by gapic-generator-java")
 @AutoConfiguration
 @ConditionalOnClass(EchoClient.class)
