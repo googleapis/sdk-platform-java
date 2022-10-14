@@ -36,7 +36,8 @@ public class SpringComposer {
   public static List<GapicClass> composeServiceAutoConfigClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generatePerServiceClasses(context));
-    return addBetaApiAnnotation(addApacheLicense(clazzes));
+    List<GapicClass> clazzesWithHeader = addApacheLicense(clazzes);
+    return addExtraClassAnnotations(clazzesWithHeader);
   }
 
   protected static List<GapicClass> generatePerServiceClasses(GapicContext context) {
@@ -69,17 +70,22 @@ public class SpringComposer {
         .collect(Collectors.toList());
   }
 
-  protected static List<GapicClass> addBetaApiAnnotation(List<GapicClass> gapicClassList) {
+  protected static List<GapicClass> addExtraClassAnnotations(List<GapicClass> gapicClassList) {
+    AnnotationNode generatedAnnotation =
+        AnnotationNode.builder()
+            .setType(FIXED_TYPESTORE.get("Generated"))
+            .setDescription("by gapic-generator-java")
+            .build();
+    AnnotationNode betaAnnotation = AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi"));
     return gapicClassList.stream()
         .map(
             gapicClass -> {
               ImmutableList<AnnotationNode> classAnnotations =
                   gapicClass.classDefinition().annotations();
-              AnnotationNode betaAnnotation =
-                  AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi"));
               ImmutableList<AnnotationNode> updatedAnnotations =
                   ImmutableList.<AnnotationNode>builder()
                       .add(betaAnnotation)
+                      .add(generatedAnnotation)
                       .addAll(classAnnotations)
                       .build();
               ClassDefinition classWithUpdatedAnnotations =

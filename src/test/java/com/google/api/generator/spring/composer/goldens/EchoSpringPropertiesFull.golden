@@ -19,10 +19,12 @@ package com.google.showcase.v1beta1.spring;
 import com.google.api.core.BetaApi;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.CredentialsSupplier;
+import javax.annotation.Generated;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.threeten.bp.Duration;
 
 @BetaApi
+@Generated("by gapic-generator-java")
 @ConfigurationProperties("spring.cloud.gcp.autoconfig.showcase.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
   @NestedConfigurationProperty

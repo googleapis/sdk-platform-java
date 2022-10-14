@@ -56,7 +56,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Generated;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
@@ -220,7 +219,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   private static List<AnnotationNode> createClassAnnotations(
       Service service, Map<String, TypeNode> types, String libName) {
-    // @Generated("by gapic-generator-java")
     // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value = "spring.cloud.gcp.language.enabled", matchIfMissing = true)
@@ -289,10 +287,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return Arrays.asList(
-        AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("Generated"))
-            .setDescription("by gapic-generator-java")
-            .build(),
         configurationNode,
         conditionalOnClassNode,
         conditionalOnPropertyNode,
@@ -788,7 +782,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
-            Generated.class,
             RetrySettings.class,
             RetrySettings.Builder
                 .class, // name will be just Builder. consider change of more than one builder here.
