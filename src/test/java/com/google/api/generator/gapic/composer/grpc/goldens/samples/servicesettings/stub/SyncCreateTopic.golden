@@ -16,7 +16,7 @@
 
 package com.google.pubsub.v1.stub.samples;
 
-// [START goldensample_generated_publisherstubsettings_createtopic_sync]
+// [START goldensample_generated_PublisherStubSettings_CreateTopic_sync]
 import com.google.pubsub.v1.stub.PublisherStubSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncCreateTopic {
     PublisherStubSettings publisherSettings = publisherSettingsBuilder.build();
   }
 }
-// [END goldensample_generated_publisherstubsettings_createtopic_sync]
+// [END goldensample_generated_PublisherStubSettings_CreateTopic_sync]

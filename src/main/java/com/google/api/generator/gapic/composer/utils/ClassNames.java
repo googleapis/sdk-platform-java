@@ -15,6 +15,8 @@
 package com.google.api.generator.gapic.composer.utils;
 
 import com.google.api.generator.gapic.model.Service;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ public class ClassNames {
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN = "Mock%sImpl";
   private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
+  private static final String SERVICE_REGION_TAG_NAME_PATTERN = "%s";
   private static final String SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN = "%sClientTest";
   private static final String SERVICE_CLIENT_TRANSPORT_TEST_CLASS_NAME_PATTERN = "%sClient%sTest";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
@@ -119,5 +122,12 @@ public class ClassNames {
     return rawServiceName.startsWith("IAMCredentials")
         ? rawServiceName.replace("IAM", "Iam")
         : rawServiceName;
+  }
+
+  // For region tags, the service name should not include `Client` in the name
+  public static String getPureServiceName(String serviceClassName) {
+    return String.format(
+        SERVICE_REGION_TAG_NAME_PATTERN,
+        Iterables.getFirst(Splitter.on("Client").split(serviceClassName), serviceClassName));
   }
 }
