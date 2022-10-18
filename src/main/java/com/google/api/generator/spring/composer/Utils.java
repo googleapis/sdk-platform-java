@@ -60,13 +60,17 @@ public class Utils {
     // discrepancies
     // eg. for vision proto: "com.google.cloud.vision.v1"
     // https://github.com/googleapis/java-vision/blob/main/proto-google-cloud-vision-v1/src/main/proto/google/cloud/vision/v1/image_annotator.proto#L36
-    String pakkageName = context.services().get(0).pakkage();
-    List<String> pakkagePhrases = Splitter.on(".").splitToList(pakkageName);
+    List<String> pakkagePhrases = Splitter.on(".").splitToList(getPackageName(context));
     return pakkagePhrases.get(pakkagePhrases.size() - 2);
 
     // Option 3: Parse ApiShortName from service proto's default host (e.g. vision.googleapis.com)
     // TODO: Replace implementation above to reuse parsing logic from SampleGen:
     //  https://github.com/googleapis/gapic-generator-java/pull/1040
+  }
+
+  public static String getPackageName(GapicContext context) {
+    // Returns package name of client library
+    return context.services().get(0).pakkage();
   }
 
   public static String getSpringPackageName(String packageName) {
