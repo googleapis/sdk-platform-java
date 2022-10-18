@@ -79,12 +79,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
-    String packageName = service.pakkage() + ".spring";
+    String packageName = Utils.getSpringPackageName(service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
     String serviceName = service.name();
     String serviceNameLowerCamel = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
     String className = getThisClassName(serviceName);
-    String libName = Utils.getLibName(context);
     String credentialsProviderName = serviceNameLowerCamel + "Credentials";
     String transportChannelProviderName = "default" + serviceName + "TransportChannelProvider";
     String clientName = serviceNameLowerCamel + "Client";
@@ -115,7 +114,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         clientName,
                         types,
                         gapicServiceConfig)))
-            .setAnnotations(createClassAnnotations(service, types, libName))
+            .setAnnotations(createClassAnnotations(service, types))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -219,11 +218,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static List<AnnotationNode> createClassAnnotations(
-      Service service, Map<String, TypeNode> types, String libName) {
+      Service service, Map<String, TypeNode> types) {
     // @Generated("by gapic-generator-java")
     // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
-    // @ConditionalOnProperty(value = "spring.cloud.gcp.language.enabled", matchIfMissing = true)
+    // @ConditionalOnProperty(value =
+    // "com.google.cloud.language.v1.spring.auto.language-service.enabled", matchIfMissing = true)
     // @EnableConfigurationProperties(LanguageProperties.class)
 
     AssignmentExpr valueStringAssignmentExpr =
@@ -234,7 +234,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setValueExpr(
                 ValueExpr.withValue(
                     StringObjectValue.withValue(
-                        Utils.springPropertyPrefix(libName, service.name()) + ".enabled")))
+                        Utils.getSpringPropertyPrefix(service.pakkage(), service.name())
+                            + ".enabled")))
             .build();
     AssignmentExpr matchIfMissingAssignmentExpr =
         AssignmentExpr.builder()

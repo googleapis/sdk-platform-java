@@ -22,7 +22,7 @@ import org.threeten.bp.Duration;
 @AutoConfiguration
 @ConditionalOnClass(EchoClient.class)
 @ConditionalOnProperty(
-    value = "spring.cloud.gcp.autoconfig.showcase.echo.enabled",
+    value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
     matchIfMissing = false)
 @EnableConfigurationProperties(EchoSpringProperties.class)
 public class EchoSpringAutoConfiguration {
