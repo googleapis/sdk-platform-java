@@ -23,7 +23,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import javax.annotation.Generated;
 
 public class SpringPackageInfoComposer {
@@ -32,13 +31,9 @@ public class SpringPackageInfoComposer {
 
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
     Preconditions.checkState(!context.services().isEmpty(), "No services found to generate");
-    // Pick some service's package, as we assume they are all the same.
-    // TODO: update when spring autoconfig package name is finalized
-    String libraryPakkage = context.services().get(0).pakkage() + ".spring";
-
     PackageInfoDefinition packageInfo =
         PackageInfoDefinition.builder()
-            .setPakkage(libraryPakkage)
+            .setPakkage(Utils.getSpringPackageName(Utils.getPackageName(context)))
             .setHeaderCommentStatements(createPackageInfoJavadoc(context))
             .setAnnotations(
                 AnnotationNode.builder()
@@ -51,17 +46,9 @@ public class SpringPackageInfoComposer {
 
   private static CommentStatement createPackageInfoJavadoc(GapicContext context) {
     JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
-    if (context.hasServiceYamlProto()
-        && !Strings.isNullOrEmpty(context.serviceYamlProto().getTitle())) {
-      javaDocCommentBuilder =
-          javaDocCommentBuilder.addComment(
-              String.format(PACKAGE_INFO_TITLE_PATTERN, context.serviceYamlProto().getTitle()));
-    } else {
-      // When title from service yaml is not available, use parsed libname as fallback
-      javaDocCommentBuilder =
-          javaDocCommentBuilder.addComment(
-              String.format(PACKAGE_INFO_TITLE_PATTERN, Utils.getLibName(context)));
-    }
+    javaDocCommentBuilder =
+        javaDocCommentBuilder.addComment(
+            String.format(PACKAGE_INFO_TITLE_PATTERN, Utils.getLibName(context)));
     return CommentStatement.withComment(javaDocCommentBuilder.build());
   }
 }
