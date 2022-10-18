@@ -27,7 +27,7 @@ import javax.annotation.Generated;
 
 public class SpringPackageInfoComposer {
   private static final String PACKAGE_INFO_TITLE_PATTERN =
-      "Auto-configuration for %s integration with Spring.";
+      "Spring Boot auto-configurations for %s.";
 
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
     Preconditions.checkState(!context.services().isEmpty(), "No services found to generate");

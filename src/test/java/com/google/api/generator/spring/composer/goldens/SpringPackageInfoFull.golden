@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/** Auto-configuration for showcase integration with Spring. */
+/** Spring Boot auto-configurations for showcase. */
 @Generated("by gapic-generator-java")
 package com.google.showcase.v1beta1.spring;
 
