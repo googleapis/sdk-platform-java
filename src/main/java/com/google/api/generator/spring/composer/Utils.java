@@ -44,18 +44,50 @@ public class Utils {
   private static final String BRAND_NAME = "spring.cloud.gcp";
 
   public static String getLibName(GapicContext context) {
-    String pakkageName = context.services().get(0).pakkage();
-    List<String> pakkagePhrases = Splitter.on(".").splitToList(pakkageName);
-    // TODO: confirm if this is guaranteed pattern: xx.[...].xx.lib-name.v[version]
+    // Returns parsed name of client library
+    // This should only be used in descriptive context, such as metadata and javadocs
+
+    // Option 1: Use title from service yaml if available (e.g. Client Library Showcase API)
+    // However, service yaml is optionally parsed and not always available
+    //    if (context.hasServiceYamlProto()
+    //        && !Strings.isNullOrEmpty(context.serviceYamlProto().getTitle())) {
+    //      return context.serviceYamlProto().getTitle();
+    //    }
+
+    // Option 2: Parse ApiShortName from service proto's package name (e.g.
+    // com.google.cloud.vision.v1)
+    // This approach assumes pattern of xx.[...].xx.lib-name.v[version], which may have
+    // discrepancies
     // eg. for vision proto: "com.google.cloud.vision.v1"
     // https://github.com/googleapis/java-vision/blob/main/proto-google-cloud-vision-v1/src/main/proto/google/cloud/vision/v1/image_annotator.proto#L36
+    List<String> pakkagePhrases = Splitter.on(".").splitToList(getPackageName(context));
     return pakkagePhrases.get(pakkagePhrases.size() - 2);
+
+    // Option 3: Parse ApiShortName from service proto's default host (e.g. vision.googleapis.com)
+    // TODO: Replace implementation above to reuse parsing logic from SampleGen:
+    //  https://github.com/googleapis/gapic-generator-java/pull/1040
   }
 
-  public static String springPropertyPrefix(String libName, String serviceName) {
-    return "spring.cloud.gcp.autoconfig."
-        + CaseFormat.LOWER_HYPHEN.to(CaseFormat.LOWER_HYPHEN, libName)
-        + "."
+  public static String getPackageName(GapicContext context) {
+    // Returns package name of client library
+    return context.services().get(0).pakkage();
+  }
+
+  public static String getSpringPackageName(String packageName) {
+    // Returns package name of generated spring autoconfiguration library
+    // e.g. for vision: com.google.cloud.vision.v1.spring
+    return packageName + ".spring";
+  }
+
+  public static String getSpringPropertyPrefix(String packageName, String serviceName) {
+    // Returns unique prefix for setting properties and enabling autoconfiguration
+    // Pattern: [package-name].spring.auto.[service-name]
+    // e.g. for vision's ImageAnnotator service:
+    // com.google.cloud.vision.v1.spring.auto.image-annotator
+    // Service name is converted to lower hyphen as required by ConfigurationPropertyName
+    // https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/properties/source/ConfigurationPropertyName.html
+    return packageName
+        + ".spring.auto."
         + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
   }
 

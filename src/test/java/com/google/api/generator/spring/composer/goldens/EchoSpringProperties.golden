@@ -5,7 +5,7 @@ import com.google.cloud.spring.core.CredentialsSupplier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.threeten.bp.Duration;
 
-@ConfigurationProperties("spring.cloud.gcp.autoconfig.showcase.echo")
+@ConfigurationProperties("com.google.showcase.v1beta1.spring.auto.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
   @NestedConfigurationProperty
   private final Credentials credentials =
