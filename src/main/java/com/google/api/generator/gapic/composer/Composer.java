@@ -192,39 +192,10 @@ public class Composer {
     return clazzes;
   }
 
-  @VisibleForTesting
-  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes, String protoPackage) {
-    //  parse protoPackage for apiVersion
-    String[] pakkage = protoPackage.split("\\.");
-    String apiVersion;
-    //  e.g. v1, v2, v1beta1
-    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
-      apiVersion = pakkage[pakkage.length - 1];
-    } else {
-      apiVersion = "";
-    }
-    // Include license header, apiShortName, and apiVersion
-    List<GapicClass> clazzesWithSamples = new ArrayList<>();
-    clazzes.forEach(
-        gapicClass -> {
-          List<Sample> samples = new ArrayList<>();
-          gapicClass
-              .samples()
-              .forEach(
-                  sample ->
-                      samples.add(
-                          addRegionTagAndHeaderToSample(
-                              sample, parseDefaultHost(gapicClass.defaultHost()), apiVersion)));
-          clazzesWithSamples.add(gapicClass.withSamples(samples));
-        });
-    return clazzesWithSamples;
-  }
-
   // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default
   // endpoints like
   // "us-east1-pubsub.googleapis.com".
-  @VisibleForTesting
-  protected static String parseDefaultHost(String defaultHost) {
+  public static String parseApiShortName(String defaultHost) {
     // If the defaultHost is of the format "**.googleapis.com", take the name before the first
     // period.
     String apiShortName = Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
@@ -237,6 +208,40 @@ public class Composer {
       apiShortName = "iam";
     }
     return apiShortName;
+  }
+
+  public static String parseApiVersion(String protoPackage) {
+    //  parse protoPackage for apiVersion
+    String[] pakkage = protoPackage.split("\\.");
+    String apiVersion;
+    //  e.g. v1, v2, v1beta1
+    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
+      apiVersion = pakkage[pakkage.length - 1];
+    } else {
+      apiVersion = "";
+    }
+    return apiVersion;
+  }
+
+  @VisibleForTesting
+  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes, String protoPackage) {
+    // Include license header, apiShortName, and apiVersion
+    List<GapicClass> clazzesWithSamples = new ArrayList<>();
+    clazzes.forEach(
+        gapicClass -> {
+          List<Sample> samples = new ArrayList<>();
+          gapicClass
+              .samples()
+              .forEach(
+                  sample ->
+                      samples.add(
+                          addRegionTagAndHeaderToSample(
+                              sample,
+                              parseApiShortName(gapicClass.defaultHost()),
+                              parseApiVersion(protoPackage))));
+          clazzesWithSamples.add(gapicClass.withSamples(samples));
+        });
+    return clazzesWithSamples;
   }
 
   @VisibleForTesting

@@ -91,28 +91,28 @@ public class ComposerTest {
   @Test
   public void parseDefaultHost_shouldReturnApiShortNameIfHostContainsRegionalEndpoint() {
     String defaultHost = "us-east1-pubsub.googleapis.com";
-    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    String apiShortName = Composer.parseApiShortName(defaultHost);
     assertEquals("pubsub", apiShortName);
   }
 
   @Test
   public void parseDefaultHost_shouldReturnApiShortName() {
     String defaultHost = "logging.googleapis.com";
-    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    String apiShortName = Composer.parseApiShortName(defaultHost);
     assertEquals("logging", apiShortName);
   }
 
   @Test
   public void parseDefaultHost_shouldReturnApiShortNameForIam() {
     String defaultHost = "iam-meta-api.googleapis.com";
-    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    String apiShortName = Composer.parseApiShortName(defaultHost);
     assertEquals("iam", apiShortName);
   }
 
   @Test
   public void parseDefaultHost_shouldReturnHostIfNoPeriods() {
     String defaultHost = "logging:7469";
-    String apiShortName = Composer.parseDefaultHost(defaultHost);
+    String apiShortName = Composer.parseApiShortName(defaultHost);
     assertEquals("logging:7469", apiShortName);
   }
 
