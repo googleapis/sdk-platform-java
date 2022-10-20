@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_create_setendpoint_sync]
+// [START example_v1_generated_libraryserviceclient_create_setendpoint_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.cloud.example.library.v1.LibraryServiceSettings;
 import com.google.cloud.example.library.v1.myEndpoint;
@@ -38,4 +38,4 @@ public class SyncCreateSetEndpoint {
     LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
   }
 }
-// [END library_v1_generated_libraryserviceclient_create_setendpoint_sync]
+// [END example_v1_generated_libraryserviceclient_create_setendpoint_sync]

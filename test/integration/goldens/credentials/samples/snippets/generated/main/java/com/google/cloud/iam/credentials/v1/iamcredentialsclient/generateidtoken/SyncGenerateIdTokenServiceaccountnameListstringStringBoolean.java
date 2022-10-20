@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START credentials_v1_generated_iamcredentialsclient_generateidtoken_serviceaccountnameliststringstringboolean_sync]
+// [START iamcredentials_v1_generated_iamcredentialsclient_generateidtoken_serviceaccountnameliststringstringboolean_sync]
 import com.google.cloud.iam.credentials.v1.GenerateIdTokenResponse;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -46,4 +46,4 @@ public class SyncGenerateIdTokenServiceaccountnameListstringStringBoolean {
     }
   }
 }
-// [END credentials_v1_generated_iamcredentialsclient_generateidtoken_serviceaccountnameliststringstringboolean_sync]
+// [END iamcredentials_v1_generated_iamcredentialsclient_generateidtoken_serviceaccountnameliststringstringboolean_sync]

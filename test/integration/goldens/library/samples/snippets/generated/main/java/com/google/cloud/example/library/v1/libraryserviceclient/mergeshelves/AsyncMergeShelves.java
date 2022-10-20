@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_mergeshelves_async]
+// [START example_v1_generated_libraryserviceclient_mergeshelves_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.MergeShelvesRequest;
@@ -47,4 +47,4 @@ public class AsyncMergeShelves {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_mergeshelves_async]
+// [END example_v1_generated_libraryserviceclient_mergeshelves_async]

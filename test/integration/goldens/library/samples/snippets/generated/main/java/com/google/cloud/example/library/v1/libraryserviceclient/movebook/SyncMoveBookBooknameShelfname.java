@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START library_v1_generated_libraryserviceclient_movebook_booknameshelfname_sync]
+// [START example_v1_generated_libraryserviceclient_movebook_booknameshelfname_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.BookName;
@@ -41,4 +41,4 @@ public class SyncMoveBookBooknameShelfname {
     }
   }
 }
-// [END library_v1_generated_libraryserviceclient_movebook_booknameshelfname_sync]
+// [END example_v1_generated_libraryserviceclient_movebook_booknameshelfname_sync]

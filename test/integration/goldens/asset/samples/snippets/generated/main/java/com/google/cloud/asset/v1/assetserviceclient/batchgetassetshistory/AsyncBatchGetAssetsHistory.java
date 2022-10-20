@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START asset_v1_generated_assetserviceclient_batchgetassetshistory_async]
+// [START cloudasset_v1_generated_assetserviceclient_batchgetassetshistory_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
@@ -53,4 +53,4 @@ public class AsyncBatchGetAssetsHistory {
     }
   }
 }
-// [END asset_v1_generated_assetserviceclient_batchgetassetshistory_async]
+// [END cloudasset_v1_generated_assetserviceclient_batchgetassetshistory_async]

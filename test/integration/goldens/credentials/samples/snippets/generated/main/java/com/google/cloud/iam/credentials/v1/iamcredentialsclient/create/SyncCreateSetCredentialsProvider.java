@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START credentials_v1_generated_iamcredentialsclient_create_setcredentialsprovider_sync]
+// [START iamcredentials_v1_generated_iamcredentialsclient_create_setcredentialsprovider_sync]
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
@@ -41,4 +41,4 @@ public class SyncCreateSetCredentialsProvider {
     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END credentials_v1_generated_iamcredentialsclient_create_setcredentialsprovider_sync]
+// [END iamcredentials_v1_generated_iamcredentialsclient_create_setcredentialsprovider_sync]
