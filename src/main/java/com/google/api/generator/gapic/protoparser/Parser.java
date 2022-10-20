@@ -120,6 +120,7 @@ public class Parser {
     Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
 
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
+    boolean willGenerateNumericEnum = PluginArgumentParser.hasNumericEnumFlag(request);
 
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     Optional<GapicServiceConfig> serviceConfigOpt =
@@ -203,7 +204,12 @@ public class Parser {
 
     return GapicContext.builder()
         .setServices(services)
-        .setMixinServices(mixinServices)
+        .setMixinServices(
+            // Mixin classes must share the package with the service they are mixed in, instead of
+            // their original package
+            mixinServices.stream()
+                .map(s -> s.toBuilder().setPakkage(services.get(0).pakkage()).build())
+                .collect(Collectors.toList()))
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
@@ -211,6 +217,7 @@ public class Parser {
         .setGapicMetadataEnabled(willGenerateMetadata)
         .setServiceYamlProto(serviceYamlProtoOpt.orElse(null))
         .setTransport(transport)
+        .setRestNumericEnumsEnabled(willGenerateNumericEnum)
         .build();
   }
 

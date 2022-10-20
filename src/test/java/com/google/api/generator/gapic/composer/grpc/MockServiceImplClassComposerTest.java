@@ -14,41 +14,38 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class MockServiceImplClassComposerTest {
-  @Test
-  public void generateServiceClasses() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
-    Service echoProtoService = context.services().get(0);
-    GapicClass clazz = MockServiceImplClassComposer.instance().generate(context, echoProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "MockEchoImpl.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "MockEchoImpl.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    return Arrays.asList(
+        new Object[][] {
+          {"MockEchoImpl", GrpcTestProtoLoader.instance().parseShowcaseEcho()},
+          {"MockDeprecatedServiceImpl", GrpcTestProtoLoader.instance().parseDeprecatedService()}
+        });
   }
 
-  @Test
-  public void generateServiceClasses_deprecated() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
-    Service protoService = context.services().get(0);
-    GapicClass clazz = MockServiceImplClassComposer.instance().generate(context, protoService);
+  @Parameterized.Parameter public String name;
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "MockDeprecatedServiceImpl.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "MockDeprecatedServiceImpl.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  @Parameterized.Parameter(1)
+  public GapicContext context;
+
+  @Test
+  public void generateMockServiceImplClasses() {
+    Service service = context.services().get(0);
+    GapicClass clazz = MockServiceImplClassComposer.instance().generate(context, service);
+
+    Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 }

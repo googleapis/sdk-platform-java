@@ -30,8 +30,7 @@ public abstract class TransportContext {
   // For AbstractServiceStubClassComposer
   public abstract Transport transport();
 
-  @Nullable
-  public abstract String transportName();
+  public abstract List<String> transportNames();
 
   @Nullable
   public abstract Class<?> callSettingsClass();
@@ -98,7 +97,7 @@ public abstract class TransportContext {
 
     public abstract Builder setTransport(Transport transport);
 
-    public abstract Builder setTransportName(String value);
+    public abstract Builder setTransportNames(List<String> values);
 
     public abstract Builder setCallSettingsClass(Class<?> callSettingsClass);
 

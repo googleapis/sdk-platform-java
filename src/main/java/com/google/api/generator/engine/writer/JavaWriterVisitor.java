@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,6 +63,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.api.generator.gapic.model.RegionTag;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -168,9 +169,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(AnnotationNode annotation) {
     buffer.append(AT);
     annotation.type().accept(this);
-    if (annotation.descriptionExpr() != null) {
+    if (annotation.descriptionExprs() != null) {
       leftParen();
-      annotation.descriptionExpr().accept(this);
+      for (int i = 0; i < annotation.descriptionExprs().size(); i++) {
+        annotation.descriptionExprs().get(i).accept(this);
+        if (i < annotation.descriptionExprs().size() - 1) {
+          buffer.append(COMMA);
+          buffer.append(SPACE);
+        }
+      }
       rightParen();
     }
     newline();
@@ -252,6 +259,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     // VariableExpr will handle isDecl and exprReferenceExpr edge cases.
     if (variableExpr.isDecl()) {
+      // Annotations, if any.
+      annotations(variableExpr.annotations());
+
       if (!scope.equals(ScopeNode.LOCAL)) {
         scope.accept(this);
         space();
@@ -910,6 +920,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       newline();
     }
 
+    String regionTagReplace = "REPLACE_REGION_TAG";
+    if (classDefinition.regionTag() != null) {
+      statements(
+          Arrays.asList(
+              classDefinition
+                  .regionTag()
+                  .generateTag(RegionTag.RegionTagRegion.START, regionTagReplace)));
+    }
+
     // This must go first, so that we can check for type collisions.
     classDefinition.accept(importWriterVisitor);
     if (!classDefinition.isNested()) {
@@ -974,10 +993,27 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     classes(classDefinition.nestedClasses());
 
     rightBrace();
+    if (classDefinition.regionTag() != null) {
+      statements(
+          Arrays.asList(
+              classDefinition
+                  .regionTag()
+                  .generateTag(RegionTag.RegionTagRegion.END, regionTagReplace)));
+    }
 
     // We should have valid Java by now, so format it.
     if (!classDefinition.isNested()) {
-      buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
+      String formattedClazz = JavaFormatter.format(buffer.toString());
+
+      // fixing region tag after formatting
+      // formatter splits long region tags on multiple lines and moves the end tag up - doesn't meet
+      // tag requirements. See https://github.com/google/google-java-format/issues/137
+      if (classDefinition.regionTag() != null) {
+        formattedClazz =
+            formattedClazz.replaceAll(regionTagReplace, classDefinition.regionTag().generate());
+        formattedClazz = formattedClazz.replaceAll("} // \\[END", "}\n// \\[END");
+      }
+      buffer.replace(0, buffer.length(), formattedClazz);
     }
   }
 

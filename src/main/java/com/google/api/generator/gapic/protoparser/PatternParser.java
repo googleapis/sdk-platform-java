@@ -22,7 +22,7 @@ public class PatternParser {
 
   // This method tries to parse all named segments from pattern and sort in natual order
   // e.g. /v1beta1/{table_name=tests/*}/{routing_id=instances/*}/** -> (routing_id, table_name)
-  public static Set<String> getPattenBindings(String pattern) {
+  public static Set<String> getPatternBindings(String pattern) {
     ImmutableSortedSet.Builder<String> bindings = ImmutableSortedSet.naturalOrder();
     if (pattern.isEmpty()) {
       return bindings.build();

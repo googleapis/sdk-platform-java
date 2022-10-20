@@ -79,7 +79,9 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
-import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
+import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
@@ -91,6 +93,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -168,6 +171,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     String pakkage = String.format("%s.stub", service.pakkage());
     TypeStore typeStore = createDynamicTypes(service, pakkage);
 
+    List<Sample> samples = new ArrayList<>();
     Set<String> deprecatedSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
@@ -177,12 +181,12 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             /* isNestedClass= */ false,
             deprecatedSettingVarNames);
     String className = ClassNames.getServiceStubSettingsClassName(service);
-
+    List<CommentStatement> classHeaderComments =
+        createClassHeaderComments(service, typeStore.get(className), samples);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(
-                createClassHeaderComments(service, typeStore.get(className)))
+            .setHeaderCommentStatements(classHeaderComments)
             .setAnnotations(createClassAnnotations(service))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -196,7 +200,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setNestedClasses(
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
-    return GapicClass.create(GapicClass.Kind.STUB, classDef);
+    return GapicClass.create(
+            GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
+        .withDefaultHost(service.defaultHost());
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
@@ -244,12 +250,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         getTransportContext().instantiatingChannelProviderBuilderClasses().iterator();
     Iterator<String> builderNamesIt =
         getTransportContext().defaultTransportProviderBuilderNames().iterator();
+    Iterator<String> transportNamesIt = getTransportContext().transportNames().iterator();
 
     List<MethodDefinition> methods = new ArrayList<>();
 
     while (providerClassIt.hasNext()
         && providerBuilderClassIt.hasNext()
-        && builderNamesIt.hasNext()) {
+        && builderNamesIt.hasNext()
+        && transportNamesIt.hasNext()) {
       TypeNode returnType =
           TypeNode.withReference(ConcreteReference.withClazz(providerBuilderClassIt.next()));
       TypeNode channelProviderType =
@@ -264,16 +272,29 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Expr returnExpr =
           initializeTransportProviderBuilder(transportChannelProviderBuilderExpr, returnType);
 
+      List<AnnotationNode> annotations = new ArrayList<>();
+      if (!methods.isEmpty()) {
+        annotations.add(AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build());
+      }
+      CommentStatement commentStatement =
+          SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
+      if (getTransportContext().transportNames().size() > 1) {
+        commentStatement =
+            new SettingsCommentComposer(transportNamesIt.next())
+                .getTransportProviderBuilderMethodComment();
+      }
+
       MethodDefinition method =
           MethodDefinition.builder()
-              .setHeaderCommentStatements(
-                  SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
+              .setHeaderCommentStatements(commentStatement)
+              .setAnnotations(annotations)
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
               .setReturnType(returnType)
               .setName(builderNamesIt.next())
               .setReturnExpr(returnExpr)
               .build();
+
       methods.add(method);
     }
 
@@ -376,7 +397,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode classType) {
+      Service service, TypeNode classType, List<Sample> samples) {
     // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
@@ -387,18 +408,23 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
                     .orElse(service.methods().get(0)));
-    Optional<String> methodNameOpt =
-        methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
-    Optional<String> sampleCodeOpt =
-        SettingsSampleCodeComposer.composeSampleCode(
+    Optional<String> methodNameOpt = methodOpt.map(Method::name);
+    Optional<Sample> sampleCode =
+        SettingsSampleComposer.composeSettingsSample(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+
+    Optional<String> docSampleCode = Optional.empty();
+    if (sampleCode.isPresent()) {
+      samples.add(sampleCode.get());
+      docSampleCode = Optional.of(SampleCodeWriter.writeInlineSample(sampleCode.get().body()));
+    }
 
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceStubClassName(service),
         service.defaultHost(),
         service.isDeprecated(),
         methodNameOpt,
-        sampleCodeOpt,
+        docSampleCode,
         classType);
   }
 
@@ -426,7 +452,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
           !Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method);
       TypeNode settingsType =
           getCallSettingsType(method, typeStore, hasBatchingSettings, isNestedClass);
-      String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
+      String varName = String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
       if (method.isDeprecated()) {
         deprecatedSettingVarNames.add(varName);
       }
@@ -971,7 +997,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
-    javaMethods.addAll(createNewBuilderMethods(service, typeStore, "newBuilder", "createDefault"));
+    javaMethods.addAll(
+        createNewBuilderMethods(
+            service,
+            typeStore,
+            "newBuilder",
+            "createDefault",
+            SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
     return javaMethods;
@@ -1076,15 +1108,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     // Put the method together.
     TypeNode returnType = typeStore.get(ClassNames.getServiceStubClassName(service));
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName("createStub")
@@ -1176,12 +1201,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service,
       TypeStore typeStore,
       String newBuilderMethodName,
-      String createDefaultMethodName) {
+      String createDefaultMethodName,
+      CommentStatement methodComment) {
     // Create the newBuilder() method.
     final TypeNode builderReturnType = typeStore.get(NESTED_BUILDER_CLASS_NAME);
     return ImmutableList.of(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(methodComment)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)

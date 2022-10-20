@@ -27,9 +27,7 @@ import java.util.stream.Collectors;
 public abstract class LambdaExpr implements Expr {
   @Override
   public TypeNode type() {
-    // TODO(v2): Support set of FunctionalInterface  parameterized on the args and return type,
-    // which would enable assignment to an appropriate variable.
-    return TypeNode.VOID;
+    return returnExpr().expr().type();
   }
 
   public abstract ImmutableList<VariableExpr> arguments();
@@ -69,9 +67,6 @@ public abstract class LambdaExpr implements Expr {
 
     public LambdaExpr build() {
       LambdaExpr lambdaExpr = autoBuild();
-      Preconditions.checkState(
-          !lambdaExpr.returnExpr().expr().type().equals(TypeNode.VOID),
-          "Lambdas cannot return void-typed expressions.");
       // Must be a declaration.
       lambdaExpr.arguments().stream()
           .forEach(

@@ -24,6 +24,11 @@ import javax.annotation.Generated;
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * try (IdentityClient identityClient = IdentityClient.create()) {
  *   String parent = UserName.of("[USER]").toString();
  *   String displayName = "displayName1714148973";
@@ -61,6 +66,11 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * IdentitySettings identitySettings =
  *     IdentitySettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -71,6 +81,11 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * IdentitySettings identitySettings =
  *     IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
  * IdentityClient identityClient = IdentityClient.create(identitySettings);
@@ -101,7 +116,6 @@ public class IdentityClient implements BackgroundResource {
    * Constructs an instance of IdentityClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(IdentitySettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final IdentityClient create(IdentityStub stub) {
     return new IdentityClient(stub);
   }
@@ -115,7 +129,6 @@ public class IdentityClient implements BackgroundResource {
     this.stub = ((IdentityStubSettings) settings.getStubSettings()).createStub();
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected IdentityClient(IdentityStub stub) {
     this.settings = null;
     this.stub = stub;
@@ -125,7 +138,6 @@ public class IdentityClient implements BackgroundResource {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public IdentityStub getStub() {
     return stub;
   }
@@ -135,6 +147,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
@@ -162,6 +179,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
@@ -214,6 +236,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
@@ -299,6 +326,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   CreateUserRequest request =
    *       CreateUserRequest.newBuilder()
@@ -321,6 +353,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   CreateUserRequest request =
    *       CreateUserRequest.newBuilder()
@@ -342,6 +379,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
    *   User response = identityClient.getUser(name);
@@ -362,6 +404,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = UserName.of("[USER]").toString();
    *   User response = identityClient.getUser(name);
@@ -381,6 +428,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   GetUserRequest request =
    *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -400,6 +452,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   GetUserRequest request =
    *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -418,6 +475,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UpdateUserRequest request =
    *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
@@ -437,6 +499,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UpdateUserRequest request =
    *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
@@ -455,6 +522,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
    *   identityClient.deleteUser(name);
@@ -475,6 +547,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = UserName.of("[USER]").toString();
    *   identityClient.deleteUser(name);
@@ -494,6 +571,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   DeleteUserRequest request =
    *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -513,6 +595,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   DeleteUserRequest request =
    *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
@@ -531,6 +618,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   ListUsersRequest request =
    *       ListUsersRequest.newBuilder()
@@ -555,6 +647,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   ListUsersRequest request =
    *       ListUsersRequest.newBuilder()
@@ -578,6 +675,11 @@ public class IdentityClient implements BackgroundResource {
    * Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   ListUsersRequest request =
    *       ListUsersRequest.newBuilder()
@@ -586,7 +688,7 @@ public class IdentityClient implements BackgroundResource {
    *           .build();
    *   while (true) {
    *     ListUsersResponse response = identityClient.listUsersCallable().call(request);
-   *     for (User element : response.getResponsesList()) {
+   *     for (User element : response.getUsersList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();

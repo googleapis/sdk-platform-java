@@ -60,7 +60,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -357,13 +356,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     if (tryCatchStatement.tryResourceExpr() != null) {
       tryCatchStatement.tryResourceExpr().accept(this);
     }
-
     statements(tryCatchStatement.tryBody());
-
-    Preconditions.checkState(
-        !tryCatchStatement.isSampleCode() && !tryCatchStatement.catchVariableExprs().isEmpty(),
-        "Import generation should not be invoked on sample code, but was found when visiting a"
-            + " try-catch block");
     for (int i = 0; i < tryCatchStatement.catchVariableExprs().size(); i++) {
       tryCatchStatement.catchVariableExprs().get(i).accept(this);
       statements(tryCatchStatement.catchBlocks().get(i));

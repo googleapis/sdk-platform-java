@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
@@ -32,10 +33,14 @@ import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComp
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +50,8 @@ public class Composer {
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(clazzes);
+    return addApacheLicense(
+        prepareExecutableSamples(clazzes, context.gapicMetadata().getProtoPackage()));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
@@ -187,6 +193,63 @@ public class Composer {
   }
 
   @VisibleForTesting
+  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes, String protoPackage) {
+    //  parse protoPackage for apiVersion
+    String[] pakkage = protoPackage.split("\\.");
+    String apiVersion;
+    //  e.g. v1, v2, v1beta1
+    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
+      apiVersion = pakkage[pakkage.length - 1];
+    } else {
+      apiVersion = "";
+    }
+    // Include license header, apiShortName, and apiVersion
+    List<GapicClass> clazzesWithSamples = new ArrayList<>();
+    clazzes.forEach(
+        gapicClass -> {
+          List<Sample> samples = new ArrayList<>();
+          gapicClass
+              .samples()
+              .forEach(
+                  sample ->
+                      samples.add(
+                          addRegionTagAndHeaderToSample(
+                              sample, parseDefaultHost(gapicClass.defaultHost()), apiVersion)));
+          clazzesWithSamples.add(gapicClass.withSamples(samples));
+        });
+    return clazzesWithSamples;
+  }
+
+  // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default
+  // endpoints like
+  // "us-east1-pubsub.googleapis.com".
+  @VisibleForTesting
+  protected static String parseDefaultHost(String defaultHost) {
+    // If the defaultHost is of the format "**.googleapis.com", take the name before the first
+    // period.
+    String apiShortName = Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
+    // If the defaultHost is of the format "**-**-**.googleapis.com", take the section before the
+    // first period and after the last dash to follow CSharp's implementation here:
+    // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
+    apiShortName = Iterables.getLast(Splitter.on("-").split(apiShortName), defaultHost);
+    // `iam-meta-api` service is an exceptional case and is handled as a one-off
+    if (defaultHost.contains("iam-meta-api")) {
+      apiShortName = "iam";
+    }
+    return apiShortName;
+  }
+
+  @VisibleForTesting
+  protected static Sample addRegionTagAndHeaderToSample(
+      Sample sample, String apiShortName, String apiVersion) {
+    final List<CommentStatement> header = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
+    return sample
+        .withHeader(header)
+        .withRegionTag(
+            sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
+  }
+
+  @VisibleForTesting
   protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
     return gapicClassList.stream()
         .map(
@@ -197,7 +260,7 @@ public class Composer {
                       .toBuilder()
                       .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
                       .build();
-              return GapicClass.create(gapicClass.kind(), classWithHeader);
+              return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
             })
         .collect(Collectors.toList());
   }

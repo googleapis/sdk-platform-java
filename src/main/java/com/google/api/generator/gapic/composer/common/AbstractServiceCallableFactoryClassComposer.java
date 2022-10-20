@@ -70,7 +70,7 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     String pakkage = String.format("%s.stub", service.pakkage());
 
     StubCommentComposer commentComposer =
-        new StubCommentComposer(getTransportContext().transportName());
+        new StubCommentComposer(getTransportContext().transportNames().get(0));
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)

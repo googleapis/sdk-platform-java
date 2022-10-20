@@ -21,10 +21,12 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -119,10 +121,11 @@ public class ClientLibraryPackageInfoComposer {
                   .setPakkage(service.pakkage())
                   .setName(ClassNames.getServiceClientClassName(service))
                   .build());
-      String packageInfoSampleCode =
-          ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+      Sample packageInfoSampleCode =
+          ServiceClientHeaderSampleComposer.composeClassHeaderSample(
               service, clientType, context.resourceNames(), context.messages());
-      javaDocCommentBuilder.addSampleCode(packageInfoSampleCode);
+      javaDocCommentBuilder.addSampleCode(
+          SampleCodeWriter.writeInlineSample(packageInfoSampleCode.body()));
     }
 
     return CommentStatement.withComment(javaDocCommentBuilder.build());

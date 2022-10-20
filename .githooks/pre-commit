@@ -48,7 +48,29 @@ function header_check_preparation {
       if [ $? -ne 0 ];
       then
         echo_status "addlicense tool is not yet installed, downloading it now."
-        go get -u github.com/google/addlicense
+        go install github.com/google/addlicense@latest
+      fi
+  fi
+}
+
+function buildifier_preparation {
+  echo_status "Setting up tool to fix Bazel format"
+  export GOPATH=$(go env GOPATH)
+  if [ $? -ne 0 ];
+  then
+      echo_status "Please install Go first, instructions can be found here: https://golang.org/doc/install."
+  else
+      export ENV_PATH=$(echo $PATH)
+      if [[ $ENV_PATH != *$GOPATH* ]];
+      then
+        echo_status "GOPATH is not in the system path, adding it now."
+        export PATH=$GOPATH/bin:$PATH
+      fi
+      which addlicense
+      if [ $? -ne 0 ];
+      then
+        echo_status "buildifier tool is not yet installed, downloading it now."
+        go install github.com/bazelbuild/buildtools/buildifier@latest
       fi
   fi
 }
@@ -123,6 +145,7 @@ fi
 # Check and fix Bazel format.
 if [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
 then
+  buildifier_preparation
   for FILE in $(find ./ -name BUILD.bazel)
   do
     buildifier --lint=fix $FILE

@@ -14,14 +14,10 @@
 
 package com.google.api.generator.gapic.composer.grpc;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.junit.Test;
 
 public class GrpcServiceStubClassComposerTest {
@@ -31,11 +27,8 @@ public class GrpcServiceStubClassComposerTest {
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcEchoStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcEchoStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcEchoStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -44,12 +37,8 @@ public class GrpcServiceStubClassComposerTest {
     Service protoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, protoService);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcDeprecatedServiceStub.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcDeprecatedServiceStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcDeprecatedServiceStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -58,11 +47,8 @@ public class GrpcServiceStubClassComposerTest {
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcTestingStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcTestingStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcTestingStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -72,12 +58,8 @@ public class GrpcServiceStubClassComposerTest {
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcRoutingHeadersStub.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcRoutingHeadersStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcRoutingHeadersStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -86,12 +68,8 @@ public class GrpcServiceStubClassComposerTest {
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcPublisherStub.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcPublisherStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcPublisherStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 
   @Test
@@ -100,10 +78,7 @@ public class GrpcServiceStubClassComposerTest {
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcLoggingStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcLoggingStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcLoggingStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 }

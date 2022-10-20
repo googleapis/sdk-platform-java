@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
   @Test
-  public void generateServiceStubSettingsClasses_basic() {
+  public void generateServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseCompliance();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =

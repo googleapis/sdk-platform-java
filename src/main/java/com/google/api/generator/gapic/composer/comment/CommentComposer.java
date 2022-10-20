@@ -17,10 +17,13 @@ package com.google.api.generator.gapic.composer.comment;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.Statement;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommentComposer {
   private static final String APACHE_LICENSE_STRING =
-      "Copyright 2021 Google LLC\n\n"
+      "Copyright 2022 Google LLC\n\n"
           + "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
           + "you may not use this file except in compliance with the License.\n"
           + "You may obtain a copy of the License at\n\n"
@@ -52,4 +55,21 @@ public class CommentComposer {
   public static final CommentStatement AUTO_GENERATED_METHOD_COMMENT =
       CommentStatement.withComment(
           LineComment.withComment(AUTO_GENERATED_METHOD_DISCLAIMER_STRING));
+
+  public static final List<Statement> AUTO_GENERATED_SAMPLE_COMMENT =
+      Arrays.asList(
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "This snippet has been automatically generated and should be regarded as a code template only.")),
+          CommentStatement.withComment(
+              LineComment.withComment("It will require modifications to work:")),
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "- It may require correct/in-range values for request initialization.")),
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "- It may require specifying regional endpoints when creating the service client as shown in")),
+          CommentStatement.withComment(
+              LineComment.withComment(
+                  "https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library")));
 }

@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.client.http.HttpMethods;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
@@ -56,9 +55,11 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.TypeRegistry;
@@ -74,6 +75,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
+
   private static final HttpJsonServiceStubClassComposer INSTANCE =
       new HttpJsonServiceStubClassComposer();
 
@@ -113,6 +115,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             TypeRegistry.class));
   }
 
+  protected boolean isSupportedMethod(Method method) {
+    return method.httpBindings() != null
+        && method.stream() != Stream.BIDI
+        && method.stream() != Stream.CLIENT;
+  }
+
   @Override
   protected boolean generateOperationsStubLogic(Service service) {
     return service.hasLroMethods();
@@ -123,7 +131,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       Service service,
       Method protoMethod,
       VariableExpr methodDescriptorVarExpr,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      boolean restNumericEnumsEnabled) {
     MethodInvocationExpr expr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
@@ -146,7 +155,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     expr = methodMaker.apply("setHttpMethod", getHttpMethodTypeExpr(protoMethod)).apply(expr);
     expr = methodMaker.apply("setType", getMethodTypeExpr(protoMethod)).apply(expr);
     expr =
-        methodMaker.apply("setRequestFormatter", getRequestFormatterExpr(protoMethod)).apply(expr);
+        methodMaker
+            .apply(
+                "setRequestFormatter",
+                getRequestFormatterExpr(protoMethod, restNumericEnumsEnabled))
+            .apply(expr);
     expr = methodMaker.apply("setResponseParser", setResponseParserExpr(protoMethod)).apply(expr);
 
     if (protoMethod.isOperationPollingMethod() || protoMethod.hasLro()) {
@@ -240,12 +253,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   protected List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = super.createClassAnnotations(service);
 
-    annotations.add(
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "A restructuring of stub classes is planned, so this may break in the future")
-            .build());
+    TypeNode betaApiType = FIXED_TYPESTORE.get("BetaApi");
+
+    if (annotations.stream().noneMatch(a -> betaApiType.equals(a.type()))) {
+      annotations.add(AnnotationNode.builder().setType(betaApiType).build());
+    }
+
     return annotations;
   }
 
@@ -314,7 +327,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .build();
   }
 
-  private List<Expr> getRequestFormatterExpr(Method protoMethod) {
+  private List<Expr> getRequestFormatterExpr(Method protoMethod, boolean restNumericEnumsEnabled) {
     BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>>
         methodMaker = getMethodMaker();
 
@@ -345,9 +358,20 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         protoMethod,
                         extractorVarType,
                         protoMethod.httpBindings().pathParameters(),
-                        "putPathParam")))
+                        "putPathParam",
+                        restNumericEnumsEnabled)))
             .apply(expr);
 
+    if (!protoMethod.httpBindings().lowerCamelAdditionalPatterns().isEmpty()) {
+      expr =
+          methodMaker
+              .apply(
+                  "setAdditionalPaths",
+                  protoMethod.httpBindings().lowerCamelAdditionalPatterns().stream()
+                      .map(a -> ValueExpr.withValue(StringObjectValue.withValue(a)))
+                      .collect(Collectors.toList()))
+              .apply(expr);
+    }
     TypeNode fieldsVarGenericType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -371,7 +395,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         protoMethod,
                         extractorVarType,
                         protoMethod.httpBindings().queryParameters(),
-                        "putQueryParam")))
+                        "putQueryParam",
+                        restNumericEnumsEnabled)))
             .apply(expr);
 
     extractorVarType = TypeNode.STRING;
@@ -388,7 +413,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                             ? protoMethod.httpBindings().pathParameters()
                             : protoMethod.httpBindings().bodyParameters(),
                         "toBody",
-                        asteriskBody)))
+                        asteriskBody,
+                        restNumericEnumsEnabled)))
             .apply(expr);
     expr = methodMaker.apply("build", Collections.emptyList()).apply(expr);
 
@@ -755,7 +781,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
       String serializerMethodName,
-      boolean asteriskBody) {
+      boolean asteriskBody,
+      boolean restNumericEnumEnabled) {
     List<Statement> bodyStatements = new ArrayList<>();
 
     Expr returnExpr = null;
@@ -828,6 +855,13 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue(bodyParamName)));
       paramsPutArgs.add(prevExpr);
 
+      PrimitiveValue primitiveValue =
+          PrimitiveValue.builder()
+              .setType(TypeNode.BOOLEAN)
+              .setValue(String.valueOf(restNumericEnumEnabled))
+              .build();
+      paramsPutArgs.add(ValueExpr.withValue(primitiveValue));
+
       returnExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(serializerExpr)
@@ -850,7 +884,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       Method method,
       TypeNode extractorReturnType,
       Set<HttpBinding> httpBindingFieldNames,
-      String serializerMethodName) {
+      String serializerMethodName,
+      boolean restNumericEnumsEnabled) {
     List<Statement> bodyStatements = new ArrayList<>();
 
     VariableExpr fieldsVarExpr =
@@ -907,7 +942,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =
-            String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+            getBindingFieldMethodName(
+                httpBindingFieldName,
+                descendantFields.length,
+                i,
+                JavaStyle.toUpperCamelCase(currFieldName));
         requestFieldGetterExprBuilder =
             requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
 
@@ -962,6 +1001,24 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       }
     }
 
+    // Add a fixed query param for numeric enum, see b/232457244 for details
+    if (restNumericEnumsEnabled && serializerMethodName.equals("putQueryParam")) {
+      ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
+
+      paramsPutArgs.add(fieldsVarExpr);
+      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("$alt")));
+      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("json;enum-encoding=int")));
+
+      Expr paramsPutExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(serializerVarExpr)
+              .setMethodName(serializerMethodName)
+              .setArguments(paramsPutArgs.build())
+              .setReturnType(extractorReturnType)
+              .build();
+      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
+    }
+
     // Overrides FieldsExtractor
     // (https://github.com/googleapis/gax-java/blob/12b18ee255d3fabe13bb3969df40753b29f830d5/gax-httpjson/src/main/java/com/google/api/gax/httpjson/FieldsExtractor.java).
     return LambdaExpr.builder()
@@ -971,15 +1028,24 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         .build();
   }
 
+  @VisibleForTesting
+  String getBindingFieldMethodName(
+      HttpBinding httpBindingField, int descendantFieldsLengths, int index, String currFieldName) {
+    if (index == descendantFieldsLengths - 1) {
+      if (httpBindingField.isRepeated()) {
+        return String.format("get%sList", currFieldName);
+      }
+      if (httpBindingField.isEnum()) {
+        return String.format("get%sValue", currFieldName);
+      }
+    }
+    return String.format("get%s", currFieldName);
+  }
+
   private List<Expr> getHttpMethodTypeExpr(Method protoMethod) {
-    EnumRefExpr expr =
-        EnumRefExpr.builder()
-            .setName(protoMethod.httpBindings().httpVerb().toString())
-            .setType(
-                TypeNode.withReference(
-                    ConcreteReference.builder().setClazz(HttpMethods.class).build()))
-            .build();
-    return Collections.singletonList(expr);
+    return Collections.singletonList(
+        ValueExpr.withValue(
+            StringObjectValue.withValue(protoMethod.httpBindings().httpVerb().toString())));
   }
 
   private List<Expr> getMethodTypeExpr(Method protoMethod) {

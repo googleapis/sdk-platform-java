@@ -89,6 +89,27 @@ public class SettingsCommentComposer {
           .map(c -> CommentStatement.withComment(c))
           .collect(Collectors.toList());
 
+  private final CommentStatement newTransportBuilderMethodComment;
+  private final CommentStatement transportProviderBuilderMethodComment;
+
+  public SettingsCommentComposer(String transportPrefix) {
+    this.newTransportBuilderMethodComment =
+        toSimpleComment(String.format("Returns a new %s builder for this class.", transportPrefix));
+    this.transportProviderBuilderMethodComment =
+        toSimpleComment(
+            String.format(
+                "Returns a builder for the default %s ChannelProvider for this service.",
+                transportPrefix));
+  }
+
+  public CommentStatement getNewTransportBuilderMethodComment() {
+    return newTransportBuilderMethodComment;
+  }
+
+  public CommentStatement getTransportProviderBuilderMethodComment() {
+    return transportProviderBuilderMethodComment;
+  }
+
   public static CommentStatement createCallSettingsGetterComment(
       String javaMethodName, boolean isMethodDeprecated) {
     String methodComment = String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName);

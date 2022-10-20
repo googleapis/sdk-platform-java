@@ -70,6 +70,9 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
 
   public static final TypeNode BYTESTRING =
       TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
+  public static final TypeNode VALUE =
+      withReference(
+          VaporReference.builder().setName("Value").setPakkage("com.google.protobuf").build());
 
   private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
@@ -201,6 +204,11 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
 
   public boolean isProtoPrimitiveType() {
     return isPrimitiveType() || equals(TypeNode.STRING) || equals(TypeNode.BYTESTRING);
+  }
+
+  public boolean isProtoEmptyType() {
+    return reference().pakkage().equals("com.google.protobuf")
+        && reference().name().equals("Empty");
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {

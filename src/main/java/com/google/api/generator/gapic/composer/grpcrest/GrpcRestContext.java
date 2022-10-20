@@ -33,7 +33,7 @@ public abstract class GrpcRestContext extends TransportContext {
       GrpcRestContext.builder()
           .setClassNames(new ClassNames("Grpc", "HttpJson"))
           .setTransport(Transport.GRPC_REST)
-          .setTransportName(null)
+          .setTransportNames(ImmutableList.of("gRPC", "REST"))
           // For grpcrest.GrpcServiceStubClassComposer
           .setCallSettingsClass(null)
           .setStubCallableFactoryType(null)

@@ -17,9 +17,11 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -34,18 +36,54 @@ public abstract class HttpBindings {
 
   @AutoValue
   public abstract static class HttpBinding implements Comparable<HttpBinding> {
+
+    // The fully qualified name of the field. e.g. request.complex_object.another_object.name
     public abstract String name();
 
     abstract String lowerCamelName();
 
-    public abstract boolean isOptional();
+    // An object that contains all info of the leaf level field
+    @Nullable
+    public abstract Field field();
+
+    public boolean isOptional() {
+      return field() != null && field().isProto3Optional();
+    }
+
+    public boolean isRepeated() {
+      return field() != null && field().isRepeated();
+    }
+
+    public boolean isEnum() {
+      return field() != null && field().isEnum();
+    }
 
     @Nullable
     public abstract String valuePattern();
 
-    public static HttpBinding create(String name, boolean isOptional, String valuePattern) {
-      return new AutoValue_HttpBindings_HttpBinding(
-          name, JavaStyle.toLowerCamelCase(name), isOptional, valuePattern);
+    public static HttpBindings.HttpBinding.Builder builder() {
+      return new AutoValue_HttpBindings_HttpBinding.Builder();
+    }
+
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+      public abstract HttpBindings.HttpBinding.Builder setName(String name);
+
+      public abstract HttpBindings.HttpBinding.Builder setField(Field field);
+
+      abstract HttpBindings.HttpBinding.Builder setLowerCamelName(String lowerCamelName);
+
+      public abstract HttpBindings.HttpBinding.Builder setValuePattern(String valuePattern);
+
+      abstract String name();
+
+      abstract HttpBindings.HttpBinding autoBuild();
+
+      public HttpBindings.HttpBinding build() {
+        setLowerCamelName(JavaStyle.toLowerCamelCase(name()));
+        return autoBuild();
+      }
     }
 
     // Do not forget to keep it in sync with equals() implementation.
@@ -59,6 +97,8 @@ public abstract class HttpBindings {
   public abstract HttpVerb httpVerb();
 
   public abstract String pattern();
+
+  public abstract List<String> additionalPatterns();
 
   public abstract Set<HttpBinding> pathParameters();
 
@@ -81,8 +121,18 @@ public abstract class HttpBindings {
   //   in .proto file: "/global/instanceTemplates/{instance_template=*}"
   //   in .java file:  "/global/instanceTemplates/{instanceTemplate=*}"
   public String lowerCamelPattern() {
-    String lowerCamelPattern = pattern();
-    for (HttpBinding pathParam : pathParameters()) {
+    return lowerCamelPattern(pattern(), pathParameters());
+  }
+
+  public List<String> lowerCamelAdditionalPatterns() {
+    return additionalPatterns().stream()
+        .map(a -> lowerCamelPattern(a, pathParameters()))
+        .collect(Collectors.toList());
+  }
+
+  private static String lowerCamelPattern(String originalPattern, Set<HttpBinding> pathParameters) {
+    String lowerCamelPattern = originalPattern;
+    for (HttpBinding pathParam : pathParameters) {
       lowerCamelPattern =
           lowerCamelPattern.replaceAll(
               "\\{" + pathParam.name(), "{" + JavaStyle.toLowerCamelCase(pathParam.name()));
@@ -91,7 +141,7 @@ public abstract class HttpBindings {
   }
 
   public Map<String, String> getPathParametersValuePatterns() {
-    Map<String, String> valuePatterns = new HashMap<>();
+    Map<String, String> valuePatterns = new LinkedHashMap<>();
     for (HttpBinding pathParameter : pathParameters()) {
       valuePatterns.put(pathParameter.lowerCamelName(), pathParameter.valuePattern());
     }
@@ -103,6 +153,8 @@ public abstract class HttpBindings {
     public abstract HttpBindings.Builder setHttpVerb(HttpVerb httpVerb);
 
     public abstract HttpBindings.Builder setPattern(String pattern);
+
+    public abstract HttpBindings.Builder setAdditionalPatterns(List<String> additionalPatterns);
 
     abstract String pattern();
 

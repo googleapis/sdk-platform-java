@@ -111,4 +111,14 @@ public class JavaStyleTest {
     assertEquals("iamHttpXmlDog", JavaStyle.toLowerCamelCase(value));
     assertEquals("IamHttpXmlDog", JavaStyle.toUpperCamelCase(value));
   }
+
+  @Test
+  public void keyword() {
+    String value = "import";
+    assertEquals("import_", JavaStyle.toLowerCamelCase(value));
+    assertEquals("Import", JavaStyle.toUpperCamelCase(value));
+    value = "IMPORT_";
+    assertEquals("import_", JavaStyle.toLowerCamelCase(value));
+    assertEquals("Import", JavaStyle.toUpperCamelCase(value));
+  }
 }

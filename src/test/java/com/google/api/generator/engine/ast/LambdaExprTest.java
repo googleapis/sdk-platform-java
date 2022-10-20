@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
@@ -25,6 +26,15 @@ public class LambdaExprTest {
     LambdaExpr.builder()
         .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
         .build();
+  }
+
+  @Test
+  public void validLambdaExpr_inferTypeFromReturnExpr() {
+    LambdaExpr lambdaExpr =
+        LambdaExpr.builder()
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
+            .build();
+    assertEquals(TypeNode.STRING, lambdaExpr.type());
   }
 
   @Test
@@ -75,17 +85,16 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void invalidLambdaExpr_returnsVoid() {
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            LambdaExpr.builder()
-                .setReturnExpr(
-                    MethodInvocationExpr.builder()
-                        .setMethodName("foo")
-                        .setReturnType(TypeNode.VOID)
-                        .build())
-                .build());
+  public void validLambdaExpr_returnsVoid() {
+    LambdaExpr voidLambda =
+        LambdaExpr.builder()
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foo")
+                    .setReturnType(TypeNode.VOID)
+                    .build())
+            .build();
+    assertEquals(TypeNode.VOID, voidLambda.returnExpr().type());
   }
 
   @Test

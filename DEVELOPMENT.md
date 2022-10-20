@@ -12,6 +12,71 @@
     cp .githooks/pre-commit .git/hooks/pre-commit
     ```
 
+## Code Formatting
+
+-   Run linter checks without actually doing the formatting.
+
+    ```sh
+    mvn fmt:check
+    ```
+
+-   Format files.
+
+    ```sh
+    mvn fmt:format
+    ```
+
+## Test Running
+
+-   Run all unit and integration tests.
+
+    ```sh
+    mvn test          # unit tests
+    bazel test //...  # integration tests
+    ```
+
+-   Run all unit tests.
+
+    ```sh
+    mvn test
+    ```
+
+-   Run a single or multiple unit tests:
+
+    ```sh
+    mvn test -Dtest=JavaCodeGeneratorTest
+
+    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+    ```
+
+-   Update all unit test golden files:
+
+    ```sh
+    mvn test -DupdateUnitGoldens
+    ```
+    This is inefficient for updating only a few golden files, as it runs all tests.
+
+-   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+
+    ```sh
+    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+    ```
+
+-   Run a single integration test for API like `Redis`, it generates Java source
+    code using the Java microgenerator and compares them with the goldens files
+    in `test/integration/goldens/redis`.
+
+    ```sh
+    bazel test //test/integration:redis
+    ```
+
+-   Update integration test golden files, for example `Redis`. This clobbers all the
+    files in `test/integration/goldens/redis`.
+
+    ```sh
+    bazel run //test/integration:update_redis
+    ```
+
 ## Running the Plugin
 
 1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
@@ -83,69 +148,4 @@
 
     ```sh
     bazel build //google/showcase/v1beta1:showcase_java_gapic
-    ```
-
-## Code Formatting
-
--   Run linter checks without actually doing the formatting.
-
-    ```sh
-    mvn fmt:check
-    ```
-
--   Format files.
-
-    ```sh
-    mvn fmt:format
-    ```
-
-## Test Running
-
--   Run all unit and integration tests.
-
-    ```sh
-    mvn test          # unit tests
-    bazel test //...  # integration tests
-    ```
-
--   Run all unit tests.
-
-    ```sh
-    mvn test
-    ```
-
--   Run a single or multiple unit tests:
-
-    ```sh
-    mvn test -Dtest=JavaCodeGeneratorTest
-
-    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
-    ```
-
--   Update all unit test golden files:
-
-    ```sh
-    mvn test -DupdateUnitGoldens
-    ```
-    This is inefficient for updating only a few golden files, as it runs all tests.
-
--   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
-
-    ```sh
-    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
-    ```
-
--   Run a single integration test for API like `Redis`, it generates Java source
-    code using the Java microgenerator and compares them with the goldens files
-    in `test/integration/goldens/redis`.
-
-    ```sh
-    bazel test //test/integration:redis
-    ```
-
--   Update integration test golden files, for example `Redis`. This clobbers all the
-    files in `test/integration/goldens/redis`.
-
-    ```sh
-    bazel run //test/integration:update_redis
     ```
