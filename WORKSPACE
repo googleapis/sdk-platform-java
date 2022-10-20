@@ -41,30 +41,26 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 com_google_api_gax_java_repositories()
 
 http_archive(
-        name = "com_google_googleapis",
-        strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
-        urls = [
-            "https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip",
-        ],
-    )
-
-load("//:repositories.bzl", "gapic_generator_java_repositories")
-
-gapic_generator_java_repositories()
+    name = "com_google_googleapis",
+    strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
+    urls = [
+        "https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip",
+    ],
+)
 
 # protobuf
 RULES_JVM_EXTERNAL_TAG = "4.2"
+
 RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
 
 http_archive(
     name = "rules_jvm_external",
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
     sha256 = RULES_JVM_EXTERNAL_SHA,
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
-
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
