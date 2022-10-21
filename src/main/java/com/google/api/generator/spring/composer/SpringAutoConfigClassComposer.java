@@ -80,6 +80,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
     String serviceName = service.name();
     String serviceNameLowerCamel = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
+    String serviceNameLowerHyphen = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
     String className = getThisClassName(serviceName);
     String credentialsProviderName = serviceNameLowerCamel + "Credentials";
     String transportChannelProviderName = "default" + serviceName + "TransportChannelProvider";
@@ -90,6 +91,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
 
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(packageName)
@@ -98,9 +101,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setStatements(createMemberVariables(service, types))
             .setMethods(
                 Arrays.asList(
-                    createConstructor(service.name(), className, types),
+                    createConstructor(service.name(), className, types, thisExpr),
                     createCredentialsProviderBeanMethod(
-                        service, className, credentialsProviderName, types),
+                        service, className, credentialsProviderName, types, thisExpr),
                     createTransportChannelProviderBeanMethod(transportChannelProviderName, types),
                     createClientBeanMethod(
                         service,
@@ -109,8 +112,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         transportChannelProviderName,
                         clientName,
                         types,
-                        gapicServiceConfig),
-                    createUserAgentHeaderProviderMethod(service, className, types)))
+                        gapicServiceConfig,
+                        thisExpr),
+                    createUserAgentHeaderProviderMethod(
+                        serviceNameLowerHyphen, className, types, thisExpr)))
             .setAnnotations(createClassAnnotations(service, types))
             .build();
     return GapicClass.create(kind, classDef);
@@ -140,7 +145,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createConstructor(
-      String serviceName, String className, Map<String, TypeNode> types) {
+      String serviceName, String className, Map<String, TypeNode> types, Expr thisExpr) {
     VariableExpr propertiesVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -152,8 +157,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setName("clientProperties")
             .setType(types.get(serviceName + "Properties"))
             .build();
-
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
 
     // this.clientProperties = clientProperties;
     AssignmentExpr thisPropertiesAssignmentExpr =
@@ -247,7 +250,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createCredentialsProviderBeanMethod(
-      Service service, String className, String methodName, Map<String, TypeNode> types) {
+      Service service,
+      String className,
+      String methodName,
+      Map<String, TypeNode> types,
+      Expr thisExpr) {
     // @Bean
     // @ConditionalOnMissingBean
     // public CredentialsProvider languageServiceCredentials() throws IOException {
@@ -260,7 +267,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setType(types.get(service.name() + "Properties"))
             .build();
 
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
     VariableExpr thisClientProperties =
         VariableExpr.withVariable(clientPropertiesVar)
             .toBuilder()
@@ -405,8 +411,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       String transportChannelProviderName,
       String clientName,
       Map<String, TypeNode> types,
-      GapicServiceConfig gapicServiceConfig) {
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+      GapicServiceConfig gapicServiceConfig,
+      Expr thisExpr) {
     // argument variables:
     VariableExpr credentialsProviderVariableExpr =
         VariableExpr.withVariable(
@@ -737,7 +743,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createUserAgentHeaderProviderMethod(
-      Service service, String className, Map<String, TypeNode> types) {
+      String serviceName, String className, Map<String, TypeNode> types, Expr thisExpr) {
     // private HeaderProvider userAgentHeaderProvider() {
     //   String springLibrary = "spring-autogen-language";
     //   String version = this.getClass().getPackage().getImplementationVersion();
@@ -751,11 +757,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 Variable.builder().setName("springLibrary").setType(TypeNode.STRING).build())
             .setIsDecl(true)
             .build();
-    String serviceNameLowerHyphen =
-        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, service.name());
     Expr springLibStringValueExpr =
-        ValueExpr.withValue(
-            StringObjectValue.withValue("spring-autogen-" + serviceNameLowerHyphen));
+        ValueExpr.withValue(StringObjectValue.withValue("spring-autogen-" + serviceName));
 
     AssignmentExpr springLibStringAssignExpr =
         AssignmentExpr.builder()
@@ -769,7 +772,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setVariable(Variable.builder().setName("version").setType(TypeNode.STRING).build())
             .setIsDecl(true)
             .build();
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
     Expr thisVersionExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(thisExpr)
