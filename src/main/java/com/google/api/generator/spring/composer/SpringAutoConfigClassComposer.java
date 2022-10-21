@@ -17,8 +17,10 @@ package com.google.api.generator.spring.composer;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -26,6 +28,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -53,6 +56,7 @@ import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -113,7 +117,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         transportChannelProviderName,
                         clientName,
                         types,
-                        gapicServiceConfig)))
+                        gapicServiceConfig),
+                    createUserAgentHeaderProviderMethod(service, className, types)))
             .setAnnotations(createClassAnnotations(service, types))
             .build();
     return GapicClass.create(kind, classDef);
@@ -460,6 +465,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       String clientName,
       Map<String, TypeNode> types,
       GapicServiceConfig gapicServiceConfig) {
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
     // argument variables:
     VariableExpr credentialsProviderVariableExpr =
         VariableExpr.withVariable(
@@ -507,14 +513,18 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethodName("setTransportChannelProvider")
             .setArguments(transportChannelProviderVariableExpr)
             .build();
-    //           .setHeaderProvider(
-    //               new UserAgentHeaderProvider(this.getClass()));
+    //           .setHeaderProvider(this.serAgentHeaderProvider());
+    MethodInvocationExpr userAgentHeaderProviderInvocation =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisExpr)
+            .setMethodName("userAgentHeaderProvider")
+            .setReturnType(STATIC_TYPES.get("HeaderProvider"))
+            .build();
     settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingsBuilderExpr)
             .setMethodName("setHeaderProvider")
-            // .setArguments() //TODO add augument here to create new obj. Caveat: decide where to
-            // UserAgentHeaderProvider class first.
+            .setArguments(userAgentHeaderProviderInvocation)
             .setReturnType(settingBuilderVariable.type())
             .build();
     AssignmentExpr settingCreateExpr =
@@ -530,7 +540,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     //     LOGGER.info("Quota project id set to: " + clientProperties.getQuotaProjectId()
     //         + ", this overrides project id from credentials.");
     //   }
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
     Variable clientPropertiesVar =
         Variable.builder()
             .setName("clientProperties")
@@ -786,6 +795,89 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .build();
   }
 
+  private static MethodDefinition createUserAgentHeaderProviderMethod(
+      Service service, String className, Map<String, TypeNode> types) {
+    // private HeaderProvider userAgentHeaderProvider() {
+    //   String springLibrary = "spring-autogen-language";
+    //   String version = this.getClass().getPackage().getImplementationVersion();
+    //   return () -> Collections.singletonMap("user-agent", springLibrary + "/" + version);
+    // }
+    List<Statement> bodyStatements = new ArrayList<>();
+
+    VariableExpr springLibStringVariableExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("springLibrary").setType(TypeNode.STRING).build())
+            .setIsDecl(true)
+            .build();
+    String serviceNameLowerHyphen =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, service.name());
+    Expr springLibStringValueExpr =
+        ValueExpr.withValue(
+            StringObjectValue.withValue("spring-autogen-" + serviceNameLowerHyphen));
+
+    AssignmentExpr springLibStringAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(springLibStringVariableExpr)
+            .setValueExpr(springLibStringValueExpr)
+            .build();
+    bodyStatements.add(ExprStatement.withExpr(springLibStringAssignExpr));
+
+    VariableExpr versionStringVariableExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("version").setType(TypeNode.STRING).build())
+            .setIsDecl(true)
+            .build();
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+    Expr thisVersionExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisExpr)
+            .setMethodName("getClass")
+            .build();
+    thisVersionExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisVersionExpr)
+            .setMethodName("getPackage")
+            .build();
+    thisVersionExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisVersionExpr)
+            .setMethodName("getImplementationVersion")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr versionStringAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(versionStringVariableExpr)
+            .setValueExpr(thisVersionExpr)
+            .build();
+    bodyStatements.add(ExprStatement.withExpr(versionStringAssignExpr));
+
+    ValueExpr slash = ValueExpr.withValue(StringObjectValue.withValue("/"));
+    ArithmeticOperationExpr userAgentStringConcat =
+        ArithmeticOperationExpr.concatWithExprs(
+            springLibStringVariableExpr.toBuilder().setIsDecl(false).build(), slash);
+    userAgentStringConcat =
+        ArithmeticOperationExpr.concatWithExprs(
+            userAgentStringConcat, versionStringVariableExpr.toBuilder().setIsDecl(false).build());
+    Expr collectionsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Collections"))
+            .setMethodName("singletonMap")
+            .setArguments(
+                ValueExpr.withValue(StringObjectValue.withValue("user-agent")),
+                userAgentStringConcat)
+            .setReturnType(STATIC_TYPES.get("HeaderProvider"))
+            .build();
+    LambdaExpr returnExpr = LambdaExpr.builder().setReturnExpr(collectionsExpr).build();
+    return MethodDefinition.builder()
+        .setName("userAgentHeaderProvider")
+        .setScope(ScopeNode.PRIVATE)
+        .setReturnType(STATIC_TYPES.get("HeaderProvider"))
+        .setReturnExpr(returnExpr)
+        .setBody(bodyStatements)
+        .build();
+  }
+
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
@@ -796,7 +888,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             TransportChannelProvider.class,
             // import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
             InstantiatingHttpJsonChannelProvider.class,
-            ExecutorProvider.class);
+            ExecutorProvider.class,
+            HeaderProvider.class,
+            Collections.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
