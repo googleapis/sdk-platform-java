@@ -21,7 +21,6 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.spring.composer.Utils;
-import com.google.common.base.Splitter;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -190,22 +189,22 @@ public class SpringWriter {
     }
   }
 
-  // write pom file. start with static string
-  // next: inject versions; change client library names
   private static void writePom(GapicContext context, JarOutputStream jos) {
+    String pakkageName = Utils.getPackageName(context);
+    pakkageName = pakkageName.replace('.', '-');
+    String clientLibraryShortName = Utils.getLibName(context);
+    String clientLibraryGroupId = "{{client-library-group-id}}";
+    String clientLibraryName = "{{client-library-artifact-id}}";
+    String clientLibraryVersion = "{{client-library-version}}";
+
+    String springStarterArtifactId = pakkageName + "spring-boot-starter";
+    String springStarterVersion = "{{starter-version}}";
+    String springStarterName = "Spring Boot Starter - " + clientLibraryShortName;
+
     JarEntry jarEntry = new JarEntry("pom.xml");
     try {
       jos.putNextEntry(jarEntry);
       StringJoiner sb = new StringJoiner(",\\\n");
-      String pakkageName = context.services().get(0).pakkage();
-      String clientLibraryGroup =
-          "com.google.cloud"; // it this always true? if not how to get this info
-      String clientLibraryName =
-          Splitter.on(".").limit(2).splitToList(pakkageName).get(1); // is this safe to assume?
-      String clientLibraryVersion = "{{client-library-version}}"; // to pass in
-      pakkageName = pakkageName.replace('.', '-');
-      String clientLibraryTitle = context.serviceYamlProto().getTitle();
-      String version = "{{starter-version}}"; // to pass in
       sb.add(
           String.format(
               "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -213,10 +212,10 @@ public class SpringWriter {
                   + "  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n"
                   + "  <modelVersion>4.0.0</modelVersion>\n"
                   + "\n"
-                  + "  <groupId>com.google.cloud.spring</groupId>\n"
-                  + "  <artifactId>%s-starter</artifactId>\n"
+                  + "  <groupId>com.google.cloud</groupId>\n"
+                  + "  <artifactId>%s</artifactId>\n"
                   + "  <version>%s</version>\n"
-                  + "  <name>%s Starter</name>\n"
+                  + "  <name>%s</name>\n"
                   + "  <description>Spring Boot Starter with AutoConfiguration for %s</description>\n"
                   + "\n"
                   + "\n"
@@ -233,7 +232,6 @@ public class SpringWriter {
                   + "      <version>2.6.3</version>\n"
                   + "    </dependency>\n"
                   + "\n"
-                  + "<!--this dependency only needed for a few util classes. Can be moved to shared location-->\n"
                   + "  <dependency>\n"
                   + "    <groupId>com.google.cloud</groupId>\n"
                   + "    <artifactId>spring-cloud-gcp-core</artifactId>\n"
@@ -267,11 +265,11 @@ public class SpringWriter {
                   + "  </build>\n"
                   + "\n"
                   + "</project>",
-              pakkageName,
-              version,
-              clientLibraryTitle,
-              clientLibraryTitle,
-              clientLibraryGroup,
+              springStarterArtifactId,
+              springStarterVersion,
+              springStarterName,
+              clientLibraryShortName,
+              clientLibraryGroupId,
               clientLibraryName,
               clientLibraryVersion));
 
