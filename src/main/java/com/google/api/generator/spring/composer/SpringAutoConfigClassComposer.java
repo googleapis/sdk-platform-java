@@ -52,7 +52,6 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,16 +63,10 @@ import javax.annotation.Generated;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
-  private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
-  private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
-  private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
 
   private static final SpringAutoConfigClassComposer INSTANCE = new SpringAutoConfigClassComposer();
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
-
-  private static final VariableExpr NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR =
-      createNestedRetryParamDefinitionsVarExpr();
 
   private SpringAutoConfigClassComposer() {}
 
@@ -102,14 +95,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
+            .setStatements(createMemberVariables(service, types))
             .setMethods(
                 Arrays.asList(
                     createConstructor(service.name(), className, types),
                     createCredentialsProviderBeanMethod(
                         service, className, credentialsProviderName, types),
-                    createTransportChannelProviderBeanMethod(
-                        service, transportChannelProviderName, types),
+                    createTransportChannelProviderBeanMethod(transportChannelProviderName, types),
                     createClientBeanMethod(
                         service,
                         className,
@@ -124,26 +116,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static VariableExpr createNestedRetryParamDefinitionsVarExpr() {
-    TypeNode varType =
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ImmutableMap.class)
-                .setGenerics(
-                    Arrays.asList(TypeNode.STRING, STATIC_TYPES.get("RetrySettings")).stream()
-                        .map(t -> t.reference())
-                        .collect(Collectors.toList()))
-                .build());
-
-    return VariableExpr.withVariable(
-        Variable.builder().setType(varType).setName(RETRY_PARAM_DEFINITIONS_VAR_NAME).build());
-  }
-
   private static List<Statement> createMemberVariables(
-      Service service,
-      String packageName,
-      Map<String, TypeNode> types,
-      GapicServiceConfig serviceConfig) {
+      Service service, Map<String, TypeNode> types) {
 
     String serviceName = service.name();
 
@@ -162,37 +136,17 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
-    return Arrays.asList(clientPropertiesStatement);
+    return Collections.singletonList(clientPropertiesStatement);
   }
 
   private static MethodDefinition createConstructor(
       String serviceName, String className, Map<String, TypeNode> types) {
-    /// constructor
-    // VariableExpr credentialsProviderBuilderVarExpr =
-    //     VariableExpr.withVariable(
-    //         Variable.builder()
-    //             .setName("coreCredentialsProvider")
-    //             .setType(types.get("CredentialsProvider"))
-    //             .build());
-    //
-    // VariableExpr coreProjectIdProviderVarExpr =
-    //     VariableExpr.withVariable(
-    //         Variable.builder()
-    //             .setName("coreProjectIdProvider")
-    //             .setType(types.get("GcpProjectIdProvider"))
-    //             .build());
-
     VariableExpr propertiesVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientProperties")
                 .setType(types.get(serviceName + "Properties"))
                 .build());
-    // Variable projectIdProviderVar =
-    //     Variable.builder()
-    //         .setName("projectIdProvider")
-    //         .setType(types.get("GcpProjectIdProvider"))
-    //         .build();
     Variable clientPropertiesVar =
         Variable.builder()
             .setName("clientProperties")
@@ -268,19 +222,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     .setStaticReferenceType(types.get("ServiceClient"))
                     .build())
             .build();
-
-    AssignmentExpr proxyBeanMethodsAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                VariableExpr.withVariable(
-                    Variable.builder()
-                        .setName("proxyBeanMethods")
-                        .setType(TypeNode.BOOLEAN)
-                        .build()))
-            .setValueExpr(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
-            .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder().setType(types.get("AutoConfiguration")).build();
     AnnotationNode enableConfigurationPropertiesNode =
@@ -349,7 +290,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createTransportChannelProviderBeanMethod(
-      Service service, String methodName, Map<String, TypeNode> types) {
+      String methodName, Map<String, TypeNode> types) {
 
     //   @Bean
     //   @ConditionalOnMissingBean
@@ -894,8 +835,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+                Class::getSimpleName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 
   private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {
