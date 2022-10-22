@@ -19,6 +19,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -47,6 +48,8 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.spring.utils.LoggerUtils;
+import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
@@ -157,7 +160,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
-    return Arrays.asList(clientPropertiesStatement);
+    Statement loggerStatement =
+        LoggerUtils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
+    return Arrays.asList(clientPropertiesStatement, loggerStatement);
   }
 
   private static MethodDefinition createConstructor(
@@ -559,10 +564,19 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(getQuotaProjectId)
             .build();
 
+    ExprStatement projectIdLoggerStatement =
+        LoggerUtils.createLoggerStatement(
+            LoggerUtils.concatManyWithExprs(
+                ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to ")),
+                getQuotaProjectId,
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(", this overrides project id from credentials."))),
+            types);
+
     IfStatement setQuotaProjectIdStatement =
         createIfStatement(
             projectIdIsNull,
-            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId)), // TODO add logger info
+            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId), projectIdLoggerStatement),
             null);
 
     bodyStatements.add(setQuotaProjectIdStatement);
@@ -621,12 +635,20 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
+    ExprStatement backgroundExecutorLoggerStatement =
+        LoggerUtils.createLoggerStatement(
+            ArithmeticOperationExpr.concatWithExprs(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue("Background executor thread count is ")),
+                getExecutorThreadCount),
+            types);
     IfStatement setBackgroundExecutorProviderStatement =
         createIfStatement(
             executorThreadCountIsNull,
             Arrays.asList(
                 ExprStatement.withExpr(executorProviderAssignExpr),
-                ExprStatement.withExpr(setBackgroundExecutorProvider)), // TODO add logger info
+                ExprStatement.withExpr(setBackgroundExecutorProvider),
+                backgroundExecutorLoggerStatement),
             null);
 
     bodyStatements.add(setBackgroundExecutorProviderStatement);
@@ -664,7 +686,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     IfStatement setTransportChannelProviderStatement =
         createIfStatement(
-            getUseRest, Arrays.asList(ExprStatement.withExpr(setTransportProvider)), null);
+            getUseRest,
+            Arrays.asList(
+                ExprStatement.withExpr(setTransportProvider),
+                LoggerUtils.createLoggerStatement(
+                    ValueExpr.withValue(
+                        StringObjectValue.withValue("Using HTTP transport channel")),
+                    types)),
+            null);
 
     bodyStatements.add(setTransportChannelProviderStatement);
 
@@ -721,7 +750,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               IfStatement currentRetrySettingPropertyIfStatement =
                   createIfStatement(
                       currentRetrySettingPropertyIsNull,
-                      Arrays.asList(ExprStatement.withExpr(retrySettingsBuilderChain)),
+                      Arrays.asList(
+                          ExprStatement.withExpr(retrySettingsBuilderChain),
+                          LoggerUtils.createLoggerStatement(
+                              LoggerUtils.concatManyWithExprs(
+                                  ValueExpr.withValue(
+                                      StringObjectValue.withValue(propertyName + " set to ")),
+                                  currentRetrySettingProperty),
+                              types)),
                       null);
               statements.add(currentRetrySettingPropertyIfStatement);
               return statements;
@@ -947,6 +983,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ConditionalOnProperty", conditionalOnProperty);
     typeMap.put("ConditionalOnClass", conditionalOnClass);
     typeMap.put("Qualifier", qualifier);
+    typeMap.put("Log", LoggerUtils.getLoggerType());
+    typeMap.put("LogFactory", LoggerUtils.getLoggerFactoryType());
 
     return typeMap;
   }
