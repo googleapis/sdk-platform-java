@@ -175,7 +175,6 @@ _java_gapic_samples_srcjar = rule(
     implementation = _java_gapic_samples_srcjar_impl,
 )
 
-
 def _java_gapic_spring_srcjar_impl(ctx):
     gapic_srcjar = ctx.file.gapic_srcjar
     output_srcjar_name = ctx.label.name
