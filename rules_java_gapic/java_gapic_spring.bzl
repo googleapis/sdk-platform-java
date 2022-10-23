@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#load("@rules_gapic//:gapic.bzl", "proto_custom_library")
-
 load("@rules_gapic//:gapic.bzl", "proto_custom_library")
+
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
 def _java_gapic_spring_postprocess_srcjar_impl(ctx):
@@ -78,9 +77,6 @@ def java_gapic_spring_library(
         service_yaml = None,
         deps = [],
         test_deps = [],
-        # possible values are: "grpc", "rest", "grpc+rest"
-        transport = None,
-        rest_numeric_enums = False,
         **kwargs):
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
@@ -91,8 +87,6 @@ def java_gapic_spring_library(
         grpc_service_config = grpc_service_config,
         gapic_yaml = gapic_yaml,
         service_yaml = service_yaml,
-        transport = transport,
-        rest_numeric_enums = rest_numeric_enums,
         **kwargs
     )
 
@@ -108,21 +102,11 @@ def _java_gapic_spring_srcjar(
         grpc_service_config,
         gapic_yaml,
         service_yaml,
-        # possible values are: "grpc", "rest", "grpc+rest"
-        transport,
-        rest_numeric_enums,
         # Can be used to provide a java_library with a customized generator,
         # like the one which dumps descriptor to a file for future debugging.
         java_generator_name = "java_gapic_spring",
         **kwargs):
     file_args_dict = {}
-
-    if grpc_service_config:
-        file_args_dict[grpc_service_config] = "grpc-service-config"
-    elif not transport or transport == "grpc":
-        for keyword in NO_GRPC_CONFIG_ALLOWLIST:
-            if keyword not in name:
-                fail("Missing a gRPC service config file")
 
     if gapic_yaml:
         file_args_dict[gapic_yaml] = "gapic-config"
@@ -131,12 +115,6 @@ def _java_gapic_spring_srcjar(
         file_args_dict[service_yaml] = "api-service-config"
 
     opt_args = []
-
-    if transport:
-        opt_args.append("transport=%s" % transport)
-
-    if rest_numeric_enums:
-        opt_args.append("rest-numeric-enums")
 
     # Produces the GAPIC metadata file if this flag is set. to any value.
     # Protoc invocation: --java_gapic_opt=metadata
