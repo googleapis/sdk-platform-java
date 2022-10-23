@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,10 @@
 
 load("@rules_gapic//:gapic.bzl", "proto_custom_library")
 
-NO_GRPC_CONFIG_ALLOWLIST = ["library"]
-
 def _java_gapic_spring_postprocess_srcjar_impl(ctx):
     gapic_srcjar = ctx.file.gapic_srcjar
     output_srcjar_name = ctx.label.name
+    srcjar_name = output_srcjar_name + "_raw.srcjar"
     output_spring = ctx.outputs.spring
     formatter = ctx.executable.formatter
 
@@ -26,21 +25,25 @@ def _java_gapic_spring_postprocess_srcjar_impl(ctx):
     output_dir_path = "%s/%s" % (output_spring.dirname, output_dir_name)
 
     script = """
+    WORKING_DIR=`pwd`
     cd $WORKING_DIR
-
-    unzip -q temp-codegen-spring.srcjar -d {output_dir_path}/spring
+    mkdir {output_dir_path}/spring
+    unzip -q {gapic_srcjar}
+    unzip -q temp-codegen-spring.srcjar -d {output_dir_path}
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
     {formatter} --replace $(find {output_dir_path}/spring -type f -printf "%p ")
 
     # Spring source files.
-    cd {output_dir_path}/spring
-    zip -r $WORKING_DIR/{output_srcjar_name}-spring.srcjar ./
+    cd {output_dir_path}/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
 
     cd $WORKING_DIR
 
-    mv {output_srcjar_name}-spring.srcjar {output_spring}
+    mv $WORKING_DIR/{output_srcjar_name}.srcjar {output_spring}
     """.format(
         output_srcjar_name = output_srcjar_name,
+        gapic_srcjar = gapic_srcjar.path,
+        srcjar_name = srcjar_name,
         formatter = formatter,
         output_dir_name = output_dir_name,
         output_dir_path = output_dir_path,
@@ -76,8 +79,8 @@ def java_gapic_spring_library(
         gapic_yaml = None,
         service_yaml = None,
         **kwargs):
-    srcjar_name = name + "_srcjar"
-    raw_srcjar_name = srcjar_name + "_raw"
+    library_name = name + "-spring"
+    raw_srcjar_name = name + "_raw"
 
     _java_gapic_spring_srcjar(
         name = raw_srcjar_name,
@@ -89,7 +92,7 @@ def java_gapic_spring_library(
     )
 
     _java_gapic_spring_postprocess_srcjar(
-        name = srcjar_name,
+        name = name,
         gapic_srcjar = "%s.srcjar" % raw_srcjar_name,
         **kwargs
     )
