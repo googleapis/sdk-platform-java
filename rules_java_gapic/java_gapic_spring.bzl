@@ -75,8 +75,6 @@ def java_gapic_spring_library(
         grpc_service_config = None,
         gapic_yaml = None,
         service_yaml = None,
-        deps = [],
-        test_deps = [],
         **kwargs):
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
