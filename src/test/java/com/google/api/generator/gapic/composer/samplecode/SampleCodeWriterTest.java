@@ -132,7 +132,7 @@ public class SampleCodeWriterTest {
             "\n",
             "package com.google.samples;\n",
             "\n",
-            "// [START testing_v1_generated_samples_write_executablesample_sync]\n",
+            "// [START testing_v1_generated_Samples_Write_ExecutableSample_sync]\n",
             "import com.google.api.gax.rpc.ClientSettings;\n",
             "\n",
             "public class SyncWriteExecutableSample {\n",
@@ -153,7 +153,7 @@ public class SampleCodeWriterTest {
             "    }\n",
             "  }\n",
             "}\n",
-            "// [END testing_v1_generated_samples_write_executablesample_sync]\n");
+            "// [END testing_v1_generated_Samples_Write_ExecutableSample_sync]\n");
     Assert.assertEquals(expected, result);
   }
 

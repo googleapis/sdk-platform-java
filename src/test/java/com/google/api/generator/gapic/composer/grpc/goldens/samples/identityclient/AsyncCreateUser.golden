@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_createuser_async]
+// [START goldensample_generated_Identity_CreateUser_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.CreateUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
@@ -47,4 +47,4 @@ public class AsyncCreateUser {
     }
   }
 }
-// [END goldensample_generated_identityclient_createuser_async]
+// [END goldensample_generated_Identity_CreateUser_async]

@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_chat_async]
+// [START goldensample_generated_Echo_Chat_async]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -53,4 +53,4 @@ public class AsyncChat {
     }
   }
 }
-// [END goldensample_generated_echoclient_chat_async]
+// [END goldensample_generated_Echo_Chat_async]
