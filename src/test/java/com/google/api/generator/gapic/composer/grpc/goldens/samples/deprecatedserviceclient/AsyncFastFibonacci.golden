@@ -16,7 +16,7 @@
 
 package com.google.testdata.v1.samples;
 
-// [START goldensample_generated_deprecatedserviceclient_fastfibonacci_async]
+// [START goldensample_generated_DeprecatedService_FastFibonacci_async]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.testdata.v1.DeprecatedServiceClient;
@@ -42,4 +42,4 @@ public class AsyncFastFibonacci {
     }
   }
 }
-// [END goldensample_generated_deprecatedserviceclient_fastfibonacci_async]
+// [END goldensample_generated_DeprecatedService_FastFibonacci_async]

@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_createuser_stringstringstringstringstringintstringstringstringstring_sync]
+// [START goldensample_generated_Identity_CreateUser_StringStringStringStringStringIntStringStringStringString_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
 import com.google.showcase.v1beta1.UserName;
@@ -60,4 +60,4 @@ public class SyncCreateUserStringStringStringStringStringIntStringStringStringSt
     }
   }
 }
-// [END goldensample_generated_identityclient_createuser_stringstringstringstringstringintstringstringstringstring_sync]
+// [END goldensample_generated_Identity_CreateUser_StringStringStringStringStringIntStringStringStringString_sync]

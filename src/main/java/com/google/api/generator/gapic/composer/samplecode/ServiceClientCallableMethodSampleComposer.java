@@ -42,6 +42,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -124,7 +125,8 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(
+                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -278,7 +280,8 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(
+                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
             .setRpcName(method.name())
             .setOverloadDisambiguation("Paged")
             .setIsAsynchronous(true)
@@ -394,7 +397,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientType.reference().name())
+            .setServiceName(ClassNames.getPureServiceName(clientType.reference().name()))
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .setOverloadDisambiguation("LRO")
@@ -531,7 +534,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientType.reference().name())
+            .setServiceName(ClassNames.getPureServiceName(clientType.reference().name()))
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -717,7 +720,8 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(
+                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -796,7 +800,8 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(
+                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -928,7 +933,8 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(
+                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
