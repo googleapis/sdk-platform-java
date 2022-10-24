@@ -16,18 +16,16 @@ package com.google.api.generator.spring.composer;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
-import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SpringComposerTest {
+public class SpringPackageInfoComposerTest {
   private GapicContext context;
 
   @Before
@@ -36,23 +34,14 @@ public class SpringComposerTest {
   }
 
   @Test
-  public void spring_composer_test() {
-
-    List<GapicClass> gapicClasses = SpringComposer.composeServiceAutoConfigClasses(context);
-    GapicPackageInfo packageInfo = SpringComposer.composePackageInfo(context);
-
-    // write to verify result for now
-    for (GapicClass gapicClazz : gapicClasses) {
-      String fileName = gapicClazz.classDefinition().classIdentifier() + "Full.golden";
-      Assert.assertGoldenClass(this.getClass(), gapicClazz, fileName);
-    }
-
-    String packageInfoFileName = "SpringPackageInfoFull.golden";
+  public void generateSpringPackageInfoTest() {
+    GapicPackageInfo packageInfo = SpringPackageInfoComposer.generatePackageInfo(this.context);
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     packageInfo.packageInfo().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), packageInfoFileName, visitor.write());
-    Path packageInfoGoldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), packageInfoFileName);
-    Assert.assertCodeEquals(packageInfoGoldenFilePath, visitor.write());
+    String fileName = "SpringPackageInfo.golden";
+
+    Utils.saveCodegenToFile(this.getClass(), fileName, visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), fileName);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

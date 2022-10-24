@@ -23,7 +23,6 @@ import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
-import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -61,8 +60,8 @@ public class SpringWriter {
     writeAutoConfigRegistration(context, jos);
     writeSpringAdditionalMetadataJson(context, jos);
 
-    // TODO: metadata and package info not custimized for Spring
-    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    // write package-info.java
+    writePackageInfo(gapicPackageInfo, codeWriter, jos);
 
     try {
       jos.finish();
@@ -111,8 +110,7 @@ public class SpringWriter {
     String code = codeWriter.write();
     codeWriter.clear();
 
-    String packagePath =
-        "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/") + "/spring";
+    String packagePath = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
     JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", packagePath));
     try {
       jos.putNextEntry(jarEntry);
@@ -121,19 +119,6 @@ public class SpringWriter {
       throw new GapicWriterException("Could not write code for package-info.java", e);
     }
     return packagePath;
-  }
-
-  private static void writeMetadataFile(GapicContext context, String path, JarOutputStream jos) {
-    if (context.gapicMetadataEnabled()) {
-      JarEntry jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
-      try {
-        jos.putNextEntry(jarEntry);
-        jos.write(
-            JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
-      } catch (IOException e) {
-        throw new GapicWriterException("Could not write gapic_metadata.json", e);
-      }
-    }
   }
 
   private static void writeAutoConfigRegistration(GapicContext context, JarOutputStream jos) {
@@ -201,9 +186,5 @@ public class SpringWriter {
       path = "proto/" + path;
     }
     return path;
-  }
-
-  private static String getSamplePackage(GapicClass gapicClazz) {
-    return gapicClazz.classDefinition().packageString().concat(".samples");
   }
 }
