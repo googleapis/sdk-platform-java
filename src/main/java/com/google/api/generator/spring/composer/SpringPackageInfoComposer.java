@@ -20,15 +20,41 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.Preconditions;
 import javax.annotation.Generated;
 
 public class SpringPackageInfoComposer {
+  private static final String DIVIDER = "=======================";
   private static final String PACKAGE_INFO_TITLE_PATTERN =
       "Spring Boot auto-configurations for %s.";
+  private static final String PACKAGE_INFO_DESCRIPTION =
+      "The services with auto-configured service client beans provided are listed below.";
+  private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
+  private static final String SPRING_USAGE_PATTERN =
+      "You can inject an auto-configured service client bean to your Spring Boot application "
+          + "with annotation-based field injection (e.g. {@code {@literal @}Autowired private %s %s;}) "
+          + "or constructor injection, as shown in "
+          + "https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using.spring-beans-and-dependency-injection.";
+
+  // TODO (emmwang): Is there value in a more verbose sample snippet, like the following?
+  // @Component
+  // public class MyComponent {
+  //   @Autowired private EchoClient autoClient;
+  // }
+  //
+  // @Component
+  // public class MyComponent {
+  //   private EchoClient autoClient;
+  //
+  //   public MyService(EchoClient echoClient) {
+  //     this.autoClient = echoClient;
+  //   }
+  // }
 
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
     Preconditions.checkState(!context.services().isEmpty(), "No services found to generate");
@@ -50,6 +76,58 @@ public class SpringPackageInfoComposer {
     javaDocCommentBuilder =
         javaDocCommentBuilder.addComment(
             String.format(PACKAGE_INFO_TITLE_PATTERN, Utils.getLibName(context)));
+
+    String firstClientName = ClassNames.getServiceClientClassName(context.services().get(0));
+    javaDocCommentBuilder =
+        javaDocCommentBuilder
+            .addParagraph("")
+            .addUnescapedComment(
+                String.format(SPRING_USAGE_PATTERN, firstClientName, "auto" + firstClientName));
+
+    javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(PACKAGE_INFO_DESCRIPTION);
+
+    for (Service service : context.services()) {
+      String javaClientName = ClassNames.getServiceClientClassName(service);
+      javaDocCommentBuilder =
+          javaDocCommentBuilder.addParagraph(
+              String.format("%s %s %s", DIVIDER, javaClientName, DIVIDER));
+
+      // TODO (emmwang): decide whether to keep (and format) or remove service description
+      if (service.hasDescription()) {
+        javaDocCommentBuilder.addParagraph(
+            String.format(SERVICE_DESCRIPTION_HEADER_PATTERN, service.description()));
+
+        // String[] descriptionParagraphs = service.description().split("\\n\\n");
+        // for (int i = 0; i < descriptionParagraphs.length; i++) {
+        //   boolean startsWithItemizedList = descriptionParagraphs[i].startsWith(" * ");
+        //   // Split by listed items, then join newlines.
+        //   List<String> listItems =
+        //       Stream.of(descriptionParagraphs[i].split("\\n \\*"))
+        //           .map(s -> s.replace("\n", ""))
+        //           .collect(Collectors.toList());
+        //   if (startsWithItemizedList) {
+        //     // Remove the first asterisk.
+        //     listItems.set(0, listItems.get(0).substring(2));
+        //   }
+        //
+        //   if (!startsWithItemizedList) {
+        //     if (i == 0) {
+        //       javaDocCommentBuilder =
+        //           javaDocCommentBuilder.addParagraph(
+        //               String.format(SERVICE_DESCRIPTION_HEADER_PATTERN, listItems.get(0)));
+        //     } else {
+        //       javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(listItems.get(0));
+        //     }
+        //   }
+        //   if (listItems.size() > 1 || startsWithItemizedList) {
+        //     javaDocCommentBuilder =
+        //         javaDocCommentBuilder.addUnorderedList(
+        //             listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()));
+        //   }
+        // }
+      }
+    }
+
     return CommentStatement.withComment(javaDocCommentBuilder.build());
   }
 }

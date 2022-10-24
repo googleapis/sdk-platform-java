@@ -14,7 +14,18 @@
  * limitations under the License.
  */
 
-/** Spring Boot auto-configurations for localhost:7469. */
+/**
+ * Spring Boot auto-configurations for localhost:7469.
+ *
+ * <p>You can inject an auto-configured service client bean to your Spring Boot application with
+ * annotation-based field injection (e.g. {@code {@literal @}Autowired private EchoClient
+ * autoEchoClient;}) or constructor injection, as shown in
+ * https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using.spring-beans-and-dependency-injection.
+ *
+ * <p>The services with auto-configured service client beans provided are listed below.
+ *
+ * <p>======================= EchoClient =======================
+ */
 @Generated("by gapic-generator-java")
 package com.google.showcase.v1beta1.spring;
 
