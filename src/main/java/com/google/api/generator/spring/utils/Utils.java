@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.spring.composer;
+package com.google.api.generator.spring.utils;
 
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.Expr;

@@ -20,7 +20,7 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.spring.composer.Utils;
+import com.google.api.generator.spring.utils.Utils;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
