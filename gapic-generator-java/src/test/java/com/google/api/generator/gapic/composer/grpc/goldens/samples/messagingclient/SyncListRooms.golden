@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_listrooms_sync]
+// [START goldensample_generated_Messaging_ListRooms_sync]
 import com.google.showcase.v1beta1.ListRoomsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
@@ -45,4 +45,4 @@ public class SyncListRooms {
     }
   }
 }
-// [END goldensample_generated_messagingclient_listrooms_sync]
+// [END goldensample_generated_Messaging_ListRooms_sync]

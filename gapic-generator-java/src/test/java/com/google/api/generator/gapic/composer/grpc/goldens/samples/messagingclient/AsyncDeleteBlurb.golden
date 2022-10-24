@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_deleteblurb_async]
+// [START goldensample_generated_Messaging_DeleteBlurb_async]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.BlurbName;
@@ -46,4 +46,4 @@ public class AsyncDeleteBlurb {
     }
   }
 }
-// [END goldensample_generated_messagingclient_deleteblurb_async]
+// [END goldensample_generated_Messaging_DeleteBlurb_async]
