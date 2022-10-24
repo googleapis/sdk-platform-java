@@ -197,7 +197,7 @@ public class SpringWriter {
     String clientLibraryName = "{{client-library-artifact-id}}";
     String clientLibraryVersion = "{{client-library-version}}";
 
-    String springStarterArtifactId = pakkageName + "spring-boot-starter";
+    String springStarterArtifactId = pakkageName + "-spring-starter";
     String springStarterVersion = "{{starter-version}}";
     String springStarterName = "Spring Boot Starter - " + clientLibraryShortName;
 
