@@ -93,36 +93,6 @@ public class ComposerTest {
     }
   }
 
-  // TODO (emmwang): these tests now test the Service class - move to ServiceTest.java?
-
-  @Test
-  public void parseDefaultHost_shouldReturnApiShortNameIfHostContainsRegionalEndpoint() {
-    String defaultHost = "us-east1-pubsub.googleapis.com";
-    Service testService = echoProtoService.toBuilder().setDefaultHost(defaultHost).build();
-    assertEquals("pubsub", testService.apiShortName());
-  }
-
-  @Test
-  public void parseDefaultHost_shouldReturnApiShortName() {
-    String defaultHost = "logging.googleapis.com";
-    Service testService = echoProtoService.toBuilder().setDefaultHost(defaultHost).build();
-    assertEquals("logging", testService.apiShortName());
-  }
-
-  @Test
-  public void parseDefaultHost_shouldReturnApiShortNameForIam() {
-    String defaultHost = "iam-meta-api.googleapis.com";
-    Service testService = echoProtoService.toBuilder().setDefaultHost(defaultHost).build();
-    assertEquals("iam", testService.apiShortName());
-  }
-
-  @Test
-  public void parseDefaultHost_shouldReturnHostIfNoPeriods() {
-    String defaultHost = "logging:7469";
-    Service testService = echoProtoService.toBuilder().setDefaultHost(defaultHost).build();
-    assertEquals("logging:7469", testService.apiShortName());
-  }
-
   @Test
   public void gapicClass_addRegionTagAndHeaderToSample() {
     Sample testSample;
@@ -135,13 +105,13 @@ public class ComposerTest {
   @Test
   public void composeSamples_parseProtoPackage() {
 
-    // TODO (emmwang): clean up / refactor repeated code in this test?
-
     String defaultHost = "accessapproval.googleapis.com:443";
     String protoPack = "google.cloud.accessapproval.v1";
     Service testService =
         echoProtoService.toBuilder().setDefaultHost(defaultHost).setProtoPakkage(protoPack).build();
-    List<Sample> composedSamples = composeSamplesFromService(testService);
+    List<GapicClass> testClassList = getTestClassListFromService(testService);
+    List<Sample> composedSamples =
+        Composer.prepareExecutableSamples(testClassList).get(0).samples();
 
     // If samples is empty, the test automatically passes without checking.
     assertFalse(composedSamples.isEmpty());
@@ -157,8 +127,9 @@ public class ComposerTest {
     protoPack = "google.cloud.vision.v1p1beta1";
     defaultHost = "vision.googleapis.com";
     testService =
-        echoProtoService.toBuilder().setDefaultHost(defaultHost).setProtoPakkage(protoPack).build();
-    composedSamples = composeSamplesFromService(testService);
+        testService.toBuilder().setDefaultHost(defaultHost).setProtoPakkage(protoPack).build();
+    testClassList = getTestClassListFromService(testService);
+    composedSamples = Composer.prepareExecutableSamples(testClassList).get(0).samples();
     // If samples is empty, the test automatically passes without checking.
     assertFalse(composedSamples.isEmpty());
 
@@ -169,8 +140,9 @@ public class ComposerTest {
 
     protoPack = "google.cloud.vision";
     testService =
-        echoProtoService.toBuilder().setDefaultHost(defaultHost).setProtoPakkage(protoPack).build();
-    composedSamples = composeSamplesFromService(testService);
+        testService.toBuilder().setDefaultHost(defaultHost).setProtoPakkage(protoPack).build();
+    testClassList = getTestClassListFromService(testService);
+    composedSamples = Composer.prepareExecutableSamples(testClassList).get(0).samples();
     // If samples is empty, the test automatically passes without checking.
     assertFalse(composedSamples.isEmpty());
 
@@ -180,7 +152,7 @@ public class ComposerTest {
     }
   }
 
-  private List<Sample> composeSamplesFromService(Service testService) {
+  private List<GapicClass> getTestClassListFromService(Service testService) {
     GapicClass testClass =
         GrpcServiceCallableFactoryClassComposer.instance()
             .generate(context, testService)
@@ -188,7 +160,6 @@ public class ComposerTest {
             .withApiShortName(testService.apiShortName())
             .withApiVersion(testService.apiVersion());
     List<GapicClass> testClassList = Arrays.asList(new GapicClass[] {testClass});
-    List<Sample> testSamples = Composer.prepareExecutableSamples(testClassList).get(0).samples();
-    return testSamples;
+    return testClassList;
   }
 }
