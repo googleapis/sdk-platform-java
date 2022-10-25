@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousArrayAnnotationExpr;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -163,6 +164,19 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ScopeNode scope) {
     buffer.append(scope.toString());
+  }
+
+  @Override
+  public void visit(AnonymousArrayAnnotationExpr expr) {
+    buffer.append(LEFT_BRACE);
+    for (int i = 0; i < expr.exprs().size(); i++) {
+      expr.exprs().get(i).accept(this);
+      if (i < expr.exprs().size() - 1) {
+        buffer.append(COMMA);
+        buffer.append(SPACE);
+      }
+    }
+    buffer.append(RIGHT_BRACE);
   }
 
   @Override

@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousArrayAnnotationExpr;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -63,6 +64,7 @@ import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -306,6 +308,40 @@ public class JavaWriterVisitorTest {
     assertThat(exceptionForAddDescription)
         .hasMessageThat()
         .contains("Multiple parameters must have names");
+  }
+
+  @Test
+  public void writeAnonymousArrayAnnotationExpr_add1StringExpr() {
+    AnonymousArrayAnnotationExpr expr =
+        AnonymousArrayAnnotationExpr.builder()
+            .addExpr(ValueExpr.builder().setValue(StringObjectValue.withValue("test1")).build())
+            .build();
+    expr.accept(writerVisitor);
+    assertEquals("{\"test1\"}", writerVisitor.write());
+  }
+
+  @Test
+  public void writeAnonymousArrayAnnotationExpr_addManyStrExpr() {
+    AnonymousArrayAnnotationExpr expr =
+        AnonymousArrayAnnotationExpr.builder()
+            .addExpr(generateStringValueExpr("test1"))
+            .addExpr(generateStringValueExpr("test2"))
+            .addExpr(generateStringValueExpr("test3"))
+            .build();
+    expr.accept(writerVisitor);
+    assertEquals("{\"test1\", \"test2\", \"test3\"}", writerVisitor.write());
+  }
+
+  @Test
+  public void writeAnonymousArrayAnnotationExpr_addManyClassExpr() {
+    AnonymousArrayAnnotationExpr expr =
+        AnonymousArrayAnnotationExpr.builder()
+            .addExpr(generateClassValueExpr("Class1"))
+            .addExpr(generateClassValueExpr("Class2"))
+            .addExpr(generateClassValueExpr("Class3"))
+            .build();
+    expr.accept(writerVisitor);
+    assertEquals("{Class1.class, Class2.class, Class3.class}", writerVisitor.write());
   }
 
   @Test
@@ -2705,5 +2741,21 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
+  }
+
+  private static ValueExpr generateStringValueExpr(String value) {
+    return ValueExpr.builder().setValue(StringObjectValue.withValue(value)).build();
+  }
+
+  private static VariableExpr generateClassValueExpr(String clazzName) {
+    return VariableExpr.builder()
+        .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+        .setStaticReferenceType(
+            TypeNode.builder()
+                .setReference(
+                    VaporReference.builder().setName(clazzName).setPakkage("com.test").build())
+                .setTypeKind(TypeKind.OBJECT)
+                .build())
+        .build();
   }
 }
