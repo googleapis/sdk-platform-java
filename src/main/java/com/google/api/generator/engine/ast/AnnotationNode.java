@@ -119,7 +119,7 @@ public abstract class AnnotationNode implements AstNode {
     }
 
     /**
-     * To add an AssignmentExpr as parameter. Can be used repeatedly to add multiple parameters.
+     * To add an AnonymousArrayAnnotationExpr as parameter. Can be used repeatedly to add multiple parameters.
      *
      * @param anonymousArrayAnnotationExpr
      * @return Builder
