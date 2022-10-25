@@ -38,6 +38,16 @@ public class ServiceClientCallableMethodSampleComposerTest {
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
   private static final String PAGINATED_FIELD_NAME = "page_size";
+  private static final Service BasicService =
+      Service.builder()
+          .setName("Echo")
+          .setDefaultHost("localhost:7469")
+          .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+          .setPakkage(SHOWCASE_PACKAGE_NAME)
+          .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+          .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+          .setOverriddenName("Echo")
+          .build();
 
   /*Testing composeLroCallableMethod*/
   @Test
