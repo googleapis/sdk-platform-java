@@ -51,7 +51,7 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
     protected abstract AnonymousArrayAnnotationExpr.Builder setType(TypeNode type);
 
     /**
-     * To set single String as description.
+     * To set many string expressions as the content
      *
      * @param exprs
      * @return Builder
@@ -68,6 +68,7 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
 
     /**
      * To set the list of expressions for the anonymous array
+     * Validates that every expression is of the same type
      *
      * @param exprs
      * @return Builder
@@ -86,16 +87,17 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
     }
 
     /**
-     * To add an AssignmentExpr as parameter. Can be used repeatedly to add multiple parameters.
+     * To add an Expr as to our list. Can be used repeatedly to add multiple parameters.
+     * same-type validation is performed
      *
-     * @param valueExpr
+     * @param expr
      * @return Builder
      */
-    public AnonymousArrayAnnotationExpr.Builder addExpr(Expr valueExpr) {
-      return addExprToList(valueExpr);
+    public AnonymousArrayAnnotationExpr.Builder addExpr(Expr expr) {
+      return addExprToList(expr);
     }
 
-    // this method is private, and called only by addDescription(AssignmentExpr expr)
+    // this method is private, and called only by addExpr(Expr expr)
     private AnonymousArrayAnnotationExpr.Builder addExprToList(Expr expr) {
       List<Expr> exprList = exprs();
       if (exprList == null) {
@@ -105,7 +107,7 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
       return setExprsList(exprList);
     }
 
-    // this setter is private, and called only by setDescription() and setDescriptions() above.
+    // this setter is private, and called only by setExprsList() to ensured sanitized contents
     abstract AnonymousArrayAnnotationExpr.Builder setExprs(List<Expr> descriptionExprs);
 
     abstract AnonymousArrayAnnotationExpr autoBuild();

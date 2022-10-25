@@ -73,6 +73,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.util.TestUtils;
 import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
@@ -324,9 +325,9 @@ public class JavaWriterVisitorTest {
   public void writeAnonymousArrayAnnotationExpr_addManyStrExpr() {
     AnonymousArrayAnnotationExpr expr =
         AnonymousArrayAnnotationExpr.builder()
-            .addExpr(generateStringValueExpr("test1"))
-            .addExpr(generateStringValueExpr("test2"))
-            .addExpr(generateStringValueExpr("test3"))
+            .addExpr(TestUtils.generateStringValueExpr("test1"))
+            .addExpr(TestUtils.generateStringValueExpr("test2"))
+            .addExpr(TestUtils.generateStringValueExpr("test3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{\"test1\", \"test2\", \"test3\"}", writerVisitor.write());
@@ -336,9 +337,9 @@ public class JavaWriterVisitorTest {
   public void writeAnonymousArrayAnnotationExpr_addManyClassExpr() {
     AnonymousArrayAnnotationExpr expr =
         AnonymousArrayAnnotationExpr.builder()
-            .addExpr(generateClassValueExpr("Class1"))
-            .addExpr(generateClassValueExpr("Class2"))
-            .addExpr(generateClassValueExpr("Class3"))
+            .addExpr(TestUtils.generateClassValueExpr("Class1"))
+            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .addExpr(TestUtils.generateClassValueExpr("Class3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{Class1.class, Class2.class, Class3.class}", writerVisitor.write());
@@ -2741,21 +2742,5 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
-  }
-
-  private static ValueExpr generateStringValueExpr(String value) {
-    return ValueExpr.builder().setValue(StringObjectValue.withValue(value)).build();
-  }
-
-  private static VariableExpr generateClassValueExpr(String clazzName) {
-    return VariableExpr.builder()
-        .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
-        .setStaticReferenceType(
-            TypeNode.builder()
-                .setReference(
-                    VaporReference.builder().setName(clazzName).setPakkage("com.test").build())
-                .setTypeKind(TypeKind.OBJECT)
-                .build())
-        .build();
   }
 }
