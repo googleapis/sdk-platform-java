@@ -118,6 +118,16 @@ public abstract class AnnotationNode implements AstNode {
       return addDescriptionToList(assignmentExpr);
     }
 
+    /**
+     * To add an AssignmentExpr as parameter. Can be used repeatedly to add multiple parameters.
+     *
+     * @param anonymousArrayAnnotationExpr
+     * @return Builder
+     */
+    public Builder addDescription(AnonymousArrayAnnotationExpr anonymousArrayAnnotationExpr) {
+      return addDescriptionToList(anonymousArrayAnnotationExpr);
+    }
+
     private Builder setDescriptions(List<Expr> exprList) {
       return setDescriptionExprs(exprList);
     }
