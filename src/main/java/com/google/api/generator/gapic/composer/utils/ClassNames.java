@@ -123,11 +123,4 @@ public class ClassNames {
         ? rawServiceName.replace("IAM", "Iam")
         : rawServiceName;
   }
-
-  // For region tags, the service name should not include `Client` in the name
-  public static String getPureServiceName(String serviceClassName) {
-    return String.format(
-        "%s",
-        Iterables.getFirst(Splitter.on(CLIENT_SUFFIX).split(serviceClassName), serviceClassName));
-  }
 }
