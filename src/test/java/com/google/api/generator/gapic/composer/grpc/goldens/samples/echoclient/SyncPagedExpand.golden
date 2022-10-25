@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_pagedexpand_sync]
+// [START goldensample_generated_Echo_PagedExpand_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -46,4 +46,4 @@ public class SyncPagedExpand {
     }
   }
 }
-// [END goldensample_generated_echoclient_pagedexpand_sync]
+// [END goldensample_generated_Echo_PagedExpand_sync]

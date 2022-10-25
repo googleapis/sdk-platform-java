@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -206,7 +207,7 @@ public class ServiceClientHeaderSampleComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientName)
+            .setServiceName(ClassNames.getPureServiceName(clientName))
             .setRpcName(rpcName)
             .setOverloadDisambiguation("setCredentialsProvider")
             .build();
@@ -273,7 +274,7 @@ public class ServiceClientHeaderSampleComposer {
             .build();
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientName)
+            .setServiceName(ClassNames.getPureServiceName(clientName))
             .setRpcName(rpcName)
             .setOverloadDisambiguation("setEndpoint")
             .build();
@@ -346,7 +347,7 @@ public class ServiceClientHeaderSampleComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientName)
+            .setServiceName(ClassNames.getPureServiceName(clientName))
             .setRpcName(rpcName)
             .setOverloadDisambiguation("setCredentialsProvider")
             .build();

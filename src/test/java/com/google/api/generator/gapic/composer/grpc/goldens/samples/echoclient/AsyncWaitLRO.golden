@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_wait_lro_async]
+// [START goldensample_generated_Echo_Wait_LRO_async]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -44,4 +44,4 @@ public class AsyncWaitLRO {
     }
   }
 }
-// [END goldensample_generated_echoclient_wait_lro_async]
+// [END goldensample_generated_Echo_Wait_LRO_async]

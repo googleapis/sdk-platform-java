@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_updateblurb_async]
+// [START goldensample_generated_Messaging_UpdateBlurb_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -43,4 +43,4 @@ public class AsyncUpdateBlurb {
     }
   }
 }
-// [END goldensample_generated_messagingclient_updateblurb_async]
+// [END goldensample_generated_Messaging_UpdateBlurb_async]

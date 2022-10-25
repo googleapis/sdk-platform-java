@@ -16,7 +16,7 @@
 
 package com.google.testdata.v1.samples;
 
-// [START goldensample_generated_deprecatedserviceclient_slowfibonacci_sync]
+// [START goldensample_generated_DeprecatedService_SlowFibonacci_sync]
 import com.google.protobuf.Empty;
 import com.google.testdata.v1.DeprecatedServiceClient;
 import com.google.testdata.v1.FibonacciRequest;
@@ -39,4 +39,4 @@ public class SyncSlowFibonacci {
     }
   }
 }
-// [END goldensample_generated_deprecatedserviceclient_slowfibonacci_sync]
+// [END goldensample_generated_DeprecatedService_SlowFibonacci_sync]
