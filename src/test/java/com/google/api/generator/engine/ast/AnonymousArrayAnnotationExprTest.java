@@ -2,6 +2,7 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.generator.util.TestUtils;
 import org.junit.Test;
 
 public class AnonymousArrayAnnotationExprTest {

@@ -3,15 +3,18 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class AnonymousArrayAnnotationExpr implements AstNode {
+public abstract class AnonymousArrayAnnotationExpr implements Expr {
 
   @Nullable
   public abstract List<Expr> exprs();
+
+  public abstract TypeNode type();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -20,6 +23,18 @@ public abstract class AnonymousArrayAnnotationExpr implements AstNode {
 
   public static AnonymousArrayAnnotationExpr.Builder builder() {
     return new AutoValue_AnonymousArrayAnnotationExpr.Builder();
+  }
+
+  public static AnonymousArrayAnnotationExpr withStrings(String ...stringValues) {
+    return AnonymousArrayAnnotationExpr.builder()
+        .setExprsString(Arrays.asList(stringValues))
+        .build();
+  }
+
+  public static AnonymousArrayAnnotationExpr withExprs(Expr ...exprs) {
+    return AnonymousArrayAnnotationExpr.builder()
+        .setExprsList(Arrays.asList(exprs))
+        .build();
   }
 
   @AutoValue.Builder
@@ -32,6 +47,8 @@ public abstract class AnonymousArrayAnnotationExpr implements AstNode {
     private static final String SAME_TYPE_EXPRS_MESSAGE = "All expressions must have the same type";
 
     abstract List<Expr> exprs();
+
+    protected abstract AnonymousArrayAnnotationExpr.Builder setType(TypeNode type);
 
     /**
      * To set single String as description.
@@ -64,6 +81,7 @@ public abstract class AnonymousArrayAnnotationExpr implements AstNode {
         Preconditions.checkState(currentType.equals(baseType), SAME_TYPE_EXPRS_MESSAGE);
         baseType = currentType;
       }
+      setType(baseType);
       return setExprs(exprs);
     }
 
