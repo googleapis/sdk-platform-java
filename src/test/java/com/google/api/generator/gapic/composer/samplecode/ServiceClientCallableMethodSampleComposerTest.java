@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.protobuf.Descriptors;
@@ -37,6 +38,16 @@ public class ServiceClientCallableMethodSampleComposerTest {
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
   private static final String PAGINATED_FIELD_NAME = "page_size";
+  private static final Service BasicService =
+      Service.builder()
+          .setName("Echo")
+          .setDefaultHost("localhost:7469")
+          .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+          .setPakkage(SHOWCASE_PACKAGE_NAME)
+          .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+          .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+          .setOverriddenName("Echo")
+          .build();
 
   /*Testing composeLroCallableMethod*/
   @Test
@@ -86,7 +97,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeLroCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -143,7 +154,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeLroCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -190,7 +201,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -244,7 +255,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   @Test
@@ -281,7 +292,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   @Test
@@ -332,7 +343,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composePagedCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   /*Testing composeStreamCallableMethod*/
@@ -369,7 +380,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -417,7 +428,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   @Test
@@ -453,7 +464,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -510,7 +521,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   @Test
@@ -546,7 +557,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -617,7 +628,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   /*Testing composeRegularCallableMethod*/
@@ -649,7 +660,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -716,7 +727,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -772,7 +783,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -818,7 +829,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -873,7 +884,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   @Test
@@ -910,7 +921,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   @Test
@@ -961,7 +972,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientCallableMethodSampleComposer.composeRegularCallableMethod(
-                method, clientType, resourceNames, messageTypes));
+                method, clientType, resourceNames, messageTypes, BasicService));
   }
 
   private String writeStatements(Sample sample) {
