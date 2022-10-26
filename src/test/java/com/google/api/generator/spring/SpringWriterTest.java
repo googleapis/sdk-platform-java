@@ -19,8 +19,15 @@ import static org.junit.Assert.assertEquals;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.spring.SpringWriter.GapicWriterException;
+import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.protobuf.ByteString;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.jar.JarOutputStream;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,86 +56,28 @@ public class SpringWriterTest {
   @Test
   public void writeSpringAdditionalMetadataJsonTest() {
     String result = SpringWriter.writeSpringAdditionalMetadataJson(context, jos);
-    // TODO(emmwang): replace with json comparison?
-    String expected =
-        "\n"
-            + "{\n"
-            + "    \"properties\": [\n"
-            + "        {\n"
-            + "            \"name\": \"com.google.showcase.v1beta1.spring.auto.echo.enabled\",\n"
-            + "            \"type\": \"java.lang.Boolean\",\n"
-            + "            \"description\": \"Auto-configure Google Cloud showcase/Echo components.\",\n"
-            + "            \"defaultValue\": true\n"
-            + "        }\n"
-            + "    ]\n"
-            + "}";
-    assertEquals(expected, result);
+    JsonObject jsonResult = JsonParser.parseString(result).getAsJsonObject();
+
+    JsonObject innerExpected = new JsonObject();
+    innerExpected.addProperty("name", "com.google.showcase.v1beta1.spring.auto.echo.enabled");
+    innerExpected.addProperty("type", "java.lang.Boolean");
+    innerExpected.addProperty(
+        "description", "Auto-configure Google Cloud showcase/Echo components.");
+    innerExpected.addProperty("defaultValue", true);
+    JsonArray innerExpectedArray = new JsonArray();
+    innerExpectedArray.add(innerExpected);
+    JsonObject jsonExpected = new JsonObject();
+    jsonExpected.add("properties", innerExpectedArray);
+
+    assertEquals(jsonExpected, jsonResult);
   }
 
   @Test
   public void writePomTest() {
     String result = SpringWriter.writePom(context, jos);
-    // TODO(emmwang): replace with file comparison?
-    String expected =
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-            + "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-            + "  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n"
-            + "  <modelVersion>4.0.0</modelVersion>\n"
-            + "\n"
-            + "  <groupId>com.google.cloud</groupId>\n"
-            + "  <artifactId>com-google-showcase-v1beta1-spring-starter</artifactId>\n"
-            + "  <version>{{starter-version}}</version>\n"
-            + "  <name>Spring Boot Starter - showcase</name>\n"
-            + "  <description>Spring Boot Starter with AutoConfiguration for showcase</description>\n"
-            + "\n"
-            + "\n"
-            + "  <dependencies>\n"
-            + "    <dependency>\n"
-            + "      <groupId>{{client-library-group-id}}</groupId>\n"
-            + "      <artifactId>{{client-library-artifact-id}}</artifactId>\n"
-            + "      <version>{{client-library-version}}</version>\n"
-            + "    </dependency>\n"
-            + "\n"
-            + "    <dependency>\n"
-            + "      <groupId>org.springframework.boot</groupId>\n"
-            + "      <artifactId>spring-boot-starter</artifactId>\n"
-            + "      <version>2.6.3</version>\n"
-            + "    </dependency>\n"
-            + "\n"
-            + "  <dependency>\n"
-            + "    <groupId>com.google.cloud</groupId>\n"
-            + "    <artifactId>spring-cloud-gcp-core</artifactId>\n"
-            + "    <version>3.2.1</version>\n"
-            + "  </dependency>\n"
-            + "</dependencies>\n"
-            + "  <build>\n"
-            + "    <pluginManagement>\n"
-            + "      <plugins>\n"
-            + "        <plugin>\n"
-            + "          <groupId>org.apache.maven.plugins</groupId>\n"
-            + "          <artifactId>maven-jar-plugin</artifactId>\n"
-            + "          <version>3.2.2</version>\n"
-            + "        </plugin>\n"
-            + "      </plugins>\n"
-            + "    </pluginManagement>\n"
-            + "\n"
-            + "    <plugins>\n"
-            + "      <plugin>\n"
-            + "        <groupId>org.apache.maven.plugins</groupId>\n"
-            + "        <artifactId>maven-jar-plugin</artifactId>\n"
-            + "        <configuration>\n"
-            + "          <archive>\n"
-            + "            <manifest>\n"
-            + "              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n"
-            + "            </manifest>\n"
-            + "          </archive>\n"
-            + "        </configuration>\n"
-            + "      </plugin>\n"
-            + "    </plugins>\n"
-            + "  </build>\n"
-            + "\n"
-            + "</project>";
-
-    assertEquals(expected, result);
+    String fileName = "SpringPackagePom.golden";
+    Utils.saveCodegenToFile(this.getClass(), fileName, result);
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), fileName);
+    Assert.assertCodeEquals(goldenFilePath, result);
   }
 }
