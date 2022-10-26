@@ -21,6 +21,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
@@ -122,7 +123,8 @@ public class SpringWriter {
     return packagePath;
   }
 
-  private static void writeAutoConfigRegistration(GapicContext context, JarOutputStream jos) {
+  @VisibleForTesting
+  static String writeAutoConfigRegistration(GapicContext context, JarOutputStream jos) {
     String path = "src/main/resources/META-INF/spring";
     JarEntry jarEntry =
         new JarEntry(
@@ -140,12 +142,14 @@ public class SpringWriter {
                           "%s.spring.%sSpringAutoConfig", service.pakkage(), service.name())));
 
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+      return sb.toString();
     } catch (IOException e) {
       throw new GapicWriterException("Could not write spring.factories", e);
     }
   }
 
-  private static void writeSpringAdditionalMetadataJson(GapicContext context, JarOutputStream jos) {
+  @VisibleForTesting
+  static String writeSpringAdditionalMetadataJson(GapicContext context, JarOutputStream jos) {
     String path = "src/main/resources/META-INF";
     JarEntry jarEntry =
         new JarEntry(String.format("%s/additional-spring-configuration-metadata.json", path));
@@ -169,12 +173,14 @@ public class SpringWriter {
                           Utils.getLibName(context) + "/" + service.name())));
 
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+      return sb.toString();
     } catch (IOException e) {
       throw new GapicWriterException("Could not write spring.factories", e);
     }
   }
 
-  private static void writePom(GapicContext context, JarOutputStream jos) {
+  @VisibleForTesting
+  static String writePom(GapicContext context, JarOutputStream jos) {
     String pakkageName = Utils.getPackageName(context);
     pakkageName = pakkageName.replace('.', '-');
     String clientLibraryShortName = Utils.getLibName(context);
@@ -259,6 +265,7 @@ public class SpringWriter {
               clientLibraryVersion));
 
       jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+      return sb.toString();
     } catch (IOException e) {
       throw new GapicWriterException("Could not write pom.xml", e);
     }
