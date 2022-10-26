@@ -15,8 +15,6 @@
 package com.google.api.generator.gapic.composer.utils;
 
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
