@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/googleapis/api-common-java/compare/v2.2.1...v2.2.2) (2022-08-04)
+
+
+### Dependencies
+
+* update dependency com.google.errorprone:error_prone_annotations to v2.15.0 ([#364](https://github.com/googleapis/api-common-java/issues/364)) ([28ff65d](https://github.com/googleapis/api-common-java/commit/28ff65d7e70495cc079379b8e78cb515a2960dae))
+
 ## [2.2.1](https://github.com/googleapis/api-common-java/compare/v2.2.0...v2.2.1) (2022-06-09)
 
 
