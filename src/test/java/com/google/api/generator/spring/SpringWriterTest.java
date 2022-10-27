@@ -18,14 +18,11 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.spring.SpringWriter.GapicWriterException;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.protobuf.ByteString;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.jar.JarOutputStream;
@@ -39,23 +36,18 @@ public class SpringWriterTest {
   @Before
   public void setUp() {
     this.context = TestProtoLoader.instance().parseShowcaseEcho();
-    try {
-      this.jos = new JarOutputStream(ByteString.newOutput());
-    } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage(), e);
-    }
   }
 
   @Test
-  public void writeAutoConfigRegistrationTest() {
-    String result = SpringWriter.writeAutoConfigRegistration(context, jos);
+  public void buildAutoConfigRegistrationStringTest() {
+    String result = SpringWriter.buildAutoConfigRegistrationString(context);
     String expected = "com.google.showcase.v1beta1.spring.EchoSpringAutoConfig";
     assertEquals(expected, result);
   }
 
   @Test
-  public void writeSpringAdditionalMetadataJsonTest() {
-    String result = SpringWriter.writeSpringAdditionalMetadataJson(context, jos);
+  public void buildSpringAdditionalMetadataJsonStringTest() {
+    String result = SpringWriter.buildSpringAdditionalMetadataJsonString(context);
     JsonObject jsonResult = JsonParser.parseString(result).getAsJsonObject();
 
     JsonObject innerExpected = new JsonObject();
@@ -73,8 +65,8 @@ public class SpringWriterTest {
   }
 
   @Test
-  public void writePomTest() {
-    String result = SpringWriter.writePom(context, jos);
+  public void buildPomStringTest() {
+    String result = SpringWriter.buildPomString(context);
     String fileName = "SpringPackagePom.golden";
     Utils.saveCodegenToFile(this.getClass(), fileName, result);
     Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), fileName);
