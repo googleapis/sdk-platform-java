@@ -121,11 +121,11 @@ public abstract class AnnotationNode implements AstNode {
     /**
      * To add an AnonymousArrayAnnotationExpr as parameter. Can be used repeatedly to add multiple parameters.
      *
-     * @param anonymousArrayAnnotationExpr
+     * @param arrayExpr
      * @return Builder
      */
-    public Builder addDescription(AnonymousArrayAnnotationExpr anonymousArrayAnnotationExpr) {
-      return addDescriptionToList(anonymousArrayAnnotationExpr);
+    public Builder addDescription(ArrayExpr arrayExpr) {
+      return addDescriptionToList(arrayExpr);
     }
 
     private Builder setDescriptions(List<Expr> exprList) {

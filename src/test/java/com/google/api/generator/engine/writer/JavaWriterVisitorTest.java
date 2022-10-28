@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
-import com.google.api.generator.engine.ast.AnonymousArrayAnnotationExpr;
+import com.google.api.generator.engine.ast.ArrayExpr;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -64,7 +64,6 @@ import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -75,6 +74,7 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.api.generator.util.TestUtils;
 import com.google.common.base.Function;
+import com.google.errorprone.annotations.Var;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -312,9 +312,9 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousArrayAnnotationExpr_add1StringExpr() {
-    AnonymousArrayAnnotationExpr expr =
-        AnonymousArrayAnnotationExpr.builder()
+  public void writeArrayExpr_add1StringExpr() {
+    ArrayExpr expr =
+        ArrayExpr.builder()
             .addExpr(ValueExpr.builder().setValue(StringObjectValue.withValue("test1")).build())
             .build();
     expr.accept(writerVisitor);
@@ -322,9 +322,9 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousArrayAnnotationExpr_addManyStrExpr() {
-    AnonymousArrayAnnotationExpr expr =
-        AnonymousArrayAnnotationExpr.builder()
+  public void writeArrayExpr_addManyStrExpr() {
+    ArrayExpr expr =
+        ArrayExpr.builder()
             .addExpr(TestUtils.generateStringValueExpr("test1"))
             .addExpr(TestUtils.generateStringValueExpr("test2"))
             .addExpr(TestUtils.generateStringValueExpr("test3"))
@@ -334,15 +334,32 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousArrayAnnotationExpr_addManyClassExpr() {
-    AnonymousArrayAnnotationExpr expr =
-        AnonymousArrayAnnotationExpr.builder()
+  public void writeArrayExpr_addManyClassExpr() {
+    ArrayExpr expr =
+        ArrayExpr.builder()
             .addExpr(TestUtils.generateClassValueExpr("Class1"))
             .addExpr(TestUtils.generateClassValueExpr("Class2"))
             .addExpr(TestUtils.generateClassValueExpr("Class3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{Class1.class, Class2.class, Class3.class}", writerVisitor.write());
+  }
+
+  @Test
+  public void writeArrayExpr_mixedVariablesStaticAndNormalReference() {
+    VariableExpr clazzVar = VariableExpr.builder()
+        .setVariable(Variable.builder()
+            .setName("clazz1Var")
+            .setType(TypeNode.CLASS_OBJECT)
+            .build())
+        .build();
+    ArrayExpr expr =
+        ArrayExpr.builder()
+            .addExpr(clazzVar)
+            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .build();
+    expr.accept(writerVisitor);
+    assertEquals("{clazz1Var, Class2.class}", writerVisitor.write());
   }
 
   @Test

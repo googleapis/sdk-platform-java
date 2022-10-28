@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class AnonymousArrayAnnotationExpr implements Expr {
+public abstract class ArrayExpr implements Expr {
 
   @Nullable
   public abstract List<Expr> exprs();
@@ -21,26 +21,26 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
     visitor.visit(this);
   }
 
-  public static AnonymousArrayAnnotationExpr.Builder builder() {
-    return new AutoValue_AnonymousArrayAnnotationExpr.Builder();
+  public static ArrayExpr.Builder builder() {
+    return new AutoValue_ArrayExpr.Builder();
   }
 
-  public static AnonymousArrayAnnotationExpr withStrings(String ...stringValues) {
-    return AnonymousArrayAnnotationExpr.builder()
-        .setExprsString(Arrays.asList(stringValues))
-        .build();
+  public static ArrayExpr withStrings(String ...stringValues) {
+    ArrayExpr.Builder builder = ArrayExpr.builder();
+    Arrays.asList(stringValues)
+        .stream()
+        .forEach(s -> builder.addExpr(s));
+    return builder.build();
   }
 
-  public static AnonymousArrayAnnotationExpr withExprs(Expr ...exprs) {
-    return AnonymousArrayAnnotationExpr.builder()
+  public static ArrayExpr withExprs(Expr ...exprs) {
+    return ArrayExpr.builder()
         .setExprsList(Arrays.asList(exprs))
         .build();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    private static final String REPEAT_SINGLE_EXCEPTION_MESSAGE =
-        "Single parameter with no name cannot be set multiple times";
 
     private static final String EMPTY_EXPRS_MESSAGE = "List of expressions cannot be empty";
 
@@ -48,22 +48,38 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
 
     abstract List<Expr> exprs();
 
-    protected abstract AnonymousArrayAnnotationExpr.Builder setType(TypeNode type);
+    protected abstract ArrayExpr.Builder setType(TypeNode type);
 
     /**
-     * To set many string expressions as the content
+     * To add a ValueExpr as to our list. Can be used repeatedly to add multiple parameters.
+     * same-type validation is performed
      *
-     * @param exprs
+     * @param expr
      * @return Builder
      */
-    public AnonymousArrayAnnotationExpr.Builder setExprsString(List<String> exprs) {
-      Preconditions.checkState(exprs() == null, REPEAT_SINGLE_EXCEPTION_MESSAGE);
-      Preconditions.checkState(exprs.size() > 0, EMPTY_EXPRS_MESSAGE);
-      List<Expr> valueExprs =
-          exprs.stream()
-              .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
-              .collect(Collectors.toList());
-      return setExprs(valueExprs);
+    public ArrayExpr.Builder addExpr(ValueExpr expr) {
+      return addExprToList(expr);
+    }
+
+    /**
+     * To add a VariableExpr as to our list. Can be used repeatedly to add multiple parameters.
+     * same-type validation is performed
+     *
+     * @param expr
+     * @return Builder
+     */
+    public ArrayExpr.Builder addExpr(VariableExpr expr) {
+      return addExprToList(expr);
+    }
+
+      /**
+       * To set many string expressions as the content
+       *
+       * @param expr
+       * @return Builder
+       */
+    public ArrayExpr.Builder addExpr(String expr) {
+      return addExprToList(ValueExpr.withValue(StringObjectValue.withValue(expr)));
     }
 
     /**
@@ -73,7 +89,7 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
      * @param exprs
      * @return Builder
      */
-    public AnonymousArrayAnnotationExpr.Builder setExprsList(List<Expr> exprs) {
+    private ArrayExpr.Builder setExprsList(List<Expr> exprs) {
       Preconditions.checkState(exprs.size() > 0, EMPTY_EXPRS_MESSAGE);
       // validate types
       TypeNode baseType = exprs.get(0).type();
@@ -86,19 +102,8 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
       return setExprs(exprs);
     }
 
-    /**
-     * To add an Expr as to our list. Can be used repeatedly to add multiple parameters.
-     * same-type validation is performed
-     *
-     * @param expr
-     * @return Builder
-     */
-    public AnonymousArrayAnnotationExpr.Builder addExpr(Expr expr) {
-      return addExprToList(expr);
-    }
-
     // this method is private, and called only by addExpr(Expr expr)
-    private AnonymousArrayAnnotationExpr.Builder addExprToList(Expr expr) {
+    private ArrayExpr.Builder addExprToList(Expr expr) {
       List<Expr> exprList = exprs();
       if (exprList == null) {
         exprList = new ArrayList<>();
@@ -108,12 +113,12 @@ public abstract class AnonymousArrayAnnotationExpr implements Expr {
     }
 
     // this setter is private, and called only by setExprsList() to ensured sanitized contents
-    abstract AnonymousArrayAnnotationExpr.Builder setExprs(List<Expr> descriptionExprs);
+    abstract ArrayExpr.Builder setExprs(List<Expr> descriptionExprs);
 
-    abstract AnonymousArrayAnnotationExpr autoBuild();
+    abstract ArrayExpr autoBuild();
 
-    public AnonymousArrayAnnotationExpr build() {
-      AnonymousArrayAnnotationExpr anonymousArrayExpr = autoBuild();
+    public ArrayExpr build() {
+      ArrayExpr anonymousArrayExpr = autoBuild();
       Preconditions.checkState(
           anonymousArrayExpr.exprs() != null && anonymousArrayExpr.exprs().size() > 0,
           EMPTY_EXPRS_MESSAGE);
