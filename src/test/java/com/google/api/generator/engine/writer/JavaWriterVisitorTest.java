@@ -312,6 +312,25 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeAnnotation_withArrayExpr() {
+    TypeNode fakeAnnotationType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(fakeAnnotationType)
+            .setDescription(
+                ArrayExpr.builder()
+                    .addExpr(TestUtils.generateClassValueExpr("Class1"))
+                    .addExpr(TestUtils.generateClassValueExpr("Class2"))
+                    .build()
+            )
+            .build();
+    annotation.accept(writerVisitor);
+    assertEquals("@FakeAnnotation({Class1.class, Class2.class})\n", writerVisitor.write());
+  }
+
+  @Test
   public void writeArrayExpr_add1StringExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
