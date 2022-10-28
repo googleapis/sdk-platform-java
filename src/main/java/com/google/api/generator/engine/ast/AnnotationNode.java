@@ -109,9 +109,9 @@ public abstract class AnnotationNode implements AstNode {
     }
 
     /**
-     * To set single VariableExpr as description.
+     * To set single ArrayExpr as description.
      *
-     * @param variableExpr
+     * @param arrayExpr
      * @return Builder
      */
     public Builder setDescription(ArrayExpr arrayExpr) {

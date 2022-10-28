@@ -331,6 +331,40 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeAnnotation_withArrayExprAssignment() {
+    TypeNode fakeAnnotationType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
+    ArrayExpr arrayExpr = ArrayExpr.builder()
+        .addExpr(TestUtils.generateClassValueExpr("Class1"))
+        .addExpr(TestUtils.generateClassValueExpr("Class2"))
+        .build();
+    AssignmentExpr clazz1AssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("value1").setType(TypeNode.CLASS_OBJECT).build()))
+            .setValueExpr(arrayExpr)
+            .build();
+    AssignmentExpr clazz2AssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("value2").setType(TypeNode.CLASS_OBJECT).build()))
+            .setValueExpr(arrayExpr)
+            .build();
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(fakeAnnotationType)
+            .addDescription(clazz1AssignExpr)
+            .addDescription(clazz2AssignExpr)
+            .build();
+    annotation.accept(writerVisitor);
+    assertEquals("@FakeAnnotation(value1 = {Class1.class, Class2.class}, "
+        + "value2 = {Class1.class, Class2.class})\n", writerVisitor.write());
+  }
+
+  @Test
   public void writeArrayExpr_add1StringExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()

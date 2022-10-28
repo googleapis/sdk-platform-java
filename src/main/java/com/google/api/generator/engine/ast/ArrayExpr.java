@@ -72,12 +72,13 @@ public abstract class ArrayExpr implements Expr {
       return addExprToList(expr);
     }
 
-      /**
-       * To set many string expressions as the content
-       *
-       * @param expr
-       * @return Builder
-       */
+    /**
+     * To add a string expression
+     * same-type validation is performed
+     *
+     * @param expr
+     * @return Builder
+     */
     public ArrayExpr.Builder addExpr(String expr) {
       return addExprToList(ValueExpr.withValue(StringObjectValue.withValue(expr)));
     }
