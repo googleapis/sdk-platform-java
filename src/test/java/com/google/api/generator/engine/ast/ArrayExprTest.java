@@ -5,12 +5,12 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.generator.util.TestUtils;
 import org.junit.Test;
 
-public class AnonymousArrayAnnotationExprTest {
+public class ArrayExprTest {
 
   @Test
   public void validAnonymousArray_sametype() {
-    AnonymousArrayAnnotationExpr.Builder exprBuilder =
-        AnonymousArrayAnnotationExpr.builder()
+    ArrayExpr.Builder exprBuilder =
+        ArrayExpr.builder()
             .addExpr(TestUtils.generateStringValueExpr("test1"))
             .addExpr(TestUtils.generateStringValueExpr("test2"))
             .addExpr(TestUtils.generateStringValueExpr("test3"));
@@ -25,7 +25,7 @@ public class AnonymousArrayAnnotationExprTest {
 
   @Test
   public void validAnonymousArray_emptythrows() {
-    AnonymousArrayAnnotationExpr.Builder exprBuilder = AnonymousArrayAnnotationExpr.builder();
+    ArrayExpr.Builder exprBuilder = ArrayExpr.builder();
     assertThrows(IllegalStateException.class, () -> exprBuilder.build());
   }
 }
