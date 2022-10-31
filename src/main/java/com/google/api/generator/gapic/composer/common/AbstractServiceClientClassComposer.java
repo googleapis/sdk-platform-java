@@ -164,7 +164,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     updateGapicMetadata(context, service, className, grpcRpcsToJavaMethodNames);
     return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
-        .withDefaultHost(service.defaultHost());
+        .withApiShortName(service.apiShortName())
+        .withApiVersion(service.apiVersion());
   }
 
   private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {

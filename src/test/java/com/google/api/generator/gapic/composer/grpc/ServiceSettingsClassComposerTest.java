@@ -31,11 +31,17 @@ public class ServiceSettingsClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {"EchoSettings", TestProtoLoader.instance().parseShowcaseEcho(), "localhost:7469"},
+          {
+            "EchoSettings",
+            TestProtoLoader.instance().parseShowcaseEcho(),
+            "localhost:7469",
+            "v1beta1"
+          },
           {
             "DeprecatedServiceSettings",
             TestProtoLoader.instance().parseDeprecatedService(),
-            "localhost:7469"
+            "localhost:7469",
+            "v1"
           }
         });
   }
@@ -46,7 +52,10 @@ public class ServiceSettingsClassComposerTest {
   public GapicContext context;
 
   @Parameterized.Parameter(2)
-  public String defaultHostExpected;
+  public String apiShortNameExpected;
+
+  @Parameterized.Parameter(3)
+  public String apiVersionExpected;
 
   @Test
   public void generateServiceSettingsClasses() {
@@ -59,6 +68,7 @@ public class ServiceSettingsClassComposerTest {
         "servicesettings",
         clazz.classDefinition().packageString(),
         clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), defaultHostExpected);
+    Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
+    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
   }
 }

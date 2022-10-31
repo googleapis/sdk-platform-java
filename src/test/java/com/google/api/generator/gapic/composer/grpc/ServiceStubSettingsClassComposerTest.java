@@ -33,20 +33,26 @@ public class ServiceStubSettingsClassComposerTest {
           {
             "LoggingServiceV2StubSettings",
             GrpcTestProtoLoader.instance().parseLogging(),
-            "logging.googleapis.com:443"
+            "logging",
+            "v2"
           },
           {
             "PublisherStubSettings",
             GrpcTestProtoLoader.instance().parsePubSubPublisher(),
-            "pubsub.googleapis.com:443"
+            "pubsub",
+            "v1"
           },
           {
-            "EchoStubSettings", GrpcTestProtoLoader.instance().parseShowcaseEcho(), "localhost:7469"
+            "EchoStubSettings",
+            GrpcTestProtoLoader.instance().parseShowcaseEcho(),
+            "localhost:7469",
+            "v1beta1"
           },
           {
             "DeprecatedServiceStubSettings",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
-            "localhost:7469"
+            "localhost:7469",
+            "v1"
           }
         });
   }
@@ -57,7 +63,10 @@ public class ServiceStubSettingsClassComposerTest {
   public GapicContext context;
 
   @Parameterized.Parameter(2)
-  public String defaultHostExpected;
+  public String apiShortNameExpected;
+
+  @Parameterized.Parameter(3)
+  public String apiVersionExpected;
 
   @Test
   public void generateServiceStubSettingsClasses() {
@@ -70,6 +79,7 @@ public class ServiceStubSettingsClassComposerTest {
         "servicesettings/stub",
         clazz.classDefinition().packageString(),
         clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), defaultHostExpected);
+    Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
+    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
   }
 }
