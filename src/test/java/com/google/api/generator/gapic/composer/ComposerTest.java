@@ -89,7 +89,7 @@ public class ComposerTest {
           "ApiShortName should be Localhost7469",
           "Localhost7469",
           sample.regionTag().apiShortName());
-      assertEquals("ApiVersion should be V1beta1", "V1Beta1", sample.regionTag().apiVersion());
+      assertEquals("ApiVersion should be V1Beta1", "V1Beta1", sample.regionTag().apiVersion());
     }
   }
 
