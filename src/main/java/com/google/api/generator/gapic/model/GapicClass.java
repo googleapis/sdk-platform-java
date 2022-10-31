@@ -35,9 +35,11 @@ public abstract class GapicClass {
 
   public abstract List<Sample> samples();
 
-  // Represents the host URL for the service. May or may not contain a regional endpoint. Only used
-  // for generating the region tag for samples; therefore only used in select Composers.
-  public abstract String defaultHost();
+  // Only used for generating the region tag for samples; therefore only used in select Composers.
+  public abstract String apiShortName();
+
+  // Only used for generating the region tag for samples; therefore only used in select Composers.
+  public abstract String apiVersion();
 
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
@@ -51,7 +53,8 @@ public abstract class GapicClass {
   static Builder builder() {
     return new AutoValue_GapicClass.Builder()
         .setSamples(Collections.emptyList())
-        .setDefaultHost("");
+        .setApiShortName("")
+        .setApiVersion("");
   }
 
   abstract Builder toBuilder();
@@ -60,8 +63,12 @@ public abstract class GapicClass {
     return toBuilder().setSamples(samples).build();
   }
 
-  public final GapicClass withDefaultHost(String defaultHost) {
-    return toBuilder().setDefaultHost(defaultHost).build();
+  public final GapicClass withApiShortName(String apiShortName) {
+    return toBuilder().setApiShortName(apiShortName).build();
+  }
+
+  public final GapicClass withApiVersion(String apiVersion) {
+    return toBuilder().setApiVersion(apiVersion).build();
   }
 
   @AutoValue.Builder
@@ -72,7 +79,9 @@ public abstract class GapicClass {
 
     abstract Builder setSamples(List<Sample> samples);
 
-    abstract Builder setDefaultHost(String defaultHost);
+    abstract Builder setApiShortName(String apiShortName);
+
+    abstract Builder setApiVersion(String apiVersion);
 
     abstract GapicClass build();
   }
