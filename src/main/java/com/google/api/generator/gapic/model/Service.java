@@ -57,14 +57,14 @@ public abstract class Service {
       return parseApiShortName(defaultHost());
     }
     return "";
-  };
+  }
 
   public String apiVersion() {
     if (!Strings.isNullOrEmpty(protoPakkage())) {
       return parseApiVersion(protoPakkage());
     }
     return "";
-  };
+  }
 
   public Method operationPollingMethod() {
     for (Method method : methods()) {
