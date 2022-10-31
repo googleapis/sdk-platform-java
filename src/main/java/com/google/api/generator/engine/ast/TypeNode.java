@@ -101,6 +101,14 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
 
   public abstract boolean isArray();
 
+  public static TypeNode arrayOf(TypeNode type) {
+    return builder()
+        .setTypeKind(type.typeKind())
+        .setReference(type.reference())
+        .setIsArray(true)
+        .build();
+  }
+
   @Nullable
   public abstract Reference reference();
 
