@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -25,18 +24,14 @@ public abstract class ArrayExpr implements Expr {
     return new AutoValue_ArrayExpr.Builder();
   }
 
-  public static ArrayExpr withStrings(String ...stringValues) {
+  public static ArrayExpr withStrings(String... stringValues) {
     ArrayExpr.Builder builder = ArrayExpr.builder();
-    Arrays.asList(stringValues)
-        .stream()
-        .forEach(s -> builder.addExpr(s));
+    Arrays.asList(stringValues).stream().forEach(s -> builder.addExpr(s));
     return builder.build();
   }
 
-  public static ArrayExpr withExprs(Expr ...exprs) {
-    return ArrayExpr.builder()
-        .setExprsList(Arrays.asList(exprs))
-        .build();
+  public static ArrayExpr withExprs(Expr... exprs) {
+    return ArrayExpr.builder().setExprsList(Arrays.asList(exprs)).build();
   }
 
   @AutoValue.Builder
@@ -73,8 +68,7 @@ public abstract class ArrayExpr implements Expr {
     }
 
     /**
-     * To add a string expression
-     * same-type validation is performed
+     * To add a string expression same-type validation is performed
      *
      * @param expr
      * @return Builder
@@ -84,8 +78,8 @@ public abstract class ArrayExpr implements Expr {
     }
 
     /**
-     * To set the list of expressions for the anonymous array
-     * Validates that every expression is of the same type
+     * To set the list of expressions for the anonymous array Validates that every expression is of
+     * the same type
      *
      * @param exprs
      * @return Builder
@@ -99,7 +93,7 @@ public abstract class ArrayExpr implements Expr {
         Preconditions.checkState(currentType.equals(baseType), SAME_TYPE_EXPRS_MESSAGE);
         baseType = currentType;
       }
-      setType(baseType);
+      setType(TypeNode.arrayOf(baseType));
       return setExprs(exprs);
     }
 

@@ -19,9 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
-import com.google.api.generator.engine.ast.ArrayExpr;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
+import com.google.api.generator.engine.ast.ArrayExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.BlockComment;
@@ -74,7 +74,6 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.testutils.LineFormatter;
 import com.google.api.generator.util.TestUtils;
 import com.google.common.base.Function;
-import com.google.errorprone.annotations.Var;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -323,8 +322,7 @@ public class JavaWriterVisitorTest {
                 ArrayExpr.builder()
                     .addExpr(TestUtils.generateClassValueExpr("Class1"))
                     .addExpr(TestUtils.generateClassValueExpr("Class2"))
-                    .build()
-            )
+                    .build())
             .build();
     annotation.accept(writerVisitor);
     assertEquals("@FakeAnnotation({Class1.class, Class2.class})\n", writerVisitor.write());
@@ -335,22 +333,31 @@ public class JavaWriterVisitorTest {
     TypeNode fakeAnnotationType =
         TypeNode.withReference(
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
-    ArrayExpr arrayExpr = ArrayExpr.builder()
-        .addExpr(TestUtils.generateClassValueExpr("Class1"))
-        .addExpr(TestUtils.generateClassValueExpr("Class2"))
-        .build();
+    ArrayExpr arrayExpr =
+        ArrayExpr.builder()
+            .addExpr(TestUtils.generateClassValueExpr("Class1"))
+            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .build();
     AssignmentExpr clazz1AssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
-                VariableExpr.withVariable(
-                    Variable.builder().setName("value1").setType(TypeNode.CLASS_OBJECT).build()))
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder()
+                            .setName("value1")
+                            .setType(TypeNode.arrayOf(TypeNode.CLASS_OBJECT))
+                            .build())
+                    .build())
             .setValueExpr(arrayExpr)
             .build();
     AssignmentExpr clazz2AssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
                 VariableExpr.withVariable(
-                    Variable.builder().setName("value2").setType(TypeNode.CLASS_OBJECT).build()))
+                    Variable.builder()
+                        .setName("value2")
+                        .setType(TypeNode.arrayOf(TypeNode.CLASS_OBJECT))
+                        .build()))
             .setValueExpr(arrayExpr)
             .build();
     AnnotationNode annotation =
@@ -360,8 +367,10 @@ public class JavaWriterVisitorTest {
             .addDescription(clazz2AssignExpr)
             .build();
     annotation.accept(writerVisitor);
-    assertEquals("@FakeAnnotation(value1 = {Class1.class, Class2.class}, "
-        + "value2 = {Class1.class, Class2.class})\n", writerVisitor.write());
+    assertEquals(
+        "@FakeAnnotation(value1 = {Class1.class, Class2.class}, "
+            + "value2 = {Class1.class, Class2.class})\n",
+        writerVisitor.write());
   }
 
   @Test
@@ -400,12 +409,11 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeArrayExpr_mixedVariablesStaticAndNormalReference() {
-    VariableExpr clazzVar = VariableExpr.builder()
-        .setVariable(Variable.builder()
-            .setName("clazz1Var")
-            .setType(TypeNode.CLASS_OBJECT)
-            .build())
-        .build();
+    VariableExpr clazzVar =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("clazz1Var").setType(TypeNode.CLASS_OBJECT).build())
+            .build();
     ArrayExpr expr =
         ArrayExpr.builder()
             .addExpr(clazzVar)
@@ -413,6 +421,28 @@ public class JavaWriterVisitorTest {
             .build();
     expr.accept(writerVisitor);
     assertEquals("{clazz1Var, Class2.class}", writerVisitor.write());
+  }
+
+  @Test
+  public void writeArrayExpr_assignemntWithDeclaration() {
+    VariableExpr varExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("varExpr")
+                    .setType(TypeNode.arrayOf(TypeNode.STRING))
+                    .build())
+            .setIsDecl(true)
+            .build();
+    ArrayExpr expr =
+        ArrayExpr.builder()
+            .addExpr(TestUtils.generateStringValueExpr("str1"))
+            .addExpr(TestUtils.generateStringValueExpr("str2"))
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(varExpr).setValueExpr(expr).build();
+    assignmentExpr.accept(writerVisitor);
+    assertEquals("String[] varExpr = {\"str1\", \"str2\"}", writerVisitor.write());
   }
 
   @Test
