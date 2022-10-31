@@ -31,17 +31,28 @@ public class ServiceStubSettingsClassComposerTest {
     return Arrays.asList(
         new Object[][] {
           {
-            "LoggingServiceV2StubSettings", GrpcTestProtoLoader.instance().parseLogging(),
+            "LoggingServiceV2StubSettings",
+            GrpcTestProtoLoader.instance().parseLogging(),
+            "logging",
+            "v2"
           },
           {
-            "PublisherStubSettings", GrpcTestProtoLoader.instance().parsePubSubPublisher(),
+            "PublisherStubSettings",
+            GrpcTestProtoLoader.instance().parsePubSubPublisher(),
+            "pubsub",
+            "v1"
           },
           {
-            "EchoStubSettings", GrpcTestProtoLoader.instance().parseShowcaseEcho(),
+            "EchoStubSettings",
+            GrpcTestProtoLoader.instance().parseShowcaseEcho(),
+            "localhost:7469",
+            "v1beta1"
           },
           {
             "DeprecatedServiceStubSettings",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
+            "localhost:7469",
+            "v1"
           }
         });
   }
@@ -50,6 +61,12 @@ public class ServiceStubSettingsClassComposerTest {
 
   @Parameterized.Parameter(1)
   public GapicContext context;
+
+  @Parameterized.Parameter(2)
+  public String apiShortNameExpected;
+
+  @Parameterized.Parameter(3)
+  public String apiVersionExpected;
 
   @Test
   public void generateServiceStubSettingsClasses() {
@@ -62,5 +79,7 @@ public class ServiceStubSettingsClassComposerTest {
         "servicesettings/stub",
         clazz.classDefinition().packageString(),
         clazz.samples());
+    Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
+    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
   }
 }
