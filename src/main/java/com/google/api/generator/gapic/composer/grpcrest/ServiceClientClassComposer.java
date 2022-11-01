@@ -54,12 +54,14 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
         ServiceClientHeaderSampleComposer.composeClassHeaderSample(
             service, clientType, resourceNames, messageTypes);
     Sample credentialsSampleCode =
-        ServiceClientHeaderSampleComposer.composeSetCredentialsSample(clientType, settingsType);
+        ServiceClientHeaderSampleComposer.composeSetCredentialsSample(
+            clientType, settingsType, service);
     Sample endpointSampleCode =
-        ServiceClientHeaderSampleComposer.composeSetEndpointSample(clientType, settingsType);
+        ServiceClientHeaderSampleComposer.composeSetEndpointSample(
+            clientType, settingsType, service);
     Sample transportSampleCode =
         ServiceClientHeaderSampleComposer.composeTransportSample(
-            clientType, settingsType, "newHttpJsonBuilder");
+            clientType, settingsType, "newHttpJsonBuilder", service);
     samples.addAll(
         Arrays.asList(
             classMethodSampleCode, credentialsSampleCode, endpointSampleCode, transportSampleCode));
