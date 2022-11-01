@@ -22,6 +22,12 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
@@ -154,23 +160,32 @@ public class SpringWriter {
 
   @VisibleForTesting
   static String buildSpringAdditionalMetadataJsonString(GapicContext context) {
-    StringJoiner sb = new StringJoiner(",\n", "\n{\n    \"properties\": [\n", "\n    ]\n" + "}");
+    JsonObject jsonResult = new JsonObject();
+    JsonArray objectArray = new JsonArray();
     context
         .services()
         .forEach(
-            service ->
-                sb.add(
-                    String.format(
-                        "        {\n"
-                            + "            \"name\": \"%s.enabled\",\n"
-                            + "            \"type\": \"java.lang.Boolean\",\n"
-                            + "            \"description\": \"Auto-configure Google Cloud %s components.\",\n"
-                            + "            \"defaultValue\": true\n"
-                            + "        }",
-                        Utils.getSpringPropertyPrefix(
-                            Utils.getPackageName(context), service.name()),
-                        Utils.getLibName(context) + "/" + service.name())));
-    return sb.toString();
+            service -> {
+              JsonObject innerObject = new JsonObject();
+              innerObject.addProperty(
+                  "name",
+                  String.format(
+                      "%s.enabled",
+                      Utils.getSpringPropertyPrefix(
+                          Utils.getPackageName(context), service.name())));
+              innerObject.addProperty("type", "java.lang.Boolean");
+              innerObject.addProperty(
+                  "description",
+                  String.format(
+                      "Auto-configure Google Cloud %s components.",
+                      Utils.getLibName(context) + "/" + service.name()));
+              innerObject.addProperty("defaultValue", true);
+              objectArray.add(innerObject);
+            });
+    jsonResult.add("properties", objectArray);
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonElement prettyJson = JsonParser.parseString(jsonResult.toString());
+    return gson.toJson(prettyJson);
   }
 
   private static void writeSpringAdditionalMetadataJson(GapicContext context, JarOutputStream jos) {
@@ -182,7 +197,8 @@ public class SpringWriter {
       String result = buildSpringAdditionalMetadataJsonString(context);
       jos.write(result.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
-      throw new GapicWriterException("Could not write spring.factories", e);
+      throw new GapicWriterException(
+          "Could not write additional-spring-configuration-metadata.json", e);
     }
   }
 

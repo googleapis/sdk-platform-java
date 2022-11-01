@@ -20,18 +20,13 @@ import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.jar.JarOutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
 public class SpringWriterTest {
   private GapicContext context;
-  private JarOutputStream jos;
 
   @Before
   public void setUp() {
@@ -48,20 +43,10 @@ public class SpringWriterTest {
   @Test
   public void buildSpringAdditionalMetadataJsonStringTest() {
     String result = SpringWriter.buildSpringAdditionalMetadataJsonString(context);
-    JsonObject jsonResult = JsonParser.parseString(result).getAsJsonObject();
-
-    JsonObject innerExpected = new JsonObject();
-    innerExpected.addProperty("name", "com.google.showcase.v1beta1.spring.auto.echo.enabled");
-    innerExpected.addProperty("type", "java.lang.Boolean");
-    innerExpected.addProperty(
-        "description", "Auto-configure Google Cloud showcase/Echo components.");
-    innerExpected.addProperty("defaultValue", true);
-    JsonArray innerExpectedArray = new JsonArray();
-    innerExpectedArray.add(innerExpected);
-    JsonObject jsonExpected = new JsonObject();
-    jsonExpected.add("properties", innerExpectedArray);
-
-    assertEquals(jsonExpected, jsonResult);
+    String fileName = "SpringAdditionalMetadataJson.golden";
+    Utils.saveCodegenToFile(this.getClass(), fileName, result);
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), fileName);
+    Assert.assertCodeEquals(goldenFilePath, result);
   }
 
   @Test
