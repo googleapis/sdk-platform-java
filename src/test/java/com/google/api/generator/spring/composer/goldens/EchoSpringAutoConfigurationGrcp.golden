@@ -3,6 +3,7 @@ package com.google.showcase.v1beta1.spring;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -41,10 +42,22 @@ public class EchoSpringAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
+  public TransportChannelProvider defaultEchoTransportChannelProvider() {
+    return EchoSettings.defaultTransportChannelProvider();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
   public EchoClient echoClient(
-      @Qualifier("echoCredentials") CredentialsProvider credentialsProvider) throws IOException {
+      @Qualifier("echoCredentials") CredentialsProvider credentialsProvider,
+      @Qualifier("defaultEchoTransportChannelProvider")
+          TransportChannelProvider defaultTransportChannelProvider)
+      throws IOException {
     EchoSettings.Builder clientSettingsBuilder =
-        EchoSettings.newBuilder().setCredentialsProvider(credentialsProvider).setHeaderProvider();
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(credentialsProvider)
+            .setTransportChannelProvider(defaultTransportChannelProvider)
+            .setHeaderProvider();
     if (this.clientProperties.getQuotaProjectId() != null) {
       clientSettingsBuilder.setQuotaProjectId(this.clientProperties.getQuotaProjectId());
       LOGGER.info(
