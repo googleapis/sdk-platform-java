@@ -71,7 +71,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     String className = String.format(CLASS_NAME_PATTERN, service.name());
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
-    Boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
+    boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
 
     // TODO: this is the prefix user will use to set properties, may need to change depending on
     // branding.
@@ -131,7 +131,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       String packageName,
       Map<String, TypeNode> types,
       GapicServiceConfig serviceConfig,
-      Boolean hasRest) {
+      boolean hasRestOption) {
 
     String serviceName = service.name();
     List<Statement> statements = new ArrayList<>();
@@ -167,8 +167,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     ExprStatement executorThreadCountVarStatement =
         createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
     statements.add(executorThreadCountVarStatement);
-    if (hasRest) {
-      //   private boolean useRest;
+    if (hasRestOption) {
       ExprStatement useRestVarStatement =
           createMemberVarStatement(
               "useRest",
@@ -205,7 +204,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             },
             (String propertyName) -> new ArrayList<>());
 
-    statements.addAll(retrySettings.stream().map(x -> (Statement) x).collect(Collectors.toList()));
+    statements.addAll(
+        retrySettings.stream().map(Statement.class::cast).collect(Collectors.toList()));
 
     return statements;
   }
@@ -214,7 +214,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       Service service,
       Map<String, TypeNode> types,
       GapicServiceConfig gapicServiceConfig,
-      Boolean hasRest) {
+      boolean hasRestOption) {
 
     TypeNode thisClassType = types.get(service.name() + "Properties");
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
@@ -228,7 +228,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createGetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING, null));
     methodDefinitions.add(createSetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING));
-    if (hasRest) {
+    if (hasRestOption) {
       methodDefinitions.add(createGetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN, null));
       methodDefinitions.add(createSetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN));
     }
