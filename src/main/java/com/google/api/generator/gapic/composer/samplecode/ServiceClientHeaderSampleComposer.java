@@ -215,7 +215,7 @@ public class ServiceClientHeaderSampleComposer {
         RegionTag.builder()
             .setServiceName(service.name())
             .setRpcName(rpcName)
-            .setOverloadDisambiguation("setCredentialsProvider") // + Math.random())
+            .setOverloadDisambiguation("setCredentialsProvider")
             .build();
     Sample sample = Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
     return sample.withRegionTag(sample.regionTag());
