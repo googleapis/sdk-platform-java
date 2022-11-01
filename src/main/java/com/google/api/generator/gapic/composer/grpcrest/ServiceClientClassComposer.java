@@ -61,7 +61,7 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
             clientType, settingsType, service);
     Sample transportSampleCode =
         ServiceClientHeaderSampleComposer.composeTransportSample(
-            clientType, settingsType, "defaultHttpJsonTransportProviderBuilder", service);
+            clientType, settingsType, "newHttpJsonBuilder", service);
     samples.addAll(
         Arrays.asList(
             classMethodSampleCode, credentialsSampleCode, endpointSampleCode, transportSampleCode));
