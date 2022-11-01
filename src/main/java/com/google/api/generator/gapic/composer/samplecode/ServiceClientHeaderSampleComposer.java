@@ -285,7 +285,7 @@ public class ServiceClientHeaderSampleComposer {
   }
 
   public static Sample composeTransportSample(
-      TypeNode clientType, TypeNode settingsType, String transportProviderMethod) {
+      TypeNode clientType, TypeNode settingsType, String transportBuilderMethod) {
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
     VariableExpr settingsVarExpr =
@@ -294,26 +294,11 @@ public class ServiceClientHeaderSampleComposer {
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
-            .setMethodName("newBuilder")
-            .build();
-    MethodInvocationExpr transportChannelProviderArg =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(settingsType)
-                    .setMethodName(transportProviderMethod)
-                    .build())
-            .setMethodName("build")
-            .build();
-    MethodInvocationExpr credentialsMethodExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(newBuilderMethodExpr)
-            .setArguments(transportChannelProviderArg)
-            .setMethodName("setTransportChannelProvider")
+            .setMethodName(transportBuilderMethod)
             .build();
     MethodInvocationExpr buildMethodExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credentialsMethodExpr)
+            .setExprReferenceExpr(newBuilderMethodExpr)
             .setReturnType(settingsType)
             .setMethodName("build")
             .build();
