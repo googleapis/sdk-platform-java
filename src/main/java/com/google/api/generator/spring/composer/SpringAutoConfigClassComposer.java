@@ -222,7 +222,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static List<AnnotationNode> createClassAnnotations(
-      Service service, Map<String, TypeNode> types, String libName) {
+      Service service, Map<String, TypeNode> types) {
     // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value =
