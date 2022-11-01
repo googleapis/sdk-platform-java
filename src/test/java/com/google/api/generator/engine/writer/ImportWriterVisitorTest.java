@@ -37,7 +37,6 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
-import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -372,30 +371,21 @@ public class ImportWriterVisitorTest {
             .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
             .build();
 
-    TypeNode fakeAnnotationType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
-
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(fakeAnnotationType)
-            .setDescription(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setValue("1").setType(TypeNode.INT).build()))
-            .build();
-
     VariableExpr variableExpr =
         VariableExpr.builder()
             .setVariable(variable)
             .setIsDecl(true)
-            .setAnnotations(Arrays.asList(annotation))
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(Generated.class)))))
             .build();
 
     variableExpr.accept(writerVisitor);
     assertEquals(
         LineFormatter.lines(
-            "import com.foo.bar.FakeAnnotation;\n",
-            "import com.google.api.generator.engine.ast.Expr;\n\n"),
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import javax.annotation.Generated;\n\n"),
         writerVisitor.write());
   }
 
