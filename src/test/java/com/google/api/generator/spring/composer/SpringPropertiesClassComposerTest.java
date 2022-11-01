@@ -18,6 +18,7 @@ import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.test.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,10 +34,20 @@ public class SpringPropertiesClassComposerTest {
   }
 
   @Test
-  public void generateAutoConfigClazzTest() {
+  public void generatePropertiesClazzGrpcTest() {
     GapicClass clazz =
         SpringPropertiesClassComposer.instance().generate(this.context, this.echoProtoService);
-    String fileName = clazz.classDefinition().classIdentifier() + ".golden";
+    String fileName = clazz.classDefinition().classIdentifier() + "Grpc.golden";
+    Assert.assertGoldenClass(this.getClass(), clazz, fileName);
+  }
+
+  @Test
+  public void generatePropertiesClazzGrpcRestTest() {
+    GapicContext contextGrpcRest =
+        this.context.toBuilder().setTransport(Transport.GRPC_REST).build();
+    GapicClass clazz =
+        SpringPropertiesClassComposer.instance().generate(contextGrpcRest, this.echoProtoService);
+    String fileName = clazz.classDefinition().classIdentifier() + "GrpcRest.golden";
     Assert.assertGoldenClass(this.getClass(), clazz, fileName);
   }
 }

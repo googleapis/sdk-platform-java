@@ -13,7 +13,7 @@ public class EchoSpringProperties implements CredentialsSupplier {
 
   private String quotaProjectId;
   private Integer executorThreadCount;
-  private boolean useRest;
+  private boolean useRest = false;
   private Duration echoInitialRetryDelay;
   private Double echoRetryDelayMultiplier;
   private Duration echoMaxRetryDelay;
@@ -79,6 +79,10 @@ public class EchoSpringProperties implements CredentialsSupplier {
 
   public boolean getUseRest() {
     return this.useRest;
+  }
+
+  public void setUseRest(boolean useRest) {
+    this.useRest = useRest;
   }
 
   public Integer getExecutorThreadCount() {
