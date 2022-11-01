@@ -42,13 +42,13 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
 
 public class ServiceClientCallableMethodSampleComposer {
   private static Sample composeUnaryOrLroCallableSample(
-      Method method, VariableExpr clientVarExpr, VariableExpr requestVarExpr) {
+      Method method, VariableExpr clientVarExpr, VariableExpr requestVarExpr, Service service) {
     List<Statement> bodyStatements = new ArrayList<>();
     // Create api future variable expression, and assign it with a value by invoking callable
     // method.
@@ -125,8 +125,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -141,7 +140,8 @@ public class ServiceClientCallableMethodSampleComposer {
       Method method,
       VariableExpr clientVarExpr,
       VariableExpr requestVarExpr,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapPaginatedRepeatedField();
@@ -280,8 +280,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setOverloadDisambiguation("Paged")
             .setIsAsynchronous(true)
@@ -297,7 +296,8 @@ public class ServiceClientCallableMethodSampleComposer {
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -397,7 +397,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(ClassNames.getPureServiceName(clientType.reference().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .setOverloadDisambiguation("LRO")
@@ -418,7 +418,8 @@ public class ServiceClientCallableMethodSampleComposer {
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -534,7 +535,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(ClassNames.getPureServiceName(clientType.reference().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -546,7 +547,8 @@ public class ServiceClientCallableMethodSampleComposer {
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -578,13 +580,13 @@ public class ServiceClientCallableMethodSampleComposer {
     RegionTag regionTag;
     if (method.isPaged()) {
       Sample pagedCallable =
-          composePagedCallableSample(method, clientVarExpr, requestVarExpr, messageTypes);
+          composePagedCallableSample(method, clientVarExpr, requestVarExpr, messageTypes, service);
       bodyStatements.addAll(pagedCallable.body());
       regionTag = pagedCallable.regionTag();
     } else {
       // e.g.  echoClient.echoCallable().futureCall(request)
       Sample unaryOrLroCallable =
-          composeUnaryOrLroCallableSample(method, clientVarExpr, requestVarExpr);
+          composeUnaryOrLroCallableSample(method, clientVarExpr, requestVarExpr, service);
       bodyStatements.addAll(unaryOrLroCallable.body());
       regionTag = unaryOrLroCallable.regionTag();
     }
@@ -604,7 +606,8 @@ public class ServiceClientCallableMethodSampleComposer {
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -633,16 +636,19 @@ public class ServiceClientCallableMethodSampleComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.stream().equals(Method.Stream.SERVER)) {
       // e.g. ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
-      Sample streamServer = composeStreamServerSample(method, clientVarExpr, requestAssignmentExpr);
+      Sample streamServer =
+          composeStreamServerSample(method, clientVarExpr, requestAssignmentExpr, service);
       bodyStatements.addAll(streamServer.body());
       regionTag = streamServer.regionTag();
     } else if (method.stream().equals(Method.Stream.BIDI)) {
       // e.g. echoClient.collect().clientStreamingCall(responseObserver);
-      Sample streamBidi = composeStreamBidiSample(method, clientVarExpr, requestAssignmentExpr);
+      Sample streamBidi =
+          composeStreamBidiSample(method, clientVarExpr, requestAssignmentExpr, service);
       bodyStatements.addAll(streamBidi.body());
       regionTag = streamBidi.regionTag();
     } else if (method.stream().equals(Method.Stream.CLIENT)) {
-      Sample streamClient = composeStreamClientSample(method, clientVarExpr, requestAssignmentExpr);
+      Sample streamClient =
+          composeStreamClientSample(method, clientVarExpr, requestAssignmentExpr, service);
       bodyStatements.addAll(streamClient.body());
       regionTag = streamClient.regionTag();
     }
@@ -659,7 +665,10 @@ public class ServiceClientCallableMethodSampleComposer {
   }
 
   private static Sample composeStreamServerSample(
-      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+      Method method,
+      VariableExpr clientVarExpr,
+      AssignmentExpr requestAssignmentExpr,
+      Service service) {
     List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
 
@@ -720,8 +729,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -729,7 +737,10 @@ public class ServiceClientCallableMethodSampleComposer {
   }
 
   private static Sample composeStreamBidiSample(
-      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+      Method method,
+      VariableExpr clientVarExpr,
+      AssignmentExpr requestAssignmentExpr,
+      Service service) {
     List<Expr> bodyExprs = new ArrayList<>();
 
     // Create bidi stream variable expression and assign it with invoking client's bidi stream
@@ -800,8 +811,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
@@ -809,7 +819,10 @@ public class ServiceClientCallableMethodSampleComposer {
   }
 
   private static Sample composeStreamClientSample(
-      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+      Method method,
+      VariableExpr clientVarExpr,
+      AssignmentExpr requestAssignmentExpr,
+      Service service) {
     List<Expr> bodyExprs = new ArrayList<>();
 
     // Create responseObserver variable expression.
@@ -933,8 +946,7 @@ public class ServiceClientCallableMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setIsAsynchronous(true)
             .build();
