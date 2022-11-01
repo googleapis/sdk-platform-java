@@ -26,6 +26,7 @@ import java.util.List;
 public class SpringGenerator {
   public static CodeGeneratorResponse generateSpring(CodeGeneratorRequest request) {
     GapicContext context = Parser.parse(request);
+    // if transport = REST, skip
     List<GapicClass> clazzes = SpringComposer.composeServiceAutoConfigClasses(context);
     GapicPackageInfo packageInfo = SpringComposer.composePackageInfo(context);
     String outputFilename = "temp-codegen-spring.srcjar";
