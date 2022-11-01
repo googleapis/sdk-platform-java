@@ -41,6 +41,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
-    String packageName = service.pakkage() + ".spring";
+    String packageName = Utils.getSpringPackageName(service.pakkage());
     String className = String.format(CLASS_NAME_PATTERN, service.name());
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
@@ -74,7 +75,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     AnnotationNode classAnnotationNode =
         AnnotationNode.builder()
             .setType(types.get("ConfigurationProperties"))
-            .setDescription(Utils.springPropertyPrefix(Utils.getLibName(context), service.name()))
+            .setDescription(Utils.getSpringPropertyPrefix(service.pakkage(), service.name()))
             .build();
 
     ClassDefinition classDef =
