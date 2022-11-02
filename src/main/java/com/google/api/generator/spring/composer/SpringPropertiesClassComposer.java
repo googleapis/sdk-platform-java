@@ -42,6 +42,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
@@ -80,6 +81,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setHeaderCommentStatements(SpringPropertiesCommentComposer.createClassHeaderComments(
+                className, service.name()))
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)

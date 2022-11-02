@@ -50,6 +50,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
@@ -59,7 +60,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Generated;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
@@ -101,6 +101,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
+            .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClassHeaderComments(className))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
@@ -224,7 +225,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   private static List<AnnotationNode> createClassAnnotations(
       Service service, Map<String, TypeNode> types) {
-    // @Generated("by gapic-generator-java")
     // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value =
@@ -295,10 +295,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return Arrays.asList(
-        AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("Generated"))
-            .setDescription("by gapic-generator-java")
-            .build(),
         configurationNode,
         conditionalOnClassNode,
         conditionalOnPropertyNode,
@@ -337,6 +333,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setName(methodName)
+        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("CredentialsProvider"))
         .setAnnotations(
@@ -365,6 +362,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
@@ -786,8 +784,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(serviceSettingsBuilt)
             .build();
 
+    String methodName =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
+    String propertiesClassName = service.name() + "Properties";
+
     return MethodDefinition.builder()
-        .setName(clientName)
+        .setHeaderCommentStatements(SpringAutoconfigCommentComposer.createClientBeanComment(
+            service.name(), propertiesClassName, transportChannelProviderName
+        ))
+        .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
         .setArguments(
@@ -825,7 +830,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
-            Generated.class,
             RetrySettings.class,
             RetrySettings.Builder
                 .class, // name will be just Builder. consider change of more than one builder here.
