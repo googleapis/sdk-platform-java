@@ -14,12 +14,10 @@
 
 package com.google.api.generator.spring.composer.comment;
 
-
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.common.base.CaseFormat;
-import com.google.common.base.Joiner;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,8 +58,7 @@ public class SpringAutoconfigCommentComposer {
   public SpringAutoconfigCommentComposer() {}
 
   public static List<CommentStatement> createClassHeaderComments(
-      String configuredClassName,
-      String serviceName) {
+      String configuredClassName, String serviceName) {
 
     JavaDocComment.Builder javaDocCommentBuilder =
         JavaDocComment.builder()
@@ -97,7 +94,11 @@ public class SpringAutoconfigCommentComposer {
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(
-                String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, credentialsBaseName, channelProviderName))
+                String.format(
+                    CLIENT_BEAN_GENERAL_DESCRIPTION,
+                    serviceName,
+                    credentialsBaseName,
+                    channelProviderName))
             .addParagraph(
                 String.format(CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
             .build());
