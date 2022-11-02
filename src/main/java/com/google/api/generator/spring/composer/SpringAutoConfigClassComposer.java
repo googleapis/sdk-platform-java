@@ -669,14 +669,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               .build();
 
       // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
-      Expr defaultTransportProviderBuider =
+      Expr defaultTransportProviderExprChain =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(types.get("ServiceSettings"))
               .setMethodName("defaultHttpJsonTransportProviderBuilder")
               .build();
-      defaultTransportProviderBuider =
+      defaultTransportProviderExprChain =
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(defaultTransportProviderBuider)
+              .setExprReferenceExpr(defaultTransportProviderExprChain)
               .setMethodName("build")
               .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
               .build();
@@ -685,7 +685,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
               .setMethodName("setTransportChannelProvider")
-              .setArguments(defaultTransportProviderBuider)
+              .setArguments(defaultTransportProviderExprChain)
               .build();
       IfStatement setTransportChannelProviderStatement =
           createIfStatement(
