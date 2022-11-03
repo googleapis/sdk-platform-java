@@ -49,6 +49,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.CaseFormat;
@@ -104,6 +105,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
+            .setHeaderCommentStatements(
+                SpringAutoconfigCommentComposer.createClassHeaderComments(className, serviceName))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setAnnotations(createClassAnnotations(service, types))
             .setMethods(
@@ -337,6 +340,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setName(methodName)
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("CredentialsProvider"))
         .setAnnotations(
@@ -365,6 +370,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
@@ -811,8 +818,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                             .build()))
                 .build());
 
+    String methodName =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
+    String propertiesClassName = service.name() + "Properties";
+
     return MethodDefinition.builder()
-        .setName(clientName)
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createClientBeanComment(
+                service.name(), propertiesClassName, transportChannelProviderName))
+        .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
         .setArguments(argumentsVariableExprs)

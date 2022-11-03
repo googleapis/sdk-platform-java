@@ -19,6 +19,20 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.threeten.bp.Duration;
 
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * Auto-configuration for {@link EchoClient}.
+ *
+ * <p>Provides auto-configuration for Spring Boot
+ *
+ * <p>The default instance has everything set to sensible defaults:
+ *
+ * <ul>
+ *   <li>The default transport provider is used.
+ *   <li>Credentials are acquired automatically through Application Default Credentials.
+ *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.
+ * </ul>
+ */
 @AutoConfiguration
 @ConditionalOnClass(EchoClient.class)
 @ConditionalOnProperty(
@@ -33,18 +47,36 @@ public class EchoSpringAutoConfiguration {
     this.clientProperties = clientProperties;
   }
 
+  /**
+   * Obtains the default credentials provider. The used key will be obtained from Spring Boot
+   * configuration data files.
+   */
   @Bean
   @ConditionalOnMissingBean
   public CredentialsProvider echoCredentials() throws IOException {
     return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
   }
 
+  /**
+   * Returns the default channel provider. The default is gRPC and will default to it unless the
+   * useRest option is provided to use HTTP transport instead
+   */
   @Bean
   @ConditionalOnMissingBean
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
     return EchoSettings.defaultTransportChannelProvider();
   }
 
+  /**
+   * Provides a EchoClient bean configured to use the default credentials provider (obtained with
+   * echoCredentials()) and its default transport channel provider
+   * (defaultEchoTransportChannelProvider()). It also configures the quota project ID if provided.
+   * It will configure an executor provider in case there is more than one thread configured in the
+   * client
+   *
+   * <p>Individual retry settings are configured as well. It will use the relevant client library's
+   * default retry settings when they are not specified in EchoProperties.
+   */
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(
