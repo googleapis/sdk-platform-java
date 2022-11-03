@@ -320,6 +320,7 @@ public class JavaWriterVisitorTest {
             .setType(fakeAnnotationType)
             .setDescription(
                 ArrayExpr.builder()
+                    .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
                     .addExpr(TestUtils.generateClassValueExpr("Class1"))
                     .addExpr(TestUtils.generateClassValueExpr("Class2"))
                     .build())
@@ -335,6 +336,7 @@ public class JavaWriterVisitorTest {
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
     ArrayExpr arrayExpr =
         ArrayExpr.builder()
+            .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
             .addExpr(TestUtils.generateClassValueExpr("Class1"))
             .addExpr(TestUtils.generateClassValueExpr("Class2"))
             .build();
@@ -345,7 +347,7 @@ public class JavaWriterVisitorTest {
                     .setVariable(
                         Variable.builder()
                             .setName("value1")
-                            .setType(TypeNode.arrayOf(TypeNode.CLASS_OBJECT))
+                            .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
                             .build())
                     .build())
             .setValueExpr(arrayExpr)
@@ -356,7 +358,7 @@ public class JavaWriterVisitorTest {
                 VariableExpr.withVariable(
                     Variable.builder()
                         .setName("value2")
-                        .setType(TypeNode.arrayOf(TypeNode.CLASS_OBJECT))
+                        .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
                         .build()))
             .setValueExpr(arrayExpr)
             .build();
@@ -377,6 +379,7 @@ public class JavaWriterVisitorTest {
   public void writeArrayExpr_add1StringExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
+            .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
             .addExpr(ValueExpr.builder().setValue(StringObjectValue.withValue("test1")).build())
             .build();
     expr.accept(writerVisitor);
@@ -387,6 +390,7 @@ public class JavaWriterVisitorTest {
   public void writeArrayExpr_addManyStrExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
+            .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
             .addExpr(TestUtils.generateStringValueExpr("test1"))
             .addExpr(TestUtils.generateStringValueExpr("test2"))
             .addExpr(TestUtils.generateStringValueExpr("test3"))
@@ -399,6 +403,7 @@ public class JavaWriterVisitorTest {
   public void writeArrayExpr_addManyClassExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
+            .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
             .addExpr(TestUtils.generateClassValueExpr("Class1"))
             .addExpr(TestUtils.generateClassValueExpr("Class2"))
             .addExpr(TestUtils.generateClassValueExpr("Class3"))
@@ -416,6 +421,7 @@ public class JavaWriterVisitorTest {
             .build();
     ArrayExpr expr =
         ArrayExpr.builder()
+            .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
             .addExpr(clazzVar)
             .addExpr(TestUtils.generateClassValueExpr("Class2"))
             .build();
@@ -430,12 +436,13 @@ public class JavaWriterVisitorTest {
             .setVariable(
                 Variable.builder()
                     .setName("varExpr")
-                    .setType(TypeNode.arrayOf(TypeNode.STRING))
+                    .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
                     .build())
             .setIsDecl(true)
             .build();
     ArrayExpr expr =
         ArrayExpr.builder()
+            .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
             .addExpr(TestUtils.generateStringValueExpr("str1"))
             .addExpr(TestUtils.generateStringValueExpr("str2"))
             .build();

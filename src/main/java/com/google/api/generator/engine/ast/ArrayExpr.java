@@ -16,15 +16,13 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
+import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class ArrayExpr implements Expr {
 
-  @Nullable
   public abstract List<Expr> exprs();
 
   public abstract TypeNode type();
@@ -35,7 +33,7 @@ public abstract class ArrayExpr implements Expr {
   }
 
   public static ArrayExpr.Builder builder() {
-    return new AutoValue_ArrayExpr.Builder();
+    return new AutoValue_ArrayExpr.Builder().setExprs(ImmutableList.of());
   }
 
   public static ArrayExpr withStrings(String... stringValues) {
@@ -45,41 +43,20 @@ public abstract class ArrayExpr implements Expr {
   }
 
   public static ArrayExpr withExprs(Expr... exprs) {
-    return ArrayExpr.builder().setExprsList(Arrays.asList(exprs)).build();
+    return ArrayExpr.builder().setExprs(Arrays.asList(exprs)).build();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
 
-    private static final String EMPTY_EXPRS_MESSAGE = "List of expressions cannot be empty";
-
-    private static final String SAME_TYPE_EXPRS_MESSAGE = "All expressions must have the same type";
+    private static final String SAME_TYPE_EXPRS_MESSAGE =
+        "All expressions must be of the type" + " specified in this ArrayExpr";
+    private static final String EXPR_ALLOWED_CLASSES_MESSAGE =
+        "Only VariableExpr and ValueExpr can be used as elements of ArrayExpr";
 
     abstract List<Expr> exprs();
 
-    protected abstract ArrayExpr.Builder setType(TypeNode type);
-
-    /**
-     * To add a ValueExpr as to our list. Can be used repeatedly to add multiple parameters.
-     * same-type validation is performed
-     *
-     * @param expr
-     * @return Builder
-     */
-    public ArrayExpr.Builder addExpr(ValueExpr expr) {
-      return addExprToList(expr);
-    }
-
-    /**
-     * To add a VariableExpr as to our list. Can be used repeatedly to add multiple parameters.
-     * same-type validation is performed
-     *
-     * @param expr
-     * @return Builder
-     */
-    public ArrayExpr.Builder addExpr(VariableExpr expr) {
-      return addExprToList(expr);
-    }
+    abstract TypeNode type();
 
     /**
      * To add a string expression same-type validation is performed
@@ -88,52 +65,29 @@ public abstract class ArrayExpr implements Expr {
      * @return Builder
      */
     public ArrayExpr.Builder addExpr(String expr) {
-      return addExprToList(ValueExpr.withValue(StringObjectValue.withValue(expr)));
-    }
-
-    /**
-     * To set the list of expressions for the anonymous array Validates that every expression is of
-     * the same type
-     *
-     * @param exprs
-     * @return Builder
-     */
-    private ArrayExpr.Builder setExprsList(List<Expr> exprs) {
-      Preconditions.checkState(exprs.size() > 0, EMPTY_EXPRS_MESSAGE);
-      // validate types
-      TypeNode baseType = exprs.get(0).type();
-      for (int i = 1; i < exprs.size(); i++) {
-        TypeNode currentType = exprs.get(i).type();
-        Preconditions.checkState(currentType.equals(baseType), SAME_TYPE_EXPRS_MESSAGE);
-        baseType = currentType;
-      }
-      setType(TypeNode.arrayOf(baseType));
-      return setExprs(exprs);
+      return addExpr(ValueExpr.withValue(StringObjectValue.withValue(expr)));
     }
 
     // this method is private, and called only by addExpr(Expr expr)
-    private ArrayExpr.Builder addExprToList(Expr expr) {
-      List<Expr> exprList = exprs();
-      if (exprList == null) {
-        exprList = new ArrayList<>();
-      }
-      exprList.add(expr);
-      return setExprsList(exprList);
+    public ArrayExpr.Builder addExpr(Expr expr) {
+      return setExprs((new ImmutableList.Builder<Expr>().addAll(exprs()).add(expr).build()));
     }
 
-    // this setter is private, and called only by setExprsList() to ensured sanitized contents
-    abstract ArrayExpr.Builder setExprs(List<Expr> descriptionExprs);
+    public abstract ArrayExpr.Builder setExprs(List<Expr> exprs);
+
+    public abstract ArrayExpr.Builder setType(TypeNode type);
 
     abstract ArrayExpr autoBuild();
 
     public ArrayExpr build() {
-      ArrayExpr anonymousArrayExpr = autoBuild();
       Preconditions.checkState(
-          anonymousArrayExpr.exprs() != null && anonymousArrayExpr.exprs().size() > 0,
-          EMPTY_EXPRS_MESSAGE);
-      Reference ref = anonymousArrayExpr.exprs().get(0).type().reference();
-      Preconditions.checkNotNull(ref, "Annotations must be an Object type");
-      return anonymousArrayExpr;
+          exprs().stream().allMatch(exp -> exp instanceof ValueExpr || exp instanceof VariableExpr),
+          EXPR_ALLOWED_CLASSES_MESSAGE);
+      TypeNode elementType = TypeNode.createElementTypeFromArrayType(type());
+      Preconditions.checkState(
+          exprs().stream().allMatch(exp -> exp.type().equals(elementType)),
+          SAME_TYPE_EXPRS_MESSAGE);
+      return autoBuild();
     }
   }
 }
