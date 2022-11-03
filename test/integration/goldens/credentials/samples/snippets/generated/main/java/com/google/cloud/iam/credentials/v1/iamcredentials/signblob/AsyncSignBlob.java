@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START iamcredentials_v1_generated_IAMCredentials_SignBlob_async]
+// [START iamcredentials_v1_generated_IamCredentials_SignBlob_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -51,4 +51,4 @@ public class AsyncSignBlob {
     }
   }
 }
-// [END iamcredentials_v1_generated_IAMCredentials_SignBlob_async]
+// [END iamcredentials_v1_generated_IamCredentials_SignBlob_async]

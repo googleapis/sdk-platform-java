@@ -15,6 +15,8 @@
 package com.google.api.generator.gapic.composer.utils;
 
 import com.google.api.generator.gapic.model.Service;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -120,5 +122,12 @@ public class ClassNames {
     return rawServiceName.startsWith("IAMCredentials")
         ? rawServiceName.replace("IAM", "Iam")
         : rawServiceName;
+  }
+
+  // For region tags, the service name should not include `Client` in the name
+  public static String getPureServiceName(String serviceClassName) {
+    return String.format(
+        "%s",
+        Iterables.getFirst(Splitter.on(CLIENT_SUFFIX).split(serviceClassName), serviceClassName));
   }
 }

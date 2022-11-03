@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START iamcredentials_v1_generated_IAMCredentials_SignJwt_async]
+// [START iamcredentials_v1_generated_IamCredentials_SignJwt_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
@@ -50,4 +50,4 @@ public class AsyncSignJwt {
     }
   }
 }
-// [END iamcredentials_v1_generated_IAMCredentials_SignJwt_async]
+// [END iamcredentials_v1_generated_IamCredentials_SignJwt_async]

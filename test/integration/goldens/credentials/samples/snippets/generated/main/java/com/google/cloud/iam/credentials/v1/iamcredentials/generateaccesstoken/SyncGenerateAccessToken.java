@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START iamcredentials_v1_generated_IAMCredentials_GenerateAccessToken_sync]
+// [START iamcredentials_v1_generated_IamCredentials_GenerateAccessToken_sync]
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
@@ -48,4 +48,4 @@ public class SyncGenerateAccessToken {
     }
   }
 }
-// [END iamcredentials_v1_generated_IAMCredentials_GenerateAccessToken_sync]
+// [END iamcredentials_v1_generated_IamCredentials_GenerateAccessToken_sync]
