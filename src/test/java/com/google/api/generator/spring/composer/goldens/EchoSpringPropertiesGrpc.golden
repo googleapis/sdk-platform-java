@@ -3,6 +3,7 @@ package com.google.showcase.v1beta1.spring;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.CredentialsSupplier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.threeten.bp.Duration;
 
 @ConfigurationProperties("com.google.showcase.v1beta1.spring.auto.echo")

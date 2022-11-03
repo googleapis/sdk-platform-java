@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.stub.samples;
 
-// [START pubsub_v1_generated_subscriberstubsettings_createsubscription_sync]
+// [START pubsub_v1_generated_SubscriberStubSettings_CreateSubscription_sync]
 import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncCreateSubscription {
     SubscriberStubSettings subscriptionAdminSettings = subscriptionAdminSettingsBuilder.build();
   }
 }
-// [END pubsub_v1_generated_subscriberstubsettings_createsubscription_sync]
+// [END pubsub_v1_generated_SubscriberStubSettings_CreateSubscription_sync]

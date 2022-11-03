@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_collect_async]
+// [START goldensample_generated_Echo_Collect_async]
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -68,4 +68,4 @@ public class AsyncCollect {
     }
   }
 }
-// [END goldensample_generated_echoclient_collect_async]
+// [END goldensample_generated_Echo_Collect_async]

@@ -35,6 +35,12 @@ public abstract class GapicClass {
 
   public abstract List<Sample> samples();
 
+  // Only used for generating the region tag for samples; therefore only used in select Composers.
+  public abstract String apiShortName();
+
+  // Only used for generating the region tag for samples; therefore only used in select Composers.
+  public abstract String apiVersion();
+
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
   }
@@ -45,13 +51,24 @@ public abstract class GapicClass {
   }
 
   static Builder builder() {
-    return new AutoValue_GapicClass.Builder().setSamples(Collections.emptyList());
+    return new AutoValue_GapicClass.Builder()
+        .setSamples(Collections.emptyList())
+        .setApiShortName("")
+        .setApiVersion("");
   }
 
   abstract Builder toBuilder();
 
   public final GapicClass withSamples(List<Sample> samples) {
     return toBuilder().setSamples(samples).build();
+  }
+
+  public final GapicClass withApiShortName(String apiShortName) {
+    return toBuilder().setApiShortName(apiShortName).build();
+  }
+
+  public final GapicClass withApiVersion(String apiVersion) {
+    return toBuilder().setApiVersion(apiVersion).build();
   }
 
   @AutoValue.Builder
@@ -61,6 +78,10 @@ public abstract class GapicClass {
     abstract Builder setClassDefinition(ClassDefinition classDefinition);
 
     abstract Builder setSamples(List<Sample> samples);
+
+    abstract Builder setApiShortName(String apiShortName);
+
+    abstract Builder setApiVersion(String apiVersion);
 
     abstract GapicClass build();
   }

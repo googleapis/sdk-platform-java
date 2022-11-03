@@ -59,6 +59,7 @@ import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.TypeRegistry;
@@ -74,6 +75,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
+
   private static final HttpJsonServiceStubClassComposer INSTANCE =
       new HttpJsonServiceStubClassComposer();
 
@@ -940,9 +942,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       for (int i = 0; i < descendantFields.length; i++) {
         String currFieldName = descendantFields[i];
         String bindingFieldMethodName =
-            (i < descendantFields.length - 1 || !httpBindingFieldName.isRepeated())
-                ? String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName))
-                : String.format("get%sList", JavaStyle.toUpperCamelCase(currFieldName));
+            getBindingFieldMethodName(
+                httpBindingFieldName,
+                descendantFields.length,
+                i,
+                JavaStyle.toUpperCamelCase(currFieldName));
         requestFieldGetterExprBuilder =
             requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
 
@@ -997,6 +1001,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       }
     }
 
+    // Add a fixed query param for numeric enum, see b/232457244 for details
     if (restNumericEnumsEnabled && serializerMethodName.equals("putQueryParam")) {
       ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
 
@@ -1021,6 +1026,20 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         .setBody(bodyStatements)
         .setReturnExpr(fieldsVarExpr)
         .build();
+  }
+
+  @VisibleForTesting
+  String getBindingFieldMethodName(
+      HttpBinding httpBindingField, int descendantFieldsLengths, int index, String currFieldName) {
+    if (index == descendantFieldsLengths - 1) {
+      if (httpBindingField.isRepeated()) {
+        return String.format("get%sList", currFieldName);
+      }
+      if (httpBindingField.isEnum()) {
+        return String.format("get%sValue", currFieldName);
+      }
+    }
+    return String.format("get%s", currFieldName);
   }
 
   private List<Expr> getHttpMethodTypeExpr(Method protoMethod) {

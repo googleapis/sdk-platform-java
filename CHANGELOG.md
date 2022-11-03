@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.10.3](https://github.com/googleapis/gapic-generator-java/compare/v2.10.2...v2.10.3) (2022-11-01)
+
+
+### Bug Fixes
+
+* Fix REST transport client creation generated javadoc sample ([#1077](https://github.com/googleapis/gapic-generator-java/issues/1077)) ([9ac0ca8](https://github.com/googleapis/gapic-generator-java/commit/9ac0ca80b09077f7880f0029b5d7b090a10a10b8))
+* Fixes regionTag breakage ([#1068](https://github.com/googleapis/gapic-generator-java/issues/1068)) ([bed9f72](https://github.com/googleapis/gapic-generator-java/commit/bed9f721fbafb5f2e974b6f43f8455f2fdb581f7))
+
+## [2.10.2](https://github.com/googleapis/gapic-generator-java/compare/v2.10.1...v2.10.2) (2022-10-24)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.5 ([#1063](https://github.com/googleapis/gapic-generator-java/issues/1063)) ([80ed62c](https://github.com/googleapis/gapic-generator-java/commit/80ed62cf6aff395d150e394a44fb60da37e9a6ae))
+* Update regionTag to use service name ([#1047](https://github.com/googleapis/gapic-generator-java/issues/1047)) ([68b33c2](https://github.com/googleapis/gapic-generator-java/commit/68b33c23948ffe7a2bf6acd53731d786257f6bd1))
+
+## [2.10.1](https://github.com/googleapis/gapic-generator-java/compare/v2.10.0...v2.10.1) (2022-10-20)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.2 ([#1035](https://github.com/googleapis/gapic-generator-java/issues/1035)) ([f76634a](https://github.com/googleapis/gapic-generator-java/commit/f76634af8497ef2977376af570d175eb0fe91e6f))
+* **deps:** Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.3 ([#1039](https://github.com/googleapis/gapic-generator-java/issues/1039)) ([9d25e47](https://github.com/googleapis/gapic-generator-java/commit/9d25e477126db35efd111a2b8ee76332b549ce91))
+* **deps:** Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.4 ([#1050](https://github.com/googleapis/gapic-generator-java/issues/1050)) ([3b052e2](https://github.com/googleapis/gapic-generator-java/commit/3b052e27bb704124ae3214dd3e8708f8e32afe6c))
+* **deps:** Update dependency org.yaml:snakeyaml to v1.32 ([#1037](https://github.com/googleapis/gapic-generator-java/issues/1037)) ([b520aa0](https://github.com/googleapis/gapic-generator-java/commit/b520aa0d35407daf96123d63c3112b9f29715115))
+* **deps:** Update dependency org.yaml:snakeyaml to v1.33 ([#1043](https://github.com/googleapis/gapic-generator-java/issues/1043)) ([67a5dc5](https://github.com/googleapis/gapic-generator-java/commit/67a5dc5e4dd3302ececd212dd047f5731c4bf74d))
+* Get numeric value for Enum fields if it is configured as query param or path param ([#1042](https://github.com/googleapis/gapic-generator-java/issues/1042)) ([0fdfa67](https://github.com/googleapis/gapic-generator-java/commit/0fdfa67fec84e1983c12b10c7b7ae7a0efa80f4d))
+* Update sample region tag to parse host instead of proto package ([#1040](https://github.com/googleapis/gapic-generator-java/issues/1040)) ([01c14d4](https://github.com/googleapis/gapic-generator-java/commit/01c14d41d4195963c0ed46f310360f39eec6d420))
+
 ## [2.10.0](https://github.com/googleapis/gapic-generator-java/compare/v2.9.0...v2.10.0) (2022-09-06)
 
 

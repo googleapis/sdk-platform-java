@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_createroom_stringstring_sync]
+// [START goldensample_generated_Messaging_CreateRoom_StringString_sync]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
 
@@ -39,4 +39,4 @@ public class SyncCreateRoomStringString {
     }
   }
 }
-// [END goldensample_generated_messagingclient_createroom_stringstring_sync]
+// [END goldensample_generated_Messaging_CreateRoom_StringString_sync]

@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_sendblurbs_async]
+// [START goldensample_generated_Messaging_SendBlurbs_async]
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
@@ -65,4 +65,4 @@ public class AsyncSendBlurbs {
     }
   }
 }
-// [END goldensample_generated_messagingclient_sendblurbs_async]
+// [END goldensample_generated_Messaging_SendBlurbs_async]
