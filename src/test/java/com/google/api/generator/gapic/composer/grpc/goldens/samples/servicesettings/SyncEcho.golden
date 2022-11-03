@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echosettings_echo_sync]
+// [START goldensample_generated_EchoSettings_Echo_sync]
 import com.google.showcase.v1beta1.EchoSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncEcho {
     EchoSettings echoSettings = echoSettingsBuilder.build();
   }
 }
-// [END goldensample_generated_echosettings_echo_sync]
+// [END goldensample_generated_EchoSettings_Echo_sync]

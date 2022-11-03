@@ -53,7 +53,7 @@ public class ServiceClientHeaderSampleComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     if (service.methods().isEmpty()) {
-      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType);
+      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType, service);
     }
 
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
@@ -67,13 +67,18 @@ public class ServiceClientHeaderSampleComposer {
     if (method.stream() == Method.Stream.NONE) {
       if (method.methodSignatures().isEmpty()) {
         return ServiceClientMethodSampleComposer.composeCanonicalSample(
-            method, clientType, resourceNames, messageTypes);
+            method, clientType, resourceNames, messageTypes, service);
       }
       return composeShowcaseMethodSample(
-          method, clientType, method.methodSignatures().get(0), resourceNames, messageTypes);
+          method,
+          clientType,
+          method.methodSignatures().get(0),
+          resourceNames,
+          messageTypes,
+          service);
     }
     return ServiceClientCallableMethodSampleComposer.composeStreamCallableMethod(
-        method, clientType, resourceNames, messageTypes);
+        method, clientType, resourceNames, messageTypes, service);
   }
 
   public static Sample composeShowcaseMethodSample(
@@ -81,7 +86,8 @@ public class ServiceClientHeaderSampleComposer {
       TypeNode clientType,
       List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -105,20 +111,20 @@ public class ServiceClientHeaderSampleComposer {
     if (method.isPaged()) {
       Sample unaryPagedRpc =
           ServiceClientMethodSampleComposer.composePagedSample(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes);
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes, service);
       bodyStatements.addAll(unaryPagedRpc.body());
       regionTag = unaryPagedRpc.regionTag();
     } else if (method.hasLro()) {
       Sample unaryLroRpc =
           ServiceClientMethodSampleComposer.composeLroSample(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs);
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, service);
       bodyStatements.addAll(unaryLroRpc.body());
       regionTag = unaryLroRpc.regionTag();
     } else {
       //  e.g. echoClient.echo(), echoClient.echo(...)
       Sample unaryRpc =
           ServiceClientMethodSampleComposer.composeSample(
-              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs);
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, service);
       bodyStatements.addAll(unaryRpc.body());
       regionTag = unaryRpc.regionTag();
     }
@@ -134,7 +140,8 @@ public class ServiceClientHeaderSampleComposer {
     return Sample.builder().setBody(body).setRegionTag(regionTag).build();
   }
 
-  public static Sample composeSetCredentialsSample(TypeNode clientType, TypeNode settingsType) {
+  public static Sample composeSetCredentialsSample(
+      TypeNode clientType, TypeNode settingsType, Service service) {
     // Initialize clientSettings with builder() method.
     // e.g. EchoSettings echoSettings =
     // EchoSettings.newBuilder().setCredentialsProvider(FixedCredentialsProvider.create("myCredentials")).build();
@@ -206,14 +213,16 @@ public class ServiceClientHeaderSampleComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientName)
+            .setServiceName(service.name())
             .setRpcName(rpcName)
             .setOverloadDisambiguation("setCredentialsProvider")
             .build();
-    return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
+    Sample sample = Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
+    return sample.withRegionTag(sample.regionTag());
   }
 
-  public static Sample composeSetEndpointSample(TypeNode clientType, TypeNode settingsType) {
+  public static Sample composeSetEndpointSample(
+      TypeNode clientType, TypeNode settingsType, Service service) {
     // Initialize client settings with builder() method.
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
@@ -273,7 +282,7 @@ public class ServiceClientHeaderSampleComposer {
             .build();
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientName)
+            .setServiceName(service.name())
             .setRpcName(rpcName)
             .setOverloadDisambiguation("setEndpoint")
             .build();
@@ -284,7 +293,7 @@ public class ServiceClientHeaderSampleComposer {
   }
 
   public static Sample composeTransportSample(
-      TypeNode clientType, TypeNode settingsType, String transportProviderMethod) {
+      TypeNode clientType, TypeNode settingsType, String transportBuilderMethod, Service service) {
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
     VariableExpr settingsVarExpr =
@@ -293,26 +302,11 @@ public class ServiceClientHeaderSampleComposer {
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
-            .setMethodName("newBuilder")
-            .build();
-    MethodInvocationExpr transportChannelProviderArg =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(settingsType)
-                    .setMethodName(transportProviderMethod)
-                    .build())
-            .setMethodName("build")
-            .build();
-    MethodInvocationExpr credentialsMethodExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(newBuilderMethodExpr)
-            .setArguments(transportChannelProviderArg)
-            .setMethodName("setTransportChannelProvider")
+            .setMethodName(transportBuilderMethod)
             .build();
     MethodInvocationExpr buildMethodExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(credentialsMethodExpr)
+            .setExprReferenceExpr(newBuilderMethodExpr)
             .setReturnType(settingsType)
             .setMethodName("build")
             .build();
@@ -346,7 +340,7 @@ public class ServiceClientHeaderSampleComposer {
             ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientName)
+            .setServiceName(service.name())
             .setRpcName(rpcName)
             .setOverloadDisambiguation("setCredentialsProvider")
             .build();

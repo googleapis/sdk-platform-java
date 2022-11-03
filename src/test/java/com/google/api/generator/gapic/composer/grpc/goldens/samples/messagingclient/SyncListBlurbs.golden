@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_listblurbs_sync]
+// [START goldensample_generated_Messaging_ListBlurbs_sync]
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.ListBlurbsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -47,4 +47,4 @@ public class SyncListBlurbs {
     }
   }
 }
-// [END goldensample_generated_messagingclient_listblurbs_sync]
+// [END goldensample_generated_Messaging_ListBlurbs_sync]

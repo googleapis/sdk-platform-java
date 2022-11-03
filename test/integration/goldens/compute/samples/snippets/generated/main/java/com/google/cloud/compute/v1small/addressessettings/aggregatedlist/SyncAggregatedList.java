@@ -16,7 +16,7 @@
 
 package com.google.cloud.compute.v1small.samples;
 
-// [START compute_v1small_generated_addressessettings_aggregatedlist_sync]
+// [START compute_v1small_generated_AddressesSettings_AggregatedList_sync]
 import com.google.cloud.compute.v1small.AddressesSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncAggregatedList {
     AddressesSettings addressesSettings = addressesSettingsBuilder.build();
   }
 }
-// [END compute_v1small_generated_addressessettings_aggregatedlist_sync]
+// [END compute_v1small_generated_AddressesSettings_AggregatedList_sync]

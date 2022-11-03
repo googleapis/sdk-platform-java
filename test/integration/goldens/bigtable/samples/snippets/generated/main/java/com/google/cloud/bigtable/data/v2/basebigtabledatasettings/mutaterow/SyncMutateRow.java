@@ -16,7 +16,7 @@
 
 package com.google.cloud.bigtable.data.v2.samples;
 
-// [START bigtable_v2_generated_basebigtabledatasettings_mutaterow_sync]
+// [START bigtable_v2_generated_BaseBigtableDataSettings_MutateRow_sync]
 import com.google.cloud.bigtable.data.v2.BaseBigtableDataSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncMutateRow {
     BaseBigtableDataSettings baseBigtableDataSettings = baseBigtableDataSettingsBuilder.build();
   }
 }
-// [END bigtable_v2_generated_basebigtabledatasettings_mutaterow_sync]
+// [END bigtable_v2_generated_BaseBigtableDataSettings_MutateRow_sync]

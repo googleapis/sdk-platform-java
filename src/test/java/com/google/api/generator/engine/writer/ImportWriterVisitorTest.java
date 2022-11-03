@@ -364,6 +364,32 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExprImports_withAnnotations() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(Generated.class)))))
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import javax.annotation.Generated;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
   public void writeAnonymousClassExprImports() {
     // [Constructing] Function<List<IOException>, MethodDefinition>
     ConcreteReference exceptionListRef =

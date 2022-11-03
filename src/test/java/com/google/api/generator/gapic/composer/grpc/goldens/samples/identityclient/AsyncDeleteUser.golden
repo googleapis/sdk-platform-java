@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_deleteuser_async]
+// [START goldensample_generated_Identity_DeleteUser_async]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.DeleteUserRequest;
@@ -44,4 +44,4 @@ public class AsyncDeleteUser {
     }
   }
 }
-// [END goldensample_generated_identityclient_deleteuser_async]
+// [END goldensample_generated_Identity_DeleteUser_async]

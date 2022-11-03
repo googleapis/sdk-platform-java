@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_deleteroom_sync]
+// [START goldensample_generated_Messaging_DeleteRoom_sync]
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.DeleteRoomRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -41,4 +41,4 @@ public class SyncDeleteRoom {
     }
   }
 }
-// [END goldensample_generated_messagingclient_deleteroom_sync]
+// [END goldensample_generated_Messaging_DeleteRoom_sync]
