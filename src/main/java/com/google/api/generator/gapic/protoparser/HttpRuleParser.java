@@ -82,11 +82,6 @@ public class HttpRuleParser {
     Map<String, String> patternSampleValues = constructPathValuePatterns(pattern);
 
     // TODO: support nested message fields bindings
-    // Nested message fields bindings for query params are already supported as part of
-    // https://github.com/googleapis/gax-java/pull/1784,
-    // however we need to excludes fields that are already configured for path params and body, see
-    // https://github.com/googleapis/googleapis/blob/532289228eaebe77c42438f74b8a5afa85fee1b6/google/api/http.proto#L208 for details,
-    // the current logic does not exclude fields that are more than one level deep.
     String body = httpRule.getBody();
     Set<String> bodyParamNames;
     Set<String> queryParamNames;
@@ -138,9 +133,8 @@ public class HttpRuleParser {
       String patternSampleValue =
           patternSampleValues != null ? patternSampleValues.get(paramName) : null;
       String[] subFields = paramName.split("\\.");
-      HttpBinding.Builder httpBindingBuilder = HttpBinding.builder().setName(paramName);
       if (inputMessage == null) {
-        httpBindings.add(httpBindingBuilder.setValuePattern(patternSampleValue).build());
+        httpBindings.add(HttpBinding.create(paramName, false, false, patternSampleValue));
         continue;
       }
       Message nestedMessage = inputMessage;
@@ -162,7 +156,8 @@ public class HttpRuleParser {
           }
           Field field = nestedMessage.fieldMap().get(subFieldName);
           httpBindings.add(
-              httpBindingBuilder.setValuePattern(patternSampleValue).setField(field).build());
+              HttpBinding.create(
+                  paramName, field.isProto3Optional(), field.isRepeated(), patternSampleValue));
         }
       }
     }

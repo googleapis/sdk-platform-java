@@ -13,8 +13,6 @@ import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.protobuf.TypeRegistry;
-import com.google.showcase.v1beta1.EnumRequest;
-import com.google.showcase.v1beta1.EnumResponse;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
 import java.io.IOException;
@@ -170,7 +168,7 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             serializer.putPathParam(
                                 fields, "info.fInt32", request.getInfo().getFInt32());
                             serializer.putPathParam(
-                                fields, "info.fKingdom", request.getInfo().getFKingdomValue());
+                                fields, "info.fKingdom", request.getInfo().getFKingdom());
                             serializer.putPathParam(
                                 fields, "info.fString", request.getInfo().getFString());
                             return fields;
@@ -287,77 +285,12 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                       .build())
               .build();
 
-  private static final ApiMethodDescriptor<EnumRequest, EnumResponse> getEnumMethodDescriptor =
-      ApiMethodDescriptor.<EnumRequest, EnumResponse>newBuilder()
-          .setFullMethodName("google.showcase.v1beta1.Compliance/GetEnum")
-          .setHttpMethod("GET")
-          .setType(ApiMethodDescriptor.MethodType.UNARY)
-          .setRequestFormatter(
-              ProtoMessageRequestFormatter.<EnumRequest>newBuilder()
-                  .setPath(
-                      "/v1beta1/compliance/enum",
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<EnumRequest> serializer = ProtoRestSerializer.create();
-                        return fields;
-                      })
-                  .setQueryParamsExtractor(
-                      request -> {
-                        Map<String, List<String>> fields = new HashMap<>();
-                        ProtoRestSerializer<EnumRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "unknownEnum", request.getUnknownEnum());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
-                        return fields;
-                      })
-                  .setRequestBodyExtractor(request -> null)
-                  .build())
-          .setResponseParser(
-              ProtoMessageResponseParser.<EnumResponse>newBuilder()
-                  .setDefaultInstance(EnumResponse.getDefaultInstance())
-                  .setDefaultTypeRegistry(typeRegistry)
-                  .build())
-          .build();
-
-  private static final ApiMethodDescriptor<EnumResponse, EnumResponse> verifyEnumMethodDescriptor =
-      ApiMethodDescriptor.<EnumResponse, EnumResponse>newBuilder()
-          .setFullMethodName("google.showcase.v1beta1.Compliance/VerifyEnum")
-          .setHttpMethod("POST")
-          .setType(ApiMethodDescriptor.MethodType.UNARY)
-          .setRequestFormatter(
-              ProtoMessageRequestFormatter.<EnumResponse>newBuilder()
-                  .setPath(
-                      "/v1beta1/compliance/enum",
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<EnumResponse> serializer = ProtoRestSerializer.create();
-                        return fields;
-                      })
-                  .setQueryParamsExtractor(
-                      request -> {
-                        Map<String, List<String>> fields = new HashMap<>();
-                        ProtoRestSerializer<EnumResponse> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "continent", request.getContinentValue());
-                        serializer.putQueryParam(fields, "request", request.getRequest());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
-                        return fields;
-                      })
-                  .setRequestBodyExtractor(request -> null)
-                  .build())
-          .setResponseParser(
-              ProtoMessageResponseParser.<EnumResponse>newBuilder()
-                  .setDefaultInstance(EnumResponse.getDefaultInstance())
-                  .setDefaultTypeRegistry(typeRegistry)
-                  .build())
-          .build();
-
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyInfoCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataQueryCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataSimplePathCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathResourceCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathTrailingResourceCallable;
-  private final UnaryCallable<EnumRequest, EnumResponse> getEnumCallable;
-  private final UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
@@ -431,16 +364,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                 .setMethodDescriptor(repeatDataPathTrailingResourceMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
                 .build();
-    HttpJsonCallSettings<EnumRequest, EnumResponse> getEnumTransportSettings =
-        HttpJsonCallSettings.<EnumRequest, EnumResponse>newBuilder()
-            .setMethodDescriptor(getEnumMethodDescriptor)
-            .setTypeRegistry(typeRegistry)
-            .build();
-    HttpJsonCallSettings<EnumResponse, EnumResponse> verifyEnumTransportSettings =
-        HttpJsonCallSettings.<EnumResponse, EnumResponse>newBuilder()
-            .setMethodDescriptor(verifyEnumMethodDescriptor)
-            .setTypeRegistry(typeRegistry)
-            .build();
 
     this.repeatDataBodyCallable =
         callableFactory.createUnaryCallable(
@@ -468,12 +391,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             repeatDataPathTrailingResourceTransportSettings,
             settings.repeatDataPathTrailingResourceSettings(),
             clientContext);
-    this.getEnumCallable =
-        callableFactory.createUnaryCallable(
-            getEnumTransportSettings, settings.getEnumSettings(), clientContext);
-    this.verifyEnumCallable =
-        callableFactory.createUnaryCallable(
-            verifyEnumTransportSettings, settings.verifyEnumSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -488,8 +405,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
     methodDescriptors.add(repeatDataSimplePathMethodDescriptor);
     methodDescriptors.add(repeatDataPathResourceMethodDescriptor);
     methodDescriptors.add(repeatDataPathTrailingResourceMethodDescriptor);
-    methodDescriptors.add(getEnumMethodDescriptor);
-    methodDescriptors.add(verifyEnumMethodDescriptor);
     return methodDescriptors;
   }
 
@@ -521,16 +436,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
   @Override
   public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathTrailingResourceCallable() {
     return repeatDataPathTrailingResourceCallable;
-  }
-
-  @Override
-  public UnaryCallable<EnumRequest, EnumResponse> getEnumCallable() {
-    return getEnumCallable;
-  }
-
-  @Override
-  public UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable() {
-    return verifyEnumCallable;
   }
 
   @Override
