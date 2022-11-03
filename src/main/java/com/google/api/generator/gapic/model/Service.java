@@ -16,10 +16,8 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -50,20 +48,6 @@ public abstract class Service {
 
   public boolean hasDescription() {
     return !Strings.isNullOrEmpty(description());
-  }
-
-  public String apiShortName() {
-    if (!Strings.isNullOrEmpty(defaultHost())) {
-      return parseApiShortName(defaultHost());
-    }
-    return "";
-  }
-
-  public String apiVersion() {
-    if (!Strings.isNullOrEmpty(protoPakkage())) {
-      return parseApiVersion(protoPakkage());
-    }
-    return "";
   }
 
   public Method operationPollingMethod() {
@@ -142,36 +126,5 @@ public abstract class Service {
     public abstract Builder setDescription(String description);
 
     public abstract Service build();
-  }
-
-  private static String parseApiVersion(String protoPackage) {
-    //  parse protoPackage for apiVersion
-    String[] pakkage = protoPackage.split("\\.");
-    String apiVersion;
-    //  e.g. v1, v2, v1beta1
-    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
-      apiVersion = pakkage[pakkage.length - 1];
-    } else {
-      apiVersion = "";
-    }
-    return apiVersion;
-  }
-
-  // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default
-  // endpoints like
-  // "us-east1-pubsub.googleapis.com".
-  private static String parseApiShortName(String defaultHost) {
-    // If the defaultHost is of the format "**.googleapis.com", take the name before the first
-    // period.
-    String apiShortName = Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
-    // If the defaultHost is of the format "**-**-**.googleapis.com", take the section before the
-    // first period and after the last dash to follow CSharp's implementation here:
-    // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
-    apiShortName = Iterables.getLast(Splitter.on("-").split(apiShortName), defaultHost);
-    // `iam-meta-api` service is an exceptional case and is handled as a one-off
-    if (defaultHost.contains("iam-meta-api")) {
-      apiShortName = "iam";
-    }
-    return apiShortName;
   }
 }
