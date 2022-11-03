@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_CreateBlurb_RoomnameBytestring_sync]
+// [START goldensample_generated_messagingclient_createblurb_roomnamebytestring_sync]
 import com.google.protobuf.ByteString;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -41,4 +41,4 @@ public class SyncCreateBlurbRoomnameBytestring {
     }
   }
 }
-// [END goldensample_generated_Messaging_CreateBlurb_RoomnameBytestring_sync]
+// [END goldensample_generated_messagingclient_createblurb_roomnamebytestring_sync]

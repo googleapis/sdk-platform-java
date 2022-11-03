@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_CollideName_sync]
+// [START goldensample_generated_echoclient_collidename_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.Foobar;
@@ -48,4 +48,4 @@ public class SyncCollideName {
     }
   }
 }
-// [END goldensample_generated_Echo_CollideName_sync]
+// [END goldensample_generated_echoclient_collidename_sync]

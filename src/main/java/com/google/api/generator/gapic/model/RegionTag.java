@@ -138,8 +138,7 @@ public abstract class RegionTag {
     if (!apiVersion().isEmpty()) {
       rt = rt + apiVersion() + "_";
     }
-    rt = rt.toLowerCase() + "generated_" + serviceName() + "_" + rpcName();
-    // TODO: @alicejli overloadDisambiguation will need to be updated to match other languages
+    rt = rt + "generated_" + serviceName() + "_" + rpcName();
     if (!overloadDisambiguation().isEmpty()) {
       rt = rt + "_" + overloadDisambiguation();
     }
@@ -149,7 +148,7 @@ public abstract class RegionTag {
       rt = rt + "_sync";
     }
 
-    return rt;
+    return rt.toLowerCase();
   }
 
   public static CommentStatement generateTag(

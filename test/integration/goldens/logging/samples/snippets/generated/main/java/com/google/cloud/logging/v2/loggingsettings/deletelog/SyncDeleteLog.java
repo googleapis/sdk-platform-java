@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.samples;
 
-// [START logging_v2_generated_LoggingSettings_DeleteLog_sync]
+// [START logging_v2_generated_loggingsettings_deletelog_sync]
 import com.google.cloud.logging.v2.LoggingSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncDeleteLog {
     LoggingSettings loggingSettings = loggingSettingsBuilder.build();
   }
 }
-// [END logging_v2_generated_LoggingSettings_DeleteLog_sync]
+// [END logging_v2_generated_loggingsettings_deletelog_sync]

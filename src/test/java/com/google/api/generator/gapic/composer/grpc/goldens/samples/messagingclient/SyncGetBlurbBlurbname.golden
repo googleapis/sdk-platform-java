@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_GetBlurb_Blurbname_sync]
+// [START goldensample_generated_messagingclient_getblurb_blurbname_sync]
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.BlurbName;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -39,4 +39,4 @@ public class SyncGetBlurbBlurbname {
     }
   }
 }
-// [END goldensample_generated_Messaging_GetBlurb_Blurbname_sync]
+// [END goldensample_generated_messagingclient_getblurb_blurbname_sync]

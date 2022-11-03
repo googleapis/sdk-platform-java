@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Identity_ListUsers_async]
+// [START goldensample_generated_identityclient_listusers_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.ListUsersRequest;
@@ -48,4 +48,4 @@ public class AsyncListUsers {
     }
   }
 }
-// [END goldensample_generated_Identity_ListUsers_async]
+// [END goldensample_generated_identityclient_listusers_async]

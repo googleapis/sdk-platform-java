@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_Wait_Duration_sync]
+// [START goldensample_generated_echoclient_wait_duration_sync]
 import com.google.protobuf.Duration;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitResponse;
@@ -39,4 +39,4 @@ public class SyncWaitDuration {
     }
   }
 }
-// [END goldensample_generated_Echo_Wait_Duration_sync]
+// [END goldensample_generated_echoclient_wait_duration_sync]

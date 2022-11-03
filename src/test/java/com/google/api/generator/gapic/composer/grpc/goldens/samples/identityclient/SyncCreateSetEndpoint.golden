@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Identity_Create_SetEndpoint_sync]
+// [START goldensample_generated_identityclient_create_setendpoint_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.myEndpoint;
@@ -38,4 +38,4 @@ public class SyncCreateSetEndpoint {
     IdentityClient identityClient = IdentityClient.create(identitySettings);
   }
 }
-// [END goldensample_generated_Identity_Create_SetEndpoint_sync]
+// [END goldensample_generated_identityclient_create_setendpoint_sync]

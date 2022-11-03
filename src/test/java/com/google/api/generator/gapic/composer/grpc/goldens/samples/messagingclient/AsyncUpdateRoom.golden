@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_UpdateRoom_async]
+// [START goldensample_generated_messagingclient_updateroom_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.Room;
@@ -43,4 +43,4 @@ public class AsyncUpdateRoom {
     }
   }
 }
-// [END goldensample_generated_Messaging_UpdateRoom_async]
+// [END goldensample_generated_messagingclient_updateroom_async]

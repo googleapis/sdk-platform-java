@@ -16,7 +16,7 @@
 
 package com.google.testdata.v1.samples;
 
-// [START goldensample_generated_DeprecatedServiceSettings_FastFibonacci_sync]
+// [START goldensample_generated_deprecatedservicesettings_fastfibonacci_sync]
 import com.google.testdata.v1.DeprecatedServiceSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncFastFibonacci {
     DeprecatedServiceSettings deprecatedServiceSettings = deprecatedServiceSettingsBuilder.build();
   }
 }
-// [END goldensample_generated_DeprecatedServiceSettings_FastFibonacci_sync]
+// [END goldensample_generated_deprecatedservicesettings_fastfibonacci_sync]

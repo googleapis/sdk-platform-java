@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_SearchBlurbs_LRO_async]
+// [START goldensample_generated_messagingclient_searchblurbs_lro_async]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
@@ -51,4 +51,4 @@ public class AsyncSearchBlurbsLRO {
     }
   }
 }
-// [END goldensample_generated_Messaging_SearchBlurbs_LRO_async]
+// [END goldensample_generated_messagingclient_searchblurbs_lro_async]

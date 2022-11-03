@@ -27,7 +27,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
-import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -58,8 +57,7 @@ public class ServiceClientMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName("emtpy")
             .build();
 
@@ -171,8 +169,7 @@ public class ServiceClientMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
             .setOverloadDisambiguation(
                 SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
@@ -246,8 +243,7 @@ public class ServiceClientMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
             .setOverloadDisambiguation(
                 SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
@@ -297,8 +293,7 @@ public class ServiceClientMethodSampleComposer {
     }
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(
-                ClassNames.getPureServiceName(clientVarExpr.variable().identifier().name()))
+            .setServiceName(clientVarExpr.variable().identifier().name())
             .setRpcName(method.name())
             .setOverloadDisambiguation(
                 SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))

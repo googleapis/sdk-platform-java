@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_DeleteRoom_async]
+// [START goldensample_generated_messagingclient_deleteroom_async]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.DeleteRoomRequest;
@@ -44,4 +44,4 @@ public class AsyncDeleteRoom {
     }
   }
 }
-// [END goldensample_generated_Messaging_DeleteRoom_async]
+// [END goldensample_generated_messagingclient_deleteroom_async]

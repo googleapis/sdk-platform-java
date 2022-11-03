@@ -16,7 +16,7 @@
 
 package com.google.bookshop.v1beta1.samples;
 
-// [START goldensample_generated_Bookshop_GetBook_async]
+// [START goldensample_generated_bookshopclient_getbook_async]
 import com.google.api.core.ApiFuture;
 import com.google.bookshop.v1beta1.Book;
 import com.google.bookshop.v1beta1.BookshopClient;
@@ -48,4 +48,4 @@ public class AsyncGetBook {
     }
   }
 }
-// [END goldensample_generated_Bookshop_GetBook_async]
+// [END goldensample_generated_bookshopclient_getbook_async]

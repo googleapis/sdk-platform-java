@@ -104,7 +104,7 @@ public class RegionTagTest {
             .build();
 
     String result = regionTag.generate();
-    String expected = "shortname_generated_ServiceName_RpcName_sync";
+    String expected = "shortname_generated_servicename_rpcname_sync";
     Assert.assertEquals(expected, result);
   }
 
@@ -121,7 +121,7 @@ public class RegionTagTest {
             .build();
 
     String result = regionTag.generate();
-    String expected = "shortname_v1_generated_ServiceName_RpcName_Disambiguation_async";
+    String expected = "shortname_v1_generated_servicename_rpcname_disambiguation_async";
     Assert.assertEquals(expected, result);
   }
 
@@ -143,8 +143,8 @@ public class RegionTagTest {
                 regionTag.generateTag(RegionTag.RegionTagRegion.END, regionTag.generate())));
     String expected =
         LineFormatter.lines(
-            "// [START shortname_v1_generated_ServiceName_RpcName_Disambiguation_sync]\n",
-            "// [END shortname_v1_generated_ServiceName_RpcName_Disambiguation_sync]");
+            "// [START shortname_v1_generated_servicename_rpcname_disambiguation_sync]\n",
+            "// [END shortname_v1_generated_servicename_rpcname_disambiguation_sync]");
     Assert.assertEquals(expected, result);
   }
 }

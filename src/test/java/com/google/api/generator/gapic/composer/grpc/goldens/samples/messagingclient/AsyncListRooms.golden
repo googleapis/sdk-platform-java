@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_ListRooms_async]
+// [START goldensample_generated_messagingclient_listrooms_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.ListRoomsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -48,4 +48,4 @@ public class AsyncListRooms {
     }
   }
 }
-// [END goldensample_generated_Messaging_ListRooms_async]
+// [END goldensample_generated_messagingclient_listrooms_async]

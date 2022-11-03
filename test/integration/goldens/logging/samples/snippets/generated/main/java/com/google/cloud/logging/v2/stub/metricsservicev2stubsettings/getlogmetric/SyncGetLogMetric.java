@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.stub.samples;
 
-// [START logging_v2_generated_MetricsServiceV2StubSettings_GetLogMetric_sync]
+// [START logging_v2_generated_metricsservicev2stubsettings_getlogmetric_sync]
 import com.google.cloud.logging.v2.stub.MetricsServiceV2StubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncGetLogMetric {
     MetricsServiceV2StubSettings metricsSettings = metricsSettingsBuilder.build();
   }
 }
-// [END logging_v2_generated_MetricsServiceV2StubSettings_GetLogMetric_sync]
+// [END logging_v2_generated_metricsservicev2stubsettings_getlogmetric_sync]

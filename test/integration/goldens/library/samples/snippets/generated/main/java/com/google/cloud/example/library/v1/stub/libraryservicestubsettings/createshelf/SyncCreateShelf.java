@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.stub.samples;
 
-// [START example_v1_generated_LibraryServiceStubSettings_CreateShelf_sync]
+// [START example_v1_generated_libraryservicestubsettings_createshelf_sync]
 import com.google.cloud.example.library.v1.stub.LibraryServiceStubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncCreateShelf {
     LibraryServiceStubSettings libraryServiceSettings = libraryServiceSettingsBuilder.build();
   }
 }
-// [END example_v1_generated_LibraryServiceStubSettings_CreateShelf_sync]
+// [END example_v1_generated_libraryservicestubsettings_createshelf_sync]

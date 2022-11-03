@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Identity_ListUsers_sync]
+// [START goldensample_generated_identityclient_listusers_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.User;
@@ -45,4 +45,4 @@ public class SyncListUsers {
     }
   }
 }
-// [END goldensample_generated_Identity_ListUsers_sync]
+// [END goldensample_generated_identityclient_listusers_sync]
