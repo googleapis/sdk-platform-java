@@ -145,7 +145,6 @@ public final class SettingsSampleComposer {
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
 
-    // TODO: alicejli edit RegionTag to match other languages
     RegionTag regionTag =
         RegionTag.builder()
             .setServiceName(classType.reference().name())

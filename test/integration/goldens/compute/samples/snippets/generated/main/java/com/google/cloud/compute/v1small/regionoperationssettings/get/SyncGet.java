@@ -16,7 +16,7 @@
 
 package com.google.cloud.compute.v1small.samples;
 
-// [START compute_v1small_generated_RegionOperationsSettings_Get_sync]
+// [START compute_v1small_generated_regionoperationssettings_get_sync]
 import com.google.cloud.compute.v1small.RegionOperationsSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncGet {
     RegionOperationsSettings regionOperationsSettings = regionOperationsSettingsBuilder.build();
   }
 }
-// [END compute_v1small_generated_RegionOperationsSettings_Get_sync]
+// [END compute_v1small_generated_regionoperationssettings_get_sync]

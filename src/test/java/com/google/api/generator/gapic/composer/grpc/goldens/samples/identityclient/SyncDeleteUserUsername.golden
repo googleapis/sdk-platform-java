@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Identity_DeleteUser_Username_sync]
+// [START goldensample_generated_identityclient_deleteuser_username_sync]
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.UserName;
@@ -39,4 +39,4 @@ public class SyncDeleteUserUsername {
     }
   }
 }
-// [END goldensample_generated_Identity_DeleteUser_Username_sync]
+// [END goldensample_generated_identityclient_deleteuser_username_sync]

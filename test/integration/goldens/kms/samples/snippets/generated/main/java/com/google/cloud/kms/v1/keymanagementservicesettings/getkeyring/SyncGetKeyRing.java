@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_KeyManagementServiceSettings_GetKeyRing_sync]
+// [START kms_v1_generated_keymanagementservicesettings_getkeyring_sync]
 import com.google.cloud.kms.v1.KeyManagementServiceSettings;
 import java.time.Duration;
 
@@ -47,4 +47,4 @@ public class SyncGetKeyRing {
         keyManagementServiceSettingsBuilder.build();
   }
 }
-// [END cloudkms_v1_generated_KeyManagementServiceSettings_GetKeyRing_sync]
+// [END kms_v1_generated_keymanagementservicesettings_getkeyring_sync]

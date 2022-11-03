@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_Wait_sync]
+// [START goldensample_generated_echoclient_wait_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
@@ -39,4 +39,4 @@ public class SyncWait {
     }
   }
 }
-// [END goldensample_generated_Echo_Wait_sync]
+// [END goldensample_generated_echoclient_wait_sync]

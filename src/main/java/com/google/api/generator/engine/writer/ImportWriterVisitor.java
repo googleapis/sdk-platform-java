@@ -183,7 +183,6 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(VariableExpr variableExpr) {
     variableExpr.variable().type().accept(this);
-    annotations(variableExpr.annotations());
     if (variableExpr.exprReferenceExpr() != null) {
       variableExpr.exprReferenceExpr().accept(this);
     }

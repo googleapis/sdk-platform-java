@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_Echo_StringSeverity_sync]
+// [START goldensample_generated_echoclient_echo_stringseverity_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.Severity;
@@ -40,4 +40,4 @@ public class SyncEchoStringSeverity {
     }
   }
 }
-// [END goldensample_generated_Echo_Echo_StringSeverity_sync]
+// [END goldensample_generated_echoclient_echo_stringseverity_sync]

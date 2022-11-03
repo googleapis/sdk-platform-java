@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_Block_sync]
+// [START goldensample_generated_echoclient_block_sync]
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
@@ -39,4 +39,4 @@ public class SyncBlock {
     }
   }
 }
-// [END goldensample_generated_Echo_Block_sync]
+// [END goldensample_generated_echoclient_block_sync]

@@ -18,7 +18,8 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -29,36 +30,11 @@ public class ServiceClientClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {
-            "EchoClient",
-            GrpcTestProtoLoader.instance().parseShowcaseEcho(),
-            "localhost:7469",
-            "v1beta1"
-          },
-          {
-            "DeprecatedServiceClient",
-            GrpcTestProtoLoader.instance().parseDeprecatedService(),
-            "localhost:7469",
-            "v1"
-          },
-          {
-            "IdentityClient",
-            GrpcTestProtoLoader.instance().parseShowcaseIdentity(),
-            "localhost:7469",
-            "v1beta1"
-          },
-          {
-            "BookshopClient",
-            GrpcTestProtoLoader.instance().parseBookshopService(),
-            "localhost:2665",
-            "v1beta1"
-          },
-          {
-            "MessagingClient",
-            GrpcTestProtoLoader.instance().parseShowcaseMessaging(),
-            "localhost:7469",
-            "v1beta1"
-          },
+          {"EchoClient", GrpcTestProtoLoader.instance().parseShowcaseEcho()},
+          {"DeprecatedServiceClient", GrpcTestProtoLoader.instance().parseDeprecatedService()},
+          {"IdentityClient", GrpcTestProtoLoader.instance().parseShowcaseIdentity()},
+          {"BookshopClient", GrpcTestProtoLoader.instance().parseBookshopService()},
+          {"MessagingClient", GrpcTestProtoLoader.instance().parseShowcaseMessaging()},
         });
   }
 
@@ -66,12 +42,6 @@ public class ServiceClientClassComposerTest {
 
   @Parameterized.Parameter(1)
   public GapicContext context;
-
-  @Parameterized.Parameter(2)
-  public String apiShortNameExpected;
-
-  @Parameterized.Parameter(3)
-  public String apiVersionExpected;
 
   @Test
   public void generateServiceClientClasses() {
@@ -81,7 +51,5 @@ public class ServiceClientClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertGoldenSamples(
         this.getClass(), name, clazz.classDefinition().packageString(), clazz.samples());
-    Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
   }
 }

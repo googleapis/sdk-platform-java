@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.stub.samples;
 
-// [START pubsub_v1_generated_PublisherStubSettings_CreateTopic_sync]
+// [START pubsub_v1_generated_publisherstubsettings_createtopic_sync]
 import com.google.cloud.pubsub.v1.stub.PublisherStubSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncCreateTopic {
     PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
   }
 }
-// [END pubsub_v1_generated_PublisherStubSettings_CreateTopic_sync]
+// [END pubsub_v1_generated_publisherstubsettings_createtopic_sync]

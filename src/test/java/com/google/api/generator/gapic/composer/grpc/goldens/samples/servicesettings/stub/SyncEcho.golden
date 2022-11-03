@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.stub.samples;
 
-// [START goldensample_generated_EchoStubSettings_Echo_sync]
+// [START goldensample_generated_echostubsettings_echo_sync]
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncEcho {
     EchoStubSettings echoSettings = echoSettingsBuilder.build();
   }
 }
-// [END goldensample_generated_EchoStubSettings_Echo_sync]
+// [END goldensample_generated_echostubsettings_echo_sync]

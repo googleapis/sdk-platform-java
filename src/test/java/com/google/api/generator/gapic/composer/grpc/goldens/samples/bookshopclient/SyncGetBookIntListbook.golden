@@ -16,7 +16,7 @@
 
 package com.google.bookshop.v1beta1.samples;
 
-// [START goldensample_generated_Bookshop_GetBook_IntListbook_sync]
+// [START goldensample_generated_bookshopclient_getbook_intlistbook_sync]
 import com.google.bookshop.v1beta1.Book;
 import com.google.bookshop.v1beta1.BookshopClient;
 import java.util.ArrayList;
@@ -41,4 +41,4 @@ public class SyncGetBookIntListbook {
     }
   }
 }
-// [END goldensample_generated_Bookshop_GetBook_IntListbook_sync]
+// [END goldensample_generated_bookshopclient_getbook_intlistbook_sync]

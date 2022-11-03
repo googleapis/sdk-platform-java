@@ -21,7 +21,6 @@ import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.CredentialsSupplier;
 import javax.annotation.Generated;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.threeten.bp.Duration;
 
 @Generated("by gapic-generator-java")

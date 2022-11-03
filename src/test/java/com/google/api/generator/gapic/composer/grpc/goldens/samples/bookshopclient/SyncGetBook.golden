@@ -16,7 +16,7 @@
 
 package com.google.bookshop.v1beta1.samples;
 
-// [START goldensample_generated_Bookshop_GetBook_sync]
+// [START goldensample_generated_bookshopclient_getbook_sync]
 import com.google.bookshop.v1beta1.Book;
 import com.google.bookshop.v1beta1.BookshopClient;
 import com.google.bookshop.v1beta1.GetBookRequest;
@@ -45,4 +45,4 @@ public class SyncGetBook {
     }
   }
 }
-// [END goldensample_generated_Bookshop_GetBook_sync]
+// [END goldensample_generated_bookshopclient_getbook_sync]

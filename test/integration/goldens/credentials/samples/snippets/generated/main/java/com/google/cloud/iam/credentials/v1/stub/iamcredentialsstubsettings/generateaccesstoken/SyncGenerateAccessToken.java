@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.stub.samples;
 
-// [START iamcredentials_v1_generated_IamCredentialsStubSettings_GenerateAccessToken_sync]
+// [START credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_sync]
 import com.google.cloud.iam.credentials.v1.stub.IamCredentialsStubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncGenerateAccessToken {
     IamCredentialsStubSettings iamCredentialsSettings = iamCredentialsSettingsBuilder.build();
   }
 }
-// [END iamcredentials_v1_generated_IamCredentialsStubSettings_GenerateAccessToken_sync]
+// [END credentials_v1_generated_iamcredentialsstubsettings_generateaccesstoken_sync]

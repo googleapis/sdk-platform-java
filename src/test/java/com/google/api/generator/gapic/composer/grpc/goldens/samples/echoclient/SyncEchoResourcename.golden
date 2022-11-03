@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_Echo_Resourcename_sync]
+// [START goldensample_generated_echoclient_echo_resourcename_sync]
 import com.google.api.resourcenames.ResourceName;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -40,4 +40,4 @@ public class SyncEchoResourcename {
     }
   }
 }
-// [END goldensample_generated_Echo_Echo_Resourcename_sync]
+// [END goldensample_generated_echoclient_echo_resourcename_sync]

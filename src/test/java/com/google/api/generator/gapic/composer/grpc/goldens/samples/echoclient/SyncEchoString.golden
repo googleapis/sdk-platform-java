@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_Echo_String_sync]
+// [START goldensample_generated_echoclient_echo_string_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 
@@ -38,4 +38,4 @@ public class SyncEchoString {
     }
   }
 }
-// [END goldensample_generated_Echo_Echo_String_sync]
+// [END goldensample_generated_echoclient_echo_string_sync]

@@ -15,7 +15,6 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
@@ -48,7 +47,8 @@ public class Composer {
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(prepareExecutableSamples(clazzes));
+    return addApacheLicense(
+        prepareExecutableSamples(clazzes, context.gapicMetadata().getProtoPackage()));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
@@ -190,30 +190,37 @@ public class Composer {
   }
 
   @VisibleForTesting
-  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes) {
-    // Include license header, apiShortName, and apiVersion
-    List<GapicClass> clazzesWithSamples = new ArrayList<>();
-    clazzes.forEach(
-        gapicClass -> {
-          List<Sample> samples = new ArrayList<>();
-          gapicClass
-              .samples()
-              .forEach(
-                  sample ->
-                      samples.add(
-                          addRegionTagAndHeaderToSample(
-                              sample, gapicClass.apiShortName(), gapicClass.apiVersion())));
-          clazzesWithSamples.add(gapicClass.withSamples(samples));
-        });
-    return clazzesWithSamples;
+  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes, String protoPackage) {
+    //  parse protoPackage for apiVersion and apiShortName
+    String[] pakkage = protoPackage.split("\\.");
+    String apiVersion;
+    String apiShortName;
+    //  e.g. v1, v2, v1beta1
+    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
+      apiVersion = pakkage[pakkage.length - 1];
+      apiShortName = pakkage[pakkage.length - 2];
+    } else {
+      apiVersion = "";
+      apiShortName = pakkage[pakkage.length - 1];
+    }
+    //  Include license header, apiShortName, and apiVersion
+    return clazzes.stream()
+        .map(
+            gapicClass -> {
+              List<Sample> samples =
+                  gapicClass.samples().stream()
+                      .map(
+                          sample -> addRegionTagAndHeaderToSample(sample, apiShortName, apiVersion))
+                      .collect(Collectors.toList());
+              return gapicClass.withSamples(samples);
+            })
+        .collect(Collectors.toList());
   }
 
-  @VisibleForTesting
-  protected static Sample addRegionTagAndHeaderToSample(
+  private static Sample addRegionTagAndHeaderToSample(
       Sample sample, String apiShortName, String apiVersion) {
-    final List<CommentStatement> header = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
     return sample
-        .withHeader(header)
+        .withHeader(Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT))
         .withRegionTag(
             sample.regionTag().withApiVersion(apiVersion).withApiShortName(apiShortName));
   }

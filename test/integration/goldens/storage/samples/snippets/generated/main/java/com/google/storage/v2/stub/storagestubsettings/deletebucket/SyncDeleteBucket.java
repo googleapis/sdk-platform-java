@@ -16,7 +16,7 @@
 
 package com.google.storage.v2.stub.samples;
 
-// [START storage_v2_generated_StorageStubSettings_DeleteBucket_sync]
+// [START storage_v2_generated_storagestubsettings_deletebucket_sync]
 import com.google.storage.v2.stub.StorageStubSettings;
 import java.time.Duration;
 
@@ -45,4 +45,4 @@ public class SyncDeleteBucket {
     StorageStubSettings storageSettings = storageSettingsBuilder.build();
   }
 }
-// [END storage_v2_generated_StorageStubSettings_DeleteBucket_sync]
+// [END storage_v2_generated_storagestubsettings_deletebucket_sync]

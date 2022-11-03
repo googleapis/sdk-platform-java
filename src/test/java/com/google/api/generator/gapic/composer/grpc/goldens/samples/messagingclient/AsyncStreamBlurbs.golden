@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Messaging_StreamBlurbs_async]
+// [START goldensample_generated_messagingclient_streamblurbs_async]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.ProfileName;
@@ -46,4 +46,4 @@ public class AsyncStreamBlurbs {
     }
   }
 }
-// [END goldensample_generated_Messaging_StreamBlurbs_async]
+// [END goldensample_generated_messagingclient_streamblurbs_async]

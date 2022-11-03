@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Echo_PagedExpand_async]
+// [START goldensample_generated_echoclient_pagedexpand_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -49,4 +49,4 @@ public class AsyncPagedExpand {
     }
   }
 }
-// [END goldensample_generated_Echo_PagedExpand_async]
+// [END goldensample_generated_echoclient_pagedexpand_async]
