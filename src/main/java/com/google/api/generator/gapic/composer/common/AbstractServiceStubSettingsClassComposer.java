@@ -201,8 +201,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
     return GapicClass.create(
-            GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
-        .withDefaultHost(service.defaultHost());
+        GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples));
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {

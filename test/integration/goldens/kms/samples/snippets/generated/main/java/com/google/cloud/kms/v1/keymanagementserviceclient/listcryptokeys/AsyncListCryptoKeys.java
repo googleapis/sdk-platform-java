@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_listcryptokeys_async]
+// [START kms_v1_generated_keymanagementserviceclient_listcryptokeys_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -54,4 +54,4 @@ public class AsyncListCryptoKeys {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_listcryptokeys_async]
+// [END kms_v1_generated_keymanagementserviceclient_listcryptokeys_async]

@@ -35,10 +35,6 @@ public abstract class GapicClass {
 
   public abstract List<Sample> samples();
 
-  // Represents the host URL for the service. May or may not contain a regional endpoint. Only used
-  // for generating the region tag for samples; therefore only used in select Composers.
-  public abstract String defaultHost();
-
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
   }
@@ -49,19 +45,13 @@ public abstract class GapicClass {
   }
 
   static Builder builder() {
-    return new AutoValue_GapicClass.Builder()
-        .setSamples(Collections.emptyList())
-        .setDefaultHost("");
+    return new AutoValue_GapicClass.Builder().setSamples(Collections.emptyList());
   }
 
   abstract Builder toBuilder();
 
   public final GapicClass withSamples(List<Sample> samples) {
     return toBuilder().setSamples(samples).build();
-  }
-
-  public final GapicClass withDefaultHost(String defaultHost) {
-    return toBuilder().setDefaultHost(defaultHost).build();
   }
 
   @AutoValue.Builder
@@ -71,8 +61,6 @@ public abstract class GapicClass {
     abstract Builder setClassDefinition(ClassDefinition classDefinition);
 
     abstract Builder setSamples(List<Sample> samples);
-
-    abstract Builder setDefaultHost(String defaultHost);
 
     abstract GapicClass build();
   }

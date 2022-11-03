@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_getcryptokey_string_sync]
+// [START kms_v1_generated_keymanagementserviceclient_getcryptokey_string_sync]
 import com.google.cloud.kms.v1.CryptoKey;
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -41,4 +41,4 @@ public class SyncGetCryptoKeyString {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_getcryptokey_string_sync]
+// [END kms_v1_generated_keymanagementserviceclient_getcryptokey_string_sync]

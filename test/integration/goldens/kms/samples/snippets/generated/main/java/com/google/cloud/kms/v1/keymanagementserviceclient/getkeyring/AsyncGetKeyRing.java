@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_getkeyring_async]
+// [START kms_v1_generated_keymanagementserviceclient_getkeyring_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.GetKeyRingRequest;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -48,4 +48,4 @@ public class AsyncGetKeyRing {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_getkeyring_async]
+// [END kms_v1_generated_keymanagementserviceclient_getkeyring_async]

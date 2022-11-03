@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START example_v1_generated_libraryserviceclient_createshelf_sync]
+// [START library_v1_generated_libraryserviceclient_createshelf_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.CreateShelfRequest;
 import com.google.example.library.v1.Shelf;
@@ -40,4 +40,4 @@ public class SyncCreateShelf {
     }
   }
 }
-// [END example_v1_generated_libraryserviceclient_createshelf_sync]
+// [END library_v1_generated_libraryserviceclient_createshelf_sync]

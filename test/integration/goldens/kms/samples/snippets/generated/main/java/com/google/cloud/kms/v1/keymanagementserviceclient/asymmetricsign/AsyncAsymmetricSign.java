@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_asymmetricsign_async]
+// [START kms_v1_generated_keymanagementserviceclient_asymmetricsign_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.AsymmetricSignRequest;
 import com.google.cloud.kms.v1.AsymmetricSignResponse;
@@ -59,4 +59,4 @@ public class AsyncAsymmetricSign {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_asymmetricsign_async]
+// [END kms_v1_generated_keymanagementserviceclient_asymmetricsign_async]

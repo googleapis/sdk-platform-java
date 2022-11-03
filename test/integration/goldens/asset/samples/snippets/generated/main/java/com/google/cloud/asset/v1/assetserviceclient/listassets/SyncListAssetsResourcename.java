@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START cloudasset_v1_generated_assetserviceclient_listassets_resourcename_sync]
+// [START asset_v1_generated_assetserviceclient_listassets_resourcename_sync]
 import com.google.api.resourcenames.ResourceName;
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
@@ -61,4 +61,4 @@ public class SyncListAssetsResourcename {
     }
   }
 }
-// [END cloudasset_v1_generated_assetserviceclient_listassets_resourcename_sync]
+// [END asset_v1_generated_assetserviceclient_listassets_resourcename_sync]

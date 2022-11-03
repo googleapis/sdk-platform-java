@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START iamcredentials_v1_generated_iamcredentialsclient_signjwt_stringliststringstring_sync]
+// [START credentials_v1_generated_iamcredentialsclient_signjwt_stringliststringstring_sync]
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
 import com.google.cloud.iam.credentials.v1.SignJwtResponse;
@@ -43,4 +43,4 @@ public class SyncSignJwtStringListstringString {
     }
   }
 }
-// [END iamcredentials_v1_generated_iamcredentialsclient_signjwt_stringliststringstring_sync]
+// [END credentials_v1_generated_iamcredentialsclient_signjwt_stringliststringstring_sync]

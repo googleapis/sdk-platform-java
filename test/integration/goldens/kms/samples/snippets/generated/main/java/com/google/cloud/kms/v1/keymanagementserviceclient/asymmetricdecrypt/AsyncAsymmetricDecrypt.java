@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_asymmetricdecrypt_async]
+// [START kms_v1_generated_keymanagementserviceclient_asymmetricdecrypt_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.AsymmetricDecryptRequest;
 import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
@@ -59,4 +59,4 @@ public class AsyncAsymmetricDecrypt {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_asymmetricdecrypt_async]
+// [END kms_v1_generated_keymanagementserviceclient_asymmetricdecrypt_async]

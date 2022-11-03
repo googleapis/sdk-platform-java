@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START cloudasset_v1_generated_assetserviceclient_listfeeds_sync]
+// [START asset_v1_generated_assetserviceclient_listfeeds_sync]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ListFeedsRequest;
 import com.google.cloud.asset.v1.ListFeedsResponse;
@@ -40,4 +40,4 @@ public class SyncListFeeds {
     }
   }
 }
-// [END cloudasset_v1_generated_assetserviceclient_listfeeds_sync]
+// [END asset_v1_generated_assetserviceclient_listfeeds_sync]

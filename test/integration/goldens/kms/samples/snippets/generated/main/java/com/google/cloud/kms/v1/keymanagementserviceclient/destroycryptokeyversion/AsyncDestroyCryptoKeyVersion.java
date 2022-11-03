@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_destroycryptokeyversion_async]
+// [START kms_v1_generated_keymanagementserviceclient_destroycryptokeyversion_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
 import com.google.cloud.kms.v1.CryptoKeyVersionName;
@@ -55,4 +55,4 @@ public class AsyncDestroyCryptoKeyVersion {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_destroycryptokeyversion_async]
+// [END kms_v1_generated_keymanagementserviceclient_destroycryptokeyversion_async]

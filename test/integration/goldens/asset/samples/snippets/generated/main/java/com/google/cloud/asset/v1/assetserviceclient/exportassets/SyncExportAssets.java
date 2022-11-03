@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START cloudasset_v1_generated_assetserviceclient_exportassets_sync]
+// [START asset_v1_generated_assetserviceclient_exportassets_sync]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.ContentType;
 import com.google.cloud.asset.v1.ExportAssetsRequest;
@@ -51,4 +51,4 @@ public class SyncExportAssets {
     }
   }
 }
-// [END cloudasset_v1_generated_assetserviceclient_exportassets_sync]
+// [END asset_v1_generated_assetserviceclient_exportassets_sync]

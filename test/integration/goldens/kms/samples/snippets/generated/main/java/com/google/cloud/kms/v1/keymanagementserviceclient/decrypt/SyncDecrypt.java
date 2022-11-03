@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_decrypt_sync]
+// [START kms_v1_generated_keymanagementserviceclient_decrypt_sync]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.DecryptRequest;
 import com.google.cloud.kms.v1.DecryptResponse;
@@ -52,4 +52,4 @@ public class SyncDecrypt {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_decrypt_sync]
+// [END kms_v1_generated_keymanagementserviceclient_decrypt_sync]

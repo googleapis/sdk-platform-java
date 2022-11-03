@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START example_v1_generated_libraryserviceclient_updatebook_async]
+// [START library_v1_generated_libraryserviceclient_updatebook_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.example.library.v1.Book;
@@ -47,4 +47,4 @@ public class AsyncUpdateBook {
     }
   }
 }
-// [END example_v1_generated_libraryserviceclient_updatebook_async]
+// [END library_v1_generated_libraryserviceclient_updatebook_async]

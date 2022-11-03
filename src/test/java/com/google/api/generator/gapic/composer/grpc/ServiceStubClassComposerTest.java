@@ -31,8 +31,8 @@ public class ServiceStubClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {"EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), ""},
-          {"DeprecatedServiceStub", TestProtoLoader.instance().parseDeprecatedService(), ""}
+          {"EchoStub", TestProtoLoader.instance().parseShowcaseEcho()},
+          {"DeprecatedServiceStub", TestProtoLoader.instance().parseDeprecatedService()}
         });
   }
 
@@ -41,9 +41,6 @@ public class ServiceStubClassComposerTest {
   @Parameterized.Parameter(1)
   public GapicContext context;
 
-  @Parameterized.Parameter(2)
-  public String defaultHostExpected;
-
   @Test
   public void generateServiceStubClasses() {
     Service service = context.services().get(0);
@@ -51,6 +48,5 @@ public class ServiceStubClassComposerTest {
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertEmptySamples(clazz.samples());
-    Assert.assertCodeEquals(clazz.defaultHost(), defaultHostExpected);
   }
 }

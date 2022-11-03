@@ -16,7 +16,7 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START example_v1_generated_libraryserviceclient_listshelves_paged_async]
+// [START library_v1_generated_libraryserviceclient_listshelves_paged_async]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.common.base.Strings;
 import com.google.example.library.v1.ListShelvesRequest;
@@ -56,4 +56,4 @@ public class AsyncListShelvesPaged {
     }
   }
 }
-// [END example_v1_generated_libraryserviceclient_listshelves_paged_async]
+// [END library_v1_generated_libraryserviceclient_listshelves_paged_async]

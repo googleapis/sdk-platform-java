@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_getlocation_sync]
+// [START kms_v1_generated_keymanagementserviceclient_getlocation_sync]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.Location;
@@ -40,4 +40,4 @@ public class SyncGetLocation {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_getlocation_sync]
+// [END kms_v1_generated_keymanagementserviceclient_getlocation_sync]

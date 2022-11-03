@@ -16,7 +16,7 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START cloudasset_v1_generated_assetserviceclient_searchalliampolicies_async]
+// [START asset_v1_generated_assetserviceclient_searchalliampolicies_async]
 import com.google.api.core.ApiFuture;
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.IamPolicySearchResult;
@@ -54,4 +54,4 @@ public class AsyncSearchAllIamPolicies {
     }
   }
 }
-// [END cloudasset_v1_generated_assetserviceclient_searchalliampolicies_async]
+// [END asset_v1_generated_assetserviceclient_searchalliampolicies_async]

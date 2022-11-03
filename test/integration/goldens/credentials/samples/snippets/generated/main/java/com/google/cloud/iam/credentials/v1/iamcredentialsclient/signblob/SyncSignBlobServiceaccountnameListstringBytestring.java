@@ -16,7 +16,7 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START iamcredentials_v1_generated_iamcredentialsclient_signblob_serviceaccountnameliststringbytestring_sync]
+// [START credentials_v1_generated_iamcredentialsclient_signblob_serviceaccountnameliststringbytestring_sync]
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.ServiceAccountName;
 import com.google.cloud.iam.credentials.v1.SignBlobResponse;
@@ -44,4 +44,4 @@ public class SyncSignBlobServiceaccountnameListstringBytestring {
     }
   }
 }
-// [END iamcredentials_v1_generated_iamcredentialsclient_signblob_serviceaccountnameliststringbytestring_sync]
+// [END credentials_v1_generated_iamcredentialsclient_signblob_serviceaccountnameliststringbytestring_sync]

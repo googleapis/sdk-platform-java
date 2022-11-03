@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_encrypt_sync]
+// [START kms_v1_generated_keymanagementserviceclient_encrypt_sync]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.EncryptRequest;
 import com.google.cloud.kms.v1.EncryptResponse;
@@ -52,4 +52,4 @@ public class SyncEncrypt {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_encrypt_sync]
+// [END kms_v1_generated_keymanagementserviceclient_encrypt_sync]

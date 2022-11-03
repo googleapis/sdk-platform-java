@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_listkeyrings_string_sync]
+// [START kms_v1_generated_keymanagementserviceclient_listkeyrings_string_sync]
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRing;
 import com.google.cloud.kms.v1.LocationName;
@@ -42,4 +42,4 @@ public class SyncListKeyRingsString {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_listkeyrings_string_sync]
+// [END kms_v1_generated_keymanagementserviceclient_listkeyrings_string_sync]

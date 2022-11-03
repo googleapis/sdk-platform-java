@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_createimportjob_keyringnamestringimportjob_sync]
+// [START kms_v1_generated_keymanagementserviceclient_createimportjob_keyringnamestringimportjob_sync]
 import com.google.cloud.kms.v1.ImportJob;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
 import com.google.cloud.kms.v1.KeyRingName;
@@ -43,4 +43,4 @@ public class SyncCreateImportJobKeyringnameStringImportjob {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_createimportjob_keyringnamestringimportjob_sync]
+// [END kms_v1_generated_keymanagementserviceclient_createimportjob_keyringnamestringimportjob_sync]

@@ -16,7 +16,7 @@
 
 package com.google.cloud.kms.v1.samples;
 
-// [START cloudkms_v1_generated_keymanagementserviceclient_listcryptokeyversions_paged_async]
+// [START kms_v1_generated_keymanagementserviceclient_listcryptokeyversions_paged_async]
 import com.google.cloud.kms.v1.CryptoKeyName;
 import com.google.cloud.kms.v1.CryptoKeyVersion;
 import com.google.cloud.kms.v1.KeyManagementServiceClient;
@@ -64,4 +64,4 @@ public class AsyncListCryptoKeyVersionsPaged {
     }
   }
 }
-// [END cloudkms_v1_generated_keymanagementserviceclient_listcryptokeyversions_paged_async]
+// [END kms_v1_generated_keymanagementserviceclient_listcryptokeyversions_paged_async]
