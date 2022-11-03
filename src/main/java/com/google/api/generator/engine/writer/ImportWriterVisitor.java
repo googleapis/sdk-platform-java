@@ -170,7 +170,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(ArrayExpr expr) {
-    expr.exprs().get(0).type().accept(this);
+    expr.type().accept(this);
   }
 
   /** =============================== EXPRESSIONS =============================== */
