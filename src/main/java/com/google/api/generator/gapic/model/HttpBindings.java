@@ -36,21 +36,54 @@ public abstract class HttpBindings {
 
   @AutoValue
   public abstract static class HttpBinding implements Comparable<HttpBinding> {
+
+    // The fully qualified name of the field. e.g. request.complex_object.another_object.name
     public abstract String name();
 
     abstract String lowerCamelName();
 
-    public abstract boolean isOptional();
+    // An object that contains all info of the leaf level field
+    @Nullable
+    public abstract Field field();
 
-    public abstract boolean isRepeated();
+    public boolean isOptional() {
+      return field() != null && field().isProto3Optional();
+    }
+
+    public boolean isRepeated() {
+      return field() != null && field().isRepeated();
+    }
+
+    public boolean isEnum() {
+      return field() != null && field().isEnum();
+    }
 
     @Nullable
     public abstract String valuePattern();
 
-    public static HttpBinding create(
-        String name, boolean isOptional, boolean isRepeated, String valuePattern) {
-      return new AutoValue_HttpBindings_HttpBinding(
-          name, JavaStyle.toLowerCamelCase(name), isOptional, isRepeated, valuePattern);
+    public static HttpBindings.HttpBinding.Builder builder() {
+      return new AutoValue_HttpBindings_HttpBinding.Builder();
+    }
+
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+      public abstract HttpBindings.HttpBinding.Builder setName(String name);
+
+      public abstract HttpBindings.HttpBinding.Builder setField(Field field);
+
+      abstract HttpBindings.HttpBinding.Builder setLowerCamelName(String lowerCamelName);
+
+      public abstract HttpBindings.HttpBinding.Builder setValuePattern(String valuePattern);
+
+      abstract String name();
+
+      abstract HttpBindings.HttpBinding autoBuild();
+
+      public HttpBindings.HttpBinding build() {
+        setLowerCamelName(JavaStyle.toLowerCamelCase(name()));
+        return autoBuild();
+      }
     }
 
     // Do not forget to keep it in sync with equals() implementation.

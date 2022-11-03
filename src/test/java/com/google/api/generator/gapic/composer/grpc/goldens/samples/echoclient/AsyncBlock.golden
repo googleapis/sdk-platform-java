@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_block_async]
+// [START goldensample_generated_Echo_Block_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
@@ -42,4 +42,4 @@ public class AsyncBlock {
     }
   }
 }
-// [END goldensample_generated_echoclient_block_async]
+// [END goldensample_generated_Echo_Block_async]

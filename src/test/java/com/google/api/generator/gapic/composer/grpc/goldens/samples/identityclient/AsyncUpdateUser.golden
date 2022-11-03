@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_updateuser_async]
+// [START goldensample_generated_Identity_UpdateUser_async]
 import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.UpdateUserRequest;
@@ -43,4 +43,4 @@ public class AsyncUpdateUser {
     }
   }
 }
-// [END goldensample_generated_identityclient_updateuser_async]
+// [END goldensample_generated_Identity_UpdateUser_async]

@@ -34,7 +34,7 @@ public class MethodTest {
           .build();
   private static final HttpBindings HTTP_BINDINGS =
       HttpBindings.builder()
-          .setPathParameters(ImmutableSet.of(HttpBinding.create("table", true, false, "")))
+          .setPathParameters(ImmutableSet.of(HttpBinding.builder().setName("table").build()))
           .setPattern("/pattern/test")
           .setAdditionalPatterns(Arrays.asList("/extra_pattern/test", "/extra_pattern/hey"))
           .setIsAsteriskBody(false)

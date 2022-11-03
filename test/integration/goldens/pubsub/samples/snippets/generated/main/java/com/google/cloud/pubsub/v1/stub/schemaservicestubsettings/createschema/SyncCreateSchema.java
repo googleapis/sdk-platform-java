@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.stub.samples;
 
-// [START pubsub_v1_generated_schemaservicestubsettings_createschema_sync]
+// [START pubsub_v1_generated_SchemaServiceStubSettings_CreateSchema_sync]
 import com.google.cloud.pubsub.v1.stub.SchemaServiceStubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncCreateSchema {
     SchemaServiceStubSettings schemaServiceSettings = schemaServiceSettingsBuilder.build();
   }
 }
-// [END pubsub_v1_generated_schemaservicestubsettings_createschema_sync]
+// [END pubsub_v1_generated_SchemaServiceStubSettings_CreateSchema_sync]

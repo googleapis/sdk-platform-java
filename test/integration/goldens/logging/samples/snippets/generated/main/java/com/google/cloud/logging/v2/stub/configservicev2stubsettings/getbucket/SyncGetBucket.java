@@ -16,7 +16,7 @@
 
 package com.google.cloud.logging.v2.stub.samples;
 
-// [START logging_v2_generated_configservicev2stubsettings_getbucket_sync]
+// [START logging_v2_generated_ConfigServiceV2StubSettings_GetBucket_sync]
 import com.google.cloud.logging.v2.stub.ConfigServiceV2StubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncGetBucket {
     ConfigServiceV2StubSettings configSettings = configSettingsBuilder.build();
   }
 }
-// [END logging_v2_generated_configservicev2stubsettings_getbucket_sync]
+// [END logging_v2_generated_ConfigServiceV2StubSettings_GetBucket_sync]
