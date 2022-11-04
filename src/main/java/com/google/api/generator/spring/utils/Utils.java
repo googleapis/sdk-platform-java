@@ -28,7 +28,6 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Splitter;
 import com.google.protobuf.Duration;
 import com.google.protobuf.util.Durations;
 import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
@@ -60,12 +59,17 @@ public class Utils {
     // discrepancies
     // eg. for vision proto: "com.google.cloud.vision.v1"
     // https://github.com/googleapis/java-vision/blob/main/proto-google-cloud-vision-v1/src/main/proto/google/cloud/vision/v1/image_annotator.proto#L36
-    List<String> pakkagePhrases = Splitter.on(".").splitToList(getPackageName(context));
-    return pakkagePhrases.get(pakkagePhrases.size() - 2);
+    // List<String> pakkagePhrases = Splitter.on(".").splitToList(getPackageName(context));
+    // return pakkagePhrases.get(pakkagePhrases.size() - 2);
 
-    // Option 3: Parse ApiShortName from service proto's default host (e.g. vision.googleapis.com)
-    // TODO: Replace implementation above to reuse parsing logic from SampleGen:
-    //  https://github.com/googleapis/gapic-generator-java/pull/1040
+    // Option 3: Use parsed apiShortName from service proto's default host
+    // (e.g. vision.googleapis.com => vision)
+    String apiShortName = context.services().get(0).apiShortName();
+    // For testing with showcase (localhost:7469)
+    if (apiShortName.equals("localhost:7469")) {
+      apiShortName = "showcase";
+    }
+    return apiShortName;
   }
 
   public static String getPackageName(GapicContext context) {
