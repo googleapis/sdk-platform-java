@@ -4,7 +4,7 @@
   <groupId>com.google.api.grpc</groupId>
   <artifactId>google-common-protos-parent</artifactId>
   <packaging>pom</packaging>
-  <version>2.10.0</version><!-- {x-version-update:proto-google-common-protos:current} -->
+  <version>2.10.1-SNAPSHOT</version><!-- {x-version-update:proto-google-common-protos:current} -->
   <name>Google Common Protos Parent</name>
   <url>https://github.com/googleapis/java-iam</url>
   <description>
@@ -81,7 +81,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-common-protos</artifactId>
-        <version>2.10.0</version><!-- {x-version-update:grpc-google-common-protos:current} -->
+        <version>2.10.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>io.grpc</groupId>
@@ -93,7 +93,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-common-protos</artifactId>
-        <version>2.10.0</version><!-- {x-version-update:proto-google-common-protos:current} -->
+        <version>2.10.1-SNAPSHOT</version><!-- {x-version-update:proto-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
