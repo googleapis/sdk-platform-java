@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.10.0](https://github.com/googleapis/java-common-protos/compare/v2.9.6...v2.10.0) (2022-11-04)
+
+
+### Features
+
+* Add FirstPartyAppMetadata to the BigQueryAuditMetadata proto, it contains metadata about requests originating from Google apps, such as Google Sheets ([86a868f](https://github.com/googleapis/java-common-protos/commit/86a868fd3925ec91e6acb7282195df8b5ad0f372))
+* Add PolicyViolation to the AuditLog proto, this will only be present when access is denied due to Organization Policy. It describes why access is denied ([#456](https://github.com/googleapis/java-common-protos/issues/456)) ([86a868f](https://github.com/googleapis/java-common-protos/commit/86a868fd3925ec91e6acb7282195df8b5ad0f372))
+* Added new events to BigQueryAuditMetadata such as UnlinkDataset and RowAccessPolicyCreation ([86a868f](https://github.com/googleapis/java-common-protos/commit/86a868fd3925ec91e6acb7282195df8b5ad0f372))
+
+
+### Documentation
+
+* Updated multiple comments ([86a868f](https://github.com/googleapis/java-common-protos/commit/86a868fd3925ec91e6acb7282195df8b5ad0f372))
+
+
+### Dependencies
+
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.8 ([#461](https://github.com/googleapis/java-common-protos/issues/461)) ([7f94cb8](https://github.com/googleapis/java-common-protos/commit/7f94cb874aa0dd618eb47ab85a85dfe7cdcfbf81))
+* Update dependency com.google.protobuf:protobuf-bom to v3.21.9 ([#469](https://github.com/googleapis/java-common-protos/issues/469)) ([965c1a1](https://github.com/googleapis/java-common-protos/commit/965c1a1fad3a37124ce7692bd4ae247771234bea))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.8 ([#462](https://github.com/googleapis/java-common-protos/issues/462)) ([185feb3](https://github.com/googleapis/java-common-protos/commit/185feb3813e54beaeb536d568644b26391470219))
+* Update dependency com.google.protobuf:protobuf-java to v3.21.9 ([#470](https://github.com/googleapis/java-common-protos/issues/470)) ([499bcac](https://github.com/googleapis/java-common-protos/commit/499bcacc83141fb2fcb1b84c5942dfb53d316c22))
+* Update dependency io.grpc:grpc-bom to v1.50.0 ([#458](https://github.com/googleapis/java-common-protos/issues/458)) ([37fae19](https://github.com/googleapis/java-common-protos/commit/37fae1934006613914e8123cde69c8f82158fd12))
+* Update dependency io.grpc:grpc-bom to v1.50.2 ([#463](https://github.com/googleapis/java-common-protos/issues/463)) ([9f5407d](https://github.com/googleapis/java-common-protos/commit/9f5407db1a44d331a881739d410fa67df39e3e71))
+* Update dependency io.grpc:grpc-protobuf to v1.50.0 ([#459](https://github.com/googleapis/java-common-protos/issues/459)) ([3f7c015](https://github.com/googleapis/java-common-protos/commit/3f7c0152e774bba00371f11e51efce9ca0cfa466))
+* Update dependency io.grpc:grpc-protobuf to v1.50.2 ([#464](https://github.com/googleapis/java-common-protos/issues/464)) ([2910c5e](https://github.com/googleapis/java-common-protos/commit/2910c5e862440d37e672646e2c7845eb39a3002c))
+* Update dependency io.grpc:grpc-stub to v1.50.0 ([#460](https://github.com/googleapis/java-common-protos/issues/460)) ([a056a8a](https://github.com/googleapis/java-common-protos/commit/a056a8a111974fe0c8312effcfe33da5b50c2100))
+* Update dependency io.grpc:grpc-stub to v1.50.2 ([#465](https://github.com/googleapis/java-common-protos/issues/465)) ([5d6780c](https://github.com/googleapis/java-common-protos/commit/5d6780cfcfdd7e65beb89a7e7c7dd455204901fa))
+
 ## [2.9.6](https://github.com/googleapis/java-common-protos/compare/v2.9.5...v2.9.6) (2022-10-02)
 
 
