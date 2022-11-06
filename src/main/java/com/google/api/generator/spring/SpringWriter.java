@@ -22,6 +22,8 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -210,6 +212,7 @@ public class SpringWriter {
     String clientLibraryGroupId = "{{client-library-group-id}}";
     String clientLibraryName = "{{client-library-artifact-id}}";
     String clientLibraryVersion = "{{client-library-version}}";
+    String springParentCoordinates = buildPomParent(context.springParentCoordinates());
 
     String springStarterArtifactId = pakkageName + "-spring-starter";
     String springStarterVersion = "{{starter-version}}";
@@ -223,6 +226,7 @@ public class SpringWriter {
                 + "  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n"
                 + "  <modelVersion>4.0.0</modelVersion>\n"
                 + "\n"
+                + "%s"
                 + "  <groupId>com.google.cloud</groupId>\n"
                 + "  <artifactId>%s</artifactId>\n"
                 + "  <version>%s</version>\n"
@@ -276,6 +280,7 @@ public class SpringWriter {
                 + "  </build>\n"
                 + "\n"
                 + "</project>",
+            springParentCoordinates,
             springStarterArtifactId,
             springStarterVersion,
             springStarterName,
@@ -285,6 +290,26 @@ public class SpringWriter {
             clientLibraryVersion));
 
     return sb.toString();
+  }
+
+  private static String buildPomParent(String springParentCoordinates) {
+    if (springParentCoordinates == null) {
+      return "";
+    }
+    List<String> splitCoords = Splitter.on(':').splitToList(springParentCoordinates);
+    Preconditions.checkArgument(
+        splitCoords.size() == 3,
+        "Expected parent coordinates to " + "be 3 elements separated by a colon (:)");
+    String groupId = splitCoords.get(0);
+    String artifactId = splitCoords.get(1);
+    String version = splitCoords.get(2);
+    String template =
+        "  <parent>\n"
+            + "    <artifactId>%s</artifactId>\n"
+            + "    <groupId>%s</groupId>\n"
+            + "    <version>%s</version>\n"
+            + "  </parent>\n";
+    return String.format(template, groupId, artifactId, version);
   }
 
   private static void writePom(GapicContext context, JarOutputStream jos) {

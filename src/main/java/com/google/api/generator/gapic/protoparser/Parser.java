@@ -118,6 +118,7 @@ public class Parser {
     Optional<GapicLanguageSettings> languageSettingsOpt =
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
     Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
+    Optional<String> springParent = PluginArgumentParser.parseSpringParentCoordinates(request);
 
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
     boolean willGenerateNumericEnum = PluginArgumentParser.hasNumericEnumFlag(request);
@@ -218,6 +219,7 @@ public class Parser {
         .setServiceYamlProto(serviceYamlProtoOpt.orElse(null))
         .setTransport(transport)
         .setRestNumericEnumsEnabled(willGenerateNumericEnum)
+        .setSpringParentCoordinates(springParent.orElse(null))
         .build();
   }
 

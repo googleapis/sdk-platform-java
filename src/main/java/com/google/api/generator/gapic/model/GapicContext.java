@@ -49,6 +49,9 @@ public abstract class GapicContext {
 
   public abstract boolean restNumericEnumsEnabled();
 
+  @Nullable
+  public abstract String springParentCoordinates();
+
   public GapicMetadata gapicMetadata() {
     return gapicMetadata;
   }
@@ -112,6 +115,8 @@ public abstract class GapicContext {
     public abstract Builder setGapicMetadataEnabled(boolean gapicMetadataEnabled);
 
     public abstract Builder setRestNumericEnumsEnabled(boolean restNumericEnumsEnabled);
+
+    public abstract Builder setSpringParentCoordinates(String springParentCoordinates);
 
     public abstract Builder setTransport(Transport transport);
 
