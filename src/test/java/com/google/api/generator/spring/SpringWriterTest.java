@@ -26,11 +26,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SpringWriterTest {
+  private static final String PARENT_COORDS = "com.google.cloud:generated-parent:3.5.0-SNAPSHOT";
   private GapicContext context;
 
   @Before
   public void setUp() {
-    this.context = TestProtoLoader.instance().parseShowcaseEcho();
+    this.context =
+        TestProtoLoader.instance()
+            .parseShowcaseEcho()
+            .toBuilder()
+            .setSpringParentCoordinates(PARENT_COORDS)
+            .build();
   }
 
   @Test

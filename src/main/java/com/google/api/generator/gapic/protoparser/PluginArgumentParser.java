@@ -31,6 +31,7 @@ public class PluginArgumentParser {
   @VisibleForTesting static final String KEY_METADATA = "metadata";
   @VisibleForTesting static final String KEY_NUMERIC_ENUM = "rest-numeric-enums";
   @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "api-service-config";
+  @VisibleForTesting static final String KEY_SPRING_PARENT = "spring-parent-coordinates";
   @VisibleForTesting static final String KEY_TRANSPORT = "transport";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
@@ -59,6 +60,10 @@ public class PluginArgumentParser {
 
   static boolean hasNumericEnumFlag(CodeGeneratorRequest request) {
     return hasFlag(request.getParameter(), KEY_NUMERIC_ENUM);
+  }
+
+  static Optional<String> parseSpringParentCoordinates(CodeGeneratorRequest request) {
+    return parseConfigArgument(request.getParameter(), KEY_SPRING_PARENT);
   }
 
   /** Expects a comma-separated list of file paths. */
