@@ -24,15 +24,13 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSampleComposer;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommentFormatter;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 public class ClientLibraryPackageInfoComposer {
@@ -80,36 +78,10 @@ public class ClientLibraryPackageInfoComposer {
           javaDocCommentBuilder.addParagraph(
               String.format("%s %s %s", DIVIDER, javaClientName, DIVIDER));
 
-      // TODO(miraleung): Replace this with a comment converter when we support CommonMark.
       if (service.hasDescription()) {
-        String[] descriptionParagraphs = service.description().split("\\n\\n");
-        for (int i = 0; i < descriptionParagraphs.length; i++) {
-          boolean startsWithItemizedList = descriptionParagraphs[i].startsWith(" * ");
-          // Split by listed items, then join newlines.
-          List<String> listItems =
-              Stream.of(descriptionParagraphs[i].split("\\n \\*"))
-                  .map(s -> s.replace("\n", ""))
-                  .collect(Collectors.toList());
-          if (startsWithItemizedList) {
-            // Remove the first asterisk.
-            listItems.set(0, listItems.get(0).substring(2));
-          }
-
-          if (!startsWithItemizedList) {
-            if (i == 0) {
-              javaDocCommentBuilder =
-                  javaDocCommentBuilder.addParagraph(
-                      String.format(SERVICE_DESCRIPTION_HEADER_PATTERN, listItems.get(0)));
-            } else {
-              javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(listItems.get(0));
-            }
-          }
-          if (listItems.size() > 1 || startsWithItemizedList) {
-            javaDocCommentBuilder =
-                javaDocCommentBuilder.addUnorderedList(
-                    listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()));
-          }
-        }
+        javaDocCommentBuilder =
+            CommentFormatter.formatCommentForJavaDoc(
+                service.description(), javaDocCommentBuilder, SERVICE_DESCRIPTION_HEADER_PATTERN);
       }
 
       javaDocCommentBuilder =
