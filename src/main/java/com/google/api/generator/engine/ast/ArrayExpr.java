@@ -68,7 +68,6 @@ public abstract class ArrayExpr implements Expr {
       return addExpr(ValueExpr.withValue(StringObjectValue.withValue(expr)));
     }
 
-    // this method is private, and called only by addExpr(Expr expr)
     public ArrayExpr.Builder addExpr(Expr expr) {
       return setExprs((new ImmutableList.Builder<Expr>().addAll(exprs()).add(expr).build()));
     }
