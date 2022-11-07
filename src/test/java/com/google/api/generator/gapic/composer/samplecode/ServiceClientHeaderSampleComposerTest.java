@@ -45,6 +45,16 @@ public class ServiceClientHeaderSampleComposerTest {
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
   private static final String PAGINATED_FIELD_NAME = "page_size";
+  private static final Service TEST_SERVICE =
+      Service.builder()
+          .setName("Echo")
+          .setDefaultHost("localhost:7469")
+          .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+          .setPakkage(SHOWCASE_PACKAGE_NAME)
+          .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+          .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+          .setOverriddenName("Echo")
+          .build();
 
   /*Testing composeClassHeaderSample*/
   @Test
@@ -297,7 +307,7 @@ public class ServiceClientHeaderSampleComposerTest {
     String results =
         writeStatements(
             ServiceClientHeaderSampleComposer.composeSetCredentialsSample(
-                clientType, settingsType));
+                clientType, settingsType, TEST_SERVICE));
     String expected =
         LineFormatter.lines(
             "EchoSettings echoSettings =\n",
@@ -325,7 +335,8 @@ public class ServiceClientHeaderSampleComposerTest {
                 .build());
     String results =
         writeStatements(
-            ServiceClientHeaderSampleComposer.composeSetEndpointSample(clientType, settingsType));
+            ServiceClientHeaderSampleComposer.composeSetEndpointSample(
+                clientType, settingsType, TEST_SERVICE));
     String expected =
         LineFormatter.lines(
             "EchoSettings echoSettings ="
@@ -340,6 +351,7 @@ public class ServiceClientHeaderSampleComposerTest {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+
     TypeNode clientType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -413,11 +425,22 @@ public class ServiceClientHeaderSampleComposerTest {
             .setFields(Arrays.asList(repeatedField, nextPagedTokenField))
             .build();
     messageTypes.put("com.google.showcase.v1beta1.ListContentResponse", listContentResponseMessage);
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
 
     String results =
         writeStatements(
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, arguments, resourceNames, messageTypes));
+                method, clientType, arguments, resourceNames, messageTypes, service));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -487,11 +510,22 @@ public class ServiceClientHeaderSampleComposerTest {
             .setFields(Arrays.asList(repeatedField, nextPagedTokenField))
             .build();
     messageTypes.put("com.google.showcase.v1beta1.ListContentResponse", listContentResponseMessage);
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
 
     String results =
         writeStatements(
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, arguments, resourceNames, messageTypes));
+                method, clientType, arguments, resourceNames, messageTypes, service));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -534,11 +568,22 @@ public class ServiceClientHeaderSampleComposerTest {
             .setOutputType(outputType)
             .setPageSizeFieldName(PAGINATED_FIELD_NAME)
             .build();
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     Assert.assertThrows(
         NullPointerException.class,
         () ->
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, methodArguments, resourceNames, messageTypes));
+                method, clientType, methodArguments, resourceNames, messageTypes, service));
   }
 
   @Test
@@ -595,11 +640,22 @@ public class ServiceClientHeaderSampleComposerTest {
             .setFields(Arrays.asList(responseField, nextPageToken))
             .build();
     messageTypes.put("PagedResponse", noRepeatedFieldMessage);
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     Assert.assertThrows(
         NullPointerException.class,
         () ->
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, methodArguments, resourceNames, messageTypes));
+                method, clientType, methodArguments, resourceNames, messageTypes, service));
   }
 
   @Test
@@ -647,11 +703,21 @@ public class ServiceClientHeaderSampleComposerTest {
             .setLro(lro)
             .setMethodSignatures(Collections.emptyList())
             .build();
-
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     String results =
         writeStatements(
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, Collections.emptyList(), resourceNames, messageTypes));
+                method, clientType, Collections.emptyList(), resourceNames, messageTypes, service));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -722,10 +788,21 @@ public class ServiceClientHeaderSampleComposerTest {
             .setMethodSignatures(Arrays.asList(arguments))
             .build();
 
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     String results =
         writeStatements(
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, arguments, resourceNames, messageTypes));
+                method, clientType, arguments, resourceNames, messageTypes, service));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -793,11 +870,21 @@ public class ServiceClientHeaderSampleComposerTest {
             .setLro(lro)
             .setMethodSignatures(Arrays.asList(arguments))
             .build();
-
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     String results =
         writeStatements(
             ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                method, clientType, arguments, resourceNames, messageTypes));
+                method, clientType, arguments, resourceNames, messageTypes, service));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",

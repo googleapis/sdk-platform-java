@@ -50,6 +50,9 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
+import com.google.api.generator.spring.utils.LoggerUtils;
+import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import java.io.IOException;
@@ -59,7 +62,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Generated;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
@@ -98,7 +100,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setStatements(createMemberVariables(service, types))
+            .setHeaderCommentStatements(
+                SpringAutoconfigCommentComposer.createClassHeaderComments(className, serviceName))
+            .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
             .setMethods(
                 Arrays.asList(
                     createConstructor(service.name(), className, types, thisExpr),
@@ -122,7 +126,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static List<Statement> createMemberVariables(
-      Service service, Map<String, TypeNode> types) {
+      Service service,
+      String packageName,
+      Map<String, TypeNode> types,
+      GapicServiceConfig serviceConfig) {
 
     String serviceName = service.name();
 
@@ -141,7 +148,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
-    return Collections.singletonList(clientPropertiesStatement);
+    Statement loggerStatement =
+        LoggerUtils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
+    return Arrays.asList(clientPropertiesStatement, loggerStatement);
   }
 
   private static MethodDefinition createConstructor(
@@ -181,7 +190,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   private static List<AnnotationNode> createClassAnnotations(
       Service service, Map<String, TypeNode> types) {
-    // @Generated("by gapic-generator-java")
     // @AutoConfiguration
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value =
@@ -239,10 +247,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return Arrays.asList(
-        AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("Generated"))
-            .setDescription("by gapic-generator-java")
-            .build(),
         configurationNode,
         conditionalOnClassNode,
         conditionalOnPropertyNode,
@@ -284,6 +288,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setName(methodName)
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("CredentialsProvider"))
         .setAnnotations(
@@ -312,6 +318,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
@@ -515,10 +523,19 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(getQuotaProjectId)
             .build();
 
+    ExprStatement projectIdLoggerStatement =
+        LoggerUtils.createLoggerStatement(
+            LoggerUtils.concatManyWithExprs(
+                ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to ")),
+                getQuotaProjectId,
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(", this overrides project id from credentials."))),
+            types);
+
     IfStatement setQuotaProjectIdStatement =
         createIfStatement(
             projectIdIsNull,
-            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId)), // TODO add logger info
+            Arrays.asList(ExprStatement.withExpr(setQuotaProjectId), projectIdLoggerStatement),
             null);
 
     bodyStatements.add(setQuotaProjectIdStatement);
@@ -577,12 +594,20 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
+    ExprStatement backgroundExecutorLoggerStatement =
+        LoggerUtils.createLoggerStatement(
+            ArithmeticOperationExpr.concatWithExprs(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue("Background executor thread count is ")),
+                getExecutorThreadCount),
+            types);
     IfStatement setBackgroundExecutorProviderStatement =
         createIfStatement(
             executorThreadCountIsNull,
             Arrays.asList(
                 ExprStatement.withExpr(executorProviderAssignExpr),
-                ExprStatement.withExpr(setBackgroundExecutorProvider)), // TODO add logger info
+                ExprStatement.withExpr(setBackgroundExecutorProvider),
+                backgroundExecutorLoggerStatement),
             null);
 
     bodyStatements.add(setBackgroundExecutorProviderStatement);
@@ -620,7 +645,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     IfStatement setTransportChannelProviderStatement =
         createIfStatement(
-            getUseRest, Arrays.asList(ExprStatement.withExpr(setTransportProvider)), null);
+            getUseRest,
+            Arrays.asList(
+                ExprStatement.withExpr(setTransportProvider),
+                LoggerUtils.createLoggerStatement(
+                    ValueExpr.withValue(
+                        StringObjectValue.withValue("Using HTTP transport channel")),
+                    types)),
+            null);
 
     bodyStatements.add(setTransportChannelProviderStatement);
 
@@ -677,7 +709,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               IfStatement currentRetrySettingPropertyIfStatement =
                   createIfStatement(
                       currentRetrySettingPropertyIsNull,
-                      Arrays.asList(ExprStatement.withExpr(retrySettingsBuilderChain)),
+                      Arrays.asList(
+                          ExprStatement.withExpr(retrySettingsBuilderChain),
+                          LoggerUtils.createLoggerStatement(
+                              LoggerUtils.concatManyWithExprs(
+                                  ValueExpr.withValue(
+                                      StringObjectValue.withValue(propertyName + " set to ")),
+                                  currentRetrySettingProperty),
+                              types)),
                       null);
               statements.add(currentRetrySettingPropertyIfStatement);
               return statements;
@@ -706,8 +745,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(serviceSettingsBuilt)
             .build();
 
+    String methodName =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
+    String propertiesClassName = service.name() + "Properties";
+
     return MethodDefinition.builder()
-        .setName(clientName)
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createClientBeanComment(
+                service.name(), propertiesClassName, transportChannelProviderName))
+        .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
         .setArguments(
@@ -824,7 +870,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
-            Generated.class,
             RetrySettings.class,
             RetrySettings.Builder
                 .class, // name will be just Builder. consider change of more than one builder here.
@@ -983,6 +1028,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ConditionalOnProperty", conditionalOnProperty);
     typeMap.put("ConditionalOnClass", conditionalOnClass);
     typeMap.put("Qualifier", qualifier);
+    typeMap.put("Log", LoggerUtils.getLoggerType());
+    typeMap.put("LogFactory", LoggerUtils.getLoggerFactoryType());
 
     return typeMap;
   }

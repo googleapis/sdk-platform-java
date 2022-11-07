@@ -16,7 +16,7 @@
 
 package com.google.logging.v2.stub.samples;
 
-// [START goldensample_generated_loggingservicev2stubsettings_deletelog_sync]
+// [START goldensample_generated_LoggingServiceV2StubSettings_DeleteLog_sync]
 import com.google.logging.v2.stub.LoggingServiceV2StubSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncDeleteLog {
     LoggingServiceV2StubSettings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
   }
 }
-// [END goldensample_generated_loggingservicev2stubsettings_deletelog_sync]
+// [END goldensample_generated_LoggingServiceV2StubSettings_DeleteLog_sync]

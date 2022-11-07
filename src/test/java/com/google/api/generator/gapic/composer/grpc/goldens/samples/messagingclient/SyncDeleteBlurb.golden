@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_deleteblurb_sync]
+// [START goldensample_generated_Messaging_DeleteBlurb_sync]
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.BlurbName;
 import com.google.showcase.v1beta1.DeleteBlurbRequest;
@@ -43,4 +43,4 @@ public class SyncDeleteBlurb {
     }
   }
 }
-// [END goldensample_generated_messagingclient_deleteblurb_sync]
+// [END goldensample_generated_Messaging_DeleteBlurb_sync]

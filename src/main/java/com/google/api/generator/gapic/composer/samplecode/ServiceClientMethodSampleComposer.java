@@ -33,6 +33,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class ServiceClientMethodSampleComposer {
   // Creates an example for an empty service (no API methods), which is a corner case but can
   // happen. Generated example will only show how to instantiate the client class but will not call
   // any API methods (because there are no API methods).
-  public static Sample composeEmptyServiceSample(TypeNode clientType) {
+  public static Sample composeEmptyServiceSample(TypeNode clientType, Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -56,10 +57,7 @@ public class ServiceClientMethodSampleComposer {
     List<Statement> bodyStatements = new ArrayList<>();
 
     RegionTag regionTag =
-        RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
-            .setRpcName("emtpy")
-            .build();
+        RegionTag.builder().setServiceName(service.name()).setRpcName("emtpy").build();
 
     List<Statement> body =
         Arrays.asList(
@@ -76,7 +74,8 @@ public class ServiceClientMethodSampleComposer {
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -111,16 +110,19 @@ public class ServiceClientMethodSampleComposer {
     if (method.isPaged()) {
       // e.g. echoClient.pagedExpand(request).iterateAll()
       Sample unaryPagedRpc =
-          composePagedSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes);
+          composePagedSample(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes, service);
       bodyStatements.addAll(unaryPagedRpc.body());
       regionTag = unaryPagedRpc.regionTag();
     } else if (method.hasLro()) {
-      Sample unaryLroRpc = composeLroSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs);
+      Sample unaryLroRpc =
+          composeLroSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, service);
       bodyStatements.addAll(unaryLroRpc.body());
       regionTag = unaryLroRpc.regionTag();
     } else {
       // e.g. echoClient.echo(request)
-      Sample unaryRpc = composeSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs);
+      Sample unaryRpc =
+          composeSample(method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, service);
       bodyStatements.addAll(unaryRpc.body());
       regionTag = unaryRpc.regionTag();
     }
@@ -140,7 +142,8 @@ public class ServiceClientMethodSampleComposer {
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
-      List<Expr> bodyExprs) {
+      List<Expr> bodyExprs,
+      Service service) {
 
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
@@ -169,7 +172,7 @@ public class ServiceClientMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setOverloadDisambiguation(
                 SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
@@ -186,7 +189,8 @@ public class ServiceClientMethodSampleComposer {
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
       List<Expr> bodyExprs,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Service service) {
 
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().fullName());
@@ -243,7 +247,7 @@ public class ServiceClientMethodSampleComposer {
 
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setOverloadDisambiguation(
                 SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))
@@ -255,7 +259,8 @@ public class ServiceClientMethodSampleComposer {
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
-      List<Expr> bodyExprs) {
+      List<Expr> bodyExprs,
+      Service service) {
     // Assign response variable with invoking client's LRO method.
     // e.g. if return void, echoClient.waitAsync(ttl).get(); or,
     // e.g. if return other type, WaitResponse response = echoClient.waitAsync(ttl).get();
@@ -293,7 +298,7 @@ public class ServiceClientMethodSampleComposer {
     }
     RegionTag regionTag =
         RegionTag.builder()
-            .setServiceName(clientVarExpr.variable().identifier().name())
+            .setServiceName(service.name())
             .setRpcName(method.name())
             .setOverloadDisambiguation(
                 SampleComposerUtil.createOverloadDisambiguation(rpcMethodArgVarExprs))

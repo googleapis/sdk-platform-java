@@ -14,7 +14,6 @@
 
 package com.google.api.generator.spring;
 
-import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -28,7 +27,7 @@ public class SpringGenerator {
   public static CodeGeneratorResponse generateSpring(CodeGeneratorRequest request) {
     GapicContext context = Parser.parse(request);
     List<GapicClass> clazzes = SpringComposer.composeServiceAutoConfigClasses(context);
-    GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
+    GapicPackageInfo packageInfo = SpringComposer.composePackageInfo(context);
     String outputFilename = "temp-codegen-spring.srcjar";
     return SpringWriter.write(context, clazzes, packageInfo, outputFilename);
   }

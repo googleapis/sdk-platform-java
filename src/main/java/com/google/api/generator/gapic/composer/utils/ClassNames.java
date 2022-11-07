@@ -24,7 +24,8 @@ public class ClassNames {
   // Using constants since many of these class names are used often.
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN = "Mock%sImpl";
-  private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
+  private static final String CLIENT_SUFFIX = "Client";
+  private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%s" + CLIENT_SUFFIX;
   private static final String SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN = "%sClientTest";
   private static final String SERVICE_CLIENT_TRANSPORT_TEST_CLASS_NAME_PATTERN = "%sClient%sTest";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
