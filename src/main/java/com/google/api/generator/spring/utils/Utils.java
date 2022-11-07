@@ -64,12 +64,7 @@ public class Utils {
 
     // Option 3: Use parsed apiShortName from service proto's default host
     // (e.g. vision.googleapis.com => vision)
-    String apiShortName = context.services().get(0).apiShortName();
-    // Cover special case with showcase (localhost:7469) for testing
-    if (apiShortName.equals("localhost:7469")) {
-      apiShortName = "showcase";
-    }
-    return apiShortName;
+    return context.services().get(0).apiShortName();
   }
 
   public static String getPackageName(GapicContext context) {
