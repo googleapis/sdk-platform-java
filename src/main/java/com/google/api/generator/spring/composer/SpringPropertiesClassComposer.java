@@ -26,6 +26,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -41,6 +42,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.CaseFormat;
@@ -70,6 +72,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     String className = String.format(CLASS_NAME_PATTERN, service.name());
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
+    boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
 
     // TODO: this is the prefix user will use to set properties, may need to change depending on
     // branding.
@@ -87,8 +90,10 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
-            .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
-            .setMethods(createGetterSetters(service, types, gapicServiceConfig))
+            .setStatements(
+                createMemberVariables(
+                    service, packageName, types, gapicServiceConfig, hasRestOption))
+            .setMethods(createGetterSetters(service, types, gapicServiceConfig, hasRestOption))
             .setAnnotations(Arrays.asList(classAnnotationNode))
             .setImplementsTypes(Arrays.asList(types.get("CredentialsSupplier")))
             .build();
@@ -129,9 +134,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       Service service,
       String packageName,
       Map<String, TypeNode> types,
-      GapicServiceConfig serviceConfig) {
+      GapicServiceConfig serviceConfig,
+      boolean hasRestOption) {
 
     String serviceName = service.name();
+    List<Statement> statements = new ArrayList<>();
     //   @NestedConfigurationProperty
     //   private final Credentials credentials = new
     // Credentials("https://www.googleapis.com/auth/cloud-language");
@@ -155,20 +162,27 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             true,
             defaultCredentialScopes,
             credentialsAnnotations);
-
+    statements.add(credentialsStatement);
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
         createMemberVarStatement("quotaProjectId", TypeNode.STRING, false, null, null);
-
+    statements.add(quotaProjectIdVarStatement);
     //   private Integer executorThreadCount;
     ExprStatement executorThreadCountVarStatement =
         createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
+    statements.add(executorThreadCountVarStatement);
+    if (hasRestOption) {
+      ExprStatement useRestVarStatement =
+          createMemberVarStatement(
+              "useRest",
+              TypeNode.BOOLEAN,
+              false,
+              ValueExpr.withValue(
+                  PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()),
+              null);
+      statements.add(useRestVarStatement);
+    }
 
-    //   private boolean useRest = false;
-    ExprStatement useRestVarStatement =
-        createMemberVarStatement("useRest", TypeNode.BOOLEAN, false, null, null);
-
-    //
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
 
     // declare each retry settings with its default value. use defaults from serviceConfig
@@ -194,18 +208,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             },
             (String propertyName) -> new ArrayList<>());
 
-    List<Statement> statements =
-        retrySettings.stream().map(x -> (Statement) x).collect(Collectors.toList());
+    statements.addAll(
+        retrySettings.stream().map(Statement.class::cast).collect(Collectors.toList()));
 
-    statements.add(0, useRestVarStatement);
-    statements.add(0, executorThreadCountVarStatement);
-    statements.add(0, quotaProjectIdVarStatement);
-    statements.add(0, credentialsStatement);
     return statements;
   }
 
   private static List<MethodDefinition> createGetterSetters(
-      Service service, Map<String, TypeNode> types, GapicServiceConfig gapicServiceConfig) {
+      Service service,
+      Map<String, TypeNode> types,
+      GapicServiceConfig gapicServiceConfig,
+      boolean hasRestOption) {
 
     TypeNode thisClassType = types.get(service.name() + "Properties");
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
@@ -219,7 +232,10 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createGetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING, null));
     methodDefinitions.add(createSetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING));
-    methodDefinitions.add(createGetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN, null));
+    if (hasRestOption) {
+      methodDefinitions.add(createGetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN, null));
+      methodDefinitions.add(createSetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN));
+    }
     methodDefinitions.add(
         createGetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT, null));
     methodDefinitions.add(
@@ -246,15 +262,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             (String propertyName) -> new ArrayList<>());
 
     methodDefinitions.addAll(retrySettings);
-    // TODO: This can be for future stages. for long running operations:
-    // for (Method method : service.methods()) {
-    //   if (!method.hasLro()) {
-    //     continue;
-    //   }
-    //   //
-    // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createLroSettingsBuilderExpr
-    //   //  %sOperationSettings
-    // }
 
     return methodDefinitions;
   }

@@ -51,6 +51,7 @@ public class SpringComposer {
         .services()
         .forEach(
             s -> {
+              // Transport.REST is out of scope for Spring composers.
               if (context.transport() == Transport.GRPC
                   || context.transport() == Transport.GRPC_REST) {
                 clazzes.add(SpringAutoConfigClassComposer.instance().generate(context, s));
