@@ -80,7 +80,7 @@ public class ClientLibraryPackageInfoComposer {
 
       if (service.hasDescription()) {
         javaDocCommentBuilder =
-            CommentFormatter.formatCommentForJavaDoc(
+            CommentFormatter.formatAndAddToJavaDocComment(
                 service.description(), javaDocCommentBuilder, SERVICE_DESCRIPTION_HEADER_PATTERN);
       }
 

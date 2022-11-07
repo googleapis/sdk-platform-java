@@ -119,7 +119,7 @@ public class ServiceClientCommentComposer {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
-          CommentFormatter.formatCommentForJavaDoc(
+          CommentFormatter.formatAndAddToJavaDocComment(
               service.description(),
               classHeaderJavadocBuilder,
               SERVICE_DESCRIPTION_SUMMARY_PATTERN);
@@ -180,7 +180,7 @@ public class ServiceClientCommentComposer {
 
     if (method.hasDescription()) {
       methodJavadocBuilder =
-          CommentFormatter.formatCommentForJavaDoc(
+          CommentFormatter.formatAndAddToJavaDocComment(
               method.description(), methodJavadocBuilder, null);
     }
 
@@ -239,7 +239,7 @@ public class ServiceClientCommentComposer {
 
     if (method.hasDescription()) {
       methodJavadocBuilder =
-          CommentFormatter.formatCommentForJavaDoc(
+          CommentFormatter.formatAndAddToJavaDocComment(
               method.description(), methodJavadocBuilder, null);
     }
 

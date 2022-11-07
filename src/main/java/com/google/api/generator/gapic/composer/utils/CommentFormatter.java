@@ -22,11 +22,11 @@ import java.util.stream.Stream;
 
 public class CommentFormatter {
 
-  private CommentFormatter() {};
+  private CommentFormatter() {}
 
   // Additional formatting logic for converting protobuf comment to Javadoc
-  public static JavaDocComment.Builder formatCommentForJavaDoc(
-      String comment, JavaDocComment.Builder originalCommentBuilder, String firstPattern) {
+  public static JavaDocComment.Builder formatAndAddToJavaDocComment(
+      String comment, JavaDocComment.Builder originalCommentBuilder, String prefixPattern) {
 
     JavaDocComment.Builder javaDocCommentBuilder = originalCommentBuilder;
 
@@ -44,9 +44,9 @@ public class CommentFormatter {
       }
 
       if (!startsWithItemizedList) {
-        if (i == 0 && !Strings.isNullOrEmpty(firstPattern)) {
+        if (i == 0 && !Strings.isNullOrEmpty(prefixPattern)) {
           javaDocCommentBuilder =
-              javaDocCommentBuilder.addParagraph(String.format(firstPattern, listItems.get(0)));
+              javaDocCommentBuilder.addParagraph(String.format(prefixPattern, listItems.get(0)));
         } else {
           javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(listItems.get(0));
         }
