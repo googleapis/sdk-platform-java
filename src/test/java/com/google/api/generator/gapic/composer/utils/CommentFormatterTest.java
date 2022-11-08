@@ -16,13 +16,11 @@ package com.google.api.generator.gapic.composer.utils;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
 public class CommentFormatterTest {
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
-  JavaDocComment.Builder originalCommentBuilder = JavaDocComment.builder();
 
   @Test
   public void parseCommentWithItemizedList() {
@@ -36,9 +34,7 @@ public class CommentFormatterTest {
             " * This is item one");
     String result =
         CommentFormatter.formatAndAddToJavaDocComment(
-                protobufComment, originalCommentBuilder, SERVICE_DESCRIPTION_HEADER_PATTERN)
-            .build()
-            .comment();
+            protobufComment, SERVICE_DESCRIPTION_HEADER_PATTERN);
     String expectedJavaDocComment =
         LineFormatter.lines(
             "<p> Service Description:  Service Name\n",

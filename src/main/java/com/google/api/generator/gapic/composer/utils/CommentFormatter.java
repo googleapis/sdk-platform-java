@@ -25,10 +25,9 @@ public class CommentFormatter {
   private CommentFormatter() {}
 
   // Additional formatting logic for converting protobuf comment to Javadoc
-  public static JavaDocComment.Builder formatAndAddToJavaDocComment(
-      String comment, JavaDocComment.Builder originalCommentBuilder, String prefixPattern) {
+  public static String formatAndAddToJavaDocComment(String comment, String prefixPattern) {
 
-    JavaDocComment.Builder javaDocCommentBuilder = originalCommentBuilder;
+    JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
 
     String[] descriptionParagraphs = comment.split("\\n\\n");
     for (int i = 0; i < descriptionParagraphs.length; i++) {
@@ -58,6 +57,6 @@ public class CommentFormatter {
       }
     }
 
-    return javaDocCommentBuilder;
+    return javaDocCommentBuilder.build().comment();
   }
 }

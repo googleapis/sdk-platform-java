@@ -118,11 +118,10 @@ public class ServiceClientCommentComposer {
       String secondaryTransport) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
-      classHeaderJavadocBuilder =
+      String descriptionComment =
           CommentFormatter.formatAndAddToJavaDocComment(
-              service.description(),
-              classHeaderJavadocBuilder,
-              SERVICE_DESCRIPTION_SUMMARY_PATTERN);
+              service.description(), SERVICE_DESCRIPTION_SUMMARY_PATTERN);
+      classHeaderJavadocBuilder = classHeaderJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
     // Service introduction.
@@ -179,9 +178,9 @@ public class ServiceClientCommentComposer {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
-      methodJavadocBuilder =
-          CommentFormatter.formatAndAddToJavaDocComment(
-              method.description(), methodJavadocBuilder, null);
+      String descriptionComment =
+          CommentFormatter.formatAndAddToJavaDocComment(method.description(), null);
+      methodJavadocBuilder = methodJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
     if (sampleCodeOpt.isPresent()) {
@@ -238,9 +237,9 @@ public class ServiceClientCommentComposer {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
-      methodJavadocBuilder =
-          CommentFormatter.formatAndAddToJavaDocComment(
-              method.description(), methodJavadocBuilder, null);
+      String descriptionComment =
+          CommentFormatter.formatAndAddToJavaDocComment(method.description(), null);
+      methodJavadocBuilder = methodJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
