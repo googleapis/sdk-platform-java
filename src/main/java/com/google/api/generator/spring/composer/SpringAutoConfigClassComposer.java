@@ -50,6 +50,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
@@ -94,6 +95,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     types.get("CredentialsProvider").isSupertypeOrEquals(types.get("DefaultCredentialsProvider"));
 
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(types.get(className)));
+    Transport transport = context.transport();
+    boolean hasRestOption = transport.equals(Transport.GRPC_REST);
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -103,6 +106,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setHeaderCommentStatements(
                 SpringAutoconfigCommentComposer.createClassHeaderComments(className, serviceName))
             .setStatements(createMemberVariables(service, packageName, types, gapicServiceConfig))
+            .setAnnotations(createClassAnnotations(service, types))
             .setMethods(
                 Arrays.asList(
                     createConstructor(service.name(), className, types, thisExpr),
@@ -117,11 +121,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         clientName,
                         types,
                         gapicServiceConfig,
-                        thisExpr),
+                        thisExpr,
+                        hasRestOption),
                     createUserAgentHeaderProviderMethod(
                         serviceNameLowerHyphen, className, types, thisExpr)))
-            .setAnnotations(createClassAnnotations(service, types))
             .build();
+
     return GapicClass.create(kind, classDef);
   }
 
@@ -420,7 +425,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       String clientName,
       Map<String, TypeNode> types,
       GapicServiceConfig gapicServiceConfig,
-      Expr thisExpr) {
+      Expr thisExpr,
+      boolean hasRestOption) {
     // argument variables:
     VariableExpr credentialsProviderVariableExpr =
         VariableExpr.withVariable(
@@ -612,50 +618,51 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     bodyStatements.add(setBackgroundExecutorProviderStatement);
 
-    //   if (clientProperties.getUseRest()) {
-    //     clientSettingsBuilder.setTransportChannelProvider(
-    //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
-    //   }
+    if (hasRestOption) {
+      //   if (clientProperties.getUseRest()) {
+      //     clientSettingsBuilder.setTransportChannelProvider(
+      //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
+      //   }
 
-    MethodInvocationExpr getUseRest =
-        MethodInvocationExpr.builder()
-            .setMethodName("getUseRest")
-            .setReturnType(TypeNode.BOOLEAN)
-            .setExprReferenceExpr(thisClientPropertiesVarExpr)
-            .build();
+      MethodInvocationExpr getUseRest =
+          MethodInvocationExpr.builder()
+              .setMethodName("getUseRest")
+              .setReturnType(TypeNode.BOOLEAN)
+              .setExprReferenceExpr(thisClientPropertiesVarExpr)
+              .build();
 
-    // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
-    Expr defaultTransportProviderBuider =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get("ServiceSettings"))
-            .setMethodName("defaultHttpJsonTransportProviderBuilder")
-            .build();
-    defaultTransportProviderBuider =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(defaultTransportProviderBuider)
-            .setMethodName("build")
-            .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
-            .build();
+      // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
+      Expr defaultTransportProviderExprChain =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("ServiceSettings"))
+              .setMethodName("defaultHttpJsonTransportProviderBuilder")
+              .build();
+      defaultTransportProviderExprChain =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(defaultTransportProviderExprChain)
+              .setMethodName("build")
+              .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
+              .build();
 
-    MethodInvocationExpr setTransportProvider =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-            .setMethodName("setTransportChannelProvider")
-            .setArguments(defaultTransportProviderBuider)
-            .build();
-    IfStatement setTransportChannelProviderStatement =
-        createIfStatement(
-            getUseRest,
-            Arrays.asList(
-                ExprStatement.withExpr(setTransportProvider),
-                LoggerUtils.createLoggerStatement(
-                    ValueExpr.withValue(
-                        StringObjectValue.withValue("Using HTTP transport channel")),
-                    types)),
-            null);
+      MethodInvocationExpr setTransportProvider =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setMethodName("setTransportChannelProvider")
+              .setArguments(defaultTransportProviderExprChain)
+              .build();
+      IfStatement setTransportChannelProviderStatement =
+          createIfStatement(
+              getUseRest,
+              Arrays.asList(
+                  ExprStatement.withExpr(setTransportProvider),
+                  LoggerUtils.createLoggerStatement(
+                      ValueExpr.withValue(
+                          StringObjectValue.withValue("Using HTTP transport channel")),
+                      types)),
+              null);
 
-    bodyStatements.add(setTransportChannelProviderStatement);
-
+      bodyStatements.add(setTransportChannelProviderStatement);
+    }
     // retry settings for each method
     TypeNode thisClassType = types.get(service.name() + "AutoConfig");
     List retrySettings =
@@ -744,6 +751,28 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setReturnType(types.get("ServiceClient"))
             .setArguments(serviceSettingsBuilt)
             .build();
+    List<VariableExpr> argumentsVariableExprs =
+        Arrays.asList(
+            credentialsProviderVariableExpr
+                .toBuilder()
+                .setIsDecl(true)
+                .setAnnotations(
+                    Arrays.asList(
+                        AnnotationNode.builder()
+                            .setType(types.get("Qualifier"))
+                            .setDescription(credentialsProviderName)
+                            .build()))
+                .build(),
+            transportChannelProviderVariableExpr
+                .toBuilder()
+                .setIsDecl(true)
+                .setAnnotations(
+                    Arrays.asList(
+                        AnnotationNode.builder()
+                            .setType(types.get("Qualifier"))
+                            .setDescription(transportChannelProviderName)
+                            .build()))
+                .build());
 
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
@@ -756,28 +785,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
-        .setArguments(
-            Arrays.asList(
-                credentialsProviderVariableExpr
-                    .toBuilder()
-                    .setIsDecl(true)
-                    .setAnnotations(
-                        Arrays.asList(
-                            AnnotationNode.builder()
-                                .setType(types.get("Qualifier"))
-                                .setDescription(credentialsProviderName)
-                                .build()))
-                    .build(),
-                transportChannelProviderVariableExpr
-                    .toBuilder()
-                    .setIsDecl(true)
-                    .setAnnotations(
-                        Arrays.asList(
-                            AnnotationNode.builder()
-                                .setType(types.get("Qualifier"))
-                                .setDescription(transportChannelProviderName)
-                                .build()))
-                    .build()))
+        .setArguments(argumentsVariableExprs)
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(types.get("Bean")),

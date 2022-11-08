@@ -109,6 +109,17 @@ public abstract class AnnotationNode implements AstNode {
     }
 
     /**
+     * To set single ArrayExpr as description.
+     *
+     * @param arrayExpr
+     * @return Builder
+     */
+    public Builder setDescription(ArrayExpr arrayExpr) {
+      Preconditions.checkState(descriptionExprs() == null, REPEAT_SINGLE_EXCEPTION_MESSAGE);
+      return setDescriptionExprs(Arrays.asList(arrayExpr));
+    }
+
+    /**
      * To add an AssignmentExpr as parameter. Can be used repeatedly to add multiple parameters.
      *
      * @param assignmentExpr

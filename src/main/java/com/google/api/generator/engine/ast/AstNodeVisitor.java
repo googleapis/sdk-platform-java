@@ -24,6 +24,8 @@ public interface AstNodeVisitor {
 
   public void visit(AnnotationNode annotation);
 
+  public void visit(ArrayExpr expr);
+
   public void visit(ConcreteReference reference);
 
   public void visit(VaporReference reference);
