@@ -6,7 +6,6 @@
   <parent>
     <artifactId>com.google.cloud</artifactId>
     <groupId>generated-parent</groupId>
-    <version>3.5.0-SNAPSHOT</version>
   </parent>
   <groupId>com.google.cloud</groupId>
   <artifactId>com-google-showcase-v1beta1-spring-starter</artifactId>

@@ -190,7 +190,6 @@ def _java_gapic_srcjar(
         # possible values are: "grpc", "rest", "grpc+rest"
         transport,
         rest_numeric_enums,
-        spring_parent_coordinates,
         # Can be used to provide a java_library with a customized generator,
         # like the one which dumps descriptor to a file for future debugging.
         java_generator_name = "java_gapic",
@@ -217,9 +216,6 @@ def _java_gapic_srcjar(
 
     if rest_numeric_enums:
         opt_args.append("rest-numeric-enums")
-
-    if spring_parent_coordinates:
-        opt_args.append("spring-parent-coordinates=%s" % spring_parent_coordinates)
 
     # Produces the GAPIC metadata file if this flag is set. to any value.
     # Protoc invocation: --java_gapic_opt=metadata
@@ -249,7 +245,6 @@ def java_gapic_library(
         # possible values are: "grpc", "rest", "grpc+rest"
         transport = None,
         rest_numeric_enums = False,
-        spring_parent_coordinates = None,
         **kwargs):
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
@@ -262,7 +257,6 @@ def java_gapic_library(
         service_yaml = service_yaml,
         transport = transport,
         rest_numeric_enums = rest_numeric_enums,
-        spring_parent_coordinates = spring_parent_coordinates,
         java_generator_name = "java_gapic",
         **kwargs
     )

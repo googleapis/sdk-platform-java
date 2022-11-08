@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SpringWriterTest {
-  private static final String PARENT_COORDS = "com.google.cloud:generated-parent:3.5.0-SNAPSHOT";
+  private static final String PARENT_COORDS = "com.google.cloud:generated-parent";
   private GapicContext context;
 
   @Before

@@ -298,18 +298,17 @@ public class SpringWriter {
     }
     List<String> splitCoords = Splitter.on(':').splitToList(springParentCoordinates);
     Preconditions.checkArgument(
-        splitCoords.size() == 3,
-        "Expected parent coordinates to " + "be 3 elements separated by a colon (:)");
-    String groupId = splitCoords.get(0);
-    String artifactId = splitCoords.get(1);
-    String version = splitCoords.get(2);
-    String template =
-        "  <parent>\n"
-            + "    <artifactId>%s</artifactId>\n"
-            + "    <groupId>%s</groupId>\n"
-            + "    <version>%s</version>\n"
-            + "  </parent>\n";
-    return String.format(template, groupId, artifactId, version);
+        splitCoords.size() >= 2,
+        "Expected parent coordinates to have two or three elements separated by a colon (:)");
+    StringBuilder result = new StringBuilder();
+    result.append("  <parent>\n");
+    result.append(String.format("    <artifactId>%s</artifactId>\n", splitCoords.get(0)));
+    result.append(String.format("    <groupId>%s</groupId>\n", splitCoords.get(1)));
+    if (splitCoords.size() == 3) {
+      result.append(String.format("    <version>%s</version>\n", splitCoords.get(2)));
+    }
+    result.append("  </parent>\n");
+    return result.toString();
   }
 
   private static void writePom(GapicContext context, JarOutputStream jos) {
