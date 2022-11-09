@@ -23,31 +23,74 @@ public class CommentFormatterTest {
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
 
   @Test
-  public void parseCommentWithItemizedList() {
+  public void parseCommentWithItemizedList_paragraphContainsList() {
     String protobufComment =
         LineFormatter.lines(
-            " Service Name\n\n",
-            " One line initial description. Here is a list of items:\n",
+            "Service Name\n\n",
+            "One line initial description. Here is a list of items:\n",
             " * This is item one\n",
-            " * This is item two\n\n",
-            " Here is another list, in a new paragraph:\n\n",
-            " * This is item one");
+            " * This is item two");
+    String result = CommentFormatter.formatAsJavaDocComment(protobufComment, null);
+    String expectedJavaDocComment =
+        LineFormatter.lines(
+            "<p> Service Name\n",
+            "<p> One line initial description. Here is a list of items:\n",
+            "<ul>\n",
+            "<li>  This is item one\n",
+            "<li>  This is item two\n",
+            "</ul>");
+    assertEquals(expectedJavaDocComment, result);
+  }
+
+  @Test
+  public void parseCommentWithItemizedList_paragraphStartsWithList() {
+    String protobufComment =
+        LineFormatter.lines(
+            "Paragraphs starting with list items should still be parsed as list:\n\n",
+            " * This is item one\n",
+            " * This is item two");
+    String result = CommentFormatter.formatAsJavaDocComment(protobufComment, null);
+    String expectedJavaDocComment =
+        LineFormatter.lines(
+            "<p> Paragraphs starting with list items should still be parsed as list:\n",
+            "<ul>\n",
+            "<li>  This is item one\n",
+            "<li>  This is item two\n",
+            "</ul>");
+    assertEquals(expectedJavaDocComment, result);
+  }
+
+  @Test
+  public void parseCommentWithPrefixPattern_addIfStartsWithParagraph() {
+    String protobufComment =
+        LineFormatter.lines(
+            "Service Name\n\n",
+            "Here is a list of items:\n",
+            " * This is item one\n",
+            " * This is item two");
     String result =
         CommentFormatter.formatAsJavaDocComment(
             protobufComment, SERVICE_DESCRIPTION_HEADER_PATTERN);
     String expectedJavaDocComment =
         LineFormatter.lines(
-            "<p> Service Description:  Service Name\n",
-            "<p>  One line initial description. Here is a list of items:\n",
+            "<p> Service Description: Service Name\n",
+            "<p> Here is a list of items:\n",
             "<ul>\n",
             "<li>  This is item one\n",
             "<li>  This is item two\n",
-            "</ul>\n",
-            "<p>  Here is another list, in a new paragraph:\n",
-            "<ul>\n",
-            "<li>  This is item one\n",
             "</ul>");
+    assertEquals(expectedJavaDocComment, result);
+  }
 
+  @Test
+  public void parseCommentWithPrefixPattern_ignoreIfStartsWithList() {
+    String protobufComment = LineFormatter.lines(" * This is item one\n", " * This is item two");
+    String result =
+        CommentFormatter.formatAsJavaDocComment(
+            protobufComment, SERVICE_DESCRIPTION_HEADER_PATTERN);
+    String expectedJavaDocComment =
+        LineFormatter.lines(
+            "<ul>\n", "<li>  This is item one\n", "<li>  This is item two\n", "</ul>");
     assertEquals(expectedJavaDocComment, result);
   }
 }
