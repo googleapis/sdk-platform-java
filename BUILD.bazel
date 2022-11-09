@@ -8,10 +8,11 @@ java_import(
     # filesystem, GCS bucket, Maven repositories, etc.
     jars = ["target/gapic-generator-java-0.0.1-SNAPSHOT.jar"],
 )
+
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [":gapic_generator_java"],
+    runtime_deps = ["@maven//:com_google_api_gapic"],
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
