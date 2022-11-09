@@ -143,8 +143,8 @@ public class TestProtoLoader {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
-    // Adds service description for testing purposes, since FileDescriptorProto with SourceCodeInfo
-    // from a protoc CodeGeneratorRequest is not available through unit testing resources
+    // Explicitly adds service description, since this is not parsed from source code location
+    // in test protos, as it would from a protoc CodeGeneratorRequest
     List<Service> servicesWithDescription =
         services.stream()
             .map(s -> s.toBuilder().setDescription(ECHO_SERVICE_DESCRIPTION).build())
