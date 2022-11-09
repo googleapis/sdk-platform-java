@@ -6,8 +6,8 @@
   <groupId>com.google.cloud</groupId>
   <artifactId>com-google-showcase-v1beta1-spring-starter</artifactId>
   <version>{{starter-version}}</version>
-  <name>Spring Boot Starter - showcase</name>
-  <description>Spring Boot Starter with AutoConfiguration for showcase</description>
+  <name>Spring Boot Starter - localhost:7469</name>
+  <description>Spring Boot Starter with AutoConfiguration for localhost:7469</description>
 
 
   <dependencies>

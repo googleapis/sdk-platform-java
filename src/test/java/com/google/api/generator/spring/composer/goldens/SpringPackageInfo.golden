@@ -1,4 +1,4 @@
-/** Spring Boot auto-configurations for showcase. */
+/** Spring Boot auto-configurations for localhost:7469. */
 @Generated("by gapic-generator-java")
 package com.google.showcase.v1beta1.spring;
 
