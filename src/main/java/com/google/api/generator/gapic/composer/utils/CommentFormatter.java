@@ -25,7 +25,7 @@ public class CommentFormatter {
   private CommentFormatter() {}
 
   // Additional formatting logic for converting protobuf comment to Javadoc
-  public static String formatAndAddToJavaDocComment(String comment, String prefixPattern) {
+  public static String formatAsJavaDocComment(String comment, String prefixPattern) {
 
     JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
 

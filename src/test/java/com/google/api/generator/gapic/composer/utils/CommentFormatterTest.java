@@ -33,7 +33,7 @@ public class CommentFormatterTest {
             " Here is another list, in a new paragraph:\n\n",
             " * This is item one");
     String result =
-        CommentFormatter.formatAndAddToJavaDocComment(
+        CommentFormatter.formatAsJavaDocComment(
             protobufComment, SERVICE_DESCRIPTION_HEADER_PATTERN);
     String expectedJavaDocComment =
         LineFormatter.lines(
