@@ -18,36 +18,14 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ClientLibraryPackageInfoComposerTest {
-  private static final String ECHO_SERVICE_DESCRIPTION =
-      "This service is used showcase the four main types of rpcs - unary, server\n"
-          + " side streaming, client side streaming, and bidirectional streaming. This\n"
-          + " service also exposes methods that explicitly implement server delay, and\n"
-          + " paginated calls. Set the 'showcase-trailer' metadata key on any method\n"
-          + " to have the values echoed in the response trailers.";
-  private GapicContext context;
-
-  @Before
-  public void setUp() {
-    GapicContext echoContext = TestProtoLoader.instance().parseShowcaseEcho();
-    // Adds service description for testing purposes, since FileDescriptorProto with SourceCodeInfo
-    // from a protoc CodeGeneratorRequest is not available through unit testing resources
-    List<Service> services =
-        echoContext.services().stream()
-            .map(s -> s.toBuilder().setDescription(ECHO_SERVICE_DESCRIPTION).build())
-            .collect(Collectors.toList());
-    this.context = echoContext.toBuilder().setServices(services).build();
-  }
+  private GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
 
   @Test
   public void composePackageInfo_showcase() {
