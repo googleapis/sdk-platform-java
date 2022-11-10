@@ -2,6 +2,7 @@ workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+load("//:PROPERTIES.bzl", "PROPERTIES")
 
 # DO NOT REMOVE.
 # This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
@@ -52,13 +53,15 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
+_googleapis_commit = "44d6bef0ca6db8bba3fb324c8186e694bcc4829c"
+
 http_archive(
-        name = "com_google_googleapis",
-        strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
-        urls = [
-            "https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip",
-        ],
-    )
+    name = "com_google_googleapis",
+    strip_prefix = "googleapis-%s" % _googleapis_commit,
+    urls = [
+        "https://github.com/googleapis/googleapis/archive/%s.zip" % _googleapis_commit,
+    ],
+)
 
 load("//:repositories.bzl", "gapic_generator_java_repositories")
 
@@ -66,17 +69,17 @@ gapic_generator_java_repositories()
 
 # protobuf
 RULES_JVM_EXTERNAL_TAG = "4.2"
+
 RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
 
 http_archive(
     name = "rules_jvm_external",
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
     sha256 = RULES_JVM_EXTERNAL_SHA,
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
-
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
@@ -112,8 +115,22 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
 
+_disco_to_proto3_converter_commit = "ce8d8732120cdfb5bf4847c3238b5be8acde87e3"
+
 http_archive(
     name = "com_google_disco_to_proto3_converter",
-    strip_prefix = "disco-to-proto3-converter-ce8d8732120cdfb5bf4847c3238b5be8acde87e3",
-    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/ce8d8732120cdfb5bf4847c3238b5be8acde87e3.zip"],
+    strip_prefix = "disco-to-proto3-converter-%s" % _disco_to_proto3_converter_commit,
+    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/%s.zip" % _disco_to_proto3_converter_commit],
+)
+
+# Showcase
+_showcase_commit = PROPERTIES["commit.gapic_showcase"]
+
+http_archive(
+    name = "com_google_gapic_showcase",
+    strip_prefix = "gapic-showcase-%s" % _showcase_commit,
+    urls = [
+        # "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
+        "https://github.com/googleapis/gapic-showcase/archive/%s.zip" % _showcase_commit,
+    ],
 )
