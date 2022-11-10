@@ -477,24 +477,27 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
         Expr root = actualRequestVarExpr;
         if (!arg.nestedFields().isEmpty()) {
           for (Field field : arg.nestedFields()) {
-            root = MethodInvocationExpr.builder()
-                .setMethodName("get" + JavaStyle.toUpperCamelCase(field.name()))
-                .setExprReferenceExpr(root)
-                .build();
+            root =
+                MethodInvocationExpr.builder()
+                    .setMethodName("get" + JavaStyle.toUpperCamelCase(field.name()))
+                    .setExprReferenceExpr(root)
+                    .build();
           }
         }
-        MethodInvocationExpr actual = MethodInvocationExpr.builder()
-            .setExprReferenceExpr(root)
-            .setMethodName(
-                String.format(
-                    createGetterNamePattern(arg.field().type()),
-                    JavaStyle.toUpperCamelCase(arg.field().name())))
-            .build();
+        MethodInvocationExpr actual =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(root)
+                .setMethodName(
+                    String.format(
+                        createGetterNamePattern(arg.field().type()),
+                        JavaStyle.toUpperCamelCase(arg.field().name())))
+                .build();
 
-        Variable var = Variable.builder()
-            .setName(JavaStyle.toLowerCamelCase(arg.name()))
-            .setType(arg.type())
-            .build();
+        Variable var =
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                .setType(arg.type())
+                .build();
         Expr expectedFieldExpr = VariableExpr.withVariable(var);
         if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(var.type())) {
           expectedFieldExpr =
@@ -504,17 +507,18 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                   .build();
         }
 
-        Builder assertionExpr = MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
-            .setMethodName("assertEquals");
+        Builder assertionExpr =
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
+                .setMethodName("assertEquals");
 
         ArrayList<Expr> assertionArgs = new ArrayList<>();
         assertionArgs.add(expectedFieldExpr);
         assertionArgs.add(actual);
         if (arg.type() == TypeNode.DOUBLE) {
-          assertionArgs.add(ValueExpr.withValue(
-              PrimitiveValue.builder().setValue("0.01").setType(TypeNode.DOUBLE)
-                  .build()));
+          assertionArgs.add(
+              ValueExpr.withValue(
+                  PrimitiveValue.builder().setValue("0.01").setType(TypeNode.DOUBLE).build()));
         }
         methodExprs.add(assertionExpr.setArguments(assertionArgs).build());
       }
