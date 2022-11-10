@@ -303,8 +303,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       VariableExpr requestVarExpr,
-      Message requestMessage,
-      List<VariableExpr> argExprs) {
+      Message requestMessage) {
 
     VariableExpr actualRequestsVarExpr =
         VariableExpr.withVariable(

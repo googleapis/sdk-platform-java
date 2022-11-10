@@ -366,8 +366,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       VariableExpr requestVarExpr, // Nullable
-      Message requestMessage,
-      List<VariableExpr> argExprs) {
+      Message requestMessage) {
     List<Expr> methodExprs = new ArrayList<>();
     List<Statement> methodStatements = new ArrayList<>();
 
@@ -493,13 +492,13 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                         JavaStyle.toUpperCamelCase(arg.field().name())))
                 .build();
 
-        Variable var =
+        Variable variable =
             Variable.builder()
                 .setName(JavaStyle.toLowerCamelCase(arg.name()))
                 .setType(arg.type())
                 .build();
-        Expr expectedFieldExpr = VariableExpr.withVariable(var);
-        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(var.type())) {
+        Expr expectedFieldExpr = VariableExpr.withVariable(variable);
+        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(variable.type())) {
           expectedFieldExpr =
               MethodInvocationExpr.builder()
                   .setExprReferenceExpr(expectedFieldExpr)

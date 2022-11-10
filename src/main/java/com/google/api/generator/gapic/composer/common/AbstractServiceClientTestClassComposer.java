@@ -698,8 +698,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
             isRequestArg,
             classMemberVarExprs,
             requestVarExpr,
-            requestMessage,
-            argExprs));
+            requestMessage));
 
     String testMethodName =
         String.format(
@@ -723,8 +722,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       VariableExpr requestVarExpr,
-      Message requestMessage,
-      List<VariableExpr> argExprs);
+      Message requestMessage);
 
   protected abstract MethodDefinition createStreamingRpcTestMethod(
       Service service,
