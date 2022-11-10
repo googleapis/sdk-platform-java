@@ -36,7 +36,7 @@ public class SpringWriterTest {
   @Test
   public void buildAutoConfigRegistrationStringTest() {
     String result = SpringWriter.buildAutoConfigRegistrationString(context);
-    String expected = "com.google.showcase.v1beta1.spring.EchoSpringAutoConfig";
+    String expected = "com.google.showcase.v1beta1.spring.EchoSpringAutoConfiguration";
     assertEquals(expected, result);
   }
 

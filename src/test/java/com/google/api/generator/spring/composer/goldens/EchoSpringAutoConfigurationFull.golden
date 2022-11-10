@@ -61,7 +61,7 @@ import org.threeten.bp.Duration;
 @EnableConfigurationProperties(EchoSpringProperties.class)
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
-  private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfig.class);
+  private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfiguration.class);
 
   protected EchoSpringAutoConfiguration(EchoSpringProperties clientProperties) {
     this.clientProperties = clientProperties;

@@ -169,7 +169,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
 
     Statement loggerStatement =
-        LoggerUtils.getLoggerDeclarationExpr(serviceName + "AutoConfig", types);
+        LoggerUtils.getLoggerDeclarationExpr(serviceName + "AutoConfiguration", types);
     return Arrays.asList(clientPropertiesStatement, loggerStatement);
   }
 
@@ -885,7 +885,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     TypeNode clientAutoconfig =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(service.name() + "SpringAutoConfig")
+                .setName(service.name() + "SpringAutoConfiguration")
                 .setPakkage(packageName)
                 .build());
 
@@ -986,7 +986,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     typeMap.put("CredentialsProvider", credentialsProvider);
     typeMap.put(service.name() + "Properties", clientProperties);
-    typeMap.put(service.name() + "AutoConfig", clientAutoconfig);
+    typeMap.put(service.name() + "AutoConfiguration", clientAutoconfig);
     typeMap.put("GcpProjectIdProvider", gcpProjectIdProvider);
     typeMap.put("Credentials", credentials);
     typeMap.put("DefaultCredentialsProvider", defaultCredentialsProvider);
