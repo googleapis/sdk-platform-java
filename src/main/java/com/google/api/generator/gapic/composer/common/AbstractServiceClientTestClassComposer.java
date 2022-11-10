@@ -82,6 +82,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public abstract class AbstractServiceClientTestClassComposer implements ClassComposer {
+
   protected static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
   protected static final String CLIENT_VAR_NAME = "client";
@@ -303,19 +304,23 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
   /**
    * Creates a test method for a given RPC, e.g. createAssetTest.
    *
-   * @param method the RPC for which this test method is created.
-   * @param apiService the host service under test.
-   * @param rpcService the service that {@code method} belongs to. This is not equal to {@code
-   *     apiService} only when {@code method} is a mixin, in which case {@code rpcService} is the
-   *     mixed-in service. If {@code apiService} and {@code rpcService} are different, they will be
-   *     used only for pagination. Otherwise, {@code rpcService} subsumes {@code apiService}.
-   * @param methodSignature the method signature of the RPC under test.
-   * @param variantIndex the nth variant of the RPC under test. This applies when we have
-   *     polymorphism due to the presence of several method signature annotations in the proto.
-   * @param isRequestArg whether the RPC variant under test take only the request proto message.
+   * @param method              the RPC for which this test method is created.
+   * @param apiService          the host service under test.
+   * @param rpcService          the service that {@code method} belongs to. This is not equal to
+   *                            {@code apiService} only when {@code method} is a mixin, in which
+   *                            case {@code rpcService} is the mixed-in service. If
+   *                            {@code apiService} and {@code rpcService} are different, they will
+   *                            be used only for pagination. Otherwise, {@code rpcService} subsumes
+   *                            {@code apiService}.
+   * @param methodSignature     the method signature of the RPC under test.
+   * @param variantIndex        the nth variant of the RPC under test. This applies when we have
+   *                            polymorphism due to the presence of several method signature
+   *                            annotations in the proto.
+   * @param isRequestArg        whether the RPC variant under test take only the request proto
+   *                            message.
    * @param classMemberVarExprs the class members in the generated test class.
-   * @param resourceNames the resource names available for use.
-   * @param messageTypes the proto message types available for use.
+   * @param resourceNames       the resource names available for use.
+   * @param messageTypes        the proto message types available for use.
    */
   private MethodDefinition createRpcTestMethod(
       Method method,
@@ -419,7 +424,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
     if (method.hasLro()
         && (method.lro().operationServiceStubType() == null
-            || !method.lro().responseType().equals(method.outputType()))) {
+        || !method.lro().responseType().equals(method.outputType()))) {
 
       VariableExpr resultOperationVarExpr =
           VariableExpr.withVariable(
@@ -690,12 +695,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     methodStatements.add(EMPTY_LINE_STATEMENT);
 
     methodStatements.addAll(
-        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-    methodExprs.clear();
-
-    methodStatements.addAll(
         constructRpcTestCheckerLogic(
             method,
+            methodSignature,
             rpcService,
             isRequestArg,
             classMemberVarExprs,
@@ -720,6 +722,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected abstract List<Statement> constructRpcTestCheckerLogic(
       Method method,
+      List<MethodArgument> methodSignature,
       Service service,
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
@@ -737,14 +740,15 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
   /**
    * Creates a test method to exercise exceptions for a given RPC, e.g. createAssetTest.
    *
-   * @param method the RPC for which this test method is created.
-   * @param service the service that {@code method} belongs to.
-   * @param methodSignature the method signature of the RPC under test.
-   * @param variantIndex the nth variant of the RPC under test. This applies when we have
-   *     polymorphism due to the presence of several method signature annotations in the proto.
+   * @param method              the RPC for which this test method is created.
+   * @param service             the service that {@code method} belongs to.
+   * @param methodSignature     the method signature of the RPC under test.
+   * @param variantIndex        the nth variant of the RPC under test. This applies when we have
+   *                            polymorphism due to the presence of several method signature
+   *                            annotations in the proto.
    * @param classMemberVarExprs the class members in the generated test class.
-   * @param resourceNames the resource names available for use.
-   * @param messageTypes the proto message types available for use.
+   * @param resourceNames       the resource names available for use.
+   * @param messageTypes        the proto message types available for use.
    */
   protected abstract MethodDefinition createRpcExceptionTestMethod(
       Method method,

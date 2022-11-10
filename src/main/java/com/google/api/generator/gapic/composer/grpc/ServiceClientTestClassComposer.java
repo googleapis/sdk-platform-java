@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.MethodInvocationExpr.Builder;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -66,6 +67,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ServiceClientTestClassComposer extends AbstractServiceClientTestClassComposer {
+
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
 
@@ -359,10 +361,11 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   @Override
   protected List<Statement> constructRpcTestCheckerLogic(
       Method method,
+      List<MethodArgument> methodSignature,
       Service service,
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
-      VariableExpr requestVarExpr,
+      VariableExpr requestVarExpr, // Nullable
       Message requestMessage,
       List<VariableExpr> argExprs) {
     List<Expr> methodExprs = new ArrayList<>();
@@ -470,36 +473,50 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                 .build());
       }
     } else {
-      for (VariableExpr argVarExpr : argExprs) {
-        Variable variable = argVarExpr.variable();
-        String fieldGetterMethodNamePattern = "get%s";
-        if (LIST_TYPE.isSupertypeOrEquals(variable.type())) {
-          fieldGetterMethodNamePattern = "get%sList";
-        } else if (MAP_TYPE.isSupertypeOrEquals(variable.type())) {
-          fieldGetterMethodNamePattern = "get%sMap";
-        }
-        Expr actualFieldExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(actualRequestVarExpr)
-                .setMethodName(
-                    String.format(
-                        fieldGetterMethodNamePattern,
-                        JavaStyle.toUpperCamelCase(variable.identifier().name())))
+      for (MethodArgument arg : methodSignature) {
+        Expr root = actualRequestVarExpr;
+        if (!arg.nestedFields().isEmpty()) {
+          for (Field field : arg.nestedFields()) {
+            root = MethodInvocationExpr.builder()
+                .setMethodName("get" + JavaStyle.toUpperCamelCase(field.name()))
+                .setExprReferenceExpr(root)
                 .build();
-        Expr expectedFieldExpr = argVarExpr;
-        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(argVarExpr.type())) {
+          }
+        }
+        MethodInvocationExpr actual = MethodInvocationExpr.builder()
+            .setExprReferenceExpr(root)
+            .setMethodName(
+                String.format(
+                    createGetterNamePattern(arg.field().type()),
+                    JavaStyle.toUpperCamelCase(arg.field().name())))
+            .build();
+
+        Variable var = Variable.builder()
+            .setName(JavaStyle.toLowerCamelCase(arg.name()))
+            .setType(arg.type())
+            .build();
+        Expr expectedFieldExpr = VariableExpr.withVariable(var);
+        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(var.type())) {
           expectedFieldExpr =
               MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(argVarExpr)
+                  .setExprReferenceExpr(expectedFieldExpr)
                   .setMethodName("toString")
                   .build();
         }
-        methodExprs.add(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
-                .setMethodName("assertEquals")
-                .setArguments(expectedFieldExpr, actualFieldExpr)
-                .build());
+
+        Builder assertionExpr = MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
+            .setMethodName("assertEquals");
+
+        ArrayList<Expr> assertionArgs = new ArrayList<>();
+        assertionArgs.add(expectedFieldExpr);
+        assertionArgs.add(actual);
+        if (arg.type() == TypeNode.DOUBLE) {
+          assertionArgs.add(ValueExpr.withValue(
+              PrimitiveValue.builder().setValue("0.01").setType(TypeNode.DOUBLE)
+                  .build()));
+        }
+        methodExprs.add(assertionExpr.setArguments(assertionArgs).build());
       }
     }
 
@@ -531,6 +548,16 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     methodExprs.clear();
 
     return methodStatements;
+  }
+
+  private static String createGetterNamePattern(TypeNode type) {
+    String fieldGetterMethodNamePattern = "get%s";
+    if (LIST_TYPE.isSupertypeOrEquals(type)) {
+      fieldGetterMethodNamePattern = "get%sList";
+    } else if (MAP_TYPE.isSupertypeOrEquals(type)) {
+      fieldGetterMethodNamePattern = "get%sMap";
+    }
+    return fieldGetterMethodNamePattern;
   }
 
   @Override
