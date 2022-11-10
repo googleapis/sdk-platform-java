@@ -4,8 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>com.google.cloud</artifactId>
-    <groupId>generated-parent</groupId>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>generated-parent</artifactId>
   </parent>
   <groupId>com.google.cloud</groupId>
   <artifactId>com-google-showcase-v1beta1-spring-starter</artifactId>

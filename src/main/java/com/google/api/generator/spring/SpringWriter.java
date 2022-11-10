@@ -302,8 +302,8 @@ public class SpringWriter {
         "Expected parent coordinates to have two or three elements separated by a colon (:)");
     StringBuilder result = new StringBuilder();
     result.append("  <parent>\n");
-    result.append(String.format("    <artifactId>%s</artifactId>\n", splitCoords.get(0)));
-    result.append(String.format("    <groupId>%s</groupId>\n", splitCoords.get(1)));
+    result.append(String.format("    <groupId>%s</groupId>\n", splitCoords.get(0)));
+    result.append(String.format("    <artifactId>%s</artifactId>\n", splitCoords.get(1)));
     if (splitCoords.size() == 3) {
       result.append(String.format("    <version>%s</version>\n", splitCoords.get(2)));
     }
