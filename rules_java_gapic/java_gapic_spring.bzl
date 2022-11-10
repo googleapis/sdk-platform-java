@@ -78,6 +78,7 @@ def java_gapic_spring_library(
         grpc_service_config = None,
         gapic_yaml = None,
         service_yaml = None,
+        transport = None,
         **kwargs):
     library_name = name + "-spring"
     raw_srcjar_name = name + "_raw"
@@ -88,6 +89,7 @@ def java_gapic_spring_library(
         grpc_service_config = grpc_service_config,
         gapic_yaml = gapic_yaml,
         service_yaml = service_yaml,
+        transport = transport,
         **kwargs
     )
 
@@ -103,6 +105,7 @@ def _java_gapic_spring_srcjar(
         grpc_service_config,
         gapic_yaml,
         service_yaml,
+        transport,
         # Can be used to provide a java_library with a customized generator,
         # like the one which dumps descriptor to a file for future debugging.
         java_generator_name = "java_gapic_spring",
@@ -116,6 +119,9 @@ def _java_gapic_spring_srcjar(
         file_args_dict[service_yaml] = "api-service-config"
 
     opt_args = []
+
+    if transport:
+        opt_args.append("transport=%s" % transport)
 
     # Produces the GAPIC metadata file if this flag is set. to any value.
     # Protoc invocation: --java_gapic_opt=metadata
