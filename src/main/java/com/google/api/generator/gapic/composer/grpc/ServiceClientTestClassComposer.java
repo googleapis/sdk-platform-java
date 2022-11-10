@@ -365,8 +365,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       VariableExpr requestVarExpr, // Nullable
-      Message requestMessage,
-      List<VariableExpr> argExprs) {
+      Message requestMessage) {
     List<Expr> methodExprs = new ArrayList<>();
     List<Statement> methodStatements = new ArrayList<>();
 
