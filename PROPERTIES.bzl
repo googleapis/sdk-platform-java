@@ -3,7 +3,6 @@ PROPERTIES = {
     # Version of google-java-format is downgraded from 1.8 to 1.7, because 1.8 supports java 11 minimum, while our JRE is java 8.
     "version.google_java_format": "1.7",
     "version.io_grpc_java": "1.42.1",
-    "commit.gapic_showcase": "90d73532a0cab753a85f45c158394f24fc21d91a",
 
     # Common deps.
     "maven.com_google_guava_guava": "com.google.guava:guava:30.1-android",

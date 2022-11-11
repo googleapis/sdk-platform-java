@@ -124,7 +124,7 @@ http_archive(
 )
 
 # Showcase
-_showcase_commit = PROPERTIES["commit.gapic_showcase"]
+_showcase_commit = "90d73532a0cab753a85f45c158394f24fc21d91a"
 
 http_archive(
     name = "com_google_gapic_showcase",
