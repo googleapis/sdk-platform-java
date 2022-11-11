@@ -20,11 +20,13 @@ import com.google.api.core.BetaApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import java.io.IOException;
+import java.util.Collections;
 import javax.annotation.Generated;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -108,7 +110,7 @@ public class EchoSpringAutoConfiguration {
         EchoSettings.newBuilder()
             .setCredentialsProvider(credentialsProvider)
             .setTransportChannelProvider(defaultTransportChannelProvider)
-            .setHeaderProvider();
+            .setHeaderProvider(this.userAgentHeaderProvider());
     if (this.clientProperties.getQuotaProjectId() != null) {
       clientSettingsBuilder.setQuotaProjectId(this.clientProperties.getQuotaProjectId());
       LOGGER.info(
@@ -446,5 +448,11 @@ public class EchoSpringAutoConfiguration {
         .collideNameSettings()
         .setRetrySettings(collideNameRetrySettingBuilder.build());
     return EchoClient.create(clientSettingsBuilder.build());
+  }
+
+  private HeaderProvider userAgentHeaderProvider() {
+    String springLibrary = "spring-autogen-echo";
+    String version = this.getClass().getPackage().getImplementationVersion();
+    return () -> Collections.singletonMap("user-agent", springLibrary + "/" + version);
   }
 }
