@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -256,7 +257,13 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               getterAndSetter.add(
                   createGetterMethod(thisClassType, propertyName, propertyType, null));
-              getterAndSetter.add(createSetterMethod(thisClassType, propertyName, propertyType));
+              if (propertyType.equals(staticTypes.get("org.threeten.bp.Duration"))) {
+                // Use different setter logic for Duration handling conversion
+                getterAndSetter.add(
+                    createDurationSetterMethod(thisClassType, propertyName, propertyType));
+              } else {
+                getterAndSetter.add(createSetterMethod(thisClassType, propertyName, propertyType));
+              }
               return getterAndSetter;
             },
             (String propertyName) -> new ArrayList<>());
@@ -315,6 +322,52 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         .build();
   }
 
+  private static MethodDefinition createDurationSetterMethod(
+      TypeNode thisClassType, String propertyName, TypeNode returnType) {
+    Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
+    Variable argumentVar =
+        Variable.builder()
+            .setName(propertyName)
+            .setType(staticTypes.get("java.time.Duration"))
+            .build();
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+
+    MethodInvocationExpr durationToStringExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(VariableExpr.withVariable(argumentVar))
+            .setMethodName("toString")
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    MethodInvocationExpr parsedDurationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(staticTypes.get("org.threeten.bp.Duration"))
+            .setMethodName("parse")
+            .setArguments(durationToStringExpr)
+            .setReturnType(staticTypes.get("org.threeten.bp.Duration"))
+            .build();
+
+    AssignmentExpr propertyVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(propertyVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(parsedDurationExpr)
+            .build();
+
+    String methodName = "set" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propertyName);
+
+    return MethodDefinition.builder()
+        .setName(methodName)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setArguments(VariableExpr.builder().setVariable(argumentVar).setIsDecl(true).build())
+        .setBody(Arrays.asList(ExprStatement.withExpr(propertyVarExpr)))
+        .build();
+  }
+
   private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {
     Map<String, TypeNode> typeMap =
         Arrays.asList(CLASS_NAME_PATTERN).stream()
@@ -365,14 +418,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 .setPakkage("org.springframework.boot.context.properties")
                 .build());
 
-    // import org.threeten.bp.Duration;
-    TypeNode duration =
-        TypeNode.withReference(
-            VaporReference.builder().setName("Duration").setPakkage("org.threeten.bp").build());
-
     typeMap.put(service.name() + "Properties", clientProperties);
     typeMap.put("Credentials", credentials);
-    typeMap.put("Duration", duration);
     typeMap.put("CredentialsSupplier", credentialsSupplier);
     typeMap.put("ConfigurationProperties", configurationProperties);
     typeMap.put("NestedConfigurationProperty", nestedConfigurationProperty);
@@ -382,11 +429,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
-        Arrays.asList(RetrySettings.class, org.threeten.bp.Duration.class);
+        Arrays.asList(
+            RetrySettings.class, org.threeten.bp.Duration.class, java.time.Duration.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+                c -> c.getName(), c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 }
