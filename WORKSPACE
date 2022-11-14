@@ -2,7 +2,6 @@ workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-load("//:PROPERTIES.bzl", "PROPERTIES")
 
 # DO NOT REMOVE.
 # This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
