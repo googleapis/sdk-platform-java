@@ -525,8 +525,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
         .setExprReferenceExpr(exprReference)
         .setMethodName(
             String.format(
-                createGetterNamePattern(field.type()),
-                JavaStyle.toUpperCamelCase(field.name())))
+                createGetterNamePattern(field.type()), JavaStyle.toUpperCamelCase(field.name())))
         .build();
   }
 
