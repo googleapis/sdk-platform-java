@@ -3,10 +3,7 @@ package com.google.showcase.v1beta1.spring;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.retrying.RetrySettings;
-<<<<<<< HEAD
 import com.google.api.gax.rpc.HeaderProvider;
-=======
->>>>>>> c0b0937c (fix(Spring CodeGen): To only include options to set to rest transport when supported (#1078))
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.global.GLobalProperties;
 import com.google.cloud.spring.core.Credentials;
@@ -14,10 +11,7 @@ import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.util.Collections;
-=======
->>>>>>> c0b0937c (fix(Spring CodeGen): To only include options to set to rest transport when supported (#1078))
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -104,11 +98,7 @@ public class EchoSpringAutoConfiguration {
         EchoSettings.newBuilder()
             .setCredentialsProvider(credentialsProvider)
             .setTransportChannelProvider(defaultTransportChannelProvider)
-<<<<<<< HEAD
             .setHeaderProvider(this.userAgentHeaderProvider());
-=======
-            .setHeaderProvider();
->>>>>>> c0b0937c (fix(Spring CodeGen): To only include options to set to rest transport when supported (#1078))
     if (this.clientProperties.getQuotaProjectId() != null) {
       clientSettingsBuilder.setQuotaProjectId(this.clientProperties.getQuotaProjectId());
       LOGGER.info(
@@ -447,13 +437,10 @@ public class EchoSpringAutoConfiguration {
         .setRetrySettings(collideNameRetrySettingBuilder.build());
     return EchoClient.create(clientSettingsBuilder.build());
   }
-<<<<<<< HEAD
 
   private HeaderProvider userAgentHeaderProvider() {
     String springLibrary = "spring-autogen-echo";
     String version = this.getClass().getPackage().getImplementationVersion();
     return () -> Collections.singletonMap("user-agent", springLibrary + "/" + version);
   }
-=======
->>>>>>> c0b0937c (fix(Spring CodeGen): To only include options to set to rest transport when supported (#1078))
 }
