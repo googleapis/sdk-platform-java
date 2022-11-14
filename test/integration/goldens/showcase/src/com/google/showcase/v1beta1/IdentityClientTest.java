@@ -166,7 +166,7 @@ public class IdentityClientTest {
     Assert.assertEquals(age, actualRequest.getUser().getAge());
     Assert.assertEquals(nickname, actualRequest.getUser().getNickname());
     Assert.assertEquals(enableNotifications, actualRequest.getUser().getEnableNotifications());
-    Assert.assertEquals(heightFeet, actualRequest.getUser().getHeightFeet(), 0.01);
+    Assert.assertEquals(heightFeet, actualRequest.getUser().getHeightFeet(), 0.0001);
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
