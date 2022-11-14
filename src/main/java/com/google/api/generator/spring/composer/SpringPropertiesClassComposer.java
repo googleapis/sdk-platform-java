@@ -257,13 +257,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               getterAndSetter.add(
                   createGetterMethod(thisClassType, propertyName, propertyType, null));
-              if (propertyType.equals(staticTypes.get("org.threeten.bp.Duration"))) {
-                // Use different setter logic for Duration handling conversion
-                getterAndSetter.add(
-                    createDurationSetterMethod(thisClassType, propertyName, propertyType));
-              } else {
-                getterAndSetter.add(createSetterMethod(thisClassType, propertyName, propertyType));
-              }
+              getterAndSetter.add(createSetterMethod(thisClassType, propertyName, propertyType));
               return getterAndSetter;
             },
             (String propertyName) -> new ArrayList<>());
@@ -298,8 +292,38 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static MethodDefinition createSetterMethod(
       TypeNode thisClassType, String propertyName, TypeNode returnType) {
+
+    // Common building blocks
     Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+
+    // Default building blocks - may be updated in Duration condition below
+    Variable argumentVar = propertyVar;
+    Expr propertyValueExpr = VariableExpr.withVariable(argumentVar);
+
+    // Setter logic for Duration accepts different type and handles conversion
+    if (returnType.equals(staticTypes.get("org.threeten.bp.Duration"))) {
+      argumentVar =
+          Variable.builder()
+              .setName(propertyName)
+              .setType(staticTypes.get("java.time.Duration"))
+              .build();
+
+      MethodInvocationExpr durationToStringExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(argumentVar))
+              .setMethodName("toString")
+              .setReturnType(TypeNode.STRING)
+              .build();
+
+      propertyValueExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(staticTypes.get("org.threeten.bp.Duration"))
+              .setMethodName("parse")
+              .setArguments(durationToStringExpr)
+              .setReturnType(staticTypes.get("org.threeten.bp.Duration"))
+              .build();
+    }
 
     AssignmentExpr propertyVarExpr =
         AssignmentExpr.builder()
@@ -308,53 +332,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(VariableExpr.withVariable(propertyVar))
-            .build();
-
-    String methodName = "set" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propertyName);
-
-    return MethodDefinition.builder()
-        .setName(methodName)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(TypeNode.VOID)
-        .setArguments(VariableExpr.builder().setVariable(propertyVar).setIsDecl(true).build())
-        .setBody(Arrays.asList(ExprStatement.withExpr(propertyVarExpr)))
-        .build();
-  }
-
-  private static MethodDefinition createDurationSetterMethod(
-      TypeNode thisClassType, String propertyName, TypeNode returnType) {
-    Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
-    Variable argumentVar =
-        Variable.builder()
-            .setName(propertyName)
-            .setType(staticTypes.get("java.time.Duration"))
-            .build();
-    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
-
-    MethodInvocationExpr durationToStringExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(argumentVar))
-            .setMethodName("toString")
-            .setReturnType(TypeNode.STRING)
-            .build();
-
-    MethodInvocationExpr parsedDurationExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(staticTypes.get("org.threeten.bp.Duration"))
-            .setMethodName("parse")
-            .setArguments(durationToStringExpr)
-            .setReturnType(staticTypes.get("org.threeten.bp.Duration"))
-            .build();
-
-    AssignmentExpr propertyVarExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                VariableExpr.withVariable(propertyVar)
-                    .toBuilder()
-                    .setExprReferenceExpr(thisExpr)
-                    .build())
-            .setValueExpr(parsedDurationExpr)
+            .setValueExpr(propertyValueExpr)
             .build();
 
     String methodName = "set" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propertyName);
