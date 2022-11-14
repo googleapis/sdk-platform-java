@@ -47,9 +47,6 @@ jobs:
       - name: Integration Tests
         run: bazel --batch test //test/integration/...
 
-      - name: Showcase Tests
-        run: bazel --batch build //test/showcase:all
-
       - name: Gradle Build Generated Storage Client Library
         run: |
           echo "Building Storage lib from generated source..."
