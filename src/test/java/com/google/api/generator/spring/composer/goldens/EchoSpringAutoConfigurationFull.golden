@@ -22,7 +22,9 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
+import com.google.cloud.spring.shared.SharedProperties;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import java.io.IOException;
@@ -60,13 +62,16 @@ import org.threeten.bp.Duration;
 @ConditionalOnProperty(
     value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
     matchIfMissing = false)
-@EnableConfigurationProperties(EchoSpringProperties.class)
+@EnableConfigurationProperties({EchoSpringProperties.class, SharedProperties.class})
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
+  private final SharedProperties sharedProperties;
   private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfig.class);
 
-  protected EchoSpringAutoConfiguration(EchoSpringProperties clientProperties) {
+  protected EchoSpringAutoConfiguration(
+      EchoSpringProperties clientProperties, SharedProperties sharedProperties) {
     this.clientProperties = clientProperties;
+    this.sharedProperties = sharedProperties;
   }
 
   /**
@@ -74,9 +79,12 @@ public class EchoSpringAutoConfiguration {
    * configuration data files.
    */
   @Bean
-  @ConditionalOnMissingBean
+  @ConditionalOnMissingBean(name = "echoCredentials")
   public CredentialsProvider echoCredentials() throws IOException {
-    return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+    if (this.clientProperties.getCredentials().hasKey()) {
+      return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+    }
+    return ((CredentialsProvider) new DefaultCredentialsProvider(this.sharedProperties));
   }
 
   /**

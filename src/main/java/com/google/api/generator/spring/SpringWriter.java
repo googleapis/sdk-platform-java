@@ -204,14 +204,12 @@ public class SpringWriter {
 
   @VisibleForTesting
   static String buildPomString(GapicContext context) {
-    String pakkageName = Utils.getPackageName(context);
-    pakkageName = pakkageName.replace('.', '-');
     String clientLibraryShortName = Utils.getLibName(context);
     String clientLibraryGroupId = "{{client-library-group-id}}";
     String clientLibraryName = "{{client-library-artifact-id}}";
     String clientLibraryVersion = "{{client-library-version}}";
 
-    String springStarterArtifactId = pakkageName + "-spring-starter";
+    String springStarterArtifactId = clientLibraryName + "-spring-starter";
     String springStarterVersion = "{{starter-version}}";
     String springStarterName = "Spring Boot Starter - " + clientLibraryShortName;
 
