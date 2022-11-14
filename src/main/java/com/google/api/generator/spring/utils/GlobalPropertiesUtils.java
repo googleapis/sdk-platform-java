@@ -23,31 +23,33 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import java.util.Map;
 
-public class SharedPropertiesUtils {
-  public static final String SHARED_PROPERTIES_CLAZZ_NAME = "SharedProperties";
-  public static final String SHARED_PROPERTIES_PAKKAGE_NAME = "com.google.cloud.spring.shared";
+public class GlobalPropertiesUtils {
+  public static final String GLOBAL_PROPERTIES_CLAZZ_NAME = "GLobalProperties";
+  public static final String GLOBAL_PROPERTIES_PAKKAGE_NAME = "com.google.cloud.global";
 
-  public static TypeNode getSharedPropertiesType() {
+  public static TypeNode getGlobalPropertiesType() {
     TypeNode loggerType =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(SHARED_PROPERTIES_CLAZZ_NAME)
-                .setPakkage(SHARED_PROPERTIES_PAKKAGE_NAME)
+                .setName(GLOBAL_PROPERTIES_CLAZZ_NAME)
+                .setPakkage(GLOBAL_PROPERTIES_PAKKAGE_NAME)
                 .build());
     return loggerType;
   }
 
-  public static Statement getSharedPropertiesDeclaration(Map<String, TypeNode> types) {
-    Variable sharedPropertiesVar = Variable.builder()
-        .setName("sharedProperties")
-        .setType(types.get("SharedProperties"))
-        .build();
-    return ExprStatement.withExpr(VariableExpr.builder()
-        .setVariable(sharedPropertiesVar)
-        .setScope(ScopeNode.PRIVATE)
-        .setIsStatic(false)
-        .setIsFinal(true)
-        .setIsDecl(true)
-        .build());
+  public static Statement getGlobalPropertiesDeclaration(Map<String, TypeNode> types) {
+    Variable globalPropertiesVar =
+        Variable.builder()
+            .setName("globalProperties")
+            .setType(types.get("GlobalProperties"))
+            .build();
+    return ExprStatement.withExpr(
+        VariableExpr.builder()
+            .setVariable(globalPropertiesVar)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(false)
+            .setIsFinal(true)
+            .setIsDecl(true)
+            .build());
   }
 }

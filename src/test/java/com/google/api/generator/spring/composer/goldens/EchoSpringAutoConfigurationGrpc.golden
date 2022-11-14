@@ -8,6 +8,8 @@ import com.google.api.gax.rpc.HeaderProvider;
 =======
 >>>>>>> c0b0937c (fix(Spring CodeGen): To only include options to set to rest transport when supported (#1078))
 import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.cloud.global.GLobalProperties;
+import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -46,13 +48,16 @@ import org.threeten.bp.Duration;
 @ConditionalOnProperty(
     value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
     matchIfMissing = false)
-@EnableConfigurationProperties(EchoSpringProperties.class)
+@EnableConfigurationProperties({EchoSpringProperties.class, GLobalProperties.class})
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
+  private final GLobalProperties globalProperties;
   private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfig.class);
 
-  protected EchoSpringAutoConfiguration(EchoSpringProperties clientProperties) {
+  protected EchoSpringAutoConfiguration(
+      EchoSpringProperties clientProperties, GLobalProperties globalProperties) {
     this.clientProperties = clientProperties;
+    this.globalProperties = globalProperties;
   }
 
   /**
@@ -60,9 +65,12 @@ public class EchoSpringAutoConfiguration {
    * configuration data files.
    */
   @Bean
-  @ConditionalOnMissingBean
+  @ConditionalOnMissingBean(name = "echoCredentials")
   public CredentialsProvider echoCredentials() throws IOException {
-    return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+    if (this.clientProperties.getCredentials().hasKey()) {
+      return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+    }
+    return ((CredentialsProvider) new DefaultCredentialsProvider(this.GlobalProperties));
   }
 
   /**
