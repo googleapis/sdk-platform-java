@@ -296,18 +296,16 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // Common building blocks
     Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    TypeNode oldDurationType = staticTypes.get("org.threeten.bp.Duration");
+    TypeNode newDurationType = staticTypes.get("java.time.Duration");
 
     // Default building blocks - may be updated in Duration condition below
     Variable argumentVar = propertyVar;
     Expr propertyValueExpr = VariableExpr.withVariable(argumentVar);
 
     // Setter logic for Duration accepts different type and handles conversion
-    if (returnType.equals(staticTypes.get("org.threeten.bp.Duration"))) {
-      argumentVar =
-          Variable.builder()
-              .setName(propertyName)
-              .setType(staticTypes.get("java.time.Duration"))
-              .build();
+    if (returnType.equals(oldDurationType)) {
+      argumentVar = Variable.builder().setName(propertyName).setType(newDurationType).build();
 
       MethodInvocationExpr durationToStringExpr =
           MethodInvocationExpr.builder()
@@ -318,10 +316,10 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
       propertyValueExpr =
           MethodInvocationExpr.builder()
-              .setStaticReferenceType(staticTypes.get("org.threeten.bp.Duration"))
+              .setStaticReferenceType(oldDurationType)
               .setMethodName("parse")
               .setArguments(durationToStringExpr)
-              .setReturnType(staticTypes.get("org.threeten.bp.Duration"))
+              .setReturnType(oldDurationType)
               .build();
     }
 
@@ -412,6 +410,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
-                c -> c.getName(), c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+                Class::getName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 }
