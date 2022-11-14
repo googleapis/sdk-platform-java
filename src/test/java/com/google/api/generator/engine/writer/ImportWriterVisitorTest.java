@@ -62,6 +62,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -825,6 +826,35 @@ public class ImportWriterVisitorTest {
         LineFormatter.lines(
             "import com.google.api.generator.engine.SomeClass;\n",
             "import com.google.api.generator.engine.ast.Expr;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeRelationalOperationExprImports_shouldNotImportLhsReturnType() {
+
+    TypeNode fileOutputStreamType =
+        TypeNode.withReference(ConcreteReference.withClazz(FileOutputStream.class));
+    TypeNode outputStreamType =
+        TypeNode.withReference(ConcreteReference.withClazz(OutputStream.class));
+
+    MethodInvocationExpr propertyExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(fileOutputStreamType)
+            .setMethodName("nullOutputStream")
+            .setReturnType(outputStreamType)
+            .build();
+
+    RelationalOperationExpr propertyIsNotNullExpr =
+        RelationalOperationExpr.notEqualToWithExprs(propertyExpr, ValueExpr.createNullExpr());
+
+    // This writes: (FileOutputStream.nullOutputStream() != null)
+
+    propertyIsNotNullExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import java.io.FileOutputStream;\n",
+            "import java.io.OutputStream;\n\n" // This should not need to be imported?
+            ),
         writerVisitor.write());
   }
 
