@@ -6,7 +6,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
-import com.google.cloud.global.GLobalProperties;
+import com.google.cloud.global.GlobalProperties;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
@@ -43,14 +43,14 @@ import org.threeten.bp.Duration;
 @ConditionalOnProperty(
     value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
     matchIfMissing = false)
-@EnableConfigurationProperties({EchoSpringProperties.class, GLobalProperties.class})
+@EnableConfigurationProperties({EchoSpringProperties.class, GlobalProperties.class})
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
-  private final GLobalProperties globalProperties;
+  private final GlobalProperties globalProperties;
   private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfig.class);
 
   protected EchoSpringAutoConfiguration(
-      EchoSpringProperties clientProperties, GLobalProperties globalProperties) {
+      EchoSpringProperties clientProperties, GlobalProperties globalProperties) {
     this.clientProperties = clientProperties;
     this.globalProperties = globalProperties;
   }
