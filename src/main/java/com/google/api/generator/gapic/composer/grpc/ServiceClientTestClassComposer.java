@@ -436,42 +436,17 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Preconditions.checkNotNull(requestVarExpr);
       Preconditions.checkNotNull(requestMessage);
       for (Field field : requestMessage.fields()) {
-        String fieldGetterMethodNamePatternTemp = "get%s";
-        if (field.isRepeated()) {
-          fieldGetterMethodNamePatternTemp = field.isMap() ? "get%sMap" : "get%sList";
-        }
-        final String fieldGetterMethodNamePattern = fieldGetterMethodNamePatternTemp;
-        Function<VariableExpr, Expr> checkExprFn =
-            v ->
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(v)
-                    .setMethodName(
-                        String.format(
-                            fieldGetterMethodNamePattern, JavaStyle.toUpperCamelCase(field.name())))
-                    .build();
-
-        Expr expectedFieldExpr = checkExprFn.apply(requestVarExpr);
-        Expr actualFieldExpr = checkExprFn.apply(actualRequestVarExpr);
+        Expr expectedFieldExpr = createGetter(requestVarExpr, field);
+        Expr actualFieldExpr = createGetter(actualRequestVarExpr, field);
         methodExprs.add(createAssertEquals(expectedFieldExpr, actualFieldExpr, field.type()));
       }
     } else {
       for (MethodArgument arg : methodSignature) {
         Expr root = actualRequestVarExpr;
         for (Field field : arg.nestedFields()) {
-          root =
-              MethodInvocationExpr.builder()
-                  .setMethodName("get" + JavaStyle.toUpperCamelCase(field.name()))
-                  .setExprReferenceExpr(root)
-                  .build();
+          root = createGetter(root, field);
         }
-        MethodInvocationExpr actual =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(root)
-                .setMethodName(
-                    String.format(
-                        createGetterNamePattern(arg.field().type()),
-                        JavaStyle.toUpperCamelCase(arg.field().name())))
-                .build();
+        MethodInvocationExpr actual = createGetter(root, arg.field());
 
         Expr expectedFieldExpr =
             VariableExpr.withVariable(
@@ -542,6 +517,16 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
         .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
         .setMethodName("assertEquals")
         .setArguments(assertionArgs)
+        .build();
+  }
+
+  private static MethodInvocationExpr createGetter(Expr exprReference, Field field) {
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(exprReference)
+        .setMethodName(
+            String.format(
+                createGetterNamePattern(field.type()),
+                JavaStyle.toUpperCamelCase(field.name())))
         .build();
   }
 
