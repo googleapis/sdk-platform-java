@@ -165,21 +165,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   private static MethodDefinition createConstructor(
       String serviceName, String className, Map<String, TypeNode> types, Expr thisExpr) {
-    /// constructor
-    // VariableExpr credentialsProviderBuilderVarExpr =
-    //     VariableExpr.withVariable(
-    //         Variable.builder()
-    //             .setName("coreCredentialsProvider")
-    //             .setType(types.get("CredentialsProvider"))
-    //             .build());
-    //
-    // VariableExpr coreProjectIdProviderVarExpr =
-    //     VariableExpr.withVariable(
-    //         Variable.builder()
-    //             .setName("coreProjectIdProvider")
-    //             .setType(types.get("GcpProjectIdProvider"))
-    //             .build());
-
     VariableExpr clientPropertiesVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -192,11 +177,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName("globalProperties")
                 .setType(types.get("GlobalProperties"))
                 .build());
-    // Variable projectIdProviderVar =
-    //     Variable.builder()
-    //         .setName("projectIdProvider")
-    //         .setType(types.get("GcpProjectIdProvider"))
-    //         .build();
     Variable clientPropertiesVar =
         Variable.builder()
             .setName("clientProperties")
