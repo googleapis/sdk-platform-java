@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -290,8 +291,36 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static MethodDefinition createSetterMethod(
       TypeNode thisClassType, String propertyName, TypeNode returnType) {
+
+    // Common building blocks
     Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    TypeNode threetenBpDurationType = staticTypes.get("org.threeten.bp.Duration");
+    TypeNode javaTimeDurationType = staticTypes.get("java.time.Duration");
+
+    // Default building blocks - may be updated in Duration condition below
+    Variable argumentVar = propertyVar;
+    Expr propertyValueExpr = VariableExpr.withVariable(argumentVar);
+
+    // Setter logic for Duration accepts different type and handles conversion
+    if (returnType.equals(threetenBpDurationType)) {
+      argumentVar = Variable.builder().setName(propertyName).setType(javaTimeDurationType).build();
+
+      MethodInvocationExpr durationToStringExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(argumentVar))
+              .setMethodName("toString")
+              .setReturnType(TypeNode.STRING)
+              .build();
+
+      propertyValueExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(threetenBpDurationType)
+              .setMethodName("parse")
+              .setArguments(durationToStringExpr)
+              .setReturnType(threetenBpDurationType)
+              .build();
+    }
 
     AssignmentExpr propertyVarExpr =
         AssignmentExpr.builder()
@@ -300,7 +329,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(VariableExpr.withVariable(propertyVar))
+            .setValueExpr(propertyValueExpr)
             .build();
 
     String methodName = "set" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propertyName);
@@ -309,7 +338,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
-        .setArguments(VariableExpr.builder().setVariable(propertyVar).setIsDecl(true).build())
+        .setArguments(VariableExpr.builder().setVariable(argumentVar).setIsDecl(true).build())
         .setBody(Arrays.asList(ExprStatement.withExpr(propertyVarExpr)))
         .build();
   }
@@ -355,14 +384,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 .setPakkage("org.springframework.boot.context.properties")
                 .build());
 
-    // import org.threeten.bp.Duration;
-    TypeNode duration =
-        TypeNode.withReference(
-            VaporReference.builder().setName("Duration").setPakkage("org.threeten.bp").build());
-
     typeMap.put(Utils.getServicePropertiesClassName(service), clientProperties);
     typeMap.put("Credentials", credentials);
-    typeMap.put("Duration", duration);
     typeMap.put("CredentialsSupplier", credentialsSupplier);
     typeMap.put("ConfigurationProperties", configurationProperties);
     typeMap.put("NestedConfigurationProperty", nestedConfigurationProperty);
@@ -372,10 +395,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
-        Arrays.asList(RetrySettings.class, org.threeten.bp.Duration.class);
+        Arrays.asList(
+            RetrySettings.class, org.threeten.bp.Duration.class, java.time.Duration.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
-                Class::getSimpleName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+                Class::getName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 }
