@@ -42,6 +42,14 @@ public class Utils {
 
   private static final String BRAND_NAME = "spring.cloud.gcp";
 
+  public static String getServiceAutoConfigurationClassName(Service service) {
+    return service.name() + "SpringAutoConfiguration";
+  }
+
+  public static String getServicePropertiesClassName(Service service) {
+    return service.name() + "SpringProperties";
+  }
+
   public static String getLibName(GapicContext context) {
     // Returns parsed name of client library
     // This should only be used in descriptive context, such as metadata and javadocs

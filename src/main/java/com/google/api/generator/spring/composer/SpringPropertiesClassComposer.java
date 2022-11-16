@@ -50,13 +50,12 @@ import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SpringPropertiesClassComposer implements ClassComposer {
-  private static final String CLASS_NAME_PATTERN = "%sSpringProperties";
-
   private static final Map<String, TypeNode> staticTypes = createStaticTypes();
   private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
 
@@ -69,7 +68,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     String packageName = Utils.getSpringPackageName(service.pakkage());
-    String className = String.format(CLASS_NAME_PATTERN, service.name());
+    String className = Utils.getServicePropertiesClassName(service);
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> types = createDynamicTypes(service, packageName);
     boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
@@ -186,7 +185,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
 
     // declare each retry settings with its default value. use defaults from serviceConfig
-    TypeNode thisClassType = types.get(service.name() + "Properties");
+    TypeNode thisClassType = types.get(Utils.getServicePropertiesClassName(service));
     List<? extends AstNode> retrySettings =
         Utils.processRetrySettings(
             service,
@@ -220,7 +219,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       GapicServiceConfig gapicServiceConfig,
       boolean hasRestOption) {
 
-    TypeNode thisClassType = types.get(service.name() + "Properties");
+    TypeNode thisClassType = types.get(Utils.getServicePropertiesClassName(service));
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
 
     methodDefinitions.add(
@@ -316,21 +315,12 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   }
 
   private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {
-    Map<String, TypeNode> typeMap =
-        Arrays.asList(CLASS_NAME_PATTERN).stream()
-            .collect(
-                Collectors.toMap(
-                    p -> String.format(p, service.name()),
-                    p ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(p, service.name()))
-                                .setPakkage(packageName)
-                                .build())));
+    Map<String, TypeNode> typeMap = new HashMap<>();
+
     TypeNode clientProperties =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(service.name() + "SpringProperties")
+                .setName(Utils.getServicePropertiesClassName(service))
                 .setPakkage(packageName)
                 .build());
 
@@ -370,7 +360,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         TypeNode.withReference(
             VaporReference.builder().setName("Duration").setPakkage("org.threeten.bp").build());
 
-    typeMap.put(service.name() + "Properties", clientProperties);
+    typeMap.put(Utils.getServicePropertiesClassName(service), clientProperties);
     typeMap.put("Credentials", credentials);
     typeMap.put("Duration", duration);
     typeMap.put("CredentialsSupplier", credentialsSupplier);
@@ -386,7 +376,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+                Class::getSimpleName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 }
