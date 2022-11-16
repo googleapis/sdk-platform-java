@@ -27,14 +27,13 @@ def _java_gapic_spring_postprocess_srcjar_impl(ctx):
     script = """
     WORKING_DIR=`pwd`
     cd $WORKING_DIR
-    mkdir {output_dir_path}/spring
     unzip -q {gapic_srcjar}
     unzip -q temp-codegen-spring.srcjar -d {output_dir_path}
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
-    {formatter} --replace $(find {output_dir_path}/spring -type f -printf "%p ")
+    {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
 
     # Spring source files.
-    cd {output_dir_path}/src/main/java
+    cd {output_dir_path}
     zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
 
     cd $WORKING_DIR
@@ -111,6 +110,12 @@ def _java_gapic_spring_srcjar(
         java_generator_name = "java_gapic_spring",
         **kwargs):
     file_args_dict = {}
+
+    if grpc_service_config:
+        file_args_dict[grpc_service_config] = "grpc-service-config"
+    elif not transport or transport == "grpc":
+        if 'library' not in name:
+            fail("Missing a gRPC service config file")
 
     if gapic_yaml:
         file_args_dict[gapic_yaml] = "gapic-config"
