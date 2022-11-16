@@ -13,26 +13,32 @@ java_library(
         # Common
         "//test/showcase:showcase_java_gapic",
         "//test/showcase:showcase_java_proto",
+        "@com_google_api_api_common//:com_google_api_api_common",
         "@com_google_api_gax_java//gax",
         "@com_google_code_gson_gson//jar",
         "@com_google_googleapis//google/type:type_java_proto",
-        "@junit_junit//jar",
         "@io_grpc_grpc_java//core:core",
         "@io_grpc_grpc_java//protobuf:protobuf",
-        "@com_google_api_api_common//:com_google_api_api_common",
+        "@junit_junit//jar",
     ] + [
         # gRPC-specific
         "@com_google_api_gax_java//gax-grpc:gax_grpc",
         "@io_grpc_grpc_java//auth:auth",
-        "@io_grpc_grpc_netty_shaded//jar",
         "@io_grpc_grpc_java//stub:stub",
+        "@io_grpc_grpc_netty_shaded//jar",
         "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+    ] + [
+        # REST-specific
+        "@com_google_http_client_google_http_client",
     ],
 )
 
 java_gapic_test(
     name = "showcase_integration_test_suite",
-    test_classes = ["com.google.showcase.v1beta1.FirstIT"],
+    test_classes = [
+        "com.google.showcase.v1beta1.FirstHttpIT",
+        "com.google.showcase.v1beta1.FirstRpcIT",
+    ],
     runtime_deps = [
         ":showcase_tests",
         "//test/showcase:showcase_java_gapic_test",

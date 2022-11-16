@@ -49,8 +49,8 @@ public class FirstRpcIT {
 
   @Test
   public void testEcho() {
-    assertEquals("echo?", echo("echo?"));
-    assertEquals("echo!", echo("echo!"));
+    assertEquals("grpc-echo?", echo("grpc-echo?"));
+    assertEquals("grpc-echo!", echo("grpc-echo!"));
   }
 
   private String echo(String value) {
