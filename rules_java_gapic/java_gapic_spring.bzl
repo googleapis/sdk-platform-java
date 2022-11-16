@@ -114,7 +114,7 @@ def _java_gapic_spring_srcjar(
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
     elif not transport or transport == "grpc":
-        if 'library' not in name:
+        if "library" not in name:
             fail("Missing a gRPC service config file")
 
     if gapic_yaml:
