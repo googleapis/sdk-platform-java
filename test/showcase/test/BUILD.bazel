@@ -1,0 +1,40 @@
+load(
+    "//rules_java_gapic:java_gapic.bzl",
+    "java_gapic_library",
+    "java_gapic_test",
+)
+
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "showcase_tests",
+    srcs = glob(["*.java"]),
+    deps = [
+        # Common
+        "//test/showcase:showcase_java_gapic",
+        "//test/showcase:showcase_java_proto",
+        "@com_google_api_gax_java//gax",
+        "@com_google_code_gson_gson//jar",
+        "@com_google_googleapis//google/type:type_java_proto",
+        "@junit_junit//jar",
+        "@io_grpc_grpc_java//core:core",
+        "@io_grpc_grpc_java//protobuf:protobuf",
+        "@com_google_api_api_common//:com_google_api_api_common",
+    ] + [
+        # gRPC-specific
+        "@com_google_api_gax_java//gax-grpc:gax_grpc",
+        "@io_grpc_grpc_java//auth:auth",
+        "@io_grpc_grpc_netty_shaded//jar",
+        "@io_grpc_grpc_java//stub:stub",
+        "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+    ],
+)
+
+java_gapic_test(
+    name = "showcase_integration_test_suite",
+    test_classes = ["com.google.showcase.v1beta1.FirstIT"],
+    runtime_deps = [
+        ":showcase_tests",
+        "//test/showcase:showcase_java_gapic_test",
+    ],
+)

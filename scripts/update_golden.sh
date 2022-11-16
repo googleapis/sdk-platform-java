@@ -28,3 +28,16 @@ cp -r ${UNPACK_DIR}/samples/snippets/generated/**/* ./samples/snippets/generated
 find . -name '.DS_Store' -delete
 find . -name 'PlaceholderFile.java' -delete
 find . -type d -empty -delete
+
+if [ $API_NAME = "showcase" ]; then
+  cd ${BUILD_WORKSPACE_DIRECTORY}/test/showcase
+  find ./src -name '*.java' -delete
+  find ./src -name 'gapic_metadata.json' -delete
+  mkdir -p ./src
+  cp -r ${UNPACK_DIR}/src/main/java/* ./src
+  cp -r ${UNPACK_DIR}/src/test/java/* ./src
+  [ -d ${UNPACK_DIR}/proto ] && cp -r ${UNPACK_DIR}/proto/src/main/java/* ./src
+  find . -name '.DS_Store' -delete
+  find . -name 'PlaceholderFile.java' -delete
+  find . -type d -empty -delete
+fi
