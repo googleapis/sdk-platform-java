@@ -72,7 +72,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
@@ -365,7 +364,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     Variable retrySettingBuilderVariable =
         Variable.builder()
             .setName(String.format("%sRetrySettingBuilder", methodName))
-            .setType(STATIC_TYPES.get("Builder"))
+            .setType(STATIC_TYPES.get("RetrySettings.Builder"))
             .build();
     VariableExpr retrySettingsVarExpr =
         VariableExpr.withVariable(retrySettingBuilderVariable).toBuilder().setIsDecl(true).build();
@@ -383,7 +382,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientSettingBuilderChain)
             .setMethodName("toBuilder")
-            .setReturnType(STATIC_TYPES.get("Builder"))
+            .setReturnType(STATIC_TYPES.get("RetrySettings.Builder"))
             .build();
     AssignmentExpr retrySettingCreateExpr =
         AssignmentExpr.builder()
@@ -409,7 +408,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     Variable retrySettingBuilderVariable =
         Variable.builder()
             .setName(String.format("%sRetrySettingBuilder", methodName)) // extract method name
-            .setType(STATIC_TYPES.get("Builder"))
+            .setType(STATIC_TYPES.get("RetrySettings.Builder"))
             .build();
     MethodInvocationExpr retrySettingsBuilderChain =
         MethodInvocationExpr.builder()
@@ -714,7 +713,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                   Variable.builder()
                       .setName(
                           String.format("%sRetrySettingBuilder", methodName)) // extract method name
-                      .setType(STATIC_TYPES.get("Builder"))
+                      .setType(STATIC_TYPES.get("RetrySettings.Builder"))
                       .build();
               MethodInvocationExpr retrySettingsBuilderChain =
                   MethodInvocationExpr.builder()
@@ -888,9 +887,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
-            RetrySettings.class,
-            RetrySettings.Builder
-                .class, // name will be just Builder. consider change of more than one builder here.
             TransportChannelProvider.class,
             InstantiatingHttpJsonChannelProvider.class,
             ExecutorProvider.class,
@@ -899,19 +895,22 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             ConditionalOnMissingBean.class,
             EnableConfigurationProperties.class,
             CredentialsProvider.class,
-            Configuration.class,
             AutoConfiguration.class,
             Bean.class,
             Qualifier.class,
-            // GcpProjectIdProvider.class,
-            // Credentials.class,
             DefaultCredentialsProvider.class,
             HeaderProvider.class,
             Collections.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                Class::getSimpleName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    Map<String, TypeNode> concreteClazzesMap =
+        concreteClazzes.stream()
+            .collect(
+                Collectors.toMap(
+                    Class::getSimpleName,
+                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    concreteClazzesMap.put(
+        "RetrySettings.Builder",
+        TypeNode.withReference(ConcreteReference.withClazz(RetrySettings.Builder.class)));
+    return concreteClazzesMap;
   }
 
   private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {

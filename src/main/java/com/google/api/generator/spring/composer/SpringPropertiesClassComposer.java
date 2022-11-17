@@ -16,7 +16,6 @@ package com.google.api.generator.spring.composer;
 
 import static com.google.api.generator.engine.ast.NewObjectExpr.*;
 
-import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
@@ -350,24 +349,21 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   }
 
   private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {
-    Map<String, TypeNode> typeMap =
-        Arrays.asList(CLASS_NAME_PATTERN).stream()
-            .collect(
-                Collectors.toMap(
-                    p -> String.format(p, service.name()),
-                    p ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(p, service.name()))
-                                .setPakkage(packageName)
-                                .build())));
-    return typeMap;
+    return Arrays.asList(CLASS_NAME_PATTERN).stream()
+        .collect(
+            Collectors.toMap(
+                p -> String.format(p, service.name()),
+                p ->
+                    TypeNode.withReference(
+                        VaporReference.builder()
+                            .setName(String.format(p, service.name()))
+                            .setPakkage(packageName)
+                            .build())));
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
-            RetrySettings.class,
             ConfigurationProperties.class,
             NestedConfigurationProperty.class,
             CredentialsSupplier.class,
@@ -378,6 +374,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 Collectors.toMap(
                     Class::getSimpleName,
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    // Add Duration classes with full name
     concreteClazzesMap.put(
         "org.threeten.bp.Duration",
         TypeNode.withReference(ConcreteReference.withClazz(org.threeten.bp.Duration.class)));
