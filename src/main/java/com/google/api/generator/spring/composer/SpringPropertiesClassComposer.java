@@ -25,7 +25,9 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -41,6 +43,9 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
+import com.google.api.generator.spring.utils.Utils;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.CredentialsSupplier;
 import com.google.common.base.CaseFormat;
@@ -68,27 +73,33 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
-    String packageName = service.pakkage() + ".spring";
+    String packageName = Utils.getSpringPackageName(service.pakkage());
     String className = String.format(CLASS_NAME_PATTERN, service.name());
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> dynamicTypes = createDynamicTypes(service, packageName);
+    boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
 
     // TODO: this is the prefix user will use to set properties, may need to change depending on
     // branding.
     AnnotationNode classAnnotationNode =
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("ConfigurationProperties"))
-            .setDescription(Utils.springPropertyPrefix(Utils.getLibName(context), service.name()))
+            .setDescription(Utils.getSpringPropertyPrefix(service.pakkage(), service.name()))
             .build();
 
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setHeaderCommentStatements(
+                SpringPropertiesCommentComposer.createClassHeaderComments(
+                    className, service.name()))
             .setPackageString(packageName)
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
             .setStatements(
-                createMemberVariables(service, packageName, dynamicTypes, gapicServiceConfig))
-            .setMethods(createGetterSetters(service, dynamicTypes, gapicServiceConfig))
+                createMemberVariables(
+                    service, packageName, dynamicTypes, gapicServiceConfig, hasRestOption))
+            .setMethods(
+                createGetterSetters(service, dynamicTypes, gapicServiceConfig, hasRestOption))
             .setAnnotations(Arrays.asList(classAnnotationNode))
             .setImplementsTypes(Arrays.asList(STATIC_TYPES.get("CredentialsSupplier")))
             .build();
@@ -97,12 +108,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   }
 
   private static ExprStatement createMemberVarStatement(
-      String varName, TypeNode varType, boolean isFinal, Expr defaultVal) {
+      String varName,
+      TypeNode varType,
+      boolean isFinal,
+      Expr defaultVal,
+      List<AnnotationNode> annotationNodes) {
     Variable memberVar = Variable.builder().setName(varName).setType(varType).build();
     VariableExpr memberVarExpr =
         VariableExpr.builder()
             .setVariable(memberVar)
             .setScope(ScopeNode.PRIVATE)
+            .setAnnotations(annotationNodes == null ? Collections.emptyList() : annotationNodes)
             .setIsDecl(true)
             .setIsFinal(isFinal)
             .build();
@@ -124,9 +140,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       Service service,
       String packageName,
       Map<String, TypeNode> types,
-      GapicServiceConfig serviceConfig) {
+      GapicServiceConfig serviceConfig,
+      boolean hasRestOption) {
 
     String serviceName = service.name();
+    List<Statement> statements = new ArrayList<>();
     //   @NestedConfigurationProperty
     //   private final Credentials credentials = new
     // Credentials("https://www.googleapis.com/auth/cloud-language");
@@ -138,24 +156,39 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
                     .collect(Collectors.toList()))
             .build();
-    // TODO: credentials field needs annotation.
+    // Note that the annotations are set on the VariableExpr rather than the ExprStatement.
+    // The single annotation works fine here,
+    // but multiple annotations would be written to the same line
+    List<AnnotationNode> credentialsAnnotations =
+        Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("NestedConfigurationProperty")));
     ExprStatement credentialsStatement =
         createMemberVarStatement(
-            "credentials", STATIC_TYPES.get("Credentials"), true, defaultCredentialScopes);
-
+            "credentials",
+            STATIC_TYPES.get("Credentials"),
+            true,
+            defaultCredentialScopes,
+            credentialsAnnotations);
+    statements.add(credentialsStatement);
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
-        createMemberVarStatement("quotaProjectId", TypeNode.STRING, false, null);
-
+        createMemberVarStatement("quotaProjectId", TypeNode.STRING, false, null, null);
+    statements.add(quotaProjectIdVarStatement);
     //   private Integer executorThreadCount;
     ExprStatement executorThreadCountVarStatement =
-        createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null);
+        createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
+    statements.add(executorThreadCountVarStatement);
+    if (hasRestOption) {
+      ExprStatement useRestVarStatement =
+          createMemberVarStatement(
+              "useRest",
+              TypeNode.BOOLEAN,
+              false,
+              ValueExpr.withValue(
+                  PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()),
+              null);
+      statements.add(useRestVarStatement);
+    }
 
-    //   private boolean useRest = false;
-    ExprStatement useRestVarStatement =
-        createMemberVarStatement("useRest", TypeNode.BOOLEAN, false, null);
-
-    //
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
 
     // declare each retry settings with its default value. use defaults from serviceConfig
@@ -175,24 +208,23 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               }
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               ExprStatement retrySettingsStatement =
-                  createMemberVarStatement(propertyName, propertyType, false, null);
+                  createMemberVarStatement(propertyName, propertyType, false, null, null);
               getterAndSetter.add(retrySettingsStatement);
               return getterAndSetter;
             },
             (String propertyName) -> new ArrayList<>());
 
-    List<Statement> statements =
-        retrySettings.stream().map(x -> (Statement) x).collect(Collectors.toList());
+    statements.addAll(
+        retrySettings.stream().map(Statement.class::cast).collect(Collectors.toList()));
 
-    statements.add(0, useRestVarStatement);
-    statements.add(0, executorThreadCountVarStatement);
-    statements.add(0, quotaProjectIdVarStatement);
-    statements.add(0, credentialsStatement);
     return statements;
   }
 
   private static List<MethodDefinition> createGetterSetters(
-      Service service, Map<String, TypeNode> types, GapicServiceConfig gapicServiceConfig) {
+      Service service,
+      Map<String, TypeNode> types,
+      GapicServiceConfig gapicServiceConfig,
+      boolean hasRestOption) {
 
     TypeNode thisClassType = types.get(service.name() + "SpringProperties");
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
@@ -206,7 +238,10 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createGetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING, null));
     methodDefinitions.add(createSetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING));
-    methodDefinitions.add(createGetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN, null));
+    if (hasRestOption) {
+      methodDefinitions.add(createGetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN, null));
+      methodDefinitions.add(createSetterMethod(thisClassType, "useRest", TypeNode.BOOLEAN));
+    }
     methodDefinitions.add(
         createGetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT, null));
     methodDefinitions.add(
@@ -233,15 +268,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             (String propertyName) -> new ArrayList<>());
 
     methodDefinitions.addAll(retrySettings);
-    // TODO: This can be for future stages. for long running operations:
-    // for (Method method : service.methods()) {
-    //   if (!method.hasLro()) {
-    //     continue;
-    //   }
-    //   //
-    // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createLroSettingsBuilderExpr
-    //   //  %sOperationSettings
-    // }
 
     return methodDefinitions;
   }
@@ -271,8 +297,36 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static MethodDefinition createSetterMethod(
       TypeNode thisClassType, String propertyName, TypeNode returnType) {
+
+    // Common building blocks
     Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    TypeNode threetenBpDurationType = STATIC_TYPES.get("org.threeten.bp.Duration");
+    TypeNode javaTimeDurationType = STATIC_TYPES.get("java.time.Duration");
+
+    // Default building blocks - may be updated in Duration condition below
+    Variable argumentVar = propertyVar;
+    Expr propertyValueExpr = VariableExpr.withVariable(argumentVar);
+
+    // Setter logic for Duration accepts different type and handles conversion
+    if (returnType.equals(threetenBpDurationType)) {
+      argumentVar = Variable.builder().setName(propertyName).setType(javaTimeDurationType).build();
+
+      MethodInvocationExpr durationToStringExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(argumentVar))
+              .setMethodName("toString")
+              .setReturnType(TypeNode.STRING)
+              .build();
+
+      propertyValueExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(threetenBpDurationType)
+              .setMethodName("parse")
+              .setArguments(durationToStringExpr)
+              .setReturnType(threetenBpDurationType)
+              .build();
+    }
 
     AssignmentExpr propertyVarExpr =
         AssignmentExpr.builder()
@@ -281,7 +335,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(VariableExpr.withVariable(propertyVar))
+            .setValueExpr(propertyValueExpr)
             .build();
 
     String methodName = "set" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propertyName);
@@ -290,7 +344,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
-        .setArguments(VariableExpr.builder().setVariable(propertyVar).setIsDecl(true).build())
+        .setArguments(VariableExpr.builder().setVariable(argumentVar).setIsDecl(true).build())
         .setBody(Arrays.asList(ExprStatement.withExpr(propertyVarExpr)))
         .build();
   }
@@ -314,15 +368,22 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     List<Class> concreteClazzes =
         Arrays.asList(
             RetrySettings.class,
-            org.threeten.bp.Duration.class,
             ConfigurationProperties.class,
             NestedConfigurationProperty.class,
             CredentialsSupplier.class,
             Credentials.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    Map<String, TypeNode> concreteClazzesMap =
+        concreteClazzes.stream()
+            .collect(
+                Collectors.toMap(
+                    Class::getSimpleName,
+                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    concreteClazzesMap.put(
+        "org.threeten.bp.Duration",
+        TypeNode.withReference(ConcreteReference.withClazz(org.threeten.bp.Duration.class)));
+    concreteClazzesMap.put(
+        "java.time.Duration",
+        TypeNode.withReference(ConcreteReference.withClazz(java.time.Duration.class)));
+    return concreteClazzesMap;
   }
 }

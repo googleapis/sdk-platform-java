@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_identityclient_createuser_stringstringstring_sync]
+// [START goldensample_generated_Identity_CreateUser_StringStringString_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
 import com.google.showcase.v1beta1.UserName;
@@ -41,4 +41,4 @@ public class SyncCreateUserStringStringString {
     }
   }
 }
-// [END goldensample_generated_identityclient_createuser_stringstringstring_sync]
+// [END goldensample_generated_Identity_CreateUser_StringStringString_sync]

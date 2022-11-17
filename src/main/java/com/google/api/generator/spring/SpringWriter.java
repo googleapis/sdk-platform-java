@@ -20,10 +20,16 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.spring.composer.Utils;
+import com.google.api.generator.spring.utils.Utils;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
-import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -43,8 +49,7 @@ public class SpringWriter {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
-      String outputFilePath,
-      boolean isSpringContent) {
+      String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos;
@@ -55,16 +60,16 @@ public class SpringWriter {
     }
 
     for (GapicClass gapicClazz : clazzes) {
-      String classPath = writeClazz(gapicClazz, codeWriter, jos);
-      // writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
+      writeClazz(gapicClazz, codeWriter, jos);
     }
 
     // write spring.factories file
-    writeSpringFactories(context, jos);
+    writeAutoConfigRegistration(context, jos);
     writeSpringAdditionalMetadataJson(context, jos);
+    writePom(context, jos);
 
-    // TODO: metadata and package info not custimized for Spring
-    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    // write package-info.java
+    writePackageInfo(gapicPackageInfo, codeWriter, jos);
 
     try {
       jos.finish();
@@ -113,8 +118,7 @@ public class SpringWriter {
     String code = codeWriter.write();
     codeWriter.clear();
 
-    String packagePath =
-        "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/") + "/spring";
+    String packagePath = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
     JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", packagePath));
     try {
       jos.putNextEntry(jarEntry);
@@ -125,67 +129,149 @@ public class SpringWriter {
     return packagePath;
   }
 
-  private static void writeMetadataFile(GapicContext context, String path, JarOutputStream jos) {
-    if (context.gapicMetadataEnabled()) {
-      JarEntry jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
-      try {
-        jos.putNextEntry(jarEntry);
-        jos.write(
-            JsonFormat.printer().print(context.gapicMetadata()).getBytes(StandardCharsets.UTF_8));
-      } catch (IOException e) {
-        throw new GapicWriterException("Could not write gapic_metadata.json", e);
-      }
+  @VisibleForTesting
+  static String buildAutoConfigRegistrationString(GapicContext context) {
+    StringJoiner sb = new StringJoiner("\n", "", "");
+    context
+        .services()
+        .forEach(
+            service ->
+                sb.add(
+                    String.format(
+                        "%s.spring.%sSpringAutoConfig", service.pakkage(), service.name())));
+    return sb.toString();
+  }
+
+  private static void writeAutoConfigRegistration(GapicContext context, JarOutputStream jos) {
+    String path = "src/main/resources/META-INF/spring";
+    String fileName =
+        String.format("%s/org.springframework.boot.autoconfigure.AutoConfiguration.imports", path);
+    JarEntry jarEntry = new JarEntry(fileName);
+    try {
+      jos.putNextEntry(jarEntry);
+      String result = buildAutoConfigRegistrationString(context);
+      jos.write(result.getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException(
+          String.format("Could not write spring autoconfiguration registration to %s", fileName),
+          e);
     }
   }
 
-  private static void writeSpringFactories(GapicContext context, JarOutputStream jos) {
-    String path = "src/main/resources/META-INF";
-    JarEntry jarEntry = new JarEntry(String.format("%s/spring.factories", path));
-    try {
-      jos.putNextEntry(jarEntry);
-      StringJoiner sb =
-          new StringJoiner(
-              ",\\\n", "org.springframework.boot.autoconfigure.EnableAutoConfiguration=\\\n", "");
-      context
-          .services()
-          .forEach(
-              service ->
-                  sb.add(
-                      String.format(
-                          "%s.spring.%sSpringAutoConfig", service.pakkage(), service.name())));
-
-      jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
-    } catch (IOException e) {
-      throw new GapicWriterException("Could not write spring.factories", e);
-    }
+  @VisibleForTesting
+  static String buildSpringAdditionalMetadataJsonString(GapicContext context) {
+    JsonObject jsonResult = new JsonObject();
+    JsonArray objectArray = new JsonArray();
+    context
+        .services()
+        .forEach(
+            service -> {
+              JsonObject innerObject = new JsonObject();
+              innerObject.addProperty(
+                  "name",
+                  String.format(
+                      "%s.enabled",
+                      Utils.getSpringPropertyPrefix(
+                          Utils.getPackageName(context), service.name())));
+              innerObject.addProperty("type", "java.lang.Boolean");
+              innerObject.addProperty(
+                  "description",
+                  String.format(
+                      "Auto-configure Google Cloud %s components.",
+                      Utils.getLibName(context) + "/" + service.name()));
+              innerObject.addProperty("defaultValue", true);
+              objectArray.add(innerObject);
+            });
+    jsonResult.add("properties", objectArray);
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonElement prettyJson = JsonParser.parseString(jsonResult.toString());
+    return gson.toJson(prettyJson);
   }
 
   private static void writeSpringAdditionalMetadataJson(GapicContext context, JarOutputStream jos) {
     String path = "src/main/resources/META-INF";
     JarEntry jarEntry =
         new JarEntry(String.format("%s/additional-spring-configuration-metadata.json", path));
-    String libName = Utils.getLibName(context);
     try {
       jos.putNextEntry(jarEntry);
-      StringJoiner sb = new StringJoiner(",\n", "\n{\n    \"properties\": [\n", "\n    ]\n" + "}");
-      context
-          .services()
-          .forEach(
-              service ->
-                  sb.add(
-                      String.format(
-                          "        {\n"
-                              + "            \"name\": \"%s.enabled\",\n"
-                              + "            \"type\": \"java.lang.Boolean\",\n"
-                              + "            \"description\": \"Auto-configure Google Cloud %s components.\",\n"
-                              + "            \"defaultValue\": true\n"
-                              + "        }",
-                          Utils.springPropertyPrefix(libName, service.name()),
-                          libName + "/" + service.name())));
-
-      jos.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+      String result = buildSpringAdditionalMetadataJsonString(context);
+      jos.write(result.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
-      throw new GapicWriterException("Could not write spring.factories", e);
+      throw new GapicWriterException(
+          "Could not write additional-spring-configuration-metadata.json", e);
+    }
+  }
+
+  @VisibleForTesting
+  static String buildPomString(GapicContext context) {
+    String clientLibraryShortName = Utils.getLibName(context);
+    String clientLibraryGroupId = "{{client-library-group-id}}";
+    String clientLibraryName = "{{client-library-artifact-id}}";
+    String clientLibraryVersion = "{{client-library-version}}";
+
+    String springStarterArtifactId = clientLibraryName + "-spring-starter";
+    String springStarterVersion = "{{starter-version}}";
+    String springStarterName = "Spring Boot Starter - " + clientLibraryShortName;
+
+    StringJoiner sb = new StringJoiner(",\\\n");
+    sb.add(
+        String.format(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+                + "  xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n"
+                + "  <modelVersion>4.0.0</modelVersion>\n"
+                + "\n"
+                + "  <parent>\n"
+                + "    <groupId>com.google.cloud</groupId>\n"
+                + "    <artifactId>generated-parent</artifactId>\n"
+                + "  </parent>\n"
+                + "  <groupId>com.google.cloud</groupId>\n"
+                + "  <artifactId>%s</artifactId>\n"
+                + "  <version>%s</version>\n"
+                + "  <name>%s</name>\n"
+                + "  <description>Spring Boot Starter with AutoConfiguration for %s</description>\n"
+                + "\n"
+                + "\n"
+                + "  <dependencies>\n"
+                + "    <dependency>\n"
+                + "      <groupId>%s</groupId>\n"
+                + "      <artifactId>%s</artifactId>\n"
+                + "      <version>%s</version>\n"
+                + "    </dependency>\n"
+                + "\n"
+                + "    <dependency>\n"
+                + "      <groupId>org.springframework.boot</groupId>\n"
+                + "      <artifactId>spring-boot-starter</artifactId>\n"
+                + "      <version>2.6.3</version>\n"
+                + "    </dependency>\n"
+                + "\n"
+                + "  <dependency>\n"
+                + "    <groupId>com.google.cloud</groupId>\n"
+                + "    <artifactId>spring-cloud-gcp-core</artifactId>\n"
+                + "    <version>3.2.1</version>\n"
+                + "  </dependency>\n"
+                + "</dependencies>\n"
+                + "\n"
+                + "</project>",
+            springStarterArtifactId,
+            springStarterVersion,
+            springStarterName,
+            clientLibraryShortName,
+            clientLibraryGroupId,
+            clientLibraryName,
+            clientLibraryVersion));
+
+    return sb.toString();
+  }
+
+  private static void writePom(GapicContext context, JarOutputStream jos) {
+    JarEntry jarEntry = new JarEntry("pom.xml");
+    try {
+      jos.putNextEntry(jarEntry);
+      String result = buildPomString(context);
+      jos.write(result.getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write pom.xml", e);
     }
   }
 
@@ -202,9 +288,5 @@ public class SpringWriter {
       path = "proto/" + path;
     }
     return path;
-  }
-
-  private static String getSamplePackage(GapicClass gapicClazz) {
-    return gapicClazz.classDefinition().packageString().concat(".samples");
   }
 }

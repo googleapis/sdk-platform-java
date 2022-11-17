@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_messagingclient_connect_async]
+// [START goldensample_generated_Messaging_Connect_async]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.showcase.v1beta1.ConnectRequest;
 import com.google.showcase.v1beta1.MessagingClient;
@@ -45,4 +45,4 @@ public class AsyncConnect {
     }
   }
 }
-// [END goldensample_generated_messagingclient_connect_async]
+// [END goldensample_generated_Messaging_Connect_async]

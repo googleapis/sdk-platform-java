@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_echoclient_echo_foobarname_sync]
+// [START goldensample_generated_Echo_Echo_Foobarname_sync]
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.FoobarName;
@@ -39,4 +39,4 @@ public class SyncEchoFoobarname {
     }
   }
 }
-// [END goldensample_generated_echoclient_echo_foobarname_sync]
+// [END goldensample_generated_Echo_Echo_Foobarname_sync]

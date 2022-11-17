@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
+import com.google.api.generator.engine.ast.ArrayExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -360,6 +361,32 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import com.google.api.generator.engine.ast.VariableExpr;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeVariableExprImports_withAnnotations() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(Generated.class)))))
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import javax.annotation.Generated;\n\n"),
         writerVisitor.write());
   }
 
@@ -890,6 +917,20 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import java.util.Arrays;\n",
             "import java.util.Map;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void importArrayExprTypes() {
+    ArrayExpr arrayExpr =
+        ArrayExpr.builder()
+            .setType(
+                TypeNode.createArrayTypeOf(
+                    TypeNode.withReference(ConcreteReference.withClazz(UnaryOperationExpr.class))))
+            .build();
+    arrayExpr.accept(writerVisitor);
+    assertEquals(
+        "import com.google.api.generator.engine.ast.UnaryOperationExpr;\n\n",
         writerVisitor.write());
   }
 

@@ -16,7 +16,7 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_subscriptionadminsettings_createsubscription_sync]
+// [START pubsub_v1_generated_SubscriptionAdminSettings_CreateSubscription_sync]
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
 import java.time.Duration;
 
@@ -46,4 +46,4 @@ public class SyncCreateSubscription {
     SubscriptionAdminSettings subscriptionAdminSettings = subscriptionAdminSettingsBuilder.build();
   }
 }
-// [END pubsub_v1_generated_subscriptionadminsettings_createsubscription_sync]
+// [END pubsub_v1_generated_SubscriptionAdminSettings_CreateSubscription_sync]
