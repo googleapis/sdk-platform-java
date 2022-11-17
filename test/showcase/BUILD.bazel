@@ -46,19 +46,6 @@ java_gapic_library(
     ],
 )
 
-java_gapic_test(
-    name = "showcase_java_gapic_test_suite",
-    test_classes = [
-        "com.google.showcase.v1beta1.ComplianceClientTest",
-        "com.google.showcase.v1beta1.EchoClientTest",
-        "com.google.showcase.v1beta1.IdentityClientTest",
-        "com.google.showcase.v1beta1.MessagingClientTest",
-        "com.google.showcase.v1beta1.SequenceServiceClientTest",
-        "com.google.showcase.v1beta1.TestingClientTest",
-    ],
-    runtime_deps = [":showcase_java_gapic_test"],
-)
-
 # Open Source Packages
 java_gapic_assembly_gradle_pkg(
     name = "google-cloud-showcase-v1beta1-java",
