@@ -115,19 +115,19 @@ java_library(
 java_library(
     name = "gapic_generator_java_test",
     srcs = glob(["src/test/java/**/*.java"]),
-    deps = [":gapic_generator_java"] + MAIN_DEPS + TEST_DEPS,
+    deps = [":gapic_generator_java"] + MAIN_DEPS + TEST_DEPS + SPING_DEPS,
 )
 
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
-    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + SPING_DEPS,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS,
 )
 
 java_binary(
     name = "protoc-gen-java_gapic_spring",
     main_class = "com.google.api.generator.spring.Main",
-    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS,
+    runtime_deps = [":gapic_generator_java"] + MAIN_DEPS + SPING_DEPS,
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
