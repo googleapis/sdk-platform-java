@@ -965,8 +965,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
-    typeMap.put("Log", LoggerUtils.getLoggerType());
-    typeMap.put("LogFactory", LoggerUtils.getLoggerFactoryType());
 
     return typeMap;
   }
