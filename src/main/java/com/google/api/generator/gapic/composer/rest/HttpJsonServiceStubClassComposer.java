@@ -317,7 +317,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   private BiFunction<String, List<Expr>, Function<MethodInvocationExpr, MethodInvocationExpr>>
-      getMethodMaker() {
+  getMethodMaker() {
     return (mName, argExpr) ->
         (m) ->
             MethodInvocationExpr.builder()
@@ -1007,7 +1007,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
 
       paramsPutArgs.add(fieldsVarExpr);
       paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("$alt")));
-      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("json;enum-encoding=int")));
+      paramsPutArgs.add(
+          ValueExpr.withValue(StringObjectValue.withValue("json;enum-encoding=int")));
 
       Expr paramsPutExpr =
           MethodInvocationExpr.builder()

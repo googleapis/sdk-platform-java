@@ -38,6 +38,7 @@ java_gapic_test(
     test_classes = [
         "com.google.showcase.v1beta1.FirstHttpIT",
         "com.google.showcase.v1beta1.FirstRpcIT",
+        "com.google.showcase.v1beta1.NumericEnumsIT",
     ],
     runtime_deps = [
         ":showcase_tests",
