@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.rpc.InvalidArgumentException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import org.junit.After;
@@ -46,12 +47,11 @@ public class NumericEnumsIT {
     client.close();
   }
 
-  @Test
+  // See https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
+  @Test(expected = InvalidArgumentException.class)
   public void verifyEnums() {
-    EnumResponse initialResponse = client.getEnum(EnumRequest.newBuilder()
-        .setUnknownEnum(true)
-        .build());
-
+    EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
+    EnumResponse initialResponse = client.getEnum(request);
     EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
 
     Assert.assertNotNull(initialResponse);

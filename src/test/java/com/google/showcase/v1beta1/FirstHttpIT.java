@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.rpc.InvalidArgumentException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import org.junit.AfterClass;
@@ -47,7 +48,8 @@ public class FirstHttpIT {
     client.close();
   }
 
-  @Test
+  // See https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
+  @Test(expected = InvalidArgumentException.class)
   public void testEcho() {
     assertEquals("http-echo?", echo("http-echo?"));
     assertEquals("http-echo!", echo("http-echo!"));
