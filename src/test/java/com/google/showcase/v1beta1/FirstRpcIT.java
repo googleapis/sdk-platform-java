@@ -32,12 +32,14 @@ public class FirstRpcIT {
 
   @BeforeClass
   public static void createClient() throws IOException {
-    EchoSettings echoSettings = EchoSettings.newBuilder()
-        .setCredentialsProvider(NoCredentialsProvider.create())
-        .setTransportChannelProvider(
-            InstantiatingGrpcChannelProvider.newBuilder().setChannelConfigurator(
-                ManagedChannelBuilder::usePlaintext).build())
-        .build();
+    EchoSettings echoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                InstantiatingGrpcChannelProvider.newBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
 
     client = EchoClient.create(echoSettings);
   }

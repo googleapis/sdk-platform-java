@@ -33,12 +33,16 @@ public class FirstHttpIT {
 
   @BeforeClass
   public static void createClient() throws IOException, GeneralSecurityException {
-    EchoSettings echoSettings = EchoSettings.newBuilder()
-        .setCredentialsProvider(NoCredentialsProvider.create())
-        .setTransportChannelProvider(EchoSettings.defaultHttpJsonTransportProviderBuilder()
-            .setHttpTransport(new NetHttpTransport.Builder().doNotValidateCertificate().build())
-            .setEndpoint("http://localhost:7469").build())
-        .build();
+    EchoSettings echoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
 
     client = EchoClient.create(echoSettings);
   }
@@ -48,7 +52,8 @@ public class FirstHttpIT {
     client.close();
   }
 
-  // See https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
+  // See
+  // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
   @Test(expected = InvalidArgumentException.class)
   public void testEcho() {
     assertEquals("http-echo?", echo("http-echo?"));
@@ -59,5 +64,4 @@ public class FirstHttpIT {
     EchoResponse response = client.echo(EchoRequest.newBuilder().setContent(value).build());
     return response.getContent();
   }
-
 }

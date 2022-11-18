@@ -32,13 +32,16 @@ public class NumericEnumsIT {
 
   @Before
   public void createClient() throws GeneralSecurityException, IOException {
-    ComplianceSettings complianceSettings = ComplianceSettings.newHttpJsonBuilder()
-        .setCredentialsProvider(NoCredentialsProvider.create())
-        .setTransportChannelProvider(ComplianceSettings.defaultHttpJsonTransportProviderBuilder()
-            .setHttpTransport(new NetHttpTransport.Builder().doNotValidateCertificate().build())
-            .setEndpoint("http://localhost:7469")
-            .build())
-        .build();
+    ComplianceSettings complianceSettings =
+        ComplianceSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                ComplianceSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
     client = ComplianceClient.create(complianceSettings);
   }
 
@@ -47,7 +50,8 @@ public class NumericEnumsIT {
     client.close();
   }
 
-  // See https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
+  // See
+  // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
   @Test(expected = InvalidArgumentException.class)
   public void verifyEnums() {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
