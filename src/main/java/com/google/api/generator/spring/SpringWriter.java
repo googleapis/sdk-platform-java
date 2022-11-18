@@ -138,7 +138,8 @@ public class SpringWriter {
             service ->
                 sb.add(
                     String.format(
-                        "%s.spring.%sSpringAutoConfig", service.pakkage(), service.name())));
+                        "%s.spring.%s",
+                        service.pakkage(), Utils.getServiceAutoConfigurationClassName(service))));
     return sb.toString();
   }
 
