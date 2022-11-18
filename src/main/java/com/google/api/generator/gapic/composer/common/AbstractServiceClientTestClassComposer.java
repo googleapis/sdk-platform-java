@@ -82,6 +82,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public abstract class AbstractServiceClientTestClassComposer implements ClassComposer {
+
   protected static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
   protected static final String CLIENT_VAR_NAME = "client";
@@ -690,18 +691,14 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     methodStatements.add(EMPTY_LINE_STATEMENT);
 
     methodStatements.addAll(
-        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-    methodExprs.clear();
-
-    methodStatements.addAll(
         constructRpcTestCheckerLogic(
             method,
+            methodSignature,
             rpcService,
             isRequestArg,
             classMemberVarExprs,
             requestVarExpr,
-            requestMessage,
-            argExprs));
+            requestMessage));
 
     String testMethodName =
         String.format(
@@ -720,12 +717,12 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected abstract List<Statement> constructRpcTestCheckerLogic(
       Method method,
+      List<MethodArgument> methodSignature,
       Service service,
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       VariableExpr requestVarExpr,
-      Message requestMessage,
-      List<VariableExpr> argExprs);
+      Message requestMessage);
 
   protected abstract MethodDefinition createStreamingRpcTestMethod(
       Service service,
