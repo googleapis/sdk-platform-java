@@ -66,6 +66,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ServiceClientTestClassComposer extends AbstractServiceClientTestClassComposer {
+
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
 
@@ -359,12 +360,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   @Override
   protected List<Statement> constructRpcTestCheckerLogic(
       Method method,
+      List<MethodArgument> methodSignature,
       Service service,
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
-      VariableExpr requestVarExpr,
-      Message requestMessage,
-      List<VariableExpr> argExprs) {
+      VariableExpr requestVarExpr, // Nullable
+      Message requestMessage) {
     List<Expr> methodExprs = new ArrayList<>();
     List<Statement> methodStatements = new ArrayList<>();
 
@@ -435,71 +436,33 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
       Preconditions.checkNotNull(requestVarExpr);
       Preconditions.checkNotNull(requestMessage);
       for (Field field : requestMessage.fields()) {
-        String fieldGetterMethodNamePatternTemp = "get%s";
-        if (field.isRepeated()) {
-          fieldGetterMethodNamePatternTemp = field.isMap() ? "get%sMap" : "get%sList";
-        }
-        final String fieldGetterMethodNamePattern = fieldGetterMethodNamePatternTemp;
-        Function<VariableExpr, Expr> checkExprFn =
-            v ->
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(v)
-                    .setMethodName(
-                        String.format(
-                            fieldGetterMethodNamePattern, JavaStyle.toUpperCamelCase(field.name())))
-                    .build();
-        Expr expectedFieldExpr = checkExprFn.apply(requestVarExpr);
-        Expr actualFieldExpr = checkExprFn.apply(actualRequestVarExpr);
-        List<Expr> assertEqualsArguments = new ArrayList<>();
-        assertEqualsArguments.add(expectedFieldExpr);
-        assertEqualsArguments.add(actualFieldExpr);
-        if (TypeNode.isFloatingPointType(field.type())) {
-          boolean isFloat = field.type().equals(TypeNode.FLOAT);
-          assertEqualsArguments.add(
-              ValueExpr.withValue(
-                  PrimitiveValue.builder()
-                      .setType(isFloat ? TypeNode.FLOAT : TypeNode.DOUBLE)
-                      .setValue(String.format("0.0001%s", isFloat ? "f" : ""))
-                      .build()));
-        }
-        methodExprs.add(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
-                .setMethodName("assertEquals")
-                .setArguments(assertEqualsArguments)
-                .build());
+        Expr expectedFieldExpr = createGetter(requestVarExpr, field);
+        Expr actualFieldExpr = createGetter(actualRequestVarExpr, field);
+        methodExprs.add(createAssertEquals(expectedFieldExpr, actualFieldExpr, field.type()));
       }
     } else {
-      for (VariableExpr argVarExpr : argExprs) {
-        Variable variable = argVarExpr.variable();
-        String fieldGetterMethodNamePattern = "get%s";
-        if (LIST_TYPE.isSupertypeOrEquals(variable.type())) {
-          fieldGetterMethodNamePattern = "get%sList";
-        } else if (MAP_TYPE.isSupertypeOrEquals(variable.type())) {
-          fieldGetterMethodNamePattern = "get%sMap";
+      for (MethodArgument arg : methodSignature) {
+        Expr root = actualRequestVarExpr;
+        for (Field field : arg.nestedFields()) {
+          root = createGetter(root, field);
         }
-        Expr actualFieldExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(actualRequestVarExpr)
-                .setMethodName(
-                    String.format(
-                        fieldGetterMethodNamePattern,
-                        JavaStyle.toUpperCamelCase(variable.identifier().name())))
-                .build();
-        Expr expectedFieldExpr = argVarExpr;
-        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(argVarExpr.type())) {
+        MethodInvocationExpr actual = createGetter(root, arg.field());
+
+        Expr expectedFieldExpr =
+            VariableExpr.withVariable(
+                Variable.builder()
+                    .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                    .setType(arg.type())
+                    .build());
+        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(arg.type())) {
           expectedFieldExpr =
               MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(argVarExpr)
+                  .setExprReferenceExpr(expectedFieldExpr)
                   .setMethodName("toString")
                   .build();
         }
-        methodExprs.add(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
-                .setMethodName("assertEquals")
-                .setArguments(expectedFieldExpr, actualFieldExpr)
-                .build());
+
+        methodExprs.add(createAssertEquals(expectedFieldExpr, actual, arg.type()));
       }
     }
 
@@ -531,6 +494,49 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
     methodExprs.clear();
 
     return methodStatements;
+  }
+
+  private static MethodInvocationExpr createAssertEquals(
+      Expr expected, Expr actual, TypeNode type) {
+
+    ArrayList<Expr> assertionArgs = new ArrayList<>();
+    assertionArgs.add(expected);
+    assertionArgs.add(actual);
+
+    if (TypeNode.isFloatingPointType(type)) {
+      boolean isFloat = type.equals(TypeNode.FLOAT);
+      assertionArgs.add(
+          ValueExpr.withValue(
+              PrimitiveValue.builder()
+                  .setType(isFloat ? TypeNode.FLOAT : TypeNode.DOUBLE)
+                  .setValue(String.format("0.0001%s", isFloat ? "f" : ""))
+                  .build()));
+    }
+
+    return MethodInvocationExpr.builder()
+        .setStaticReferenceType(FIXED_TYPESTORE.get("Assert"))
+        .setMethodName("assertEquals")
+        .setArguments(assertionArgs)
+        .build();
+  }
+
+  private static MethodInvocationExpr createGetter(Expr exprReference, Field field) {
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(exprReference)
+        .setMethodName(
+            String.format(
+                createGetterNamePattern(field.type()), JavaStyle.toUpperCamelCase(field.name())))
+        .build();
+  }
+
+  private static String createGetterNamePattern(TypeNode type) {
+    String fieldGetterMethodNamePattern = "get%s";
+    if (LIST_TYPE.isSupertypeOrEquals(type)) {
+      fieldGetterMethodNamePattern = "get%sList";
+    } else if (MAP_TYPE.isSupertypeOrEquals(type)) {
+      fieldGetterMethodNamePattern = "get%sMap";
+    }
+    return fieldGetterMethodNamePattern;
   }
 
   @Override

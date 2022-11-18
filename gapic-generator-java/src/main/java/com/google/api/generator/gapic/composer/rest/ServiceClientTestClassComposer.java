@@ -60,6 +60,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ServiceClientTestClassComposer extends AbstractServiceClientTestClassComposer {
+
   private static final String MOCK_SERVICE_VAR_NAME = "mockService";
 
   private static final ServiceClientTestClassComposer INSTANCE =
@@ -297,12 +298,12 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   @Override
   protected List<Statement> constructRpcTestCheckerLogic(
       Method method,
+      List<MethodArgument> methodSignature,
       Service service,
       boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       VariableExpr requestVarExpr,
-      Message requestMessage,
-      List<VariableExpr> argExprs) {
+      Message requestMessage) {
 
     VariableExpr actualRequestsVarExpr =
         VariableExpr.withVariable(
