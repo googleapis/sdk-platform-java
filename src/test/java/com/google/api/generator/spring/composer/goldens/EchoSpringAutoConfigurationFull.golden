@@ -63,7 +63,7 @@ import org.threeten.bp.Duration;
 @EnableConfigurationProperties(EchoSpringProperties.class)
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
-  private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfig.class);
+  private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfiguration.class);
 
   protected EchoSpringAutoConfiguration(EchoSpringProperties clientProperties) {
     this.clientProperties = clientProperties;
@@ -97,7 +97,7 @@ public class EchoSpringAutoConfiguration {
    * client
    *
    * <p>Individual retry settings are configured as well. It will use the relevant client library's
-   * default retry settings when they are not specified in EchoProperties.
+   * default retry settings when they are not specified in EchoSpringProperties.
    */
   @Bean
   @ConditionalOnMissingBean
