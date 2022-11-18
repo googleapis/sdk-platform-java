@@ -877,7 +877,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             RetrySettings.class,
             RetrySettings.Builder

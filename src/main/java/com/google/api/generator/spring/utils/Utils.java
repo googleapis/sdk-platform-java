@@ -38,6 +38,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Utils {
+
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private static final String BRAND_NAME = "spring.cloud.gcp";
@@ -98,14 +99,14 @@ public class Utils {
         + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
   }
 
-  public static List<? extends AstNode> processRetrySettings(
+  public static <T extends AstNode> List<T> processRetrySettings(
       Service service,
       GapicServiceConfig gapicServiceConfig,
       TypeNode thisClassType,
-      Function<String, List<? extends AstNode>> perMethodFuncBeforeSettings,
-      BiFunction<List<String>, Expr, List<? extends AstNode>> processFunc,
-      Function<String, List<? extends AstNode>> perMethodFuncAfterSettings) {
-    List resultList = new ArrayList<>();
+      Function<String, List<? extends T>> perMethodFuncBeforeSettings,
+      BiFunction<List<String>, Expr, List<? extends T>> processFunc,
+      Function<String, List<? extends T>> perMethodFuncAfterSettings) {
+    List<T> resultList = new ArrayList<>();
     for (Method method : service.methods()) {
       String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
       String retryParamName = gapicServiceConfig.getRetryParamsName(service, method);
