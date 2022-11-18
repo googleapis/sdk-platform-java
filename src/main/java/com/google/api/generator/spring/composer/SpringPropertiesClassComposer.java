@@ -186,7 +186,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     // declare each retry settings with its default value. use defaults from serviceConfig
     TypeNode thisClassType = types.get(Utils.getServicePropertiesClassName(service));
-    List<? extends AstNode> retrySettings =
+    List<Statement> retrySettings =
         Utils.processRetrySettings(
             service,
             serviceConfig,
