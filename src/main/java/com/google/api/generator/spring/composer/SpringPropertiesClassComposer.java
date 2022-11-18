@@ -14,11 +14,10 @@
 
 package com.google.api.generator.spring.composer;
 
-import static com.google.api.generator.engine.ast.NewObjectExpr.*;
+import static com.google.api.generator.engine.ast.NewObjectExpr.builder;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -59,6 +58,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 public class SpringPropertiesClassComposer implements ClassComposer {
+
   private static final String CLASS_NAME_PATTERN = "%sSpringProperties";
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
@@ -192,7 +192,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     // declare each retry settings with its default value. use defaults from serviceConfig
     TypeNode thisClassType = types.get(service.name() + "SpringProperties");
-    List<? extends AstNode> retrySettings =
+    List<Statement> retrySettings =
         Utils.processRetrySettings(
             service,
             serviceConfig,
@@ -213,8 +213,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             },
             (String propertyName) -> new ArrayList<>());
 
-    statements.addAll(
-        retrySettings.stream().map(Statement.class::cast).collect(Collectors.toList()));
+    statements.addAll(retrySettings);
 
     return statements;
   }
@@ -246,7 +245,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
-    List retrySettings =
+    List<MethodDefinition> retrySettings =
         Utils.processRetrySettings(
             service,
             gapicServiceConfig,
@@ -362,7 +361,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             ConfigurationProperties.class,
             NestedConfigurationProperty.class,

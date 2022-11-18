@@ -74,6 +74,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 
 public class SpringAutoConfigClassComposer implements ClassComposer {
+
   private static final String CLASS_NAME_PATTERN = "%sSpringAutoConfiguration";
 
   private static final SpringAutoConfigClassComposer INSTANCE = new SpringAutoConfigClassComposer();
@@ -674,7 +675,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     }
     // retry settings for each method
     TypeNode thisClassType = types.get(service.name() + "AutoConfig");
-    List retrySettings =
+    List<Statement> retrySettings =
         Utils.processRetrySettings(
             service,
             gapicServiceConfig,
@@ -885,7 +886,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
-    List<Class> concreteClazzes =
+    List<Class<?>> concreteClazzes =
         Arrays.asList(
             TransportChannelProvider.class,
             InstantiatingHttpJsonChannelProvider.class,
