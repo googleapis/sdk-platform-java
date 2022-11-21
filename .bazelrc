@@ -1,3 +1,4 @@
 startup --batch
 
+build --show_timestamps
 build --protocopt=--experimental_allow_proto3_optional
