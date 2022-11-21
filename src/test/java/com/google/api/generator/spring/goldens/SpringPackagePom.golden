@@ -7,9 +7,7 @@
     <groupId>com.google.cloud</groupId>
     <artifactId>generated-parent</artifactId>
   </parent>
-  <groupId>com.google.cloud</groupId>
   <artifactId>{{client-library-artifact-id}}-spring-starter</artifactId>
-  <version>{{starter-version}}</version>
   <name>Spring Boot Starter - localhost:7469</name>
   <description>Spring Boot Starter with AutoConfiguration for localhost:7469</description>
 
