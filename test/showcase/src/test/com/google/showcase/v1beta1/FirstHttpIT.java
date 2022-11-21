@@ -58,12 +58,10 @@ public class FirstHttpIT {
   @Test
   public void testEcho() {
     assertThrows(
-        InvalidArgumentException.class,
-        () -> assertEquals("http-echo?", echo("http-echo?")));
+        InvalidArgumentException.class, () -> assertEquals("http-echo?", echo("http-echo?")));
 
     assertThrows(
-        InvalidArgumentException.class,
-        () -> assertEquals("http-echo!", echo("http-echo!")));
+        InvalidArgumentException.class, () -> assertEquals("http-echo!", echo("http-echo!")));
   }
 
   private String echo(String value) {

@@ -58,13 +58,11 @@ public class NumericEnumsIT {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
 
     // EnumResponse initialResponse =
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> client.getEnum(request));
+    assertThrows(InvalidArgumentException.class, () -> client.getEnum(request));
 
-//    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
-//
-//    Assert.assertNotNull(initialResponse);
-//    Assert.assertEquals(initialResponse, verifiedResponse);
+    //    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
+    //
+    //    Assert.assertNotNull(initialResponse);
+    //    Assert.assertEquals(initialResponse, verifiedResponse);
   }
 }
