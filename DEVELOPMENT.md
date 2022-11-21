@@ -2,168 +2,238 @@
 
 ## Set Up
 
-1.  Clone this repo.
+1. Clone this repo.
 
-2.  Copy the Git pre-commit hooks. This will automatically check the build, run
-    tests, and perform linting before each commit. (Symlinks don't seem to work,
-    but if you find a way, please add it here!)
+2. Copy the Git pre-commit hooks. This will automatically check the build, run
+   tests, and perform linting before each commit. (Symlinks don't seem to work,
+   but if you find a way, please add it here!)
 
-    ```sh
-    cp .githooks/pre-commit .git/hooks/pre-commit
-    ```
+   ```sh
+   cp .githooks/pre-commit .git/hooks/pre-commit
+   ```
 
 ## Code Formatting
 
--   Run linter checks without actually doing the formatting.
+- Run linter checks without actually doing the formatting.
 
-    ```sh
-    bazel run //:google_java_format_verification
-    ```
-    or
-    ```sh
-    mvn fmt:check
-    ```
+  ```sh
+  bazel run //:google_java_format_verification
+  ```
+  or
+  ```sh
+  mvn fmt:check
+  ```
 
--   Format files.
+- Format files.
 
-    ```sh
-    bazel run //:google_java_format
-    ```
-    or
-    ```sh
-    mvn fmt:format
-    ```
+  ```sh
+  bazel run //:google_java_format
+  ```
+  or
+  ```sh
+  mvn fmt:format
+  ```
 
 ## Test Running
 
--   Run all unit and integration tests.
+- Run all tests.
 
-    ```sh
-    bazel test //...
-    ```
+  NOTE: Integration tests require a [running, local showcase server](#showcase-integration-testing).
 
--   Run all unit tests.
+  ```sh
+  bazel test //...
+  ```
 
-    ```sh
-    bazel test //:units
-    ```
-    or
-    ```sh
-    mvn test
-    ```
+- Run all unit tests.
 
--   Run a single unit test like `JavaCodeGeneratorTest.java`:
+  ```sh
+  bazel test //:units
+  ```
+  or
+  ```sh
+  mvn test
+  ```
 
-    ```sh
-    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
-    ```
-    or
-    ```sh
-    mvn test -Dtest=JavaCodeGeneratorTest
+- Run a single unit test like `JavaCodeGeneratorTest.java`:
 
-    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
-    ```
-￼
--   Update all unit test golden files:
+  ```sh
+  bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
+  ```
+  or
+  ```sh
+  mvn test -Dtest=JavaCodeGeneratorTest
 
-    ```sh
-    mvn test -DupdateUnitGoldens
-    ```
+  mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+  ```
 
--   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+- Update all unit test golden files:
 
-    ```sh
-    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
-    ```
-    or
-    ```sh
-    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
-    ```
+  ```sh
+  mvn test -DupdateUnitGoldens
+  ```
 
--   Run a single integration test for API like `Redis`, it generates Java source
-    code using the Java microgenerator and compares them with the goldens files
-    in `test/integration/goldens/redis`.
+- Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
-    ```sh
-    bazel test //test/integration:redis
-    ```
+  ```sh
+  bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
+  ```
+  or
+  ```sh
+  mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+  ```
 
--   Update integration test golden files, for example `Redis`. This clobbers all the
-    files in `test/integration/goldens/redis`.
+## Golden Integration Testing
 
-    ```sh
-    bazel run //test/integration:update_redis
-    ```
+- Run a single integration test for API like `Redis`, it generates Java source
+  code using the Java microgenerator and compares them with the goldens files
+  in `test/integration/goldens/redis`.
+
+  ```sh
+  bazel test //test/integration:redis
+  ```
+
+- Update integration test golden files, for example `Redis`. This clobbers all the
+  files in `test/integration/goldens/redis`.
+
+  ```sh
+  bazel run //test/integration:update_redis
+  ```
+
+## Showcase Integration Testing
+
+[GAPIC Showcase](https://github.com/googleapis/gapic-showcase) is an API that demonstrates Generated
+API Client (GAPIC) features and common API patterns used by Google. It follows the [Cloud APIs
+design guide](https://cloud.google.com/apis/design/). `gapic-generator-java` generates a client for
+the Showcase API which can communicate with a local Showcase server to perform integration tests.
+
+### Requirements
+
+* Install [Go](https://go.dev) in your `PATH`.
+
+### Installing the Server
+
+```shell
+$ GAPIC_SHOWCASE_VERSION=0.25.0
+$ go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$GAPIC_SHOWCASE_VERSION"
+$ PATH=$PATH:`go env GOPATH`/bin
+$ gapic-showcase --help
+> Root command of gapic-showcase
+> 
+> Usage:
+>   gapic-showcase [command]
+> 
+> Available Commands:
+>   completion  Emits bash a completion for gapic-showcase
+>   compliance  This service is used to test that GAPICs...
+>   echo        This service is used showcase the four main types...
+>   help        Help about any command
+>   identity    A simple identity service.
+>   messaging   A simple messaging service that implements chat...
+>   run         Runs the showcase server
+>   sequence    Sub-command for Service: Sequence
+>   testing     A service to facilitate running discrete sets of...
+> 
+> Flags:
+>   -h, --help      help for gapic-showcase
+>   -j, --json      Print JSON output
+>   -v, --verbose   Print verbose output
+>       --version   version for gapic-showcase
+```
+
+### Running the Server
+
+Run the showcase server to allow requests to be sent to it. This opens port `:7469` to send and
+receive requests.
+
+```shell
+$ gapic-showcase run
+> 2022/11/21 16:22:15 Showcase listening on port: :7469
+> 2022/11/21 16:22:15 Starting endpoint 0: gRPC endpoint
+> 2022/11/21 16:22:15 Starting endpoint 1: HTTP/REST endpoint
+> 2022/11/21 16:22:15 Starting endpoint multiplexer
+> 2022/11/21 16:22:15 Listening for gRPC-fallback connections
+> 2022/11/21 16:22:15 Listening for gRPC connections
+> 2022/11/21 16:22:15 Listening for REST connections
+> 2022/11/21 16:22:15 Fallback server listening on port: :1337
+```
+
+### Running the Integration Tests
+
+Open a new terminal window and run all tests in the `/test/showcase` directory.
+
+```shell
+$ bazel test //test/showcase/...
+```
 
 ## Running the Plugin
 
-1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
-    [gapic-showcase](https://github.com/googleapis/gapic-showcase/).
+1. Clone [googleapis](https://github.com/googleapis/googleapis) and
+   [gapic-showcase](https://github.com/googleapis/gapic-showcase/).
 
-2.  Copy the protos from Showcase into googleapis/google/showcase.
+2. Copy the protos from Showcase into googleapis/google/showcase.
 
-    ```sh
-    mkdir googleapis/google/showcase
-    cp -r gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta1
-    ```
+   ```sh
+   mkdir googleapis/google/showcase
+   cp -r gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta1
+   ```
 
-3.  Add the new microgenerator rules to
-    `googleapis/google/showcase/v1beta1/BUILD.bazel` file as follows:
+3. Add the new microgenerator rules to
+   `googleapis/google/showcase/v1beta1/BUILD.bazel` file as follows:
 
-    ```python
-    load(
-        "@com_google_googleapis_imports//:imports.bzl",
-        # Existing rules here.
-        "java_gapic_assembly_gradle_pkg",
-        "java_gapic_library",
-        "java_proto_library",
-        "proto_library_with_info",
-    )
+   ```python
+   load(
+       "@com_google_googleapis_imports//:imports.bzl",
+       # Existing rules here.
+       "java_gapic_assembly_gradle_pkg",
+       "java_gapic_library",
+       "java_proto_library",
+       "proto_library_with_info",
+   )
 
-    proto_library_with_info(
-        name = "showcase_proto_with_info",
-        deps = [
-            ":showcase_proto",
-        ],
-    )
+   proto_library_with_info(
+       name = "showcase_proto_with_info",
+       deps = [
+           ":showcase_proto",
+       ],
+   )
 
-    java_proto_library(
-        name = "showcase_java_proto",
-        deps = [
-            ":showcase_proto",
-        ],
-    )
+   java_proto_library(
+       name = "showcase_java_proto",
+       deps = [
+           ":showcase_proto",
+       ],
+   )
 
-    # This should either replace the existing monolith target or have a unique name
-    # that includes "java_gapic".
-    java_gapic_library(
-        name = "showcase_java_gapic",
-        srcs = [":showcase_proto_with_info"],
-        grpc_service_config = "showcase_grpc_service_config.json",
-        test_deps = [
-            ":showcase_java_grpc",
-        ],
-        deps = [
-            ":showcase_java_proto",
-        ],
-    )
+   # This should either replace the existing monolith target or have a unique name
+   # that includes "java_gapic".
+   java_gapic_library(
+       name = "showcase_java_gapic",
+       srcs = [":showcase_proto_with_info"],
+       grpc_service_config = "showcase_grpc_service_config.json",
+       test_deps = [
+           ":showcase_java_grpc",
+       ],
+       deps = [
+           ":showcase_java_proto",
+       ],
+   )
 
-    java_gapic_assembly_gradle_pkg(
-        # This name should be unique from the existing target name.
-        name = "google-cloud-showcase-v1beta1-java",
-        deps = [
-            # This is the new microgen target above.
-            ":showcase_java_gapic",
-            # The following targets already exist.
-            ":showcase_java_grpc",
-            ":showcase_java_proto",
-            ":showcase_proto",
-        ],
-    )
-    ```
+   java_gapic_assembly_gradle_pkg(
+       # This name should be unique from the existing target name.
+       name = "google-cloud-showcase-v1beta1-java",
+       deps = [
+           # This is the new microgen target above.
+           ":showcase_java_gapic",
+           # The following targets already exist.
+           ":showcase_java_grpc",
+           ":showcase_java_proto",
+           ":showcase_proto",
+       ],
+   )
+   ```
 
-4.  Build the new target.
+4. Build the new target.
 
-    ```sh
-    bazel build //google/showcase/v1beta1:showcase_java_gapic
-    ```
+   ```sh
+   bazel build //google/showcase/v1beta1:showcase_java_gapic
+   ```
