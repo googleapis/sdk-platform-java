@@ -6,6 +6,7 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>generated-parent</artifactId>
+    <version>{{parent-version}}</version>
   </parent>
   <artifactId>{{client-library-artifact-id}}-spring-starter</artifactId>
   <name>Spring Boot Starter - localhost:7469</name>
