@@ -36,6 +36,7 @@ public class SpringComposer {
 
   public static List<GapicClass> composeServiceAutoConfigClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
+
     clazzes.addAll(generatePerServiceClasses(context));
     List<GapicClass> clazzesWithHeader = addApacheLicense(clazzes);
     return addExtraClassAnnotations(clazzesWithHeader);

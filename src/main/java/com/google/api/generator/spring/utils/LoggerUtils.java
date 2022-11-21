@@ -16,25 +16,31 @@ package com.google.api.generator.spring.utils;
 
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class LoggerUtils {
 
+  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+
   public static Statement getLoggerDeclarationExpr(String className, Map<String, TypeNode> types) {
 
-    Variable loggerVar = Variable.builder().setName("LOGGER").setType(types.get("Log")).build();
+    Variable loggerVar =
+        Variable.builder().setName("LOGGER").setType(STATIC_TYPES.get("Log")).build();
     VariableExpr loggerExpr =
         VariableExpr.builder()
             .setVariable(loggerVar)
@@ -46,7 +52,7 @@ public class LoggerUtils {
 
     MethodInvocationExpr loggerValueExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get("LogFactory"))
+            .setStaticReferenceType(STATIC_TYPES.get("LogFactory"))
             .setMethodName("getLog")
             .setArguments(
                 VariableExpr.builder()
@@ -54,7 +60,7 @@ public class LoggerUtils {
                         Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
                     .setStaticReferenceType(types.get(className))
                     .build())
-            .setReturnType(types.get("Log"))
+            .setReturnType(STATIC_TYPES.get("Log"))
             .build();
 
     AssignmentExpr loggerAssignmentExpr =
@@ -65,7 +71,7 @@ public class LoggerUtils {
 
   public static ExprStatement createLoggerStatement(Expr value, Map<String, TypeNode> types) {
     Variable loggerVariable =
-        Variable.builder().setName("LOGGER").setType(types.get("Log")).build();
+        Variable.builder().setName("LOGGER").setType(STATIC_TYPES.get("Log")).build();
     MethodInvocationExpr loggerCallExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
@@ -73,21 +79,6 @@ public class LoggerUtils {
             .setArguments(value)
             .build();
     return ExprStatement.withExpr(loggerCallExpr);
-  }
-
-  public static TypeNode getLoggerType() {
-    return createType("Log", "org.apache.commons.logging");
-  }
-
-  public static TypeNode getLoggerFactoryType() {
-    return createType("LogFactory", "org.apache.commons.logging");
-  }
-
-  private static TypeNode createType(String className, String pakkage) {
-    TypeNode loggerType =
-        TypeNode.withReference(
-            VaporReference.builder().setName(className).setPakkage(pakkage).build());
-    return loggerType;
   }
 
   public static Expr concatManyWithExprs(Expr... exprs) {
@@ -105,5 +96,13 @@ public class LoggerUtils {
     return ArithmeticOperationExpr.concatWithExprs(
         current.get(),
         concatManyWithExprsHelper(Optional.of(exprs.get(0)), exprs.subList(1, exprs.size())));
+  }
+
+  private static Map<String, TypeNode> createStaticTypes() {
+    List<Class> concreteClazzes = Arrays.asList(Log.class, LogFactory.class);
+    return concreteClazzes.stream()
+        .collect(
+            Collectors.toMap(
+                Class::getSimpleName, c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 }

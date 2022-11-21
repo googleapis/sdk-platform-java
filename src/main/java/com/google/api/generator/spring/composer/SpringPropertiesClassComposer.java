@@ -14,17 +14,16 @@
 
 package com.google.api.generator.spring.composer;
 
-import static com.google.api.generator.engine.ast.NewObjectExpr.*;
+import static com.google.api.generator.engine.ast.NewObjectExpr.builder;
 
-import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
-import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -45,19 +44,24 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.cloud.spring.core.Credentials;
+import com.google.cloud.spring.core.CredentialsSupplier;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 public class SpringPropertiesClassComposer implements ClassComposer {
-  private static final String CLASS_NAME_PATTERN = "%sSpringProperties";
 
-  private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+
   private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
 
   private static final SpringPropertiesClassComposer INSTANCE = new SpringPropertiesClassComposer();
@@ -69,16 +73,16 @@ public class SpringPropertiesClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     String packageName = Utils.getSpringPackageName(service.pakkage());
-    String className = String.format(CLASS_NAME_PATTERN, service.name());
+    String className = Utils.getServicePropertiesClassName(service);
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
-    Map<String, TypeNode> types = createDynamicTypes(service, packageName);
+    Map<String, TypeNode> dynamicTypes = createDynamicTypes(service, packageName);
     boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
 
     // TODO: this is the prefix user will use to set properties, may need to change depending on
     // branding.
     AnnotationNode classAnnotationNode =
         AnnotationNode.builder()
-            .setType(types.get("ConfigurationProperties"))
+            .setType(STATIC_TYPES.get("ConfigurationProperties"))
             .setDescription(Utils.getSpringPropertyPrefix(service.pakkage(), service.name()))
             .build();
 
@@ -92,10 +96,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setStatements(
                 createMemberVariables(
-                    service, packageName, types, gapicServiceConfig, hasRestOption))
-            .setMethods(createGetterSetters(service, types, gapicServiceConfig, hasRestOption))
+                    service, packageName, dynamicTypes, gapicServiceConfig, hasRestOption))
+            .setMethods(
+                createGetterSetters(service, dynamicTypes, gapicServiceConfig, hasRestOption))
             .setAnnotations(Arrays.asList(classAnnotationNode))
-            .setImplementsTypes(Arrays.asList(types.get("CredentialsSupplier")))
+            .setImplementsTypes(Arrays.asList(STATIC_TYPES.get("CredentialsSupplier")))
             .build();
     return GapicClass.create(Kind.MAIN, classDef);
     // return null;
@@ -144,7 +149,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // Credentials("https://www.googleapis.com/auth/cloud-language");
     NewObjectExpr defaultCredentialScopes =
         builder()
-            .setType(types.get("Credentials"))
+            .setType(STATIC_TYPES.get("Credentials"))
             .setArguments(
                 service.oauthScopes().stream()
                     .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
@@ -154,11 +159,11 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // The single annotation works fine here,
     // but multiple annotations would be written to the same line
     List<AnnotationNode> credentialsAnnotations =
-        Arrays.asList(AnnotationNode.withType(types.get("NestedConfigurationProperty")));
+        Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("NestedConfigurationProperty")));
     ExprStatement credentialsStatement =
         createMemberVarStatement(
             "credentials",
-            types.get("Credentials"),
+            STATIC_TYPES.get("Credentials"),
             true,
             defaultCredentialScopes,
             credentialsAnnotations);
@@ -186,8 +191,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
 
     // declare each retry settings with its default value. use defaults from serviceConfig
-    TypeNode thisClassType = types.get(service.name() + "Properties");
-    List<? extends AstNode> retrySettings =
+    TypeNode thisClassType = types.get(Utils.getServicePropertiesClassName(service));
+    List<Statement> retrySettings =
         Utils.processRetrySettings(
             service,
             serviceConfig,
@@ -208,8 +213,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             },
             (String propertyName) -> new ArrayList<>());
 
-    statements.addAll(
-        retrySettings.stream().map(Statement.class::cast).collect(Collectors.toList()));
+    statements.addAll(retrySettings);
 
     return statements;
   }
@@ -220,14 +224,14 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       GapicServiceConfig gapicServiceConfig,
       boolean hasRestOption) {
 
-    TypeNode thisClassType = types.get(service.name() + "Properties");
+    TypeNode thisClassType = types.get(Utils.getServicePropertiesClassName(service));
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
 
     methodDefinitions.add(
         createGetterMethod(
             thisClassType,
             "credentials",
-            types.get("Credentials"),
+            STATIC_TYPES.get("Credentials"),
             Arrays.asList(AnnotationNode.OVERRIDE)));
     methodDefinitions.add(
         createGetterMethod(thisClassType, "quotaProjectId", TypeNode.STRING, null));
@@ -241,7 +245,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
-    List retrySettings =
+    List<MethodDefinition> retrySettings =
         Utils.processRetrySettings(
             service,
             gapicServiceConfig,
@@ -291,8 +295,36 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static MethodDefinition createSetterMethod(
       TypeNode thisClassType, String propertyName, TypeNode returnType) {
+
+    // Common building blocks
     Variable propertyVar = Variable.builder().setName(propertyName).setType(returnType).build();
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    TypeNode threetenBpDurationType = STATIC_TYPES.get("org.threeten.bp.Duration");
+    TypeNode javaTimeDurationType = STATIC_TYPES.get("java.time.Duration");
+
+    // Default building blocks - may be updated in Duration condition below
+    Variable argumentVar = propertyVar;
+    Expr propertyValueExpr = VariableExpr.withVariable(argumentVar);
+
+    // Setter logic for Duration accepts different type and handles conversion
+    if (returnType.equals(threetenBpDurationType)) {
+      argumentVar = Variable.builder().setName(propertyName).setType(javaTimeDurationType).build();
+
+      MethodInvocationExpr durationToStringExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(argumentVar))
+              .setMethodName("toString")
+              .setReturnType(TypeNode.STRING)
+              .build();
+
+      propertyValueExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(threetenBpDurationType)
+              .setMethodName("parse")
+              .setArguments(durationToStringExpr)
+              .setReturnType(threetenBpDurationType)
+              .build();
+    }
 
     AssignmentExpr propertyVarExpr =
         AssignmentExpr.builder()
@@ -301,7 +333,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(VariableExpr.withVariable(propertyVar))
+            .setValueExpr(propertyValueExpr)
             .build();
 
     String methodName = "set" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propertyName);
@@ -310,83 +342,44 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
-        .setArguments(VariableExpr.builder().setVariable(propertyVar).setIsDecl(true).build())
+        .setArguments(VariableExpr.builder().setVariable(argumentVar).setIsDecl(true).build())
         .setBody(Arrays.asList(ExprStatement.withExpr(propertyVarExpr)))
         .build();
   }
 
   private static Map<String, TypeNode> createDynamicTypes(Service service, String packageName) {
-    Map<String, TypeNode> typeMap =
-        Arrays.asList(CLASS_NAME_PATTERN).stream()
-            .collect(
-                Collectors.toMap(
-                    p -> String.format(p, service.name()),
-                    p ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(p, service.name()))
-                                .setPakkage(packageName)
-                                .build())));
+    Map<String, TypeNode> typeMap = new HashMap<>();
+
     TypeNode clientProperties =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(service.name() + "SpringProperties")
+                .setName(Utils.getServicePropertiesClassName(service))
                 .setPakkage(packageName)
                 .build());
-
-    // import com.google.cloud.spring.core.Credentials;
-    TypeNode credentials =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Credentials")
-                .setPakkage("com.google.cloud.spring.core")
-                .build());
-
-    // import com.google.cloud.spring.core.CredentialsSupplier;
-    TypeNode credentialsSupplier =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("CredentialsSupplier")
-                .setPakkage("com.google.cloud.spring.core")
-                .build());
-    // import org.springframework.boot.context.properties.ConfigurationProperties;
-    TypeNode configurationProperties =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("ConfigurationProperties")
-                .setPakkage("org.springframework.boot.context.properties")
-                .build());
-
-    // import org.springframework.boot.context.properties.NestedConfigurationProperty;
-    TypeNode nestedConfigurationProperty =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("NestedConfigurationProperty")
-                .setPakkage("org.springframework.boot.context.properties")
-                .build());
-
-    // import org.threeten.bp.Duration;
-    TypeNode duration =
-        TypeNode.withReference(
-            VaporReference.builder().setName("Duration").setPakkage("org.threeten.bp").build());
-
-    typeMap.put(service.name() + "Properties", clientProperties);
-    typeMap.put("Credentials", credentials);
-    typeMap.put("Duration", duration);
-    typeMap.put("CredentialsSupplier", credentialsSupplier);
-    typeMap.put("ConfigurationProperties", configurationProperties);
-    typeMap.put("NestedConfigurationProperty", nestedConfigurationProperty);
-
+    typeMap.put(Utils.getServicePropertiesClassName(service), clientProperties);
     return typeMap;
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
-    List<Class> concreteClazzes =
-        Arrays.asList(RetrySettings.class, org.threeten.bp.Duration.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    List<Class<?>> concreteClazzes =
+        Arrays.asList(
+            ConfigurationProperties.class,
+            NestedConfigurationProperty.class,
+            CredentialsSupplier.class,
+            Credentials.class);
+    Map<String, TypeNode> concreteClazzesMap =
+        concreteClazzes.stream()
+            .collect(
+                Collectors.toMap(
+                    Class::getSimpleName,
+                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    // Add Duration classes with full name
+    concreteClazzesMap.put(
+        "org.threeten.bp.Duration",
+        TypeNode.withReference(ConcreteReference.withClazz(org.threeten.bp.Duration.class)));
+    concreteClazzesMap.put(
+        "java.time.Duration",
+        TypeNode.withReference(ConcreteReference.withClazz(java.time.Duration.class)));
+    return concreteClazzesMap;
   }
 }

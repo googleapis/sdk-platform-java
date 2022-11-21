@@ -66,7 +66,7 @@ import org.threeten.bp.Duration;
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
   private final GlobalProperties globalProperties;
-  private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfig.class);
+  private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfiguration.class);
 
   protected EchoSpringAutoConfiguration(
       EchoSpringProperties clientProperties, GlobalProperties globalProperties) {
@@ -79,7 +79,7 @@ public class EchoSpringAutoConfiguration {
    * configuration data files.
    */
   @Bean
-  @ConditionalOnMissingBean(name = "echoCredentials")
+  @ConditionalOnMissingBean
   public CredentialsProvider echoCredentials() throws IOException {
     if (this.clientProperties.getCredentials().hasKey()) {
       return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
@@ -94,7 +94,7 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
-    return EchoSettings.defaultTransportChannelProvider();
+    return defaultTransportChannelProvider();
   }
 
   /**
@@ -105,7 +105,7 @@ public class EchoSpringAutoConfiguration {
    * client
    *
    * <p>Individual retry settings are configured as well. It will use the relevant client library's
-   * default retry settings when they are not specified in EchoProperties.
+   * default retry settings when they are not specified in EchoSpringProperties.
    */
   @Bean
   @ConditionalOnMissingBean
