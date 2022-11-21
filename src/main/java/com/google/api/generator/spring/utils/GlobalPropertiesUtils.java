@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class GlobalPropertiesUtils {
   public static final String GLOBAL_PROPERTIES_CLAZZ_NAME = "GlobalProperties";
-  public static final String GLOBAL_PROPERTIES_PAKKAGE_NAME = "com.google.cloud.global";
+  public static final String GLOBAL_PROPERTIES_PAKKAGE_NAME = "com.google.cloud.spring.global";
 
   public static TypeNode getGlobalPropertiesType() {
     TypeNode loggerType =
