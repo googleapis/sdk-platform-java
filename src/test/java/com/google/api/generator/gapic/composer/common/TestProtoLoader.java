@@ -51,11 +51,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TestProtoLoader {
 
   private static final TestProtoLoader INSTANCE =
       new TestProtoLoader(Transport.GRPC, "src/test/resources/");
+  private static final String ECHO_SERVICE_DESCRIPTION =
+      "This service is used showcase the four main types of rpcs - unary, server\n"
+          + " side streaming, client side streaming, and bidirectional streaming. This\n"
+          + " service also exposes methods that explicitly implement server delay, and\n"
+          + " paginated calls. Set the 'showcase-trailer' metadata key on any method\n"
+          + " to have the values echoed in the response trailers.";
   private final String testFilesDirectory;
   private final Transport transport;
 
@@ -136,6 +143,13 @@ public class TestProtoLoader {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
+    // Explicitly adds service description, since this is not parsed from source code location
+    // in test protos, as it would from a protoc CodeGeneratorRequest
+    List<Service> servicesWithDescription =
+        services.stream()
+            .map(s -> s.toBuilder().setDescription(ECHO_SERVICE_DESCRIPTION).build())
+            .collect(Collectors.toList());
+
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
@@ -145,7 +159,7 @@ public class TestProtoLoader {
     return GapicContext.builder()
         .setMessages(messageTypes)
         .setResourceNames(resourceNames)
-        .setServices(services)
+        .setServices(servicesWithDescription)
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
