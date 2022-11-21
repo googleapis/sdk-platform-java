@@ -10,7 +10,20 @@ env:
   SHOWCASE_VERSION: 0.25.0
 
 jobs:
+  license-header:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '^1.13.1'
+      - name: License Header Check
+        run: |
+          go install github.com/google/addlicense@latest
+          addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java')
+
   build:
+    needs: license-header
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,10 +58,13 @@ jobs:
           echo "and it will start over with a clean cache."
           echo "The old one will disappear after 7 days."
 
+      - name: Java Linter
+        run: bazel --batch run //:google_java_format_verification
+
       - name: Unit Tests
         run: bazel --batch test //:units --noshow_progress --test_output=errors
 
-      - name: Integration Tests
+      - name: Golden Tests
         run: bazel --batch test //test/integration/...
 
       - name: Gradle Build Generated Storage Client Library
@@ -78,10 +94,8 @@ jobs:
           path: ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-out/*/testlogs/*
           retention-days: 5
 
-      - name: Java Linter
-        run: bazel --batch run //:google_java_format_verification
-
   coverage:
+    needs: license-header
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -94,20 +108,8 @@ jobs:
         # Run only test targets, and not golden_update targets.
         run: bazel coverage //:units --combined_report=lcov
 
-  license-header:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v3
-        with:
-          go-version: '^1.13.1'
-      - name: License Header Check
-        run: |
-          go install github.com/google/addlicense@latest
-          addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java')
-
   showcase:
-    needs: build
+    #    needs: build
     runs-on: ubuntu-latest
     #    services:
     #      showcase-server:
