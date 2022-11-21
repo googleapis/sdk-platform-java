@@ -42,47 +42,48 @@ public final class ServiceProto {
     java.lang.String[] descriptorData = {
       "\n\030google/api/service.proto\022\ngoogle.api\032\025"
           + "google/api/auth.proto\032\030google/api/backen"
-          + "d.proto\032\030google/api/billing.proto\032\030googl"
-          + "e/api/context.proto\032\030google/api/control."
-          + "proto\032\036google/api/documentation.proto\032\031g"
-          + "oogle/api/endpoint.proto\032\025google/api/htt"
-          + "p.proto\032\024google/api/log.proto\032\030google/ap"
-          + "i/logging.proto\032\027google/api/metric.proto"
-          + "\032#google/api/monitored_resource.proto\032\033g"
-          + "oogle/api/monitoring.proto\032\026google/api/q"
-          + "uota.proto\032\034google/api/source_info.proto"
-          + "\032!google/api/system_parameter.proto\032\026goo"
-          + "gle/api/usage.proto\032\031google/protobuf/api"
-          + ".proto\032\032google/protobuf/type.proto\032\036goog"
-          + "le/protobuf/wrappers.proto\"\332\007\n\007Service\022\014"
-          + "\n\004name\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022\033\n\023producer_"
-          + "project_id\030\026 \001(\t\022\n\n\002id\030! \001(\t\022\"\n\004apis\030\003 \003"
-          + "(\0132\024.google.protobuf.Api\022$\n\005types\030\004 \003(\0132"
-          + "\025.google.protobuf.Type\022$\n\005enums\030\005 \003(\0132\025."
-          + "google.protobuf.Enum\0220\n\rdocumentation\030\006 "
-          + "\001(\0132\031.google.api.Documentation\022$\n\007backen"
-          + "d\030\010 \001(\0132\023.google.api.Backend\022\036\n\004http\030\t \001"
-          + "(\0132\020.google.api.Http\022 \n\005quota\030\n \001(\0132\021.go"
-          + "ogle.api.Quota\0222\n\016authentication\030\013 \001(\0132\032"
-          + ".google.api.Authentication\022$\n\007context\030\014 "
-          + "\001(\0132\023.google.api.Context\022 \n\005usage\030\017 \001(\0132"
-          + "\021.google.api.Usage\022\'\n\tendpoints\030\022 \003(\0132\024."
-          + "google.api.Endpoint\022$\n\007control\030\025 \001(\0132\023.g"
-          + "oogle.api.Control\022\'\n\004logs\030\027 \003(\0132\031.google"
-          + ".api.LogDescriptor\022-\n\007metrics\030\030 \003(\0132\034.go"
-          + "ogle.api.MetricDescriptor\022D\n\023monitored_r"
-          + "esources\030\031 \003(\0132\'.google.api.MonitoredRes"
-          + "ourceDescriptor\022$\n\007billing\030\032 \001(\0132\023.googl"
-          + "e.api.Billing\022$\n\007logging\030\033 \001(\0132\023.google."
-          + "api.Logging\022*\n\nmonitoring\030\034 \001(\0132\026.google"
-          + ".api.Monitoring\0227\n\021system_parameters\030\035 \001"
-          + "(\0132\034.google.api.SystemParameters\022+\n\013sour"
-          + "ce_info\030% \001(\0132\026.google.api.SourceInfo\0228\n"
-          + "\016config_version\030\024 \001(\0132\034.google.protobuf."
-          + "UInt32ValueB\002\030\001Bn\n\016com.google.apiB\014Servi"
-          + "ceProtoP\001ZEgoogle.golang.org/genproto/go"
-          + "ogleapis/api/serviceconfig;serviceconfig"
-          + "\242\002\004GAPIb\006proto3"
+          + "d.proto\032\030google/api/billing.proto\032\027googl"
+          + "e/api/client.proto\032\030google/api/context.p"
+          + "roto\032\030google/api/control.proto\032\036google/a"
+          + "pi/documentation.proto\032\031google/api/endpo"
+          + "int.proto\032\025google/api/http.proto\032\024google"
+          + "/api/log.proto\032\030google/api/logging.proto"
+          + "\032\027google/api/metric.proto\032#google/api/mo"
+          + "nitored_resource.proto\032\033google/api/monit"
+          + "oring.proto\032\026google/api/quota.proto\032\034goo"
+          + "gle/api/source_info.proto\032!google/api/sy"
+          + "stem_parameter.proto\032\026google/api/usage.p"
+          + "roto\032\031google/protobuf/api.proto\032\032google/"
+          + "protobuf/type.proto\032\036google/protobuf/wra"
+          + "ppers.proto\"\202\010\n\007Service\022\014\n\004name\030\001 \001(\t\022\r\n"
+          + "\005title\030\002 \001(\t\022\033\n\023producer_project_id\030\026 \001("
+          + "\t\022\n\n\002id\030! \001(\t\022\"\n\004apis\030\003 \003(\0132\024.google.pro"
+          + "tobuf.Api\022$\n\005types\030\004 \003(\0132\025.google.protob"
+          + "uf.Type\022$\n\005enums\030\005 \003(\0132\025.google.protobuf"
+          + ".Enum\0220\n\rdocumentation\030\006 \001(\0132\031.google.ap"
+          + "i.Documentation\022$\n\007backend\030\010 \001(\0132\023.googl"
+          + "e.api.Backend\022\036\n\004http\030\t \001(\0132\020.google.api"
+          + ".Http\022 \n\005quota\030\n \001(\0132\021.google.api.Quota\022"
+          + "2\n\016authentication\030\013 \001(\0132\032.google.api.Aut"
+          + "hentication\022$\n\007context\030\014 \001(\0132\023.google.ap"
+          + "i.Context\022 \n\005usage\030\017 \001(\0132\021.google.api.Us"
+          + "age\022\'\n\tendpoints\030\022 \003(\0132\024.google.api.Endp"
+          + "oint\022$\n\007control\030\025 \001(\0132\023.google.api.Contr"
+          + "ol\022\'\n\004logs\030\027 \003(\0132\031.google.api.LogDescrip"
+          + "tor\022-\n\007metrics\030\030 \003(\0132\034.google.api.Metric"
+          + "Descriptor\022D\n\023monitored_resources\030\031 \003(\0132"
+          + "\'.google.api.MonitoredResourceDescriptor"
+          + "\022$\n\007billing\030\032 \001(\0132\023.google.api.Billing\022$"
+          + "\n\007logging\030\033 \001(\0132\023.google.api.Logging\022*\n\n"
+          + "monitoring\030\034 \001(\0132\026.google.api.Monitoring"
+          + "\0227\n\021system_parameters\030\035 \001(\0132\034.google.api"
+          + ".SystemParameters\022+\n\013source_info\030% \001(\0132\026"
+          + ".google.api.SourceInfo\022*\n\npublishing\030- \001"
+          + "(\0132\026.google.api.Publishing\0224\n\016config_ver"
+          + "sion\030\024 \001(\0132\034.google.protobuf.UInt32Value"
+          + "Bn\n\016com.google.apiB\014ServiceProtoP\001ZEgoog"
+          + "le.golang.org/genproto/googleapis/api/se"
+          + "rviceconfig;serviceconfig\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -91,6 +92,7 @@ public final class ServiceProto {
               com.google.api.AuthProto.getDescriptor(),
               com.google.api.BackendProto.getDescriptor(),
               com.google.api.BillingProto.getDescriptor(),
+              com.google.api.ClientProto.getDescriptor(),
               com.google.api.ContextProto.getDescriptor(),
               com.google.api.ControlProto.getDescriptor(),
               com.google.api.DocumentationProto.getDescriptor(),
@@ -138,11 +140,13 @@ public final class ServiceProto {
               "Monitoring",
               "SystemParameters",
               "SourceInfo",
+              "Publishing",
               "ConfigVersion",
             });
     com.google.api.AuthProto.getDescriptor();
     com.google.api.BackendProto.getDescriptor();
     com.google.api.BillingProto.getDescriptor();
+    com.google.api.ClientProto.getDescriptor();
     com.google.api.ContextProto.getDescriptor();
     com.google.api.ControlProto.getDescriptor();
     com.google.api.DocumentationProto.getDescriptor();

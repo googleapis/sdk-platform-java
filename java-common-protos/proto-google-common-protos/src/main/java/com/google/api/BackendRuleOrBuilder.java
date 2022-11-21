@@ -121,14 +121,16 @@ public interface BackendRuleOrBuilder
    *
    *
    * <pre>
-   * Minimum deadline in seconds needed for this method. Calls having deadline
-   * value lower than this will be rejected.
+   * Deprecated, do not use.
    * </pre>
    *
-   * <code>double min_deadline = 4;</code>
+   * <code>double min_deadline = 4 [deprecated = true];</code>
    *
+   * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+   *     google/api/backend.proto;l=123
    * @return The minDeadline.
    */
+  @java.lang.Deprecated
   double getMinDeadline();
 
   /**

@@ -28,7 +28,8 @@ public interface VisibilityRuleOrBuilder
    *
    * <pre>
    * Selects methods, messages, fields, enums, etc. to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -41,7 +42,8 @@ public interface VisibilityRuleOrBuilder
    *
    * <pre>
    * Selects methods, messages, fields, enums, etc. to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>

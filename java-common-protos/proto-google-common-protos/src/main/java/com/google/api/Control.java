@@ -22,9 +22,10 @@ package com.google.api;
  *
  *
  * <pre>
- * Selects and configures the service controller used by the service.  The
- * service controller handles features like abuse, quota, billing, logging,
- * monitoring, etc.
+ * Selects and configures the service controller used by the service.
+ * Example:
+ *     control:
+ *       environment: servicecontrol.googleapis.com
  * </pre>
  *
  * Protobuf type {@code google.api.Control}
@@ -72,8 +73,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The service control environment to use. If empty, no control plane
-   * feature (like quota and billing) will be enabled.
+   * The service controller environment to use. If empty, no control plane
+   * feature (like quota and billing) will be enabled. The recommended value for
+   * most services is servicecontrol.googleapis.com
    * </pre>
    *
    * <code>string environment = 1;</code>
@@ -96,8 +98,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The service control environment to use. If empty, no control plane
-   * feature (like quota and billing) will be enabled.
+   * The service controller environment to use. If empty, no control plane
+   * feature (like quota and billing) will be enabled. The recommended value for
+   * most services is servicecontrol.googleapis.com
    * </pre>
    *
    * <code>string environment = 1;</code>
@@ -278,9 +281,10 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Selects and configures the service controller used by the service.  The
-   * service controller handles features like abuse, quota, billing, logging,
-   * monitoring, etc.
+   * Selects and configures the service controller used by the service.
+   * Example:
+   *     control:
+   *       environment: servicecontrol.googleapis.com
    * </pre>
    *
    * Protobuf type {@code google.api.Control}
@@ -446,8 +450,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The service control environment to use. If empty, no control plane
-     * feature (like quota and billing) will be enabled.
+     * The service controller environment to use. If empty, no control plane
+     * feature (like quota and billing) will be enabled. The recommended value for
+     * most services is servicecontrol.googleapis.com
      * </pre>
      *
      * <code>string environment = 1;</code>
@@ -469,8 +474,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The service control environment to use. If empty, no control plane
-     * feature (like quota and billing) will be enabled.
+     * The service controller environment to use. If empty, no control plane
+     * feature (like quota and billing) will be enabled. The recommended value for
+     * most services is servicecontrol.googleapis.com
      * </pre>
      *
      * <code>string environment = 1;</code>
@@ -492,8 +498,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The service control environment to use. If empty, no control plane
-     * feature (like quota and billing) will be enabled.
+     * The service controller environment to use. If empty, no control plane
+     * feature (like quota and billing) will be enabled. The recommended value for
+     * most services is servicecontrol.googleapis.com
      * </pre>
      *
      * <code>string environment = 1;</code>
@@ -514,8 +521,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The service control environment to use. If empty, no control plane
-     * feature (like quota and billing) will be enabled.
+     * The service controller environment to use. If empty, no control plane
+     * feature (like quota and billing) will be enabled. The recommended value for
+     * most services is servicecontrol.googleapis.com
      * </pre>
      *
      * <code>string environment = 1;</code>
@@ -532,8 +540,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The service control environment to use. If empty, no control plane
-     * feature (like quota and billing) will be enabled.
+     * The service controller environment to use. If empty, no control plane
+     * feature (like quota and billing) will be enabled. The recommended value for
+     * most services is servicecontrol.googleapis.com
      * </pre>
      *
      * <code>string environment = 1;</code>

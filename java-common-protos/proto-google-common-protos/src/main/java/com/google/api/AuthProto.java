@@ -67,19 +67,19 @@ public final class AuthProto {
           + "tionRule\022\020\n\010selector\030\001 \001(\t\022,\n\005oauth\030\002 \001("
           + "\0132\035.google.api.OAuthRequirements\022 \n\030allo"
           + "w_without_credential\030\005 \001(\010\0221\n\014requiremen"
-          + "ts\030\007 \003(\0132\033.google.api.AuthRequirement\"L\n"
+          + "ts\030\007 \003(\0132\033.google.api.AuthRequirement\"^\n"
           + "\013JwtLocation\022\020\n\006header\030\001 \001(\tH\000\022\017\n\005query\030"
-          + "\002 \001(\tH\000\022\024\n\014value_prefix\030\003 \001(\tB\004\n\002in\"\232\001\n\014"
-          + "AuthProvider\022\n\n\002id\030\001 \001(\t\022\016\n\006issuer\030\002 \001(\t"
-          + "\022\020\n\010jwks_uri\030\003 \001(\t\022\021\n\taudiences\030\004 \001(\t\022\031\n"
-          + "\021authorization_url\030\005 \001(\t\022.\n\rjwt_location"
-          + "s\030\006 \003(\0132\027.google.api.JwtLocation\"-\n\021OAut"
-          + "hRequirements\022\030\n\020canonical_scopes\030\001 \001(\t\""
-          + "9\n\017AuthRequirement\022\023\n\013provider_id\030\001 \001(\t\022"
-          + "\021\n\taudiences\030\002 \001(\tBk\n\016com.google.apiB\tAu"
-          + "thProtoP\001ZEgoogle.golang.org/genproto/go"
-          + "ogleapis/api/serviceconfig;serviceconfig"
-          + "\242\002\004GAPIb\006proto3"
+          + "\002 \001(\tH\000\022\020\n\006cookie\030\004 \001(\tH\000\022\024\n\014value_prefi"
+          + "x\030\003 \001(\tB\004\n\002in\"\232\001\n\014AuthProvider\022\n\n\002id\030\001 \001"
+          + "(\t\022\016\n\006issuer\030\002 \001(\t\022\020\n\010jwks_uri\030\003 \001(\t\022\021\n\t"
+          + "audiences\030\004 \001(\t\022\031\n\021authorization_url\030\005 \001"
+          + "(\t\022.\n\rjwt_locations\030\006 \003(\0132\027.google.api.J"
+          + "wtLocation\"-\n\021OAuthRequirements\022\030\n\020canon"
+          + "ical_scopes\030\001 \001(\t\"9\n\017AuthRequirement\022\023\n\013"
+          + "provider_id\030\001 \001(\t\022\021\n\taudiences\030\002 \001(\tBk\n\016"
+          + "com.google.apiB\tAuthProtoP\001ZEgoogle.gola"
+          + "ng.org/genproto/googleapis/api/serviceco"
+          + "nfig;serviceconfig\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -104,7 +104,7 @@ public final class AuthProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_api_JwtLocation_descriptor,
             new java.lang.String[] {
-              "Header", "Query", "ValuePrefix", "In",
+              "Header", "Query", "Cookie", "ValuePrefix", "In",
             });
     internal_static_google_api_AuthProvider_descriptor = getDescriptor().getMessageTypes().get(3);
     internal_static_google_api_AuthProvider_fieldAccessorTable =

@@ -27,8 +27,9 @@ public interface ControlOrBuilder
    *
    *
    * <pre>
-   * The service control environment to use. If empty, no control plane
-   * feature (like quota and billing) will be enabled.
+   * The service controller environment to use. If empty, no control plane
+   * feature (like quota and billing) will be enabled. The recommended value for
+   * most services is servicecontrol.googleapis.com
    * </pre>
    *
    * <code>string environment = 1;</code>
@@ -40,8 +41,9 @@ public interface ControlOrBuilder
    *
    *
    * <pre>
-   * The service control environment to use. If empty, no control plane
-   * feature (like quota and billing) will be enabled.
+   * The service controller environment to use. If empty, no control plane
+   * feature (like quota and billing) will be enabled. The recommended value for
+   * most services is servicecontrol.googleapis.com
    * </pre>
    *
    * <code>string environment = 1;</code>

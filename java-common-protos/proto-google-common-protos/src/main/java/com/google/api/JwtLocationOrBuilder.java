@@ -101,6 +101,43 @@ public interface JwtLocationOrBuilder
    *
    *
    * <pre>
+   * Specifies cookie name to extract JWT token.
+   * </pre>
+   *
+   * <code>string cookie = 4;</code>
+   *
+   * @return Whether the cookie field is set.
+   */
+  boolean hasCookie();
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cookie name to extract JWT token.
+   * </pre>
+   *
+   * <code>string cookie = 4;</code>
+   *
+   * @return The cookie.
+   */
+  java.lang.String getCookie();
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cookie name to extract JWT token.
+   * </pre>
+   *
+   * <code>string cookie = 4;</code>
+   *
+   * @return The bytes for cookie.
+   */
+  com.google.protobuf.ByteString getCookieBytes();
+
+  /**
+   *
+   *
+   * <pre>
    * The value prefix. The value format is "value_prefix{token}"
    * Only applies to "in" header type. Must be empty for "in" query type.
    * If not empty, the header value has to match (case sensitive) this prefix.

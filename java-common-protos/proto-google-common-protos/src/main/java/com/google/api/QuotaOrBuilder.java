@@ -27,7 +27,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -37,7 +37,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -47,7 +47,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -57,7 +57,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -67,7 +67,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -78,7 +78,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -89,7 +89,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -100,7 +100,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -111,7 +111,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -122,7 +122,7 @@ public interface QuotaOrBuilder
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *

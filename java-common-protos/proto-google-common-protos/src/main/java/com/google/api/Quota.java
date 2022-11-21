@@ -38,10 +38,10 @@ package com.google.api;
  *        unit: "1/min/{project}"  # rate limit for consumer projects
  *        values:
  *          STANDARD: 10000
- *      # The metric rules bind all methods to the read_calls metric,
- *      # except for the UpdateBook and DeleteBook methods. These two methods
- *      # are mapped to the write_calls metric, with the UpdateBook method
- *      # consuming at twice rate as the DeleteBook method.
+ *      (The metric rules bind all methods to the read_calls metric,
+ *       except for the UpdateBook and DeleteBook methods. These two methods
+ *       are mapped to the write_calls metric, with the UpdateBook method
+ *       consuming at twice rate as the DeleteBook method.)
  *      metric_rules:
  *      - selector: "*"
  *        metric_costs:
@@ -110,7 +110,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -123,7 +123,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -136,7 +136,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -149,7 +149,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -162,7 +162,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `QuotaLimit` definitions for the service.
+   * List of QuotaLimit definitions for the service.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -178,7 +178,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -192,7 +192,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -207,7 +207,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -221,7 +221,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -235,7 +235,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * List of `MetricRule` definitions, each one mapping a selected method to one
+   * List of MetricRule definitions, each one mapping a selected method to one
    * or more metrics.
    * </pre>
    *
@@ -436,10 +436,10 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *        unit: "1/min/{project}"  # rate limit for consumer projects
    *        values:
    *          STANDARD: 10000
-   *      # The metric rules bind all methods to the read_calls metric,
-   *      # except for the UpdateBook and DeleteBook methods. These two methods
-   *      # are mapped to the write_calls metric, with the UpdateBook method
-   *      # consuming at twice rate as the DeleteBook method.
+   *      (The metric rules bind all methods to the read_calls metric,
+   *       except for the UpdateBook and DeleteBook methods. These two methods
+   *       are mapped to the write_calls metric, with the UpdateBook method
+   *       consuming at twice rate as the DeleteBook method.)
    *      metric_rules:
    *      - selector: "*"
    *        metric_costs:
@@ -739,7 +739,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -755,7 +755,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -771,7 +771,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -787,7 +787,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -809,7 +809,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -828,7 +828,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -850,7 +850,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -872,7 +872,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -891,7 +891,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -910,7 +910,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -929,7 +929,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -948,7 +948,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -967,7 +967,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -979,7 +979,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -995,7 +995,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1011,7 +1011,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1023,7 +1023,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1036,7 +1036,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `QuotaLimit` definitions for the service.
+     * List of QuotaLimit definitions for the service.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1082,7 +1082,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1099,7 +1099,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1116,7 +1116,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1133,7 +1133,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1156,7 +1156,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1176,7 +1176,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1199,7 +1199,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1222,7 +1222,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1242,7 +1242,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1262,7 +1262,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1283,7 +1283,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1303,7 +1303,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1323,7 +1323,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1336,7 +1336,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1353,7 +1353,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1371,7 +1371,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1385,7 +1385,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *
@@ -1399,7 +1399,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * List of `MetricRule` definitions, each one mapping a selected method to one
+     * List of MetricRule definitions, each one mapping a selected method to one
      * or more metrics.
      * </pre>
      *

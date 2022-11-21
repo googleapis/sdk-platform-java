@@ -22,19 +22,24 @@ package com.google.api;
  *
  *
  * <pre>
- * `Endpoint` describes a network endpoint of a service that serves a set of
+ * `Endpoint` describes a network address of a service that serves a set of
  * APIs. It is commonly known as a service endpoint. A service may expose
  * any number of service endpoints, and all service endpoints share the same
  * service definition, such as quota limits and monitoring metrics.
- * Example service configuration:
+ * Example:
+ *     type: google.api.Service
  *     name: library-example.googleapis.com
  *     endpoints:
- *       # Below entry makes 'google.example.library.v1.Library'
- *       # API be served from endpoint address library-example.googleapis.com.
- *       # It also allows HTTP OPTIONS calls to be passed to the backend, for
- *       # it to decide whether the subsequent cross-origin request is
- *       # allowed to proceed.
+ *       # Declares network address `https://library-example.googleapis.com`
+ *       # for service `library-example.googleapis.com`. The `https` scheme
+ *       # is implicit for all service endpoints. Other schemes may be
+ *       # supported in the future.
  *     - name: library-example.googleapis.com
+ *       allow_cors: false
+ *     - name: content-staging-library-example.googleapis.com
+ *       # Allows HTTP OPTIONS calls to be passed to the API frontend, for it
+ *       # to decide whether the subsequent cross-origin request is allowed
+ *       # to proceed.
  *       allow_cors: true
  * </pre>
  *
@@ -136,14 +141,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @return A list containing the aliases.
    */
   @java.lang.Deprecated
@@ -156,14 +161,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @return The count of aliases.
    */
   @java.lang.Deprecated
@@ -176,14 +181,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @param index The index of the element to return.
    * @return The aliases at the given index.
    */
@@ -197,14 +202,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @param index The index of the value to return.
    * @return The bytes of the aliases at the given index.
    */
@@ -488,19 +493,24 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * `Endpoint` describes a network endpoint of a service that serves a set of
+   * `Endpoint` describes a network address of a service that serves a set of
    * APIs. It is commonly known as a service endpoint. A service may expose
    * any number of service endpoints, and all service endpoints share the same
    * service definition, such as quota limits and monitoring metrics.
-   * Example service configuration:
+   * Example:
+   *     type: google.api.Service
    *     name: library-example.googleapis.com
    *     endpoints:
-   *       # Below entry makes 'google.example.library.v1.Library'
-   *       # API be served from endpoint address library-example.googleapis.com.
-   *       # It also allows HTTP OPTIONS calls to be passed to the backend, for
-   *       # it to decide whether the subsequent cross-origin request is
-   *       # allowed to proceed.
+   *       # Declares network address `https://library-example.googleapis.com`
+   *       # for service `library-example.googleapis.com`. The `https` scheme
+   *       # is implicit for all service endpoints. Other schemes may be
+   *       # supported in the future.
    *     - name: library-example.googleapis.com
+   *       allow_cors: false
+   *     - name: content-staging-library-example.googleapis.com
+   *       # Allows HTTP OPTIONS calls to be passed to the API frontend, for it
+   *       # to decide whether the subsequent cross-origin request is allowed
+   *       # to proceed.
    *       allow_cors: true
    * </pre>
    *
@@ -835,14 +845,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @return A list containing the aliases.
      */
     @java.lang.Deprecated
@@ -855,14 +865,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @return The count of aliases.
      */
     @java.lang.Deprecated
@@ -875,14 +885,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @param index The index of the element to return.
      * @return The aliases at the given index.
      */
@@ -896,14 +906,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @param index The index of the value to return.
      * @return The bytes of the aliases at the given index.
      */
@@ -917,14 +927,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @param index The index to set the value at.
      * @param value The aliases to set.
      * @return This builder for chaining.
@@ -945,14 +955,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @param value The aliases to add.
      * @return This builder for chaining.
      */
@@ -972,14 +982,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @param values The aliases to add.
      * @return This builder for chaining.
      */
@@ -996,14 +1006,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @return This builder for chaining.
      */
     @java.lang.Deprecated
@@ -1019,14 +1029,14 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Unimplemented. Dot not use.
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-     * aliases.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+     * of the intended aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      *
-     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+     * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
      * @param value The bytes of the aliases to add.
      * @return This builder for chaining.
      */

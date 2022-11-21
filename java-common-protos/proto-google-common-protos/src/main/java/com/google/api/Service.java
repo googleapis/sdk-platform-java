@@ -22,17 +22,26 @@ package com.google.api;
  *
  *
  * <pre>
- * `Service` is the root object of Google service configuration schema. It
- * describes basic information about a service, such as the name and the
- * title, and delegates other aspects to sub-sections. Each sub-section is
- * either a proto message or a repeated proto message that configures a
- * specific aspect, such as auth. See each proto message definition for details.
+ * `Service` is the root object of Google API service configuration (service
+ * config). It describes the basic information about a logical service,
+ * such as the service name and the user-facing title, and delegates other
+ * aspects to sub-sections. Each sub-section is either a proto message or a
+ * repeated proto message that configures a specific aspect, such as auth.
+ * For more information, see each proto message definition.
  * Example:
  *     type: google.api.Service
  *     name: calendar.googleapis.com
  *     title: Google Calendar API
  *     apis:
  *     - name: google.calendar.v3.Calendar
+ *     visibility:
+ *       rules:
+ *       - selector: "google.calendar.v3.*"
+ *         restriction: PREVIEW
+ *     backend:
+ *       rules:
+ *       - selector: "google.calendar.v3.*"
+ *         address: calendar.example.com
  *     authentication:
  *       providers:
  *       - id: google_calendar_auth
@@ -154,7 +163,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The product title for this service.
+   * The product title for this service, it is the name displayed in Google
+   * Cloud Console.
    * </pre>
    *
    * <code>string title = 2;</code>
@@ -177,7 +187,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The product title for this service.
+   * The product title for this service, it is the name displayed in Google
+   * Cloud Console.
    * </pre>
    *
    * <code>string title = 2;</code>
@@ -396,10 +407,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are
-   * automatically included.  Messages which are not referenced but
-   * shall be included, such as types used by the `google.protobuf.Any` type,
-   * should be listed here by name. Example:
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -415,10 +426,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are
-   * automatically included.  Messages which are not referenced but
-   * shall be included, such as types used by the `google.protobuf.Any` type,
-   * should be listed here by name. Example:
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -434,10 +445,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are
-   * automatically included.  Messages which are not referenced but
-   * shall be included, such as types used by the `google.protobuf.Any` type,
-   * should be listed here by name. Example:
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -453,10 +464,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are
-   * automatically included.  Messages which are not referenced but
-   * shall be included, such as types used by the `google.protobuf.Any` type,
-   * should be listed here by name. Example:
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -472,10 +483,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are
-   * automatically included.  Messages which are not referenced but
-   * shall be included, such as types used by the `google.protobuf.Any` type,
-   * should be listed here by name. Example:
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -493,10 +504,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A list of all enum types included in this API service.  Enums
-   * referenced directly or indirectly by the `apis` are automatically
-   * included.  Enums which are not referenced but shall be included
-   * should be listed here by name. Example:
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -511,10 +522,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A list of all enum types included in this API service.  Enums
-   * referenced directly or indirectly by the `apis` are automatically
-   * included.  Enums which are not referenced but shall be included
-   * should be listed here by name. Example:
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -529,10 +540,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A list of all enum types included in this API service.  Enums
-   * referenced directly or indirectly by the `apis` are automatically
-   * included.  Enums which are not referenced but shall be included
-   * should be listed here by name. Example:
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -547,10 +558,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A list of all enum types included in this API service.  Enums
-   * referenced directly or indirectly by the `apis` are automatically
-   * included.  Enums which are not referenced but shall be included
-   * should be listed here by name. Example:
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -565,10 +576,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A list of all enum types included in this API service.  Enums
-   * referenced directly or indirectly by the `apis` are automatically
-   * included.  Enums which are not referenced but shall be included
-   * should be listed here by name. Example:
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -1474,6 +1485,58 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     return getSourceInfo();
   }
 
+  public static final int PUBLISHING_FIELD_NUMBER = 45;
+  private com.google.api.Publishing publishing_;
+  /**
+   *
+   *
+   * <pre>
+   * Settings for [Google Cloud Client
+   * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+   * generated from APIs defined as protocol buffers.
+   * </pre>
+   *
+   * <code>.google.api.Publishing publishing = 45;</code>
+   *
+   * @return Whether the publishing field is set.
+   */
+  @java.lang.Override
+  public boolean hasPublishing() {
+    return publishing_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Settings for [Google Cloud Client
+   * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+   * generated from APIs defined as protocol buffers.
+   * </pre>
+   *
+   * <code>.google.api.Publishing publishing = 45;</code>
+   *
+   * @return The publishing.
+   */
+  @java.lang.Override
+  public com.google.api.Publishing getPublishing() {
+    return publishing_ == null ? com.google.api.Publishing.getDefaultInstance() : publishing_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Settings for [Google Cloud Client
+   * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+   * generated from APIs defined as protocol buffers.
+   * </pre>
+   *
+   * <code>.google.api.Publishing publishing = 45;</code>
+   */
+  @java.lang.Override
+  public com.google.api.PublishingOrBuilder getPublishingOrBuilder() {
+    return getPublishing();
+  }
+
   public static final int CONFIG_VERSION_FIELD_NUMBER = 20;
   private com.google.protobuf.UInt32Value configVersion_;
   /**
@@ -1485,13 +1548,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
    *
-   * @deprecated google.api.Service.config_version is deprecated. See google/api/service.proto;l=170
    * @return Whether the configVersion field is set.
    */
   @java.lang.Override
-  @java.lang.Deprecated
   public boolean hasConfigVersion() {
     return configVersion_ != null;
   }
@@ -1504,13 +1565,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
    *
-   * @deprecated google.api.Service.config_version is deprecated. See google/api/service.proto;l=170
    * @return The configVersion.
    */
   @java.lang.Override
-  @java.lang.Deprecated
   public com.google.protobuf.UInt32Value getConfigVersion() {
     return configVersion_ == null
         ? com.google.protobuf.UInt32Value.getDefaultInstance()
@@ -1525,10 +1584,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * sets this field to `3`.
    * </pre>
    *
-   * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
    */
   @java.lang.Override
-  @java.lang.Deprecated
   public com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder() {
     return getConfigVersion();
   }
@@ -1622,6 +1680,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (sourceInfo_ != null) {
       output.writeMessage(37, getSourceInfo());
     }
+    if (publishing_ != null) {
+      output.writeMessage(45, getPublishing());
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -1707,6 +1768,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (sourceInfo_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(37, getSourceInfo());
     }
+    if (publishing_ != null) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(45, getPublishing());
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -1784,6 +1848,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (hasSourceInfo() != other.hasSourceInfo()) return false;
     if (hasSourceInfo()) {
       if (!getSourceInfo().equals(other.getSourceInfo())) return false;
+    }
+    if (hasPublishing() != other.hasPublishing()) return false;
+    if (hasPublishing()) {
+      if (!getPublishing().equals(other.getPublishing())) return false;
     }
     if (hasConfigVersion() != other.hasConfigVersion()) return false;
     if (hasConfigVersion()) {
@@ -1887,6 +1955,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
     if (hasSourceInfo()) {
       hash = (37 * hash) + SOURCE_INFO_FIELD_NUMBER;
       hash = (53 * hash) + getSourceInfo().hashCode();
+    }
+    if (hasPublishing()) {
+      hash = (37 * hash) + PUBLISHING_FIELD_NUMBER;
+      hash = (53 * hash) + getPublishing().hashCode();
     }
     if (hasConfigVersion()) {
       hash = (37 * hash) + CONFIG_VERSION_FIELD_NUMBER;
@@ -1995,17 +2067,26 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * `Service` is the root object of Google service configuration schema. It
-   * describes basic information about a service, such as the name and the
-   * title, and delegates other aspects to sub-sections. Each sub-section is
-   * either a proto message or a repeated proto message that configures a
-   * specific aspect, such as auth. See each proto message definition for details.
+   * `Service` is the root object of Google API service configuration (service
+   * config). It describes the basic information about a logical service,
+   * such as the service name and the user-facing title, and delegates other
+   * aspects to sub-sections. Each sub-section is either a proto message or a
+   * repeated proto message that configures a specific aspect, such as auth.
+   * For more information, see each proto message definition.
    * Example:
    *     type: google.api.Service
    *     name: calendar.googleapis.com
    *     title: Google Calendar API
    *     apis:
    *     - name: google.calendar.v3.Calendar
+   *     visibility:
+   *       rules:
+   *       - selector: "google.calendar.v3.*"
+   *         restriction: PREVIEW
+   *     backend:
+   *       rules:
+   *       - selector: "google.calendar.v3.*"
+   *         address: calendar.example.com
    *     authentication:
    *       providers:
    *       - id: google_calendar_auth
@@ -2180,6 +2261,12 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
         sourceInfo_ = null;
         sourceInfoBuilder_ = null;
       }
+      if (publishingBuilder_ == null) {
+        publishing_ = null;
+      } else {
+        publishing_ = null;
+        publishingBuilder_ = null;
+      }
       if (configVersionBuilder_ == null) {
         configVersion_ = null;
       } else {
@@ -2343,6 +2430,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
         result.sourceInfo_ = sourceInfo_;
       } else {
         result.sourceInfo_ = sourceInfoBuilder_.build();
+      }
+      if (publishingBuilder_ == null) {
+        result.publishing_ = publishing_;
+      } else {
+        result.publishing_ = publishingBuilder_.build();
       }
       if (configVersionBuilder_ == null) {
         result.configVersion_ = configVersion_;
@@ -2642,6 +2734,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
       if (other.hasSourceInfo()) {
         mergeSourceInfo(other.getSourceInfo());
       }
+      if (other.hasPublishing()) {
+        mergePublishing(other.getPublishing());
+      }
       if (other.hasConfigVersion()) {
         mergeConfigVersion(other.getConfigVersion());
       }
@@ -2865,6 +2960,12 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
 
                 break;
               } // case 298
+            case 362:
+              {
+                input.readMessage(getPublishingFieldBuilder().getBuilder(), extensionRegistry);
+
+                break;
+              } // case 362
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -3010,7 +3111,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The product title for this service.
+     * The product title for this service, it is the name displayed in Google
+     * Cloud Console.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3032,7 +3134,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The product title for this service.
+     * The product title for this service, it is the name displayed in Google
+     * Cloud Console.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3054,7 +3157,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The product title for this service.
+     * The product title for this service, it is the name displayed in Google
+     * Cloud Console.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3075,7 +3179,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The product title for this service.
+     * The product title for this service, it is the name displayed in Google
+     * Cloud Console.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3092,7 +3197,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The product title for this service.
+     * The product title for this service, it is the name displayed in Google
+     * Cloud Console.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3771,10 +3877,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3793,10 +3899,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3815,10 +3921,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3837,10 +3943,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3865,10 +3971,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3890,10 +3996,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3918,10 +4024,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3946,10 +4052,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3971,10 +4077,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3996,10 +4102,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4021,10 +4127,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4046,10 +4152,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4071,10 +4177,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4089,10 +4195,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4111,10 +4217,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4133,10 +4239,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4151,10 +4257,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4170,10 +4276,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are
-     * automatically included.  Messages which are not referenced but
-     * shall be included, such as types used by the `google.protobuf.Any` type,
-     * should be listed here by name. Example:
+     * Types referenced directly or indirectly by the `apis` are automatically
+     * included.  Messages which are not referenced but shall be included, such as
+     * types used by the `google.protobuf.Any` type, should be listed here by
+     * name by the configuration author. Example:
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4220,10 +4326,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4241,10 +4347,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4262,10 +4368,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4283,10 +4389,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4310,10 +4416,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4334,10 +4440,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4361,10 +4467,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4388,10 +4494,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4412,10 +4518,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4436,10 +4542,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4460,10 +4566,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4484,10 +4590,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4508,10 +4614,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4525,10 +4631,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4546,10 +4652,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4567,10 +4673,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4584,10 +4690,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4602,10 +4708,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A list of all enum types included in this API service.  Enums
-     * referenced directly or indirectly by the `apis` are automatically
-     * included.  Enums which are not referenced but shall be included
-     * should be listed here by name. Example:
+     * A list of all enum types included in this API service.  Enums referenced
+     * directly or indirectly by the `apis` are automatically included.  Enums
+     * which are not referenced but shall be included should be listed here by
+     * name by the configuration author. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -8371,6 +8477,203 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
       return sourceInfoBuilder_;
     }
 
+    private com.google.api.Publishing publishing_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.api.Publishing,
+            com.google.api.Publishing.Builder,
+            com.google.api.PublishingOrBuilder>
+        publishingBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     *
+     * @return Whether the publishing field is set.
+     */
+    public boolean hasPublishing() {
+      return publishingBuilder_ != null || publishing_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     *
+     * @return The publishing.
+     */
+    public com.google.api.Publishing getPublishing() {
+      if (publishingBuilder_ == null) {
+        return publishing_ == null ? com.google.api.Publishing.getDefaultInstance() : publishing_;
+      } else {
+        return publishingBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    public Builder setPublishing(com.google.api.Publishing value) {
+      if (publishingBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        publishing_ = value;
+        onChanged();
+      } else {
+        publishingBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    public Builder setPublishing(com.google.api.Publishing.Builder builderForValue) {
+      if (publishingBuilder_ == null) {
+        publishing_ = builderForValue.build();
+        onChanged();
+      } else {
+        publishingBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    public Builder mergePublishing(com.google.api.Publishing value) {
+      if (publishingBuilder_ == null) {
+        if (publishing_ != null) {
+          publishing_ =
+              com.google.api.Publishing.newBuilder(publishing_).mergeFrom(value).buildPartial();
+        } else {
+          publishing_ = value;
+        }
+        onChanged();
+      } else {
+        publishingBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    public Builder clearPublishing() {
+      if (publishingBuilder_ == null) {
+        publishing_ = null;
+        onChanged();
+      } else {
+        publishing_ = null;
+        publishingBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    public com.google.api.Publishing.Builder getPublishingBuilder() {
+
+      onChanged();
+      return getPublishingFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    public com.google.api.PublishingOrBuilder getPublishingOrBuilder() {
+      if (publishingBuilder_ != null) {
+        return publishingBuilder_.getMessageOrBuilder();
+      } else {
+        return publishing_ == null ? com.google.api.Publishing.getDefaultInstance() : publishing_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Settings for [Google Cloud Client
+     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+     * generated from APIs defined as protocol buffers.
+     * </pre>
+     *
+     * <code>.google.api.Publishing publishing = 45;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.api.Publishing,
+            com.google.api.Publishing.Builder,
+            com.google.api.PublishingOrBuilder>
+        getPublishingFieldBuilder() {
+      if (publishingBuilder_ == null) {
+        publishingBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.api.Publishing,
+                com.google.api.Publishing.Builder,
+                com.google.api.PublishingOrBuilder>(
+                getPublishing(), getParentForChildren(), isClean());
+        publishing_ = null;
+      }
+      return publishingBuilder_;
+    }
+
     private com.google.protobuf.UInt32Value configVersion_;
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.protobuf.UInt32Value,
@@ -8386,13 +8689,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      *
-     * @deprecated google.api.Service.config_version is deprecated. See
-     *     google/api/service.proto;l=170
      * @return Whether the configVersion field is set.
      */
-    @java.lang.Deprecated
     public boolean hasConfigVersion() {
       return configVersionBuilder_ != null || configVersion_ != null;
     }
@@ -8405,13 +8705,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      *
-     * @deprecated google.api.Service.config_version is deprecated. See
-     *     google/api/service.proto;l=170
      * @return The configVersion.
      */
-    @java.lang.Deprecated
     public com.google.protobuf.UInt32Value getConfigVersion() {
       if (configVersionBuilder_ == null) {
         return configVersion_ == null
@@ -8430,9 +8727,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
-    @java.lang.Deprecated
     public Builder setConfigVersion(com.google.protobuf.UInt32Value value) {
       if (configVersionBuilder_ == null) {
         if (value == null) {
@@ -8455,9 +8751,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
-    @java.lang.Deprecated
     public Builder setConfigVersion(com.google.protobuf.UInt32Value.Builder builderForValue) {
       if (configVersionBuilder_ == null) {
         configVersion_ = builderForValue.build();
@@ -8477,9 +8772,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
-    @java.lang.Deprecated
     public Builder mergeConfigVersion(com.google.protobuf.UInt32Value value) {
       if (configVersionBuilder_ == null) {
         if (configVersion_ != null) {
@@ -8506,9 +8800,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
-    @java.lang.Deprecated
     public Builder clearConfigVersion() {
       if (configVersionBuilder_ == null) {
         configVersion_ = null;
@@ -8529,9 +8822,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
-    @java.lang.Deprecated
     public com.google.protobuf.UInt32Value.Builder getConfigVersionBuilder() {
 
       onChanged();
@@ -8546,9 +8838,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
-    @java.lang.Deprecated
     public com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder() {
       if (configVersionBuilder_ != null) {
         return configVersionBuilder_.getMessageOrBuilder();
@@ -8567,7 +8858,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * sets this field to `3`.
      * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20 [deprecated = true];</code>
+     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.protobuf.UInt32Value,

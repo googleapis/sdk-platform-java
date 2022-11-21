@@ -471,15 +471,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Minimum deadline in seconds needed for this method. Calls having deadline
-   * value lower than this will be rejected.
+   * Deprecated, do not use.
    * </pre>
    *
-   * <code>double min_deadline = 4;</code>
+   * <code>double min_deadline = 4 [deprecated = true];</code>
    *
+   * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+   *     google/api/backend.proto;l=123
    * @return The minDeadline.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public double getMinDeadline() {
     return minDeadline_;
   }
@@ -1625,15 +1627,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Minimum deadline in seconds needed for this method. Calls having deadline
-     * value lower than this will be rejected.
+     * Deprecated, do not use.
      * </pre>
      *
-     * <code>double min_deadline = 4;</code>
+     * <code>double min_deadline = 4 [deprecated = true];</code>
      *
+     * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+     *     google/api/backend.proto;l=123
      * @return The minDeadline.
      */
     @java.lang.Override
+    @java.lang.Deprecated
     public double getMinDeadline() {
       return minDeadline_;
     }
@@ -1641,15 +1645,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Minimum deadline in seconds needed for this method. Calls having deadline
-     * value lower than this will be rejected.
+     * Deprecated, do not use.
      * </pre>
      *
-     * <code>double min_deadline = 4;</code>
+     * <code>double min_deadline = 4 [deprecated = true];</code>
      *
+     * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+     *     google/api/backend.proto;l=123
      * @param value The minDeadline to set.
      * @return This builder for chaining.
      */
+    @java.lang.Deprecated
     public Builder setMinDeadline(double value) {
 
       minDeadline_ = value;
@@ -1660,14 +1666,16 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Minimum deadline in seconds needed for this method. Calls having deadline
-     * value lower than this will be rejected.
+     * Deprecated, do not use.
      * </pre>
      *
-     * <code>double min_deadline = 4;</code>
+     * <code>double min_deadline = 4 [deprecated = true];</code>
      *
+     * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+     *     google/api/backend.proto;l=123
      * @return This builder for chaining.
      */
+    @java.lang.Deprecated
     public Builder clearMinDeadline() {
 
       minDeadline_ = 0D;

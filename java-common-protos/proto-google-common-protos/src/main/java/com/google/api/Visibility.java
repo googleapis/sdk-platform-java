@@ -22,14 +22,15 @@ package com.google.api;
  *
  *
  * <pre>
- * `Visibility` defines restrictions for the visibility of service
- * elements.  Restrictions are specified using visibility labels
- * (e.g., PREVIEW) that are elsewhere linked to users and projects.
- * Users and projects can have access to more than one visibility label. The
- * effective visibility for multiple labels is the union of each label's
- * elements, plus any unrestricted elements.
- * If an element and its parents have no restrictions, visibility is
- * unconditionally granted.
+ * `Visibility` restricts service consumer's access to service elements,
+ * such as whether an application can call a visibility-restricted method.
+ * The restriction is expressed by applying visibility labels on service
+ * elements. The visibility labels are elsewhere linked to service consumers.
+ * A service can define multiple visibility labels, but a service consumer
+ * should be granted at most one visibility label. Multiple visibility
+ * labels for a single service consumer are not supported.
+ * If an element and all its parents have no visibility label, its visibility
+ * is unconditionally granted.
  * Example:
  *     visibility:
  *       rules:
@@ -316,14 +317,15 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * `Visibility` defines restrictions for the visibility of service
-   * elements.  Restrictions are specified using visibility labels
-   * (e.g., PREVIEW) that are elsewhere linked to users and projects.
-   * Users and projects can have access to more than one visibility label. The
-   * effective visibility for multiple labels is the union of each label's
-   * elements, plus any unrestricted elements.
-   * If an element and its parents have no restrictions, visibility is
-   * unconditionally granted.
+   * `Visibility` restricts service consumer's access to service elements,
+   * such as whether an application can call a visibility-restricted method.
+   * The restriction is expressed by applying visibility labels on service
+   * elements. The visibility labels are elsewhere linked to service consumers.
+   * A service can define multiple visibility labels, but a service consumer
+   * should be granted at most one visibility label. Multiple visibility
+   * labels for a single service consumer are not supported.
+   * If an element and all its parents have no visibility label, its visibility
+   * is unconditionally granted.
    * Example:
    *     visibility:
    *       rules:

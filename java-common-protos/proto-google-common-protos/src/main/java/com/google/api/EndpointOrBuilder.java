@@ -54,14 +54,14 @@ public interface EndpointOrBuilder
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @return A list containing the aliases.
    */
   @java.lang.Deprecated
@@ -72,14 +72,14 @@ public interface EndpointOrBuilder
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @return The count of aliases.
    */
   @java.lang.Deprecated
@@ -90,14 +90,14 @@ public interface EndpointOrBuilder
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @param index The index of the element to return.
    * @return The aliases at the given index.
    */
@@ -109,14 +109,14 @@ public interface EndpointOrBuilder
    * <pre>
    * Unimplemented. Dot not use.
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
-   * aliases.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
+   * of the intended aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    *
-   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=51
+   * @deprecated google.api.Endpoint.aliases is deprecated. See google/api/endpoint.proto;l=56
    * @param index The index of the value to return.
    * @return The bytes of the aliases at the given index.
    */

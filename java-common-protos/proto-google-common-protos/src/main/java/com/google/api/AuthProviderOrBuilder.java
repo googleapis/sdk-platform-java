@@ -214,10 +214,11 @@ public interface AuthProviderOrBuilder
    *
    *
    * <pre>
-   * Defines the locations to extract the JWT.
-   * JWT locations can be either from HTTP headers or URL query parameters.
-   * The rule is that the first match wins. The checking order is: checking
-   * all headers first, then URL query parameters.
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
@@ -237,10 +238,11 @@ public interface AuthProviderOrBuilder
    *
    *
    * <pre>
-   * Defines the locations to extract the JWT.
-   * JWT locations can be either from HTTP headers or URL query parameters.
-   * The rule is that the first match wins. The checking order is: checking
-   * all headers first, then URL query parameters.
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
@@ -260,10 +262,11 @@ public interface AuthProviderOrBuilder
    *
    *
    * <pre>
-   * Defines the locations to extract the JWT.
-   * JWT locations can be either from HTTP headers or URL query parameters.
-   * The rule is that the first match wins. The checking order is: checking
-   * all headers first, then URL query parameters.
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
@@ -283,10 +286,11 @@ public interface AuthProviderOrBuilder
    *
    *
    * <pre>
-   * Defines the locations to extract the JWT.
-   * JWT locations can be either from HTTP headers or URL query parameters.
-   * The rule is that the first match wins. The checking order is: checking
-   * all headers first, then URL query parameters.
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
@@ -306,10 +310,11 @@ public interface AuthProviderOrBuilder
    *
    *
    * <pre>
-   * Defines the locations to extract the JWT.
-   * JWT locations can be either from HTTP headers or URL query parameters.
-   * The rule is that the first match wins. The checking order is: checking
-   * all headers first, then URL query parameters.
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion

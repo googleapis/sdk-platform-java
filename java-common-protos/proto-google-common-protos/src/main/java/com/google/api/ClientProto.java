@@ -125,6 +125,63 @@ public final class ClientProto {
           com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
               java.lang.String.class, null);
 
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_CommonLanguageSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_CommonLanguageSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_ClientLibrarySettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_ClientLibrarySettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_Publishing_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_Publishing_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_JavaSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_JavaSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_JavaSettings_ServiceClassNamesEntry_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_JavaSettings_ServiceClassNamesEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_CppSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_CppSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_PhpSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_PhpSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_PythonSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_PythonSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_NodeSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_NodeSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_DotnetSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_DotnetSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_RubySettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_RubySettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_GoSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_GoSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_MethodSettings_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_MethodSettings_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_MethodSettings_LongRunning_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_MethodSettings_LongRunning_fieldAccessorTable;
+
   public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
     return descriptor;
   }
@@ -133,26 +190,208 @@ public final class ClientProto {
 
   static {
     java.lang.String[] descriptorData = {
-      "\n\027google/api/client.proto\022\ngoogle.api\032 g"
-          + "oogle/protobuf/descriptor.proto:9\n\020metho"
-          + "d_signature\022\036.google.protobuf.MethodOpti"
-          + "ons\030\233\010 \003(\t:6\n\014default_host\022\037.google.prot"
-          + "obuf.ServiceOptions\030\231\010 \001(\t:6\n\014oauth_scop"
-          + "es\022\037.google.protobuf.ServiceOptions\030\232\010 \001"
-          + "(\tBi\n\016com.google.apiB\013ClientProtoP\001ZAgoo"
-          + "gle.golang.org/genproto/googleapis/api/a"
-          + "nnotations;annotations\242\002\004GAPIb\006proto3"
+      "\n\027google/api/client.proto\022\ngoogle.api\032\035g"
+          + "oogle/api/launch_stage.proto\032 google/pro"
+          + "tobuf/descriptor.proto\032\036google/protobuf/"
+          + "duration.proto\"p\n\026CommonLanguageSettings"
+          + "\022\032\n\022reference_docs_uri\030\001 \001(\t\022:\n\014destinat"
+          + "ions\030\002 \003(\0162$.google.api.ClientLibraryDes"
+          + "tination\"\373\003\n\025ClientLibrarySettings\022\017\n\007ve"
+          + "rsion\030\001 \001(\t\022-\n\014launch_stage\030\002 \001(\0162\027.goog"
+          + "le.api.LaunchStage\022\032\n\022rest_numeric_enums"
+          + "\030\003 \001(\010\022/\n\rjava_settings\030\025 \001(\0132\030.google.a"
+          + "pi.JavaSettings\022-\n\014cpp_settings\030\026 \001(\0132\027."
+          + "google.api.CppSettings\022-\n\014php_settings\030\027"
+          + " \001(\0132\027.google.api.PhpSettings\0223\n\017python_"
+          + "settings\030\030 \001(\0132\032.google.api.PythonSettin"
+          + "gs\022/\n\rnode_settings\030\031 \001(\0132\030.google.api.N"
+          + "odeSettings\0223\n\017dotnet_settings\030\032 \001(\0132\032.g"
+          + "oogle.api.DotnetSettings\022/\n\rruby_setting"
+          + "s\030\033 \001(\0132\030.google.api.RubySettings\022+\n\013go_"
+          + "settings\030\034 \001(\0132\026.google.api.GoSettings\"\323"
+          + "\002\n\nPublishing\0223\n\017method_settings\030\002 \003(\0132\032"
+          + ".google.api.MethodSettings\022\025\n\rnew_issue_"
+          + "uri\030e \001(\t\022\031\n\021documentation_uri\030f \001(\t\022\026\n\016"
+          + "api_short_name\030g \001(\t\022\024\n\014github_label\030h \001"
+          + "(\t\022\036\n\026codeowner_github_teams\030i \003(\t\022\026\n\016do"
+          + "c_tag_prefix\030j \001(\t\022;\n\014organization\030k \001(\016"
+          + "2%.google.api.ClientLibraryOrganization\022"
+          + ";\n\020library_settings\030m \003(\0132!.google.api.C"
+          + "lientLibrarySettings\"\343\001\n\014JavaSettings\022\027\n"
+          + "\017library_package\030\001 \001(\t\022L\n\023service_class_"
+          + "names\030\002 \003(\0132/.google.api.JavaSettings.Se"
+          + "rviceClassNamesEntry\0222\n\006common\030\003 \001(\0132\".g"
+          + "oogle.api.CommonLanguageSettings\0328\n\026Serv"
+          + "iceClassNamesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value"
+          + "\030\002 \001(\t:\0028\001\"A\n\013CppSettings\0222\n\006common\030\001 \001("
+          + "\0132\".google.api.CommonLanguageSettings\"A\n"
+          + "\013PhpSettings\0222\n\006common\030\001 \001(\0132\".google.ap"
+          + "i.CommonLanguageSettings\"D\n\016PythonSettin"
+          + "gs\0222\n\006common\030\001 \001(\0132\".google.api.CommonLa"
+          + "nguageSettings\"B\n\014NodeSettings\0222\n\006common"
+          + "\030\001 \001(\0132\".google.api.CommonLanguageSettin"
+          + "gs\"D\n\016DotnetSettings\0222\n\006common\030\001 \001(\0132\".g"
+          + "oogle.api.CommonLanguageSettings\"B\n\014Ruby"
+          + "Settings\0222\n\006common\030\001 \001(\0132\".google.api.Co"
+          + "mmonLanguageSettings\"@\n\nGoSettings\0222\n\006co"
+          + "mmon\030\001 \001(\0132\".google.api.CommonLanguageSe"
+          + "ttings\"\260\002\n\016MethodSettings\022\020\n\010selector\030\001 "
+          + "\001(\t\022<\n\014long_running\030\002 \001(\0132&.google.api.M"
+          + "ethodSettings.LongRunning\032\315\001\n\013LongRunnin"
+          + "g\0225\n\022initial_poll_delay\030\001 \001(\0132\031.google.p"
+          + "rotobuf.Duration\022\035\n\025poll_delay_multiplie"
+          + "r\030\002 \001(\002\0221\n\016max_poll_delay\030\003 \001(\0132\031.google"
+          + ".protobuf.Duration\0225\n\022total_poll_timeout"
+          + "\030\004 \001(\0132\031.google.protobuf.Duration*y\n\031Cli"
+          + "entLibraryOrganization\022+\n\'CLIENT_LIBRARY"
+          + "_ORGANIZATION_UNSPECIFIED\020\000\022\t\n\005CLOUD\020\001\022\007"
+          + "\n\003ADS\020\002\022\n\n\006PHOTOS\020\003\022\017\n\013STREET_VIEW\020\004*g\n\030"
+          + "ClientLibraryDestination\022*\n&CLIENT_LIBRA"
+          + "RY_DESTINATION_UNSPECIFIED\020\000\022\n\n\006GITHUB\020\n"
+          + "\022\023\n\017PACKAGE_MANAGER\020\024:9\n\020method_signatur"
+          + "e\022\036.google.protobuf.MethodOptions\030\233\010 \003(\t"
+          + ":6\n\014default_host\022\037.google.protobuf.Servi"
+          + "ceOptions\030\231\010 \001(\t:6\n\014oauth_scopes\022\037.googl"
+          + "e.protobuf.ServiceOptions\030\232\010 \001(\tBi\n\016com."
+          + "google.apiB\013ClientProtoP\001ZAgoogle.golang"
+          + ".org/genproto/googleapis/api/annotations"
+          + ";annotations\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
             descriptorData,
             new com.google.protobuf.Descriptors.FileDescriptor[] {
+              com.google.api.LaunchStageProto.getDescriptor(),
               com.google.protobuf.DescriptorProtos.getDescriptor(),
+              com.google.protobuf.DurationProto.getDescriptor(),
+            });
+    internal_static_google_api_CommonLanguageSettings_descriptor =
+        getDescriptor().getMessageTypes().get(0);
+    internal_static_google_api_CommonLanguageSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_CommonLanguageSettings_descriptor,
+            new java.lang.String[] {
+              "ReferenceDocsUri", "Destinations",
+            });
+    internal_static_google_api_ClientLibrarySettings_descriptor =
+        getDescriptor().getMessageTypes().get(1);
+    internal_static_google_api_ClientLibrarySettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_ClientLibrarySettings_descriptor,
+            new java.lang.String[] {
+              "Version",
+              "LaunchStage",
+              "RestNumericEnums",
+              "JavaSettings",
+              "CppSettings",
+              "PhpSettings",
+              "PythonSettings",
+              "NodeSettings",
+              "DotnetSettings",
+              "RubySettings",
+              "GoSettings",
+            });
+    internal_static_google_api_Publishing_descriptor = getDescriptor().getMessageTypes().get(2);
+    internal_static_google_api_Publishing_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_Publishing_descriptor,
+            new java.lang.String[] {
+              "MethodSettings",
+              "NewIssueUri",
+              "DocumentationUri",
+              "ApiShortName",
+              "GithubLabel",
+              "CodeownerGithubTeams",
+              "DocTagPrefix",
+              "Organization",
+              "LibrarySettings",
+            });
+    internal_static_google_api_JavaSettings_descriptor = getDescriptor().getMessageTypes().get(3);
+    internal_static_google_api_JavaSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_JavaSettings_descriptor,
+            new java.lang.String[] {
+              "LibraryPackage", "ServiceClassNames", "Common",
+            });
+    internal_static_google_api_JavaSettings_ServiceClassNamesEntry_descriptor =
+        internal_static_google_api_JavaSettings_descriptor.getNestedTypes().get(0);
+    internal_static_google_api_JavaSettings_ServiceClassNamesEntry_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_JavaSettings_ServiceClassNamesEntry_descriptor,
+            new java.lang.String[] {
+              "Key", "Value",
+            });
+    internal_static_google_api_CppSettings_descriptor = getDescriptor().getMessageTypes().get(4);
+    internal_static_google_api_CppSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_CppSettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_PhpSettings_descriptor = getDescriptor().getMessageTypes().get(5);
+    internal_static_google_api_PhpSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_PhpSettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_PythonSettings_descriptor = getDescriptor().getMessageTypes().get(6);
+    internal_static_google_api_PythonSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_PythonSettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_NodeSettings_descriptor = getDescriptor().getMessageTypes().get(7);
+    internal_static_google_api_NodeSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_NodeSettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_DotnetSettings_descriptor = getDescriptor().getMessageTypes().get(8);
+    internal_static_google_api_DotnetSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_DotnetSettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_RubySettings_descriptor = getDescriptor().getMessageTypes().get(9);
+    internal_static_google_api_RubySettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_RubySettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_GoSettings_descriptor = getDescriptor().getMessageTypes().get(10);
+    internal_static_google_api_GoSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_GoSettings_descriptor,
+            new java.lang.String[] {
+              "Common",
+            });
+    internal_static_google_api_MethodSettings_descriptor =
+        getDescriptor().getMessageTypes().get(11);
+    internal_static_google_api_MethodSettings_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_MethodSettings_descriptor,
+            new java.lang.String[] {
+              "Selector", "LongRunning",
+            });
+    internal_static_google_api_MethodSettings_LongRunning_descriptor =
+        internal_static_google_api_MethodSettings_descriptor.getNestedTypes().get(0);
+    internal_static_google_api_MethodSettings_LongRunning_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_MethodSettings_LongRunning_descriptor,
+            new java.lang.String[] {
+              "InitialPollDelay", "PollDelayMultiplier", "MaxPollDelay", "TotalPollTimeout",
             });
     methodSignature.internalInit(descriptor.getExtensions().get(0));
     defaultHost.internalInit(descriptor.getExtensions().get(1));
     oauthScopes.internalInit(descriptor.getExtensions().get(2));
+    com.google.api.LaunchStageProto.getDescriptor();
     com.google.protobuf.DescriptorProtos.getDescriptor();
+    com.google.protobuf.DurationProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

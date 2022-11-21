@@ -493,6 +493,182 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ACCESS_TOKEN_TYPE_UNSUPPORTED = 19;</code>
    */
   ACCESS_TOKEN_TYPE_UNSUPPORTED(19),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the request doesn't have any authentication
+   * credentials. For more information regarding the supported authentication
+   * strategies for Google Cloud APIs, see
+   * https://cloud.google.com/docs/authentication.
+   * Example of an ErrorInfo when the request is to the Cloud Storage API
+   * without any authentication credentials.
+   *     { "reason": "CREDENTIALS_MISSING",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "storage.googleapis.com",
+   *         "method": "google.storage.v1.Storage.GetObject"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>CREDENTIALS_MISSING = 20;</code>
+   */
+  CREDENTIALS_MISSING(20),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the provided project owning the resource
+   * which acts as the [API
+   * consumer](https://cloud.google.com/apis/design/glossary#api_consumer) is
+   * invalid. It may be in a bad format or empty.
+   * Example of an ErrorInfo when the request is to the Cloud Functions API,
+   * but the offered resource project in the request in a bad format which can't
+   * perform the ListFunctions method.
+   *     { "reason": "RESOURCE_PROJECT_INVALID",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "cloudfunctions.googleapis.com",
+   *         "method":
+   *         "google.cloud.functions.v1.CloudFunctionsService.ListFunctions"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>RESOURCE_PROJECT_INVALID = 21;</code>
+   */
+  RESOURCE_PROJECT_INVALID(21),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the provided session cookie is missing,
+   * invalid or failed to decode.
+   * Example of an ErrorInfo when the request is calling Cloud Storage service
+   * with a SID cookie which can't be decoded.
+   *     { "reason": "SESSION_COOKIE_INVALID",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "storage.googleapis.com",
+   *         "method": "google.storage.v1.Storage.GetObject",
+   *         "cookie": "SID"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>SESSION_COOKIE_INVALID = 23;</code>
+   */
+  SESSION_COOKIE_INVALID(23),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the user is from a Google Workspace customer
+   * that blocks their users from accessing a particular service.
+   * Example scenario: https://support.google.com/a/answer/9197205?hl=en
+   * Example of an ErrorInfo when access to Google Cloud Storage service is
+   * blocked by the Google Workspace administrator:
+   *     { "reason": "USER_BLOCKED_BY_ADMIN",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "storage.googleapis.com",
+   *         "method": "google.storage.v1.Storage.GetObject",
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>USER_BLOCKED_BY_ADMIN = 24;</code>
+   */
+  USER_BLOCKED_BY_ADMIN(24),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the resource service usage is restricted
+   * by administrators according to the organization policy constraint.
+   * For more information see
+   * https://cloud.google.com/resource-manager/docs/organization-policy/restricting-services.
+   * Example of an ErrorInfo when access to Google Cloud Storage service is
+   * restricted by Resource Usage Restriction policy:
+   *     { "reason": "RESOURCE_USAGE_RESTRICTION_VIOLATED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/project-123",
+   *         "service": "storage.googleapis.com"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>RESOURCE_USAGE_RESTRICTION_VIOLATED = 25;</code>
+   */
+  RESOURCE_USAGE_RESTRICTION_VIOLATED(25),
+  /**
+   *
+   *
+   * <pre>
+   * Unimplemented. Do not use.
+   * The request is denied because it contains unsupported system parameters in
+   * URL query parameters or HTTP headers. For more information,
+   * see https://cloud.google.com/apis/docs/system-parameters
+   * Example of an ErrorInfo when access "pubsub.googleapis.com" service with
+   * a request header of "x-goog-user-ip":
+   *     { "reason": "SYSTEM_PARAMETER_UNSUPPORTED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "pubsub.googleapis.com"
+   *         "parameter": "x-goog-user-ip"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>SYSTEM_PARAMETER_UNSUPPORTED = 26;</code>
+   */
+  SYSTEM_PARAMETER_UNSUPPORTED(26),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because it violates Org Restriction: the requested
+   * resource does not belong to allowed organizations specified in
+   * "X-Goog-Allowed-Resources" header.
+   * Example of an ErrorInfo when accessing a GCP resource that is restricted by
+   * Org Restriction for "pubsub.googleapis.com" service.
+   * {
+   *   reason: "ORG_RESTRICTION_VIOLATION"
+   *   domain: "googleapis.com"
+   *   metadata {
+   *     "consumer":"projects/123456"
+   *     "service": "pubsub.googleapis.com"
+   *   }
+   * }
+   * </pre>
+   *
+   * <code>ORG_RESTRICTION_VIOLATION = 27;</code>
+   */
+  ORG_RESTRICTION_VIOLATION(27),
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because "X-Goog-Allowed-Resources" header is in a bad
+   * format.
+   * Example of an ErrorInfo when
+   * accessing "pubsub.googleapis.com" service with an invalid
+   * "X-Goog-Allowed-Resources" request header.
+   * {
+   *   reason: "ORG_RESTRICTION_HEADER_INVALID"
+   *   domain: "googleapis.com"
+   *   metadata {
+   *     "consumer":"projects/123456"
+   *     "service": "pubsub.googleapis.com"
+   *   }
+   * }
+   * </pre>
+   *
+   * <code>ORG_RESTRICTION_HEADER_INVALID = 28;</code>
+   */
+  ORG_RESTRICTION_HEADER_INVALID(28),
   UNRECOGNIZED(-1),
   ;
 
@@ -952,6 +1128,182 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ACCESS_TOKEN_TYPE_UNSUPPORTED = 19;</code>
    */
   public static final int ACCESS_TOKEN_TYPE_UNSUPPORTED_VALUE = 19;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the request doesn't have any authentication
+   * credentials. For more information regarding the supported authentication
+   * strategies for Google Cloud APIs, see
+   * https://cloud.google.com/docs/authentication.
+   * Example of an ErrorInfo when the request is to the Cloud Storage API
+   * without any authentication credentials.
+   *     { "reason": "CREDENTIALS_MISSING",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "storage.googleapis.com",
+   *         "method": "google.storage.v1.Storage.GetObject"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>CREDENTIALS_MISSING = 20;</code>
+   */
+  public static final int CREDENTIALS_MISSING_VALUE = 20;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the provided project owning the resource
+   * which acts as the [API
+   * consumer](https://cloud.google.com/apis/design/glossary#api_consumer) is
+   * invalid. It may be in a bad format or empty.
+   * Example of an ErrorInfo when the request is to the Cloud Functions API,
+   * but the offered resource project in the request in a bad format which can't
+   * perform the ListFunctions method.
+   *     { "reason": "RESOURCE_PROJECT_INVALID",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "cloudfunctions.googleapis.com",
+   *         "method":
+   *         "google.cloud.functions.v1.CloudFunctionsService.ListFunctions"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>RESOURCE_PROJECT_INVALID = 21;</code>
+   */
+  public static final int RESOURCE_PROJECT_INVALID_VALUE = 21;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the provided session cookie is missing,
+   * invalid or failed to decode.
+   * Example of an ErrorInfo when the request is calling Cloud Storage service
+   * with a SID cookie which can't be decoded.
+   *     { "reason": "SESSION_COOKIE_INVALID",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "storage.googleapis.com",
+   *         "method": "google.storage.v1.Storage.GetObject",
+   *         "cookie": "SID"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>SESSION_COOKIE_INVALID = 23;</code>
+   */
+  public static final int SESSION_COOKIE_INVALID_VALUE = 23;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the user is from a Google Workspace customer
+   * that blocks their users from accessing a particular service.
+   * Example scenario: https://support.google.com/a/answer/9197205?hl=en
+   * Example of an ErrorInfo when access to Google Cloud Storage service is
+   * blocked by the Google Workspace administrator:
+   *     { "reason": "USER_BLOCKED_BY_ADMIN",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "storage.googleapis.com",
+   *         "method": "google.storage.v1.Storage.GetObject",
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>USER_BLOCKED_BY_ADMIN = 24;</code>
+   */
+  public static final int USER_BLOCKED_BY_ADMIN_VALUE = 24;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because the resource service usage is restricted
+   * by administrators according to the organization policy constraint.
+   * For more information see
+   * https://cloud.google.com/resource-manager/docs/organization-policy/restricting-services.
+   * Example of an ErrorInfo when access to Google Cloud Storage service is
+   * restricted by Resource Usage Restriction policy:
+   *     { "reason": "RESOURCE_USAGE_RESTRICTION_VIOLATED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/project-123",
+   *         "service": "storage.googleapis.com"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>RESOURCE_USAGE_RESTRICTION_VIOLATED = 25;</code>
+   */
+  public static final int RESOURCE_USAGE_RESTRICTION_VIOLATED_VALUE = 25;
+  /**
+   *
+   *
+   * <pre>
+   * Unimplemented. Do not use.
+   * The request is denied because it contains unsupported system parameters in
+   * URL query parameters or HTTP headers. For more information,
+   * see https://cloud.google.com/apis/docs/system-parameters
+   * Example of an ErrorInfo when access "pubsub.googleapis.com" service with
+   * a request header of "x-goog-user-ip":
+   *     { "reason": "SYSTEM_PARAMETER_UNSUPPORTED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "service": "pubsub.googleapis.com"
+   *         "parameter": "x-goog-user-ip"
+   *       }
+   *     }
+   * </pre>
+   *
+   * <code>SYSTEM_PARAMETER_UNSUPPORTED = 26;</code>
+   */
+  public static final int SYSTEM_PARAMETER_UNSUPPORTED_VALUE = 26;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because it violates Org Restriction: the requested
+   * resource does not belong to allowed organizations specified in
+   * "X-Goog-Allowed-Resources" header.
+   * Example of an ErrorInfo when accessing a GCP resource that is restricted by
+   * Org Restriction for "pubsub.googleapis.com" service.
+   * {
+   *   reason: "ORG_RESTRICTION_VIOLATION"
+   *   domain: "googleapis.com"
+   *   metadata {
+   *     "consumer":"projects/123456"
+   *     "service": "pubsub.googleapis.com"
+   *   }
+   * }
+   * </pre>
+   *
+   * <code>ORG_RESTRICTION_VIOLATION = 27;</code>
+   */
+  public static final int ORG_RESTRICTION_VIOLATION_VALUE = 27;
+  /**
+   *
+   *
+   * <pre>
+   * The request is denied because "X-Goog-Allowed-Resources" header is in a bad
+   * format.
+   * Example of an ErrorInfo when
+   * accessing "pubsub.googleapis.com" service with an invalid
+   * "X-Goog-Allowed-Resources" request header.
+   * {
+   *   reason: "ORG_RESTRICTION_HEADER_INVALID"
+   *   domain: "googleapis.com"
+   *   metadata {
+   *     "consumer":"projects/123456"
+   *     "service": "pubsub.googleapis.com"
+   *   }
+   * }
+   * </pre>
+   *
+   * <code>ORG_RESTRICTION_HEADER_INVALID = 28;</code>
+   */
+  public static final int ORG_RESTRICTION_HEADER_INVALID_VALUE = 28;
 
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
@@ -1017,6 +1369,22 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
         return ACCOUNT_STATE_INVALID;
       case 19:
         return ACCESS_TOKEN_TYPE_UNSUPPORTED;
+      case 20:
+        return CREDENTIALS_MISSING;
+      case 21:
+        return RESOURCE_PROJECT_INVALID;
+      case 23:
+        return SESSION_COOKIE_INVALID;
+      case 24:
+        return USER_BLOCKED_BY_ADMIN;
+      case 25:
+        return RESOURCE_USAGE_RESTRICTION_VIOLATED;
+      case 26:
+        return SYSTEM_PARAMETER_UNSUPPORTED;
+      case 27:
+        return ORG_RESTRICTION_VIOLATION;
+      case 28:
+        return ORG_RESTRICTION_HEADER_INVALID;
       default:
         return null;
     }
