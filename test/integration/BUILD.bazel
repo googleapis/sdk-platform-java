@@ -89,7 +89,7 @@ java_gapic_test(
         "com.google.showcase.v1beta1.SequenceServiceClientTest",
         "com.google.showcase.v1beta1.TestingClientTest",
     ],
-    runtime_deps = ["//src/test/resources/showcase:showcase_java_gapic_test"],
+    runtime_deps = ["//test/showcase:showcase_java_gapic_test"],
 )
 
 # Redis API.

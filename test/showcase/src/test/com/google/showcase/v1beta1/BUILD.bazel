@@ -11,8 +11,8 @@ java_library(
     srcs = glob(["*.java"]),
     deps = [
         # Common
-        "//src/test/resources/showcase:showcase_java_gapic",
-        "//src/test/resources/showcase:showcase_java_proto",
+        "//test/showcase:showcase_java_gapic",
+        "//test/showcase:showcase_java_proto",
         "@com_google_api_api_common//:com_google_api_api_common",
         "@com_google_api_gax_java//gax",
         "@com_google_code_gson_gson//jar",
@@ -43,6 +43,6 @@ java_gapic_test(
     ],
     runtime_deps = [
         ":showcase_tests",
-        "//src/test/resources/showcase:showcase_java_gapic_test",
+        "//test/showcase:showcase_java_gapic_test",
     ],
 )

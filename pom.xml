@@ -10,8 +10,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
     <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
-    <!-- Should be in sync with WORKSPACE -->
-    <showcase.commit>90d73532a0cab753a85f45c158394f24fc21d91a</showcase.commit>
   </properties>
 
   <dependencyManagement>
@@ -200,7 +198,7 @@
               <executable>bazel</executable>
               <arguments>
                 <argument>test</argument>
-                <argument>//src/test/java/com/google/showcase/...</argument>
+                <argument>//test/showcase/...</argument>
               </arguments>
             </configuration>
           </execution>

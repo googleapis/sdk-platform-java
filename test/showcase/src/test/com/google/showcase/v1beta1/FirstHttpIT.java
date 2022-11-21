@@ -16,49 +16,58 @@
 
 package com.google.showcase.v1beta1;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class NumericEnumsIT {
+public class FirstHttpIT {
 
-  private ComplianceClient client;
+  private static EchoClient client;
 
-  @Before
-  public void createClient() throws GeneralSecurityException, IOException {
-    ComplianceSettings complianceSettings =
-        ComplianceSettings.newHttpJsonBuilder()
+  @BeforeClass
+  public static void createClient() throws IOException, GeneralSecurityException {
+    EchoSettings echoSettings =
+        EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                ComplianceSettings.defaultHttpJsonTransportProviderBuilder()
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
                     .build())
             .build();
-    client = ComplianceClient.create(complianceSettings);
+
+    client = EchoClient.create(echoSettings);
   }
 
-  @After
-  public void destroyClient() {
+  @AfterClass
+  public static void destroyClient() {
     client.close();
   }
 
-  // See
+  // For 'throws' explanation, see
   // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
-  @Test(expected = InvalidArgumentException.class)
-  public void verifyEnums() {
-    EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
-    EnumResponse initialResponse = client.getEnum(request);
-    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
+  @Test
+  public void testEcho() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> assertEquals("http-echo?", echo("http-echo?")));
 
-    Assert.assertNotNull(initialResponse);
-    Assert.assertEquals(initialResponse, verifiedResponse);
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> assertEquals("http-echo!", echo("http-echo!")));
+  }
+
+  private String echo(String value) {
+    EchoResponse response = client.echo(EchoRequest.newBuilder().setContent(value).build());
+    return response.getContent();
   }
 }
