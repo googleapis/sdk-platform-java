@@ -18,18 +18,16 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommentFormatter;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ServiceClientCommentComposer {
   // Tokens.
@@ -120,11 +118,10 @@ public class ServiceClientCommentComposer {
       String secondaryTransport) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
-      classHeaderJavadocBuilder =
-          processProtobufComment(
-              service.description(),
-              classHeaderJavadocBuilder,
-              SERVICE_DESCRIPTION_SUMMARY_PATTERN);
+      String descriptionComment =
+          CommentFormatter.formatAsJavaDocComment(
+              service.description(), SERVICE_DESCRIPTION_SUMMARY_PATTERN);
+      classHeaderJavadocBuilder = classHeaderJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
     // Service introduction.
@@ -181,8 +178,9 @@ public class ServiceClientCommentComposer {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
-      methodJavadocBuilder =
-          processProtobufComment(method.description(), methodJavadocBuilder, null);
+      String descriptionComment =
+          CommentFormatter.formatAsJavaDocComment(method.description(), null);
+      methodJavadocBuilder = methodJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
     if (sampleCodeOpt.isPresent()) {
@@ -239,8 +237,9 @@ public class ServiceClientCommentComposer {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
-      methodJavadocBuilder =
-          processProtobufComment(method.description(), methodJavadocBuilder, null);
+      String descriptionComment =
+          CommentFormatter.formatAsJavaDocComment(method.description(), null);
+      methodJavadocBuilder = methodJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
@@ -259,43 +258,5 @@ public class ServiceClientCommentComposer {
 
   private static CommentStatement toSimpleComment(String comment) {
     return CommentStatement.withComment(JavaDocComment.withComment(comment));
-  }
-
-  // TODO(miraleung): Replace this with a comment converter when we support CommonMark.
-  private static JavaDocComment.Builder processProtobufComment(
-      String rawComment, JavaDocComment.Builder originalCommentBuilder, String firstPattern) {
-    JavaDocComment.Builder commentBuilder = originalCommentBuilder;
-    String[] descriptionParagraphs = rawComment.split("\\n\\n");
-    for (int i = 0; i < descriptionParagraphs.length; i++) {
-      boolean startsWithItemizedList = descriptionParagraphs[i].startsWith(" * ");
-      // Split by listed items, then join newlines.
-      List<String> listItems =
-          Stream.of(descriptionParagraphs[i].split("\\n \\*"))
-              .map(s -> s.replace("\n", ""))
-              .collect(Collectors.toList());
-      if (startsWithItemizedList) {
-        // Remove the first asterisk.
-        listItems.set(0, listItems.get(0).substring(2));
-      }
-      if (!startsWithItemizedList) {
-        if (i == 0) {
-          if (!Strings.isNullOrEmpty(firstPattern)) {
-            commentBuilder =
-                commentBuilder.addParagraph(String.format(firstPattern, listItems.get(0)));
-          } else {
-            commentBuilder = commentBuilder.addParagraph(listItems.get(0));
-          }
-        } else {
-          commentBuilder = commentBuilder.addParagraph(listItems.get(0));
-        }
-      }
-      if (listItems.size() > 1 || startsWithItemizedList) {
-        commentBuilder =
-            commentBuilder.addUnorderedList(
-                listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()));
-      }
-    }
-
-    return commentBuilder;
   }
 }
