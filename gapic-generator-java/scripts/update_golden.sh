@@ -3,7 +3,7 @@
 set -o errexit
 
 API_NAME=$1
-RAW_SRCJAR=$( find . -name '*_java_gapic_srcjar_raw.srcjar' )
+RAW_SRCJAR=$(find . -name '*_java_gapic_srcjar_raw.srcjar')
 
 rm -rf srcjar_unpacked
 mkdir srcjar_unpacked
@@ -25,5 +25,6 @@ cp -r ${UNPACK_DIR}/src/test/java/* ./src
 mkdir -p ./samples/snippets/generated
 cp -r ${UNPACK_DIR}/samples/snippets/generated/**/* ./samples/snippets/generated
 
+find . -name '.DS_Store' -delete
 find . -name 'PlaceholderFile.java' -delete
 find . -type d -empty -delete
