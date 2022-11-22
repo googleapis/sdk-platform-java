@@ -3,9 +3,9 @@
 set -o errexit
 
 API_NAME=$1
-RAW_SRCJAR=$( find . -name '*_java_gapic_srcjar_raw.srcjar' )
+RAW_SRCJAR=$(find . -name '*_java_gapic_srcjar_raw.srcjar')
 
-mkdir unpacked src
+mkdir -p unpacked src
 cd unpacked
 unzip -q -c "../${RAW_SRCJAR}" temp-codegen.srcjar | jar x
 

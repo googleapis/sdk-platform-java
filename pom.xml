@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java</artifactId>
@@ -45,6 +47,10 @@
               <version>1.10.1</version>
             </path>
           </annotationProcessorPaths>
+          <testExcludes>
+            <!-- Showcase integration testing is compiled and executed via bazel -->
+            <exclude>com/google/showcase/**/*.java</exclude>
+          </testExcludes>
         </configuration>
       </plugin>
 
@@ -52,6 +58,11 @@
         <groupId>com.coveo</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
         <version>2.9.1</version>
+        <configuration>
+          <additionalSourceDirectories>
+            <additionalSourceDirectory>test/showcase/src</additionalSourceDirectory>
+          </additionalSourceDirectories>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -66,7 +77,9 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/gapic/metadata/gapic_metadata.proto</url>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/gapic/metadata/gapic_metadata.proto
+              </url>
               <outputDirectory>${project.build.directory}/generated-sources/proto/</outputDirectory>
             </configuration>
           </execution>
@@ -77,8 +90,11 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/cloud/common_resources.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/cloud/common_resources.proto
+              </url>
+              <outputDirectory>${project.build.directory}/generated-test-sources/proto/
+              </outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -88,8 +104,11 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/pubsub/v1/pubsub.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/pubsub/v1/pubsub.proto
+              </url>
+              <outputDirectory>${project.build.directory}/generated-test-sources/proto/
+              </outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -99,8 +118,12 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/pubsub/v1/schema.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/google/pubsub/v1/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/pubsub/v1/schema.proto
+              </url>
+              <outputDirectory>
+                ${project.build.directory}/generated-test-sources/proto/google/pubsub/v1/
+              </outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -110,8 +133,11 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/logging.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/logging.proto
+              </url>
+              <outputDirectory>${project.build.directory}/generated-test-sources/proto/
+              </outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -121,8 +147,12 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/log_entry.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/google/logging/v2/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/log_entry.proto
+              </url>
+              <outputDirectory>
+                ${project.build.directory}/generated-test-sources/proto/google/logging/v2/
+              </outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -132,8 +162,12 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/logging_config.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/google/logging/v2/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/logging_config.proto
+              </url>
+              <outputDirectory>
+                ${project.build.directory}/generated-test-sources/proto/google/logging/v2/
+              </outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -143,8 +177,12 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/logging_metrics.proto</url>
-              <outputDirectory>${project.build.directory}/generated-test-sources/proto/google/logging/v2/</outputDirectory>
+              <url>
+                https://raw.githubusercontent.com/googleapis/googleapis/${googleapis.commit}/google/logging/v2/logging_metrics.proto
+              </url>
+              <outputDirectory>
+                ${project.build.directory}/generated-test-sources/proto/google/logging/v2/
+              </outputDirectory>
             </configuration>
           </execution>
         </executions>
@@ -155,7 +193,8 @@
         <artifactId>protobuf-maven-plugin</artifactId>
         <version>0.6.1</version>
         <configuration>
-          <protocArtifact>com.google.protobuf:protoc:3.21.7:exe:${os.detected.classifier}</protocArtifact>
+          <protocArtifact>com.google.protobuf:protoc:3.21.7:exe:${os.detected.classifier}
+          </protocArtifact>
         </configuration>
         <executions>
           <execution>
@@ -192,7 +231,8 @@
               <goal>test-compile</goal>
             </goals>
             <configuration>
-              <protoTestSourceRoot>${project.build.directory}/generated-test-sources/proto/</protoTestSourceRoot>
+              <protoTestSourceRoot>${project.build.directory}/generated-test-sources/proto/
+              </protoTestSourceRoot>
               <clearOutputDirectory>false</clearOutputDirectory>
             </configuration>
           </execution>
@@ -205,7 +245,9 @@
         <version>3.0.0-M7</version>
         <configuration>
           <additionalClasspathElements>
-            <additionalClasspathElement>${project.build.directory}/generated-test-resources/protobuf/descriptor-sets/</additionalClasspathElement>
+            <additionalClasspathElement>
+              ${project.build.directory}/generated-test-resources/protobuf/descriptor-sets/
+            </additionalClasspathElement>
           </additionalClasspathElements>
         </configuration>
       </plugin>
@@ -230,7 +272,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>

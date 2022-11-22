@@ -7,10 +7,9 @@ name: ci-maven
 jobs:
   build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        java: [8, 11]
+        java: [ 8, 11 ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v3
@@ -29,7 +28,7 @@ jobs:
 
       - name: Unit Tests
         run: |
-          mvn verify --batch-mode --no-transfer-progress
+          mvn package --batch-mode --no-transfer-progress
 
       - name: Java Linter
         run: mvn fmt:check
