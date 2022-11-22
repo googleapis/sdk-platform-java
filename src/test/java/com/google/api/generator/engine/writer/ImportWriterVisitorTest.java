@@ -518,9 +518,7 @@ public class ImportWriterVisitorTest {
 
     throwExpr.accept(writerVisitor);
     assertEquals(
-        LineFormatter.lines(
-            "import com.google.api.generator.engine.ast.Expr;\n",
-            "import com.google.api.generator.engine.ast.IfStatement;\n\n"),
+        LineFormatter.lines("import com.google.api.generator.engine.ast.IfStatement;\n\n"),
         writerVisitor.write());
   }
 
@@ -554,7 +552,6 @@ public class ImportWriterVisitorTest {
     throwExpr.accept(writerVisitor);
     assertEquals(
         LineFormatter.lines(
-            "import com.google.api.generator.engine.ast.Expr;\n",
             "import com.google.api.generator.engine.ast.IfStatement;\n",
             "import java.io.FileNotFoundException;\n\n"),
         writerVisitor.write());
@@ -613,7 +610,7 @@ public class ImportWriterVisitorTest {
                 .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
                 .build());
     returnExpr.accept(writerVisitor);
-    assertEquals("import com.google.api.generator.engine.ast.Expr;\n\n", writerVisitor.write());
+    assertEquals("", writerVisitor.write());
   }
 
   @Test
@@ -721,8 +718,7 @@ public class ImportWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        LineFormatter.lines(
-            "import com.google.api.generator.engine.ast.Expr;\n", "import java.util.Arrays;\n\n"),
+        LineFormatter.lines("import com.google.api.generator.engine.ast.Expr;\n\n"),
         writerVisitor.write());
   }
 
@@ -767,9 +763,7 @@ public class ImportWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        LineFormatter.lines(
-            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import java.util.Map;\n\n"),
+        LineFormatter.lines("import com.google.api.generator.engine.ast.AssignmentExpr;\n\n"),
         writerVisitor.write());
   }
 
@@ -852,8 +846,8 @@ public class ImportWriterVisitorTest {
     propertyIsNotNullExpr.accept(writerVisitor);
     assertEquals(
         LineFormatter.lines(
-            "import java.io.FileOutputStream;\n",
-            "import java.io.OutputStream;\n\n" // This should not need to be imported?
+            "import java.io.FileOutputStream;\n\n"
+            // "import java.io.OutputStream;\n\n" // This should not need to be imported
             ),
         writerVisitor.write());
   }
@@ -944,8 +938,6 @@ public class ImportWriterVisitorTest {
     assertEquals(
         LineFormatter.lines(
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import com.google.api.generator.engine.ast.Expr;\n",
-            "import java.util.Arrays;\n",
             "import java.util.Map;\n\n"),
         writerVisitor.write());
   }
