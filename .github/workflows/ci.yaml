@@ -153,7 +153,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y curl unzip
-
       - name: Install showcase
         run: |
           sudo mkdir -p /usr/src/showcase
@@ -163,6 +162,5 @@ jobs:
           tar -xf showcase-*
           ./gapic-showcase run &
           cd -
-
       - name: Showcase Integration Testing
         run: bazel --batch test //test/showcase/...
