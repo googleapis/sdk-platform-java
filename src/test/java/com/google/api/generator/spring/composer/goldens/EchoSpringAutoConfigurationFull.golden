@@ -84,7 +84,7 @@ public class EchoSpringAutoConfiguration {
     if (this.clientProperties.getCredentials().hasKey()) {
       return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
     }
-    return ((CredentialsProvider) new DefaultCredentialsProvider(this.GlobalProperties));
+    return ((CredentialsProvider) new DefaultCredentialsProvider(this.globalProperties));
   }
 
   /**
@@ -94,7 +94,7 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
-    return defaultTransportChannelProvider();
+    return EchoSettings.defaultTransportChannelProvider();
   }
 
   /**

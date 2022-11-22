@@ -335,7 +335,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     Variable globalPropertiesVar =
         Variable.builder()
-            .setName("GlobalProperties")
+            .setName("globalProperties")
             .setType(types.get("GlobalProperties"))
             .build();
     Variable clientPropertiesVar =
@@ -432,7 +432,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             .setMethodName("defaultTransportChannelProvider")
-            .setStaticReferenceType(STATIC_TYPES.get("ServiceSettings"))
+            .setStaticReferenceType(types.get("ServiceSettings"))
             .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
             .build();
 
