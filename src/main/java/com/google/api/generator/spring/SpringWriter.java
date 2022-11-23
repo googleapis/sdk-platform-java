@@ -211,8 +211,8 @@ public class SpringWriter {
     String clientLibraryVersion = "{{client-library-version}}";
 
     String springStarterArtifactId = clientLibraryName + "-spring-starter";
-    String springStarterVersion = "{{starter-version}}";
     String springStarterName = "Spring Boot Starter - " + clientLibraryShortName;
+    String springParentVersion = "{{parent-version}}";
 
     StringJoiner sb = new StringJoiner(",\\\n");
     sb.add(
@@ -225,10 +225,9 @@ public class SpringWriter {
                 + "  <parent>\n"
                 + "    <groupId>com.google.cloud</groupId>\n"
                 + "    <artifactId>generated-parent</artifactId>\n"
+                + "    <version>%s</version>\n"
                 + "  </parent>\n"
-                + "  <groupId>com.google.cloud</groupId>\n"
                 + "  <artifactId>%s</artifactId>\n"
-                + "  <version>%s</version>\n"
                 + "  <name>%s</name>\n"
                 + "  <description>Spring Boot Starter with AutoConfiguration for %s</description>\n"
                 + "\n"
@@ -254,8 +253,8 @@ public class SpringWriter {
                 + "</dependencies>\n"
                 + "\n"
                 + "</project>",
+            springParentVersion,
             springStarterArtifactId,
-            springStarterVersion,
             springStarterName,
             clientLibraryShortName,
             clientLibraryGroupId,
