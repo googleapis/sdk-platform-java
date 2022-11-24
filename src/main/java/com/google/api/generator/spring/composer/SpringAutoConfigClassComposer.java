@@ -22,6 +22,7 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
+import com.google.api.generator.engine.ast.ArrayExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -35,6 +36,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -53,8 +55,10 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
+import com.google.api.generator.spring.utils.GlobalPropertiesUtils;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
@@ -164,41 +168,71 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     Statement loggerStatement =
         LoggerUtils.getLoggerDeclarationExpr(
             Utils.getServiceAutoConfigurationClassName(service), types);
-    return Arrays.asList(clientPropertiesStatement, loggerStatement);
+    Statement globalPropertiesStatement =
+        GlobalPropertiesUtils.getGlobalPropertiesDeclaration(types);
+    return Arrays.asList(clientPropertiesStatement, globalPropertiesStatement, loggerStatement);
   }
 
   private static MethodDefinition createConstructor(
       Service service, String className, Map<String, TypeNode> types, Expr thisExpr) {
-    VariableExpr propertiesVarExpr =
+    VariableExpr clientPropertiesVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientProperties")
                 .setType(types.get(Utils.getServicePropertiesClassName(service)))
+                .build());
+    VariableExpr globalPropertiesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("globalProperties")
+                .setType(types.get("GlobalProperties"))
                 .build());
     Variable clientPropertiesVar =
         Variable.builder()
             .setName("clientProperties")
             .setType(types.get(Utils.getServicePropertiesClassName(service)))
             .build();
+    Variable globalPropertiesVar =
+        Variable.builder()
+            .setName("globalProperties")
+            .setType(types.get("GlobalProperties"))
+            .build();
 
     // this.clientProperties = clientProperties;
-    AssignmentExpr thisPropertiesAssignmentExpr =
+    AssignmentExpr thisClientPropertiesAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
                 VariableExpr.withVariable(clientPropertiesVar)
                     .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
-            .setValueExpr(propertiesVarExpr)
+            .setValueExpr(clientPropertiesVarExpr)
             .build();
-    ExprStatement thisPropertiesAssignmentStatement =
-        ExprStatement.withExpr(thisPropertiesAssignmentExpr);
+    ExprStatement thisClientPropertiesAssignmentStatement =
+        ExprStatement.withExpr(thisClientPropertiesAssignmentExpr);
+
+    AssignmentExpr thisGlobalPropertiesAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(globalPropertiesVar)
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
+            .setValueExpr(globalPropertiesVarExpr)
+            .build();
+    ExprStatement thisGlobalPropertiesAssignmentStatement =
+        ExprStatement.withExpr(thisGlobalPropertiesAssignmentExpr);
 
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(types.get(className))
-        .setArguments(Arrays.asList(propertiesVarExpr.toBuilder().setIsDecl(true).build()))
-        .setBody(Arrays.asList(thisPropertiesAssignmentStatement))
+        .setArguments(
+            Arrays.asList(
+                clientPropertiesVarExpr.toBuilder().setIsDecl(true).build(),
+                globalPropertiesVarExpr.toBuilder().setIsDecl(true).build()))
+        .setBody(
+            Arrays.asList(
+                thisClientPropertiesAssignmentStatement, thisGlobalPropertiesAssignmentStatement))
         .build();
   }
 
@@ -253,10 +287,27 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("EnableConfigurationProperties"))
             .setDescription(
-                VariableExpr.builder()
-                    .setVariable(
-                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
-                    .setStaticReferenceType(types.get(Utils.getServicePropertiesClassName(service)))
+                ArrayExpr.builder()
+                    .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
+                    .addExpr(
+                        VariableExpr.builder()
+                            .setVariable(
+                                Variable.builder()
+                                    .setType(TypeNode.CLASS_OBJECT)
+                                    .setName("class")
+                                    .build())
+                            .setStaticReferenceType(
+                                types.get(Utils.getServicePropertiesClassName(service)))
+                            .build())
+                    .addExpr(
+                        VariableExpr.builder()
+                            .setVariable(
+                                Variable.builder()
+                                    .setType(TypeNode.CLASS_OBJECT)
+                                    .setName("class")
+                                    .build())
+                            .setStaticReferenceType(types.get("GlobalProperties"))
+                            .build())
                     .build())
             .build();
 
@@ -274,11 +325,19 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       Map<String, TypeNode> types,
       Expr thisExpr) {
     // @Bean
-    // @ConditionalOnMissingBean
+    // @ConditionalOnMissingBean(name = "[serviceName]ServiceCredentials")
     // public CredentialsProvider languageServiceCredentials() throws IOException {
-    //   return new DefaultCredentialsProvider(this.clientProperties);
+    //    if (this.clientProperties.getCredentials().hasKey()) {
+    //      return new DefaultCredentialsProvider(this.clientProperties);
+    //    }
+    //    return new DefaultCredentialsProvider(this.globalProperties);
     // }
-
+    List<Statement> bodyStatements = new ArrayList<>();
+    Variable globalPropertiesVar =
+        Variable.builder()
+            .setName("globalProperties")
+            .setType(types.get("GlobalProperties"))
+            .build();
     Variable clientPropertiesVar =
         Variable.builder()
             .setName("clientProperties")
@@ -290,7 +349,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .toBuilder()
             .setExprReferenceExpr(thisExpr)
             .build();
-    CastExpr castExpr =
+    VariableExpr thisGlobalProperties =
+        VariableExpr.withVariable(globalPropertiesVar)
+            .toBuilder()
+            .setExprReferenceExpr(thisExpr)
+            .build();
+    CastExpr clientCastExpr =
         CastExpr.builder()
             .setExpr(
                 NewObjectExpr.builder()
@@ -298,6 +362,46 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     .setArguments(thisClientProperties)
                     .build())
             .setType(STATIC_TYPES.get("CredentialsProvider"))
+            .build();
+    CastExpr globalCredentialsCastExpr =
+        CastExpr.builder()
+            .setExpr(
+                NewObjectExpr.builder()
+                    .setType(STATIC_TYPES.get("DefaultCredentialsProvider"))
+                    .setArguments(thisGlobalProperties)
+                    .build())
+            .setType(STATIC_TYPES.get("CredentialsProvider"))
+            .build();
+    ExprStatement clientCredentialsReturnExpr =
+        ExprStatement.withExpr(ReturnExpr.withExpr(clientCastExpr));
+    Expr clientPropertiesGetCredentials =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisClientProperties)
+            .setMethodName("getCredentials")
+            .setReturnType(STATIC_TYPES.get("Credentials"))
+            .build();
+    Expr clientPropertiesCredentialsHasKey =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientPropertiesGetCredentials)
+            .setMethodName("hasKey")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    IfStatement clientCredentialsIfStatement =
+        createIfStatement(
+            clientPropertiesCredentialsHasKey, Arrays.asList(clientCredentialsReturnExpr), null);
+    bodyStatements.add(clientCredentialsIfStatement);
+
+    // @ConditionalOnMissingBean(name = "[serviceName]ServiceCredentials")
+    AnnotationNode conditionalOnMissingBeanExpr =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("ConditionalOnMissingBean"))
+            .addDescription(
+                AssignmentExpr.builder()
+                    .setVariableExpr(
+                        VariableExpr.withVariable(
+                            Variable.builder().setName("name").setType(TypeNode.STRING).build()))
+                    .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue(methodName)))
+                    .build())
             .build();
 
     return MethodDefinition.builder()
@@ -311,7 +415,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 AnnotationNode.withType(STATIC_TYPES.get("Bean")),
                 AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
-        .setReturnExpr(castExpr)
+        .setBody(bodyStatements)
+        .setReturnExpr(globalCredentialsCastExpr)
         .build();
   }
 
@@ -901,7 +1006,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             Qualifier.class,
             DefaultCredentialsProvider.class,
             HeaderProvider.class,
-            Collections.class);
+            Collections.class,
+            Credentials.class);
     Map<String, TypeNode> concreteClazzesMap =
         concreteClazzes.stream()
             .collect(
@@ -955,6 +1061,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
+    typeMap.put("GlobalProperties", GlobalPropertiesUtils.getGlobalPropertiesType());
 
     return typeMap;
   }
