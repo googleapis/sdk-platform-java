@@ -4,7 +4,7 @@
     <groupId>com.google.api</groupId>
     <artifactId>api-common</artifactId>
     <packaging>jar</packaging>
-    <version>2.2.2</version><!-- {x-version-update:api-common:current} -->
+    <version>2.2.3-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
     <name>API Common</name>
     <url>https://github.com/googleapis/api-common-java</url>
     <description>Common utilities for Google APIs in Java</description>
