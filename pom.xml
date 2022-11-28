@@ -10,6 +10,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
     <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
+    <jacoco.version>0.8.8</jacoco.version>
   </properties>
 
   <dependencyManagement>
@@ -23,6 +24,42 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <!-- Perform showcase integration testing -->
+      <id>showcase</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>perform-showcase-integration-tests</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>integration-test</phase>
+                <configuration>
+                  <executable>bazel</executable>
+                  <arguments>
+                    <argument>coverage</argument>
+                    <!-- Common root path for source and tests are required for coverage report. -->
+                    <!-- Source @ /test/integration/goldens/showcase/src -->
+                    <!-- Tests  @ /test/showcase/src -->
+                    <argument>//test/...</argument>
+                    <argument>--combined_report=lcov</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <build>
     <extensions>
@@ -256,7 +293,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.8</version>
+        <version>${jacoco.version}</version>
         <executions>
           <execution>
             <goals>

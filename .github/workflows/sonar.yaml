@@ -83,6 +83,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.verbose=true \
           -Dsonar.projectKey=googleapis_gapic-generator-java \
           -Dsonar.organization=googleapis \
           -Dsonar.host.url=https://sonarcloud.io \
