@@ -83,6 +83,7 @@ jobs:
           mvn verify \
           -P showcase,sonar \
           -B \
+          -X \
           -Dsonar.verbose=true \
           -Dsonar.projectKey=googleapis_gapic-generator-java \
           -Dsonar.organization=googleapis \
