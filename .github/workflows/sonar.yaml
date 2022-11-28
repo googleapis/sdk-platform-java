@@ -67,8 +67,6 @@ jobs:
           tar -xf showcase-*
           ./gapic-showcase run &
           cd -
-      - name: Bazel Coverage
-        run: bazel --batch coverage //... --combined_report=lcov
 
       - name: Cache Maven packages
         uses: actions/cache@v3
