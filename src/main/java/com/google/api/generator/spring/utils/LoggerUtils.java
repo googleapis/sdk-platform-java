@@ -70,7 +70,7 @@ public class LoggerUtils {
     return ExprStatement.withExpr(loggerAssignmentExpr);
   }
 
-  public static IfStatement createLoggerStatement(Expr value, Map<String, TypeNode> types) {
+  public static Statement createLoggerStatement(Expr value, Map<String, TypeNode> types) {
     Variable loggerVariable =
         Variable.builder().setName("LOGGER").setType(STATIC_TYPES.get("Log")).build();
     MethodInvocationExpr loggerCallExpr =
