@@ -75,7 +75,7 @@ public class LoggerUtils {
     MethodInvocationExpr loggerCallExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
-            .setMethodName("info")
+            .setMethodName("trace")
             .setArguments(value)
             .build();
     return ExprStatement.withExpr(loggerCallExpr);
