@@ -642,7 +642,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(getQuotaProjectId)
             .build();
 
-    IfStatement projectIdLoggerStatement =
+    Statement projectIdLoggerStatement =
         LoggerUtils.createLoggerStatement(
             LoggerUtils.concatManyWithExprs(
                 ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to ")),
@@ -713,7 +713,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
-    IfStatement backgroundExecutorLoggerStatement =
+    Statement backgroundExecutorLoggerStatement =
         LoggerUtils.createLoggerStatement(
             ArithmeticOperationExpr.concatWithExprs(
                 ValueExpr.withValue(
