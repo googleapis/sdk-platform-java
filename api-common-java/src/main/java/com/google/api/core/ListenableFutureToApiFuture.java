@@ -32,9 +32,7 @@ package com.google.api.core;
 import com.google.common.util.concurrent.ForwardingListenableFuture.SimpleForwardingListenableFuture;
 import com.google.common.util.concurrent.ListenableFuture;
 
-/**
- * INTERNAL USE ONLY. Adapter from Guava ListenableFuture to ApiFuture.
- */
+/** INTERNAL USE ONLY. Adapter from Guava ListenableFuture to ApiFuture. */
 @InternalApi
 public class ListenableFutureToApiFuture<V> extends SimpleForwardingListenableFuture<V>
     implements ApiFuture<V> {

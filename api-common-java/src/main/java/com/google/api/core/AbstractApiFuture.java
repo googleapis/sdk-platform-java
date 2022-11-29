@@ -37,9 +37,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import javax.annotation.Nullable;
 
-/**
- * Abstract implementation of ApiFuture that mirrors {@code AbstractFuture} in Guava.
- */
+/** Abstract implementation of ApiFuture that mirrors {@code AbstractFuture} in Guava. */
 public abstract class AbstractApiFuture<V> implements ApiFuture<V> {
   private final InternalSettableFuture impl = new InternalSettableFuture();
 

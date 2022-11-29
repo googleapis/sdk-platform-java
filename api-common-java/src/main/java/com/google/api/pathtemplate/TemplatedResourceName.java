@@ -30,7 +30,6 @@
 
 package com.google.api.pathtemplate;
 
-import com.google.api.core.BetaApi;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
@@ -43,25 +42,22 @@ import javax.annotation.Nullable;
 /**
  * Class for representing and working with resource names.
  *
- * <p>
- * A resource name is represented by {@link PathTemplate}, an assignment to variables in the
+ * <p>A resource name is represented by {@link PathTemplate}, an assignment to variables in the
  * template, and an optional endpoint. The {@code ResourceName} class implements the map interface
  * (unmodifiable) to work with the variable assignments, and has methods to reproduce the string
  * representation of the name, to construct new names, and to dereference names into resources.
  *
- * <p>
- * As a resource name essentially represents a match of a path template against a string, it can be
- * also used for other purposes than naming resources. However, not all provided methods may make
+ * <p>As a resource name essentially represents a match of a path template against a string, it can
+ * be also used for other purposes than naming resources. However, not all provided methods may make
  * sense in all applications.
  *
- * <p>
- * Usage examples:
+ * <p>Usage examples:
  *
  * <pre>{@code
- *   PathTemplate template = PathTemplate.create("shelves/*&#47;books/*");
- *   TemplatedResourceName resourceName = TemplatedResourceName.create(template, "shelves/s1/books/b1");
- *   assert resourceName.get("$1").equals("b1");
- *   assert resourceName.parentName().toString().equals("shelves/s1/books");
+ * PathTemplate template = PathTemplate.create("shelves/*&#47;books/*");
+ * TemplatedResourceName resourceName = TemplatedResourceName.create(template, "shelves/s1/books/b1");
+ * assert resourceName.get("$1").equals("b1");
+ * assert resourceName.parentName().toString().equals("shelves/s1/books");
  * }</pre>
  */
 public class TemplatedResourceName implements Map<String, String> {
@@ -69,13 +65,9 @@ public class TemplatedResourceName implements Map<String, String> {
   // ResourceName Resolver
   // =====================
 
-  /**
-   * Represents a resource name resolver which can be registered with this class.
-   */
+  /** Represents a resource name resolver which can be registered with this class. */
   public interface Resolver {
-    /**
-     * Resolves the resource name into a resource by calling the underlying API.
-     */
+    /** Resolves the resource name into a resource by calling the underlying API. */
     <T> T resolve(Class<T> resourceType, TemplatedResourceName name, @Nullable String version);
   }
 
@@ -180,31 +172,23 @@ public class TemplatedResourceName implements Map<String, String> {
     return Objects.hash(template, endpoint, values);
   }
 
-  /**
-   * Gets the template associated with this resource name.
-   */
+  /** Gets the template associated with this resource name. */
   public PathTemplate template() {
     return template;
   }
 
-  /**
-   * Checks whether the resource name has an endpoint.
-   */
+  /** Checks whether the resource name has an endpoint. */
   public boolean hasEndpoint() {
     return endpoint != null;
   }
 
-  /**
-   * Returns the endpoint of this resource name, or null if none is defined.
-   */
+  /** Returns the endpoint of this resource name, or null if none is defined. */
   @Nullable
   public String endpoint() {
     return endpoint;
   }
 
-  /**
-   * Returns a resource name with specified endpoint.
-   */
+  /** Returns a resource name with specified endpoint. */
   public TemplatedResourceName withEndpoint(String endpoint) {
     return new TemplatedResourceName(template, values, Preconditions.checkNotNull(endpoint));
   }

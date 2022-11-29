@@ -32,20 +32,16 @@ package com.google.api.core;
 /**
  * An interface for getting the current value of a high-resolution time source, in nanoseconds.
  *
- * Clocks other than {@link NanoClock} are typically used only for testing.
+ * <p>Clocks other than {@link NanoClock} are typically used only for testing.
  *
- * This interface is required in addition to Java 8's Clock, because nanoTime is required to compare
- * values with io.grpc.CallOptions.getDeadlineNanoTime().
+ * <p>This interface is required in addition to Java 8's Clock, because nanoTime is required to
+ * compare values with io.grpc.CallOptions.getDeadlineNanoTime().
  */
 public interface ApiClock {
 
-  /**
-   * Returns the current value of this clock's high-resolution time source, in nanoseconds.
-   */
+  /** Returns the current value of this clock's high-resolution time source, in nanoseconds. */
   long nanoTime();
 
-  /**
-   * Returns the current value of this clock's high-resolution time source, in milliseconds.
-   */
+  /** Returns the current value of this clock's high-resolution time source, in milliseconds. */
   long millisTime();
 }

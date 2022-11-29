@@ -39,9 +39,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-/**
- * Tests for {@link UntypedResourceNameTest}.
- */
+/** Tests for {@link UntypedResourceNameTest}. */
 @RunWith(JUnit4.class)
 public class UntypedResourceNameTest {
   private static final String NAME_STRING = "sunshine";

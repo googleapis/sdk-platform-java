@@ -39,16 +39,16 @@ import java.lang.annotation.Target;
  * Indicates a public API that can change at any time, and has no guarantee of API stability and
  * backward-compatibility.
  *
- * <p>
- * Usage guidelines:
+ * <p>Usage guidelines:
+ *
  * <ol>
- * <li>This annotation is used only on APIs with public visibility. Internal interfaces should not
- * use it.</li>
- * <li>This annotation should only be added to new APIs. Adding it to an existing API is considered
- * API-breaking.</li>
- * <li>Removing this annotation from an API gives it stable status, assuming the API doesn't have
- * other annotations denoting instability (such as {@link InternalApi} or
- * {@link InternalExtensionOnly}).</li>
+ *   <li>This annotation is used only on APIs with public visibility. Internal interfaces should not
+ *       use it.
+ *   <li>This annotation should only be added to new APIs. Adding it to an existing API is
+ *       considered API-breaking.
+ *   <li>Removing this annotation from an API gives it stable status, assuming the API doesn't have
+ *       other annotations denoting instability (such as {@link InternalApi} or {@link
+ *       InternalExtensionOnly}).
  * </ol>
  */
 @BetaApi
@@ -63,8 +63,6 @@ import java.lang.annotation.Target;
 })
 @Documented
 public @interface BetaApi {
-  /**
-   * Context information such as links to a discussion thread, tracking issue, etc.
-   */
+  /** Context information such as links to a discussion thread, tracking issue, etc. */
   String value() default "";
 }

@@ -32,8 +32,7 @@ package com.google.api.core;
 /**
  * A callback for accepting the results of an {@link ApiFuture}.
  *
- * <p>
- * It is similar to Guava's {@code FutureCallback}, redeclared so that Guava can be shaded.
+ * <p>It is similar to Guava's {@code FutureCallback}, redeclared so that Guava can be shaded.
  */
 public interface ApiFutureCallback<V> {
   void onFailure(Throwable t);

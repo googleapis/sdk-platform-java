@@ -32,8 +32,7 @@ package com.google.api.core;
 /**
  * Legacy version of Function.
  *
- * <p>
- * It is similar to Guava's {@code Function}, redeclared so that Guava can be shaded.
+ * <p>It is similar to Guava's {@code Function}, redeclared so that Guava can be shaded.
  */
 public interface ApiFunction<F, T> {
   T apply(F input);

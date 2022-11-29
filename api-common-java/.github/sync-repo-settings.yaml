@@ -5,8 +5,10 @@ branchProtectionRules:
   - pattern: main
     isAdminEnforced: true
     requiredStatusCheckContexts:
-      - units
-      - format
+      - units (8)
+      - units (11)
+      - units (17)
+      - lint
       - cla/google
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
@@ -14,8 +16,10 @@ branchProtectionRules:
   - pattern: 1.10.1-sp
     isAdminEnforced: true
     requiredStatusCheckContexts:
-      - units
-      - format
+      - units (8)
+      - units (11)
+      - units (17)
+      - lint
       - cla/google
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
@@ -23,8 +27,10 @@ branchProtectionRules:
   - pattern: java7
     isAdminEnforced: true
     requiredStatusCheckContexts:
-      - units
-      - format
+      - units (8)
+      - units (11)
+      - units (17)
+      - lint
       - cla/google
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
@@ -32,8 +38,10 @@ branchProtectionRules:
   - pattern: 2.0.x
     isAdminEnforced: true
     requiredStatusCheckContexts:
-      - units
-      - format
+      - units (8)
+      - units (11)
+      - units (17)
+      - lint
       - cla/google
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
@@ -41,8 +49,10 @@ branchProtectionRules:
   - pattern: 2.1.x
     isAdminEnforced: true
     requiredStatusCheckContexts:
-      - units
-      - format
+      - units (8)
+      - units (11)
+      - units (17)
+      - lint
       - cla/google
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
@@ -50,8 +60,10 @@ branchProtectionRules:
   - pattern: 2.2.x
     isAdminEnforced: true
     requiredStatusCheckContexts:
-      - units
-      - format
+      - units (8)
+      - units (11)
+      - units (17)
+      - lint
       - cla/google
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true

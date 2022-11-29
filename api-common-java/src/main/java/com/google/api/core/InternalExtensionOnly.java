@@ -39,20 +39,18 @@ import java.lang.annotation.Target;
  * Indicates a public API that is stable for callers to use, but has no guarantee of stability for
  * extension. Consequently, the API should only be extended within the package containing the API.
  *
- * <p>
- * For example:
+ * <p>For example:
+ *
  * <ul>
- * <li>An interface marked with this annotation can have new methods added to it.</li>
- * <li>A non-final class with this annotation can be marked final.</li>
- * <li>A class with this annotation can have new abstract methods added.</li>
- * <li>a non-final method with this annotation can be marked final.</li>
+ *   <li>An interface marked with this annotation can have new methods added to it.
+ *   <li>A non-final class with this annotation can be marked final.
+ *   <li>A class with this annotation can have new abstract methods added.
+ *   <li>a non-final method with this annotation can be marked final.
  * </ul>
  *
- * <p>
- * The list above is just for illustration purposes and is not exhaustive.
+ * <p>The list above is just for illustration purposes and is not exhaustive.
  *
- * <p>
- * Adding this annotation to an API is considered API-breaking.
+ * <p>Adding this annotation to an API is considered API-breaking.
  */
 @BetaApi
 @Retention(RetentionPolicy.RUNTIME)
@@ -66,8 +64,6 @@ import java.lang.annotation.Target;
 })
 @Documented
 public @interface InternalExtensionOnly {
-  /**
-   * Context information on why the interface/class is annotated with InternalExtensionOnly.
-   */
+  /** Context information on why the interface/class is annotated with InternalExtensionOnly. */
   String value() default "";
 }

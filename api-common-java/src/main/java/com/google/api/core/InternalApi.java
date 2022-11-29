@@ -39,12 +39,10 @@ import java.lang.annotation.Target;
  * Annotates a program element (class, method, package etc) which is internal to its containing
  * library, not part of the public API, and should not be used by users of the library.
  *
- * <p>
- * This annotation only makes sense on APIs that are not private. Its existence is necessary because
- * Java does not have a visibility level for code within a compilation unit.
+ * <p>This annotation only makes sense on APIs that are not private. Its existence is necessary
+ * because Java does not have a visibility level for code within a compilation unit.
  *
- * <p>
- * Adding this annotation to an API is considered API-breaking.
+ * <p>Adding this annotation to an API is considered API-breaking.
  */
 @BetaApi
 @Retention(RetentionPolicy.RUNTIME)
@@ -58,8 +56,6 @@ import java.lang.annotation.Target;
 })
 @Documented
 public @interface InternalApi {
-  /**
-   * Context information such as "internal to library", "for testing", etc.
-   */
+  /** Context information such as "internal to library", "for testing", etc. */
   String value() default "";
 }

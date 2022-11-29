@@ -19,3 +19,5 @@ tmp_gh-pages
 
 # Vim
 *.sw*
+
+target/

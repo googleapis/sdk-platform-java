@@ -35,9 +35,7 @@ import java.util.Map;
 /** An interface that generated resource name types must implement. */
 public interface ResourceName {
 
-  /**
-   * Return the map of each field name to its value.
-   */
+  /** Return the map of each field name to its value. */
   Map<String, String> getFieldValuesMap();
 
   /**

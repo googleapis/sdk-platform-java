@@ -15,11 +15,54 @@
 
 set -eo pipefail
 
-cd github/api-common-java/
+## Get the directory of the build script
+scriptDir=$(realpath $(dirname "${BASH_SOURCE[0]}"))
+## cd to the parent directory, i.e. the root of the git repo
+cd ${scriptDir}/..
 
-# Print out Java
+# include common functions
+source ${scriptDir}/common.sh
+
+function setJava() {
+  export JAVA_HOME=$1
+  export PATH=${JAVA_HOME}/bin:$PATH
+}
+
+# This project requires compiling the classes in JDK 11 or higher for GraalVM
+# classes. Compiling this project with Java 8 or earlier would fail with "class
+# file has wrong version 55.0, should be 53.0" and "unrecognized --release 8
+# option" (set in build.gradle).
+if [ ! -z "${JAVA11_HOME}" ]; then
+  setJava "${JAVA11_HOME}"
+fi
+
+echo "Compiling using Java:"
 java -version
-echo $JOB_TYPE
+mvn clean install -B -Dcheckstyle.skip -Dfmt.skip
 
-./gradlew assemble
-./gradlew build install
+# We ensure the generated class files are compatible with Java 8
+if [ ! -z "${JAVA8_HOME}" ]; then
+  setJava "${JAVA8_HOME}"
+fi
+
+RETURN_CODE=0
+
+case ${JOB_TYPE} in
+  test)
+    retry_with_backoff 3 10 \
+      mvn -B -ntp \
+      -Dclirr.skip=true \
+      -Denforcer.skip=true \
+      -Dcheckstyle.skip=true \
+      -Dflatten.skip=true \
+      -Danimal.sniffer.skip=true \
+      -Dmaven.wagon.http.retryHandler.count=5 \
+      test
+    RETURN_CODE=$?
+    ;;
+  clirr)
+    mvn -B -ntp -Denforcer.skip=true clirr:check
+    RETURN_CODE=$?
+    ;;
+  *) ;;
+esac

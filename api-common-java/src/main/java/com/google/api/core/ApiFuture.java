@@ -35,7 +35,7 @@ import java.util.concurrent.Future;
 /**
  * A Future that can have a listener added.
  *
- * Similar to Guava's {@code ListenableFuture}, but redeclared so that Guava could be shaded.
+ * <p>Similar to Guava's {@code ListenableFuture}, but redeclared so that Guava could be shaded.
  */
 public interface ApiFuture<V> extends Future<V> {
   void addListener(Runnable listener, Executor executor);
