@@ -82,7 +82,13 @@ public class EchoSpringAutoConfiguration {
   @ConditionalOnMissingBean
   public CredentialsProvider echoCredentials() throws IOException {
     if (this.clientProperties.getCredentials().hasKey()) {
+      if (LOGGER.isTraceEnabled()) {
+        LOGGER.trace("Using credentials from Echo-specific configuration");
+      }
       return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+    }
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("Using credentials from global configuration");
     }
     return ((CredentialsProvider) new DefaultCredentialsProvider(this.globalProperties));
   }
