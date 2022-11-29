@@ -28,7 +28,8 @@ import java.util.Optional;
 import org.junit.Test;
 
 public class ServiceConfigParserTest {
-  private static final String JSON_DIRECTORY = "src/test/resources/";
+
+  private static final String JSON_DIRECTORY = "../src/test/resources/";
   private static final double EPSILON = 1e-4;
 
   @Test
