@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
 public class TestProtoLoader {
 
   private static final TestProtoLoader INSTANCE =
-      new TestProtoLoader(Transport.GRPC, "src/test/resources/");
+      new TestProtoLoader(Transport.GRPC, "../src/test/resources/");
   private static final String ECHO_SERVICE_DESCRIPTION =
       "This service is used showcase the four main types of rpcs - unary, server\n"
           + " side streaming, client side streaming, and bidirectional streaming. This\n"
