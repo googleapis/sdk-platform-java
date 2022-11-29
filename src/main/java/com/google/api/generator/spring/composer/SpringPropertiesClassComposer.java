@@ -138,16 +138,19 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             true,
             defaultCredentialScopes,
             nestedPropertyAnnotations);
+    statements.add(SpringPropertiesCommentComposer.createCredentialsPropertyComment());
     statements.add(credentialsStatement);
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
         ComposerUtils.createMemberVarStatement(
             "quotaProjectId", TypeNode.STRING, false, null, null);
+    statements.add(SpringPropertiesCommentComposer.createQuotaProjectIdPropertyComment());
     statements.add(quotaProjectIdVarStatement);
     //   private Integer executorThreadCount;
     ExprStatement executorThreadCountVarStatement =
         ComposerUtils.createMemberVarStatement(
             "executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
+    statements.add(SpringPropertiesCommentComposer.createExecutorThreadCountPropertyComment());
     statements.add(executorThreadCountVarStatement);
     if (hasRestOption) {
       ExprStatement useRestVarStatement =
@@ -158,6 +161,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               ValueExpr.withValue(
                   PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()),
               null);
+      statements.add(SpringPropertiesCommentComposer.createUseRestPropertyComment());
       statements.add(useRestVarStatement);
     }
     //   private Retry retry;

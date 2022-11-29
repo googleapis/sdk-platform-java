@@ -10,13 +10,17 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 /** Provides default property values for Echo client bean */
 @ConfigurationProperties("com.google.showcase.v1beta1.spring.auto.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
+  /** OAuth2 credentials to authenticate and authorize calls to Google Cloud Client Libraries. */
   @NestedConfigurationProperty
   private final Credentials credentials =
       new Credentials("https://www.googleapis.com/auth/cloud-platform");
-
+  /** Quota project to use for billing. */
   private String quotaProjectId;
+  /** Number of threads used for executors. */
   private Integer executorThreadCount;
+  /** Allow override of default transport channel provider to use REST instead of gRPC. */
   private boolean useRest = false;
+
   @NestedConfigurationProperty private Retry retry;
   @NestedConfigurationProperty private Retry echoRetry;
   @NestedConfigurationProperty private Retry expandRetry;

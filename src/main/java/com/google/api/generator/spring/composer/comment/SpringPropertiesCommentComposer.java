@@ -23,6 +23,13 @@ import java.util.List;
 public class SpringPropertiesCommentComposer {
   private static final String CLASS_HEADER_GENERAL_DESCRIPTION =
       "Provides default property values for %s client bean";
+  private static final String CREDENTIALS_DESCRIPTION =
+      "OAuth2 credentials to authenticate and authorize calls to Google Cloud Client Libraries.";
+  private static final String QUOTA_PROJECT_ID_DESCRIPTION = "Quota project to use for billing.";
+  private static final String EXECUTOR_THREAD_COUNT_DESCRIPTION =
+      "Number of threads used for executors.";
+  private static final String USE_REST_DESCRIPTION =
+      "Allow override of default transport channel provider to use REST instead of gRPC.";
 
   public static List<CommentStatement> createClassHeaderComments(
       String configuredClassName, String serviceName) {
@@ -33,5 +40,25 @@ public class SpringPropertiesCommentComposer {
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(javaDocCommentBuilder.build()));
+  }
+
+  public static CommentStatement createCredentialsPropertyComment() {
+    return toSimpleJavaDocComment(CREDENTIALS_DESCRIPTION);
+  }
+
+  public static CommentStatement createQuotaProjectIdPropertyComment() {
+    return toSimpleJavaDocComment(QUOTA_PROJECT_ID_DESCRIPTION);
+  }
+
+  public static CommentStatement createExecutorThreadCountPropertyComment() {
+    return toSimpleJavaDocComment(EXECUTOR_THREAD_COUNT_DESCRIPTION);
+  }
+
+  public static CommentStatement createUseRestPropertyComment() {
+    return toSimpleJavaDocComment(USE_REST_DESCRIPTION);
+  }
+
+  private static CommentStatement toSimpleJavaDocComment(String comment) {
+    return CommentStatement.withComment(JavaDocComment.withComment(comment));
   }
 }
