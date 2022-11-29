@@ -81,7 +81,7 @@ public class SpringComposer {
     AnnotationNode generatedAnnotation =
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))
-            .setDescription("by gapic-generator-java")
+            .setDescription("by spring-generator-java")
             .build();
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
