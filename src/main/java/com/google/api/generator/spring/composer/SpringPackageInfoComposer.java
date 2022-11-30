@@ -14,17 +14,13 @@
 
 package com.google.api.generator.spring.composer;
 
-import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.CommentStatement;
-import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
-import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.common.base.Preconditions;
-import javax.annotation.Generated;
 
 public class SpringPackageInfoComposer {
   private static final String PACKAGE_INFO_TITLE_PATTERN =
@@ -36,11 +32,6 @@ public class SpringPackageInfoComposer {
         PackageInfoDefinition.builder()
             .setPakkage(Utils.getSpringPackageName(Utils.getPackageName(context)))
             .setHeaderCommentStatements(createPackageInfoJavadoc(context))
-            .setAnnotations(
-                AnnotationNode.builder()
-                    .setType(TypeNode.withReference(ConcreteReference.withClazz(Generated.class)))
-                    .setDescription("by gapic-generator-java")
-                    .build())
             .build();
     return GapicPackageInfo.with(packageInfo);
   }
