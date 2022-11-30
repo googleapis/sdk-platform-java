@@ -9,6 +9,11 @@
  * <p>The services with auto-configured service client beans provided are listed below.
  *
  * <p>======================= EchoClient =======================
+ *
+ * <p>Service Description: This service is used showcase the four main types of rpcs - unary, server
+ * side streaming, client side streaming, and bidirectional streaming. This service also exposes
+ * methods that explicitly implement server delay, and paginated calls. Set the 'showcase-trailer'
+ * metadata key on any method to have the values echoed in the response trailers.
  */
 @Generated("by gapic-generator-java")
 package com.google.showcase.v1beta1.spring;
