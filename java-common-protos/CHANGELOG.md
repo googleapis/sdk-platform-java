@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.11.0](https://github.com/googleapis/java-common-protos/compare/v2.10.0...v2.11.0) (2022-11-21)
+
+
+### Features
+
+* Added google.api.Service.publishing and client libraries settings ([#481](https://github.com/googleapis/java-common-protos/issues/481)) ([d805f7e](https://github.com/googleapis/java-common-protos/commit/d805f7e16cdc3634ee377278221c2ac83f3a93e8))
+* Next release from main branch is 2.11.0 ([#475](https://github.com/googleapis/java-common-protos/issues/475)) ([b641e49](https://github.com/googleapis/java-common-protos/commit/b641e497ca90d4b5d6136e1f84769d1301a7bdd9))
+
+
+### Dependencies
+
+* Update dependency io.grpc:grpc-bom to v1.51.0 ([#483](https://github.com/googleapis/java-common-protos/issues/483)) ([f2550c4](https://github.com/googleapis/java-common-protos/commit/f2550c4bdb0ea94f2876f63b12bde9f63031d820))
+* Update dependency io.grpc:grpc-protobuf to v1.51.0 ([#484](https://github.com/googleapis/java-common-protos/issues/484)) ([c2cde01](https://github.com/googleapis/java-common-protos/commit/c2cde010a89123375518340819b420358e192302))
+* Update dependency io.grpc:grpc-stub to v1.51.0 ([#485](https://github.com/googleapis/java-common-protos/issues/485)) ([873e01a](https://github.com/googleapis/java-common-protos/commit/873e01a40327939812cb75185b0a8dbb2eae8a47))
+
 ## [2.10.0](https://github.com/googleapis/java-common-protos/compare/v2.9.6...v2.10.0) (2022-11-04)
 
 
