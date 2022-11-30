@@ -36,7 +36,7 @@ public class SpringComposer {
   private static final AnnotationNode GENERATED_ANNOTATION =
       AnnotationNode.builder()
           .setType(FIXED_TYPESTORE.get("Generated"))
-          .setDescription("by spring-generator-java")
+          .setDescription("by google-cloud-spring-generator")
           .build();
   private static final AnnotationNode BETA_ANNOTATION =
       AnnotationNode.builder()
