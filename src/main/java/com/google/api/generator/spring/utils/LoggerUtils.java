@@ -79,17 +79,15 @@ public class LoggerUtils {
             .setMethodName("trace")
             .setArguments(value)
             .build();
-    IfStatement loggerStatement =
-        IfStatement.builder()
-            .setConditionExpr(
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
-                    .setMethodName("isTraceEnabled")
-                    .setReturnType(TypeNode.BOOLEAN)
-                    .build())
-            .setBody(Arrays.asList(ExprStatement.withExpr(loggerCallExpr)))
-            .build();
-    return loggerStatement;
+    return IfStatement.builder()
+        .setConditionExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
+                .setMethodName("isTraceEnabled")
+                .setReturnType(TypeNode.BOOLEAN)
+                .build())
+        .setBody(Arrays.asList(ExprStatement.withExpr(loggerCallExpr)))
+        .build();
   }
 
   public static Expr concatManyWithExprs(Expr... exprs) {
