@@ -63,6 +63,7 @@ import java.util.Stack;
 import org.junit.Test;
 
 public class JavaCodeGeneratorTest {
+
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/engine/goldens/";
   // Create shared VaporReferences.

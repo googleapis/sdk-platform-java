@@ -23,6 +23,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 
 public class TestUtils {
+
   public static ValueExpr generateStringValueExpr(String value) {
     return ValueExpr.builder().setValue(StringObjectValue.withValue(value)).build();
   }

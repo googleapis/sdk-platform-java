@@ -6,6 +6,7 @@ target/
 # IDE
 .idea
 .ijwb
+*.iml
 
 # Vim.
 *.sw*
