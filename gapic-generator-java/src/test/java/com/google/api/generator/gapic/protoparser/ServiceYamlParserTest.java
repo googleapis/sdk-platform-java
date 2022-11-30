@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.junit.Test;
 
 public class ServiceYamlParserTest {
+
   private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
