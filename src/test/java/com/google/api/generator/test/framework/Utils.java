@@ -29,9 +29,9 @@ public class Utils {
    * generated code into a file called `ComposerTest.golden` at
    * `src/test/java/com/google/api/generator/gapic/composer/goldens/ComposerTest.golden`.
    *
-   * @param clazz the test class.
+   * @param clazz    the test class.
    * @param fileName the name of saved file, usually a test method name with suffix `.golden`
-   * @param codegen the generated code from JUnit test
+   * @param codegen  the generated code from JUnit test
    */
   public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
@@ -71,7 +71,7 @@ public class Utils {
   }
 
   public static String getGoldenDir(Class<?> clazz) {
-    return "../src/test/java/" + getTestoutGoldenDir(clazz);
+    return "src/test/java/" + getTestoutGoldenDir(clazz);
   }
 
   public static class SaveCodegenToFileException extends RuntimeException {

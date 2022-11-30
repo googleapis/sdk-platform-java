@@ -245,6 +245,7 @@
               ../target/generated-test-resources/protobuf/descriptor-sets
             </additionalClasspathElement>
           </additionalClasspathElements>
+          <workingDirectory>../</workingDirectory>
         </configuration>
       </plugin>
 

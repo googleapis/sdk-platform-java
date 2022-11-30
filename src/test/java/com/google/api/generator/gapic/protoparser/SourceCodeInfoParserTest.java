@@ -173,7 +173,7 @@ public class SourceCodeInfoParserTest {
   private static InputStream newDescriptorSetInputStream() throws IOException {
     Path path =
         Paths.get(
-            "../target/generated-test-resources/protobuf/descriptor-sets", PROTO_DESCRIPTOR_SET);
+            "target/generated-test-resources/protobuf/descriptor-sets", PROTO_DESCRIPTOR_SET);
 
     if (path.toFile().exists()) {
       return Files.newInputStream(path);
