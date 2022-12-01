@@ -83,70 +83,20 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>generate-showcase</id>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <executable>bazel</executable>
-              <arguments>
-                <argument>run</argument>
-                <argument>//showcase:update_gapic</argument>
-              </arguments>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.8</version>
         <executions>
           <execution>
-            <goals>
-              <goal>prepare-agent-integration</goal>
-            </goals>
-            <configuration>
-              <destFile>
-                ${project.build.directory}/jacoco-output/jacoco-integration-tests.exec
-              </destFile>
-              <propertyName>failsafe.jacoco.args</propertyName>
-            </configuration>
-          </execution>
-          <execution>
             <id>report</id>
             <goals>
-              <goal>report-integration</goal>
+              <goal>report</goal>
             </goals>
             <configuration>
-              <dataFile>
-                ${project.build.directory}/jacoco-output/jacoco-integration-tests.exec
-              </dataFile>
-              <outputDirectory>
-                ${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report
-              </outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M7</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-            <configuration>
-              <argLine>${failsafe.jacoco.args}</argLine>
+              <formats>
+                <format>XML</format>
+                <format>HTML</format>
+              </formats>
             </configuration>
           </execution>
         </executions>

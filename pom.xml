@@ -14,6 +14,12 @@
     <module>coverage</module>
   </modules>
 
+  <properties>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${project.basedir}/target/site/jacoco/jacoco.xml,${project.basedir}/showcase/gapic-showcase/target/site/jacoco/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
+  </properties>
+
   <!-- Do not deploy the aggregator POM -->
   <build>
     <plugins>
