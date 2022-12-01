@@ -386,24 +386,23 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethodName("hasKey")
             .setReturnType(TypeNode.BOOLEAN)
             .build();
+    Statement logClientCredentials =
+        LoggerUtils.createLoggerStatement(
+            ValueExpr.withValue(
+                StringObjectValue.withValue(
+                    "Using credentials from " + service.name() + "-specific configuration")),
+            types);
     IfStatement clientCredentialsIfStatement =
         createIfStatement(
-            clientPropertiesCredentialsHasKey, Arrays.asList(clientCredentialsReturnExpr), null);
+            clientPropertiesCredentialsHasKey,
+            Arrays.asList(logClientCredentials, clientCredentialsReturnExpr),
+            null);
     bodyStatements.add(clientCredentialsIfStatement);
-
-    // @ConditionalOnMissingBean(name = "[serviceName]ServiceCredentials")
-    AnnotationNode conditionalOnMissingBeanExpr =
-        AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("ConditionalOnMissingBean"))
-            .addDescription(
-                AssignmentExpr.builder()
-                    .setVariableExpr(
-                        VariableExpr.withVariable(
-                            Variable.builder().setName("name").setType(TypeNode.STRING).build()))
-                    .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue(methodName)))
-                    .build())
-            .build();
-
+    bodyStatements.add(
+        LoggerUtils.createLoggerStatement(
+            ValueExpr.withValue(
+                StringObjectValue.withValue("Using credentials from global configuration")),
+            types));
     return MethodDefinition.builder()
         .setName(methodName)
         .setHeaderCommentStatements(
@@ -643,7 +642,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(getQuotaProjectId)
             .build();
 
-    ExprStatement projectIdLoggerStatement =
+    Statement projectIdLoggerStatement =
         LoggerUtils.createLoggerStatement(
             LoggerUtils.concatManyWithExprs(
                 ValueExpr.withValue(StringObjectValue.withValue("Quota project id set to ")),
@@ -714,7 +713,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(executorProviderVarExpr)
             .build();
 
-    ExprStatement backgroundExecutorLoggerStatement =
+    Statement backgroundExecutorLoggerStatement =
         LoggerUtils.createLoggerStatement(
             ArithmeticOperationExpr.concatWithExprs(
                 ValueExpr.withValue(

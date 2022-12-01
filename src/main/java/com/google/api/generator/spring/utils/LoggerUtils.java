@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -69,16 +70,24 @@ public class LoggerUtils {
     return ExprStatement.withExpr(loggerAssignmentExpr);
   }
 
-  public static ExprStatement createLoggerStatement(Expr value, Map<String, TypeNode> types) {
+  public static Statement createLoggerStatement(Expr value, Map<String, TypeNode> types) {
     Variable loggerVariable =
         Variable.builder().setName("LOGGER").setType(STATIC_TYPES.get("Log")).build();
     MethodInvocationExpr loggerCallExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
-            .setMethodName("info")
+            .setMethodName("trace")
             .setArguments(value)
             .build();
-    return ExprStatement.withExpr(loggerCallExpr);
+    return IfStatement.builder()
+        .setConditionExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(VariableExpr.withVariable(loggerVariable))
+                .setMethodName("isTraceEnabled")
+                .setReturnType(TypeNode.BOOLEAN)
+                .build())
+        .setBody(Arrays.asList(ExprStatement.withExpr(loggerCallExpr)))
+        .build();
   }
 
   public static Expr concatManyWithExprs(Expr... exprs) {
