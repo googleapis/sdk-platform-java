@@ -262,7 +262,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     Variable.builder().setName("matchIfMissing").setType(TypeNode.BOOLEAN).build()))
             .setValueExpr(
                 ValueExpr.withValue(
-                    PrimitiveValue.builder().setValue("false").setType(TypeNode.BOOLEAN).build()))
+                    PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
             .build();
     AnnotationNode conditionalOnPropertyNode =
         AnnotationNode.builder()
