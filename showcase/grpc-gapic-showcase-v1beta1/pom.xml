@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc</groupId>
   <artifactId>grpc-gapic-showcase-v1beta1</artifactId>
-  <version>0.0.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <name>grpc-gapic-showcase-v1beta1</name>
   <description>GRPC library for grpc-google-cloud-iot-v1</description>
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>gapic-showcase-parent</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <profiles>
