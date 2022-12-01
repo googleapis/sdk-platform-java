@@ -33,9 +33,7 @@ case $1 in
 
     tar -xzf "../$PROTO_ARCHIVE"
     delete_unneeded
-    echo "Unpacked:"
-    ls -a "$PROTO_UNPACK_DIR/$PROTO_ARCHIVE_NAME"/src/main/proto
-    diff -ru "$SHOWCASE_DIR/$PROTO_PROJECT_DIR"/src "$PROTO_UNPACK_DIR/$PROTO_ARCHIVE_NAME"/src
+    diff -ru "$SHOWCASE_DIR/$PROTO_PROJECT_DIR"/src/main/java "$PROTO_UNPACK_DIR/$PROTO_ARCHIVE_NAME"/src/main/java
     ;;
 
   grpc)
