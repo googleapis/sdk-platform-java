@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.11.0](https://github.com/googleapis/gapic-generator-java/compare/v2.10.3...v2.11.0) (2022-11-30)
+
+
+### Features
+
+* **ast:** Array expressions ([#1080](https://github.com/googleapis/gapic-generator-java/issues/1080)) ([bd9532c](https://github.com/googleapis/gapic-generator-java/commit/bd9532c6663f2e8f9d9978cd0a3cffde821960ec))
+
+
+### Bug Fixes
+
+* **ast:** Add import generation for annotations on VariableExpr ([#1076](https://github.com/googleapis/gapic-generator-java/issues/1076)) ([f5d5524](https://github.com/googleapis/gapic-generator-java/commit/f5d5524e626f26ef53d4ae6c02118ef70ace205a))
+* **deps:** Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.6 ([#1088](https://github.com/googleapis/gapic-generator-java/issues/1088)) ([0e75338](https://github.com/googleapis/gapic-generator-java/commit/0e75338dcb083c4cccd35d8682ba9cbe4e314ef8))
+* Support testing nested argument method signatures and 'double' field assertions ([#1094](https://github.com/googleapis/gapic-generator-java/issues/1094)) ([4bf419f](https://github.com/googleapis/gapic-generator-java/commit/4bf419f764e2ecfdac9caf03968f40a8cd564655))
+
 ## [2.10.3](https://github.com/googleapis/gapic-generator-java/compare/v2.10.2...v2.10.3) (2022-11-01)
 
 
