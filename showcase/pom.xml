@@ -23,7 +23,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <github.global.server>github</github.global.server>
-    <site.installationModule>google-cloud-iot-parent</site.installationModule>
+    <site.installationModule>google-cloud-showcase-parent</site.installationModule>
   </properties>
 
   <dependencyManagement>

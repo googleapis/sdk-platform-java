@@ -10,6 +10,8 @@
 
   <modules>
     <module>gapic-generator-java</module>
+    <module>showcase</module>
+    <module>coverage</module>
   </modules>
 
   <!-- Do not deploy the aggregator POM -->

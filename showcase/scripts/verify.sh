@@ -3,9 +3,10 @@
 
 set -o errexit
 BAZEL_ROOT=$PWD
+SHOWCASE_DIR="$BUILD_WORKSPACE_DIRECTORY/showcase"
 
 clear_existing() {
-  cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$1"
+  cd "$SHOWCASE_DIR/$1"
   find . -name '*.java' -not -path '*/it/*' -delete
   find . -name 'gapic_metadata.json' -delete
   cd -
@@ -25,43 +26,35 @@ delete_unneeded() {
 case $1 in
   proto)
     PROTO_PROJECT_DIR=proto-gapic-showcase-v1beta1
-    PROTO_ARCHIVE=$(find . -name 'proto-google-cloud-showcase-v1beta1-java.tar.gz')
-    clear_existing $PROTO_PROJECT_DIR
+    PROTO_ARCHIVE_NAME=proto-google-cloud-showcase-v1beta1-java
+    PROTO_ARCHIVE=$(find . -name "$PROTO_ARCHIVE_NAME.tar.gz")
     create_unpack_dir proto_unpacked
     PROTO_UNPACK_DIR=$PWD
 
     tar -xzf "../$PROTO_ARCHIVE"
     delete_unneeded
-    cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$PROTO_PROJECT_DIR"
-    mkdir -p ./src
-    cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-v1beta1-java/src/* ./src
+    diff -ru "$SHOWCASE_DIR/$PROTO_PROJECT_DIR"/src "$PROTO_UNPACK_DIR/$PROTO_ARCHIVE_NAME"/src
     ;;
 
   grpc)
     GRPC_PROJECT_DIR=grpc-gapic-showcase-v1beta1
     GRPC_JAR=$(find . -name 'libshowcase_java_grpc-src.jar')
-    clear_existing $PROTO_PROJECT_DIR
     create_unpack_dir grpc_unpacked
     GRPC_UNPACK_DIR=$PWD
 
     jar xf "../$GRPC_JAR"
-    cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$GRPC_PROJECT_DIR"
-    mkdir -p ./src/main/java/com
-    cp -r "$GRPC_UNPACK_DIR"/com/* ./src/main/java/com
+    delete_unneeded
+    diff -ru "$SHOWCASE_DIR/$GRPC_PROJECT_DIR"/src/main/java/com "$GRPC_UNPACK_DIR"/com
     ;;
 
   gapic)
     GAPIC_PROJECT_DIR=gapic-showcase
     GAPIC_JAR=$(find . -name 'showcase_java_gapic_srcjar_raw.srcjar')
-    clear_existing $GAPIC_PROJECT_DIR
     create_unpack_dir gapic_unpacked
     GAPIC_UNPACK_DIR=$PWD
 
     unzip -q -c "../$GAPIC_JAR" temp-codegen.srcjar | jar x
-    cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$GAPIC_PROJECT_DIR"
-    cp -r "$GAPIC_UNPACK_DIR"/* ./
+    delete_unneeded
+    diff -ru "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/src --exclude=it
     ;;
 esac
-
-cd "${BUILD_WORKSPACE_DIRECTORY}/showcase"
-delete_unneeded
