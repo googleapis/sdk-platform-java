@@ -293,6 +293,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <outputDirectory>../target</outputDirectory>
               <createDependencyReducedPom>false</createDependencyReducedPom>
               <filters>
                 <filter>
