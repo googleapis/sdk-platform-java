@@ -42,7 +42,7 @@ import org.threeten.bp.Duration;
 @ConditionalOnClass(EchoClient.class)
 @ConditionalOnProperty(
     value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
-    matchIfMissing = false)
+    matchIfMissing = true)
 @EnableConfigurationProperties({EchoSpringProperties.class, GlobalProperties.class})
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
