@@ -25,6 +25,7 @@ jobs:
           java-version: 11
           distribution: temurin
       - run: java -version
+      - run: mvn -version
 
       - name: Bazel File Cache Setup
         id: cache-bazel
