@@ -28,12 +28,25 @@ setup_environment_secrets() {
   export SONATYPE_PASSWORD=$(cat ${KOKORO_KEYSTORE_DIR}/70247_sonatype-credentials | cut -f2 -d'|')
 }
 
-create_gradle_properties_file() {
+create_settings_xml_file() {
   echo "
-signing.gnupg.executable=gpg
-signing.gnupg.homeDir=${GPG_HOMEDIR}
-signing.gnupg.keyName=${GPG_KEY_ID}
-signing.gnupg.passphrase=${GPG_PASSPHRASE}
-ossrhUsername=${SONATYPE_USERNAME}
-ossrhPassword=${SONATYPE_PASSWORD}" > $1
+<settings>
+  <servers>
+    <server>
+      <id>ossrh</id>
+      <username>${SONATYPE_USERNAME}</username>
+      <password>${SONATYPE_PASSWORD}</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-staging</id>
+      <username>${SONATYPE_USERNAME}</username>
+      <password>${SONATYPE_PASSWORD}</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>${SONATYPE_USERNAME}</username>
+      <password>${SONATYPE_PASSWORD}</password>
+    </server>
+  </servers>
+</settings>" > $1
 }

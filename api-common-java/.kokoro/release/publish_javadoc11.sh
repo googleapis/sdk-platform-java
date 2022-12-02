@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019 Google Inc.
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,21 +28,28 @@ fi
 pushd $(dirname "$0")/../../
 
 # install docuploader package
-python3 -m pip install gcp-docuploader
+python3 -m pip install --require-hashes -r .kokoro/requirements.txt
 
 NAME=api-common
 VERSION=$(grep ${NAME}: versions.txt | cut -d: -f3)
 
 # build the docs
-./gradlew javadocCombinedV3
+mvn -B -ntp \
+  -P docFX \
+  -Dclirr.skip=true \
+  -Denforcer.skip=true \
+  -Dcheckstyle.skip=true \
+  -Dflatten.skip=true \
+  -Danimal.sniffer.skip=true \
+  javadoc:aggregate
 
-# copy README to tmp_docs dir and rename index.md
-cp README.md tmp_docs/docfx-yml/index.md
+# copy README to docfx-yml dir and rename index.md
+cp README.md target/docfx-yml/index.md
 
 # copy CHANGELOG to docfx-yml dir and rename history.md
-cp CHANGELOG.md tmp_docs/docfx-yml/history.md
+cp CHANGELOG.md target/docfx-yml/history.md
 
-pushd tmp_docs/docfx-yml/
+pushd target/docfx-yml/
 
 # create metadata
 python3 -m docuploader create-metadata \
