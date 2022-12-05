@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.3.0](https://github.com/googleapis/api-common-java/compare/v2.2.2...v2.3.0) (2022-12-05)
+
+
+### Features
+
+* Next release from main branch is 2.3.0 ([#371](https://github.com/googleapis/api-common-java/issues/371)) ([9f6f62d](https://github.com/googleapis/api-common-java/commit/9f6f62d1a32ee0b9c02065fe3752c2cd9d711038))
+
+
+### Dependencies
+
+* Update auto-value.version to v1.10.1 ([#378](https://github.com/googleapis/api-common-java/issues/378)) ([d44ba0b](https://github.com/googleapis/api-common-java/commit/d44ba0b7b15ef910ad7caba607d0d84edac2611b))
+* Update dependency com.google.auto.value:auto-value to v1.10.1 ([#380](https://github.com/googleapis/api-common-java/issues/380)) ([96eb7d6](https://github.com/googleapis/api-common-java/commit/96eb7d67c06fcd2e43dc6a2d332e9ad8e5fec7eb))
+* Update dependency com.google.auto.value:auto-value-annotations to v1.10.1 ([#381](https://github.com/googleapis/api-common-java/issues/381)) ([fb33ae8](https://github.com/googleapis/api-common-java/commit/fb33ae8ab0810dde5e33400309b4e632e04f4e0b))
+* Update dependency com.google.errorprone:error_prone_annotations to v2.16 ([#382](https://github.com/googleapis/api-common-java/issues/382)) ([da19378](https://github.com/googleapis/api-common-java/commit/da1937834bcfa9edfe2fa642211478fed54e5e61))
+* Update dependency gradle to v6.9.3 ([#379](https://github.com/googleapis/api-common-java/issues/379)) ([3cbb296](https://github.com/googleapis/api-common-java/commit/3cbb296485c5f6a5483aa15573c563e97436e13a))
+
 ## [2.2.2](https://github.com/googleapis/api-common-java/compare/v2.2.1...v2.2.2) (2022-08-04)
 
 
