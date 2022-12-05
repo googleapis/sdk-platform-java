@@ -125,7 +125,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         service, className, credentialsProviderName, dynamicTypes, thisExpr),
                     createTransportChannelProviderBeanMethod(
                         transportChannelProviderName, dynamicTypes),
-                    createServiceSettingsBeanMethod(
+                    createSettingsBeanMethod(
                         service,
                         credentialsProviderName,
                         transportChannelProviderName,
@@ -529,7 +529,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     return ExprStatement.withExpr(clientSettingBuilderChain);
   }
 
-  private static MethodDefinition createServiceSettingsBeanMethod(
+  private static MethodDefinition createSettingsBeanMethod(
       Service service,
       String credentialsProviderName,
       String transportChannelProviderName,
