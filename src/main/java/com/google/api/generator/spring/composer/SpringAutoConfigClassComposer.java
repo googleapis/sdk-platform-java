@@ -877,22 +877,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Settings";
-    String conditionalOnMissingBeanNameArgument = methodName;
-
-    // @ConditionalOnMissingBean(name = "[service]Settings")
-    AnnotationNode conditionalOnMissingBeanAnnotation =
-        AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("ConditionalOnMissingBean"))
-            .addDescription(
-                AssignmentExpr.builder()
-                    .setVariableExpr(
-                        VariableExpr.withVariable(
-                            Variable.builder().setName("name").setType(TypeNode.STRING).build()))
-                    .setValueExpr(
-                        ValueExpr.withValue(
-                            StringObjectValue.withValue(conditionalOnMissingBeanNameArgument)))
-                    .build())
-            .build();
 
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
@@ -907,7 +891,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(STATIC_TYPES.get("Bean")),
-                conditionalOnMissingBeanAnnotation))
+                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnExpr(returnExpr)
         .setBody(bodyStatements)
