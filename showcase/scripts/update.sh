@@ -40,7 +40,7 @@ case $1 in
   grpc)
     GRPC_PROJECT_DIR=grpc-gapic-showcase-v1beta1
     GRPC_JAR=$(find . -name 'libshowcase_java_grpc-src.jar')
-    clear_existing $PROTO_PROJECT_DIR
+    clear_existing $GRPC_PROJECT_DIR
     create_unpack_dir grpc_unpacked
     GRPC_UNPACK_DIR=$PWD
 
