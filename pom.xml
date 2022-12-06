@@ -22,6 +22,69 @@
 
   <profiles>
     <profile>
+      <id>update-showcase</id>
+      <activation>
+        <property>
+          <name>updateUnitGoldens</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>update-showcase-goldens</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <workingDirectory>showcase</workingDirectory>
+                  <executable>mvn</executable>
+                  <arguments>
+                    <argument>compile</argument>
+                    <argument>-P update</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>showcase-golden</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>perform-showcase-golden-testing</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <workingDirectory>showcase</workingDirectory>
+                  <executable>mvn</executable>
+                  <arguments>
+                    <argument>test</argument>
+                    <argument>-P enable-golden-tests</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>showcase</id>
       <build>
         <plugins>
@@ -41,6 +104,7 @@
                   <executable>mvn</executable>
                   <arguments>
                     <argument>verify</argument>
+                    <argument>-P enable-golden-tests</argument>
                     <argument>-P enable-integration-tests</argument>
                   </arguments>
                 </configuration>
@@ -49,6 +113,9 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>update</id>
     </profile>
   </profiles>
 

@@ -24,7 +24,7 @@
 
   <profiles>
     <profile>
-      <id>diff</id>
+      <id>enable-golden-tests</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
