@@ -16,8 +16,6 @@ package(default_visibility = ["//visibility:public"])
 API_GAPIC_TARGETS = {
     # basic case
     "asset": "@com_google_googleapis//google/cloud/asset/v1:asset_java_gapic",
-    # Showcase provides wide feature set coverage.
-    "showcase": "//test/showcase:showcase_java_gapic",
     # Check that the capital name edge case is handled.
     "credentials": "@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic",
     # Mixin-only special-case API can build on its own.
@@ -78,20 +76,6 @@ java_gapic_test(
         "com.google.cloud.asset.v1.AssetServiceClientTest",
     ],
     runtime_deps = ["@com_google_googleapis//google/cloud/asset/v1:asset_java_gapic_test"],
-)
-
-# Showcase API.
-java_gapic_test(
-    name = "showcase_java_gapic_test_suite",
-    test_classes = [
-        "com.google.showcase.v1beta1.ComplianceClientTest",
-        "com.google.showcase.v1beta1.EchoClientTest",
-        "com.google.showcase.v1beta1.IdentityClientTest",
-        "com.google.showcase.v1beta1.MessagingClientTest",
-        "com.google.showcase.v1beta1.SequenceServiceClientTest",
-        "com.google.showcase.v1beta1.TestingClientTest",
-    ],
-    runtime_deps = ["//test/showcase:showcase_java_gapic_test"],
 )
 
 # Redis API.
@@ -270,42 +254,4 @@ java_gapic_test(
         "com.google.cloud.pubsub.v1.TopicAdminClientTest",
     ],
     runtime_deps = [":pubsub_java_gapic_test"],
-)
-
-SHOWCASE_DEPS = [
-    "//test/showcase:showcase_java_grpc",
-    "//test/showcase:showcase_java_proto",
-    "@com_google_api_api_common//jar",
-    "@com_google_api_gax_java//gax-grpc:gax_grpc",
-    "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
-    "@com_google_api_gax_java//gax-httpjson:gax_httpjson",
-    "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
-    "@com_google_api_gax_java//gax:gax",
-    "@com_google_api_gax_java//gax:gax_testlib",
-    "@com_google_auth_google_auth_library_credentials//jar",
-    "@com_google_auth_google_auth_library_oauth2_http//jar",
-    "@com_google_code_findbugs_jsr305//jar",
-    "@com_google_code_gson_gson//jar",
-    "@com_google_googleapis//google/longrunning:longrunning_java_proto",
-    "@com_google_googleapis//google/rpc:rpc_java_proto",
-    "@com_google_googleapis//google/type:type_java_proto",
-    "@com_google_guava_guava//jar",
-    "@com_google_http_client_google_http_client//jar",
-    "@com_google_protobuf//:protobuf_java",
-    "@io_grpc_grpc_java//auth:auth",
-    "@io_grpc_grpc_java//core:core",
-    "@io_grpc_grpc_java//protobuf:protobuf",
-    "@io_grpc_grpc_java//stub:stub",
-    "@io_grpc_grpc_netty_shaded//jar",
-    "@io_opencensus_opencensus_api//jar",
-    "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
-    "@javax_annotation_javax_annotation_api//jar",
-    "@junit_junit//jar",
-    "@org_threeten_threetenbp//jar",
-]
-
-java_library(
-    name = "generated_showcase",
-    srcs = glob(["goldens/showcase/src/**/*.java"]),
-    deps = SHOWCASE_DEPS,
 )
