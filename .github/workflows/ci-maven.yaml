@@ -87,7 +87,4 @@ jobs:
           cd -
 
       - name: Showcase integration tests
-        run: |
-          cd showcase
-          mvn verify -P enable-integration-tests
-          cd -
+        run: mvn verify -P showcase
