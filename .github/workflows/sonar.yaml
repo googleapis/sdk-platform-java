@@ -7,9 +7,6 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
 
-env:
-  SHOWCASE_VERSION: 0.25.0
-
 jobs:
   build:
     name: Build
@@ -27,47 +24,12 @@ jobs:
       - run: java -version
       - run: mvn -version
 
-      - name: Bazel File Cache Setup
-        id: cache-bazel
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/bazel
-          key: ${{ runner.os }}-${{ secrets.CACHE_VERSION }}
-      - name: Bazel Cache Not Found
-        if: steps.cache-bazel.outputs.cache-hit != 'true'
-        run: |
-          echo "No cache found."
-      - name: Bazel Cache Found
-        if: steps.cache-bazel.outputs.cache-hit == 'true'
-        run: |
-          echo -n "Cache found. Cache size: "
-          du -sh ~/.cache/bazel
-          echo "If the cache seems broken, update the CACHE_VERSION secret in"
-          echo "https://github.com/googleapis/googleapis-discovery/settings/secrets/actions"
-          echo "(use any random string, any GUID will work)"
-          echo "and it will start over with a clean cache."
-          echo "The old one will disappear after 7 days."
-
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-
-      - name: Install system dependencies.
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl unzip
-      - name: Install showcase
-        run: |
-          sudo mkdir -p /usr/src/showcase
-          sudo chown -R ${USER} /usr/src/
-          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${SHOWCASE_VERSION}/gapic-showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz
-          cd /usr/src/showcase/
-          tar -xf showcase-*
-          ./gapic-showcase run &
-          cd -
 
       - name: Cache Maven packages
         uses: actions/cache@v3
