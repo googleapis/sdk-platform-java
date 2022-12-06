@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/googleapis/api-common-java/compare/v2.3.0...v2.3.1) (2022-12-06)
+
+
+### Bug Fixes
+
+* Build with JDK11 and target JDK8 ([1862611](https://github.com/googleapis/api-common-java/commit/1862611d8b5cff69288380fe567e6ce033148c55))
+
 ## [2.3.0](https://github.com/googleapis/api-common-java/compare/v2.2.2...v2.3.0) (2022-12-05)
 
 
