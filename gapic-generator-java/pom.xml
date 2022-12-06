@@ -6,17 +6,13 @@
   <artifactId>gapic-generator-java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <parent>
-    <groupId>com.google.api</groupId>
-    <artifactId>gapic-generator-java-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
     <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
+    <sonar.projectBaseDir>..</sonar.projectBaseDir>
+    <sonar.sources>../src/main/java,pom.xml</sonar.sources>
+    <sonar.working.directory>../target/sonar</sonar.working.directory>
   </properties>
 
   <dependencyManagement>
@@ -269,19 +265,14 @@
           </execution>
           <execution>
             <id>report</id>
-            <phase>verify</phase>
+            <phase>test</phase>
             <goals>
               <goal>report</goal>
             </goals>
-            <configuration>
-              <formats>
-                <format>XML</format>
-                <format>HTML</format>
-              </formats>
-            </configuration>
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -293,7 +284,6 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <outputDirectory>../target</outputDirectory>
               <createDependencyReducedPom>false</createDependencyReducedPom>
               <filters>
                 <filter>
