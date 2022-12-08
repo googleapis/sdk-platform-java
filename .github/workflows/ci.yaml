@@ -60,7 +60,7 @@ jobs:
       - name: Unit Tests
         run: bazel --batch test //:units --noshow_progress --test_output=errors
 
-      - name: Golden Tests
+      - name: Golden Integration Tests
         run: bazel --batch test //test/integration/...
 
       - name: Gradle Build Generated Storage Client Library
