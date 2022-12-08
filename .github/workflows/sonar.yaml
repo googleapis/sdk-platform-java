@@ -45,7 +45,6 @@ jobs:
         run: |
           mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -B \
-          -Dsonar.verbose=true \
           -Dsonar.projectKey=googleapis_gapic-generator-java \
           -Dsonar.organization=googleapis \
           -Dsonar.host.url=https://sonarcloud.io

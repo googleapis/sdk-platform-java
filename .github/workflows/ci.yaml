@@ -6,9 +6,6 @@ on:
       - main
   pull_request:
 
-env:
-  SHOWCASE_VERSION: 0.25.0
-
 jobs:
   license-header:
     runs-on: ubuntu-latest
