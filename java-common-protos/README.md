@@ -39,7 +39,7 @@ Apache 2.0 - See [LICENSE][license] for more information.
 | Java 8 Windows | [![Kokoro CI][kokoro-badge-image-4]][kokoro-badge-link-4] |
 | Java 11        | [![Kokoro CI][kokoro-badge-image-5]][kokoro-badge-link-5] |
 
-[javadocs]: https://googleapis.dev/java/google-common-protos/latest/index.html
+[javadocs]: https://cloud.google.com/java/docs/reference/proto-google-common-protos/latest/overview
 [kokoro-badge-image-1]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-common-protos/java7.svg
 [kokoro-badge-link-1]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-common-protos/java7.html
 [kokoro-badge-image-2]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-common-protos/java8.svg
