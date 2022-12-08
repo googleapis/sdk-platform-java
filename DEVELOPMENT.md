@@ -99,6 +99,23 @@
   bazel run //test/integration:update_redis
   ```
 
+### Golden Showcase Testing
+
+- Regenerate the showcase client into the `./showcase` projects.
+
+  ```shell
+  mvn compile -P update-showcase
+  # or, for backward compatibility with previous workflows:
+  mvn compile -D updateUnitGoldens
+  ```
+
+- Run a test to verify a newly generated showcase client is identical to the golden files
+  in `./showcase`.
+
+  ```shell
+  mvn verify -P showcase-golden
+  ```
+
 ## Showcase Integration Testing
 
 [GAPIC Showcase](https://github.com/googleapis/gapic-showcase) is an API that demonstrates Generated
@@ -159,10 +176,10 @@ $ gapic-showcase run
 
 ### Running the Integration Tests
 
-Open a new terminal window and run all tests in the `/test/showcase` directory.
+Open a new terminal window in the root project directory.
 
 ```shell
-$ bazel test //test/showcase/...
+$ mvn verify -P showcase
 ```
 
 ## Running the Plugin
