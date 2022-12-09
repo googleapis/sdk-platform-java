@@ -13,10 +13,23 @@ APIs. It currently contains the following packages:
   formatted as Google API resource names.
 - resourcenames: Resource Name library used by generated resource name types
 
+> For new and existing Developers/ Contributors:
+>
+> In December 2022, api-common-java's build tool has been migrated from gradle to maven.
+> Gradle related files are no longer being maintained and will be removed.
+>
+> The artifact coordinates in Maven Central (`{{ group_id }}:{{ artifact_id }}`) remain the same.
+
+
 Java Versions
 -------------
 
-Java 7 or above is required for using this library.
+Java 8 or above is required for using this library.
+
+To build this project, JDK 11 or above is required.
+The build produces Java bytecode targeted for Java 8.
+
+The project uses Maven to build.
 
 Contributing
 ------------
@@ -57,14 +70,14 @@ Build and Test
 To build this library, please do the following.
 
 ```sh
-./gradlew build
+mvn clean install
 ```
 
 After making changes, run the following commands to format your code and test your changes.
 
 ```sh
-./gradlew googleJavaFormat
-./gradlew test
+mvn fmt:format
+mvn test
 ```
 
 [CONTRIBUTING]:https://github.com/googleapis/api-common-java/blob/main/CONTRIBUTING.md
