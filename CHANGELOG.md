@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.12.0](https://github.com/googleapis/gapic-generator-java/compare/v2.11.0...v2.12.0) (2022-12-09)
+
+
+### Features
+
+* Add scripts to release gapic-generator-java as jar ([#1111](https://github.com/googleapis/gapic-generator-java/issues/1111)) ([7941cc5](https://github.com/googleapis/gapic-generator-java/commit/7941cc5d7b3aca732d27b4f00eae18a145f8c459))
+
+
+### Bug Fixes
+
+* Sonar coverage for non-standard directory structure ([#1108](https://github.com/googleapis/gapic-generator-java/issues/1108)) ([60dc190](https://github.com/googleapis/gapic-generator-java/commit/60dc1904676b1ede343b84998658eca2e20cc56a))
+
+
+### Dependencies
+
+* Explicitly declare dependencies instead of using shared-dependencies-bom ([#1115](https://github.com/googleapis/gapic-generator-java/issues/1115)) ([402d565](https://github.com/googleapis/gapic-generator-java/commit/402d565e318b31199f3765b3bf82528fb189255d))
+
 ## [2.11.0](https://github.com/googleapis/gapic-generator-java/compare/v2.10.3...v2.11.0) (2022-11-30)
 
 
