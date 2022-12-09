@@ -129,6 +129,10 @@ the Showcase API which can communicate with a local Showcase server to perform i
 
 ### Installing the Server
 
+Using the latest version of showcase is recommended, but backward compatibility between server
+versions is not guaranteed. If changing the version of the server, it may also be necessary to
+update to a compatible client version in `./WORKSPACE`.
+
 ```shell
 $ GAPIC_SHOWCASE_VERSION=0.25.0
 $ go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$GAPIC_SHOWCASE_VERSION"
