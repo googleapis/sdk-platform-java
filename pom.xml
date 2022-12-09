@@ -8,6 +8,12 @@
   <version>2.11.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <packaging>pom</packaging>
 
+  <parent>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-shared-config</artifactId>
+    <version>1.5.5</version>
+  </parent>
+  
   <modules>
     <module>gapic-generator-java</module>
   </modules>
