@@ -1,1 +1,4 @@
-2.11.0
+# Format:
+# module:released-version:current-version
+
+gapic-generator-java:2.11.0:2.11.1-SNAPSHOT
