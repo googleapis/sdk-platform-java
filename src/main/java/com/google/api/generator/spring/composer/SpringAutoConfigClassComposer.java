@@ -53,7 +53,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
-import com.google.api.generator.spring.utils.GlobalPropertiesUtils;
+import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.cloud.spring.core.Credentials;
@@ -143,14 +143,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     // private final LanguageProperties clientProperties;
     ExprStatement clientPropertiesStatement =
-        GlobalPropertiesUtils.createMemberVarStatement(
+        ComposerUtils.createMemberVarStatement(
             "clientProperties",
             types.get(Utils.getServicePropertiesClassName(service)),
             true,
             null,
             null);
     Statement credentialProvider =
-        GlobalPropertiesUtils.createMemberVarStatement(
+        ComposerUtils.createMemberVarStatement(
             "credentialsProvider", STATIC_TYPES.get("CredentialsProvider"), true, null, null);
 
     Statement loggerStatement =
@@ -957,7 +957,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
-    typeMap.put("GlobalProperties", GlobalPropertiesUtils.getGlobalPropertiesType());
 
     return typeMap;
   }

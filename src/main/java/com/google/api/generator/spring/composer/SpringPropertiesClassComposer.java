@@ -43,6 +43,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
+import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.CredentialsSupplier;
@@ -106,35 +107,6 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     // return null;
   }
 
-  private static ExprStatement createMemberVarStatement(
-      String varName,
-      TypeNode varType,
-      boolean isFinal,
-      Expr defaultVal,
-      List<AnnotationNode> annotationNodes) {
-    Variable memberVar = Variable.builder().setName(varName).setType(varType).build();
-    VariableExpr memberVarExpr =
-        VariableExpr.builder()
-            .setVariable(memberVar)
-            .setScope(ScopeNode.PRIVATE)
-            .setAnnotations(annotationNodes == null ? Collections.emptyList() : annotationNodes)
-            .setIsDecl(true)
-            .setIsFinal(isFinal)
-            .build();
-
-    if (defaultVal == null) {
-      return ExprStatement.withExpr(memberVarExpr);
-    }
-    AssignmentExpr assignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(memberVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(defaultVal)
-            .build();
-    ExprStatement memberVarStatement = ExprStatement.withExpr(assignmentExpr);
-
-    return memberVarStatement;
-  }
-
   private static List<Statement> createMemberVariables(
       Service service,
       String packageName,
@@ -161,7 +133,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     List<AnnotationNode> credentialsAnnotations =
         Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("NestedConfigurationProperty")));
     ExprStatement credentialsStatement =
-        createMemberVarStatement(
+        ComposerUtils.createMemberVarStatement(
             "credentials",
             STATIC_TYPES.get("Credentials"),
             true,
@@ -170,15 +142,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     statements.add(credentialsStatement);
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
-        createMemberVarStatement("quotaProjectId", TypeNode.STRING, false, null, null);
+        ComposerUtils.createMemberVarStatement(
+            "quotaProjectId", TypeNode.STRING, false, null, null);
     statements.add(quotaProjectIdVarStatement);
     //   private Integer executorThreadCount;
     ExprStatement executorThreadCountVarStatement =
-        createMemberVarStatement("executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
+        ComposerUtils.createMemberVarStatement(
+            "executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
     statements.add(executorThreadCountVarStatement);
     if (hasRestOption) {
       ExprStatement useRestVarStatement =
-          createMemberVarStatement(
+          ComposerUtils.createMemberVarStatement(
               "useRest",
               TypeNode.BOOLEAN,
               false,
@@ -207,7 +181,8 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               }
               String propertyName = Joiner.on("").join(methodAndPropertyName);
               ExprStatement retrySettingsStatement =
-                  createMemberVarStatement(propertyName, propertyType, false, null, null);
+                  ComposerUtils.createMemberVarStatement(
+                      propertyName, propertyType, false, null, null);
               getterAndSetter.add(retrySettingsStatement);
               return getterAndSetter;
             },
