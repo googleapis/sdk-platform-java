@@ -24,7 +24,6 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
-import com.google.cloud.spring.global.GlobalProperties;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import java.io.IOException;
@@ -62,35 +61,24 @@ import org.threeten.bp.Duration;
 @ConditionalOnProperty(
     value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
     matchIfMissing = true)
-@EnableConfigurationProperties({EchoSpringProperties.class, GlobalProperties.class})
+@EnableConfigurationProperties(EchoSpringProperties.class)
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;
-  private final GlobalProperties globalProperties;
+  private final CredentialsProvider credentialsProvider;
   private static final Log LOGGER = LogFactory.getLog(EchoSpringAutoConfiguration.class);
 
   protected EchoSpringAutoConfiguration(
-      EchoSpringProperties clientProperties, GlobalProperties globalProperties) {
+      EchoSpringProperties clientProperties, CredentialsProvider credentialsProvider) {
     this.clientProperties = clientProperties;
-    this.globalProperties = globalProperties;
-  }
-
-  /**
-   * Obtains the default credentials provider. The used key will be obtained from Spring Boot
-   * configuration data files.
-   */
-  @Bean
-  @ConditionalOnMissingBean
-  public CredentialsProvider echoCredentials() throws IOException {
     if (this.clientProperties.getCredentials().hasKey()) {
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Using credentials from Echo-specific configuration");
       }
-      return ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+      this.credentialsProvider =
+          ((CredentialsProvider) new DefaultCredentialsProvider(this.clientProperties));
+    } else {
+      this.credentialsProvider = credentialsProvider;
     }
-    if (LOGGER.isTraceEnabled()) {
-      LOGGER.trace("Using credentials from global configuration");
-    }
-    return ((CredentialsProvider) new DefaultCredentialsProvider(this.globalProperties));
   }
 
   /**
@@ -116,13 +104,12 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(
-      @Qualifier("echoCredentials") CredentialsProvider credentialsProvider,
       @Qualifier("defaultEchoTransportChannelProvider")
           TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {
     EchoSettings.Builder clientSettingsBuilder =
         EchoSettings.newBuilder()
-            .setCredentialsProvider(credentialsProvider)
+            .setCredentialsProvider(this.credentialsProvider)
             .setTransportChannelProvider(defaultTransportChannelProvider)
             .setHeaderProvider(this.userAgentHeaderProvider());
     if (this.clientProperties.getQuotaProjectId() != null) {

@@ -14,6 +14,9 @@
 
 package com.google.api.generator.spring.utils;
 
+import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -21,6 +24,8 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class GlobalPropertiesUtils {
@@ -51,5 +56,45 @@ public class GlobalPropertiesUtils {
             .setIsFinal(true)
             .setIsDecl(true)
             .build());
+  }
+
+  public static Statement getPrivateVarDeclaration(String varName, TypeNode type, boolean isFinal) {
+    Variable variable = Variable.builder().setName(varName).setType(type).build();
+    return ExprStatement.withExpr(
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsFinal(true)
+            .setIsDecl(true)
+            .build());
+  }
+
+  public static ExprStatement createMemberVarStatement(
+      String varName,
+      TypeNode varType,
+      boolean isFinal,
+      Expr defaultVal,
+      List<AnnotationNode> annotationNodes) {
+    Variable memberVar = Variable.builder().setName(varName).setType(varType).build();
+    VariableExpr memberVarExpr =
+        VariableExpr.builder()
+            .setVariable(memberVar)
+            .setScope(ScopeNode.PRIVATE)
+            .setAnnotations(annotationNodes == null ? Collections.emptyList() : annotationNodes)
+            .setIsDecl(true)
+            .setIsFinal(isFinal)
+            .build();
+
+    if (defaultVal == null) {
+      return ExprStatement.withExpr(memberVarExpr);
+    }
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(memberVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(defaultVal)
+            .build();
+    ExprStatement memberVarStatement = ExprStatement.withExpr(assignmentExpr);
+
+    return memberVarStatement;
   }
 }
