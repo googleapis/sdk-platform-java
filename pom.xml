@@ -13,8 +13,6 @@
   </modules>
 
   <properties>
-    <checkstyle.skip>true</checkstyle.skip>
-    <animal.sniffer.skip>true</animal.sniffer.skip>
     <sonar.coverage.jacoco.xmlReportPaths>
       ${project.basedir}/target/site/jacoco/jacoco.xml
     </sonar.coverage.jacoco.xmlReportPaths>
