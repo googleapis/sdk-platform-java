@@ -15,6 +15,12 @@
     <sonar.working.directory>../target/sonar</sonar.working.directory>
   </properties>
 
+  <parent>
+    <groupId>com.google.api</groupId>
+    <artifactId>gapic-generator-java-parent</artifactId>
+    <version>2.11.1-SNAPSHOT</version>
+  </parent>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -364,6 +370,11 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.auth</groupId>
+      <artifactId>google-auth-library-credentials</artifactId>
+      <version>1.13.0</version>
     </dependency>
 
     <!--
