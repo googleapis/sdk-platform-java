@@ -18,6 +18,14 @@
     <module>gapic-generator-java</module>
   </modules>
 
+  <properties>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${project.basedir}/target/site/jacoco/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.sources>pom.xml</sonar.sources>
+    <sonar.tests/>
+  </properties>
+
   <!-- Do not deploy the aggregator POM -->
   <build>
     <plugins>
