@@ -16,6 +16,7 @@
     <gax.version>2.20.1</gax.version>
     <grpc.version>1.51.0</grpc.version>
     <protobuf.version>3.21.10</protobuf.version>
+    <auto-value.version>1.10.1</auto-value.version>
   </properties>
 
   <dependencyManagement>
@@ -66,7 +67,7 @@
             <path>
               <groupId>com.google.auto.value</groupId>
               <artifactId>auto-value</artifactId>
-              <version>1.10.1</version>
+              <version>${auto-value.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
@@ -348,6 +349,7 @@
     <dependency>
       <groupId>com.google.auto.value</groupId>
       <artifactId>auto-value-annotations</artifactId>
+      <version>${auto-value.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.protobuf</groupId>
