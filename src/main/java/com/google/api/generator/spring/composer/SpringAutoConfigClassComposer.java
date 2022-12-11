@@ -107,6 +107,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(dynamicTypes.get(className)));
     Transport transport = context.transport();
     boolean hasRestOption = transport.equals(Transport.GRPC_REST);
+    String serviceSettingsMethodName =
+        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Settings";
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -132,8 +134,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         dynamicTypes,
                         gapicServiceConfig,
                         thisExpr,
-                        hasRestOption),
-                    createClientBeanMethod(dynamicTypes, service),
+                        hasRestOption,
+                        serviceSettingsMethodName),
+                    createClientBeanMethod(dynamicTypes, service, serviceSettingsMethodName),
                     createUserAgentHeaderProviderMethod(
                         serviceNameLowerHyphen, className, dynamicTypes, thisExpr)))
             .build();
@@ -536,7 +539,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       Map<String, TypeNode> types,
       GapicServiceConfig gapicServiceConfig,
       Expr thisExpr,
-      boolean hasRestOption) {
+      boolean hasRestOption,
+      String serviceSettingsMethodName) {
     // argument variables:
     VariableExpr credentialsProviderVariableExpr =
         VariableExpr.withVariable(
@@ -875,16 +879,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                             .build()))
                 .build());
 
-    String methodName =
-        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Settings";
-
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             SpringAutoconfigCommentComposer.createClientBeanComment(
                 service.name(),
                 Utils.getServicePropertiesClassName(service),
                 transportChannelProviderName))
-        .setName(methodName)
+        .setName(serviceSettingsMethodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceSettings"))
         .setArguments(argumentsVariableExprs)
@@ -899,18 +900,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createClientBeanMethod(
-      Map<String, TypeNode> types, Service service) {
+      Map<String, TypeNode> types, Service service, String serviceSettingsMethodName) {
     VariableExpr clientSettingsVariableExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setName(
-                    CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Settings")
+                .setName(serviceSettingsMethodName)
                 .setType(types.get("ServiceSettings"))
                 .build());
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
-            // read more in client composer:
-            // src/main/java/com/google/api/generator/gapic/composer/common/AbstractServiceClientClassComposer.java#L277-L292
             .setMethodName("create")
             .setStaticReferenceType(types.get("ServiceClient"))
             .setReturnType(types.get("ServiceClient"))
