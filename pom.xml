@@ -18,7 +18,6 @@
     </sonar.coverage.jacoco.xmlReportPaths>
     <sonar.sources>pom.xml</sonar.sources>
     <sonar.tests/>
-    <enforcer.skip>true</enforcer.skip>
   </properties>
 
   <!-- Do not deploy the aggregator POM -->
