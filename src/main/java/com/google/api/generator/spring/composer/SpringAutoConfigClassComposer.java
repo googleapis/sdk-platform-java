@@ -243,6 +243,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnType(types.get(className))
         .setArguments(
             Arrays.asList(
