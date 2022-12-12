@@ -30,7 +30,7 @@ pushd $(dirname "$0")/../../
 setup_environment_secrets
 create_settings_xml_file "settings.xml"
 
-mvn clean deploy -B \
+mvn clean deploy -B -X \
   -DskipTests=true \
   -Dclirr.skip=true \
   --settings ${MAVEN_SETTINGS_FILE} \
@@ -39,11 +39,19 @@ mvn clean deploy -B \
   -Dgpg.homedir=${GPG_HOMEDIR} \
   -P release
 
+echo "Finding nexus-staging"
+find . -name "nexus-staging"
+
+echo "Done"
+echo "Finding staging"
+find . -name "staging"
+echo  "Done"
+
 # The job triggered by Release Please (release-trigger) has this AUTORELEASE_PR
 # environment variable. Fusion also lets us to specify this variable.
 if [[ -n "${AUTORELEASE_PR}" ]]
 then
-  mvn nexus-staging:release -B \
+  mvn nexus-staging:release -B -X \
     -P release-staging-repository \
     -DperformRelease=true \
     --settings=${MAVEN_SETTINGS_FILE}
