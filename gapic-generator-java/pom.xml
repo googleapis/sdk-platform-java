@@ -25,6 +25,7 @@
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-shared-config</artifactId>
     <version>1.5.5</version>
+    <relativePath/>
   </parent>
 
   <dependencyManagement>
