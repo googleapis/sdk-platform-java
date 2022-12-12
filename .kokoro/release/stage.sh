@@ -30,7 +30,7 @@ pushd $(dirname "$0")/../../
 setup_environment_secrets
 create_settings_xml_file "settings.xml"
 
-mvn clean deploy -B \
+mvn clean deploy -B -X \
   -DskipTests=true \
   -Dclirr.skip=true \
   --settings ${MAVEN_SETTINGS_FILE} \
@@ -43,7 +43,7 @@ mvn clean deploy -B \
 # environment variable. Fusion also lets us to specify this variable.
 if [[ -n "${AUTORELEASE_PR}" ]]
 then
- mvn nexus-staging:release -B \
+ mvn nexus-staging:release -B -X \
    -DperformRelease=true \
    --settings=${MAVEN_SETTINGS_FILE}
 else
