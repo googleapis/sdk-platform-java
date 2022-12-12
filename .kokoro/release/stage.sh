@@ -30,7 +30,7 @@ pushd $(dirname "$0")/../../
 setup_environment_secrets
 create_settings_xml_file "settings.xml"
 
-mvn clean deploy -B -X \
+mvn clean deploy -B \
   -DskipTests=true \
   -Dclirr.skip=true \
   --settings ${MAVEN_SETTINGS_FILE} \
