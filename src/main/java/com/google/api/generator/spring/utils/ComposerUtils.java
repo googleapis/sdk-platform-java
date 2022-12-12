@@ -51,8 +51,7 @@ public class ComposerUtils {
             .setVariableExpr(memberVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(defaultVal)
             .build();
-    ExprStatement memberVarStatement = ExprStatement.withExpr(assignmentExpr);
 
-    return memberVarStatement;
+    return ExprStatement.withExpr(assignmentExpr);
   }
 }
