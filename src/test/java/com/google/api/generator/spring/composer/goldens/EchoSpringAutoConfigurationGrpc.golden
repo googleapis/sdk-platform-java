@@ -83,6 +83,13 @@ public class EchoSpringAutoConfiguration {
     return EchoSettings.defaultTransportChannelProvider();
   }
 
+  @Bean
+  @ConditionalOnMissingBean
+  public RetrySettings echoRetrySettings() {
+    defaultRetrySettings = EchoSettings.newBuilder().echoSettings().getRetrySettings();
+    return updateRetrySettings(defaultRetrySettings, this.clientProperties.getEchoRetrySettings());
+  }
+
   /**
    * Provides a EchoClient bean configured to use the default credentials provider (obtained with
    * echoCredentials()) and its default transport channel provider

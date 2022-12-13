@@ -125,6 +125,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                         service, className, credentialsProviderName, dynamicTypes, thisExpr),
                     createTransportChannelProviderBeanMethod(
                         transportChannelProviderName, dynamicTypes),
+                    // TODO: create beans per-method
+                    createRetrySettingsBeanMethod(service, "echo", dynamicTypes, thisExpr),
                     createClientBeanMethod(
                         service,
                         className,
@@ -441,6 +443,98 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+        .setAnnotations(
+            Arrays.asList(
+                AnnotationNode.withType(STATIC_TYPES.get("Bean")),
+                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static MethodDefinition createRetrySettingsBeanMethod(
+      Service service, String rpcMethodName, Map<String, TypeNode> types, Expr thisExpr) {
+
+    //    @Bean
+    //    @ConditionalOnMissingBean(name = "annotateTextRetrySettings")
+    //    public RetrySettings annotateTextRetrySettings() {
+    //      RetrySettings defaultRetrySettings =
+    // LanguageServiceSettings.newBuilder().annotateTextSettings().getRetrySettings();
+    //      return updateRetrySettings(defaultRetrySettings,
+    // this.clientProperties.getAnnotateTextRetrySettings());
+    //    }
+
+    List<Statement> bodyStatements = new ArrayList<>();
+
+    String methodName = rpcMethodName + "RetrySettings";
+    String getRetrySettingsMethodName =
+        "get" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, rpcMethodName) + "RetrySettings";
+
+    Variable defaultRetrySettingsVariable =
+        Variable.builder()
+            .setName("defaultRetrySettings")
+            .setType(STATIC_TYPES.get("RetrySettings"))
+            .build();
+
+    Expr settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setMethodName("newBuilder")
+            .build();
+
+    Expr methodSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingsBuilderExpr)
+            .setMethodName(String.format("%sSettings", rpcMethodName))
+            .build();
+
+    Expr methodRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(methodSettingsExpr)
+            .setMethodName("getRetrySettings")
+            .setReturnType(STATIC_TYPES.get("RetrySettings"))
+            .build();
+
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(VariableExpr.withVariable(defaultRetrySettingsVariable))
+                .setValueExpr(methodRetrySettingsExpr)
+                .build()));
+
+    Variable clientPropertiesVar =
+        Variable.builder()
+            .setName("clientProperties")
+            .setType(types.get(Utils.getServicePropertiesClassName(service)))
+            .build();
+
+    VariableExpr thisClientPropertiesVarExpr =
+        VariableExpr.withVariable(clientPropertiesVar)
+            .toBuilder()
+            .setExprReferenceExpr(thisExpr)
+            .build();
+
+    MethodInvocationExpr getMethodRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisClientPropertiesVarExpr)
+            .setMethodName(getRetrySettingsMethodName)
+            .setReturnType(STATIC_TYPES.get("RetrySettings"))
+            .build();
+
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("updateRetrySettings")
+            .setArguments(
+                Arrays.asList(
+                    VariableExpr.withVariable(defaultRetrySettingsVariable),
+                    getMethodRetrySettingsExpr))
+            .setReturnType(STATIC_TYPES.get("RetrySettings"))
+            .build();
+
+    return MethodDefinition.builder()
+        .setName(methodName)
+        .setScope(ScopeNode.PUBLIC)
+        .setBody(bodyStatements)
+        .setReturnType(STATIC_TYPES.get("RetrySettings"))
         .setAnnotations(
             Arrays.asList(
                 AnnotationNode.withType(STATIC_TYPES.get("Bean")),
@@ -1004,6 +1098,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             Bean.class,
             Qualifier.class,
             DefaultCredentialsProvider.class,
+            RetrySettings.class,
             HeaderProvider.class,
             Collections.class,
             Credentials.class);
