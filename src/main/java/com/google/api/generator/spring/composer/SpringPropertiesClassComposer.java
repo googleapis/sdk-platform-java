@@ -40,6 +40,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
@@ -47,7 +48,6 @@ import com.google.api.generator.spring.utils.Utils;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.CredentialsSupplier;
 import com.google.common.base.CaseFormat;
-import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -188,32 +188,18 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       statements.add(useRestVarStatement);
     }
 
-    //   private static final ImmutableMap<String, RetrySettings> RETRY_PARAM_DEFINITIONS;
+    // For each method, declare RetryProperties
+    // e.g. private Retry annotateTextRetrySettings = new Retry();
+    Expr newRetryObjectExpr = NewObjectExpr.builder().setType(types.get("Retry")).build();
 
-    // declare each retry settings with its default value. use defaults from serviceConfig
-    TypeNode thisClassType = types.get(Utils.getServicePropertiesClassName(service));
-    List<Statement> retrySettings =
-        Utils.processRetrySettings(
-            service,
-            serviceConfig,
-            thisClassType,
-            (String propertyName) -> new ArrayList<>(),
-            (List<String> methodAndPropertyName, Expr defaultVal) -> {
-              List<Statement> getterAndSetter = new ArrayList<>();
-              TypeNode propertyType = defaultVal.type();
-              // TODO: safer cast?
-              if (propertyType.equals(TypeNode.DOUBLE)) {
-                propertyType = TypeNode.DOUBLE_OBJECT;
-              }
-              String propertyName = Joiner.on("").join(methodAndPropertyName);
-              ExprStatement retrySettingsStatement =
-                  createMemberVarStatement(propertyName, propertyType, false, null, null);
-              getterAndSetter.add(retrySettingsStatement);
-              return getterAndSetter;
-            },
-            (String propertyName) -> new ArrayList<>());
-
-    statements.addAll(retrySettings);
+    for (Method method : service.methods()) {
+      String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
+      String retryVarName = methodName + "RetrySettings";
+      ExprStatement retryPropertiesStatement =
+          createMemberVarStatement(
+              retryVarName, types.get("Retry"), false, newRetryObjectExpr, null);
+      statements.add(retryPropertiesStatement);
+    }
 
     return statements;
   }
@@ -245,28 +231,14 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
-    List<MethodDefinition> retrySettings =
-        Utils.processRetrySettings(
-            service,
-            gapicServiceConfig,
-            thisClassType,
-            (String propertyName) -> new ArrayList<>(),
-            (List<String> methodAndPropertyName, Expr defaultVal) -> {
-              List<MethodDefinition> getterAndSetter = new ArrayList<>();
-              TypeNode propertyType = defaultVal.type();
-              if (propertyType.equals(TypeNode.DOUBLE)) {
-                propertyType = TypeNode.DOUBLE_OBJECT;
-              }
-              String propertyName = Joiner.on("").join(methodAndPropertyName);
-              getterAndSetter.add(
-                  createGetterMethod(thisClassType, propertyName, propertyType, null));
-              getterAndSetter.add(createSetterMethod(thisClassType, propertyName, propertyType));
-              return getterAndSetter;
-            },
-            (String propertyName) -> new ArrayList<>());
-
-    methodDefinitions.addAll(retrySettings);
-
+    // For each method, create getters and setters for <method>RetrySettings
+    for (Method method : service.methods()) {
+      String retryVarName =
+          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "RetrySettings";
+      methodDefinitions.add(
+          createGetterMethod(thisClassType, retryVarName, types.get("Retry"), null));
+      methodDefinitions.add(createSetterMethod(thisClassType, retryVarName, types.get("Retry")));
+    }
     return methodDefinitions;
   }
 
@@ -356,7 +328,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 .setName(Utils.getServicePropertiesClassName(service))
                 .setPakkage(packageName)
                 .build());
+
+    TypeNode retryProperties =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Retry")
+                .setPakkage("com.google.cloud.spring.core")
+                .build());
+
     typeMap.put(Utils.getServicePropertiesClassName(service), clientProperties);
+    typeMap.put("Retry", retryProperties);
+
     return typeMap;
   }
 
