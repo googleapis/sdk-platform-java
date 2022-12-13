@@ -1,6 +1,7 @@
 bazel-*
 .gradle/
 target/
+.flattened-pom.xml
 
 # IDE
 .idea
