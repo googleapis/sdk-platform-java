@@ -191,7 +191,20 @@
 
 5. Build the new target.
 
-    ```sh
-    cd googleapis
-    bazel build //google/showcase/v1beta1:showcase_java_gapic
-    ```
+   ```sh
+   cd googleapis
+   bazel build //google/showcase/v1beta1:showcase_java_gapic
+   ```
+    
+   You can generate any client library based on the protos within googleapis.
+   You just need the name of the service within the `java_gapic_assembly_gradle_pkg`
+   rules within the service's `BUILD.bazel` file.
+   For instance, to run your local generator on the `speech`'s v2 service, you can
+   run:
+    
+   ```
+   bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
+   ```
+
+
+
