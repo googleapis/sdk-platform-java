@@ -8,6 +8,8 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
+import com.google.cloud.spring.core.Retry;
+import com.google.cloud.spring.core.util.RetryUtils;
 import com.google.cloud.spring.global.GlobalProperties;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -22,7 +24,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -134,436 +135,61 @@ public class EchoSpringAutoConfiguration {
         LOGGER.trace("Using HTTP transport channel");
       }
     }
-    RetrySettings.Builder echoRetrySettingBuilder =
-        clientSettingsBuilder.echoSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getEchoInitialRetryDelay() != null) {
-      echoRetrySettingBuilder.setInitialRetryDelay(
-          this.clientProperties.getEchoInitialRetryDelay());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "EchoInitialRetryDelay set to " + this.clientProperties.getEchoInitialRetryDelay());
-      }
+    Retry serviceRetrySettings = clientProperties.getServiceRetrySettings();
+    if (serviceRetrySettings != null) {
+      RetrySettings echoRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.echoSettings().getEchoRetrySettings(), serviceRetrySettings);
+      clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
+      RetrySettings expandRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.expandSettings().getExpandRetrySettings(),
+              serviceRetrySettings);
+      clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
+      RetrySettings collectRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.collectSettings().getCollectRetrySettings(),
+              serviceRetrySettings);
+      clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
+      RetrySettings chatRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.chatSettings().getChatRetrySettings(), serviceRetrySettings);
+      clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
+      RetrySettings chatAgainRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(),
+              serviceRetrySettings);
+      clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
+      RetrySettings pagedExpandRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
+              serviceRetrySettings);
+      clientSettingsBuilder
+          .pagedExpandSettings()
+          .setPagedExpandRetrySettings(pagedExpandRetrySettings);
+      RetrySettings simplePagedExpandRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
+              serviceRetrySettings);
+      clientSettingsBuilder
+          .simplePagedExpandSettings()
+          .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
+      RetrySettings waitRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.waitSettings().getWaitRetrySettings(), serviceRetrySettings);
+      clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
+      RetrySettings blockRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.blockSettings().getBlockRetrySettings(), serviceRetrySettings);
+      clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
+      RetrySettings collideNameRetrySettings =
+          RetryUtils.updateRetrySettings(
+              clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
+              serviceRetrySettings);
+      clientSettingsBuilder
+          .collideNameSettings()
+          .setCollideNameRetrySettings(collideNameRetrySettings);
     }
-    if (this.clientProperties.getEchoRetryDelayMultiplier() != null) {
-      echoRetrySettingBuilder.setRetryDelayMultiplier(
-          this.clientProperties.getEchoRetryDelayMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "EchoRetryDelayMultiplier set to "
-                + this.clientProperties.getEchoRetryDelayMultiplier());
-      }
-    }
-    if (this.clientProperties.getEchoMaxRetryDelay() != null) {
-      echoRetrySettingBuilder.setMaxRetryDelay(this.clientProperties.getEchoMaxRetryDelay());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("EchoMaxRetryDelay set to " + this.clientProperties.getEchoMaxRetryDelay());
-      }
-    }
-    if (this.clientProperties.getEchoInitialRpcTimeout() != null) {
-      echoRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getEchoInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "EchoInitialRpcTimeout set to " + this.clientProperties.getEchoInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getEchoRpcTimeoutMultiplier() != null) {
-      echoRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getEchoRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "EchoRpcTimeoutMultiplier set to "
-                + this.clientProperties.getEchoRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getEchoMaxRpcTimeout() != null) {
-      echoRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getEchoMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("EchoMaxRpcTimeout set to " + this.clientProperties.getEchoMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getEchoTotalTimeout() != null) {
-      echoRetrySettingBuilder.setTotalTimeout(this.clientProperties.getEchoTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("EchoTotalTimeout set to " + this.clientProperties.getEchoTotalTimeout());
-      }
-    }
-    clientSettingsBuilder.echoSettings().setRetrySettings(echoRetrySettingBuilder.build());
-    RetrySettings.Builder expandRetrySettingBuilder =
-        clientSettingsBuilder.expandSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getExpandInitialRetryDelay() != null) {
-      expandRetrySettingBuilder.setInitialRetryDelay(
-          this.clientProperties.getExpandInitialRetryDelay());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ExpandInitialRetryDelay set to " + this.clientProperties.getExpandInitialRetryDelay());
-      }
-    }
-    if (this.clientProperties.getExpandRetryDelayMultiplier() != null) {
-      expandRetrySettingBuilder.setRetryDelayMultiplier(
-          this.clientProperties.getExpandRetryDelayMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ExpandRetryDelayMultiplier set to "
-                + this.clientProperties.getExpandRetryDelayMultiplier());
-      }
-    }
-    if (this.clientProperties.getExpandMaxRetryDelay() != null) {
-      expandRetrySettingBuilder.setMaxRetryDelay(this.clientProperties.getExpandMaxRetryDelay());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ExpandMaxRetryDelay set to " + this.clientProperties.getExpandMaxRetryDelay());
-      }
-    }
-    if (this.clientProperties.getExpandInitialRpcTimeout() != null) {
-      expandRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getExpandInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ExpandInitialRpcTimeout set to " + this.clientProperties.getExpandInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getExpandRpcTimeoutMultiplier() != null) {
-      expandRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getExpandRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ExpandRpcTimeoutMultiplier set to "
-                + this.clientProperties.getExpandRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getExpandMaxRpcTimeout() != null) {
-      expandRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getExpandMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ExpandMaxRpcTimeout set to " + this.clientProperties.getExpandMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getExpandTotalTimeout() != null) {
-      expandRetrySettingBuilder.setTotalTimeout(this.clientProperties.getExpandTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("ExpandTotalTimeout set to " + this.clientProperties.getExpandTotalTimeout());
-      }
-    }
-    clientSettingsBuilder.expandSettings().setRetrySettings(expandRetrySettingBuilder.build());
-    RetrySettings.Builder collectRetrySettingBuilder =
-        clientSettingsBuilder.collectSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getCollectInitialRpcTimeout() != null) {
-      collectRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getCollectInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollectInitialRpcTimeout set to "
-                + this.clientProperties.getCollectInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getCollectRpcTimeoutMultiplier() != null) {
-      collectRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getCollectRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollectRpcTimeoutMultiplier set to "
-                + this.clientProperties.getCollectRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getCollectMaxRpcTimeout() != null) {
-      collectRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getCollectMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollectMaxRpcTimeout set to " + this.clientProperties.getCollectMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getCollectTotalTimeout() != null) {
-      collectRetrySettingBuilder.setTotalTimeout(this.clientProperties.getCollectTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollectTotalTimeout set to " + this.clientProperties.getCollectTotalTimeout());
-      }
-    }
-    clientSettingsBuilder.collectSettings().setRetrySettings(collectRetrySettingBuilder.build());
-    RetrySettings.Builder chatRetrySettingBuilder =
-        clientSettingsBuilder.chatSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getChatInitialRpcTimeout() != null) {
-      chatRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getChatInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ChatInitialRpcTimeout set to " + this.clientProperties.getChatInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getChatRpcTimeoutMultiplier() != null) {
-      chatRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getChatRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ChatRpcTimeoutMultiplier set to "
-                + this.clientProperties.getChatRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getChatMaxRpcTimeout() != null) {
-      chatRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getChatMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("ChatMaxRpcTimeout set to " + this.clientProperties.getChatMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getChatTotalTimeout() != null) {
-      chatRetrySettingBuilder.setTotalTimeout(this.clientProperties.getChatTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("ChatTotalTimeout set to " + this.clientProperties.getChatTotalTimeout());
-      }
-    }
-    clientSettingsBuilder.chatSettings().setRetrySettings(chatRetrySettingBuilder.build());
-    RetrySettings.Builder chatAgainRetrySettingBuilder =
-        clientSettingsBuilder.chatAgainSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getChatAgainInitialRpcTimeout() != null) {
-      chatAgainRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getChatAgainInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ChatAgainInitialRpcTimeout set to "
-                + this.clientProperties.getChatAgainInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getChatAgainRpcTimeoutMultiplier() != null) {
-      chatAgainRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getChatAgainRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ChatAgainRpcTimeoutMultiplier set to "
-                + this.clientProperties.getChatAgainRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getChatAgainMaxRpcTimeout() != null) {
-      chatAgainRetrySettingBuilder.setMaxRpcTimeout(
-          this.clientProperties.getChatAgainMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ChatAgainMaxRpcTimeout set to " + this.clientProperties.getChatAgainMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getChatAgainTotalTimeout() != null) {
-      chatAgainRetrySettingBuilder.setTotalTimeout(
-          this.clientProperties.getChatAgainTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "ChatAgainTotalTimeout set to " + this.clientProperties.getChatAgainTotalTimeout());
-      }
-    }
-    clientSettingsBuilder
-        .chatAgainSettings()
-        .setRetrySettings(chatAgainRetrySettingBuilder.build());
-    RetrySettings.Builder pagedExpandRetrySettingBuilder =
-        clientSettingsBuilder.pagedExpandSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getPagedExpandInitialRetryDelay() != null) {
-      pagedExpandRetrySettingBuilder.setInitialRetryDelay(
-          this.clientProperties.getPagedExpandInitialRetryDelay());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandInitialRetryDelay set to "
-                + this.clientProperties.getPagedExpandInitialRetryDelay());
-      }
-    }
-    if (this.clientProperties.getPagedExpandRetryDelayMultiplier() != null) {
-      pagedExpandRetrySettingBuilder.setRetryDelayMultiplier(
-          this.clientProperties.getPagedExpandRetryDelayMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandRetryDelayMultiplier set to "
-                + this.clientProperties.getPagedExpandRetryDelayMultiplier());
-      }
-    }
-    if (this.clientProperties.getPagedExpandMaxRetryDelay() != null) {
-      pagedExpandRetrySettingBuilder.setMaxRetryDelay(
-          this.clientProperties.getPagedExpandMaxRetryDelay());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandMaxRetryDelay set to "
-                + this.clientProperties.getPagedExpandMaxRetryDelay());
-      }
-    }
-    if (this.clientProperties.getPagedExpandInitialRpcTimeout() != null) {
-      pagedExpandRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getPagedExpandInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandInitialRpcTimeout set to "
-                + this.clientProperties.getPagedExpandInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getPagedExpandRpcTimeoutMultiplier() != null) {
-      pagedExpandRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getPagedExpandRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandRpcTimeoutMultiplier set to "
-                + this.clientProperties.getPagedExpandRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getPagedExpandMaxRpcTimeout() != null) {
-      pagedExpandRetrySettingBuilder.setMaxRpcTimeout(
-          this.clientProperties.getPagedExpandMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandMaxRpcTimeout set to "
-                + this.clientProperties.getPagedExpandMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getPagedExpandTotalTimeout() != null) {
-      pagedExpandRetrySettingBuilder.setTotalTimeout(
-          this.clientProperties.getPagedExpandTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "PagedExpandTotalTimeout set to " + this.clientProperties.getPagedExpandTotalTimeout());
-      }
-    }
-    clientSettingsBuilder
-        .pagedExpandSettings()
-        .setRetrySettings(pagedExpandRetrySettingBuilder.build());
-    RetrySettings.Builder simplePagedExpandRetrySettingBuilder =
-        clientSettingsBuilder.simplePagedExpandSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getSimplePagedExpandInitialRpcTimeout() != null) {
-      simplePagedExpandRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getSimplePagedExpandInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "SimplePagedExpandInitialRpcTimeout set to "
-                + this.clientProperties.getSimplePagedExpandInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getSimplePagedExpandRpcTimeoutMultiplier() != null) {
-      simplePagedExpandRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getSimplePagedExpandRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "SimplePagedExpandRpcTimeoutMultiplier set to "
-                + this.clientProperties.getSimplePagedExpandRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getSimplePagedExpandMaxRpcTimeout() != null) {
-      simplePagedExpandRetrySettingBuilder.setMaxRpcTimeout(
-          this.clientProperties.getSimplePagedExpandMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "SimplePagedExpandMaxRpcTimeout set to "
-                + this.clientProperties.getSimplePagedExpandMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getSimplePagedExpandTotalTimeout() != null) {
-      simplePagedExpandRetrySettingBuilder.setTotalTimeout(
-          this.clientProperties.getSimplePagedExpandTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "SimplePagedExpandTotalTimeout set to "
-                + this.clientProperties.getSimplePagedExpandTotalTimeout());
-      }
-    }
-    clientSettingsBuilder
-        .simplePagedExpandSettings()
-        .setRetrySettings(simplePagedExpandRetrySettingBuilder.build());
-    RetrySettings.Builder waitRetrySettingBuilder =
-        clientSettingsBuilder.waitSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getWaitInitialRpcTimeout() != null) {
-      waitRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getWaitInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "WaitInitialRpcTimeout set to " + this.clientProperties.getWaitInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getWaitRpcTimeoutMultiplier() != null) {
-      waitRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getWaitRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "WaitRpcTimeoutMultiplier set to "
-                + this.clientProperties.getWaitRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getWaitMaxRpcTimeout() != null) {
-      waitRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getWaitMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("WaitMaxRpcTimeout set to " + this.clientProperties.getWaitMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getWaitTotalTimeout() != null) {
-      waitRetrySettingBuilder.setTotalTimeout(this.clientProperties.getWaitTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("WaitTotalTimeout set to " + this.clientProperties.getWaitTotalTimeout());
-      }
-    }
-    clientSettingsBuilder.waitSettings().setRetrySettings(waitRetrySettingBuilder.build());
-    RetrySettings.Builder blockRetrySettingBuilder =
-        clientSettingsBuilder.blockSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getBlockInitialRpcTimeout() != null) {
-      blockRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getBlockInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "BlockInitialRpcTimeout set to " + this.clientProperties.getBlockInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getBlockRpcTimeoutMultiplier() != null) {
-      blockRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getBlockRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "BlockRpcTimeoutMultiplier set to "
-                + this.clientProperties.getBlockRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getBlockMaxRpcTimeout() != null) {
-      blockRetrySettingBuilder.setMaxRpcTimeout(this.clientProperties.getBlockMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("BlockMaxRpcTimeout set to " + this.clientProperties.getBlockMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getBlockTotalTimeout() != null) {
-      blockRetrySettingBuilder.setTotalTimeout(this.clientProperties.getBlockTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("BlockTotalTimeout set to " + this.clientProperties.getBlockTotalTimeout());
-      }
-    }
-    clientSettingsBuilder.blockSettings().setRetrySettings(blockRetrySettingBuilder.build());
-    RetrySettings.Builder collideNameRetrySettingBuilder =
-        clientSettingsBuilder.collideNameSettings().getRetrySettings().toBuilder();
-    if (this.clientProperties.getCollideNameInitialRpcTimeout() != null) {
-      collideNameRetrySettingBuilder.setInitialRpcTimeout(
-          this.clientProperties.getCollideNameInitialRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollideNameInitialRpcTimeout set to "
-                + this.clientProperties.getCollideNameInitialRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getCollideNameRpcTimeoutMultiplier() != null) {
-      collideNameRetrySettingBuilder.setRpcTimeoutMultiplier(
-          this.clientProperties.getCollideNameRpcTimeoutMultiplier());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollideNameRpcTimeoutMultiplier set to "
-                + this.clientProperties.getCollideNameRpcTimeoutMultiplier());
-      }
-    }
-    if (this.clientProperties.getCollideNameMaxRpcTimeout() != null) {
-      collideNameRetrySettingBuilder.setMaxRpcTimeout(
-          this.clientProperties.getCollideNameMaxRpcTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollideNameMaxRpcTimeout set to "
-                + this.clientProperties.getCollideNameMaxRpcTimeout());
-      }
-    }
-    if (this.clientProperties.getCollideNameTotalTimeout() != null) {
-      collideNameRetrySettingBuilder.setTotalTimeout(
-          this.clientProperties.getCollideNameTotalTimeout());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(
-            "CollideNameTotalTimeout set to " + this.clientProperties.getCollideNameTotalTimeout());
-      }
-    }
-    clientSettingsBuilder
-        .collideNameSettings()
-        .setRetrySettings(collideNameRetrySettingBuilder.build());
     return clientSettingsBuilder.build();
   }
 

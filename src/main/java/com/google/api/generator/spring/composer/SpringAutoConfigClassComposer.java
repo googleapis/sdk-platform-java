@@ -52,6 +52,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
@@ -61,7 +62,6 @@ import com.google.api.generator.spring.utils.Utils;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.common.base.CaseFormat;
-import com.google.common.base.Joiner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -461,77 +461,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     return credentialIfStatement.build();
   }
 
-  private static Statement createRetrySettingBuilderForMethod(
-      String methodName, Variable settingBuilderVariable) {
-    // RetrySettings.Builder annotateTextRetrySettingsBuilder =
-    // clientSettingsBuilder.annotateTextSettings()
-    //     .getRetrySettings()
-    //     .toBuilder();
-    Variable retrySettingBuilderVariable =
-        Variable.builder()
-            .setName(String.format("%sRetrySettingBuilder", methodName))
-            .setType(STATIC_TYPES.get("RetrySettings.Builder"))
-            .build();
-    VariableExpr retrySettingsVarExpr =
-        VariableExpr.withVariable(retrySettingBuilderVariable).toBuilder().setIsDecl(true).build();
-    MethodInvocationExpr clientSettingBuilderChain =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-            .setMethodName(String.format("%sSettings", methodName))
-            .build();
-    clientSettingBuilderChain =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientSettingBuilderChain)
-            .setMethodName("getRetrySettings")
-            .build();
-    clientSettingBuilderChain =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientSettingBuilderChain)
-            .setMethodName("toBuilder")
-            .setReturnType(STATIC_TYPES.get("RetrySettings.Builder"))
-            .build();
-    AssignmentExpr retrySettingCreateExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(retrySettingsVarExpr)
-            .setValueExpr(clientSettingBuilderChain)
-            .build();
-
-    return ExprStatement.withExpr(retrySettingCreateExpr);
-  }
-
-  private static Statement setRetrySettingsForMethod(
-      String methodName, Variable settingBuilderVariable) {
-    //     clientSettingsBuilder.annotateTextSettings()
-    //         .setRetrySettings(annotateTextRetrySettingsBuilder.build());
-
-    MethodInvocationExpr clientSettingBuilderChain =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-            .setMethodName(String.format("%sSettings", methodName))
-            .build();
-
-    // annotateTextRetrySettingsBuilder.build()
-    Variable retrySettingBuilderVariable =
-        Variable.builder()
-            .setName(String.format("%sRetrySettingBuilder", methodName)) // extract method name
-            .setType(STATIC_TYPES.get("RetrySettings.Builder"))
-            .build();
-    MethodInvocationExpr retrySettingsBuilderChain =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(VariableExpr.withVariable(retrySettingBuilderVariable))
-            .setMethodName("build")
-            .build();
-
-    clientSettingBuilderChain =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientSettingBuilderChain)
-            .setMethodName("setRetrySettings")
-            .setArguments(retrySettingsBuilderChain)
-            .build();
-
-    return ExprStatement.withExpr(clientSettingBuilderChain);
-  }
-
   private static MethodDefinition createSettingsBeanMethod(
       Service service,
       String credentialsProviderName,
@@ -777,77 +706,98 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
       bodyStatements.add(setTransportChannelProviderStatement);
     }
-    // retry settings for each method
-    TypeNode thisClassType = types.get(Utils.getServiceAutoConfigurationClassName(service));
-    List retrySettings =
-        Utils.processRetrySettings(
-            service,
-            gapicServiceConfig,
-            thisClassType,
-            (String methodName) -> {
-              List<Statement> statements = new ArrayList<>();
-              statements.add(
-                  createRetrySettingBuilderForMethod(methodName, settingBuilderVariable));
-              return statements;
-            },
-            (List<String> methodAndPropertyName, Expr defaultVal) -> {
-              // return new ArrayList<>();
-              List<Statement> statements = new ArrayList<>();
-              String methodName = methodAndPropertyName.get(0);
-              String settingName = methodAndPropertyName.get(1); // safe guard??
-              String propertyName =
-                  CaseFormat.LOWER_CAMEL.to(
-                      CaseFormat.UPPER_CAMEL, Joiner.on("").join(methodAndPropertyName));
+    // If service-level properties configured, update retry settings for each method
 
-              TypeNode propertyType = defaultVal.type();
-              if (propertyType.equals(TypeNode.DOUBLE)) {
-                propertyType = TypeNode.DOUBLE_OBJECT;
-              }
-              MethodInvocationExpr currentRetrySettingProperty =
-                  MethodInvocationExpr.builder()
-                      .setMethodName(String.format("get%s", propertyName))
-                      .setReturnType(propertyType)
-                      .setExprReferenceExpr(thisClientPropertiesVarExpr)
-                      .build();
-              RelationalOperationExpr currentRetrySettingPropertyIsNull =
-                  RelationalOperationExpr.notEqualToWithExprs(
-                      currentRetrySettingProperty, ValueExpr.createNullExpr());
+    Variable serviceRetryPropertiesVar =
+        Variable.builder().setName("serviceRetrySettings").setType(types.get("Retry")).build();
 
-              // annotateTextRetrySettingsBuilder.setInitialRetryDelay(this.clientProperties.getAnnotateTextInitialRetryDelay());
-              Variable retrySettingBuilderVariable =
-                  Variable.builder()
-                      .setName(
-                          String.format("%sRetrySettingBuilder", methodName)) // extract method name
-                      .setType(STATIC_TYPES.get("RetrySettings.Builder"))
-                      .build();
-              MethodInvocationExpr retrySettingsBuilderChain =
-                  MethodInvocationExpr.builder()
-                      .setExprReferenceExpr(VariableExpr.withVariable(retrySettingBuilderVariable))
-                      .setMethodName(String.format("set%s", settingName))
-                      .setArguments(currentRetrySettingProperty)
-                      .build();
+    VariableExpr serviceRetryPropertiesVarExpr =
+        VariableExpr.builder().setVariable(serviceRetryPropertiesVar).setIsDecl(true).build();
 
-              IfStatement currentRetrySettingPropertyIfStatement =
-                  createIfStatement(
-                      currentRetrySettingPropertyIsNull,
-                      Arrays.asList(
-                          ExprStatement.withExpr(retrySettingsBuilderChain),
-                          LoggerUtils.createLoggerStatement(
-                              LoggerUtils.concatManyWithExprs(
-                                  ValueExpr.withValue(
-                                      StringObjectValue.withValue(propertyName + " set to ")),
-                                  currentRetrySettingProperty),
-                              types)),
-                      null);
-              statements.add(currentRetrySettingPropertyIfStatement);
-              return statements;
-            },
-            (String methodName) -> {
-              List<Statement> statements = new ArrayList<>();
-              statements.add(setRetrySettingsForMethod(methodName, settingBuilderVariable));
-              return statements;
-            });
-    bodyStatements.addAll(retrySettings);
+    // clientProperties.getServiceRetrySettings()
+    MethodInvocationExpr serviceRetryPropertiesExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(VariableExpr.withVariable(clientPropertiesVar))
+            .setMethodName("getServiceRetrySettings")
+            .setReturnType(types.get("Retry"))
+            .build();
+
+    // Retry serviceRetrySettings = clientProperties.getServiceRetrySettings();
+    AssignmentExpr serviceRetrySettingsExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(serviceRetryPropertiesVarExpr)
+            .setValueExpr(serviceRetryPropertiesExpr)
+            .build();
+
+    bodyStatements.add(ExprStatement.withExpr(serviceRetrySettingsExpr));
+
+    RelationalOperationExpr serviceRetryPropertiesNotNull =
+        RelationalOperationExpr.notEqualToWithExprs(
+            VariableExpr.withVariable(serviceRetryPropertiesVar), ValueExpr.createNullExpr());
+
+    List<Statement> setRetrySettingsStatementBody = new ArrayList<>();
+
+    for (Method method : service.methods()) {
+      String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
+      String settingsVarName = methodName + "Settings";
+      String retryVarName = methodName + "RetrySettings";
+
+      Variable methodRetrySettingsVariable =
+          Variable.builder()
+              .setName(retryVarName)
+              .setType(STATIC_TYPES.get("RetrySettings"))
+              .build();
+
+      // clientSettingsBuilder.analyzeSentimentSettings()
+      MethodInvocationExpr methodSettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setMethodName(settingsVarName)
+              .build();
+
+      // clientSettingsBuilder.analyzeSentimentSettings().getRetrySettings()
+      MethodInvocationExpr getRetrySettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(methodSettingsExpr)
+              .setMethodName(String.format("get%sRetrySettings", method.name()))
+              .build();
+
+      MethodInvocationExpr updatedRetrySettingsExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("RetryUtils"))
+              .setMethodName("updateRetrySettings")
+              .setArguments(
+                  Arrays.asList(
+                      getRetrySettingsExpr, VariableExpr.withVariable(serviceRetryPropertiesVar)))
+              .setReturnType(STATIC_TYPES.get("RetrySettings"))
+              .build();
+
+      // clientSettingsBuilder.analyzeSentimentSettings().setRetrySettings(analyzeSentimentRetrySettings)
+      MethodInvocationExpr setRetrySettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(methodSettingsExpr)
+              .setMethodName(String.format("set%sRetrySettings", method.name()))
+              .setArguments(VariableExpr.withVariable(methodRetrySettingsVariable))
+              .build();
+
+      setRetrySettingsStatementBody.add(
+          ExprStatement.withExpr(
+              AssignmentExpr.builder()
+                  .setVariableExpr(
+                      VariableExpr.builder()
+                          .setVariable(methodRetrySettingsVariable)
+                          .setIsDecl(true)
+                          .build())
+                  .setValueExpr(updatedRetrySettingsExpr)
+                  .build()));
+
+      setRetrySettingsStatementBody.add(ExprStatement.withExpr(setRetrySettingsExpr));
+    }
+
+    IfStatement setRetrySettingsStatement =
+        createIfStatement(serviceRetryPropertiesNotNull, setRetrySettingsStatementBody, null);
+
+    bodyStatements.add(setRetrySettingsStatement);
 
     // return expressions
     MethodInvocationExpr returnExpr =
@@ -1026,6 +976,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             Bean.class,
             Qualifier.class,
             DefaultCredentialsProvider.class,
+            RetrySettings.class,
             HeaderProvider.class,
             Collections.class,
             Credentials.class);
@@ -1057,6 +1008,20 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage(packageName)
                 .build());
 
+    TypeNode retryProperties =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Retry")
+                .setPakkage("com.google.cloud.spring.core")
+                .build());
+
+    TypeNode retryUtils =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("RetryUtils")
+                .setPakkage("com.google.cloud.spring.core.util")
+                .build());
+
     TypeNode serviceClient =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1083,6 +1048,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("GlobalProperties", GlobalPropertiesUtils.getGlobalPropertiesType());
+    typeMap.put("Retry", retryProperties);
+    typeMap.put("RetryUtils", retryUtils);
 
     return typeMap;
   }
