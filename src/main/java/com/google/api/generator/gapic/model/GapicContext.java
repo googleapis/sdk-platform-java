@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetConfig;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gapic.metadata.GapicMetadata;
@@ -56,6 +57,15 @@ public abstract class GapicContext {
   @Nullable
   public abstract GapicServiceConfig serviceConfig();
 
+  public abstract List<GapicSnippetConfig> snippetConfigs();
+
+  public boolean hasSnippetConfigs() {
+    return snippetConfigs().size() != 0;
+  }
+
+  // test only, remove
+//  public abstract String requestToString ();
+
   @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
@@ -66,6 +76,11 @@ public abstract class GapicContext {
   public void updateGapicMetadata(GapicMetadata newMetadata) {
     gapicMetadata = newMetadata;
   }
+
+  public void updateSnippetConfigs(List<GapicSnippetConfig> listOfsnippetConfigs) {
+    for(GapicSnippetConfig snippetConfig : listOfsnippetConfigs){
+      snippetConfigs().add(snippetConfig);
+    }}
 
   static GapicMetadata defaultGapicMetadata() {
     return GapicMetadata.newBuilder()
@@ -106,6 +121,8 @@ public abstract class GapicContext {
     abstract Builder setHelperResourceNames(Map<String, ResourceName> helperResourceNames);
 
     public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
+
+    public abstract Builder setSnippetConfigs(List<GapicSnippetConfig> snippetConfigs);
 
     public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
 

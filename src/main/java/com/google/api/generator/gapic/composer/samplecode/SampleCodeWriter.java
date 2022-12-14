@@ -19,6 +19,8 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.Arrays;
@@ -32,6 +34,10 @@ public final class SampleCodeWriter {
 
   public static String writeExecutableSample(Sample sample, String packkage) {
     return write(SampleComposer.composeExecutableSample(sample, packkage));
+  }
+
+  public static String writeConfiguredSnippet(GapicSnippetConfig snippetConfig) {
+    return write(ConfiguredSnippetComposer.composeSnippetTest(snippetConfig));
   }
 
   @VisibleForTesting

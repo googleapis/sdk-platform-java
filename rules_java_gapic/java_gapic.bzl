@@ -187,6 +187,8 @@ def _java_gapic_srcjar(
         grpc_service_config,
         gapic_yaml,
         service_yaml,
+        # for snippetGen prototype for Phase 2: @TODO update once final location/rules are published
+        snippet_config,
         # possible values are: "grpc", "rest", "grpc+rest"
         transport,
         rest_numeric_enums,
@@ -208,6 +210,9 @@ def _java_gapic_srcjar(
 
     if service_yaml:
         file_args_dict[service_yaml] = "api-service-config"
+
+    if snippet_config:
+            file_args_dict[snippet_config] = "snippet-config"
 
     opt_args = []
 
@@ -240,6 +245,8 @@ def java_gapic_library(
         grpc_service_config = None,
         gapic_yaml = None,
         service_yaml = None,
+        # for snippetGen Phase 2 prototype
+        snippet_config = None,
         deps = [],
         test_deps = [],
         # possible values are: "grpc", "rest", "grpc+rest"
@@ -255,6 +262,8 @@ def java_gapic_library(
         grpc_service_config = grpc_service_config,
         gapic_yaml = gapic_yaml,
         service_yaml = service_yaml,
+        # for snippetGen Phase 2 prototype
+        snippet_config = snippet_config,
         transport = transport,
         rest_numeric_enums = rest_numeric_enums,
         java_generator_name = "java_gapic",
@@ -386,7 +395,7 @@ def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
         **kwargs
     )
 
-# A debugging rule, to dump CodeGenereatorRequest from protoc as is to a file,
+# A debugging rule, to dump CodeGeneratorRequest from protoc as is to a file,
 # which then can be used to run gapic-generator directly instead of relying on
 # protoc to launch it. This would simplify attaching the debugger and/or
 # working with stdin/stderr.
@@ -396,6 +405,7 @@ def java_generator_request_dump(
         grpc_service_config = None,
         gapic_yaml = None,
         service_yaml = None,
+        snippet_config = None,
         transport = None,
         rest_numeric_enums = False,
         **kwargs):
@@ -404,6 +414,7 @@ def java_generator_request_dump(
         srcs = srcs,
         grpc_service_config = grpc_service_config,
         gapic_yaml = gapic_yaml,
+        snippet_config = snippet_config,
         service_yaml = service_yaml,
         transport = transport,
         rest_numeric_enums = rest_numeric_enums,

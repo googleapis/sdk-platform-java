@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.ConfiguredSnippet;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.testutils.LineFormatter;
@@ -307,4 +308,5 @@ public class SampleComposerTest {
   private static String writeSample(List<Statement> sample) {
     return SampleCodeWriter.write(sample);
   }
+
 }

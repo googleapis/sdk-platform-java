@@ -21,12 +21,14 @@ import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.gapic.model.ConfiguredSnippet;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
@@ -119,6 +121,7 @@ public class Parser {
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
     Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
 
+    // TODO: @alicejli build in boolean to check if snippet configs exist
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
     boolean willGenerateNumericEnum = PluginArgumentParser.hasNumericEnumFlag(request);
 
@@ -137,6 +140,16 @@ public class Parser {
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
         serviceYamlConfigPathOpt.flatMap(ServiceYamlParser::parse);
+
+    // TODO: @alicejli Each snippet config will have its own path, will need to update this to get the list from wherever it will live
+    Optional<String> snippetConfigPathOpt = PluginArgumentParser.parseSnippetConfigPath(request);
+
+    Optional<GapicSnippetConfig> configuredSnippetOpt = SnippetConfigParser.parse(snippetConfigPathOpt.orElse(null));
+    List<GapicSnippetConfig> listOfSnippetConfigs = new ArrayList<>();
+    if(snippetConfigPathOpt.isPresent()){
+      GapicSnippetConfig gapicSnippetConfig = configuredSnippetOpt.get();
+      listOfSnippetConfigs.add(gapicSnippetConfig);
+    }
 
     // Collect the resource references seen in messages.
     Set<ResourceReference> outputResourceReferencesSeen = new HashSet<>();
@@ -218,6 +231,7 @@ public class Parser {
         .setServiceYamlProto(serviceYamlProtoOpt.orElse(null))
         .setTransport(transport)
         .setRestNumericEnumsEnabled(willGenerateNumericEnum)
+        .setSnippetConfigs(listOfSnippetConfigs)
         .build();
   }
 

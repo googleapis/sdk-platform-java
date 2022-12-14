@@ -5,6 +5,7 @@ package(default_visibility = ["//visibility:public"])
 # TODO: some dependencies may be runtime only.
 MAIN_DEPS = [
     ":service_config_java_proto",
+    ":snippet_config_language_java_proto", # For configured snippet testing
     "@com_google_api_api_common//jar",
     "@com_google_api_gax_java//gax",
     "@com_google_api_gax_java//gax:gax_testlib",
@@ -63,6 +64,18 @@ java_proto_library(
 )
 
 proto_library(
+    name = "snippet_config_language_proto",
+    srcs = ["src/main/proto/snippet_config_language.proto"],
+    deps = [
+            "@com_google_protobuf//:descriptor_proto",
+        ],
+)
+java_proto_library(
+    name = "snippet_config_language_java_proto",
+    deps = [":snippet_config_language_proto"],
+)
+
+proto_library(
     name = "test_protos",
     srcs = glob(["src/test/proto/*.proto"]),
     deps = [
@@ -75,6 +88,7 @@ proto_library(
         "@com_google_googleapis//google/longrunning:operations_proto",
         "@com_google_googleapis//google/rpc:error_details_proto",
         "@com_google_googleapis//google/rpc:status_proto",
+        "@com_google_protobuf//:descriptor_proto",
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:field_mask_proto",
