@@ -85,7 +85,7 @@ public class EchoSpringAutoConfiguration {
    */
   @Bean
   @ConditionalOnMissingBean
-  public EchoClient echoClient(
+  public EchoSettings echoSettings(
       @Qualifier("defaultEchoTransportChannelProvider")
           TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {
@@ -552,7 +552,13 @@ public class EchoSpringAutoConfiguration {
     clientSettingsBuilder
         .collideNameSettings()
         .setRetrySettings(collideNameRetrySettingBuilder.build());
-    return EchoClient.create(clientSettingsBuilder.build());
+    return clientSettingsBuilder.build();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public EchoClient echoClient(EchoSettings echoSettings) throws IOException {
+    return EchoClient.create(echoSettings);
   }
 
   private HeaderProvider userAgentHeaderProvider() {
