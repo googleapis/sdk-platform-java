@@ -80,7 +80,7 @@ maven_install(
 
 maven_install(
     artifacts = [
-        "com.google.api:gapic-generator-java:0.0.1-SNAPSHOT",
+        "com.google.api:gapic-generator-java:2.12.0",
     ],
     fail_on_missing_checksum = True,
     repositories = [
