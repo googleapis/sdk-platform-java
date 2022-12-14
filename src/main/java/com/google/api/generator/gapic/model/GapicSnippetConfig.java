@@ -8,12 +8,15 @@ import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetConfig;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetConfigMetadata;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Rpc;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetSignature;
+import com.google.cloud.tools.snippetgen.configlanguage.v1.Statement;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -28,30 +31,37 @@ public class GapicSnippetConfig {
     private final Map<String, Object> configMetadata;
     private final Map<String, Object> configRpc;
     private final Map<String, Object> configSignature;
+    private final LinkedHashMap<String, List> configSignatureParameters;
     private final Map<String, Object> configSnippet;
 
-    public GapicSnippetConfig(Map<String, Object> configMetadata, Map<String, Object> configRpc, Map<String, Object> configSignature, Map<String, Object> configSnippet) {
+    public GapicSnippetConfig(Map<String, Object> configMetadata, Map<String, Object> configRpc, Map<String, Object> configSignature, LinkedHashMap<String, List> configSignatureParameters, Map<String, Object> configSnippet) {
         this.configMetadata = configMetadata;
         this.configRpc = configRpc;
         this.configSignature = configSignature;
+        this.configSignatureParameters = configSignatureParameters;
         this.configSnippet = configSnippet;
     }
 
-    private static final GapicSnippetConfig emptyGapicSnippetConfig = new GapicSnippetConfig(Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
+    private static final GapicSnippetConfig emptyGapicSnippetConfig = new GapicSnippetConfig(Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(), new LinkedHashMap(), Collections.emptyMap());
 
-    //    STANDARD(2),
-//    PAGINATED(3),
-//    LRO(4),
-//    CLIENT_STREAMING(5),
-//    SERVER_STREAMING(6),
-//    BIDI_STREAMING(7),
-
+    // TODO Update to parse logic for other types
     private static int parseSnippetCallType(Snippet rawConfigSnippet){
         Snippet.CallCase call_type = rawConfigSnippet.getCallCase();
         if(call_type == Snippet.CallCase.STANDARD){
             return 2;
         }
         return 2;
+    }
+
+    // Order matters
+    // Key is name of parameter
+    // Value is array with first element being parameter description, second element is type of parameter, and third element the actual value of the parameter
+    private static LinkedHashMap<String, List> parseSignatureParameters(SnippetSignature rawConfigSignature){
+        LinkedHashMap<String, List> configSignatureParameters = new LinkedHashMap<>();
+        for(Statement.Declaration parameter : rawConfigSignature.getParametersList()){
+            configSignatureParameters.put(parameter.getName(), Arrays.asList(parameter.getDescription(),parameter.getType(), parameter.getValue()));
+        }
+        return configSignatureParameters;
     }
 
     public static GapicSnippetConfig create(Optional<SnippetConfig> snippetConfigOpt) {
@@ -84,23 +94,37 @@ public class GapicSnippetConfig {
 
         configSignature.put("sync_preference", rawConfigSignature.getSyncPreference());
 
+        // Order of parameters matters
+        LinkedHashMap<String, List> configSignatureParameters = parseSignatureParameters(rawConfigSignature);
+
         Snippet rawConfigSnippet = snippetConfig.getSnippet();
         Map<String, Object> configSnippet = new HashMap<>();
+
         // TODO: Depending on call type, generate a different sample
+        //    STANDARD(2),
+        //    PAGINATED(3),
+        //    LRO(4),
+        //    CLIENT_STREAMING(5),
+        //    SERVER_STREAMING(6),
+        //    BIDI_STREAMING(7),
         // For now, just generate a Standard sample
         configSnippet.put("call_type", parseSnippetCallType(rawConfigSnippet));
 
-        return new GapicSnippetConfig(configMetadata, configRpc, configSignature, configSnippet);
+        return new GapicSnippetConfig(configMetadata, configRpc, configSignature, configSignatureParameters, configSnippet);
     }
 
+    // for scratch testing
     public static String getConfiguredSnippetCallType(GapicSnippetConfig gapicSnippetConfig){
-        return gapicSnippetConfig.configSnippet.get("call_type").toString();
+        return gapicSnippetConfig.configSignatureParameters.toString();
+    }
+
+    public static Map<String, List> getConfiguredSnippetSignatureParameters(GapicSnippetConfig gapicSnippetConfig){
+        return gapicSnippetConfig.configSignatureParameters;
     }
 
     public static String getConfiguredSnippetSnippetName(GapicSnippetConfig gapicSnippetConfig) {
         return (String) gapicSnippetConfig.configMetadata.get("snippet_name");
     }
-
 
     public static String getConfiguredSnippetSnippetDescription(GapicSnippetConfig gapicSnippetConfig){
         return (String) gapicSnippetConfig.configMetadata.get("snippet_description");
@@ -110,19 +134,19 @@ public class GapicSnippetConfig {
         return (String) gapicSnippetConfig.configRpc.get("rpc_name");
     }
 
-    // Used to get PackageName for configured Snippet
+    // PackageName for configured Snippet
     public static String getConfiguredSnippetPackageString(GapicSnippetConfig gapicSnippetConfig){
         return (String) gapicSnippetConfig.configRpc.get("proto_package")+ "." + gapicSnippetConfig.configRpc.get("api_version") + ".samples";
     }
 
-    // Used to get ApiShortName for regionTag
+    // ApiShortName for regionTag for configured Snippet
     private static String parseProtoPackage(String protopackage){
         // Get the ApiShortName as last part of the protoPackage
         String apiShortName = Iterables.getLast(Splitter.on(".").split(protopackage), protopackage);
         return apiShortName;
     }
 
-    // Used to get sync preference for regionTag.
+    // Sync preference for regionTag.
     // TODO: build in additional logic; if BOTH then need to generate multiple samples. Confirm that Java prefers Async
     private static Boolean parseSyncPreference(GapicSnippetConfig gapicSnippetConfig){
         Boolean isAsync = TRUE;
@@ -134,7 +158,6 @@ public class GapicSnippetConfig {
 
     public static RegionTag getConfiguredSnippetRegionTag(GapicSnippetConfig gapicSnippetConfig){
         return RegionTag.builder()
-                // ApiShortName is parsed from the host_name
                 .setApiShortName(parseProtoPackage(String.valueOf(gapicSnippetConfig.configRpc.get("proto_package"))))
                 .setTagType("config")
                 .setConfigId(String.valueOf(gapicSnippetConfig.configMetadata.get("config_id")))

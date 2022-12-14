@@ -37,7 +37,7 @@ public final class SampleCodeWriter {
   }
 
   public static String writeConfiguredSnippet(GapicSnippetConfig snippetConfig) {
-    return write(ConfiguredSnippetComposer.composeSnippetTest(snippetConfig));
+    return write(ConfiguredSnippetComposer.composeConfiguredSnippetClass(snippetConfig));
   }
 
   @VisibleForTesting

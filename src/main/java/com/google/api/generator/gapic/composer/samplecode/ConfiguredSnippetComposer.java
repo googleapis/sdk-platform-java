@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.util.Arrays;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.model.ConfiguredSnippet;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -40,18 +41,15 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ConfiguredSnippetComposer {
 
     static List<CommentStatement> fileHeader = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
-
-    // Use this to add swap fileHeader easily
-    public static ClassDefinition addFileHeader(GapicSnippetConfig snippetConfig, List<CommentStatement> fileHeader){
-        return ClassDefinition.builder().build();
-    }
 
     private static List<Statement> composeMainBody(
             List<AssignmentExpr> sampleVariableAssignments, Statement invokeMethod) {
@@ -105,17 +103,26 @@ public class ConfiguredSnippetComposer {
                 .build();
     }
 
+    private static List<CommentStatement> composeHeaderStatements (GapicSnippetConfig snippetConfig){
+        Iterator<Map.Entry<String, List>> iterator = GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig).entrySet().iterator();
+        JavaDocComment.Builder javaDocComment = JavaDocComment.builder();
+        javaDocComment.addComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
+        javaDocComment.addComment(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig));
+        javaDocComment.addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
+        // for scratch stuff
+//                        .addComment(GapicSnippetConfig.getConfiguredSnippetCallType(snippetConfig))
+
+        while(iterator.hasNext()) {
+            Map.Entry<String, List> actualValue = iterator.next();
+            // Key is the name of the parameter, Value is the description
+            javaDocComment.addParam(JavaStyle.toLowerCamelCase(actualValue.getKey()), actualValue.getValue().get(0).toString());
+        }
+
+        return Arrays.asList(
+                CommentStatement.withComment(javaDocComment.build()));
+    }
+
     public static ClassDefinition composeConfiguredSnippetClass(GapicSnippetConfig snippetConfig) {
-        LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
-        JavaDocComment javaDocComment =
-                JavaDocComment.builder()
-                        .addComment(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig))
-                        .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig))
-                        // for scratch stuff
-                        .addComment(GapicSnippetConfig.getConfiguredSnippetCallType(snippetConfig))
-//        JavaDocComment.builder()
-//                .addParam(paramName1, paramDescription1)
-                        .build();
         List<Statement> sampleBody = Arrays.asList(ExprStatement.withExpr(
                 VariableExpr.builder()
                         .setVariable(Variable.builder().setType(TypeNode.OBJECT).setName("thing").build())
@@ -123,12 +130,8 @@ public class ConfiguredSnippetComposer {
                         .build()));
         MethodDefinition mainMethod = composeMainMethod(sampleBody);
             return ClassDefinition.builder()
-                    // Test fileheader separately
-//                    .setFileHeader(fileHeaderList)
-                    .setHeaderCommentStatements(
-                            Arrays.asList(
-                                    CommentStatement.withComment(lineComment),
-                                    CommentStatement.withComment(javaDocComment)))
+                    .setFileHeader(fileHeader)
+                    .setHeaderCommentStatements(composeHeaderStatements(snippetConfig))
                     .setPackageString(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
                     .setName(GapicSnippetConfig.getConfiguredSnippetRpcName(snippetConfig))
                     .setRegionTag(GapicSnippetConfig.getConfiguredSnippetRegionTag(snippetConfig))
@@ -136,14 +139,5 @@ public class ConfiguredSnippetComposer {
                     .setMethods(ImmutableList.of(mainMethod))
                     .build();
     }
-
-    public static ClassDefinition composeSnippetTest(GapicSnippetConfig snippetConfig) {
-        return ClassDefinition.builder()
-            .setName(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig))
-            .setIsNested(true)
-            .setScope(ScopeNode.PUBLIC)
-            .build();
-}
-
 }
 
