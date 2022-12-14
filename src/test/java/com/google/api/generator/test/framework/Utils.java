@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Utils {
+
   /**
    * Save the generated code from JUnit test to a file for updating goldens. The relative path
    * `com/google/..` which is identical with the location of goldens files which will help us easily
@@ -68,6 +69,7 @@ public class Utils {
   }
 
   public static class SaveCodegenToFileException extends RuntimeException {
+
     public SaveCodegenToFileException(String errorMessage) {
       super(errorMessage);
     }

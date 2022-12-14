@@ -25,13 +25,18 @@ import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.OneofDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
 public class SourceCodeInfoParserTest {
+
   private static final String BASIC_PROTO = "basic.proto";
   private static final String PROTO_DESCRIPTOR_SET = "test-proto.descriptorset";
 
@@ -150,10 +155,8 @@ public class SourceCodeInfoParserTest {
    * @return the top level target protoFile descriptor
    */
   private static FileDescriptor buildFileDescriptor() throws Exception {
-    try (InputStream testProto =
-        SourceCodeInfoParserTest.class.getClassLoader().getResourceAsStream(PROTO_DESCRIPTOR_SET)) {
-      List<FileDescriptorProto> protoFileList =
-          FileDescriptorSet.parseFrom(testProto).getFileList();
+    try (InputStream in = newDescriptorSetInputStream()) {
+      List<FileDescriptorProto> protoFileList = FileDescriptorSet.parseFrom(in).getFileList();
       List<FileDescriptor> deps = new ArrayList<>();
       for (FileDescriptorProto proto : protoFileList) {
         FileDescriptor descriptor =
@@ -165,5 +168,16 @@ public class SourceCodeInfoParserTest {
       }
     }
     return null;
+  }
+
+  private static InputStream newDescriptorSetInputStream() throws IOException {
+    Path path =
+        Paths.get("target/generated-test-resources/protobuf/descriptor-sets", PROTO_DESCRIPTOR_SET);
+
+    if (path.toFile().exists()) {
+      return Files.newInputStream(path);
+    }
+    // TODO: only for Bazel build. Remove when we don't build with Bazel.
+    return Files.newInputStream(Paths.get(PROTO_DESCRIPTOR_SET));
   }
 }

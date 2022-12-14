@@ -164,7 +164,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     updateGapicMetadata(context, service, className, grpcRpcsToJavaMethodNames);
     return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
-        .withDefaultHost(service.defaultHost());
+        .withApiShortName(service.apiShortName())
+        .withApiVersion(service.apiVersion());
   }
 
   private static List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
@@ -199,9 +200,11 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         ServiceClientHeaderSampleComposer.composeClassHeaderSample(
             service, clientType, resourceNames, messageTypes);
     Sample credentialsSampleCode =
-        ServiceClientHeaderSampleComposer.composeSetCredentialsSample(clientType, settingsType);
+        ServiceClientHeaderSampleComposer.composeSetCredentialsSample(
+            clientType, settingsType, service);
     Sample endpointSampleCode =
-        ServiceClientHeaderSampleComposer.composeSetEndpointSample(clientType, settingsType);
+        ServiceClientHeaderSampleComposer.composeSetEndpointSample(
+            clientType, settingsType, service);
     samples.addAll(Arrays.asList(classMethodSampleCode, credentialsSampleCode, endpointSampleCode));
     return ServiceClientCommentComposer.createClassHeaderComments(
         service,
@@ -579,7 +582,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                 messageTypes,
                 typeStore,
                 resourceNames,
-                samples);
+                samples,
+                service);
 
         // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata
@@ -597,7 +601,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                 messageTypes,
                 typeStore,
                 resourceNames,
-                samples);
+                samples,
+                service);
 
         // Collect data for gapic_metadata.json.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
@@ -637,7 +642,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       Map<String, Message> messageTypes,
       TypeStore typeStore,
       Map<String, ResourceName> resourceNames,
-      List<Sample> samples) {
+      List<Sample> samples,
+      Service service) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -701,7 +707,12 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       Optional<Sample> methodSample =
           Optional.of(
               ServiceClientHeaderSampleComposer.composeShowcaseMethodSample(
-                  method, typeStore.get(clientName), signature, resourceNames, messageTypes));
+                  method,
+                  typeStore.get(clientName),
+                  signature,
+                  resourceNames,
+                  messageTypes,
+                  service));
       Optional<String> methodDocSample = Optional.empty();
       if (methodSample.isPresent()) {
         samples.add(methodSample.get());
@@ -745,7 +756,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       Map<String, Message> messageTypes,
       TypeStore typeStore,
       Map<String, ResourceName> resourceNames,
-      List<Sample> samples) {
+      List<Sample> samples,
+      Service service) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
@@ -789,7 +801,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     Optional<Sample> defaultMethodSample =
         Optional.of(
             ServiceClientMethodSampleComposer.composeCanonicalSample(
-                method, typeStore.get(clientName), resourceNames, messageTypes));
+                method, typeStore.get(clientName), resourceNames, messageTypes, service));
     Optional<String> defaultMethodDocSample = Optional.empty();
     if (defaultMethodSample.isPresent()) {
       samples.add(defaultMethodSample.get());
@@ -931,7 +943,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
-                  messageTypes));
+                  messageTypes,
+                  service));
     } else if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
       sampleCode =
           Optional.of(
@@ -939,7 +952,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
-                  messageTypes));
+                  messageTypes,
+                  service));
     } else if (callableMethodKind.equals(CallableMethodKind.REGULAR)) {
       if (method.stream().equals(Stream.NONE)) {
         sampleCode =
@@ -948,7 +962,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                     method,
                     typeStore.get(ClassNames.getServiceClientClassName(service)),
                     resourceNames,
-                    messageTypes));
+                    messageTypes,
+                    service));
       } else {
         sampleCode =
             Optional.of(
@@ -956,7 +971,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
                     method,
                     typeStore.get(ClassNames.getServiceClientClassName(service)),
                     resourceNames,
-                    messageTypes));
+                    messageTypes,
+                    service));
       }
     }
     Optional<String> sampleDocCode = Optional.empty();

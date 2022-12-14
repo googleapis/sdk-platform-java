@@ -40,11 +40,13 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
+_googleapis_commit = "44d6bef0ca6db8bba3fb324c8186e694bcc4829c"
+
 http_archive(
     name = "com_google_googleapis",
-    strip_prefix = "googleapis-44d6bef0ca6db8bba3fb324c8186e694bcc4829c",
+    strip_prefix = "googleapis-%s" % _googleapis_commit,
     urls = [
-        "https://github.com/googleapis/googleapis/archive/44d6bef0ca6db8bba3fb324c8186e694bcc4829c.zip",
+        "https://github.com/googleapis/googleapis/archive/%s.zip" % _googleapis_commit,
     ],
 )
 
@@ -112,8 +114,22 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
 
+_disco_to_proto3_converter_commit = "ce8d8732120cdfb5bf4847c3238b5be8acde87e3"
+
 http_archive(
     name = "com_google_disco_to_proto3_converter",
-    strip_prefix = "disco-to-proto3-converter-ce8d8732120cdfb5bf4847c3238b5be8acde87e3",
-    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/ce8d8732120cdfb5bf4847c3238b5be8acde87e3.zip"],
+    strip_prefix = "disco-to-proto3-converter-%s" % _disco_to_proto3_converter_commit,
+    urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/%s.zip" % _disco_to_proto3_converter_commit],
+)
+
+# Showcase
+_showcase_commit = "90d73532a0cab753a85f45c158394f24fc21d91a"
+
+http_archive(
+    name = "com_google_gapic_showcase",
+    strip_prefix = "gapic-showcase-%s" % _showcase_commit,
+    urls = [
+        # "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
+        "https://github.com/googleapis/gapic-showcase/archive/%s.zip" % _showcase_commit,
+    ],
 )

@@ -37,8 +37,6 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +48,7 @@ public class Composer {
     clazzes.addAll(generateServiceClasses(context));
     clazzes.addAll(generateMockClasses(context, context.mixinServices()));
     clazzes.addAll(generateResourceNameHelperClasses(context));
-    return addApacheLicense(
-        prepareExecutableSamples(clazzes, context.gapicMetadata().getProtoPackage()));
+    return addApacheLicense(prepareExecutableSamples(clazzes));
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
@@ -193,16 +190,7 @@ public class Composer {
   }
 
   @VisibleForTesting
-  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes, String protoPackage) {
-    //  parse protoPackage for apiVersion
-    String[] pakkage = protoPackage.split("\\.");
-    String apiVersion;
-    //  e.g. v1, v2, v1beta1
-    if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
-      apiVersion = pakkage[pakkage.length - 1];
-    } else {
-      apiVersion = "";
-    }
+  static List<GapicClass> prepareExecutableSamples(List<GapicClass> clazzes) {
     // Include license header, apiShortName, and apiVersion
     List<GapicClass> clazzesWithSamples = new ArrayList<>();
     clazzes.forEach(
@@ -214,29 +202,10 @@ public class Composer {
                   sample ->
                       samples.add(
                           addRegionTagAndHeaderToSample(
-                              sample, parseDefaultHost(gapicClass.defaultHost()), apiVersion)));
+                              sample, gapicClass.apiShortName(), gapicClass.apiVersion())));
           clazzesWithSamples.add(gapicClass.withSamples(samples));
         });
     return clazzesWithSamples;
-  }
-
-  // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default
-  // endpoints like
-  // "us-east1-pubsub.googleapis.com".
-  @VisibleForTesting
-  protected static String parseDefaultHost(String defaultHost) {
-    // If the defaultHost is of the format "**.googleapis.com", take the name before the first
-    // period.
-    String apiShortName = Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
-    // If the defaultHost is of the format "**-**-**.googleapis.com", take the section before the
-    // first period and after the last dash to follow CSharp's implementation here:
-    // https://github.com/googleapis/gapic-generator-csharp/blob/main/Google.Api.Generator/Generation/ServiceDetails.cs#L70
-    apiShortName = Iterables.getLast(Splitter.on("-").split(apiShortName), defaultHost);
-    // `iam-meta-api` service is an exceptional case and is handled as a one-off
-    if (defaultHost.contains("iam-meta-api")) {
-      apiShortName = "iam";
-    }
-    return apiShortName;
   }
 
   @VisibleForTesting

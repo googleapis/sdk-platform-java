@@ -79,17 +79,17 @@
 
 ## Running the Plugin
 
-1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
+1. Clone [googleapis](https://github.com/googleapis/googleapis) and
     [gapic-showcase](https://github.com/googleapis/gapic-showcase/).
 
-2.  Copy the protos from Showcase into googleapis/google/showcase.
+2. Copy the protos from Showcase into googleapis/google/showcase.
 
     ```sh
     mkdir googleapis/google/showcase
     cp -r gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta1
     ```
 
-3.  Add the new microgenerator rules to
+3. Add the new microgenerator rules to
     `googleapis/google/showcase/v1beta1/BUILD.bazel` file as follows:
 
     ```python
@@ -144,8 +144,49 @@
     )
     ```
 
-4.  Build the new target.
+4. Point to local gapic-generator-java
+   
+   Normally, googleapis's build pulls in googleapis/gapic-generator-java from the
+   Internet:
 
-    ```sh
-    bazel build //google/showcase/v1beta1:showcase_java_gapic
-    ```
+   ```
+   # Java microgenerator.
+   …
+   _gapic_generator_java_version = "2.1.0"
+   
+   http_archive(
+       name = "gapic_generator_java",
+       …
+       urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
+   )
+   ```
+
+   By replacing this portion using the built-in local_repository rule, you can mak
+   it refer to your local development repo:
+
+   ```
+   local_repository(
+     name = "gapic_generator_java",
+     path = "/home/<your id>/gapic-generator-java",
+   )
+   ```
+
+5. Build the new target.
+
+   ```sh
+   cd googleapis
+   bazel build //google/showcase/v1beta1:showcase_java_gapic
+   ```
+    
+   You can generate any client library based on the protos within googleapis.
+   You just need the name of the service within the `java_gapic_assembly_gradle_pkg`
+   rules within the service's `BUILD.bazel` file.
+   For instance, to run your local generator on the `speech`'s v2 service, you can
+   run:
+    
+   ```
+   bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
+   ```
+
+
+
