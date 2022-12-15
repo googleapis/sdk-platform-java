@@ -147,7 +147,7 @@ public class Parser {
     Optional<GapicSnippetConfig> configuredSnippetOpt =
         SnippetConfigParser.parse(snippetConfigPathOpt.orElse(null));
     List<GapicSnippetConfig> listOfSnippetConfigs = new ArrayList<>();
-    if (snippetConfigPathOpt.isPresent()) {
+    if (snippetConfigPathOpt.isPresent() && configuredSnippetOpt.isPresent()) {
       GapicSnippetConfig gapicSnippetConfig = configuredSnippetOpt.get();
       listOfSnippetConfigs.add(gapicSnippetConfig);
     }
