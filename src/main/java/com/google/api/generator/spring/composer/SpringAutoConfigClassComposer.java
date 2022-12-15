@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
@@ -82,6 +83,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static final SpringAutoConfigClassComposer INSTANCE = new SpringAutoConfigClassComposer();
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+  private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
   private SpringAutoConfigClassComposer() {}
 
@@ -706,6 +708,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
       bodyStatements.add(setTransportChannelProviderStatement);
     }
+
     // If service-level properties configured, update retry settings for each method
 
     Variable serviceRetryPropertiesVar =
@@ -736,6 +739,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             VariableExpr.withVariable(serviceRetryPropertiesVar), ValueExpr.createNullExpr());
 
     List<Statement> setRetrySettingsStatementBody = new ArrayList<>();
+
+    Statement retrySettingsLoggerStatement =
+        LoggerUtils.createLoggerStatement(
+            ValueExpr.withValue(
+                StringObjectValue.withValue(
+                    "Configuring service-level retry settings from properties.")),
+            types);
+
+    setRetrySettingsStatementBody.add(retrySettingsLoggerStatement);
 
     for (Method method : service.methods()) {
       String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
@@ -792,6 +804,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                   .build()));
 
       setRetrySettingsStatementBody.add(ExprStatement.withExpr(setRetrySettingsExpr));
+      setRetrySettingsStatementBody.add(EMPTY_LINE_STATEMENT);
     }
 
     IfStatement setRetrySettingsStatement =

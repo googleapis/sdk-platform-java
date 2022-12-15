@@ -149,29 +149,37 @@ public class EchoSpringAutoConfiguration {
     }
     Retry serviceRetrySettings = clientProperties.getRetrySettings();
     if (serviceRetrySettings != null) {
+      if (LOGGER.isTraceEnabled()) {
+        LOGGER.trace("Configuring service-level retry settings from properties.");
+      }
       RetrySettings echoRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.echoSettings().getEchoRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
+
       RetrySettings expandRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.expandSettings().getExpandRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
+
       RetrySettings collectRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.collectSettings().getCollectRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
+
       RetrySettings chatRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.chatSettings().getChatRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
+
       RetrySettings chatAgainRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
+
       RetrySettings pagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
@@ -179,6 +187,7 @@ public class EchoSpringAutoConfiguration {
       clientSettingsBuilder
           .pagedExpandSettings()
           .setPagedExpandRetrySettings(pagedExpandRetrySettings);
+
       RetrySettings simplePagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
@@ -186,14 +195,17 @@ public class EchoSpringAutoConfiguration {
       clientSettingsBuilder
           .simplePagedExpandSettings()
           .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
+
       RetrySettings waitRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.waitSettings().getWaitRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
+
       RetrySettings blockRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.blockSettings().getBlockRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
+
       RetrySettings collideNameRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
