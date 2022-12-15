@@ -333,9 +333,7 @@ java_gapic_library(
 java_gapic_test(
     name = "speech_java_gapic_test_suite",
     test_classes = [
-        "com.google.cloud.speech.v1.AdaptationClientHttpJsonTest",
         "com.google.cloud.speech.v1.AdaptationClientTest",
-        "com.google.cloud.speech.v1.SpeechClientHttpJsonTest",
         "com.google.cloud.speech.v1.SpeechClientTest",
     ],
     runtime_deps = [":speech_java_gapic_test"],
