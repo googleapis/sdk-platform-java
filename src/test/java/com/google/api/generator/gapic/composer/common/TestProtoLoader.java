@@ -162,7 +162,8 @@ public class TestProtoLoader {
     // @TODO: Once ability to parse multiple snippet configs, add in additional configs here to test
     String jsonFilename_configuredSnippet = "configured_snippet_config.json";
     Path jsonPath_configuredSnippet = Paths.get(testFilesDirectory, jsonFilename_configuredSnippet);
-    Optional<GapicSnippetConfig> snippetConfigOpt = SnippetConfigParser.parse(jsonPath_configuredSnippet.toString());
+    Optional<GapicSnippetConfig> snippetConfigOpt =
+        SnippetConfigParser.parse(jsonPath_configuredSnippet.toString());
     assertTrue(snippetConfigOpt.isPresent());
     GapicSnippetConfig snippetConfig = snippetConfigOpt.get();
     List<GapicSnippetConfig> snippetConfigs = new ArrayList<>();

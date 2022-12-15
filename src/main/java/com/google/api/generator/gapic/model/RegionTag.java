@@ -155,7 +155,7 @@ public abstract class RegionTag {
     }
     rt = rt.toLowerCase() + tagType() + "_" + serviceName() + "_" + rpcName();
     // TODO: @alicejli overloadDisambiguation will need to be updated to match other languages
-    if (configId().length()>1) {
+    if (configId().length() > 1) {
       rt = rt + "_" + configId();
     }
     if (!overloadDisambiguation().isEmpty()) {

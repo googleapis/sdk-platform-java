@@ -102,14 +102,13 @@ public class PluginArgumentParserTest {
     String jsonPathOne = "/tmp/speech_createCustomClass.json";
     String jsonPathTwo = "/tmp/speech_somethingelse.json";
     assertEquals(
-            jsonPathOne,
-            PluginArgumentParser.parseSnippetConfigPath(
-                            String.join(
-                                    ",",
-                                    Arrays.asList(
-                                            createSnippetConfig(jsonPathOne),
-                                            createSnippetConfig(jsonPathTwo))))
-                    .get());
+        jsonPathOne,
+        PluginArgumentParser.parseSnippetConfigPath(
+                String.join(
+                    ",",
+                    Arrays.asList(
+                        createSnippetConfig(jsonPathOne), createSnippetConfig(jsonPathTwo))))
+            .get());
   }
 
   @Test
@@ -290,7 +289,7 @@ public class PluginArgumentParserTest {
     String jsonPath = "/tmp/speech_createClass.json";
     String gapicPath = "";
     String rawArgument =
-            String.join(",", Arrays.asList("snippet-config", createSnippetConfig(jsonPath), gapicPath));
+        String.join(",", Arrays.asList("snippet-config", createSnippetConfig(jsonPath), gapicPath));
     assertTrue(PluginArgumentParser.hasFlag(rawArgument, KEY_SNIPPET_CONFIG));
   }
 
@@ -309,5 +308,4 @@ public class PluginArgumentParserTest {
   private static String createSnippetConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_SNIPPET_CONFIG, path);
   }
-
 }

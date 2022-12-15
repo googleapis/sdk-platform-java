@@ -28,7 +28,11 @@ package google.cloud.speech.v1.samples;
 public class CreateCustomClass {
 
   public static void main(String[] args) throws Exception {
-    Object thing;
+    String parent = "projects/[PROJECT]/locations/us";
+    String customClassId = "passengerships";
+    asyncCreateCustomClass(parent, customClassId);
   }
+
+  public static void asyncCreateCustomClass(String parent, String customClassId) throws Exception {}
 }
 // [END speech_v1_config_Adaptation_CreateCustomClass_Basic_async]

@@ -101,7 +101,7 @@ public class SampleComposer {
             .build());
   }
 
-  private static List<Statement> composeMainBody(
+  public static List<Statement> composeMainBody(
       List<AssignmentExpr> sampleVariableAssignments, Statement invokeMethod) {
     List<ExprStatement> setVariables =
         sampleVariableAssignments.stream()
@@ -129,7 +129,7 @@ public class SampleComposer {
         .build();
   }
 
-  private static MethodDefinition composeMainMethod(List<Statement> mainBody) {
+  public static MethodDefinition composeMainMethod(List<Statement> mainBody) {
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
@@ -146,7 +146,7 @@ public class SampleComposer {
         .build();
   }
 
-  private static MethodDefinition composeSampleMethod(
+  public static MethodDefinition composeSampleMethod(
       String sampleMethodName,
       List<VariableExpr> sampleMethodArgs,
       List<Statement> sampleMethodBody) {

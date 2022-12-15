@@ -112,12 +112,12 @@ public class RegionTagTest {
   @Test
   public void generateRegionTagsValidMissingFields_withDiffTagType() {
     RegionTag regionTag =
-            RegionTag.builder()
-                    .setApiShortName(apiShortName)
-                    .setServiceName(serviceName)
-                    .setRpcName(rpcName)
-                    .setTagType("config")
-                    .build();
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .setTagType("config")
+            .build();
 
     String result = regionTag.generate();
     String expected = "shortname_config_ServiceName_RpcName_sync";

@@ -145,4 +145,25 @@ public class SampleComposerUtilTest {
     assertTrue(result.contains(echoClientSample));
     assertTrue(result.contains(echoClientSampleDiffRpcName));
   }
+
+  // Test if parsing TypeNode is done correctly
+  // TODO: update this
+  //  @Test
+  //  public void parseTypeNode() {
+  //    GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
+  //    List<GapicSnippetConfig> gapicSnippetConfigList = context.snippetConfigs();
+  //    GapicSnippetConfig snippetConfig = gapicSnippetConfigList.get(0);
+  //
+  //    Type.ScalarType testType = Type.ScalarType.TYPE_STRING;
+  //    Map<String, List> signatureParameters =
+  // GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig);
+  //    Iterator<Map.Entry<String, List>> iterator =
+  // GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig).entrySet().iterator();
+  //    while(iterator.hasNext()) {
+  //      Map.Entry<String, List> actualValue = iterator.next();
+  //      // Key is the name of the parameter, Value is the description
+  //      assertEquals(testType, actualValue.getValue().get(1));
+  //    }
+  //  }
+
 }

@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -109,5 +110,31 @@ public class SampleComposerUtil {
       }
     }
     return uniqueSamples;
+  }
+
+  // Convert configLanguage.Type to TypeNode
+  // TODO: finish this
+  public static TypeNode convertTypeToTypeNode(Type.ScalarType configType) {
+    switch (configType) {
+      case TYPE_STRING:
+        return TypeNode.STRING;
+      case TYPE_BOOL:
+        return TypeNode.BOOLEAN;
+        //      case 2: return TYPE_FLOAT;
+        //      case 3: return TYPE_INT64;
+        //      case 4: return TYPE_UINT64;
+        //      case 5: return TYPE_INT32;
+        //      case 6: return TYPE_FIXED64;
+        //      case 7: return TYPE_FIXED32;
+        //      case 8: return TYPE_BOOL;
+        //      case 9: return TYPE_STRING;
+        //      case 13: return TYPE_UINT32;
+        //      case 15: return TYPE_SFIXED32;
+        //      case 16: return TYPE_SFIXED64;
+        //      case 17: return TYPE_SINT32;
+        //      case 18: return TYPE_SINT64;
+      default:
+        return null;
+    }
   }
 }
