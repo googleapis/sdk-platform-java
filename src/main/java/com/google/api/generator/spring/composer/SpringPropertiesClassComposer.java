@@ -60,9 +60,6 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 public class SpringPropertiesClassComposer implements ClassComposer {
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
-
-  private static final String RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
-
   private static final SpringPropertiesClassComposer INSTANCE = new SpringPropertiesClassComposer();
 
   public static SpringPropertiesClassComposer instance() {
@@ -186,10 +183,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               null);
       statements.add(useRestVarStatement);
     }
-
-    String serviceRetryPropertyName = "retrySettings";
+    //   private Retry retrySettings;
     ExprStatement retryPropertiesStatement =
-        createMemberVarStatement(serviceRetryPropertyName, types.get("Retry"), false, null, null);
+        createMemberVarStatement("retrySettings", types.get("Retry"), false, null, null);
     statements.add(retryPropertiesStatement);
 
     return statements;
@@ -222,11 +218,9 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
-    String serviceRetryPropertyName = "retrySettings";
     methodDefinitions.add(
-        createGetterMethod(thisClassType, serviceRetryPropertyName, types.get("Retry"), null));
-    methodDefinitions.add(
-        createSetterMethod(thisClassType, serviceRetryPropertyName, types.get("Retry")));
+        createGetterMethod(thisClassType, "retrySettings", types.get("Retry"), null));
+    methodDefinitions.add(createSetterMethod(thisClassType, "retrySettings", types.get("Retry")));
 
     return methodDefinitions;
   }
@@ -318,6 +312,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                 .setPakkage(packageName)
                 .build());
 
+    // TODO: This should move to static types once class is added into spring-cloud-gcp-core
     TypeNode retryProperties =
         TypeNode.withReference(
             VaporReference.builder()

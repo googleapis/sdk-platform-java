@@ -738,7 +738,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         RelationalOperationExpr.notEqualToWithExprs(
             VariableExpr.withVariable(serviceRetryPropertiesVar), ValueExpr.createNullExpr());
 
-    List<Statement> setRetrySettingsStatementBody = new ArrayList<>();
+    List<Statement> updateRetrySettingsStatementBody = new ArrayList<>();
 
     Statement retrySettingsLoggerStatement =
         LoggerUtils.createLoggerStatement(
@@ -747,7 +747,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     "Configuring service-level retry settings from properties.")),
             types);
 
-    setRetrySettingsStatementBody.add(retrySettingsLoggerStatement);
+    updateRetrySettingsStatementBody.add(retrySettingsLoggerStatement);
 
     for (Method method : service.methods()) {
       String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
@@ -792,7 +792,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               .setArguments(VariableExpr.withVariable(methodRetrySettingsVariable))
               .build();
 
-      setRetrySettingsStatementBody.add(
+      updateRetrySettingsStatementBody.add(
           ExprStatement.withExpr(
               AssignmentExpr.builder()
                   .setVariableExpr(
@@ -803,12 +803,12 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                   .setValueExpr(updatedRetrySettingsExpr)
                   .build()));
 
-      setRetrySettingsStatementBody.add(ExprStatement.withExpr(setRetrySettingsExpr));
-      setRetrySettingsStatementBody.add(EMPTY_LINE_STATEMENT);
+      updateRetrySettingsStatementBody.add(ExprStatement.withExpr(setRetrySettingsExpr));
+      updateRetrySettingsStatementBody.add(EMPTY_LINE_STATEMENT);
     }
 
     IfStatement setRetrySettingsStatement =
-        createIfStatement(serviceRetryPropertiesNotNull, setRetrySettingsStatementBody, null);
+        createIfStatement(serviceRetryPropertiesNotNull, updateRetrySettingsStatementBody, null);
 
     bodyStatements.add(setRetrySettingsStatement);
 
