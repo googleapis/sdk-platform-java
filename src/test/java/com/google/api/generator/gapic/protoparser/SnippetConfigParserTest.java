@@ -16,7 +16,7 @@ import org.junit.Test;
 public class SnippetConfigParserTest {
   private static final String JSON_DIRECTORY = "src/test/resources/";
 
-  //TODO: Update tests
+  // TODO: Update tests
   @Test
   public void parseSnippetConfig_metadata_only() {
     String jsonFilename = "configured_snippet_config.json";

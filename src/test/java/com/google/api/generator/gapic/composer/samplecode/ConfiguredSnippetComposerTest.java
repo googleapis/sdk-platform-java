@@ -1,14 +1,14 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import static org.junit.Assert.assertEquals;
+
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicSnippetConfig;
-import org.junit.Test;
-
 import java.util.List;
+import org.junit.Test;
 
 public class ConfiguredSnippetComposerTest {
 
