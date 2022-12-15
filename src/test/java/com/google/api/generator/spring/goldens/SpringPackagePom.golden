@@ -5,10 +5,12 @@
 
   <parent>
     <groupId>com.google.cloud</groupId>
-    <artifactId>generated-parent</artifactId>
+    <artifactId>spring-cloud-gcp-starters</artifactId>
     <version>{{parent-version}}</version>
+    <relativePath>../../spring-cloud-gcp-starters/pom.xml</relativePath>
   </parent>
   <artifactId>{{client-library-artifact-id}}-spring-starter</artifactId>
+  <version>${project.parent.version}-preview</version>
   <name>Spring Boot Starter - localhost:7469</name>
   <description>Spring Boot Starter with AutoConfiguration for localhost:7469</description>
 
@@ -17,7 +19,6 @@
     <dependency>
       <groupId>{{client-library-group-id}}</groupId>
       <artifactId>{{client-library-artifact-id}}</artifactId>
-      <version>{{client-library-version}}</version>
     </dependency>
 
     <dependency>
