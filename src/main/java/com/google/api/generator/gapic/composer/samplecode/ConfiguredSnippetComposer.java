@@ -75,11 +75,10 @@ public class ConfiguredSnippetComposer {
         GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig)
             .entrySet()
             .iterator();
-    JavaDocComment.Builder javaDocComment = JavaDocComment.builder();
-    javaDocComment.addComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
-    javaDocComment.addComment(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig));
-    javaDocComment.addParagraph(
-        GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
+    JavaDocComment.Builder javaDocComment = JavaDocComment.builder()
+            .addComment("AUTO-GENERATED DOCUMENTATION\n")
+            .addComment(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig))
+            .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
     // for scratch stuff
     //
     // .addComment(GapicSnippetConfig.getConfiguredSnippetCallType(snippetConfig))

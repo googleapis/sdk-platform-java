@@ -207,7 +207,6 @@ message Snippet {
   // May be empty. If any, statements should appear on generated code in the
   // same order as they appear on this field.
   repeated Statement final_statements = 8;
-//} // TODO: @alicejli this is manually added in
 
   // Options to initialize the client with.
   message ClientInitialization {

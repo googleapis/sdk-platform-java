@@ -160,7 +160,7 @@ public abstract class Service {
   // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default
   // endpoints like
   // "us-east1-pubsub.googleapis.com".
-  public static String parseApiShortName(String defaultHost) {
+  private static String parseApiShortName(String defaultHost) {
     // If the defaultHost is of the format "**.googleapis.com", take the name before the first
     // period.
     String apiShortName = Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
