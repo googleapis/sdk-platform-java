@@ -147,7 +147,7 @@ public class EchoSpringAutoConfiguration {
                 + this.clientProperties.getExecutorThreadCount());
       }
     }
-    Retry serviceRetrySettings = clientProperties.getServiceRetrySettings();
+    Retry serviceRetrySettings = clientProperties.getRetrySettings();
     if (serviceRetrySettings != null) {
       RetrySettings echoRetrySettings =
           RetryUtils.updateRetrySettings(

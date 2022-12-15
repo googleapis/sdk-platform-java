@@ -36,7 +36,7 @@ public class EchoSpringProperties implements CredentialsSupplier {
 
   private String quotaProjectId;
   private Integer executorThreadCount;
-  private Retry serviceRetrySettings;
+  private Retry retrySettings;
 
   @Override
   public Credentials getCredentials() {
@@ -59,11 +59,11 @@ public class EchoSpringProperties implements CredentialsSupplier {
     this.executorThreadCount = executorThreadCount;
   }
 
-  public Retry getServiceRetrySettings() {
-    return this.serviceRetrySettings;
+  public Retry getRetrySettings() {
+    return this.retrySettings;
   }
 
-  public void setServiceRetrySettings(Retry serviceRetrySettings) {
-    this.serviceRetrySettings = serviceRetrySettings;
+  public void setRetrySettings(Retry retrySettings) {
+    this.retrySettings = retrySettings;
   }
 }

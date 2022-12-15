@@ -135,7 +135,7 @@ public class EchoSpringAutoConfiguration {
         LOGGER.trace("Using HTTP transport channel");
       }
     }
-    Retry serviceRetrySettings = clientProperties.getServiceRetrySettings();
+    Retry serviceRetrySettings = clientProperties.getRetrySettings();
     if (serviceRetrySettings != null) {
       RetrySettings echoRetrySettings =
           RetryUtils.updateRetrySettings(

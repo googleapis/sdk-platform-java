@@ -187,7 +187,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       statements.add(useRestVarStatement);
     }
 
-    String serviceRetryPropertyName = "serviceRetrySettings";
+    String serviceRetryPropertyName = "retrySettings";
     ExprStatement retryPropertiesStatement =
         createMemberVarStatement(serviceRetryPropertyName, types.get("Retry"), false, null, null);
     statements.add(retryPropertiesStatement);
@@ -222,7 +222,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
-    String serviceRetryPropertyName = "serviceRetrySettings";
+    String serviceRetryPropertyName = "retrySettings";
     methodDefinitions.add(
         createGetterMethod(thisClassType, serviceRetryPropertyName, types.get("Retry"), null));
     methodDefinitions.add(

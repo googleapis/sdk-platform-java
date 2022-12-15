@@ -714,15 +714,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     VariableExpr serviceRetryPropertiesVarExpr =
         VariableExpr.builder().setVariable(serviceRetryPropertiesVar).setIsDecl(true).build();
 
-    // clientProperties.getServiceRetrySettings()
+    // clientProperties.getRetrySettings()
     MethodInvocationExpr serviceRetryPropertiesExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(VariableExpr.withVariable(clientPropertiesVar))
-            .setMethodName("getServiceRetrySettings")
+            .setMethodName("getRetrySettings")
             .setReturnType(types.get("Retry"))
             .build();
 
-    // Retry serviceRetrySettings = clientProperties.getServiceRetrySettings();
+    // Retry retrySettings = clientProperties.getRetrySettings();
     AssignmentExpr serviceRetrySettingsExpr =
         AssignmentExpr.builder()
             .setVariableExpr(serviceRetryPropertiesVarExpr)
