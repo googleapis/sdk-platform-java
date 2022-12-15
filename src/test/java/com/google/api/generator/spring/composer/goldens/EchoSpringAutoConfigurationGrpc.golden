@@ -8,7 +8,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.cloud.spring.core.Retry;
-import com.google.cloud.spring.core.util.RetryUtils;
+import com.google.cloud.spring.core.util.RetryUtil;
 import com.google.cloud.spring.global.GlobalProperties;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -130,52 +130,52 @@ public class EchoSpringAutoConfiguration {
     Retry serviceRetrySettings = clientProperties.getRetrySettings();
     if (serviceRetrySettings != null) {
       RetrySettings echoRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.echoSettings().getEchoRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
       RetrySettings expandRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.expandSettings().getExpandRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
       RetrySettings collectRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.collectSettings().getCollectRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
       RetrySettings chatRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.chatSettings().getChatRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
       RetrySettings chatAgainRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
       RetrySettings pagedExpandRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder
           .pagedExpandSettings()
           .setPagedExpandRetrySettings(pagedExpandRetrySettings);
       RetrySettings simplePagedExpandRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder
           .simplePagedExpandSettings()
           .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
       RetrySettings waitRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.waitSettings().getWaitRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
       RetrySettings blockRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.blockSettings().getBlockRetrySettings(), serviceRetrySettings);
       clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
       RetrySettings collideNameRetrySettings =
-          RetryUtils.updateRetrySettings(
+          RetryUtil.updateRetrySettings(
               clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
               serviceRetrySettings);
       clientSettingsBuilder

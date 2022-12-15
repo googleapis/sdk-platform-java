@@ -764,7 +764,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
       MethodInvocationExpr updatedRetrySettingsExpr =
           MethodInvocationExpr.builder()
-              .setStaticReferenceType(types.get("RetryUtils"))
+              .setStaticReferenceType(types.get("RetryUtil"))
               .setMethodName("updateRetrySettings")
               .setArguments(
                   Arrays.asList(
@@ -986,9 +986,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 Collectors.toMap(
                     Class::getSimpleName,
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
-    concreteClazzesMap.put(
-        "RetrySettings.Builder",
-        TypeNode.withReference(ConcreteReference.withClazz(RetrySettings.Builder.class)));
     return concreteClazzesMap;
   }
 
@@ -1008,6 +1005,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage(packageName)
                 .build());
 
+    // TODO: This should move to static types once class is added into spring-cloud-gcp-core
     TypeNode retryProperties =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1015,10 +1013,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage("com.google.cloud.spring.core")
                 .build());
 
-    TypeNode retryUtils =
+    // TODO: This should move to static types once class is added into spring-cloud-gcp-core
+    TypeNode retryUtil =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName("RetryUtils")
+                .setName("RetryUtil")
                 .setPakkage("com.google.cloud.spring.core.util")
                 .build());
 
@@ -1049,7 +1048,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("GlobalProperties", GlobalPropertiesUtils.getGlobalPropertiesType());
     typeMap.put("Retry", retryProperties);
-    typeMap.put("RetryUtils", retryUtils);
+    typeMap.put("RetryUtil", retryUtil);
 
     return typeMap;
   }
