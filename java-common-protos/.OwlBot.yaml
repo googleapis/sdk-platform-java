@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-docker:
-  image: "gcr.io/cloud-devrel-public-resources/owlbot-java:latest"
 
 deep-remove-regex:
 - "/grpc-google-.*/src"
@@ -25,37 +23,38 @@ deep-preserve-regex:
 
 deep-copy-regex:
 - source: "/google/api/google-api-java/proto-google-api-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/cloud/audit/google-cloud-audit-java/proto-google-cloud-audit-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/geo/type/google-geo-type-java/proto-google-geo-type-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/logging/type/google-logging-type-java/proto-google-logging-type-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/longrunning/google-longrunning-java/proto-google-longrunning-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/rpc/google-rpc-java/proto-google-rpc-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/rpc/context/google-context-java/proto-google-context-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/type/google-type-java/proto-google-type-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/cloud/google-apps-script-type-java/proto-google-apps-script-type-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/cloud/location/google-cloud-location-java/proto-google-cloud-location-java/src"
-  dest: "/owl-bot-staging/v1/proto-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/cloud/location/google-cloud-location-java/grpc-google-cloud-location-java/src"
-  dest: "/owl-bot-staging/v1/grpc-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/grpc-google-common-protos/src"
 
 - source: "/google/longrunning/google-longrunning-java/grpc-google-longrunning-java/src"
-  dest: "/owl-bot-staging/v1/grpc-google-common-protos/src"
+  dest: "/owl-bot-staging/java-common-protos/v1/grpc-google-common-protos/src"
+api-name: common-protos
