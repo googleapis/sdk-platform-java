@@ -63,7 +63,7 @@ jobs:
           export PATH=${JAVA_HOME}/bin:$PATH
           # useIncrementalCompilation not to recompile previous class file
           mvn test --batch-mode --no-transfer-progress \
-              -Dcheckstyle.skip -DuseIncrementalCompilation=false
+              -Dcheckstyle.skip -Dmaven.compiler.useIncrementalCompilation=false
 
   lint:
     runs-on: ubuntu-latest
