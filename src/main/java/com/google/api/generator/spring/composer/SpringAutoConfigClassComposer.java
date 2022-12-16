@@ -791,7 +791,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     MethodInvocationExpr getRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(methodSettingsExpr)
-            .setMethodName(String.format("get%sRetrySettings", methodNameUpperCamel))
+            .setMethodName(String.format("getRetrySettings"))
             .build();
 
     MethodInvocationExpr updatedRetrySettingsExpr =
@@ -808,7 +808,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     MethodInvocationExpr setRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(methodSettingsExpr)
-            .setMethodName(String.format("set%sRetrySettings", methodNameUpperCamel))
+            .setMethodName(String.format("setRetrySettings"))
             .setArguments(VariableExpr.withVariable(methodRetrySettingsVariable))
             .build();
 

@@ -127,62 +127,55 @@ public class EchoSpringAutoConfiguration {
     if (serviceRetry != null) {
       RetrySettings echoRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.echoSettings().getEchoRetrySettings(), serviceRetry);
-      clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
+              clientSettingsBuilder.echoSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.echoSettings().setRetrySettings(echoRetrySettings);
 
       RetrySettings expandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.expandSettings().getExpandRetrySettings(), serviceRetry);
-      clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
+              clientSettingsBuilder.expandSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.expandSettings().setRetrySettings(expandRetrySettings);
 
       RetrySettings collectRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.collectSettings().getCollectRetrySettings(), serviceRetry);
-      clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
+              clientSettingsBuilder.collectSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.collectSettings().setRetrySettings(collectRetrySettings);
 
       RetrySettings chatRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.chatSettings().getChatRetrySettings(), serviceRetry);
-      clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
+              clientSettingsBuilder.chatSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.chatSettings().setRetrySettings(chatRetrySettings);
 
       RetrySettings chatAgainRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(), serviceRetry);
-      clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
+              clientSettingsBuilder.chatAgainSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.chatAgainSettings().setRetrySettings(chatAgainRetrySettings);
 
       RetrySettings pagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
-              serviceRetry);
-      clientSettingsBuilder
-          .pagedExpandSettings()
-          .setPagedExpandRetrySettings(pagedExpandRetrySettings);
+              clientSettingsBuilder.pagedExpandSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.pagedExpandSettings().setRetrySettings(pagedExpandRetrySettings);
 
       RetrySettings simplePagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
-              serviceRetry);
+              clientSettingsBuilder.simplePagedExpandSettings().getRetrySettings(), serviceRetry);
       clientSettingsBuilder
           .simplePagedExpandSettings()
-          .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
+          .setRetrySettings(simplePagedExpandRetrySettings);
 
       RetrySettings waitRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.waitSettings().getWaitRetrySettings(), serviceRetry);
-      clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
+              clientSettingsBuilder.waitSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.waitSettings().setRetrySettings(waitRetrySettings);
 
       RetrySettings blockRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.blockSettings().getBlockRetrySettings(), serviceRetry);
-      clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
+              clientSettingsBuilder.blockSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.blockSettings().setRetrySettings(blockRetrySettings);
 
       RetrySettings collideNameRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
-              serviceRetry);
-      clientSettingsBuilder
-          .collideNameSettings()
-          .setCollideNameRetrySettings(collideNameRetrySettings);
+              clientSettingsBuilder.collideNameSettings().getRetrySettings(), serviceRetry);
+      clientSettingsBuilder.collideNameSettings().setRetrySettings(collideNameRetrySettings);
 
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured service-level retry settings from properties.");
@@ -192,8 +185,8 @@ public class EchoSpringAutoConfiguration {
     if (echoRetry != null) {
       RetrySettings echoRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.echoSettings().getEchoRetrySettings(), echoRetry);
-      clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
+              clientSettingsBuilder.echoSettings().getRetrySettings(), echoRetry);
+      clientSettingsBuilder.echoSettings().setRetrySettings(echoRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for echo from properties.");
       }
@@ -202,8 +195,8 @@ public class EchoSpringAutoConfiguration {
     if (expandRetry != null) {
       RetrySettings expandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.expandSettings().getExpandRetrySettings(), expandRetry);
-      clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
+              clientSettingsBuilder.expandSettings().getRetrySettings(), expandRetry);
+      clientSettingsBuilder.expandSettings().setRetrySettings(expandRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for expand from properties.");
       }
@@ -212,8 +205,8 @@ public class EchoSpringAutoConfiguration {
     if (collectRetry != null) {
       RetrySettings collectRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.collectSettings().getCollectRetrySettings(), collectRetry);
-      clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
+              clientSettingsBuilder.collectSettings().getRetrySettings(), collectRetry);
+      clientSettingsBuilder.collectSettings().setRetrySettings(collectRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for collect from properties.");
       }
@@ -222,8 +215,8 @@ public class EchoSpringAutoConfiguration {
     if (chatRetry != null) {
       RetrySettings chatRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.chatSettings().getChatRetrySettings(), chatRetry);
-      clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
+              clientSettingsBuilder.chatSettings().getRetrySettings(), chatRetry);
+      clientSettingsBuilder.chatSettings().setRetrySettings(chatRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for chat from properties.");
       }
@@ -232,9 +225,8 @@ public class EchoSpringAutoConfiguration {
     if (chatAgainRetry != null) {
       RetrySettings chatAgainRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(),
-              chatAgainRetry);
-      clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
+              clientSettingsBuilder.chatAgainSettings().getRetrySettings(), chatAgainRetry);
+      clientSettingsBuilder.chatAgainSettings().setRetrySettings(chatAgainRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for chatAgain from properties.");
       }
@@ -243,11 +235,8 @@ public class EchoSpringAutoConfiguration {
     if (pagedExpandRetry != null) {
       RetrySettings pagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
-              pagedExpandRetry);
-      clientSettingsBuilder
-          .pagedExpandSettings()
-          .setPagedExpandRetrySettings(pagedExpandRetrySettings);
+              clientSettingsBuilder.pagedExpandSettings().getRetrySettings(), pagedExpandRetry);
+      clientSettingsBuilder.pagedExpandSettings().setRetrySettings(pagedExpandRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for pagedExpand from properties.");
       }
@@ -256,11 +245,11 @@ public class EchoSpringAutoConfiguration {
     if (simplePagedExpandRetry != null) {
       RetrySettings simplePagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
+              clientSettingsBuilder.simplePagedExpandSettings().getRetrySettings(),
               simplePagedExpandRetry);
       clientSettingsBuilder
           .simplePagedExpandSettings()
-          .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
+          .setRetrySettings(simplePagedExpandRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace(
             "Configured method-level retry settings for simplePagedExpand from properties.");
@@ -270,8 +259,8 @@ public class EchoSpringAutoConfiguration {
     if (waitRetry != null) {
       RetrySettings waitRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.waitSettings().getWaitRetrySettings(), waitRetry);
-      clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
+              clientSettingsBuilder.waitSettings().getRetrySettings(), waitRetry);
+      clientSettingsBuilder.waitSettings().setRetrySettings(waitRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for wait from properties.");
       }
@@ -280,8 +269,8 @@ public class EchoSpringAutoConfiguration {
     if (blockRetry != null) {
       RetrySettings blockRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.blockSettings().getBlockRetrySettings(), blockRetry);
-      clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
+              clientSettingsBuilder.blockSettings().getRetrySettings(), blockRetry);
+      clientSettingsBuilder.blockSettings().setRetrySettings(blockRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for block from properties.");
       }
@@ -290,11 +279,8 @@ public class EchoSpringAutoConfiguration {
     if (collideNameRetry != null) {
       RetrySettings collideNameRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
-              collideNameRetry);
-      clientSettingsBuilder
-          .collideNameSettings()
-          .setCollideNameRetrySettings(collideNameRetrySettings);
+              clientSettingsBuilder.collideNameSettings().getRetrySettings(), collideNameRetry);
+      clientSettingsBuilder.collideNameSettings().setRetrySettings(collideNameRetrySettings);
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configured method-level retry settings for collideName from properties.");
       }
