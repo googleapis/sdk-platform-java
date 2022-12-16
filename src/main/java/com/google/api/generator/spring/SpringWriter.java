@@ -246,7 +246,7 @@ public class SpringWriter {
                 + "\n"
                 + "  <dependency>\n"
                 + "    <groupId>com.google.cloud</groupId>\n"
-                + "    <artifactId>spring-cloud-gcp-core</artifactId>\n"
+                + "    <artifactId>spring-cloud-gcp-autoconfigure</artifactId>\n"
                 + "  </dependency>\n"
                 + "</dependencies>\n"
                 + "\n"

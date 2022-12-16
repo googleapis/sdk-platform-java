@@ -22,7 +22,6 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
-import com.google.api.generator.engine.ast.ArrayExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -36,7 +35,6 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
-import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -55,7 +53,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
-import com.google.api.generator.spring.utils.GlobalPropertiesUtils;
+import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
 import com.google.cloud.spring.core.Credentials;
@@ -123,13 +121,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethods(
                 Arrays.asList(
                     createConstructor(service, className, dynamicTypes, thisExpr),
-                    createCredentialsProviderBeanMethod(
-                        service, className, credentialsProviderName, dynamicTypes, thisExpr),
                     createTransportChannelProviderBeanMethod(
                         transportChannelProviderName, dynamicTypes),
                     createSettingsBeanMethod(
                         service,
-                        credentialsProviderName,
                         transportChannelProviderName,
                         dynamicTypes,
                         gapicServiceConfig,
@@ -150,29 +145,22 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       Map<String, TypeNode> types,
       GapicServiceConfig serviceConfig) {
 
-    String serviceName = service.name();
-
     // private final LanguageProperties clientProperties;
-    Variable clientPropertiesVar =
-        Variable.builder()
-            .setName("clientProperties")
-            .setType(types.get(Utils.getServicePropertiesClassName(service)))
-            .build();
-    VariableExpr clientPropertiesVarExpr =
-        VariableExpr.builder()
-            .setVariable(clientPropertiesVar)
-            .setScope(ScopeNode.PRIVATE)
-            .setIsFinal(true)
-            .setIsDecl(true)
-            .build();
-    ExprStatement clientPropertiesStatement = ExprStatement.withExpr(clientPropertiesVarExpr);
+    ExprStatement clientPropertiesStatement =
+        ComposerUtils.createMemberVarStatement(
+            "clientProperties",
+            types.get(Utils.getServicePropertiesClassName(service)),
+            true,
+            null,
+            null);
+    Statement credentialProvider =
+        ComposerUtils.createMemberVarStatement(
+            "credentialsProvider", STATIC_TYPES.get("CredentialsProvider"), true, null, null);
 
     Statement loggerStatement =
         LoggerUtils.getLoggerDeclarationExpr(
             Utils.getServiceAutoConfigurationClassName(service), types);
-    Statement globalPropertiesStatement =
-        GlobalPropertiesUtils.getGlobalPropertiesDeclaration(types);
-    return Arrays.asList(clientPropertiesStatement, globalPropertiesStatement, loggerStatement);
+    return Arrays.asList(clientPropertiesStatement, credentialProvider, loggerStatement);
   }
 
   private static MethodDefinition createConstructor(
@@ -183,58 +171,92 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setName("clientProperties")
                 .setType(types.get(Utils.getServicePropertiesClassName(service)))
                 .build());
-    VariableExpr globalPropertiesVarExpr =
+    VariableExpr credentialsProviderVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setName("globalProperties")
-                .setType(types.get("GlobalProperties"))
+                .setName("credentialsProvider")
+                .setType(STATIC_TYPES.get("CredentialsProvider"))
                 .build());
-    Variable clientPropertiesVar =
-        Variable.builder()
-            .setName("clientProperties")
-            .setType(types.get(Utils.getServicePropertiesClassName(service)))
-            .build();
-    Variable globalPropertiesVar =
-        Variable.builder()
-            .setName("globalProperties")
-            .setType(types.get("GlobalProperties"))
-            .build();
 
     // this.clientProperties = clientProperties;
     AssignmentExpr thisClientPropertiesAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
-                VariableExpr.withVariable(clientPropertiesVar)
-                    .toBuilder()
-                    .setExprReferenceExpr(thisExpr)
-                    .build())
+                clientPropertiesVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(clientPropertiesVarExpr)
             .build();
     ExprStatement thisClientPropertiesAssignmentStatement =
         ExprStatement.withExpr(thisClientPropertiesAssignmentExpr);
 
-    AssignmentExpr thisGlobalPropertiesAssignmentExpr =
+    // if (this.clientProperties.getCredentials().hasKey()) {
+    //    this.credentialsProvider = new DefaultCredentialsProvider(this.clientProperties);
+    //  } else {
+    //    this.credentialsProvider = credentialsProvider;
+    //  }
+    VariableExpr thisClientProperties =
+        clientPropertiesVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build();
+    AssignmentExpr.Builder thisCredentialsProviderAssignmentExprBuilder =
         AssignmentExpr.builder()
             .setVariableExpr(
-                VariableExpr.withVariable(globalPropertiesVar)
-                    .toBuilder()
-                    .setExprReferenceExpr(thisExpr)
+                credentialsProviderVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build());
+    ExprStatement thisCredentialsProviderToGlobalAssignmentStatement =
+        ExprStatement.withExpr(
+            thisCredentialsProviderAssignmentExprBuilder
+                .setValueExpr(credentialsProviderVarExpr)
+                .build());
+
+    CastExpr newCredentialsProviderExpr =
+        CastExpr.builder()
+            .setExpr(
+                NewObjectExpr.builder()
+                    .setType(STATIC_TYPES.get("DefaultCredentialsProvider"))
+                    .setArguments(thisClientProperties)
                     .build())
-            .setValueExpr(globalPropertiesVarExpr)
+            .setType(STATIC_TYPES.get("CredentialsProvider"))
             .build();
-    ExprStatement thisGlobalPropertiesAssignmentStatement =
-        ExprStatement.withExpr(thisGlobalPropertiesAssignmentExpr);
+    ExprStatement thisCredentialsProviderAssignmentExprNewStatement =
+        ExprStatement.withExpr(
+            thisCredentialsProviderAssignmentExprBuilder
+                .setValueExpr(newCredentialsProviderExpr)
+                .build());
+
+    Expr clientPropertiesGetCredentials =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(thisClientProperties)
+            .setMethodName("getCredentials")
+            .setReturnType(STATIC_TYPES.get("Credentials"))
+            .build();
+    Expr clientPropertiesCredentialsHasKey =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientPropertiesGetCredentials)
+            .setMethodName("hasKey")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    Statement logClientCredentials =
+        LoggerUtils.createLoggerStatement(
+            ValueExpr.withValue(
+                StringObjectValue.withValue(
+                    "Using credentials from " + service.name() + "-specific configuration")),
+            types);
+    IfStatement thisCredentialsProviderAssignmentStatement =
+        createIfStatement(
+            clientPropertiesCredentialsHasKey,
+            Arrays.asList(logClientCredentials, thisCredentialsProviderAssignmentExprNewStatement),
+            Arrays.asList(thisCredentialsProviderToGlobalAssignmentStatement));
 
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setReturnType(types.get(className))
         .setArguments(
             Arrays.asList(
                 clientPropertiesVarExpr.toBuilder().setIsDecl(true).build(),
-                globalPropertiesVarExpr.toBuilder().setIsDecl(true).build()))
+                credentialsProviderVarExpr.toBuilder().setIsDecl(true).build()))
         .setBody(
             Arrays.asList(
-                thisClientPropertiesAssignmentStatement, thisGlobalPropertiesAssignmentStatement))
+                thisClientPropertiesAssignmentStatement,
+                thisCredentialsProviderAssignmentStatement))
         .build();
   }
 
@@ -289,27 +311,10 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         AnnotationNode.builder()
             .setType(STATIC_TYPES.get("EnableConfigurationProperties"))
             .setDescription(
-                ArrayExpr.builder()
-                    .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-                    .addExpr(
-                        VariableExpr.builder()
-                            .setVariable(
-                                Variable.builder()
-                                    .setType(TypeNode.CLASS_OBJECT)
-                                    .setName("class")
-                                    .build())
-                            .setStaticReferenceType(
-                                types.get(Utils.getServicePropertiesClassName(service)))
-                            .build())
-                    .addExpr(
-                        VariableExpr.builder()
-                            .setVariable(
-                                Variable.builder()
-                                    .setType(TypeNode.CLASS_OBJECT)
-                                    .setName("class")
-                                    .build())
-                            .setStaticReferenceType(types.get("GlobalProperties"))
-                            .build())
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get(Utils.getServicePropertiesClassName(service)))
                     .build())
             .build();
 
@@ -318,107 +323,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         conditionalOnClassNode,
         conditionalOnPropertyNode,
         enableConfigurationPropertiesNode);
-  }
-
-  private static MethodDefinition createCredentialsProviderBeanMethod(
-      Service service,
-      String className,
-      String methodName,
-      Map<String, TypeNode> types,
-      Expr thisExpr) {
-    // @Bean
-    // @ConditionalOnMissingBean(name = "[serviceName]ServiceCredentials")
-    // public CredentialsProvider languageServiceCredentials() throws IOException {
-    //    if (this.clientProperties.getCredentials().hasKey()) {
-    //      return new DefaultCredentialsProvider(this.clientProperties);
-    //    }
-    //    return new DefaultCredentialsProvider(this.globalProperties);
-    // }
-    List<Statement> bodyStatements = new ArrayList<>();
-    Variable globalPropertiesVar =
-        Variable.builder()
-            .setName("globalProperties")
-            .setType(types.get("GlobalProperties"))
-            .build();
-    Variable clientPropertiesVar =
-        Variable.builder()
-            .setName("clientProperties")
-            .setType(types.get(Utils.getServicePropertiesClassName(service)))
-            .build();
-
-    VariableExpr thisClientProperties =
-        VariableExpr.withVariable(clientPropertiesVar)
-            .toBuilder()
-            .setExprReferenceExpr(thisExpr)
-            .build();
-    VariableExpr thisGlobalProperties =
-        VariableExpr.withVariable(globalPropertiesVar)
-            .toBuilder()
-            .setExprReferenceExpr(thisExpr)
-            .build();
-    CastExpr clientCastExpr =
-        CastExpr.builder()
-            .setExpr(
-                NewObjectExpr.builder()
-                    .setType(STATIC_TYPES.get("DefaultCredentialsProvider"))
-                    .setArguments(thisClientProperties)
-                    .build())
-            .setType(STATIC_TYPES.get("CredentialsProvider"))
-            .build();
-    CastExpr globalCredentialsCastExpr =
-        CastExpr.builder()
-            .setExpr(
-                NewObjectExpr.builder()
-                    .setType(STATIC_TYPES.get("DefaultCredentialsProvider"))
-                    .setArguments(thisGlobalProperties)
-                    .build())
-            .setType(STATIC_TYPES.get("CredentialsProvider"))
-            .build();
-    ExprStatement clientCredentialsReturnExpr =
-        ExprStatement.withExpr(ReturnExpr.withExpr(clientCastExpr));
-    Expr clientPropertiesGetCredentials =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(thisClientProperties)
-            .setMethodName("getCredentials")
-            .setReturnType(STATIC_TYPES.get("Credentials"))
-            .build();
-    Expr clientPropertiesCredentialsHasKey =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientPropertiesGetCredentials)
-            .setMethodName("hasKey")
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
-    Statement logClientCredentials =
-        LoggerUtils.createLoggerStatement(
-            ValueExpr.withValue(
-                StringObjectValue.withValue(
-                    "Using credentials from " + service.name() + "-specific configuration")),
-            types);
-    IfStatement clientCredentialsIfStatement =
-        createIfStatement(
-            clientPropertiesCredentialsHasKey,
-            Arrays.asList(logClientCredentials, clientCredentialsReturnExpr),
-            null);
-    bodyStatements.add(clientCredentialsIfStatement);
-    bodyStatements.add(
-        LoggerUtils.createLoggerStatement(
-            ValueExpr.withValue(
-                StringObjectValue.withValue("Using credentials from global configuration")),
-            types));
-    return MethodDefinition.builder()
-        .setName(methodName)
-        .setHeaderCommentStatements(
-            SpringAutoconfigCommentComposer.createCredentialsProviderBeanComment())
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(STATIC_TYPES.get("CredentialsProvider"))
-        .setAnnotations(
-            Arrays.asList(
-                AnnotationNode.withType(STATIC_TYPES.get("Bean")),
-                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
-        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
-        .setBody(bodyStatements)
-        .setReturnExpr(globalCredentialsCastExpr)
-        .build();
   }
 
   private static MethodDefinition createTransportChannelProviderBeanMethod(
@@ -534,7 +438,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
   private static MethodDefinition createSettingsBeanMethod(
       Service service,
-      String credentialsProviderName,
       String transportChannelProviderName,
       Map<String, TypeNode> types,
       GapicServiceConfig gapicServiceConfig,
@@ -575,11 +478,20 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setMethodName("newBuilder")
             .build();
 
+    VariableExpr thisCredentialsProvider =
+        VariableExpr.withVariable(
+                Variable.builder()
+                    .setName("credentialsProvider")
+                    .setType(STATIC_TYPES.get("CredentialsProvider"))
+                    .build())
+            .toBuilder()
+            .setExprReferenceExpr(thisExpr)
+            .build();
     settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingsBuilderExpr)
             .setMethodName("setCredentialsProvider")
-            .setArguments(credentialsProviderVariableExpr)
+            .setArguments(thisCredentialsProvider)
             .build();
     //           .setTransportChannelProvider(defaultTransportChannelProvider)
     settingsBuilderExpr =
@@ -858,16 +770,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     List<VariableExpr> argumentsVariableExprs =
         Arrays.asList(
-            credentialsProviderVariableExpr
-                .toBuilder()
-                .setIsDecl(true)
-                .setAnnotations(
-                    Arrays.asList(
-                        AnnotationNode.builder()
-                            .setType(STATIC_TYPES.get("Qualifier"))
-                            .setDescription(credentialsProviderName)
-                            .build()))
-                .build(),
             transportChannelProviderVariableExpr
                 .toBuilder()
                 .setIsDecl(true)
@@ -1082,7 +984,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceClient", serviceClient);
     typeMap.put("ServiceSettings", serviceSettings);
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
-    typeMap.put("GlobalProperties", GlobalPropertiesUtils.getGlobalPropertiesType());
 
     return typeMap;
   }
