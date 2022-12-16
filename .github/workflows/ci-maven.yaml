@@ -16,15 +16,8 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
+          cache: maven
       - run: java -version
-
-      - name: Cache local Maven repository
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
       - name: Unit Tests
         run: |
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip
@@ -39,6 +32,7 @@ jobs:
         with:
           java-version: 8
           distribution: temurin
+          cache: maven
       - run: echo "JAVA8_HOME=${JAVA_HOME}" >> $GITHUB_ENV
       - uses: actions/setup-java@v3
         with:
@@ -75,6 +69,8 @@ jobs:
       with:
         java-version: 8
         distribution: temurin
+        cache: maven
+    - run: java -version
     - name: Run test only for gapic-generator-java
       shell: bash
       run: |
@@ -88,14 +84,8 @@ jobs:
         with:
           java-version: 11
           distribution: temurin
+          cache: maven
       - run: java -version
-      - name: Cache local Maven repository
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
       - name: Java Linter
         run: mvn fmt:check
         working-directory: gapic-generator-java
