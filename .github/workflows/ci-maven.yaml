@@ -61,7 +61,9 @@ jobs:
           set -x
           export JAVA_HOME=$JAVA8_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
-          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip
+          # useIncrementalCompilation not to recompile previous class file
+          mvn test --batch-mode --no-transfer-progress \
+              -Dcheckstyle.skip -DuseIncrementalCompilation=false
 
   lint:
     runs-on: ubuntu-latest
