@@ -51,7 +51,10 @@ jobs:
           set -x
           export JAVA_HOME=$JAVA11_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
-          mvn compile --batch-mode --no-transfer-progress -Dcheckstyle.skip
+
+          # Why not compile? It's because the process needs to package jar so
+          # that gapic-generator-java module can use testlib modules of gax.
+          mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip  -DskipTests
       - name: Run test with Java 8
         shell: bash
         run: |
