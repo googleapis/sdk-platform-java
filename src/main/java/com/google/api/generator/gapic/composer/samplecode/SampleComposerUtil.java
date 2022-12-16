@@ -113,28 +113,27 @@ public class SampleComposerUtil {
   }
 
   // Convert configLanguage.Type to TypeNode
-  // TODO: finish this
+  // https://developers.google.com/protocol-buffers/docs/proto3#scalar
   public static TypeNode convertTypeToTypeNode(Type.ScalarType configType) {
     switch (configType) {
-      case TYPE_STRING:
-        return TypeNode.STRING;
       case TYPE_BOOL:
         return TypeNode.BOOLEAN;
-        //      case 2: return TYPE_FLOAT;
-        //      case 3: return TYPE_INT64;
-        //      case 4: return TYPE_UINT64;
-        //      case 5: return TYPE_INT32;
-        //      case 6: return TYPE_FIXED64;
-        //      case 7: return TYPE_FIXED32;
-        //      case 8: return TYPE_BOOL;
-        //      case 9: return TYPE_STRING;
-        //      case 13: return TYPE_UINT32;
-        //      case 15: return TYPE_SFIXED32;
-        //      case 16: return TYPE_SFIXED64;
-        //      case 17: return TYPE_SINT32;
-        //      case 18: return TYPE_SINT64;
+      case TYPE_FLOAT:
+        return TypeNode.FLOAT;
+      case TYPE_INT64:
+      case TYPE_FIXED64:
+      case TYPE_SFIXED64:
+      case TYPE_SINT64:
+        return TypeNode.LONG;
+      case TYPE_UINT64:
+      case TYPE_INT32:
+      case TYPE_FIXED32:
+      case TYPE_UINT32:
+      case TYPE_SFIXED32:
+      case TYPE_SINT32:
+        return TypeNode.INT;
       default:
-        return null;
+        return TypeNode.STRING;
     }
   }
 }

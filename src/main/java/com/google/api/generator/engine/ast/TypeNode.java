@@ -18,6 +18,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.UInt64Value;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

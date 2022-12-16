@@ -17,6 +17,8 @@ package com.google.api.generator.gapic.model;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.GeneratorOutputLanguage;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Rpc;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Snippet;
@@ -24,11 +26,13 @@ import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetConfig;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetConfigMetadata;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.SnippetSignature;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Statement;
+import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,18 +79,57 @@ public class GapicSnippetConfig {
 
   // Order matters
   // Key is name of parameter
-  // Value is array with first element being parameter description, second element is type of
-  // parameter, and third element the actual value of the parameter
-  public static LinkedHashMap<String, List> parseSignatureParameters(
+  // Value is array with first element being parameter description, second element is the value of the parameter,
+  // third element is the TypeKind, and fourth element the full parameter
+  public static LinkedHashMap<String, List> parseSignatureParametersForHeaderStatement(
       SnippetSignature rawConfigSignature) {
     LinkedHashMap<String, List> configSignatureParameters = new LinkedHashMap<>();
     for (Statement.Declaration parameter : rawConfigSignature.getParametersList()) {
       configSignatureParameters.put(
           parameter.getName(),
-          Arrays.asList(parameter.getDescription(), parameter.getType(), parameter.getValue()));
+          Arrays.asList(parameter.getDescription(), parameter.getValue(), parameter.getType().getTypeKindCase(), parameter));
     }
     return configSignatureParameters;
   }
+
+  // Generates parameters for main method
+  public static List<VariableExpr> composeMainMethodArgs (LinkedHashMap<String, List> configSignatureParameters) {
+    Iterator<Map.Entry<String, List>> iterator =
+            configSignatureParameters
+                    .entrySet()
+                    .iterator();
+    while (iterator.hasNext()) {
+      Map.Entry<String, List> actualValue = iterator.next();
+      // Key is the name of the parameter, Value is the description
+      javaDocComment.addParam(
+              JavaStyle.toLowerCamelCase(actualValue.getKey()),
+              actualValue.getValue().get(0).toString());
+
+  }
+
+  // Based on parameter type, get the correct TypeNode and Value
+  private static void convertTypeToTypeNodeValue(Type type){
+    if(type.hasScalarType()){
+      type.getScalarType();
+    }
+    if(type.hasMapType()){
+      type.getMapType();
+    }
+    if(type.hasMessageType()){
+      type.getMessageType();
+    }
+    if(type.hasRepeatedType()){
+      type.getRepeatedType();
+    }
+    if(type.hasEnumType()){
+      type.getEnumType();
+    }
+    if(type.hasBytesType()){
+      type.getBytesType();
+    }
+  }
+
+
 
   public static GapicSnippetConfig create(Optional<SnippetConfig> snippetConfigOpt) {
     if (!snippetConfigOpt.isPresent()) {
@@ -122,7 +165,7 @@ public class GapicSnippetConfig {
 
     // Order of parameters matters
     LinkedHashMap<String, List> configSignatureParameters =
-        parseSignatureParameters(rawConfigSignature);
+        parseSignatureParametersForHeaderStatement(rawConfigSignature);
 
     Snippet rawConfigSnippet = snippetConfig.getSnippet();
     Map<String, Object> configSnippet = new HashMap<>();

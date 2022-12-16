@@ -18,11 +18,19 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.ClientLibraryPackageInfoComposer;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.GapicSnippetConfig;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
@@ -38,28 +46,16 @@ public class ConfiguredSnippetComposerTest {
     assertEquals("asyncCreateCustomClass", result);
   }
 
-  // TODO: Update test
-      @Test
-      public void createConfigSnippet() {
-          String sampleResult =
-   writeSample(ConfiguredSnippetComposer.composeConfiguredSnippetClass(snippetConfig));
-          String expected =
-                  LineFormatter.lines(
-                          "google.cloud.speech.v1.samples;\n",
-                          "\n",
-                          "// [START adaptation_v1_config_Adaptation_CreateCustomClass_Basic_sync]\n",
-                          "public class SyncCreateExecutableSampleEmptyStatementSample {\n",
-                          "\n",
-                          "  public static void main(String[] args) throws Exception {\n",
-                          "    syncCreateExecutableSampleEmptyStatementSample();\n",
-                          "  }\n",
-                          "\n",
-                          "  public static void syncCreateExecutableSampleEmptyStatementSample()throws Exception {\n",
-                          "  }\n",
-                          "}\n",
-                          "// [END adaptation_v1_config_Adaptation_CreateCustomClass_Basic_sync]\n");
-          assertEquals(expected, sampleResult);
-      }
+  @Test
+  public void composeConfiguredSnippet_speech() {
+    ClassDefinition configuredSnippet = ConfiguredSnippetComposer.composeConfiguredSnippetClass(snippetConfig);
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    configuredSnippet.accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "ConfiguredSnippetComposerSpeech.golden", visitor.write());
+    Path goldenFilePath =
+            Paths.get(Utils.getGoldenDir(this.getClass()), "ConfiguredSnippetComposerSpeech.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    }
 
   private static String writeSample(ClassDefinition sample) {
     return SampleCodeWriter.write(sample);

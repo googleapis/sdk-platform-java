@@ -22,12 +22,19 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.common.TestProtoLoader;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import org.junit.Test;
 
 public class SampleComposerUtilTest {
@@ -146,24 +153,24 @@ public class SampleComposerUtilTest {
     assertTrue(result.contains(echoClientSampleDiffRpcName));
   }
 
-  // Test if parsing TypeNode is done correctly
-  // TODO: update this
-  //  @Test
-  //  public void parseTypeNode() {
-  //    GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
-  //    List<GapicSnippetConfig> gapicSnippetConfigList = context.snippetConfigs();
-  //    GapicSnippetConfig snippetConfig = gapicSnippetConfigList.get(0);
-  //
-  //    Type.ScalarType testType = Type.ScalarType.TYPE_STRING;
-  //    Map<String, List> signatureParameters =
-  // GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig);
-  //    Iterator<Map.Entry<String, List>> iterator =
-  // GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig).entrySet().iterator();
-  //    while(iterator.hasNext()) {
-  //      Map.Entry<String, List> actualValue = iterator.next();
-  //      // Key is the name of the parameter, Value is the description
-  //      assertEquals(testType, actualValue.getValue().get(1));
-  //    }
-  //  }
+  // Test if TypeNode conversion is done correctly
+    @Test
+    public void testConvertTypeToTypeNode() {
+      GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
+      List<GapicSnippetConfig> gapicSnippetConfigList = context.snippetConfigs();
+      GapicSnippetConfig snippetConfig = gapicSnippetConfigList.get(0);
+
+      Type.ScalarType testType = Type.ScalarType.TYPE_STRING;
+
+      Type testType2 = Type.newBuilder().setScalarType(Type.ScalarType.TYPE_STRING).build();
+
+      Iterator<Map.Entry<String, List>> iterator =
+      GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig).entrySet().iterator();
+      while(iterator.hasNext()) {
+        Map.Entry<String, List> actualValue = iterator.next();
+        // Type is the 2nd item in the Array
+        assertEquals(testType, actualValue.getValue().get(1));
+      }
+    }
 
 }

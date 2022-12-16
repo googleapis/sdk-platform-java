@@ -55,6 +55,7 @@ public class ConfiguredSnippetComposer {
           .setValueExpr(
               ValueExpr.withValue(StringObjectValue.withValue("projects/[PROJECT]/locations/us")))
           .build();
+
   private static VariableExpr strVariableExpr2 =
       VariableExpr.builder()
           .setVariable(Variable.builder().setType(TypeNode.STRING).setName("customClassId").build())
@@ -71,18 +72,16 @@ public class ConfiguredSnippetComposer {
       Arrays.asList(strVariableExpr1, strVariableExpr2);
 
   private static List<CommentStatement> composeHeaderStatements(GapicSnippetConfig snippetConfig) {
-    Iterator<Map.Entry<String, List>> iterator =
-        GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig)
-            .entrySet()
-            .iterator();
     JavaDocComment.Builder javaDocComment = JavaDocComment.builder()
             .addComment("AUTO-GENERATED DOCUMENTATION\n")
             .addComment(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig))
             .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
     // for scratch stuff
-    //
     // .addComment(GapicSnippetConfig.getConfiguredSnippetCallType(snippetConfig))
-
+    Iterator<Map.Entry<String, List>> iterator =
+            GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig)
+                    .entrySet()
+                    .iterator();
     while (iterator.hasNext()) {
       Map.Entry<String, List> actualValue = iterator.next();
       // Key is the name of the parameter, Value is the description
@@ -103,6 +102,13 @@ public class ConfiguredSnippetComposer {
   }
 
   public static ClassDefinition composeConfiguredSnippetClass(GapicSnippetConfig snippetConfig) {
+
+//    MethodDefinition mainMethod =
+//            SampleComposer.composeMainMethod(
+//                    SampleComposer.composeMainBody(
+//                            sampleVariableAssignments,
+//                            SampleComposer.composeInvokeMethodStatement(
+//                                    composeSampleMethodName(snippetConfig), SampleComposer.composeSampleMethodArgs(sampleVariableAssignments))));
     MethodDefinition mainMethod =
         SampleComposer.composeMainMethod(
             SampleComposer.composeMainBody(
