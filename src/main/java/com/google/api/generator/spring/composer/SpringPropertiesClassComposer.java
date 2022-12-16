@@ -207,6 +207,15 @@ public class SpringPropertiesClassComposer implements ClassComposer {
         createGetterMethod(thisClassType, "retrySettings", types.get("Retry"), null));
     methodDefinitions.add(createSetterMethod(thisClassType, "retrySettings", types.get("Retry")));
 
+    for (Method method : service.methods()) {
+      String methodPropertiesVarName =
+          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "RetrySettings";
+      methodDefinitions.add(
+          createGetterMethod(thisClassType, methodPropertiesVarName, types.get("Retry"), null));
+      methodDefinitions.add(
+          createSetterMethod(thisClassType, methodPropertiesVarName, types.get("Retry")));
+    }
+
     return methodDefinitions;
   }
 

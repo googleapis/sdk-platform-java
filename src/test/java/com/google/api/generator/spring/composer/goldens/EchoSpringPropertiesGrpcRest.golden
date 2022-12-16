@@ -65,4 +65,84 @@ public class EchoSpringProperties implements CredentialsSupplier {
   public void setRetrySettings(Retry retrySettings) {
     this.retrySettings = retrySettings;
   }
+
+  public Retry getEchoRetrySettings() {
+    return this.echoRetrySettings;
+  }
+
+  public void setEchoRetrySettings(Retry echoRetrySettings) {
+    this.echoRetrySettings = echoRetrySettings;
+  }
+
+  public Retry getExpandRetrySettings() {
+    return this.expandRetrySettings;
+  }
+
+  public void setExpandRetrySettings(Retry expandRetrySettings) {
+    this.expandRetrySettings = expandRetrySettings;
+  }
+
+  public Retry getCollectRetrySettings() {
+    return this.collectRetrySettings;
+  }
+
+  public void setCollectRetrySettings(Retry collectRetrySettings) {
+    this.collectRetrySettings = collectRetrySettings;
+  }
+
+  public Retry getChatRetrySettings() {
+    return this.chatRetrySettings;
+  }
+
+  public void setChatRetrySettings(Retry chatRetrySettings) {
+    this.chatRetrySettings = chatRetrySettings;
+  }
+
+  public Retry getChatAgainRetrySettings() {
+    return this.chatAgainRetrySettings;
+  }
+
+  public void setChatAgainRetrySettings(Retry chatAgainRetrySettings) {
+    this.chatAgainRetrySettings = chatAgainRetrySettings;
+  }
+
+  public Retry getPagedExpandRetrySettings() {
+    return this.pagedExpandRetrySettings;
+  }
+
+  public void setPagedExpandRetrySettings(Retry pagedExpandRetrySettings) {
+    this.pagedExpandRetrySettings = pagedExpandRetrySettings;
+  }
+
+  public Retry getSimplePagedExpandRetrySettings() {
+    return this.simplePagedExpandRetrySettings;
+  }
+
+  public void setSimplePagedExpandRetrySettings(Retry simplePagedExpandRetrySettings) {
+    this.simplePagedExpandRetrySettings = simplePagedExpandRetrySettings;
+  }
+
+  public Retry getWaitRetrySettings() {
+    return this.waitRetrySettings;
+  }
+
+  public void setWaitRetrySettings(Retry waitRetrySettings) {
+    this.waitRetrySettings = waitRetrySettings;
+  }
+
+  public Retry getBlockRetrySettings() {
+    return this.blockRetrySettings;
+  }
+
+  public void setBlockRetrySettings(Retry blockRetrySettings) {
+    this.blockRetrySettings = blockRetrySettings;
+  }
+
+  public Retry getCollideNameRetrySettings() {
+    return this.collideNameRetrySettings;
+  }
+
+  public void setCollideNameRetrySettings(Retry collideNameRetrySettings) {
+    this.collideNameRetrySettings = collideNameRetrySettings;
+  }
 }
