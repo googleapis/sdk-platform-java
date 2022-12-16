@@ -740,15 +740,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     List<Statement> updateRetrySettingsStatementBody = new ArrayList<>();
 
-    Statement retrySettingsLoggerStatement =
-        LoggerUtils.createLoggerStatement(
-            ValueExpr.withValue(
-                StringObjectValue.withValue(
-                    "Configuring service-level retry settings from properties.")),
-            types);
-
-    updateRetrySettingsStatementBody.add(retrySettingsLoggerStatement);
-
     for (Method method : service.methods()) {
       List<Statement> updateMethodWithServiceRetryStatments =
           createUpdateRetrySettingsStatements(
@@ -756,6 +747,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       updateRetrySettingsStatementBody.addAll(updateMethodWithServiceRetryStatments);
       updateRetrySettingsStatementBody.add(EMPTY_LINE_STATEMENT);
     }
+
+    updateRetrySettingsStatementBody.add(
+        LoggerUtils.createLoggerStatement(
+            ValueExpr.withValue(
+                StringObjectValue.withValue(
+                    "Configured service-level retry settings from properties.")),
+            types));
 
     IfStatement setRetrySettingsStatement =
         createIfStatement(serviceRetryPropertiesNotNull, updateRetrySettingsStatementBody, null);
@@ -795,6 +793,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       List<Statement> updateMethodRetrySettingsStatementBody =
           createUpdateRetrySettingsStatements(
               method.name(), settingBuilderVariable, methodRetryPropertiesVar, types);
+
+      updateMethodRetrySettingsStatementBody.add(
+          LoggerUtils.createLoggerStatement(
+              ValueExpr.withValue(
+                  StringObjectValue.withValue(
+                      String.format(
+                          "Configured method-level retry settings for %s from properties.",
+                          methodName))),
+              types));
 
       IfStatement setMethodRetrySettingsStatement =
           createIfStatement(
