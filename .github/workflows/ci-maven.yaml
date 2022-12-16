@@ -38,12 +38,12 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: 8
-          distribution: zulu
+          distribution: temurin
       - run: echo "JAVA8_HOME=${JAVA_HOME}" >> $GITHUB_ENV
       - uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: zulu
+          distribution: temurin
       - run: echo "JAVA11_HOME=${JAVA_HOME}" >> $GITHUB_ENV
       - name: Compile with Java 11
         shell: bash
