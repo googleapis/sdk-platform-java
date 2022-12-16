@@ -113,6 +113,13 @@ public class SpringPropertiesClassComposer implements ClassComposer {
 
     String serviceName = service.name();
     List<Statement> statements = new ArrayList<>();
+
+    // Note that the annotations are set on the VariableExpr rather than the ExprStatement.
+    // The single annotation works fine here,
+    // but multiple annotations would be written to the same line
+    List<AnnotationNode> nestedPropertyAnnotations =
+        Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("NestedConfigurationProperty")));
+
     //   @NestedConfigurationProperty
     //   private final Credentials credentials = new
     // Credentials("https://www.googleapis.com/auth/cloud-language");
@@ -124,18 +131,13 @@ public class SpringPropertiesClassComposer implements ClassComposer {
                     .map(x -> ValueExpr.withValue(StringObjectValue.withValue(x)))
                     .collect(Collectors.toList()))
             .build();
-    // Note that the annotations are set on the VariableExpr rather than the ExprStatement.
-    // The single annotation works fine here,
-    // but multiple annotations would be written to the same line
-    List<AnnotationNode> credentialsAnnotations =
-        Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("NestedConfigurationProperty")));
     ExprStatement credentialsStatement =
         ComposerUtils.createMemberVarStatement(
             "credentials",
             STATIC_TYPES.get("Credentials"),
             true,
             defaultCredentialScopes,
-            credentialsAnnotations);
+            nestedPropertyAnnotations);
     statements.add(credentialsStatement);
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
@@ -161,7 +163,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     //   private Retry retrySettings;
     ExprStatement retryPropertiesStatement =
         ComposerUtils.createMemberVarStatement(
-            "retrySettings", types.get("Retry"), false, null, null);
+            "retrySettings", types.get("Retry"), false, null, nestedPropertyAnnotations);
     statements.add(retryPropertiesStatement);
 
     for (Method method : service.methods()) {
@@ -169,7 +171,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
           CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "RetrySettings";
       ExprStatement methodRetryPropertiesStatement =
           ComposerUtils.createMemberVarStatement(
-              methodPropertiesVarName, types.get("Retry"), false, null, null);
+              methodPropertiesVarName, types.get("Retry"), false, null, nestedPropertyAnnotations);
       statements.add(methodRetryPropertiesStatement);
     }
 
