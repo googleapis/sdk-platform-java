@@ -147,43 +147,40 @@ public class EchoSpringAutoConfiguration {
                 + this.clientProperties.getExecutorThreadCount());
       }
     }
-    Retry serviceRetrySettings = clientProperties.getRetrySettings();
-    if (serviceRetrySettings != null) {
+    Retry serviceRetry = clientProperties.getRetrySettings();
+    if (serviceRetry != null) {
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace("Configuring service-level retry settings from properties.");
       }
       RetrySettings echoRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.echoSettings().getEchoRetrySettings(), serviceRetrySettings);
+              clientSettingsBuilder.echoSettings().getEchoRetrySettings(), serviceRetry);
       clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
 
       RetrySettings expandRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.expandSettings().getExpandRetrySettings(),
-              serviceRetrySettings);
+              clientSettingsBuilder.expandSettings().getExpandRetrySettings(), serviceRetry);
       clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
 
       RetrySettings collectRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.collectSettings().getCollectRetrySettings(),
-              serviceRetrySettings);
+              clientSettingsBuilder.collectSettings().getCollectRetrySettings(), serviceRetry);
       clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
 
       RetrySettings chatRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.chatSettings().getChatRetrySettings(), serviceRetrySettings);
+              clientSettingsBuilder.chatSettings().getChatRetrySettings(), serviceRetry);
       clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
 
       RetrySettings chatAgainRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(),
-              serviceRetrySettings);
+              clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(), serviceRetry);
       clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
 
       RetrySettings pagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
-              serviceRetrySettings);
+              serviceRetry);
       clientSettingsBuilder
           .pagedExpandSettings()
           .setPagedExpandRetrySettings(pagedExpandRetrySettings);
@@ -191,25 +188,105 @@ public class EchoSpringAutoConfiguration {
       RetrySettings simplePagedExpandRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
-              serviceRetrySettings);
+              serviceRetry);
       clientSettingsBuilder
           .simplePagedExpandSettings()
           .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
 
       RetrySettings waitRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.waitSettings().getWaitRetrySettings(), serviceRetrySettings);
+              clientSettingsBuilder.waitSettings().getWaitRetrySettings(), serviceRetry);
       clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
 
       RetrySettings blockRetrySettings =
           RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.blockSettings().getBlockRetrySettings(), serviceRetrySettings);
+              clientSettingsBuilder.blockSettings().getBlockRetrySettings(), serviceRetry);
       clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
 
       RetrySettings collideNameRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
-              serviceRetrySettings);
+              serviceRetry);
+      clientSettingsBuilder
+          .collideNameSettings()
+          .setCollideNameRetrySettings(collideNameRetrySettings);
+    }
+    Retry echoRetry = clientProperties.getEchoRetrySettings();
+    if (echoRetry != null) {
+      RetrySettings echoRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.echoSettings().getEchoRetrySettings(), echoRetry);
+      clientSettingsBuilder.echoSettings().setEchoRetrySettings(echoRetrySettings);
+    }
+    Retry expandRetry = clientProperties.getExpandRetrySettings();
+    if (expandRetry != null) {
+      RetrySettings expandRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.expandSettings().getExpandRetrySettings(), expandRetry);
+      clientSettingsBuilder.expandSettings().setExpandRetrySettings(expandRetrySettings);
+    }
+    Retry collectRetry = clientProperties.getCollectRetrySettings();
+    if (collectRetry != null) {
+      RetrySettings collectRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.collectSettings().getCollectRetrySettings(), collectRetry);
+      clientSettingsBuilder.collectSettings().setCollectRetrySettings(collectRetrySettings);
+    }
+    Retry chatRetry = clientProperties.getChatRetrySettings();
+    if (chatRetry != null) {
+      RetrySettings chatRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.chatSettings().getChatRetrySettings(), chatRetry);
+      clientSettingsBuilder.chatSettings().setChatRetrySettings(chatRetrySettings);
+    }
+    Retry chatAgainRetry = clientProperties.getChatAgainRetrySettings();
+    if (chatAgainRetry != null) {
+      RetrySettings chatAgainRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.chatAgainSettings().getChatAgainRetrySettings(),
+              chatAgainRetry);
+      clientSettingsBuilder.chatAgainSettings().setChatAgainRetrySettings(chatAgainRetrySettings);
+    }
+    Retry pagedExpandRetry = clientProperties.getPagedExpandRetrySettings();
+    if (pagedExpandRetry != null) {
+      RetrySettings pagedExpandRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.pagedExpandSettings().getPagedExpandRetrySettings(),
+              pagedExpandRetry);
+      clientSettingsBuilder
+          .pagedExpandSettings()
+          .setPagedExpandRetrySettings(pagedExpandRetrySettings);
+    }
+    Retry simplePagedExpandRetry = clientProperties.getSimplePagedExpandRetrySettings();
+    if (simplePagedExpandRetry != null) {
+      RetrySettings simplePagedExpandRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.simplePagedExpandSettings().getSimplePagedExpandRetrySettings(),
+              simplePagedExpandRetry);
+      clientSettingsBuilder
+          .simplePagedExpandSettings()
+          .setSimplePagedExpandRetrySettings(simplePagedExpandRetrySettings);
+    }
+    Retry waitRetry = clientProperties.getWaitRetrySettings();
+    if (waitRetry != null) {
+      RetrySettings waitRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.waitSettings().getWaitRetrySettings(), waitRetry);
+      clientSettingsBuilder.waitSettings().setWaitRetrySettings(waitRetrySettings);
+    }
+    Retry blockRetry = clientProperties.getBlockRetrySettings();
+    if (blockRetry != null) {
+      RetrySettings blockRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.blockSettings().getBlockRetrySettings(), blockRetry);
+      clientSettingsBuilder.blockSettings().setBlockRetrySettings(blockRetrySettings);
+    }
+    Retry collideNameRetry = clientProperties.getCollideNameRetrySettings();
+    if (collideNameRetry != null) {
+      RetrySettings collideNameRetrySettings =
+          RetryUtil.updateRetrySettings(
+              clientSettingsBuilder.collideNameSettings().getCollideNameRetrySettings(),
+              collideNameRetry);
       clientSettingsBuilder
           .collideNameSettings()
           .setCollideNameRetrySettings(collideNameRetrySettings);

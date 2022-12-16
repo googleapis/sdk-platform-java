@@ -40,6 +40,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
@@ -187,6 +188,14 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     ExprStatement retryPropertiesStatement =
         createMemberVarStatement("retrySettings", types.get("Retry"), false, null, null);
     statements.add(retryPropertiesStatement);
+
+    for (Method method : service.methods()) {
+      String methodPropertiesVarName =
+          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "RetrySettings";
+      ExprStatement methodRetryPropertiesStatement =
+          createMemberVarStatement(methodPropertiesVarName, types.get("Retry"), false, null, null);
+      statements.add(methodRetryPropertiesStatement);
+    }
 
     return statements;
   }

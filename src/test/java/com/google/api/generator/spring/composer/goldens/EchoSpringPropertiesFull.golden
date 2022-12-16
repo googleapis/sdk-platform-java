@@ -37,6 +37,16 @@ public class EchoSpringProperties implements CredentialsSupplier {
   private String quotaProjectId;
   private Integer executorThreadCount;
   private Retry retrySettings;
+  private Retry echoRetrySettings;
+  private Retry expandRetrySettings;
+  private Retry collectRetrySettings;
+  private Retry chatRetrySettings;
+  private Retry chatAgainRetrySettings;
+  private Retry pagedExpandRetrySettings;
+  private Retry simplePagedExpandRetrySettings;
+  private Retry waitRetrySettings;
+  private Retry blockRetrySettings;
+  private Retry collideNameRetrySettings;
 
   @Override
   public Credentials getCredentials() {
