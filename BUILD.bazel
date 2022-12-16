@@ -49,7 +49,7 @@ TEST_DEPS = [
 
 proto_library(
     name = "service_config_proto",
-    srcs = ["src/main/proto/service_config.proto"],
+    srcs = ["gapic-generator-java/src/main/proto/service_config.proto"],
     deps = [
         "@com_google_googleapis//google/rpc:code_proto",
         "@com_google_protobuf//:duration_proto",
@@ -64,7 +64,7 @@ java_proto_library(
 
 proto_library(
     name = "test_protos",
-    srcs = glob(["src/test/proto/*.proto"]),
+    srcs = glob(["gapic-generator-java/src/test/proto/*.proto"]),
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",
         "@com_google_googleapis//google/api:client_proto",
@@ -98,14 +98,14 @@ java_plugin(
 
 java_library(
     name = "gapic_generator_java",
-    srcs = glob(["src/main/java/**/*.java"]),
+    srcs = glob(["gapic-generator-java/src/main/java/**/*.java"]),
     plugins = [":autovalue_plugin"],
     deps = MAIN_DEPS,
 )
 
 java_library(
     name = "gapic_generator_java_test",
-    srcs = glob(["src/test/java/**/*.java"]),
+    srcs = glob(["gapic-generator-java/src/test/java/**/*.java"]),
     deps = [":gapic_generator_java"] + MAIN_DEPS + TEST_DEPS,
 )
 
@@ -153,7 +153,7 @@ java_binary(
 # another test resource
 genrule(
     name = "basic_proto_descriptor",
-    srcs = ["src/test/proto/basic.proto"],
+    srcs = ["gapic-generator-java/src/test/proto/basic.proto"],
     outs = ["test-proto.descriptorset"],
     cmd = "$(location @com_google_protobuf//:protoc) " +
           "--include_source_info --include_imports --descriptor_set_out=$(OUTS) $(SRCS)",
@@ -171,11 +171,11 @@ genrule(
         ":gapic_generator_java_test",
     ] + MAIN_DEPS + TEST_DEPS,
     data = [":basic_proto_descriptor"] + glob([
-        "src/test/java/**/*.golden",
-        "src/test/resources/**",
+        "gapic-generator-java/src/test/java/**/*.golden",
+        "gapic-generator-java/src/test/resources/**",
     ]),
     tags = ["small"],
-) for file in glob(["src/test/java/**/*Test.java"])]
+) for file in glob(["gapic-generator-java/src/test/java/**/*Test.java"])]
 
 test_suite(name = "units", tags = ["small"])
 
@@ -223,8 +223,8 @@ GOLDEN_UPDATING_UNIT_TESTS = [
         ":gapic_generator_java_test",
     ] + MAIN_DEPS + TEST_DEPS,
     data = glob([
-        "src/test/java/**/*.golden",
-        "src/test/resources/**",
+        "gapic-generator-java/src/test/java/**/*.golden",
+        "gapic-generator-java/src/test/resources/**",
     ]),
 ) for test_class in GOLDEN_UPDATING_UNIT_TESTS]
 
@@ -239,7 +239,7 @@ java_binary(
 genrule(
     name = "google_java_format",
     outs = ["google_java_format.sh"],
-    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --replace' > $(OUTS)",
+    cmd = "echo 'find gapic-generator-java/src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --replace' > $(OUTS)",
     executable = 1,
     tools = [":google_java_format_binary"],
     local = 1,
@@ -250,7 +250,7 @@ genrule(
 genrule(
     name = "google_java_format_verification",
     outs = ["google_java_format_verification.sh"],
-    cmd = "echo 'find src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --dry-run --set-exit-if-changed' > $(OUTS)",
+    cmd = "echo 'find gapic-generator-java/src test -name \'*.java\' | grep -v /goldens/ | xargs $(execpath :google_java_format_binary) --dry-run --set-exit-if-changed' > $(OUTS)",
     executable = 1,
     tools = [":google_java_format_binary"],
     local = 1,
