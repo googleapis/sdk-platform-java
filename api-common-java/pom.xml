@@ -105,7 +105,6 @@
                             <version>${auto-value.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <release>8</release>
                     <compilerArgs>
                         <arg>-Xlint:unchecked</arg>
                         <arg>-Xlint:deprecation</arg>
