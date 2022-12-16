@@ -1,0 +1,4 @@
+releaseType: java-yoshi
+bumpMinorPreMajor: true
+handleGHRelease: true
+primaryBranch: main
