@@ -1,5 +1,0 @@
-# Format:
-# module:released-version:current-version
-
-proto-google-common-protos:2.11.0:2.11.1-SNAPSHOT
-grpc-google-common-protos:2.11.0:2.11.1-SNAPSHOT
