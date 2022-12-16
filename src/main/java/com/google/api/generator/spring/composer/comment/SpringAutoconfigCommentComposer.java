@@ -51,9 +51,9 @@ public class SpringAutoconfigCommentComposer {
           + "in the client ";
 
   public static final String CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION =
-      "Individual retry settings "
-          + "are configured as well. It will use the relevant client library's default retry "
-          + "settings when they are not specified in %s.";
+      "Retry settings are also configured from service-level and method-level properties specified in %s. "
+          + "Method-level properties will take precedence over service-level properties if available, "
+          + "and client library defaults will be used if neither are specified.";
 
   public SpringAutoconfigCommentComposer() {}
 

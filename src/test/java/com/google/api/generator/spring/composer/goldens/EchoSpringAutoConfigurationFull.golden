@@ -100,8 +100,9 @@ public class EchoSpringAutoConfiguration {
    * It will configure an executor provider in case there is more than one thread configured in the
    * client
    *
-   * <p>Individual retry settings are configured as well. It will use the relevant client library's
-   * default retry settings when they are not specified in EchoSpringProperties.
+   * <p>Retry settings are also configured from service-level and method-level properties specified
+   * in EchoSpringProperties. Method-level properties will take precedence over service-level
+   * properties if available, and client library defaults will be used if neither are specified.
    */
   @Bean
   @ConditionalOnMissingBean
