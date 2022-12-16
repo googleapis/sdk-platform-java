@@ -74,7 +74,7 @@ jobs:
     - name: Run test only for gapic-generator-java
       shell: bash
       run: |
-        mvn -B -ntp test --projects 'gapic-generator-java' -Dcheckstyle.skip
+        mvn -B -ntp verify --projects 'gapic-generator-java' -Dcheckstyle.skip
 
   lint:
     runs-on: ubuntu-latest
