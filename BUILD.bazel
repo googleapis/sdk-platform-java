@@ -164,8 +164,10 @@ genrule(
 # Unit tests. Run each test with, e.g.,
 # bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
 [java_test(
-    name = "unit_" + file[14:-5].replace('/', '_'),
-    test_class = file[14:-5].replace('/', '.'),
+    # 35 is the length of 'gapic-generator-java/src/test/java'
+    # 5 is the length of '.java'
+    name = "unit_" + file[35:-5].replace('gapic-generator-java/', '').replace('/', '_'),
+    test_class = file[35:-5].replace('gapic-generator-java/', '').replace('/', '.'),
     runtime_deps = [
         ":gapic_generator_java",
         ":gapic_generator_java_test",
