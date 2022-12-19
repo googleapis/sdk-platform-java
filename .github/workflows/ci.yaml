@@ -51,9 +51,6 @@ jobs:
           path: ~/.cache/bazel/*/*/*/gapic_generator_java/bazel-out/*/testlogs/*
           retention-days: 5
 
-      - name: Java Linter
-        run: bazelisk --batch run //:google_java_format_verification
-
   generate-client-libraries:
     runs-on: ubuntu-latest
     strategy:
