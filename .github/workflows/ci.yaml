@@ -56,7 +56,6 @@ jobs:
 
   generate-client-libraries:
     runs-on: ubuntu-latest
-    container: gcr.io/gapic-images/googleapis:20220711
     strategy:
       fail-fast: false
       matrix:
