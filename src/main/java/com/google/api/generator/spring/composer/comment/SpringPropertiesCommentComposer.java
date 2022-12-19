@@ -30,6 +30,11 @@ public class SpringPropertiesCommentComposer {
       "Number of threads used for executors.";
   private static final String USE_REST_DESCRIPTION =
       "Allow override of default transport channel provider to use REST instead of gRPC.";
+  private static final String SERVICE_RETRY_SETTINGS_DESCRIPTION =
+      "Allow override of retry settings at service level, applying to all of its RPC methods.";
+  private static final String METHOD_RETRY_SETTINGS_DESCRIPTION =
+      "Allow override of retry settings at method-level for %s. "
+          + "If defined, this takes precedence over service-level retry configurations for that RPC method.";
 
   public static List<CommentStatement> createClassHeaderComments(
       String configuredClassName, String serviceName) {
@@ -56,6 +61,15 @@ public class SpringPropertiesCommentComposer {
 
   public static CommentStatement createUseRestPropertyComment() {
     return toSimpleJavaDocComment(USE_REST_DESCRIPTION);
+  }
+
+  public static CommentStatement createServiceRetryPropertyComment() {
+    return toSimpleJavaDocComment(SERVICE_RETRY_SETTINGS_DESCRIPTION);
+  }
+
+  public static CommentStatement createMethodRetryPropertyComment(String methodName) {
+    String comment = String.format(METHOD_RETRY_SETTINGS_DESCRIPTION, methodName);
+    return toSimpleJavaDocComment(comment);
   }
 
   private static CommentStatement toSimpleJavaDocComment(String comment) {

@@ -20,17 +20,57 @@ public class EchoSpringProperties implements CredentialsSupplier {
   private Integer executorThreadCount;
   /** Allow override of default transport channel provider to use REST instead of gRPC. */
   private boolean useRest = false;
-
+  /** Allow override of retry settings at service level, applying to all of its RPC methods. */
   @NestedConfigurationProperty private Retry retrySettings;
+  /**
+   * Allow override of retry settings at method-level for echo. If defined, this takes precedence
+   * over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry echoRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for expand. If defined, this takes precedence
+   * over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry expandRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for collect. If defined, this takes precedence
+   * over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry collectRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for chat. If defined, this takes precedence
+   * over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry chatRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for chatAgain. If defined, this takes
+   * precedence over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry chatAgainRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for pagedExpand. If defined, this takes
+   * precedence over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry pagedExpandRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for simplePagedExpand. If defined, this takes
+   * precedence over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry simplePagedExpandRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for wait. If defined, this takes precedence
+   * over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry waitRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for block. If defined, this takes precedence
+   * over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry blockRetrySettings;
+  /**
+   * Allow override of retry settings at method-level for collideName. If defined, this takes
+   * precedence over service-level retry configurations for that RPC method.
+   */
   @NestedConfigurationProperty private Retry collideNameRetrySettings;
 
   @Override
