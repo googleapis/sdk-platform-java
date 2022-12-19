@@ -41,11 +41,11 @@ jobs:
           echo "and it will start over with a clean cache."
           echo "The old one will disappear after 7 days."
 
-      - name: Unit Tests
-        run: bazel --batch test //:units --noshow_progress --test_output=errors
-
-      - name: Integration Tests
-        run: bazel --batch test //test/integration/...
+#      - name: Unit Tests
+#        run: bazel --batch test //:units --noshow_progress --test_output=errors
+#
+#      - name: Integration Tests
+#        run: bazel --batch test //test/integration/...
 
       - name: Gradle Build Generated Storage Client Library
         run: |
