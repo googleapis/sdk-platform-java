@@ -7,6 +7,10 @@ name: ci
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Using the same container as googleapis/googleapis repository ensures that
+    # we use the same Bazel version. The ubuntu-latest's Bazel version is
+    # occasionally upgraded automatically without a notice.
+    # https://github.com/googleapis/googleapis/blob/master/.github/workflows/diregapic.yaml#L11
     container: gcr.io/gapic-images/googleapis:20220711
     strategy:
       fail-fast: false
