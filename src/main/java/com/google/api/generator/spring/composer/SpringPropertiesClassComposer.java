@@ -168,14 +168,18 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     ExprStatement retryPropertiesStatement =
         ComposerUtils.createMemberVarStatement(
             "retry", types.get("Retry"), false, null, nestedPropertyAnnotations);
+    statements.add(SpringPropertiesCommentComposer.createServiceRetryPropertyComment());
     statements.add(retryPropertiesStatement);
 
     for (Method method : service.methods()) {
-      String methodPropertiesVarName =
-          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "Retry";
+      String methodNameLowerCamel =
+          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
+      String methodPropertiesVarName = methodNameLowerCamel + "Retry";
       ExprStatement methodRetryPropertiesStatement =
           ComposerUtils.createMemberVarStatement(
               methodPropertiesVarName, types.get("Retry"), false, null, nestedPropertyAnnotations);
+      statements.add(
+          SpringPropertiesCommentComposer.createMethodRetryPropertyComment(methodNameLowerCamel));
       statements.add(methodRetryPropertiesStatement);
     }
 
