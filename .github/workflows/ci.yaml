@@ -7,7 +7,7 @@ name: ci
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    container: gcr.io/gapic-images/googleapis:20220711
     strategy:
       matrix:
         java: [ 8, 11 ]
