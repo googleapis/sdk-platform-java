@@ -7,11 +7,6 @@ name: ci
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Using the same container as googleapis/googleapis repository ensures that
-    # we use the same Bazel version. The ubuntu-latest's Bazel version is
-    # occasionally upgraded automatically without a notice.
-    # https://github.com/googleapis/googleapis/blob/master/.github/workflows/diregapic.yaml#L11
-    container: gcr.io/gapic-images/googleapis:20220711
     strategy:
       fail-fast: false
       matrix:
@@ -23,7 +18,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
       - run: java -version
-      - run: bazel version
+      - run: bazelisk version
       - name: Bazel File Cache Setup
         id: cache-bazel
         uses: actions/cache@v3
@@ -47,7 +42,7 @@ jobs:
           echo "The old one will disappear after 7 days."
 
       - name: Integration Tests
-        run: bazel --batch test //test/integration/...
+        run: bazelisk --batch test //test/integration/...
 
       - uses: actions/upload-artifact@v3
         if: ${{ failure() }}
@@ -57,7 +52,7 @@ jobs:
           retention-days: 5
 
       - name: Java Linter
-        run: bazel --batch run //:google_java_format_verification
+        run: bazelisk --batch run //:google_java_format_verification
 
   generate-client-libraries:
     runs-on: ubuntu-latest
@@ -73,7 +68,7 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
     - run: java -version
-    - run: bazel version
+    - run: bazelisk version
     - name: Bazel File Cache Setup
       id: cache-bazel
       uses: actions/cache@v3
@@ -100,7 +95,7 @@ jobs:
       run: |
         echo "Building Storage lib from generated source..."
         mkdir /tmp/java-storage
-        bazel --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+        bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
         tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
         pushd /tmp/java-storage/google-cloud-storage-v2-java
         ./gradlew clean build publishToMavenLocal sourcesJar allJars
@@ -110,7 +105,7 @@ jobs:
       run: |
         echo "Building Compute lib from generated source..."
         mkdir /tmp/java-compute
-        bazel --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+        bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
         tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
         pushd /tmp/java-compute/google-cloud-compute-small-v1-java
         ./gradlew clean build publishToMavenLocal sourcesJar allJars
@@ -127,7 +122,7 @@ jobs:
 
       - name: Generate Code Coverage Report
         # Run only test targets, and not golden_update targets.
-        run: bazel coverage //:units --combined_report=lcov
+        run: bazelisk coverage //:units --combined_report=lcov
 
   license-header:
     runs-on: ubuntu-latest
