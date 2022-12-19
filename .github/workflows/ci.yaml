@@ -74,19 +74,6 @@ jobs:
       - name: Java Linter
         run: bazel --batch run //:google_java_format_verification
 
-  coverage:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v3
-        with:
-          java-version: 8
-      - run: java -version
-
-      - name: Generate Code Coverage Report
-        # Run only test targets, and not golden_update targets.
-        run: bazel coverage //:units --combined_report=lcov
-
   license-header:
     runs-on: ubuntu-latest
     steps:
