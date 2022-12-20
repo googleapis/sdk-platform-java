@@ -14,28 +14,12 @@
 
 package com.google.api.generator.spring.utils;
 
-import com.google.api.generator.engine.ast.AstNode;
-import com.google.api.generator.engine.ast.Expr;
-import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.PrimitiveValue;
-import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.GapicRetrySettings;
-import com.google.api.generator.gapic.model.GapicServiceConfig;
-import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
-import com.google.common.base.Preconditions;
-import com.google.protobuf.Duration;
-import com.google.protobuf.util.Durations;
-import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class Utils {
 
@@ -99,118 +83,8 @@ public class Utils {
         + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
   }
 
-  public static <T extends AstNode> List<T> processRetrySettings(
-      Service service,
-      GapicServiceConfig gapicServiceConfig,
-      TypeNode thisClassType,
-      Function<String, List<? extends T>> perMethodFuncBeforeSettings,
-      BiFunction<List<String>, Expr, List<? extends T>> processFunc,
-      Function<String, List<? extends T>> perMethodFuncAfterSettings) {
-    List<T> resultList = new ArrayList<>();
-    for (Method method : service.methods()) {
-      String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
-      String retryParamName = gapicServiceConfig.getRetryParamsName(service, method);
-      resultList.addAll(perMethodFuncBeforeSettings.apply(methodName));
-      // follow logic in:
-      // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createRetrySettingsExprs
-      // Build the settings object for each config.
-
-      String settingsName = retryParamName;
-      GapicRetrySettings settings =
-          gapicServiceConfig.getAllGapicRetrySettings(service).get(retryParamName);
-      RetryPolicy retryPolicy = settings.retryPolicy();
-      if (settings.kind().equals(GapicRetrySettings.Kind.FULL)) {
-        Preconditions.checkState(
-            retryPolicy.hasInitialBackoff(),
-            String.format("initialBackoff not found for setting %s", settingsName));
-
-        resultList.addAll(
-            processFunc.apply(
-                Arrays.asList(methodName, "InitialRetryDelay"),
-                createDurationOfMillisExpr(toValExpr(retryPolicy.getInitialBackoff()))));
-
-        resultList.addAll(
-            processFunc.apply(
-                Arrays.asList(methodName, "RetryDelayMultiplier"),
-                toValExpr(retryPolicy.getBackoffMultiplier())));
-
-        Preconditions.checkState(
-            retryPolicy.hasMaxBackoff(),
-            String.format("maxBackoff not found for setting %s", settingsName));
-
-        resultList.addAll(
-            processFunc.apply(
-                Arrays.asList(methodName, "MaxRetryDelay"),
-                createDurationOfMillisExpr(toValExpr(retryPolicy.getMaxBackoff()))));
-      }
-
-      if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
-
-        resultList.addAll(
-            processFunc.apply(
-                Arrays.asList(methodName, "InitialRpcTimeout"),
-                createDurationOfMillisExpr(toValExpr(settings.timeout()))));
-      }
-
-      // This will always be done, no matter the type of the retry settings object.
-      resultList.addAll(
-          processFunc.apply(
-              Arrays.asList(methodName, "RpcTimeoutMultiplier"),
-              ValueExpr.withValue(
-                  // this value is hardcoded in, risk of gapic- changes in future?
-                  // com.google.api.generator.gapic.composer.common.RetrySettingsComposer.createRetrySettingsExprs
-                  PrimitiveValue.builder().setType(TypeNode.DOUBLE).setValue("1.0").build())));
-
-      if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
-        for (String setterMethodName : Arrays.asList("MaxRpcTimeout", "TotalTimeout")) {
-
-          resultList.addAll(
-              processFunc.apply(
-                  Arrays.asList(methodName, setterMethodName),
-                  createDurationOfMillisExpr(toValExpr(settings.timeout()))));
-        }
-      }
-
-      resultList.addAll(perMethodFuncAfterSettings.apply(methodName));
-    }
-    return resultList;
-  }
-
-  private static ValueExpr toValExpr(long longValue) {
-    return ValueExpr.withValue(
-        PrimitiveValue.builder()
-            .setType(TypeNode.LONG)
-            .setValue(String.format("%dL", longValue))
-            .build());
-  }
-
-  private static ValueExpr toValExpr(float floatValue) {
-    return toValExpr((double) floatValue);
-  }
-
-  private static ValueExpr toValExpr(double val) {
-    return ValueExpr.withValue(
-        PrimitiveValue.builder()
-            .setType(TypeNode.DOUBLE)
-            .setValue(String.format("%.1f", val))
-            .build());
-  }
-
-  private static ValueExpr toValExpr(Duration duration) {
-    return toValExpr(Durations.toMillis(duration));
-  }
-
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes = Arrays.asList(org.threeten.bp.Duration.class);
     return new TypeStore(concreteClazzes);
-  }
-
-  private static MethodInvocationExpr createDurationOfMillisExpr(ValueExpr valExpr) {
-    return MethodInvocationExpr.builder()
-        .setStaticReferenceType(FIXED_TYPESTORE.get("Duration"))
-        .setMethodName("ofMillis")
-        .setArguments(valExpr)
-        .setReturnType(FIXED_TYPESTORE.get("Duration"))
-        .build();
   }
 }
