@@ -13,7 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
     <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
-    <grpc.version>1.51.0</grpc.version>
+    <grpc.version>1.51.1</grpc.version>
     <protobuf.version>3.21.10</protobuf.version>
     <auto-value.version>1.10.1</auto-value.version>
     <maven.compiler.source>1.8</maven.compiler.source>
