@@ -18,7 +18,6 @@ deep-remove-regex:
   - "/java-iam/proto-google-.*/src"
 
 deep-preserve-regex:
-  - "/java-iam/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
   - "/java-iam/proto-google-iam-v1/src/main/java/com/google/iam/v1/logging"
   - "/java-iam/proto-google-iam-v1/src/main/proto/google/iam/v1"
 
