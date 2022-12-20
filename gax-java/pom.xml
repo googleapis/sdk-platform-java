@@ -11,9 +11,9 @@
 
   <parent>
     <groupId>com.google.cloud</groupId>
-    <artifactId>google-cloud-shared-config</artifactId>
-    <version>1.5.5</version>
-    <relativePath/>
+    <artifactId>gapic-generator-java-pom-parent</artifactId>
+    <version>2.12.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
   <developers>

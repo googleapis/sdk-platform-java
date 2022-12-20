@@ -13,7 +13,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
     <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
-    <gax.version>2.20.1</gax.version>
     <grpc.version>1.51.0</grpc.version>
     <protobuf.version>3.21.10</protobuf.version>
     <auto-value.version>1.10.1</auto-value.version>
@@ -23,9 +22,9 @@
 
   <parent>
     <groupId>com.google.cloud</groupId>
-    <artifactId>google-cloud-shared-config</artifactId>
-    <version>1.5.5</version>
-    <relativePath/>
+    <artifactId>gapic-generator-java-pom-parent</artifactId>
+    <version>2.12.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
   <dependencyManagement>
@@ -33,7 +32,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax-bom</artifactId>
-        <version>${gax.version}</version>
+        <version>2.20.1</version><!-- {x-version-update:gax:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
