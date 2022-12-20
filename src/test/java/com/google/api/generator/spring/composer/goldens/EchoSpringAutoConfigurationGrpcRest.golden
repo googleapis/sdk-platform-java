@@ -40,9 +40,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @ConditionalOnClass(EchoClient.class)
-@ConditionalOnProperty(
-    value = "com.google.showcase.v1beta1.spring.auto.echo.enabled",
-    matchIfMissing = true)
+@ConditionalOnProperty(value = "com.google.showcase.v1beta1.echo.enabled", matchIfMissing = true)
 @EnableConfigurationProperties(EchoSpringProperties.class)
 public class EchoSpringAutoConfiguration {
   private final EchoSpringProperties clientProperties;

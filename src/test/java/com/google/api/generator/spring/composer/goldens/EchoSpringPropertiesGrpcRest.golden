@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /** Provides default property values for Echo client bean */
-@ConfigurationProperties("com.google.showcase.v1beta1.spring.auto.echo")
+@ConfigurationProperties("com.google.showcase.v1beta1.echo")
 public class EchoSpringProperties implements CredentialsSupplier {
   @NestedConfigurationProperty
   private final Credentials credentials =
