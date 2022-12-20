@@ -36,17 +36,17 @@ public class EchoSpringProperties implements CredentialsSupplier {
 
   private String quotaProjectId;
   private Integer executorThreadCount;
-  @NestedConfigurationProperty private Retry retrySettings;
-  @NestedConfigurationProperty private Retry echoRetrySettings;
-  @NestedConfigurationProperty private Retry expandRetrySettings;
-  @NestedConfigurationProperty private Retry collectRetrySettings;
-  @NestedConfigurationProperty private Retry chatRetrySettings;
-  @NestedConfigurationProperty private Retry chatAgainRetrySettings;
-  @NestedConfigurationProperty private Retry pagedExpandRetrySettings;
-  @NestedConfigurationProperty private Retry simplePagedExpandRetrySettings;
-  @NestedConfigurationProperty private Retry waitRetrySettings;
-  @NestedConfigurationProperty private Retry blockRetrySettings;
-  @NestedConfigurationProperty private Retry collideNameRetrySettings;
+  @NestedConfigurationProperty private Retry retry;
+  @NestedConfigurationProperty private Retry echoRetry;
+  @NestedConfigurationProperty private Retry expandRetry;
+  @NestedConfigurationProperty private Retry collectRetry;
+  @NestedConfigurationProperty private Retry chatRetry;
+  @NestedConfigurationProperty private Retry chatAgainRetry;
+  @NestedConfigurationProperty private Retry pagedExpandRetry;
+  @NestedConfigurationProperty private Retry simplePagedExpandRetry;
+  @NestedConfigurationProperty private Retry waitRetry;
+  @NestedConfigurationProperty private Retry blockRetry;
+  @NestedConfigurationProperty private Retry collideNameRetry;
 
   @Override
   public Credentials getCredentials() {
@@ -69,91 +69,91 @@ public class EchoSpringProperties implements CredentialsSupplier {
     this.executorThreadCount = executorThreadCount;
   }
 
-  public Retry getRetrySettings() {
-    return this.retrySettings;
+  public Retry getRetry() {
+    return this.retry;
   }
 
-  public void setRetrySettings(Retry retrySettings) {
-    this.retrySettings = retrySettings;
+  public void setRetry(Retry retry) {
+    this.retry = retry;
   }
 
-  public Retry getEchoRetrySettings() {
-    return this.echoRetrySettings;
+  public Retry getEchoRetry() {
+    return this.echoRetry;
   }
 
-  public void setEchoRetrySettings(Retry echoRetrySettings) {
-    this.echoRetrySettings = echoRetrySettings;
+  public void setEchoRetry(Retry echoRetry) {
+    this.echoRetry = echoRetry;
   }
 
-  public Retry getExpandRetrySettings() {
-    return this.expandRetrySettings;
+  public Retry getExpandRetry() {
+    return this.expandRetry;
   }
 
-  public void setExpandRetrySettings(Retry expandRetrySettings) {
-    this.expandRetrySettings = expandRetrySettings;
+  public void setExpandRetry(Retry expandRetry) {
+    this.expandRetry = expandRetry;
   }
 
-  public Retry getCollectRetrySettings() {
-    return this.collectRetrySettings;
+  public Retry getCollectRetry() {
+    return this.collectRetry;
   }
 
-  public void setCollectRetrySettings(Retry collectRetrySettings) {
-    this.collectRetrySettings = collectRetrySettings;
+  public void setCollectRetry(Retry collectRetry) {
+    this.collectRetry = collectRetry;
   }
 
-  public Retry getChatRetrySettings() {
-    return this.chatRetrySettings;
+  public Retry getChatRetry() {
+    return this.chatRetry;
   }
 
-  public void setChatRetrySettings(Retry chatRetrySettings) {
-    this.chatRetrySettings = chatRetrySettings;
+  public void setChatRetry(Retry chatRetry) {
+    this.chatRetry = chatRetry;
   }
 
-  public Retry getChatAgainRetrySettings() {
-    return this.chatAgainRetrySettings;
+  public Retry getChatAgainRetry() {
+    return this.chatAgainRetry;
   }
 
-  public void setChatAgainRetrySettings(Retry chatAgainRetrySettings) {
-    this.chatAgainRetrySettings = chatAgainRetrySettings;
+  public void setChatAgainRetry(Retry chatAgainRetry) {
+    this.chatAgainRetry = chatAgainRetry;
   }
 
-  public Retry getPagedExpandRetrySettings() {
-    return this.pagedExpandRetrySettings;
+  public Retry getPagedExpandRetry() {
+    return this.pagedExpandRetry;
   }
 
-  public void setPagedExpandRetrySettings(Retry pagedExpandRetrySettings) {
-    this.pagedExpandRetrySettings = pagedExpandRetrySettings;
+  public void setPagedExpandRetry(Retry pagedExpandRetry) {
+    this.pagedExpandRetry = pagedExpandRetry;
   }
 
-  public Retry getSimplePagedExpandRetrySettings() {
-    return this.simplePagedExpandRetrySettings;
+  public Retry getSimplePagedExpandRetry() {
+    return this.simplePagedExpandRetry;
   }
 
-  public void setSimplePagedExpandRetrySettings(Retry simplePagedExpandRetrySettings) {
-    this.simplePagedExpandRetrySettings = simplePagedExpandRetrySettings;
+  public void setSimplePagedExpandRetry(Retry simplePagedExpandRetry) {
+    this.simplePagedExpandRetry = simplePagedExpandRetry;
   }
 
-  public Retry getWaitRetrySettings() {
-    return this.waitRetrySettings;
+  public Retry getWaitRetry() {
+    return this.waitRetry;
   }
 
-  public void setWaitRetrySettings(Retry waitRetrySettings) {
-    this.waitRetrySettings = waitRetrySettings;
+  public void setWaitRetry(Retry waitRetry) {
+    this.waitRetry = waitRetry;
   }
 
-  public Retry getBlockRetrySettings() {
-    return this.blockRetrySettings;
+  public Retry getBlockRetry() {
+    return this.blockRetry;
   }
 
-  public void setBlockRetrySettings(Retry blockRetrySettings) {
-    this.blockRetrySettings = blockRetrySettings;
+  public void setBlockRetry(Retry blockRetry) {
+    this.blockRetry = blockRetry;
   }
 
-  public Retry getCollideNameRetrySettings() {
-    return this.collideNameRetrySettings;
+  public Retry getCollideNameRetry() {
+    return this.collideNameRetry;
   }
 
-  public void setCollideNameRetrySettings(Retry collideNameRetrySettings) {
-    this.collideNameRetrySettings = collideNameRetrySettings;
+  public void setCollideNameRetry(Retry collideNameRetry) {
+    this.collideNameRetry = collideNameRetry;
   }
 }
