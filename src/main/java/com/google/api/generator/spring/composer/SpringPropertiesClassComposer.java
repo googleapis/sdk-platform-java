@@ -164,17 +164,17 @@ public class SpringPropertiesClassComposer implements ClassComposer {
       statements.add(SpringPropertiesCommentComposer.createUseRestPropertyComment());
       statements.add(useRestVarStatement);
     }
-    //   private Retry retrySettings;
+    //   private Retry retry;
     ExprStatement retryPropertiesStatement =
         ComposerUtils.createMemberVarStatement(
-            "retrySettings", types.get("Retry"), false, null, nestedPropertyAnnotations);
+            "retry", types.get("Retry"), false, null, nestedPropertyAnnotations);
     statements.add(SpringPropertiesCommentComposer.createServiceRetryPropertyComment());
     statements.add(retryPropertiesStatement);
 
     for (Method method : service.methods()) {
       String methodNameLowerCamel =
           CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
-      String methodPropertiesVarName = methodNameLowerCamel + "RetrySettings";
+      String methodPropertiesVarName = methodNameLowerCamel + "Retry";
       ExprStatement methodRetryPropertiesStatement =
           ComposerUtils.createMemberVarStatement(
               methodPropertiesVarName, types.get("Retry"), false, null, nestedPropertyAnnotations);
@@ -213,13 +213,12 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(
         createSetterMethod(thisClassType, "executorThreadCount", TypeNode.INT_OBJECT));
 
-    methodDefinitions.add(
-        createGetterMethod(thisClassType, "retrySettings", types.get("Retry"), null));
-    methodDefinitions.add(createSetterMethod(thisClassType, "retrySettings", types.get("Retry")));
+    methodDefinitions.add(createGetterMethod(thisClassType, "retry", types.get("Retry"), null));
+    methodDefinitions.add(createSetterMethod(thisClassType, "retry", types.get("Retry")));
 
     for (Method method : service.methods()) {
       String methodPropertiesVarName =
-          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "RetrySettings";
+          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "Retry";
       methodDefinitions.add(
           createGetterMethod(thisClassType, methodPropertiesVarName, types.get("Retry"), null));
       methodDefinitions.add(
