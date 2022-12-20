@@ -18,7 +18,9 @@ package google.cloud.speech.v1.samples;
 
 // [START speech_v1_config_Adaptation_CreateCustomClass_Basic_async]
 /**
- * AUTO-GENERATED DOCUMENTATION AND CLASS Custom Class Creation
+ * AUTO-GENERATED DOCUMENTATION
+ *
+ * <p>Custom Class Creation
  *
  * <p>Shows how to create a custom class
  *
@@ -33,6 +35,21 @@ public class CreateCustomClass {
     asyncCreateCustomClass(parent, customClassId);
   }
 
-  public static void asyncCreateCustomClass(String parent, String customClassId) throws Exception {}
+  public static void asyncCreateCustomClass(String parent, String customClassId) throws Exception {
+    String endpoint = "us-speech.googleapis.com:443";
+    AdaptationSettings adaptationSettings =
+        AdaptationSettings.newBuilder().setEndpoint(endpoint).build();
+    try (AdaptationClient AdaptationClient = AdaptationClient.create(adaptationSettings)) {
+      CreateCustomClassRequest createCustomClassRequest =
+          CreateCustomClassRequest.newBuilder()
+              .setParent(parent)
+              .setCustomClassId(customClassId)
+              .build();
+      System.out.println("Calling the CreateCustomClass operation.");
+      System.out.println("A Custom Class with the following name has been created.");
+      System.out.println("createdCustomClass.getName()");
+      System.out.println("The Custom class contains the following items.");
+    }
+  }
 }
 // [END speech_v1_config_Adaptation_CreateCustomClass_Basic_async]
