@@ -17,7 +17,19 @@ package com.google.api.generator.gapic.model;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.Value;
+import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposer;
+import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
+import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.GeneratorOutputLanguage;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Rpc;
@@ -29,6 +41,9 @@ import com.google.cloud.tools.snippetgen.configlanguage.v1.Statement;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import com.google.protobuf.Descriptors;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,68 +83,79 @@ public class GapicSnippetConfig {
           new LinkedHashMap(),
           Collections.emptyMap());
 
-  // TODO Update to parse logic for other types
-  private static int parseSnippetCallType(Snippet rawConfigSnippet) {
-    Snippet.CallCase call_type = rawConfigSnippet.getCallCase();
-    if (call_type == Snippet.CallCase.STANDARD) {
-      return 2;
+  // Get sample method return type
+  private static String parseSnippetSignatureReturnType(Type type) {
+    if (type.hasScalarType()) {
+      return SampleComposerUtil.convertScalarTypeToJavaTypeString(type.getScalarType());
     }
-    return 2;
+    if (type.hasMessageType()){
+      return type.getMessageType().getMessageFullName();
+    }
+    // TODO: add additional types to parse (map type, repeated type, bytes type)
+    return "potato";
   }
+
 
   // Order matters
   // Key is name of parameter
-  // Value is array with first element being parameter description, second element is the value of the parameter,
-  // third element is the TypeKind, and fourth element the full parameter
+  // Value is array with first element being parameter description, second element is the TypeKind of the parameter,
+  // third element is full parameter
   public static LinkedHashMap<String, List> parseSignatureParametersForHeaderStatement(
       SnippetSignature rawConfigSignature) {
     LinkedHashMap<String, List> configSignatureParameters = new LinkedHashMap<>();
     for (Statement.Declaration parameter : rawConfigSignature.getParametersList()) {
       configSignatureParameters.put(
           parameter.getName(),
-          Arrays.asList(parameter.getDescription(), parameter.getValue(), parameter.getType().getTypeKindCase(), parameter));
+          // TODO: test for when description is null
+          Arrays.asList(parameter.getDescription(), parameter.getType().getTypeKindCase(), parameter));
     }
     return configSignatureParameters;
   }
 
   // Generates parameters for main method
-  public static List<VariableExpr> composeMainMethodArgs (LinkedHashMap<String, List> configSignatureParameters) {
+  public static LinkedHashMap<VariableExpr, AssignmentExpr> composeMainMethodArgs (LinkedHashMap<String, List> configSignatureParameters) {
+    LinkedHashMap<VariableExpr, AssignmentExpr> mainMethodVariables = new LinkedHashMap<>();
     Iterator<Map.Entry<String, List>> iterator =
             configSignatureParameters
                     .entrySet()
                     .iterator();
     while (iterator.hasNext()) {
-      Map.Entry<String, List> actualValue = iterator.next();
-      // Key is the name of the parameter, Value is the description
-      javaDocComment.addParam(
-              JavaStyle.toLowerCamelCase(actualValue.getKey()),
-              actualValue.getValue().get(0).toString());
-
+      Map.Entry<String, List> param = iterator.next();
+      Type.TypeKindCase paramTypeKindCase = (Type.TypeKindCase) param.getValue().get(1);
+      Statement.Declaration parameter = (Statement.Declaration) param.getValue().get(2);
+      // TODO: handle other TypeKinds; currently only handles SCALAR_TYPE for prototype
+      // Not handled yet: MapType, MessageType, RepeatedType, EnumType, BytesType
+      if(paramTypeKindCase == Type.TypeKindCase.SCALAR_TYPE){
+        Type.ScalarType varScalarType = parameter.getType().getScalarType();
+        VariableExpr methodVar = VariableExpr.builder()
+                .setVariable(Variable.builder()
+                        // convert Type to TypeNode
+                        .setType(SampleComposerUtil.convertScalarTypeToTypeNode(varScalarType))
+                        // Key is the name of the parameter
+                        .setName(JavaStyle.toLowerCamelCase(param.getKey())).build())
+                .setIsDecl(true)
+                .build();
+        // If parameters have default values, assign them
+        if(parameter.hasValue()){
+          AssignmentExpr methodAssignment = AssignmentExpr.builder()
+                  .setVariableExpr(methodVar)
+                  .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue(parameter.getValue().getStringValue())))
+                  .build();
+          mainMethodVariables.put(methodVar, methodAssignment);
+        }
+        else{
+          Value value = NullObjectValue.create();
+          Expr valueExpr = ValueExpr.builder().setValue(value).build();
+          AssignmentExpr methodAssignment = AssignmentExpr.builder()
+                  .setVariableExpr(methodVar)
+                  .setValueExpr(valueExpr)
+                  .build();
+          mainMethodVariables.put(methodVar, methodAssignment);
+        }
+      }
+    }
+    return mainMethodVariables;
   }
-
-  // Based on parameter type, get the correct TypeNode and Value
-  private static void convertTypeToTypeNodeValue(Type type){
-    if(type.hasScalarType()){
-      type.getScalarType();
-    }
-    if(type.hasMapType()){
-      type.getMapType();
-    }
-    if(type.hasMessageType()){
-      type.getMessageType();
-    }
-    if(type.hasRepeatedType()){
-      type.getRepeatedType();
-    }
-    if(type.hasEnumType()){
-      type.getEnumType();
-    }
-    if(type.hasBytesType()){
-      type.getBytesType();
-    }
-  }
-
-
 
   public static GapicSnippetConfig create(Optional<SnippetConfig> snippetConfigOpt) {
     if (!snippetConfigOpt.isPresent()) {
@@ -162,6 +188,10 @@ public class GapicSnippetConfig {
     Map<String, Object> configSignature = new HashMap<>();
 
     configSignature.put("sync_preference", rawConfigSignature.getSyncPreference());
+    configSignature.put("has_return_type", rawConfigSignature.hasReturnType());
+    if(rawConfigSignature.hasReturnType()){
+      configSignature.put("return_type", parseSnippetSignatureReturnType(rawConfigSignature.getReturnType()));
+    }
 
     // Order of parameters matters
     LinkedHashMap<String, List> configSignatureParameters =
@@ -170,26 +200,108 @@ public class GapicSnippetConfig {
     Snippet rawConfigSnippet = snippetConfig.getSnippet();
     Map<String, Object> configSnippet = new HashMap<>();
 
-    // TODO: Depending on call type, generate a different sample
-    //    STANDARD(2),
-    //    PAGINATED(3),
-    //    LRO(4),
-    //    CLIENT_STREAMING(5),
-    //    SERVER_STREAMING(6),
-    //    BIDI_STREAMING(7),
-    // For now, just generate a Standard sample
-    configSnippet.put("call_type", parseSnippetCallType(rawConfigSnippet));
+    configSnippet.put("has_service_client_initialization", rawConfigSnippet.hasServiceClientInitialization());
+    configSnippet.put("has_custom_service_endpoint", FALSE);
+    // If service client initialization exists, add values to configSnippet
+    if(rawConfigSnippet.hasServiceClientInitialization()){
+      // TODO: parse statement type
+      configSnippet.put("pre_client_initialization", rawConfigSnippet.getServiceClientInitializationOrBuilder().getPreClientInitializationList());
+      // If specified endpoint exists, add value to configSnippet
+      // Endpoint should be `region`-`host`:`port`. If port is not specified, use Parser.DEFAULT_PORT
+      if(rawConfigSnippet.getServiceClientInitializationOrBuilder().hasCustomServiceEndpoint()){
+        configSnippet.replace("has_custom_service_endpoint", TRUE);
+        String region = rawConfigSnippet.getServiceClientInitializationOrBuilder().getCustomServiceEndpoint().getRegion();
+        String host = rawConfigSnippet.getServiceClientInitializationOrBuilder().getCustomServiceEndpoint().getHost();
+        int port = rawConfigSnippet.getServiceClientInitializationOrBuilder().getCustomServiceEndpoint().getPort();
+        String endpoint = region + "-" + host + ":";
+        // If port doesn't exist, then use DEFAULT_PORT
+        if(port == 0){
+          endpoint = endpoint + Parser.DEFAULT_PORT;
+        }
+        else{
+          endpoint = endpoint + port;
+        }
+        configSnippet.put("endpoint", endpoint);
+      }
+    }
+
+    configSnippet.put("call_type", rawConfigSnippet.getCallCase().name());
+    if(rawConfigSnippet.hasStandard()){
+      configSnippet.put("pre_request_initialization_statements", rawConfigSnippet.getStandard().getRequestInitialization().getPreRequestInitializationList());
+      configSnippet.put("request_value", SampleComposerUtil.convertExpressionToString(rawConfigSnippet.getStandard().getRequestInitialization().getRequestValue()));
+      configSnippet.put("request_name", JavaStyle.toLowerCamelCase(rawConfigSnippet.getStandard().getRequestInitialization().getRequestName()));
+      configSnippet.put("pre_call_statements", rawConfigSnippet.getStandard().getCall().getPreCallList());
+    }
+    // TODO: handle other call types
+//    else if(rawConfigSnippet.hasLro()){
+//      configSnippet.put("has_pre_request_initialization", rawConfigSnippet.getLro().hasRequestInitialization());
+//      configSnippet.put("pre_request_initialization", rawConfigSnippet.getLro().getRequestInitialization());
+//    }
+//    else if(rawConfigSnippet.hasPaginated()){
+//      configSnippet.put("has_pre_request_initialization", rawConfigSnippet.getPaginated().hasRequestInitialization());
+//      configSnippet.put("pre_request_initialization", rawConfigSnippet.getPaginated().getRequestInitialization());
+//    }
+//    else if(rawConfigSnippet.hasClientStreaming()){
+//      configSnippet.put("has_pre_request_initialization", rawConfigSnippet.getClientStreaming().hasRequestInitialization());
+//      configSnippet.put("pre_request_initialization", rawConfigSnippet.getClientStreaming().getRequestInitialization());
+//    }
+//    else if(rawConfigSnippet.hasServerStreaming()){
+//      configSnippet.put("has_pre_request_initialization", rawConfigSnippet.getServerStreaming().hasRequestInitialization());
+//      configSnippet.put("pre_request_initialization", rawConfigSnippet.getServerStreaming().getRequestInitialization());
+//    }
+//    else if(rawConfigSnippet.hasBidiStreaming()){
+//      configSnippet.put("has_pre_request_initialization", rawConfigSnippet.getBidiStreaming().hasRequestInitialization());
+//      configSnippet.put("pre_request_initialization", rawConfigSnippet.getBidiStreaming().getRequestInitialization());
+//    }
+    configSnippet.put("final_statements", rawConfigSnippet.getFinalStatementsList());
 
     return new GapicSnippetConfig(
         configMetadata, configRpc, configSignature, configSignatureParameters, configSnippet);
   }
 
-  // for scratch testing
-  public static String getConfiguredSnippetCallType(GapicSnippetConfig gapicSnippetConfig) {
-    return gapicSnippetConfig.configSignatureParameters.toString();
+  public static String getRequestValue(GapicSnippetConfig gapicSnippetConfig) {
+    return (String) gapicSnippetConfig.configSnippet.get("request_value");
   }
 
-  public static Map<String, List> getConfiguredSnippetSignatureParameters(
+  public static String getRequestName(GapicSnippetConfig gapicSnippetConfig) {
+    return (String) gapicSnippetConfig.configSnippet.get("request_name");
+  }
+
+  public static List<Statement> getPreCallStatements(GapicSnippetConfig gapicSnippetConfig) {
+    return (List<Statement>) gapicSnippetConfig.configSnippet.get("pre_call_statements");
+  }
+
+  public static List<Statement> getPreRequestInitializationStatements(GapicSnippetConfig gapicSnippetConfig) {
+    return (List<Statement>) gapicSnippetConfig.configSnippet.get("pre_request_initialization_statements");
+  }
+
+  public static List<Statement> getFinalStatements(GapicSnippetConfig gapicSnippetConfig) {
+      return (List<Statement>) gapicSnippetConfig.configSnippet.get("final_statements");
+  }
+
+  public static String getConfiguredSnippetReturn(GapicSnippetConfig gapicSnippetConfig) {
+    if((Boolean) gapicSnippetConfig.configSignature.get("has_return_type")){
+      return (String) gapicSnippetConfig.configSignature.get("return_type");
+    }
+    return "";
+  }
+
+  // TODO: parse through and convert to Statement
+  public static List<Statement> getPreClientInitializationStatements(GapicSnippetConfig gapicSnippetConfig) {
+    if((Boolean) gapicSnippetConfig.configSnippet.get("has_service_client_initialization")){
+      return (List<Statement>) gapicSnippetConfig.configSnippet.get("pre_client_initialization");
+    }
+    return null;
+  }
+
+  public static String getConfiguredSnippetEndpoint(GapicSnippetConfig gapicSnippetConfig) {
+    if((Boolean) gapicSnippetConfig.configSnippet.get("has_custom_service_endpoint")){
+      return (String) gapicSnippetConfig.configSnippet.get("endpoint");
+    }
+    return null;
+  }
+
+  public static LinkedHashMap<String, List> getConfiguredSnippetSignatureParameters(
       GapicSnippetConfig gapicSnippetConfig) {
     return gapicSnippetConfig.configSignatureParameters;
   }
@@ -207,9 +319,13 @@ public class GapicSnippetConfig {
     return (String) gapicSnippetConfig.configRpc.get("rpc_name");
   }
 
+  public static String getConfiguredSnippetServiceName(GapicSnippetConfig gapicSnippetConfig) {
+    return (String) gapicSnippetConfig.configRpc.get("service_name");
+  }
+
   // PackageName for configured Snippet
   public static String getConfiguredSnippetPackageString(GapicSnippetConfig gapicSnippetConfig) {
-    return (String) gapicSnippetConfig.configRpc.get("proto_package")
+    return gapicSnippetConfig.configRpc.get("proto_package")
         + "."
         + gapicSnippetConfig.configRpc.get("api_version")
         + ".samples";

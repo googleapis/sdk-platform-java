@@ -27,11 +27,14 @@ import com.google.api.generator.gapic.model.GapicSnippetConfig;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
 import com.google.api.generator.testutils.LineFormatter;
+import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import org.junit.Test;
 
 public class ConfiguredSnippetComposerTest {

@@ -83,7 +83,7 @@ import java.util.stream.IntStream;
 public class Parser {
   private static final String COMMA = ",";
   private static final String COLON = ":";
-  private static final String DEFAULT_PORT = "443";
+  public static final String DEFAULT_PORT = "443";
   private static final String DOT = ".";
   private static final String SLASH = "/";
 
