@@ -70,16 +70,21 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
       with:
-        java-version: 8
+        java-version: 11
         distribution: temurin
         cache: maven
-    - run: java -version
     - name: Install modules outside gapic-generator-java
       shell: bash
       run: |
         mvn -B -ntp install --projects '!gapic-generator-java' \
             -Dcheckstyle.skip -Dfmt.skip -DskipTests
-    - name: Run test only for gapic-generator-java
+    - uses: actions/setup-java@v3
+      with:
+        java-version: 8
+        distribution: temurin
+        cache: maven
+    - run: java -version
+    - name: Run test only for gapic-generator-java using Java 8
       shell: bash
       run: |
         mvn -B -ntp verify --projects 'gapic-generator-java' \
