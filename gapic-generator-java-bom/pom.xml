@@ -30,6 +30,13 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>com.google.auth</groupId>
+        <artifactId>google-auth-library-bom</artifactId>
+        <version>${google.auth.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <groupId>com.google.protobuf</groupId>
         <artifactId>protobuf-bom</artifactId>
         <version>${protobuf.version}</version>
