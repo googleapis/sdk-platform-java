@@ -89,7 +89,7 @@ jobs:
       - name: Run test only for gapic-generator-java using Java 8
         shell: bash
         run: |
-          mvn -B -ntp verify --projects 'gapic-generator-java' \
+          mvn -B -ntp test --projects 'gapic-generator-java' \
               -Dcheckstyle.skip -Dfmt.skip
 
   lint:
