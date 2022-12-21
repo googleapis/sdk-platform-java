@@ -7,6 +7,22 @@ name: ci-maven
 env:
   SHOWCASE_VERSION: 0.25.0
 jobs:
+  maven-install:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 11, 17 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Install maven modules
+        run: mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+
   units:
     runs-on: ubuntu-latest
     strategy:
@@ -107,17 +123,13 @@ jobs:
         run: mvn -B -ntp --projects '!.' fmt:check
 
   showcase:
+    needs: maven-install
     runs-on: ubuntu-latest
     strategy:
       matrix:
         java: [ 11, 17 ]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v3
-        with:
-          java-version: ${{ matrix.java }}
-          distribution: temurin
-      - run: java -version
 
       - name: Bazel File Cache Setup
         id: cache-bazel
@@ -140,10 +152,6 @@ jobs:
           echo "and it will start over with a clean cache."
           echo "The old one will disappear after 7 days."
 
-      - name: Install maven modules
-        run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -157,6 +165,13 @@ jobs:
           tar -xf showcase-*
           ./gapic-showcase run &
           cd -
+
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+      - run: java -version
       - name: Showcase integration tests
         working-directory: showcase
         run: |
