@@ -78,11 +78,13 @@ maven_install(
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
+_gapic_generator_java_version = "2.12.1-SNAPSHOT" # {x-version-update:gapic-generator-java:current}
+
 maven_install(
     artifacts = [
-        "com.google.api:gapic-generator-java:2.12.0",
+        "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
     ],
-    fail_on_missing_checksum = True,
+    fail_on_missing_checksum = False,
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2/",
