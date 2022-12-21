@@ -17,12 +17,17 @@
 package google.cloud.speech.v1.samples;
 
 // [START speech_v1_config_Adaptation_CreateCustomClass_Basic_async]
+import com.google.api.core.ApiFuture;
+import com.google.cloud.speech.v1.CustomClass.ClassItem;
+
 /**
  * AUTO-GENERATED DOCUMENTATION
  *
  * <p>Custom Class Creation
  *
  * <p>Shows how to create a custom class
+ *
+ * <p>Returns google.cloud.speech.v1.CustomClass
  *
  * @param parent The custom class parent element
  * @param customClassId The id for the custom class
@@ -39,16 +44,28 @@ public class CreateCustomClass {
     String endpoint = "us-speech.googleapis.com:443";
     AdaptationSettings adaptationSettings =
         AdaptationSettings.newBuilder().setEndpoint(endpoint).build();
-    try (AdaptationClient AdaptationClient = AdaptationClient.create(adaptationSettings)) {
+    try (AdaptationClient adaptationClient = AdaptationClient.create(adaptationSettings)) {
       CreateCustomClassRequest createCustomClassRequest =
           CreateCustomClassRequest.newBuilder()
               .setParent(parent)
               .setCustomClassId(customClassId)
+              .setCustomClass(
+                  CustomClass.newBuilder()
+                      .addItems(
+                          CustomClass.ClassItem.newBuilder().setValue(Titanic),
+                          CustomClass.ClassItem.newBuilder().setValue(RMSQueenMary))
+                      .build())
               .build();
       System.out.println("Calling the CreateCustomClass operation.");
+      ApiFuture<CustomClass> future =
+          adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
+      CustomClass createdCustomClass = future.get();
       System.out.println("A Custom Class with the following name has been created.");
       System.out.println("createdCustomClass.getName()");
       System.out.println("The Custom class contains the following items.");
+      for (ClassItem item : createdCustomClass.getItemsList()) {
+        System.out.println(item);
+      }
     }
   }
 }

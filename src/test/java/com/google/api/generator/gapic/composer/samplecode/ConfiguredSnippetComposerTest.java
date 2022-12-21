@@ -16,7 +16,10 @@ package com.google.api.generator.gapic.composer.samplecode;
 
 import static org.junit.Assert.assertEquals;
 
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.ClientLibraryPackageInfoComposer;
@@ -27,6 +30,7 @@ import com.google.api.generator.gapic.model.GapicSnippetConfig;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +52,14 @@ public class ConfiguredSnippetComposerTest {
     String result = ConfiguredSnippetComposer.composeSampleMethodName(snippetConfig);
     assertEquals("asyncCreateCustomClass", result);
   }
+
+//  @Test
+//  public void composeHeaderStatements() {
+//    List<CommentStatement> result = ConfiguredSnippetComposer.composeHeaderStatements(snippetConfig);
+//    List<CommentStatement> expected =
+//            Arrays.asList(CommentStatement.withComment(JavaDocComment.withComment("apache license")));
+//    assertEquals(expected, result);
+//  }
 
   @Test
   public void composeConfiguredSnippet_speech() {

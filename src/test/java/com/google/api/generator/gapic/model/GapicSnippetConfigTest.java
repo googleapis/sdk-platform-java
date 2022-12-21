@@ -106,10 +106,18 @@ public class GapicSnippetConfigTest {
 
   @Test
   public void  parseSnippetSignatureReturnType_test() {
-    String actualReturnValue = GapicSnippetConfig.getConfiguredSnippetReturn(snippetConfig);
+    String actualReturnValue = GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig);
 
     assertEquals(
             "google.cloud.speech.v1.CustomClass", actualReturnValue);
+  }
+
+  @Test
+  public void  getSnippetResponseValue_test() {
+    String actualResponseValue = GapicSnippetConfig.getResponseValue(snippetConfig);
+
+    assertEquals(
+            "createdCustomClass", actualResponseValue);
   }
 
 }

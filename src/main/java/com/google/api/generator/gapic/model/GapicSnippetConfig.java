@@ -92,7 +92,7 @@ public class GapicSnippetConfig {
       return type.getMessageType().getMessageFullName();
     }
     // TODO: add additional types to parse (map type, repeated type, bytes type)
-    return "potato";
+    return "";
   }
 
 
@@ -231,6 +231,7 @@ public class GapicSnippetConfig {
       configSnippet.put("request_value", SampleComposerUtil.convertExpressionToString(rawConfigSnippet.getStandard().getRequestInitialization().getRequestValue()));
       configSnippet.put("request_name", JavaStyle.toLowerCamelCase(rawConfigSnippet.getStandard().getRequestInitialization().getRequestName()));
       configSnippet.put("pre_call_statements", rawConfigSnippet.getStandard().getCall().getPreCallList());
+      configSnippet.put("response_name", JavaStyle.toLowerCamelCase(rawConfigSnippet.getStandard().getResponseHandling().getResponseName()));
     }
     // TODO: handle other call types
 //    else if(rawConfigSnippet.hasLro()){
@@ -259,6 +260,10 @@ public class GapicSnippetConfig {
         configMetadata, configRpc, configSignature, configSignatureParameters, configSnippet);
   }
 
+  public static String getResponseValue(GapicSnippetConfig gapicSnippetConfig) {
+    return (String) gapicSnippetConfig.configSnippet.get("response_name");
+  }
+
   public static String getRequestValue(GapicSnippetConfig gapicSnippetConfig) {
     return (String) gapicSnippetConfig.configSnippet.get("request_value");
   }
@@ -279,7 +284,7 @@ public class GapicSnippetConfig {
       return (List<Statement>) gapicSnippetConfig.configSnippet.get("final_statements");
   }
 
-  public static String getConfiguredSnippetReturn(GapicSnippetConfig gapicSnippetConfig) {
+  public static String getConfiguredSnippetReturnType(GapicSnippetConfig gapicSnippetConfig) {
     if((Boolean) gapicSnippetConfig.configSignature.get("has_return_type")){
       return (String) gapicSnippetConfig.configSignature.get("return_type");
     }

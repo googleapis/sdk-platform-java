@@ -14,13 +14,17 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
+import com.google.api.core.ApiFuture;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -42,7 +46,10 @@ import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
+import com.google.longrunning.Operation;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -52,34 +59,35 @@ import java.util.stream.Collectors;
 
 public class ConfiguredSnippetComposer {
 
-  //TODO: Figure out how to update import statements
+  //TODO: Update import statements
   //TODO: Depending on call type, generate a different sample
   // For now, just generate a Standard sample
 
   static List<CommentStatement> fileHeader = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
 
-  private static List<CommentStatement> composeHeaderStatements(GapicSnippetConfig snippetConfig) {
+  public static List<CommentStatement> composeHeaderStatements(GapicSnippetConfig snippetConfig) {
     JavaDocComment.Builder javaDocComment = JavaDocComment.builder()
             .addComment("AUTO-GENERATED DOCUMENTATION\n")
             .addComment(GapicSnippetConfig.getConfiguredSnippetSnippetName(snippetConfig))
             .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
+
+    if(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig).length() > 1) {
+      javaDocComment.addComment(String.format("\nReturns %s", GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig)));
+    }
+
     Iterator<Map.Entry<String, List>> iterator =
             GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig)
                     .entrySet()
                     .iterator();
+
     while (iterator.hasNext()) {
       Map.Entry<String, List> actualValue = iterator.next();
-      // Key is the name of the parameter, Value is the description
+      // Key is the name of the parameter, first element of Value is the description
       javaDocComment.addParam(
           JavaStyle.toLowerCamelCase(actualValue.getKey()),
           actualValue.getValue().get(0).toString());
     }
 
-    // TODO: add return Type to comments
-//    if(GapicSnippetConfig.getConfiguredSnippetReturn(snippetConfig).length() > 1) {
-//      javaDocComment.addComment(String.format("\nReturns %s", GapicSnippetConfig.getConfiguredSnippetReturn(snippetConfig)))
-//              .build();
-//    }
     return Arrays.asList(CommentStatement.withComment(javaDocComment.build()));
   }
 
@@ -96,14 +104,6 @@ public class ConfiguredSnippetComposer {
     // Create Request Statement
     // e.g. CreateCustomClassRequest createCustomClassRequest =
     //          CreateCustomClassRequest.newBuilder()
-    //              .setParent(parent)
-    //              .setCustomClassId(customClassId)
-    //              .setCustomClass(
-    //                  CustomClass.newBuilder()
-    //                      .addItems(CustomClass.ClassItem.newBuilder().setValue("Titanic"))
-    //                      .addItems(CustomClass.ClassItem.newBuilder().setValue("RMS Queen Mary"))
-    //                      .build())
-    //              .build();
     String requestName = String.format("%s", JavaStyle.toLowerCamelCase(GapicSnippetConfig.getRequestName(snippetConfig)));
     String requestTypeName = String.format("%s", JavaStyle.toUpperCamelCase(GapicSnippetConfig.getRequestName(snippetConfig)));
     TypeNode requestType =
@@ -121,17 +121,14 @@ public class ConfiguredSnippetComposer {
                     .setMethodName("newBuilder")
                     .build();
     // TODO: this will depend on the request initialization parameters; currently hardcoded for golden sample
-    TypeNode firstRequestParamType = TypeNode.withReference(
-            VaporReference.builder()
-                    .setName("parent")
-                    .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
-                    .build());
+    // .setParent(parent)
+    // .setCustomClassId(customClassId)
     MethodInvocationExpr firstRequestMethodExpr =
             MethodInvocationExpr.builder()
                     .setExprReferenceExpr(newBuilderMethodExpr)
                     .setArguments(
                             VariableExpr.withVariable(
-                                    Variable.builder().setName("parent").setType(firstRequestParamType).build()))
+                                    Variable.builder().setName("parent").setType(TypeNode.STRING).build()))
                     .setMethodName("setParent")
                     .build();
     MethodInvocationExpr secondRequestMethodExpr =
@@ -139,52 +136,92 @@ public class ConfiguredSnippetComposer {
                     .setExprReferenceExpr(firstRequestMethodExpr)
                     .setArguments(
                             VariableExpr.withVariable(
-                                    Variable.builder().setName("customClassId").setType(firstRequestParamType).build()))
+                                    Variable.builder().setName("customClassId").setType(TypeNode.STRING).build()))
                     .setMethodName("setCustomClassId")
+                    .build();
+//    Compose nested Argument Variables
+    TypeNode nestedRequestType =
+            TypeNode.withReference(
+                    VaporReference.builder()
+                            .setName("CustomClass")
+                            .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                            .build());
+    VariableExpr nestedRequestVarExpr =
+            VariableExpr.withVariable(
+                    Variable.builder().setName("CustomClass").setType(nestedRequestType).build());
+
+    MethodInvocationExpr nestedFirstNewBuilderMethodExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(nestedRequestVarExpr)
+                    .setMethodName("newBuilder")
+                    .build();
+
+    VaporReference CustomClassClassItem =
+            VaporReference.builder()
+                    .setEnclosingClassNames("CustomClass")
+                    .setName("ClassItem")
+                    .setPakkage("java.lang")
+                    .build();
+    MethodInvocationExpr nestedSecondNewBuilderMethodExpr =
+            MethodInvocationExpr.builder()
+                    .setStaticReferenceType(TypeNode.withReference(CustomClassClassItem))
+                    .setMethodName("newBuilder")
+                    .build();
+
+    //TODO update to value as String directly; may need to substantiate variable at the top
+    MethodInvocationExpr setValueTitanic =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
+                    .setArguments(
+                            VariableExpr.withVariable(
+                                    Variable.builder().setName("Titanic").setType(TypeNode.STRING).build()))
+                    .setMethodName("setValue")
+                    .build();
+
+    //TODO update to value as String directly; may need to substantiate variable at the top
+    MethodInvocationExpr setValueRMSQueenMary =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
+                    .setArguments(
+                            VariableExpr.withVariable(
+                                    Variable.builder().setName("RMSQueenMary").setType(TypeNode.STRING).build()))
+                    .setMethodName("setValue")
+                    .build();
+
+    MethodInvocationExpr addItemsMethodExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(nestedFirstNewBuilderMethodExpr)
+                    .setArguments(
+                            setValueTitanic, setValueRMSQueenMary)
+                    .setMethodName("addItems")
+                    .build();
+
+    MethodInvocationExpr innerNestedBuildMethodExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(addItemsMethodExpr)
+                    .setReturnType(requestType)
+                    .setMethodName("build")
+                    .build();
+
+    MethodInvocationExpr thirdRequestMethodExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(secondRequestMethodExpr)
+                    .setArguments(innerNestedBuildMethodExpr)
+                    .setMethodName("setCustomClass")
                     .build();
 
     MethodInvocationExpr buildMethodExpr =
             MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(secondRequestMethodExpr)
+                    .setExprReferenceExpr(thirdRequestMethodExpr)
                     .setReturnType(requestType)
                     .setMethodName("build")
                     .build();
-//    // Nested request statement
-//    TypeNode nestedRequestParamType = TypeNode.withReference(
-//            VaporReference.builder()
-//                    .setName("CustomClass")
-//                    .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
-//                    .build());
-//    VariableExpr nestedRequestVarExpr =
-//            VariableExpr.withVariable(
-//                    Variable.builder().setName("CustomClass").setType(requestType).build());
-//    MethodInvocationExpr nestedNewBuilderMethodExpr =
-//            MethodInvocationExpr.builder()
-//                    .setStaticReferenceType(nestedRequestParamType)
-//                    .setMethodName("newBuilder")
-//                    .build();
-//    MethodInvocationExpr firstNestedRequestMethodExpr =
-//            MethodInvocationExpr.builder()
-//                    .setExprReferenceExpr(nestedNewBuilderMethodExpr)
-//                    .setArguments(
-//                            VariableExpr.withVariable(
-//                                    Variable.builder().setName("parent").setType(nestedRequestParamType).build()))
-//                    .setMethodName("setParent")
-//                    .build();
-//
-//    MethodInvocationExpr nestedBuildMethodExpr =
-//            MethodInvocationExpr.builder()
-//                    .setExprReferenceExpr(firstNestedRequestMethodExpr)
-//                    .setReturnType(requestType)
-//                    .setMethodName("build")
-//                    .build();
-//    // ends here
+
     Expr initRequestVarExpr =
             AssignmentExpr.builder()
                     .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
                     .setValueExpr(buildMethodExpr)
                     .build();
-
 
     sampleBodyStatements.add(ExprStatement.withExpr(initRequestVarExpr));
 
@@ -196,20 +233,90 @@ public class ConfiguredSnippetComposer {
       }
     }
 
-    // Create the call statement
-//    e.g. ApiFuture<CustomClass> future = adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
-//    CustomClass createdCustomClass = future.get();
+    // Create the call statement using api future variable expression, and assign it with a value by invoking callable method
+    //    e.g. ApiFuture<CustomClass> future = adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
+    //    CustomClass createdCustomClass = future.get();
+    String returnType =  SampleComposerUtil.convertMessageTypeToReturnType(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
+    TypeNode responseType =
+            TypeNode.withReference(
+                    VaporReference.builder()
+                            .setName(returnType)
+                            .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                            .build());
+    TypeNode apiFutureType =
+            TypeNode.withReference(
+                    ConcreteReference.builder()
+                            .setClazz(ApiFuture.class)
+                            .setGenerics(responseType.reference())
+                            .build());
+    VariableExpr apiFutureVarExpr =
+            VariableExpr.withVariable(
+                    Variable.builder().setName("future").setType(apiFutureType).build());
+
+    String clientName = String.format("%sClient", JavaStyle.toLowerCamelCase(GapicSnippetConfig.getConfiguredSnippetServiceName(snippetConfig)));
+    String clientTypeName = String.format("%sClient", GapicSnippetConfig.getConfiguredSnippetServiceName(snippetConfig));
+
+    TypeNode clientType =
+            TypeNode.withReference(
+                    VaporReference.builder()
+                            .setName(clientTypeName)
+                            .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                            .build());
+
+    VariableExpr clientVarExpr =
+            VariableExpr.withVariable(
+                    Variable.builder().setName(clientName).setType(clientType).build());
+    MethodInvocationExpr callableMethodInvocationExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(clientVarExpr)
+                    .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", GapicSnippetConfig.getConfiguredSnippetRpcName(snippetConfig))))
+                    .build();
+    callableMethodInvocationExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(callableMethodInvocationExpr)
+                    .setMethodName("futureCall")
+                    .setArguments(requestVarExpr)
+                    .setReturnType(apiFutureType)
+                    .build();
+    AssignmentExpr futureAssignmentExpr =
+            AssignmentExpr.builder()
+                    .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
+                    .setValueExpr(callableMethodInvocationExpr)
+                    .build();
+    sampleBodyStatements.add(ExprStatement.withExpr(futureAssignmentExpr));
+
+    MethodInvocationExpr getMethodInvocationExpr =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(apiFutureVarExpr)
+                    .setMethodName("get")
+                    .setReturnType(responseType)
+                    .build();
+
+      VariableExpr responseVarExpr =
+              VariableExpr.builder()
+                      .setVariable(
+                              Variable.builder().setType(responseType).setName(GapicSnippetConfig.getResponseValue(snippetConfig)).build())
+                      .setIsDecl(true)
+                      .build();
+      AssignmentExpr responseAssignmentExpr =
+              AssignmentExpr.builder()
+                      .setVariableExpr(responseVarExpr)
+                      .setValueExpr(getMethodInvocationExpr)
+                      .build();
+      sampleBodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
 
     // Parse final statements
     List<com.google.cloud.tools.snippetgen.configlanguage.v1.Statement> finalStatements = GapicSnippetConfig.getFinalStatements(snippetConfig);
     for(com.google.cloud.tools.snippetgen.configlanguage.v1.Statement statement : finalStatements){
       if(statement.hasStandardOutput()){
+        //TODO update if it's not a string value to use the value directly
         sampleBodyStatements.add(ExprStatement.withExpr(SampleComposerUtil.systemOutPrint(SampleComposerUtil.convertExpressionToString(statement.getStandardOutput().getValue()))));
       }
       if(statement.hasIteration()){
-        statement.getIteration(); // TODO update this
+        sampleBodyStatements.add(SampleComposerUtil.convertIterationTypeStatementToStatement(statement));
       }
     }
+
     return sampleBodyStatements;
   }
 
@@ -289,13 +396,14 @@ public class ConfiguredSnippetComposer {
 
       clientInitializationStatements.add(ExprStatement.withExpr(initSettingsVarExpr));
 
-      // compose try Catch block
-    String clientName = String.format("%sClient", GapicSnippetConfig.getConfiguredSnippetServiceName(snippetConfig));
+    // compose try Catch block
+    String clientName = String.format("%sClient", JavaStyle.toLowerCamelCase(GapicSnippetConfig.getConfiguredSnippetServiceName(snippetConfig)));
+    String clientTypeName = String.format("%sClient", GapicSnippetConfig.getConfiguredSnippetServiceName(snippetConfig));
 
     TypeNode clientType =
             TypeNode.withReference(
                     VaporReference.builder()
-                            .setName(clientName)
+                            .setName(clientTypeName)
                             .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
                             .build());
 
