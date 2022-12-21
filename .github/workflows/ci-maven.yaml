@@ -20,8 +20,12 @@ jobs:
       - run: java -version
       - name: Unit Tests
         run: |
-          mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+          mvn install --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip
+      - run: bazelisk version
+      - name: Integration Tests
+        run: |
+          bazel --batch test //test/integration/...
 
   units-java8:
     name: "units (8) except gapic-generator-java"
@@ -87,8 +91,12 @@ jobs:
     - name: Run test only for gapic-generator-java using Java 8
       shell: bash
       run: |
-        mvn -B -ntp verify --projects 'gapic-generator-java' \
+        mvn -B -ntp install --projects 'gapic-generator-java' \
             -Dcheckstyle.skip -Dfmt.skip
+    - run: bazelisk version
+    - name: Integration Tests
+      run: |
+        bazel --batch test //test/integration/...
 
   lint:
     runs-on: ubuntu-latest
