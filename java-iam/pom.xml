@@ -69,19 +69,30 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-bom</artifactId>
-        <version>3.21.9</version>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-bom</artifactId>
+        <version>${guava.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <!-- This should not depend on this, because the shared dependencies BOM
-          includes proto-google-iam-v1 from this repository. Avoid circular
-          dependencies -->
-        <groupId>com.google.cloud</groupId>
-        <artifactId>google-cloud-shared-dependencies</artifactId>
-        <version>3.0.6</version>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-bom</artifactId>
+        <version>${protobuf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-bom</artifactId>
+        <version>${grpc.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-bom</artifactId>
+        <version>2.20.1</version><!-- {x-version-update:gax:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -102,6 +113,11 @@
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
+        <artifactId>proto-google-common-protos</artifactId>
+        <version>2.11.1-SNAPSHOT</version><!-- {x-version-update:proto-google-common-protos:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v2beta</artifactId>
         <version>1.6.23-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v2beta:current} -->
       </dependency>
@@ -119,6 +135,11 @@
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v1</artifactId>
         <version>1.6.23-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v1:current} -->
+      </dependency>
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>${javax.annotation-api.version}</version>
       </dependency>
 
       <dependency>
