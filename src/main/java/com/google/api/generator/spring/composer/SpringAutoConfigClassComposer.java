@@ -71,6 +71,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -265,6 +266,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations(
       Service service, Map<String, TypeNode> types) {
     // @AutoConfiguration
+    // @AutoConfigureAfter(GcpContextAutoConfiguration.class)
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value =
     // "com.google.cloud.language.v1.spring.auto.language-service.enabled", matchIfMissing = true)
@@ -307,6 +309,16 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     .setStaticReferenceType(types.get("ServiceClient"))
                     .build())
             .build();
+    AnnotationNode autoConfigureAfterNode =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("AutoConfigureAfter"))
+            .setDescription(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(types.get("GcpContextAutoConfiguration"))
+                    .build())
+            .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder().setType(STATIC_TYPES.get("AutoConfiguration")).build();
     AnnotationNode enableConfigurationPropertiesNode =
@@ -322,6 +334,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return Arrays.asList(
         configurationNode,
+        autoConfigureAfterNode,
         conditionalOnClassNode,
         conditionalOnPropertyNode,
         enableConfigurationPropertiesNode);
@@ -951,6 +964,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             EnableConfigurationProperties.class,
             CredentialsProvider.class,
             AutoConfiguration.class,
+            AutoConfigureAfter.class,
             Bean.class,
             Qualifier.class,
             DefaultCredentialsProvider.class,
@@ -999,6 +1013,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage("com.google.cloud.spring.core.util")
                 .build());
 
+    // TODO: This should move to static types after adding spring-cloud-gcp-autoconfigure as
+    // dependency
+    TypeNode gcpContextAutoConfiguration =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("GcpContextAutoConfiguration")
+                .setPakkage("com.google.cloud.spring.autoconfigure")
+                .build());
+
     TypeNode serviceClient =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1026,6 +1049,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("Retry", retryProperties);
     typeMap.put("RetryUtil", retryUtil);
+    typeMap.put("GcpContextAutoConfiguration", gcpContextAutoConfiguration);
 
     return typeMap;
   }
