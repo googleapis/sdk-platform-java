@@ -1,20 +1,6 @@
 workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-
-jvm_maven_import_external(
-    name = "google_java_format_all_deps",
-    artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
-    licenses = [
-        "notice",
-        "reciprocal",
-    ],
-    server_urls = [
-        "https://repo.maven.apache.org/maven2/",
-        "http://repo1.maven.org/maven2/",
-    ],
-)
 
 # gax-java and its transitive dependencies must be imported before
 # gapic-generator-java dependencies to match the order in googleapis repository,
