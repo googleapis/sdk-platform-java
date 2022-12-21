@@ -117,5 +117,5 @@ jobs:
       - name: License Header Check
         run: |
           go install github.com/google/addlicense@latest
-          addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java') -ignore showcase/**
+          addlicense -ignore showcase/** -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java' ! -iname '*PlaceholderFile.java')
 
