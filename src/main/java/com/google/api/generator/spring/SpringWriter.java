@@ -208,7 +208,6 @@ public class SpringWriter {
     String clientLibraryShortName = Utils.getLibName(context);
     String clientLibraryGroupId = "{{client-library-group-id}}";
     String clientLibraryName = "{{client-library-artifact-id}}";
-    String clientLibraryVersion = "{{client-library-version}}";
 
     String springStarterArtifactId = clientLibraryName + "-spring-starter";
     String springStarterName = "Spring Boot Starter - " + clientLibraryShortName;
@@ -224,10 +223,12 @@ public class SpringWriter {
                 + "\n"
                 + "  <parent>\n"
                 + "    <groupId>com.google.cloud</groupId>\n"
-                + "    <artifactId>generated-parent</artifactId>\n"
+                + "    <artifactId>spring-cloud-gcp-starters</artifactId>\n"
                 + "    <version>%s</version>\n"
+                + "    <relativePath>../../spring-cloud-gcp-starters/pom.xml</relativePath>\n"
                 + "  </parent>\n"
                 + "  <artifactId>%s</artifactId>\n"
+                + "  <version>${project.parent.version}-preview</version>\n"
                 + "  <name>%s</name>\n"
                 + "  <description>Spring Boot Starter with AutoConfiguration for %s</description>\n"
                 + "\n"
@@ -236,7 +237,6 @@ public class SpringWriter {
                 + "    <dependency>\n"
                 + "      <groupId>%s</groupId>\n"
                 + "      <artifactId>%s</artifactId>\n"
-                + "      <version>%s</version>\n"
                 + "    </dependency>\n"
                 + "\n"
                 + "    <dependency>\n"
@@ -256,8 +256,7 @@ public class SpringWriter {
             springStarterName,
             clientLibraryShortName,
             clientLibraryGroupId,
-            clientLibraryName,
-            clientLibraryVersion));
+            clientLibraryName));
 
     return sb.toString();
   }
