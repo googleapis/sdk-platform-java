@@ -139,6 +139,11 @@ jobs:
           echo "(use any random string, any GUID will work)"
           echo "and it will start over with a clean cache."
           echo "The old one will disappear after 7 days."
+
+      - name: Install maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
