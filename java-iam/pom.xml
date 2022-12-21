@@ -119,7 +119,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v2beta</artifactId>
-        <version>1.6.23-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v2beta:current} -->
+        <version>1.6.23</version><!-- {x-version-update:proto-google-iam-v2beta:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
