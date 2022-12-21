@@ -43,7 +43,7 @@ jobs:
 
       - name: Integration Tests
         run: |
-          mvn -B -ntp verify --projects 'gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip
+          mvn -B -ntp install -DskipTests -Dcheckstyle.skip -Dfmt.skip
           bazel --batch test //test/integration/...
 
       - uses: actions/upload-artifact@v3
