@@ -43,7 +43,7 @@ jobs:
 
       - name: Integration Tests
         run: |
-          mvn package
+          mvn clean install -B -DskipTests=true -Dclirr.skip=true -f gapic-generator-java/
           bazel --batch test //test/integration/...
 
       - uses: actions/upload-artifact@v3
