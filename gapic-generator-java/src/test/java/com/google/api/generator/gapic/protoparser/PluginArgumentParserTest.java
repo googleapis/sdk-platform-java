@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.protoparser;
 
 import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_METADATA;
 import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_NUMERIC_ENUM;
+import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_SNIPPET_CONFIG;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -94,6 +95,20 @@ public class PluginArgumentParserTest {
     String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument = String.join(",", Arrays.asList(gapicPath));
     assertFalse(PluginArgumentParser.parseJsonConfigPath(rawArgument).isPresent());
+  }
+
+  @Test
+  public void parseSnippetConfigPath_onlyOnePresent() {
+    String jsonPathOne = "/tmp/speech_createCustomClass.json";
+    String jsonPathTwo = "/tmp/speech_somethingelse.json";
+    assertEquals(
+        jsonPathOne,
+        PluginArgumentParser.parseSnippetConfigPath(
+                String.join(
+                    ",",
+                    Arrays.asList(
+                        createSnippetConfig(jsonPathOne), createSnippetConfig(jsonPathTwo))))
+            .get());
   }
 
   @Test
@@ -269,6 +284,15 @@ public class PluginArgumentParserTest {
     assertTrue(PluginArgumentParser.hasFlag(rawArgument, KEY_METADATA));
   }
 
+  @Test
+  public void hasSnippetConfigFlag_flagFound() {
+    String jsonPath = "/tmp/speech_createClass.json";
+    String gapicPath = "";
+    String rawArgument =
+        String.join(",", Arrays.asList("snippet-config", createSnippetConfig(jsonPath), gapicPath));
+    assertTrue(PluginArgumentParser.hasFlag(rawArgument, KEY_SNIPPET_CONFIG));
+  }
+
   private static String createGrpcServiceConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_GRPC_SERVICE_CONFIG, path);
   }
@@ -279,5 +303,9 @@ public class PluginArgumentParserTest {
 
   private static String createServiceConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_SERVICE_YAML_CONFIG, path);
+  }
+
+  private static String createSnippetConfig(String path) {
+    return String.format("%s=%s", PluginArgumentParser.KEY_SNIPPET_CONFIG, path);
   }
 }

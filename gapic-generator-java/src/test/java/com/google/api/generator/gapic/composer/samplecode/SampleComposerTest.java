@@ -274,6 +274,7 @@ public class SampleComposerTest {
     assertEquals(expected, sampleResult);
   }
 
+  // TODO: move these to SampleComposerUtil as ConfiguredSnippets will use these
   private Expr systemOutPrint(MethodInvocationExpr response) {
     return composeSystemOutPrint(response);
   }

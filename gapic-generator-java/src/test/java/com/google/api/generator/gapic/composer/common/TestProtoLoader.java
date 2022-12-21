@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
@@ -27,6 +28,7 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.gapic.protoparser.SnippetConfigParser;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTestingOuterClass;
 import com.google.logging.v2.LogEntryProto;
@@ -44,6 +46,7 @@ import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -156,11 +159,22 @@ public class TestProtoLoader {
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
+    // @TODO: Once ability to parse multiple snippet configs, add in additional configs here to test
+    String jsonFilename_configuredSnippet = "configured_snippet_config.json";
+    Path jsonPath_configuredSnippet = Paths.get(testFilesDirectory, jsonFilename_configuredSnippet);
+    Optional<GapicSnippetConfig> snippetConfigOpt =
+        SnippetConfigParser.parse(jsonPath_configuredSnippet.toString());
+    assertTrue(snippetConfigOpt.isPresent());
+    GapicSnippetConfig snippetConfig = snippetConfigOpt.get();
+    List<GapicSnippetConfig> snippetConfigs = new ArrayList<>();
+    snippetConfigs.add(snippetConfig);
+
     return GapicContext.builder()
         .setMessages(messageTypes)
         .setResourceNames(resourceNames)
         .setServices(servicesWithDescription)
         .setServiceConfig(config)
+        .setSnippetConfigs(snippetConfigs)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();

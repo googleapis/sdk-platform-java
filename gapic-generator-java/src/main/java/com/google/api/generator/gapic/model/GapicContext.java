@@ -57,6 +57,13 @@ public abstract class GapicContext {
   public abstract GapicServiceConfig serviceConfig();
 
   @Nullable
+  public abstract List<GapicSnippetConfig> snippetConfigs();
+
+  public boolean hasSnippetConfigs() {
+    return snippetConfigs().size() != 0;
+  }
+
+  @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
   public boolean hasServiceYamlProto() {
@@ -65,6 +72,12 @@ public abstract class GapicContext {
 
   public void updateGapicMetadata(GapicMetadata newMetadata) {
     gapicMetadata = newMetadata;
+  }
+
+  public void updateSnippetConfigs(List<GapicSnippetConfig> listOfsnippetConfigs) {
+    for (GapicSnippetConfig snippetConfig : listOfsnippetConfigs) {
+      snippetConfigs().add(snippetConfig);
+    }
   }
 
   static GapicMetadata defaultGapicMetadata() {
@@ -106,6 +119,8 @@ public abstract class GapicContext {
     abstract Builder setHelperResourceNames(Map<String, ResourceName> helperResourceNames);
 
     public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
+
+    public abstract Builder setSnippetConfigs(List<GapicSnippetConfig> snippetConfigs);
 
     public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
 

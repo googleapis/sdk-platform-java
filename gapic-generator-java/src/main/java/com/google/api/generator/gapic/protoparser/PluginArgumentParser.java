@@ -32,13 +32,24 @@ public class PluginArgumentParser {
   @VisibleForTesting static final String KEY_NUMERIC_ENUM = "rest-numeric-enums";
   @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "api-service-config";
   @VisibleForTesting static final String KEY_TRANSPORT = "transport";
+  // For snippetgen prototype
+  @VisibleForTesting static final String KEY_SNIPPET_CONFIG = "snippet-config";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
   private static final String GAPIC_YAML_FILE_ENDING = "gapic.yaml";
   private static final String SERVICE_YAML_FILE_ENDING = ".yaml";
 
+  // Hardcoded for prototype only; design TBD about where these configs will live. TODO: @alicejli
+  // update this part once design is finalized
+  // speech_createCustomClass.json
+  public static final String PROTOTYPE_SNIPPET_CONFIG_FILE_ENDING = ".json";
+
   static Optional<String> parseJsonConfigPath(CodeGeneratorRequest request) {
     return parseJsonConfigPath(request.getParameter());
+  }
+
+  static Optional<String> parseSnippetConfigPath(CodeGeneratorRequest request) {
+    return parseSnippetConfigPath(request.getParameter());
   }
 
   static Optional<String> parseGapicYamlConfigPath(CodeGeneratorRequest request) {
@@ -65,6 +76,13 @@ public class PluginArgumentParser {
   @VisibleForTesting
   static Optional<String> parseJsonConfigPath(String pluginProtocArgument) {
     return parseFileArgument(pluginProtocArgument, KEY_GRPC_SERVICE_CONFIG, JSON_FILE_ENDING);
+  }
+
+  // Currently designed to only handle a single snippet config for prototype purposes only
+  // TODO: @alicejli update to intake multiple files
+  static Optional<String> parseSnippetConfigPath(String pluginProtocArgument) {
+    return parseFileArgument(
+        pluginProtocArgument, KEY_SNIPPET_CONFIG, PROTOTYPE_SNIPPET_CONFIG_FILE_ENDING);
   }
 
   @VisibleForTesting

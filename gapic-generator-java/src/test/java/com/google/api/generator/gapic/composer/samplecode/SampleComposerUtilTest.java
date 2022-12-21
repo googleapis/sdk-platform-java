@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.samplecode;
 
+import static com.google.cloud.tools.snippetgen.configlanguage.v1.Type.ScalarType.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -22,12 +23,19 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.common.TestProtoLoader;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import org.junit.Test;
 
 public class SampleComposerUtilTest {
@@ -144,5 +152,28 @@ public class SampleComposerUtilTest {
     assertEquals(result.size(), 2);
     assertTrue(result.contains(echoClientSample));
     assertTrue(result.contains(echoClientSampleDiffRpcName));
+  }
+
+    @Test
+    public void testConvertTypeToTypeNode() {
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_BOOL), TypeNode.BOOLEAN);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_FLOAT), TypeNode.FLOAT);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_INT64), TypeNode.LONG);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_FIXED64), TypeNode.LONG);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_SFIXED64), TypeNode.LONG);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_SINT64), TypeNode.LONG);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_UINT64), TypeNode.INT);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_INT32), TypeNode.INT);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_FIXED32), TypeNode.INT);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_SFIXED32), TypeNode.INT);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_SINT32), TypeNode.INT);
+      assertEquals(SampleComposerUtil.convertScalarTypeToTypeNode(TYPE_STRING), TypeNode.STRING);
+    }
+
+  @Test
+  public void testConvertMessageTypeToReturnType() {
+    String messageType = "google.cloud.speech.v1.CustomClass";
+    assertEquals(SampleComposerUtil.convertMessageTypeToReturnType(messageType), "CustomClass");
+
   }
 }

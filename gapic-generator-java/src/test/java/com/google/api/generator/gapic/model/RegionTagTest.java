@@ -108,6 +108,22 @@ public class RegionTagTest {
     Assert.assertEquals(expected, result);
   }
 
+  // TODO: Add some more testing for configured snippet region tags
+  @Test
+  public void generateRegionTagsValidMissingFields_withDiffTagType() {
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setApiShortName(apiShortName)
+            .setServiceName(serviceName)
+            .setRpcName(rpcName)
+            .setTagType("config")
+            .build();
+
+    String result = regionTag.generate();
+    String expected = "shortname_config_ServiceName_RpcName_sync";
+    Assert.assertEquals(expected, result);
+  }
+
   @Test
   public void generateRegionTagsAllFields() {
     RegionTag regionTag =

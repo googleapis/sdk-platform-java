@@ -1,0 +1,72 @@
+/*
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package google.cloud.speech.v1.samples;
+
+// [START speech_v1_config_Adaptation_CreateCustomClass_Basic_async]
+import com.google.api.core.ApiFuture;
+import com.google.cloud.speech.v1.CustomClass.ClassItem;
+
+/**
+ * AUTO-GENERATED DOCUMENTATION
+ *
+ * <p>Custom Class Creation
+ *
+ * <p>Shows how to create a custom class
+ *
+ * <p>Returns google.cloud.speech.v1.CustomClass
+ *
+ * @param parent The custom class parent element
+ * @param customClassId The id for the custom class
+ */
+public class CreateCustomClass {
+
+  public static void main(String[] args) throws Exception {
+    String parent = "projects/[PROJECT]/locations/us";
+    String customClassId = "passengerships";
+    asyncCreateCustomClass(parent, customClassId);
+  }
+
+  public static void asyncCreateCustomClass(String parent, String customClassId) throws Exception {
+    String endpoint = "us-speech.googleapis.com:443";
+    AdaptationSettings adaptationSettings =
+        AdaptationSettings.newBuilder().setEndpoint(endpoint).build();
+    try (AdaptationClient adaptationClient = AdaptationClient.create(adaptationSettings)) {
+      CreateCustomClassRequest createCustomClassRequest =
+          CreateCustomClassRequest.newBuilder()
+              .setParent(parent)
+              .setCustomClassId(customClassId)
+              .setCustomClass(
+                  CustomClass.newBuilder()
+                      .addItems(
+                          CustomClass.ClassItem.newBuilder().setValue(Titanic),
+                          CustomClass.ClassItem.newBuilder().setValue(RMSQueenMary))
+                      .build())
+              .build();
+      System.out.println("Calling the CreateCustomClass operation.");
+      ApiFuture<CustomClass> future =
+          adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
+      CustomClass createdCustomClass = future.get();
+      System.out.println("A Custom Class with the following name has been created.");
+      System.out.println("createdCustomClass.getName()");
+      System.out.println("The Custom class contains the following items.");
+      for (ClassItem item : createdCustomClass.getItemsList()) {
+        System.out.println(item);
+      }
+    }
+  }
+}
+// [END speech_v1_config_Adaptation_CreateCustomClass_Basic_async]
