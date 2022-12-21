@@ -3,7 +3,7 @@
 
 gapic-generator-java:2.12.0:2.12.1-SNAPSHOT
 api-common:2.3.1:2.3.1
-gax:2.20.1:2.20.1
+gax:2.20.1:2.20.2-SNAPSHOT
 gax-grpc:2.20.1:2.20.1
 gax-httpjson:0.105.1:0.105.1
 proto-google-common-protos:2.11.0:2.11.1-SNAPSHOT

@@ -92,7 +92,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax-bom</artifactId>
-        <version>2.20.1</version><!-- {x-version-update:gax:current} -->
+        <version>2.20.2-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>

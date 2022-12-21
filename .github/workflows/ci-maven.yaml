@@ -74,10 +74,16 @@ jobs:
         distribution: temurin
         cache: maven
     - run: java -version
+    - name: Install modules outside gapic-generator-java
+      shell: bash
+      run: |
+        mvn -B -ntp install --projects '!gapic-generator-java' \
+            -Dcheckstyle.skip -Dfmt.skip -DskipTests
     - name: Run test only for gapic-generator-java
       shell: bash
       run: |
-        mvn -B -ntp verify --projects 'gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip
+        mvn -B -ntp verify --projects 'gapic-generator-java' \
+            -Dcheckstyle.skip -Dfmt.skip
 
   lint:
     runs-on: ubuntu-latest
