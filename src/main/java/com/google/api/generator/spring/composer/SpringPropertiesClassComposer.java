@@ -138,16 +138,19 @@ public class SpringPropertiesClassComposer implements ClassComposer {
             true,
             defaultCredentialScopes,
             nestedPropertyAnnotations);
+    statements.add(SpringPropertiesCommentComposer.createCredentialsPropertyComment());
     statements.add(credentialsStatement);
     //   private String quotaProjectId;
     ExprStatement quotaProjectIdVarStatement =
         ComposerUtils.createMemberVarStatement(
             "quotaProjectId", TypeNode.STRING, false, null, null);
+    statements.add(SpringPropertiesCommentComposer.createQuotaProjectIdPropertyComment());
     statements.add(quotaProjectIdVarStatement);
     //   private Integer executorThreadCount;
     ExprStatement executorThreadCountVarStatement =
         ComposerUtils.createMemberVarStatement(
             "executorThreadCount", TypeNode.INT_OBJECT, false, null, null);
+    statements.add(SpringPropertiesCommentComposer.createExecutorThreadCountPropertyComment());
     statements.add(executorThreadCountVarStatement);
     if (hasRestOption) {
       ExprStatement useRestVarStatement =
@@ -158,20 +161,25 @@ public class SpringPropertiesClassComposer implements ClassComposer {
               ValueExpr.withValue(
                   PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()),
               null);
+      statements.add(SpringPropertiesCommentComposer.createUseRestPropertyComment());
       statements.add(useRestVarStatement);
     }
     //   private Retry retry;
     ExprStatement retryPropertiesStatement =
         ComposerUtils.createMemberVarStatement(
             "retry", types.get("Retry"), false, null, nestedPropertyAnnotations);
+    statements.add(SpringPropertiesCommentComposer.createServiceRetryPropertyComment());
     statements.add(retryPropertiesStatement);
 
     for (Method method : service.methods()) {
-      String methodPropertiesVarName =
-          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "Retry";
+      String methodNameLowerCamel =
+          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
+      String methodPropertiesVarName = methodNameLowerCamel + "Retry";
       ExprStatement methodRetryPropertiesStatement =
           ComposerUtils.createMemberVarStatement(
               methodPropertiesVarName, types.get("Retry"), false, null, nestedPropertyAnnotations);
+      statements.add(
+          SpringPropertiesCommentComposer.createMethodRetryPropertyComment(methodNameLowerCamel));
       statements.add(methodRetryPropertiesStatement);
     }
 
