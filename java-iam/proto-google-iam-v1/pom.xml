@@ -9,7 +9,7 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-iam-parent</artifactId>
-    <version>1.6.23-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v1:current} -->
+    <version>1.6.23</version><!-- {x-version-update:proto-google-iam-v1:current} -->
   </parent>
   <dependencies>
     <dependency>
