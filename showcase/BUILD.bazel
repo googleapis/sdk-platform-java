@@ -57,3 +57,82 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
     ],
 )
+
+# Golden File Directories
+filegroup(
+    name = "gapic_showcase_files",
+    srcs = glob(["gapic-showcase/src/**"]),
+)
+
+filegroup(
+    name = "grpc_gapic_showcase_files",
+    srcs = glob(["grpc-gapic-showcase-v1beta1/src/**"]),
+)
+
+filegroup(
+    name = "proto_gapic_showcase_files",
+    srcs = glob(["proto-gapic-showcase-v1beta1/src/**"]),
+)
+
+# GAPIC Showcase : Update and Verify
+GAPIC_DATA = [
+    "showcase_java_gapic_srcjar_raw.srcjar",
+    ":gapic_showcase_files",
+    "//showcase:showcase_java_gapic",
+]
+
+sh_binary(
+    name = "update_gapic",
+    srcs = ["//showcase/scripts:update.sh"],
+    args = ["gapic"],
+    data = GAPIC_DATA,
+)
+
+sh_binary(
+    name = "verify_gapic",
+    srcs = ["//showcase/scripts:verify.sh"],
+    args = ["gapic"],
+    data = GAPIC_DATA,
+)
+
+# GRPC Showcase : Update and Verify
+GRPC_DATA = [
+    "libshowcase_java_grpc-src.jar",
+    ":grpc_gapic_showcase_files",
+    "//showcase:showcase_java_grpc",
+]
+
+sh_binary(
+    name = "update_grpc",
+    srcs = ["//showcase/scripts:update.sh"],
+    args = ["grpc"],
+    data = GRPC_DATA,
+)
+
+sh_binary(
+    name = "verify_grpc",
+    srcs = ["//showcase/scripts:verify.sh"],
+    args = ["grpc"],
+    data = GRPC_DATA,
+)
+
+# Proto Showcase : Update and Verify
+PROTO_DATA = [
+    "proto-google-cloud-showcase-v1beta1-java.tar.gz",
+    ":proto_gapic_showcase_files",
+    "//showcase:showcase_java_proto",
+]
+
+sh_binary(
+    name = "update_proto",
+    srcs = ["//showcase/scripts:update.sh"],
+    args = ["proto"],
+    data = PROTO_DATA,
+)
+
+sh_binary(
+    name = "verify_proto",
+    srcs = ["//showcase/scripts:verify.sh"],
+    args = ["proto"],
+    data = PROTO_DATA,
+)
