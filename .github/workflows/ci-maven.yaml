@@ -9,21 +9,19 @@ env:
 jobs:
   maven-install:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: [ 11, 17 ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v3
         with:
-          java-version: ${{ matrix.java }}
+          java-version: 11
           distribution: temurin
           cache: maven
       - run: java -version
       - name: Install maven modules
-        run: mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+        run: mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
 
   units:
+    needs: maven-install
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -42,6 +40,7 @@ jobs:
               -Dfmt.skip
 
   units-java8:
+    needs: maven-install
     name: "units (8) except gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
@@ -82,6 +81,7 @@ jobs:
               -Dfmt.skip
 
   units-java8-gapic-generator-java:
+    needs: maven-install
     name: "units (8) for gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
@@ -109,6 +109,7 @@ jobs:
               -Dcheckstyle.skip -Dfmt.skip
 
   lint:
+    needs: maven-install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
