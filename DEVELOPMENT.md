@@ -172,6 +172,15 @@ Note:
 
 * `-P enable-golden-tests` is optional. These tests do not require a local server.
 
+### Update the Golden Showcase Files
+
+Open a new terminal window in the root project directory.
+
+```shell
+$ cd showcase
+$ mvn compile -P update
+```
+
 ## Running the Plugin
 
 1. Clone [googleapis](https://github.com/googleapis/googleapis) and
