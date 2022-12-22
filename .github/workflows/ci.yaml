@@ -70,8 +70,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: ${{ runner.os }}-${{ secrets.CACHE_VERSION }}
-
+          key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
+          restore-keys: ${{ runner.os }}-
       - name: Bazel Cache Not Found
         if: steps.cache-bazel.outputs.cache-hit != 'true'
         run: |
@@ -81,11 +81,8 @@ jobs:
         run: |
           echo -n "Cache found. Cache size: "
           du -sh ~/.cache/bazel
-          echo "If the cache seems broken, update the CACHE_VERSION secret in"
-          echo "https://github.com/googleapis/googleapis-discovery/settings/secrets/actions"
-          echo "(use any random string, any GUID will work)"
-          echo "and it will start over with a clean cache."
-          echo "The old one will disappear after 7 days."
+          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
+          echo "The old cache will disappear after 7 days."
 
       - name: Gradle Build Generated Storage Client Library
         run: |
