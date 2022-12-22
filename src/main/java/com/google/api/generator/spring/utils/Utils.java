@@ -75,12 +75,10 @@ public class Utils {
     // Returns unique prefix for setting properties and enabling autoconfiguration
     // Pattern: [package-name].spring.auto.[service-name]
     // e.g. for vision's ImageAnnotator service:
-    // com.google.cloud.vision.v1.spring.auto.image-annotator
+    // com.google.cloud.vision.v1.image-annotator
     // Service name is converted to lower hyphen as required by ConfigurationPropertyName
     // https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/properties/source/ConfigurationPropertyName.html
-    return packageName
-        + ".spring.auto."
-        + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
+    return packageName + "." + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
   }
 
   private static TypeStore createStaticTypes() {
