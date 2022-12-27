@@ -49,7 +49,7 @@ jobs:
           popd
 
   build-java8-except-gapic-generator-java:
-    name: "unit tests except gapic-generator-java in Java 8"
+    name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -89,7 +89,7 @@ jobs:
               -Dfmt.skip
 
   build-java8-gapic-generator-java:
-    name: "unit and integration tests for gapic-generator-java in Java 8"
+    name: "build(8) for gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
