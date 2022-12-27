@@ -7,20 +7,20 @@ name: ci
 jobs:
 #  Due to the circular dependencies in the integration tests between googleapis and gapic-generator-java,
 #  this check will not work until we update googleapis to use the Maven jar
-#  generate-client-libraries:
-#    runs-on: ubuntu-latest
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        java: [ 8, 11 ]
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-java@v3
-#        with:
-#          java-version: ${{ matrix.java }}
-#          distribution: temurin
-#      - run: java -version
-#      - run: bazelisk version
+  generate-client-libraries:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 8, 11 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+      - run: java -version
+      - run: bazelisk version
 #      - name: Bazel File Cache Setup
 #        id: cache-bazel
 #        uses: actions/cache@v3
