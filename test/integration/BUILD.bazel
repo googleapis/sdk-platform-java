@@ -14,8 +14,6 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 API_GAPIC_TARGETS = {
     # basic case
     "asset": "@com_google_googleapis//google/cloud/asset/v1:asset_java_gapic",
-    # Showcase provides wide feature set coverage.
-    "showcase": "//test/showcase:showcase_java_gapic",
     # Check that the capital name edge case is handled.
     "credentials": "@com_google_googleapis//google/iam/credentials/v1:credentials_java_gapic",
     # Mixin-only special-case API can build on its own.
@@ -76,20 +74,6 @@ java_gapic_test(
         "com.google.cloud.asset.v1.AssetServiceClientTest",
     ],
     runtime_deps = ["@com_google_googleapis//google/cloud/asset/v1:asset_java_gapic_test"],
-)
-
-# Showcase API.
-java_gapic_test(
-    name = "showcase_java_gapic_test_suite",
-    test_classes = [
-        "com.google.showcase.v1beta1.ComplianceClientTest",
-        "com.google.showcase.v1beta1.EchoClientTest",
-        "com.google.showcase.v1beta1.IdentityClientTest",
-        "com.google.showcase.v1beta1.MessagingClientTest",
-        "com.google.showcase.v1beta1.SequenceServiceClientTest",
-        "com.google.showcase.v1beta1.TestingClientTest",
-    ],
-    runtime_deps = ["//test/showcase:showcase_java_gapic_test"],
 )
 
 # Redis API.
