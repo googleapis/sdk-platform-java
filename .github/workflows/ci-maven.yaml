@@ -7,7 +7,7 @@ name: ci-maven
 env:
   SHOWCASE_VERSION: 0.25.0
 jobs:
-  units:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,8 +28,27 @@ jobs:
       - name: Integration Tests
         run: |
           bazel --batch test //test/integration/...
+#      - name: Gradle Build Generated Storage Client Library
+#        run: |
+#          echo "Building Storage lib from generated source..."
+#          mkdir /tmp/java-storage
+#          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+#          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+#          pushd /tmp/java-storage/google-cloud-storage-v2-java
+#          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+#          popd
+#
+#      - name: Gradle Build Generated Compute Client Library
+#        run: |
+#          echo "Building Compute lib from generated source..."
+#          mkdir /tmp/java-compute
+#          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+#          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+#          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+#          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+#          popd
 
-  units-java8:
+  build-java8(except gapic-generator-java):
     name: "units (8) except gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +88,7 @@ jobs:
               -Dcheckstyle.skip -Dmaven.compiler.useIncrementalCompilation=false \
               -Dfmt.skip
 
-  units-java8-gapic-generator-java:
+  build-java8-gapic-generator-java:
     name: "units (8) for gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
@@ -90,15 +109,34 @@ jobs:
           distribution: temurin
           cache: maven
       - run: java -version
-      - name: Run test only for gapic-generator-java using Java 8
+      - name: Run unit tests and install gapic-generator-java using Java 8
         shell: bash
         run: |
-          mvn -B -ntp verify --projects 'gapic-generator-java' \
+          mvn -B -ntp install --projects 'gapic-generator-java' \
               -Dcheckstyle.skip -Dfmt.skip
       - run: bazelisk version
       - name: Integration Tests
         run: |
-          bazel --batch test //test/integration/...
+          bazelisk --batch test //test/integration/...
+#      - name: Gradle Build Generated Storage Client Library
+#        run: |
+#          echo "Building Storage lib from generated source..."
+#          mkdir /tmp/java-storage
+#          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+#          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+#          pushd /tmp/java-storage/google-cloud-storage-v2-java
+#          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+#          popd
+#
+#      - name: Gradle Build Generated Compute Client Library
+#        run: |
+#          echo "Building Compute lib from generated source..."
+#          mkdir /tmp/java-compute
+#          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+#          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+#          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+#          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+#          popd
 
   lint:
     runs-on: ubuntu-latest
