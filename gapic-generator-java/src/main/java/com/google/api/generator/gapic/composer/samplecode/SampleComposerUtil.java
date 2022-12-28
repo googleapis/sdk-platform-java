@@ -19,7 +19,6 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -27,14 +26,12 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Expression;
 import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -178,30 +175,31 @@ public class SampleComposerUtil {
   // Get return type from full message Type
   public static String convertMessageTypeToReturnType(String messageType) {
     String[] splitString = messageType.split("\\.");
-    return splitString[splitString.length-1];
+    return splitString[splitString.length - 1];
   }
 
   //   Convert expression type to String
   // TODO: add handling for BytesValue, ComplexValue, MapValue, ConditionalValue
   public static String convertExpressionToString(Expression expression) {
-    if(expression.hasBooleanValue()){
+    if (expression.hasBooleanValue()) {
       return String.valueOf(expression.getBooleanValue());
     }
-    if(expression.hasStringValue()){
+    if (expression.hasStringValue()) {
       return expression.getStringValue();
     }
-    if(expression.hasNameValue()){
+    if (expression.hasNameValue()) {
       String name = JavaStyle.toLowerCamelCase(expression.getNameValue().getName());
-      String path = JavaStyle.toUpperCamelCase(expression.getNameValue().getPathList().stream().collect(Collectors.joining(".")));
-      if(path.length() > 0){
+      String path =
+          JavaStyle.toUpperCamelCase(
+              expression.getNameValue().getPathList().stream().collect(Collectors.joining(".")));
+      if (path.length() > 0) {
         path = ".get" + path + "()";
       }
       return name + path;
     }
-    if(expression.hasComplexValue()){
+    if (expression.hasComplexValue()) {
       return expression.getComplexValue().getPropertiesMap().toString();
-    }
-    else{
+    } else {
       return null;
     }
   }
@@ -209,46 +207,48 @@ public class SampleComposerUtil {
   // Convert Statement of Iteration type to Statement
   // Currently only works for repeated_iteration
   //        List<CustomClass.ClassItem> itemsList = createdCustomClass.getItemsList();
-//        for(items : itemsList){
-//          System.out.println(item)
-//        }
+  //        for(items : itemsList){
+  //          System.out.println(item)
+  //        }
   // TODO: handle for other iteration_types
-  public static Statement convertIterationTypeStatementToStatement(com.google.cloud.tools.snippetgen.configlanguage.v1.Statement statement) {
-    if(statement.hasIteration() && statement.getIteration().hasRepeatedIteration()){
+  public static Statement convertIterationTypeStatementToStatement(
+      com.google.cloud.tools.snippetgen.configlanguage.v1.Statement statement) {
+    if (statement.hasIteration() && statement.getIteration().hasRepeatedIteration()) {
       String name = statement.getIteration().getRepeatedIteration().getCurrentName();
-//      String element = statement.getIteration().getRepeatedIteration().getRepeatedElements();
+      //      String element =
+      // statement.getIteration().getRepeatedIteration().getRepeatedElements();
       TypeNode iterationType =
-              TypeNode.withReference(
-                      VaporReference.builder()
-                              .setName("ClassItem")
-                              .setPakkage("com.google.cloud.speech.v1.CustomClass")
-                              .build());
+          TypeNode.withReference(
+              VaporReference.builder()
+                  .setName("ClassItem")
+                  .setPakkage("com.google.cloud.speech.v1.CustomClass")
+                  .build());
 
       Variable variable = Variable.builder().setName(name).setType(iterationType).build();
       VariableExpr variableExpr =
-              VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+          VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
       VariableExpr objVariableExpr =
-              VariableExpr.builder()
-                      .setVariable(Variable.builder().setType(TypeNode.OBJECT).setName("createdCustomClass").build())
-                      .setIsDecl(true)
-                      .build();
+          VariableExpr.builder()
+              .setVariable(
+                  Variable.builder().setType(TypeNode.OBJECT).setName("createdCustomClass").build())
+              .setIsDecl(true)
+              .build();
 
       MethodInvocationExpr methodExpr =
-              MethodInvocationExpr.builder()
-                      .setExprReferenceExpr(objVariableExpr.toBuilder().setIsDecl(false).build())
-                      .setMethodName("getItemsList")
-                      .build();
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(objVariableExpr.toBuilder().setIsDecl(false).build())
+              .setMethodName("getItemsList")
+              .build();
 
       Statement BodyStatement = ExprStatement.withExpr(systemOutPrint(variableExpr));
 
       ForStatement forStatement =
-              ForStatement.builder()
-                      .setLocalVariableExpr(variableExpr)
-                      .setCollectionExpr(methodExpr)
-                      .setBody(Arrays.asList(BodyStatement))
-                      .build();
-
+          ForStatement.builder()
+              .setLocalVariableExpr(variableExpr)
+              .setCollectionExpr(methodExpr)
+              .setBody(Arrays.asList(BodyStatement))
+              .build();
 
       return forStatement;
     }
@@ -270,36 +270,33 @@ public class SampleComposerUtil {
 
   private static MethodInvocationExpr composeSystemOutPrint(Expr content) {
     VaporReference out =
-            VaporReference.builder()
-                    .setEnclosingClassNames("System")
-                    .setName("out")
-                    .setPakkage("java.lang")
-                    .build();
-    return MethodInvocationExpr.builder()
-            .setStaticReferenceType(TypeNode.withReference(out))
-            .setMethodName("println")
-            .setArguments(content)
+        VaporReference.builder()
+            .setEnclosingClassNames("System")
+            .setName("out")
+            .setPakkage("java.lang")
             .build();
+    return MethodInvocationExpr.builder()
+        .setStaticReferenceType(TypeNode.withReference(out))
+        .setMethodName("println")
+        .setArguments(content)
+        .build();
   }
 
   public static MethodInvocationExpr setNestedValue(String content) {
     return composeNestedValue(ValueExpr.withValue(StringObjectValue.withValue(content)));
   }
 
-
   private static MethodInvocationExpr composeNestedValue(Expr content) {
     VaporReference out =
-            VaporReference.builder()
-                    .setEnclosingClassNames("CustomClass")
-                    .setName("out")
-                    .setPakkage("java.lang")
-                    .build();
-    return MethodInvocationExpr.builder()
-            .setStaticReferenceType(TypeNode.withReference(out))
-            .setMethodName("println")
-            .setArguments(content)
+        VaporReference.builder()
+            .setEnclosingClassNames("CustomClass")
+            .setName("out")
+            .setPakkage("java.lang")
             .build();
+    return MethodInvocationExpr.builder()
+        .setStaticReferenceType(TypeNode.withReference(out))
+        .setMethodName("println")
+        .setArguments(content)
+        .build();
   }
-
-
 }

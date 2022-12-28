@@ -21,17 +21,13 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
-import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -168,27 +164,23 @@ public class SampleComposer {
 
   // TODO: update to include valid return type
   public static MethodDefinition composeSampleMethodWithSpecifiedReturnType(
-          String sampleMethodName,
-          List<VariableExpr> sampleMethodArgs,
-          List<Statement> sampleMethodBody,
-          String returnType,
-          String pakkageName) {
+      String sampleMethodName,
+      List<VariableExpr> sampleMethodArgs,
+      List<Statement> sampleMethodBody,
+      String returnType,
+      String pakkageName) {
     TypeNode returnTypeNode =
-            TypeNode.withReference(
-                    VaporReference.builder()
-                            .setName(returnType)
-                            .setPakkage(pakkageName)
-                            .build());
+        TypeNode.withReference(
+            VaporReference.builder().setName(returnType).setPakkage(pakkageName).build());
     return MethodDefinition.builder()
-            .setScope(ScopeNode.PUBLIC)
-            .setIsStatic(true)
-            .setReturnType(returnTypeNode)
-            .setName(sampleMethodName)
-            .setArguments(sampleMethodArgs)
-            .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
-            .setBody(sampleMethodBody)
-            //.setReturnExpr(ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue(returnType))))
-            .build();
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(returnTypeNode)
+        .setName(sampleMethodName)
+        .setArguments(sampleMethodArgs)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(sampleMethodBody)
+        // .setReturnExpr(ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue(returnType))))
+        .build();
   }
-
 }

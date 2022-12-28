@@ -15,7 +15,6 @@
 package com.google.api.generator.gapic.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -27,21 +26,18 @@ import com.google.api.generator.gapic.protoparser.SnippetConfigParser;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.google.cloud.tools.snippetgen.configlanguage.v1.Type;
 import org.junit.Test;
 
 public class GapicSnippetConfigTest {
   private static final String TESTDATA_DIRECTORY = "gapic-generator-java/src/test/resources/";
   private static final String jsonFilename = "configured_snippet_config.json";
   private static final Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
-  private static final Optional<GapicSnippetConfig> snippetConfigOpt = SnippetConfigParser.parse(jsonPath.toString());
+  private static final Optional<GapicSnippetConfig> snippetConfigOpt =
+      SnippetConfigParser.parse(jsonPath.toString());
   private static final GapicSnippetConfig snippetConfig = snippetConfigOpt.get();
 
   // TODO Add more tests
@@ -57,67 +53,65 @@ public class GapicSnippetConfigTest {
   @Test
   public void snippetConfig_composeVariableExpr() {
     VariableExpr strVariableExpr1 =
-            VariableExpr.builder()
-                    .setVariable(Variable.builder().setType(TypeNode.STRING).setName("parent").build())
-                    .setIsDecl(true)
-                    .build();
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setType(TypeNode.STRING).setName("parent").build())
+            .setIsDecl(true)
+            .build();
 
     AssignmentExpr strVarAssignment1 =
-            AssignmentExpr.builder()
-                    .setVariableExpr(strVariableExpr1)
-                    .setValueExpr(
-                            ValueExpr.withValue(StringObjectValue.withValue("projects/[PROJECT]/locations/us")))
-                    .build();
+        AssignmentExpr.builder()
+            .setVariableExpr(strVariableExpr1)
+            .setValueExpr(
+                ValueExpr.withValue(StringObjectValue.withValue("projects/[PROJECT]/locations/us")))
+            .build();
 
     VariableExpr strVariableExpr2 =
-            VariableExpr.builder()
-                    .setVariable(Variable.builder().setType(TypeNode.STRING).setName("customClassId").build())
-                    .setIsDecl(true)
-                    .build();
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setType(TypeNode.STRING).setName("customClassId").build())
+            .setIsDecl(true)
+            .build();
 
     AssignmentExpr strVarAssignment2 =
-            AssignmentExpr.builder()
-                    .setVariableExpr(strVariableExpr2)
-                    .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue("passengerships")))
-                    .build();
+        AssignmentExpr.builder()
+            .setVariableExpr(strVariableExpr2)
+            .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue("passengerships")))
+            .build();
 
     List<VariableExpr> sampleVariableExpr = Arrays.asList(strVariableExpr1, strVariableExpr2);
-    List<AssignmentExpr> sampleAssignmentExpr =
-            Arrays.asList(strVarAssignment1, strVarAssignment2);
+    List<AssignmentExpr> sampleAssignmentExpr = Arrays.asList(strVarAssignment1, strVarAssignment2);
 
+    LinkedHashMap<String, List> configSignatureParameters =
+        GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig);
+    List<VariableExpr> listOfVarExpr =
+        GapicSnippetConfig.composeMainMethodArgs(configSignatureParameters).keySet().stream()
+            .collect(Collectors.toList());
+    List<AssignmentExpr> listOfAssignmentExpr =
+        GapicSnippetConfig.composeMainMethodArgs(configSignatureParameters).values().stream()
+            .collect(Collectors.toList());
 
-    LinkedHashMap<String, List> configSignatureParameters = GapicSnippetConfig.getConfiguredSnippetSignatureParameters(snippetConfig);
-    List<VariableExpr> listOfVarExpr = GapicSnippetConfig.composeMainMethodArgs(configSignatureParameters).keySet().stream().collect(Collectors.toList());
-    List<AssignmentExpr> listOfAssignmentExpr = GapicSnippetConfig.composeMainMethodArgs(configSignatureParameters).values().stream().collect(Collectors.toList());
-
-    assertEquals(
-            sampleVariableExpr,
-            listOfVarExpr);
-    assertEquals(
-            sampleAssignmentExpr,
-            listOfAssignmentExpr);
+    assertEquals(sampleVariableExpr, listOfVarExpr);
+    assertEquals(sampleAssignmentExpr, listOfAssignmentExpr);
   }
 
   @Test
   public void snippetConfig_getSnippetEndpoint() {
     assertEquals(
-            "us-speech.googleapis.com:443", GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig));
+        "us-speech.googleapis.com:443",
+        GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig));
   }
 
   @Test
-  public void  parseSnippetSignatureReturnType_test() {
+  public void parseSnippetSignatureReturnType_test() {
     String actualReturnValue = GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig);
 
-    assertEquals(
-            "google.cloud.speech.v1.CustomClass", actualReturnValue);
+    assertEquals("google.cloud.speech.v1.CustomClass", actualReturnValue);
   }
 
   @Test
-  public void  getSnippetResponseValue_test() {
+  public void getSnippetResponseValue_test() {
     String actualResponseValue = GapicSnippetConfig.getResponseValue(snippetConfig);
 
-    assertEquals(
-            "createdCustomClass", actualResponseValue);
+    assertEquals("createdCustomClass", actualResponseValue);
   }
-
 }
