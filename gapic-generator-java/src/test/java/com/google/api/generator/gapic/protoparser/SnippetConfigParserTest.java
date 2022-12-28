@@ -28,11 +28,11 @@ import java.util.Optional;
 import org.junit.Test;
 
 public class SnippetConfigParserTest {
-  private static final String JSON_DIRECTORY = "src/test/resources/";
+  private static final String JSON_DIRECTORY = "gapic-generator-java/src/test/resources/";
 
   // TODO: Update tests
   @Test
-  public void parseSnippetConfig_metadata_only() {
+  public void parseSnippetConfig() {
     String jsonFilename = "configured_snippet_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
     Optional<SnippetConfig> configOpt = SnippetConfigParser.parseFile(jsonPath.toString());

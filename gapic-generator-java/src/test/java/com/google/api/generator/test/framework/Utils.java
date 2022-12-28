@@ -45,7 +45,7 @@ public class Utils {
   }
 
   private static void saveCodeToFile(String relativeGoldenDir, String fileName, String codegen) {
-    Path testOutputDir = Paths.get("src", "test", "java", relativeGoldenDir);
+    Path testOutputDir = Paths.get("gapic-generator-java","src", "test", "java", relativeGoldenDir);
 
     // Auto-detect project workspace when running `bazel run //:update_TargetTest`.
     // TODO: remove when we don't use Bazel.
@@ -71,7 +71,7 @@ public class Utils {
   }
 
   public static String getGoldenDir(Class<?> clazz) {
-    return "src/test/java/" + getTestoutGoldenDir(clazz);
+    return "gapic-generator-java/src/test/java/" + getTestoutGoldenDir(clazz);
   }
 
   public static class SaveCodegenToFileException extends RuntimeException {
