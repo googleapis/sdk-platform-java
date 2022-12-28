@@ -125,8 +125,11 @@ http_archive(
 # Showcase
 _showcase_commit = "90d73532a0cab753a85f45c158394f24fc21d91a"
 
+_showcase_sha256 = "0f582541a379be0746e6b8bc5af3df511581d4b1f18f7dfb9ce203be1a64cef1"
+
 http_archive(
     name = "com_google_gapic_showcase",
+    sha256 = _showcase_sha256,
     strip_prefix = "gapic-showcase-%s" % _showcase_commit,
     urls = [
         # "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
