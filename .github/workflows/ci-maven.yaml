@@ -25,24 +25,24 @@ jobs:
           mvn install --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip
       - run: bazelisk version
-      - name: Bazel File Cache Setup
-          id: cache-bazel
-          uses: actions/cache@v3
-          with:
-            path: ~/.cache/bazel
-            key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
-            restore-keys: ${{ runner.os }}-
-      - name: Bazel Cache Not Found
-        if: steps.cache-bazel.outputs.cache-hit != 'true'
-        run: |
-          echo "No cache found."
-      - name: Bazel Cache Found
-        if: steps.cache-bazel.outputs.cache-hit == 'true'
-        run: |
-          echo -n "Cache found. Cache size: "
-          du -sh ~/.cache/bazel          
-          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
-          echo "The old cache will disappear after 7 days."
+#      - name: Bazel File Cache Setup
+#          id: cache-bazel
+#          uses: actions/cache@v3
+#          with:
+#            path: ~/.cache/bazel
+#            key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
+#            restore-keys: ${{ runner.os }}-
+#      - name: Bazel Cache Not Found
+#        if: steps.cache-bazel.outputs.cache-hit != 'true'
+#        run: |
+#          echo "No cache found."
+#      - name: Bazel Cache Found
+#        if: steps.cache-bazel.outputs.cache-hit == 'true'
+#        run: |
+#          echo -n "Cache found. Cache size: "
+#          du -sh ~/.cache/bazel
+#          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
+#          echo "The old cache will disappear after 7 days."
 
       - name: Integration Tests
         run: |
@@ -134,24 +134,24 @@ jobs:
           mvn -B -ntp install --projects 'gapic-generator-java' \
               -Dcheckstyle.skip -Dfmt.skip
       - run: bazelisk version
-      - name: Bazel File Cache Setup
-          id: cache-bazel
-          uses: actions/cache@v3
-          with:
-            path: ~/.cache/bazel
-            key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
-            restore-keys: ${{ runner.os }}-
-      - name: Bazel Cache Not Found
-        if: steps.cache-bazel.outputs.cache-hit != 'true'
-        run: |
-          echo "No cache found."
-      - name: Bazel Cache Found
-        if: steps.cache-bazel.outputs.cache-hit == 'true'
-        run: |
-          echo -n "Cache found. Cache size: "
-          du -sh ~/.cache/bazel          
-          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
-          echo "The old cache will disappear after 7 days."
+#      - name: Bazel File Cache Setup
+#          id: cache-bazel
+#          uses: actions/cache@v3
+#          with:
+#            path: ~/.cache/bazel
+#            key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
+#            restore-keys: ${{ runner.os }}-
+#      - name: Bazel Cache Not Found
+#        if: steps.cache-bazel.outputs.cache-hit != 'true'
+#        run: |
+#          echo "No cache found."
+#      - name: Bazel Cache Found
+#        if: steps.cache-bazel.outputs.cache-hit == 'true'
+#        run: |
+#          echo -n "Cache found. Cache size: "
+#          du -sh ~/.cache/bazel
+#          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
+#          echo "The old cache will disappear after 7 days."
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
