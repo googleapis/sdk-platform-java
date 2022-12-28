@@ -32,17 +32,17 @@ jobs:
             path: ~/.cache/bazel
             key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
             restore-keys: ${{ runner.os }}-
-            - name: Bazel Cache Not Found
-              if: steps.cache-bazel.outputs.cache-hit != 'true'
-              run: |
-                echo "No cache found."
-            - name: Bazel Cache Found
-              if: steps.cache-bazel.outputs.cache-hit == 'true'
-              run: |
-                echo -n "Cache found. Cache size: "
-                du -sh ~/.cache/bazel          
-                echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
-                echo "The old cache will disappear after 7 days."
+      - name: Bazel Cache Not Found
+        if: steps.cache-bazel.outputs.cache-hit != 'true'
+        run: |
+          echo "No cache found."
+      - name: Bazel Cache Found
+        if: steps.cache-bazel.outputs.cache-hit == 'true'
+        run: |
+          echo -n "Cache found. Cache size: "
+          du -sh ~/.cache/bazel          
+          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
+          echo "The old cache will disappear after 7 days."
 
       - name: Integration Tests
         run: |
@@ -141,17 +141,17 @@ jobs:
             path: ~/.cache/bazel
             key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
             restore-keys: ${{ runner.os }}-
-            - name: Bazel Cache Not Found
-              if: steps.cache-bazel.outputs.cache-hit != 'true'
-              run: |
-                echo "No cache found."
-            - name: Bazel Cache Found
-              if: steps.cache-bazel.outputs.cache-hit == 'true'
-              run: |
-                echo -n "Cache found. Cache size: "
-                du -sh ~/.cache/bazel          
-                echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
-                echo "The old cache will disappear after 7 days."
+      - name: Bazel Cache Not Found
+        if: steps.cache-bazel.outputs.cache-hit != 'true'
+        run: |
+          echo "No cache found."
+      - name: Bazel Cache Found
+        if: steps.cache-bazel.outputs.cache-hit == 'true'
+        run: |
+          echo -n "Cache found. Cache size: "
+          du -sh ~/.cache/bazel          
+          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
+          echo "The old cache will disappear after 7 days."
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
