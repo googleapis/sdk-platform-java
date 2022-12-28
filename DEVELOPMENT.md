@@ -49,13 +49,6 @@
     mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
     ```
 
--   Update all unit test golden files:
-
-    ```sh
-    mvn test -DupdateUnitGoldens
-    ```
-    This is inefficient for updating only a few golden files, as it runs all tests.
-
 - Update all unit test golden files:
 
   ```sh
@@ -64,10 +57,6 @@
 
 - Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
-  ```sh
-  bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
-  ```
-  or
   ```sh
   mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
   ```
