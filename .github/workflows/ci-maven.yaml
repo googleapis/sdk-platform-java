@@ -33,11 +33,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
           restore-keys: ${{ runner.os }}-
       - name: Bazel Cache Not Found
-        if: steps.cache-bazel-build.outputs.cache-hit != 'true'
+        if: steps.cache-bazel.outputs.cache-hit != 'true'
         run: |
           echo "No cache found."
       - name: Bazel Cache Found
-        if: steps.cache-bazel-build.outputs.cache-hit == 'true'
+        if: steps.cache-bazel.outputs.cache-hit == 'true'
         run: |
           echo -n "Cache found. Cache size: "
           du -sh ~/.cache/bazel
@@ -146,7 +146,7 @@ jobs:
         run: |
           echo "No cache found."
       - name: Bazel Cache Found
-        if: steps.cache-bazel-build-8.outputs.cache-hit == 'true'
+        if: steps.cache-bazel.outputs.cache-hit == 'true'
         run: |
           echo -n "Cache found. Cache size: "
           du -sh ~/.cache/bazel
