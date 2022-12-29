@@ -7,6 +7,8 @@
   <version>2.12.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
 
   <properties>
+    <checkstyle.skip>true</checkstyle.skip>
+    <animal.sniffer.skip>true</animal.sniffer.skip>
     <clirr.skip>true</clirr.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
