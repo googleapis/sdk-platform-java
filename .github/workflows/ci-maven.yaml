@@ -25,18 +25,18 @@ jobs:
           mvn install --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip
       - run: bazelisk version
-      - name: Bazel File Cache Setup
+      - name: Bazel File Cache Setup${{ matrix.java }}
           id: cache-bazel-build
           uses: actions/cache@v3
           with:
             path: ~/.cache/bazel
             key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
             restore-keys: ${{ runner.os }}-
-      - name: Bazel Cache Not Found
+      - name: Bazel Cache Not Found${{ matrix.java }}
         if: steps.cache-bazel-build.outputs.cache-hit != 'true'
         run: |
           echo "No cache found."
-      - name: Bazel Cache Found
+      - name: Bazel Cache Found${{ matrix.java }}
         if: steps.cache-bazel-build.outputs.cache-hit == 'true'
         run: |
           echo -n "Cache found. Cache size: "
@@ -134,18 +134,18 @@ jobs:
           mvn -B -ntp install --projects 'gapic-generator-java' \
               -Dcheckstyle.skip -Dfmt.skip
       - run: bazelisk version
-      - name: Bazel File Cache Setup
+      - name: Bazel File Cache Setup(8)
           id: cache-bazel-build-8
           uses: actions/cache@v3
           with:
             path: ~/.cache/bazel
             key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
             restore-keys: ${{ runner.os }}-
-      - name: Bazel Cache Not Found
+      - name: Bazel Cache Not Found(8)
         if: steps.cache-bazel-build-8.outputs.cache-hit != 'true'
         run: |
           echo "No cache found."
-      - name: Bazel Cache Found
+      - name: Bazel Cache Found(8)
         if: steps.cache-bazel-build-8.outputs.cache-hit == 'true'
         run: |
           echo -n "Cache found. Cache size: "
