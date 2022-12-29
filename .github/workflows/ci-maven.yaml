@@ -32,11 +32,11 @@ jobs:
           path: ~/.cache/bazel
           key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
           restore-keys: ${{ runner.os }}-
-      - name: Bazel Cache Not Found${{ matrix.java }}
+      - name: Bazel Cache Not Found
         if: steps.cache-bazel-build.outputs.cache-hit != 'true'
         run: |
           echo "No cache found."
-      - name: Bazel Cache Found${{ matrix.java }}
+      - name: Bazel Cache Found
         if: steps.cache-bazel-build.outputs.cache-hit == 'true'
         run: |
           echo -n "Cache found. Cache size: "
