@@ -140,6 +140,7 @@ jobs:
         with:
           path: ~/.cache/bazel
           key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
+          restore-keys: ${{ runner.os }}
       - name: Bazel Cache Not Found
         if: steps.cache-bazel.outputs.cache-hit != 'true'
         run: |
