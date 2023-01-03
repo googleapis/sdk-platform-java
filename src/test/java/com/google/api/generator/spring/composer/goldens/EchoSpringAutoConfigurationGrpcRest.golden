@@ -67,7 +67,7 @@ public class EchoSpringAutoConfiguration {
    * useRest option is provided to use HTTP transport instead
    */
   @Bean
-  @ConditionalOnMissingBean
+  @ConditionalOnMissingBean(value = "defaultEchoTransportChannelProvider")
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
     return EchoSettings.defaultTransportChannelProvider();
   }
