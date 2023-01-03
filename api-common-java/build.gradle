@@ -32,7 +32,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.8"
 }
 
 // Dependencies
@@ -46,7 +46,7 @@ ext {
       auto_value_annotations: 'com.google.auto.value:auto-value-annotations:1.10.1',
       guava: 'com.google.guava:guava:31.1-jre',
       jsr305: 'com.google.code.findbugs:jsr305:3.0.2',
-      error_prone_annotations: 'com.google.errorprone:error_prone_annotations:2.16',
+      error_prone_annotations: 'com.google.errorprone:error_prone_annotations:2.17.0',
 
       // Testing
       junit: 'junit:junit:4.13.2',
