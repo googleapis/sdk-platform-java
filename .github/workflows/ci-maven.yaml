@@ -89,6 +89,7 @@ jobs:
         shell: bash
         run: |
           mvn -V -B -ntp surefire:test --projects 'gapic-generator-java'
+          mvn -B -ntp clirr:check --projects 'gapic-generator-java'
 
   lint:
     runs-on: ubuntu-latest
