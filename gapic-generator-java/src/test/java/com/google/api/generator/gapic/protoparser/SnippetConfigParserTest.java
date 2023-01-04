@@ -28,7 +28,7 @@ import java.util.Optional;
 import org.junit.Test;
 
 public class SnippetConfigParserTest {
-  private static final String JSON_DIRECTORY = "gapic-generator-java/src/test/resources/";
+  private static final String JSON_DIRECTORY = "src/test/resources/";
 
   // TODO: Update tests
   @Test

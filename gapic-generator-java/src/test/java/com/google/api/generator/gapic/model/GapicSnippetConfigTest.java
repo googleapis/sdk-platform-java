@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 public class GapicSnippetConfigTest {
-  private static final String TESTDATA_DIRECTORY = "gapic-generator-java/src/test/resources/";
+  private static final String TESTDATA_DIRECTORY = "src/test/resources/";
   private static final String jsonFilename = "configured_snippet_config.json";
   private static final Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
   private static final Optional<GapicSnippetConfig> snippetConfigOpt =

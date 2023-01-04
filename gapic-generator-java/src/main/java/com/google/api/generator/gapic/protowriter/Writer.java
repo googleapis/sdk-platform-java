@@ -195,9 +195,9 @@ public class Writer {
   private static String getPath(String pakkage, String className) {
     String path = pakkage.replaceAll("\\.", "/");
     if (className.startsWith("Mock") || className.endsWith("Test")) {
-      path = "gapic-generator-java/src/test/java/" + path;
+      path = "src/test/java/" + path;
     } else {
-      path = "gapic-generator-java/src/main/java/" + path;
+      path = "src/main/java/" + path;
     }
 
     // Resource name helpers go into the protobuf package. Denote this with "proto/src/main/*".
