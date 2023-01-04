@@ -58,7 +58,6 @@ else
   modules=($(echo "${MODULE_LIST}" | tr ',' ' '))
 fi
 
-# TODO: Maps docs exclusion logic to be removed once we move to correct location on devsite. See b/262712184 and b/262600829
 excluded_modules=('gapic-generator-java-pom-parent' 'gapic-generator-java' 'gapic-generator-java-bom' )
 failed_modules=()
 
@@ -71,7 +70,7 @@ for module in "${modules[@]}"; do
   # It tries to match the *exact* `module` text
   if [[ ! " ${excluded_modules[*]} " =~ " ${module} " ]]; then
     pushd $module
-    # Extract Cloud RAD module name from `distribution_name` in .repo-metadata.json
+
     NAME=${cloud_rad_module_name[${module}]}
     # Extract (current) version from root `versions.txt` file and remove `-SNAPSHOT`
     VERSION=$(grep "^${NAME}:" "${root_dir}/versions.txt" | cut -d: -f3 | sed -e 's/-SNAPSHOT//g')
