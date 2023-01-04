@@ -59,6 +59,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -126,7 +127,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             RequestParamsExtractor.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
-            UnaryCallable.class);
+            UnaryCallable.class,
+            UnsupportedOperationException.class);
     return new TypeStore(concreteClazzes);
   }
 
@@ -190,6 +192,20 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             messageTypes,
             context.restNumericEnumsEnabled());
 
+    List<MethodDefinition> methodDefinitions =
+        createClassMethods(
+            context,
+            service,
+            typeStore,
+            classMemberVarExprs,
+            callableClassMemberVarExprs,
+            protoMethodNameToDescriptorVarExprs,
+            classStatements);
+    methodDefinitions.addAll(createInvalidClassMethods(service));
+    methodDefinitions.addAll(
+        createStubOverrideMethods(
+            classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME), service));
+
     StubCommentComposer commentComposer =
         new StubCommentComposer(getTransportContext().transportNames().get(0));
 
@@ -204,18 +220,52 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setName(className)
             .setExtendsType(
                 typeStore.get(getTransportContext().classNames().getServiceStubClassName(service)))
-            .setMethods(
-                createClassMethods(
-                    context,
-                    service,
-                    typeStore,
-                    classMemberVarExprs,
-                    callableClassMemberVarExprs,
-                    protoMethodNameToDescriptorVarExprs,
-                    classStatements))
+            .setMethods(methodDefinitions)
             .setStatements(classStatements)
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  private String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
+    if (protoMethod.stream() == Method.Stream.BIDI
+        || protoMethod.stream() == Method.Stream.CLIENT) {
+      return String.format(
+          "Not implemented: %s(). %s is not implemented for %s",
+          callableName, protoMethod.stream(), Transport.REST);
+    } else if (protoMethod.httpBindings() == null) {
+      return String.format(
+          "Not implemented: %s(). RPC is not enabled for %s", callableName, Transport.REST);
+    } else {
+      return String.format("Not implemented: %s()", callableName);
+    }
+  }
+
+  private List<MethodDefinition> createInvalidClassMethods(Service service) {
+    List<MethodDefinition> methodDefinitions = new ArrayList<>();
+    for (Method protoMethod : service.methods()) {
+      if (!isSupportedMethod(protoMethod)) {
+        String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
+        String callableName =
+            String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
+        methodDefinitions.add(
+            MethodDefinition.builder()
+                .setIsOverride(true)
+                .setScope(ScopeNode.PUBLIC)
+                .setName(callableName)
+                .setReturnType(getCallableType(protoMethod))
+                .setBody(
+                    Arrays.asList(
+                        ExprStatement.withExpr(
+                            ThrowExpr.builder()
+                                .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
+                                .setMessageExpr(
+                                    getUnsupportedOperationExceptionReason(
+                                        callableName, protoMethod))
+                                .build())))
+                .build());
+      }
+    }
+    return methodDefinitions;
   }
 
   protected boolean isSupportedMethod(Method method) {
@@ -470,9 +520,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             service,
             classMemberVarExprs.get(getTransportContext().transportOperationsStubNames().get(0))));
     javaMethods.addAll(createCallableGetterMethods(callableClassMemberVarExprs));
-    javaMethods.addAll(
-        createStubOverrideMethods(
-            classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME), service));
     return javaMethods;
   }
 
