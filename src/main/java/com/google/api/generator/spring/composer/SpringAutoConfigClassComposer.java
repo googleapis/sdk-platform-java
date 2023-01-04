@@ -750,7 +750,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            SpringAutoconfigCommentComposer.createClientBeanComment(
+            SpringAutoconfigCommentComposer.createSettingsBeanComment(
                 service.name(),
                 Utils.getServicePropertiesClassName(service),
                 transportChannelProviderName))
@@ -853,6 +853,8 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName =
         CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            SpringAutoconfigCommentComposer.createClientBeanComment(service.name()))
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))

@@ -43,17 +43,20 @@ public class SpringAutoconfigCommentComposer {
   public static final String TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION =
       "Returns the default channel provider. The default is gRPC and will default to it unless the "
           + "useRest option is provided to use HTTP transport instead";
-  public static final String CLIENT_BEAN_GENERAL_DESCRIPTION =
-      "Provides a %sClient bean configured to "
+  public static final String CLIENT_SETTINGS_BEAN_GENERAL_DESCRIPTION =
+      "Provides a %sSettings bean configured to "
           + "use the default credentials provider (obtained with %sCredentials()) and its default "
           + "transport channel provider (%s()). It also configures the quota project ID if provided. It "
           + "will configure an executor provider in case there is more than one thread configured "
           + "in the client ";
 
-  public static final String CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION =
+  public static final String CLIENT_SETTINGS_BEAN_RETRY_SETTINGS_DESCRIPTION =
       "Retry settings are also configured from service-level and method-level properties specified in %s. "
           + "Method-level properties will take precedence over service-level properties if available, "
           + "and client library defaults will be used if neither are specified.";
+
+  public static final String CLIENT_BEAN_GENERAL_DESCRIPTION =
+      "Provides a %sClient bean configured with %sSettings.";
 
   public SpringAutoconfigCommentComposer() {}
 
@@ -88,19 +91,26 @@ public class SpringAutoconfigCommentComposer {
             .build());
   }
 
-  public static CommentStatement createClientBeanComment(
+  public static CommentStatement createSettingsBeanComment(
       String serviceName, String propertiesClazzName, String channelProviderName) {
     String credentialsBaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(
                 String.format(
-                    CLIENT_BEAN_GENERAL_DESCRIPTION,
+                    CLIENT_SETTINGS_BEAN_GENERAL_DESCRIPTION,
                     serviceName,
                     credentialsBaseName,
                     channelProviderName))
             .addParagraph(
-                String.format(CLIENT_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
+                String.format(CLIENT_SETTINGS_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
+            .build());
+  }
+
+  public static CommentStatement createClientBeanComment(String serviceName) {
+    return CommentStatement.withComment(
+        JavaDocComment.builder()
+            .addParagraph(String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, serviceName))
             .build());
   }
 }
