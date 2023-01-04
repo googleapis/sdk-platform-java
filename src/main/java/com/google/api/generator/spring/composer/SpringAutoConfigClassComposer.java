@@ -341,7 +341,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         AssignmentExpr.builder()
             .setVariableExpr(
                 VariableExpr.withVariable(
-                    Variable.builder().setName("value").setType(TypeNode.STRING).build()))
+                    Variable.builder().setName("name").setType(TypeNode.STRING).build()))
             .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue(methodName)))
             .build();
     AnnotationNode conditionalOnMissingBean =
