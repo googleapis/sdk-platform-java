@@ -330,17 +330,24 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static MethodDefinition createTransportChannelProviderBeanMethod(
       String methodName, Map<String, TypeNode> types) {
 
-    //   @Bean
-    //   @ConditionalOnMissingBean
-    //   public TransportChannelProvider defaultLanguageTransportChannelProvider() {
-    //     return LanguageServiceSettings.defaultTransportChannelProvider();
-    //   }
-    // build expressions
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             .setMethodName("defaultTransportChannelProvider")
             .setStaticReferenceType(types.get("ServiceSettings"))
             .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+            .build();
+
+    AssignmentExpr nameStringAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("name").setType(TypeNode.STRING).build()))
+            .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue(methodName)))
+            .build();
+    AnnotationNode conditionalOnMissingBean =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("ConditionalOnMissingBean"))
+            .addDescription(nameStringAssignmentExpr)
             .build();
 
     return MethodDefinition.builder()
@@ -351,8 +358,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
         .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
         .setAnnotations(
             Arrays.asList(
-                AnnotationNode.withType(STATIC_TYPES.get("Bean")),
-                AnnotationNode.withType(STATIC_TYPES.get("ConditionalOnMissingBean"))))
+                AnnotationNode.withType(STATIC_TYPES.get("Bean")), conditionalOnMissingBean))
         .setReturnExpr(returnExpr)
         .build();
   }
