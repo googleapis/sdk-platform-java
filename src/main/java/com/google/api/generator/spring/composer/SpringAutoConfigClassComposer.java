@@ -58,6 +58,7 @@ import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentC
 import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.cloud.spring.autoconfigure.core.GcpContextAutoConfiguration;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.common.base.CaseFormat;
@@ -316,7 +317,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 VariableExpr.builder()
                     .setVariable(
                         Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
-                    .setStaticReferenceType(types.get("GcpContextAutoConfiguration"))
+                    .setStaticReferenceType(STATIC_TYPES.get("GcpContextAutoConfiguration"))
                     .build())
             .build();
     AnnotationNode configurationNode =
@@ -963,6 +964,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             ConditionalOnMissingBean.class,
             EnableConfigurationProperties.class,
             CredentialsProvider.class,
+            GcpContextAutoConfiguration.class,
             AutoConfiguration.class,
             AutoConfigureAfter.class,
             Bean.class,
@@ -1013,15 +1015,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .setPakkage("com.google.cloud.spring.core.util")
                 .build());
 
-    // TODO: This should move to static types after adding spring-cloud-gcp-autoconfigure as
-    // dependency
-    TypeNode gcpContextAutoConfiguration =
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("GcpContextAutoConfiguration")
-                .setPakkage("com.google.cloud.spring.autoconfigure")
-                .build());
-
     TypeNode serviceClient =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1049,7 +1042,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     typeMap.put("ServiceSettingsBuilder", serviceSettingsBuilder);
     typeMap.put("Retry", retryProperties);
     typeMap.put("RetryUtil", retryUtil);
-    typeMap.put("GcpContextAutoConfiguration", gcpContextAutoConfiguration);
 
     return typeMap;
   }
