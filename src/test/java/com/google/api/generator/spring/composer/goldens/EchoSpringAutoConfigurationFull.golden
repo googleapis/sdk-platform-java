@@ -299,6 +299,7 @@ public class EchoSpringAutoConfiguration {
     return clientSettingsBuilder.build();
   }
 
+  /** Provides a EchoClient bean configured with EchoSettings. */
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(EchoSettings echoSettings) throws IOException {

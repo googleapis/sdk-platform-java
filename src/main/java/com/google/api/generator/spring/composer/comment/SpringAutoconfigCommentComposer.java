@@ -55,6 +55,9 @@ public class SpringAutoconfigCommentComposer {
           + "Method-level properties will take precedence over service-level properties if available, "
           + "and client library defaults will be used if neither are specified.";
 
+  public static final String CLIENT_BEAN_GENERAL_DESCRIPTION =
+      "Provides a %sClient bean configured with %sSettings.";
+
   public SpringAutoconfigCommentComposer() {}
 
   public static List<CommentStatement> createClassHeaderComments(
@@ -101,6 +104,13 @@ public class SpringAutoconfigCommentComposer {
                     channelProviderName))
             .addParagraph(
                 String.format(CLIENT_SETTINGS_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
+            .build());
+  }
+
+  public static CommentStatement createClientBeanComment(String serviceName) {
+    return CommentStatement.withComment(
+        JavaDocComment.builder()
+            .addParagraph(String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, serviceName))
             .build());
   }
 }
