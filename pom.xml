@@ -333,7 +333,7 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>spring-cloud-gcp-autoconfigure</artifactId>
-      <version>3.3.0</version>
+      <version>3.4.1</version>
     </dependency>
 
     <!--
