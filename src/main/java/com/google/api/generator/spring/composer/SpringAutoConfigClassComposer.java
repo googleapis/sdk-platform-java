@@ -744,7 +744,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            SpringAutoconfigCommentComposer.createClientBeanComment(
+            SpringAutoconfigCommentComposer.createSettingsBeanComment(
                 service.name(),
                 Utils.getServicePropertiesClassName(service),
                 transportChannelProviderName))

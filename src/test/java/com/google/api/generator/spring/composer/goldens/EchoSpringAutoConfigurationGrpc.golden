@@ -72,7 +72,7 @@ public class EchoSpringAutoConfiguration {
   }
 
   /**
-   * Provides a EchoClient bean configured to use the default credentials provider (obtained with
+   * Provides a EchoSettings bean configured to use the default credentials provider (obtained with
    * echoCredentials()) and its default transport channel provider
    * (defaultEchoTransportChannelProvider()). It also configures the quota project ID if provided.
    * It will configure an executor provider in case there is more than one thread configured in the
