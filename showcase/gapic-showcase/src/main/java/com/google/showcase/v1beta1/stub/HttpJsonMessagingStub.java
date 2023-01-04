@@ -32,7 +32,9 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
 import com.google.api.gax.longrunning.OperationSnapshot;
+import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
@@ -40,6 +42,7 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.Blurb;
+import com.google.showcase.v1beta1.ConnectRequest;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
 import com.google.showcase.v1beta1.CreateRoomRequest;
 import com.google.showcase.v1beta1.DeleteBlurbRequest;
@@ -54,6 +57,7 @@ import com.google.showcase.v1beta1.Room;
 import com.google.showcase.v1beta1.SearchBlurbsMetadata;
 import com.google.showcase.v1beta1.SearchBlurbsRequest;
 import com.google.showcase.v1beta1.SearchBlurbsResponse;
+import com.google.showcase.v1beta1.SendBlurbsResponse;
 import com.google.showcase.v1beta1.StreamBlurbsRequest;
 import com.google.showcase.v1beta1.StreamBlurbsResponse;
 import com.google.showcase.v1beta1.UpdateBlurbRequest;
@@ -783,6 +787,18 @@ public class HttpJsonMessagingStub extends MessagingStub {
   @Override
   public ServerStreamingCallable<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsCallable() {
     return streamBlurbsCallable;
+  }
+
+  @Override
+  public ClientStreamingCallable<CreateBlurbRequest, SendBlurbsResponse> sendBlurbsCallable() {
+    throw new UnsupportedOperationException(
+        "Not implemented: sendBlurbsCallable(). CLIENT is not implemented for REST");
+  }
+
+  @Override
+  public BidiStreamingCallable<ConnectRequest, StreamBlurbsResponse> connectCallable() {
+    throw new UnsupportedOperationException(
+        "Not implemented: connectCallable(). BIDI is not implemented for REST");
   }
 
   @Override
