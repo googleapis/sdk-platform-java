@@ -34,6 +34,9 @@ jobs:
         # Example: https://github.com/googleapis/testing-infra-docker/pull/195
         graalvm-version: ${{matrix.graalvm}}
         native-image: true
+    - name: Install maven modules
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Install showcase server
       run: |
         sudo mkdir -p /usr/src/showcase
