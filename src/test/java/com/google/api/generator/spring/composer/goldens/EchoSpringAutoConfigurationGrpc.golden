@@ -133,11 +133,6 @@ public class EchoSpringAutoConfiguration {
           .simplePagedExpandSettings()
           .setRetrySettings(simplePagedExpandRetrySettings);
 
-      RetrySettings waitRetrySettings =
-          RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.waitSettings().getRetrySettings(), serviceRetry);
-      clientSettingsBuilder.waitSettings().setRetrySettings(waitRetrySettings);
-
       RetrySettings blockRetrySettings =
           RetryUtil.updateRetrySettings(
               clientSettingsBuilder.blockSettings().getRetrySettings(), serviceRetry);
@@ -184,16 +179,6 @@ public class EchoSpringAutoConfiguration {
       if (LOGGER.isTraceEnabled()) {
         LOGGER.trace(
             "Configured method-level retry settings for simplePagedExpand from properties.");
-      }
-    }
-    Retry waitRetry = clientProperties.getWaitRetry();
-    if (waitRetry != null) {
-      RetrySettings waitRetrySettings =
-          RetryUtil.updateRetrySettings(
-              clientSettingsBuilder.waitSettings().getRetrySettings(), waitRetry);
-      clientSettingsBuilder.waitSettings().setRetrySettings(waitRetrySettings);
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("Configured method-level retry settings for wait from properties.");
       }
     }
     Retry blockRetry = clientProperties.getBlockRetry();

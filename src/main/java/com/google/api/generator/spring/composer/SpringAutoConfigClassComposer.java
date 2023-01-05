@@ -659,7 +659,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     List<Statement> updateRetrySettingsStatementBody = new ArrayList<>();
 
     for (Method method : service.methods()) {
-      if (!method.stream().equals(Method.Stream.NONE)) {
+      if (!method.stream().equals(Method.Stream.NONE) || method.hasLro()) {
         continue;
       }
       List<Statement> updateMethodWithServiceRetryStatements =
@@ -683,7 +683,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     // If-blocks to update with method-level properties
     for (Method method : service.methods()) {
-      if (!method.stream().equals(Method.Stream.NONE)) {
+      if (!method.stream().equals(Method.Stream.NONE) || method.hasLro()) {
         continue;
       }
       String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());

@@ -172,7 +172,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     statements.add(retryPropertiesStatement);
 
     for (Method method : service.methods()) {
-      if (!method.stream().equals(Method.Stream.NONE)) {
+      if (!method.stream().equals(Method.Stream.NONE) || method.hasLro()) {
         continue;
       }
       String methodNameLowerCamel =
@@ -220,7 +220,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(createSetterMethod(thisClassType, "retry", types.get("Retry")));
 
     for (Method method : service.methods()) {
-      if (!method.stream().equals(Method.Stream.NONE)) {
+      if (!method.stream().equals(Method.Stream.NONE) || method.hasLro()) {
         continue;
       }
       String methodPropertiesVarName =

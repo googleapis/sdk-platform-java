@@ -38,11 +38,6 @@ public class EchoSpringProperties implements CredentialsSupplier {
    */
   @NestedConfigurationProperty private Retry simplePagedExpandRetry;
   /**
-   * Allow override of retry settings at method-level for wait. If defined, this takes precedence
-   * over service-level retry configurations for that RPC method.
-   */
-  @NestedConfigurationProperty private Retry waitRetry;
-  /**
    * Allow override of retry settings at method-level for block. If defined, this takes precedence
    * over service-level retry configurations for that RPC method.
    */
@@ -112,14 +107,6 @@ public class EchoSpringProperties implements CredentialsSupplier {
 
   public void setSimplePagedExpandRetry(Retry simplePagedExpandRetry) {
     this.simplePagedExpandRetry = simplePagedExpandRetry;
-  }
-
-  public Retry getWaitRetry() {
-    return this.waitRetry;
-  }
-
-  public void setWaitRetry(Retry waitRetry) {
-    this.waitRetry = waitRetry;
   }
 
   public Retry getBlockRetry() {
