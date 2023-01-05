@@ -31,6 +31,7 @@
     <gson.version>2.10</gson.version>
     <guava.version>31.1-jre</guava.version>
     <protobuf.version>3.21.12</protobuf.version>
+    <maven.compiler.release>8</maven.compiler.release>
   </properties>
 
   <developers>
