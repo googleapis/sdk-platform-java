@@ -7,7 +7,6 @@
     <packaging>jar</packaging>
     <version>2.4.0</version><!-- {x-version-update:api-common:current} -->
     <name>API Common</name>
-    <url>https://github.com/googleapis/api-common-java</url>
     <description>Common utilities for Google APIs in Java</description>
 
     <parent>
@@ -26,11 +25,6 @@
             <organizationUrl>https://www.google.com</organizationUrl>
         </developer>
     </developers>
-
-    <scm>
-        <connection>scm:git:https://github.com/googleapis/api-common-java.git</connection>
-        <url>https://github.com/googleapis/api-common-java</url>
-    </scm>
 
     <licenses>
         <license>
