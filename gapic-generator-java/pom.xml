@@ -6,6 +6,7 @@
   <artifactId>gapic-generator-java</artifactId>
   <version>2.12.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <name>GAPIC Generator Java</name>
+  <description>GAPIC generator Java</description>
 
   <properties>
     <checkstyle.skip>true</checkstyle.skip>
