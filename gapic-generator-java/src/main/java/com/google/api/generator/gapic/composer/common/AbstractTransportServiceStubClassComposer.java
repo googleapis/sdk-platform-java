@@ -82,18 +82,18 @@ import javax.annotation.Nullable;
 public abstract class AbstractTransportServiceStubClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
-  private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
-  private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
+  protected static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
+  protected static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+  protected static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
 
-  private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
-  private static final String CALLABLE_NAME = "Callable";
-  private static final String CALLABLE_FACTORY_MEMBER_NAME = "callableFactory";
-  private static final String CALLABLE_CLASS_MEMBER_PATTERN = "%sCallable";
-  private static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
-  private static final String OPERATION_CALLABLE_NAME = "OperationCallable";
+  protected static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
+  protected static final String CALLABLE_NAME = "Callable";
+  protected static final String CALLABLE_FACTORY_MEMBER_NAME = "callableFactory";
+  protected static final String CALLABLE_CLASS_MEMBER_PATTERN = "%sCallable";
+  protected static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
+  protected static final String OPERATION_CALLABLE_NAME = "OperationCallable";
   // private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
-  private static final String PAGED_CALLABLE_NAME = "PagedCallable";
+  protected static final String PAGED_CALLABLE_NAME = "PagedCallable";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
@@ -200,7 +200,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             callableClassMemberVarExprs,
             protoMethodNameToDescriptorVarExprs,
             classStatements);
-    methodDefinitions.addAll(createInvalidClassMethods(service));
     methodDefinitions.addAll(
         createStubOverrideMethods(
             classMemberVarExprs.get(BACKGROUND_RESOURCES_MEMBER_NAME), service));
@@ -227,34 +226,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
     return String.format("Not implemented: %s()", callableName);
-  }
-
-  private List<MethodDefinition> createInvalidClassMethods(Service service) {
-    List<MethodDefinition> methodDefinitions = new ArrayList<>();
-    for (Method protoMethod : service.methods()) {
-      if (!isSupportedMethod(protoMethod)) {
-        String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
-        String callableName =
-            String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
-        methodDefinitions.add(
-            MethodDefinition.builder()
-                .setIsOverride(true)
-                .setScope(ScopeNode.PUBLIC)
-                .setName(callableName)
-                .setReturnType(getCallableType(protoMethod))
-                .setBody(
-                    Arrays.asList(
-                        ExprStatement.withExpr(
-                            ThrowExpr.builder()
-                                .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
-                                .setMessageExpr(
-                                    getUnsupportedOperationExceptionReason(
-                                        callableName, protoMethod))
-                                .build())))
-                .build());
-      }
-    }
-    return methodDefinitions;
   }
 
   protected boolean isSupportedMethod(Method method) {
@@ -1139,7 +1110,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return typeStore;
   }
 
-  private static TypeNode getCallableType(Method protoMethod) {
+  protected static TypeNode getCallableType(Method protoMethod) {
     TypeNode callableType = FIXED_TYPESTORE.get("UnaryCallable");
     switch (protoMethod.stream()) {
       case CLIENT:
