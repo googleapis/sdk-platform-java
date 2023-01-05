@@ -59,7 +59,6 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -226,18 +225,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return GapicClass.create(kind, classDef);
   }
 
-  private String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
-    if (protoMethod.stream() == Method.Stream.BIDI
-        || protoMethod.stream() == Method.Stream.CLIENT) {
-      return String.format(
-          "Not implemented: %s(). %s is not implemented for %s",
-          callableName, protoMethod.stream(), Transport.REST);
-    } else if (protoMethod.httpBindings() == null) {
-      return String.format(
-          "Not implemented: %s(). RPC is not enabled for %s", callableName, Transport.REST);
-    } else {
-      return String.format("Not implemented: %s()", callableName);
-    }
+  protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
+    return String.format("Not implemented: %s()", callableName);
   }
 
   private List<MethodDefinition> createInvalidClassMethods(Service service) {
