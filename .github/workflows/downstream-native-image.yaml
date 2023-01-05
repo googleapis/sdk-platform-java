@@ -52,5 +52,4 @@ jobs:
         java -version
         sudo apt-get update -y
         sudo apt-get install libxml2-utils
-        java -version
-        mvn test -Pnative -Denforcer.skip=true
+        mvn verify -Penable-integration-tests -Pnative -Denforcer.skip=true
