@@ -41,7 +41,6 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Splitter;

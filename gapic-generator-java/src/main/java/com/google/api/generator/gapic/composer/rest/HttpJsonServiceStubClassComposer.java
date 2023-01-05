@@ -1263,15 +1263,23 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   protected List<MethodDefinition> createClassMethods(
-          GapicContext context,
-          Service service,
-          TypeStore typeStore,
-          Map<String, VariableExpr> classMemberVarExprs,
-          Map<String, VariableExpr> callableClassMemberVarExprs,
-          Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
-          List<Statement> classStatements) {
+      GapicContext context,
+      Service service,
+      TypeStore typeStore,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, VariableExpr> callableClassMemberVarExprs,
+      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
+      List<Statement> classStatements) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(super.createClassMethods(context, service, typeStore, classMemberVarExprs, callableClassMemberVarExprs, protoMethodNameToDescriptorVarExprs, classStatements));
+    javaMethods.addAll(
+        super.createClassMethods(
+            context,
+            service,
+            typeStore,
+            classMemberVarExprs,
+            callableClassMemberVarExprs,
+            protoMethodNameToDescriptorVarExprs,
+            classStatements));
     javaMethods.addAll(createInvalidClassMethods(service));
     return javaMethods;
   }
@@ -1282,23 +1290,23 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       if (!isSupportedMethod(protoMethod)) {
         String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
         String callableName =
-                String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
+            String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
         methodDefinitions.add(
-                MethodDefinition.builder()
-                        .setIsOverride(true)
-                        .setScope(ScopeNode.PUBLIC)
-                        .setName(callableName)
-                        .setReturnType(getCallableType(protoMethod))
-                        .setBody(
-                                Arrays.asList(
-                                        ExprStatement.withExpr(
-                                                ThrowExpr.builder()
-                                                        .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
-                                                        .setMessageExpr(
-                                                                getUnsupportedOperationExceptionReason(
-                                                                        callableName, protoMethod))
-                                                        .build())))
-                        .build());
+            MethodDefinition.builder()
+                .setIsOverride(true)
+                .setScope(ScopeNode.PUBLIC)
+                .setName(callableName)
+                .setReturnType(getCallableType(protoMethod))
+                .setBody(
+                    Arrays.asList(
+                        ExprStatement.withExpr(
+                            ThrowExpr.builder()
+                                .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
+                                .setMessageExpr(
+                                    getUnsupportedOperationExceptionReason(
+                                        callableName, protoMethod))
+                                .build())))
+                .build());
       }
     }
     return methodDefinitions;
