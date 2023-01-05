@@ -51,6 +51,12 @@ public class GapicSnippetConfigTest {
   }
 
   @Test
+  public void snippetConfig_getPackageString() {
+    assertEquals(
+            "com.google.cloud.speech.v1", GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig));
+  }
+
+  @Test
   public void snippetConfig_composeVariableExpr() {
     VariableExpr strVariableExpr1 =
         VariableExpr.builder()

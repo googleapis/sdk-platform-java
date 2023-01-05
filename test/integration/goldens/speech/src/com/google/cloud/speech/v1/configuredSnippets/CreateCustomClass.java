@@ -18,6 +18,10 @@ package google.cloud.speech.v1.samples;
 
 // [START speech_v1_config_Adaptation_CreateCustomClass_Basic_async]
 import com.google.api.core.ApiFuture;
+import com.google.cloud.speech.v1.AdaptationClient;
+import com.google.cloud.speech.v1.AdaptationSettings;
+import com.google.cloud.speech.v1.CreateCustomClassRequest;
+import com.google.cloud.speech.v1.CustomClass;
 import com.google.cloud.speech.v1.CustomClass.ClassItem;
 
 /**

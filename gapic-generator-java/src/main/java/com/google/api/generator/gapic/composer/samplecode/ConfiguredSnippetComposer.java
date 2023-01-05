@@ -105,7 +105,7 @@ public class ConfiguredSnippetComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(requestTypeName)
-                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
                 .build());
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
@@ -140,7 +140,7 @@ public class ConfiguredSnippetComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("CustomClass")
-                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
                 .build());
     VariableExpr nestedRequestVarExpr =
         VariableExpr.withVariable(
@@ -246,7 +246,7 @@ public class ConfiguredSnippetComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(returnType)
-                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
                 .build());
     TypeNode apiFutureType =
         TypeNode.withReference(
@@ -271,7 +271,7 @@ public class ConfiguredSnippetComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(clientTypeName)
-                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
                 .build());
 
     VariableExpr clientVarExpr =
@@ -364,7 +364,7 @@ public class ConfiguredSnippetComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(settingsTypeName)
-                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
                 .build());
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
@@ -377,33 +377,32 @@ public class ConfiguredSnippetComposer {
     Expr buildMethodExpr;
     // Set endpoint if configured
     if (GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig) != null) {
-      VariableExpr endpoint =
-          VariableExpr.withVariable(
-              Variable.builder().setName("String endpoint").setType(TypeNode.STRING).build());
-      AssignmentExpr endpointAssignment =
-          AssignmentExpr.builder()
-              .setVariableExpr(endpoint)
-              .setValueExpr(
-                  ValueExpr.withValue(
-                      StringObjectValue.withValue(
-                          GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig))))
-              .build();
+      VariableExpr endpointVar =
+              VariableExpr.builder()
+                      .setVariable(
+                              Variable.builder()
+                                      .setType(TypeNode.STRING)
+                                      .setName("endpoint")
+                                      .build())
+                      .setIsDecl(true)
+                      .build();
+        AssignmentExpr endpointAssignment =
+                AssignmentExpr.builder()
+                        .setVariableExpr(endpointVar)
+                        .setValueExpr(
+                                ValueExpr.withValue(
+                                        StringObjectValue.withValue(GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig))))
+                        .build();
 
       Statement endpointStatement = ExprStatement.withExpr(endpointAssignment);
       clientInitializationStatements.add(endpointStatement);
 
-      TypeNode endpointType =
-          TypeNode.withReference(
-              VaporReference.builder()
-                  .setName("endpoint")
-                  .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
-                  .build());
       MethodInvocationExpr credentialsMethodExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(newBuilderMethodExpr)
               .setArguments(
                   VariableExpr.withVariable(
-                      Variable.builder().setName("endpoint").setType(endpointType).build()))
+                      Variable.builder().setName("endpoint").setType(TypeNode.STRING).build()))
               .setMethodName("setEndpoint")
               .build();
 
@@ -440,7 +439,7 @@ public class ConfiguredSnippetComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(clientTypeName)
-                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPackageString(snippetConfig))
+                .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
                 .build());
 
     VariableExpr clientVarExpr =
