@@ -228,9 +228,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return String.format("Not implemented: %s()", callableName);
   }
 
-  protected boolean isSupportedMethod(Method method) {
-    return true;
-  }
+  protected abstract boolean isSupportedMethod(Method method);
 
   protected abstract Statement createMethodDescriptorVariableDecl(
       Service service,

@@ -99,6 +99,20 @@ public abstract class Method {
     return operationPollingMethod();
   }
 
+  public boolean isRESTEnabled() {
+    return httpBindings() != null && stream() != Stream.BIDI && stream() != Stream.CLIENT;
+  }
+
+  public boolean isMethodSupportedByTransport(Transport transport) {
+    if (transport == Transport.REST) {
+      return isRESTEnabled();
+    } else if (transport == Transport.GRPC) {
+      return true;
+    } else {
+      throw new IllegalArgumentException("GRPC+REST Transport is not allowed.");
+    }
+  }
+
   public abstract Builder toBuilder();
 
   public static Builder builder() {

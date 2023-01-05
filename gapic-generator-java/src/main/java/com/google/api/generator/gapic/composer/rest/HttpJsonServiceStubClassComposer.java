@@ -119,23 +119,19 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   protected boolean isSupportedMethod(Method method) {
-    return method.httpBindings() != null
-        && method.stream() != Stream.BIDI
-        && method.stream() != Stream.CLIENT;
+    return method.isMethodSupportedByTransport(Transport.REST);
   }
 
   protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
     if (protoMethod.stream() == Method.Stream.BIDI
         || protoMethod.stream() == Method.Stream.CLIENT) {
       return String.format(
-          "Not supported: %s(). %s streaming is not implemented for %s",
+          "Not supported: %s(). %s streaming is not supported for %s",
           callableName, protoMethod.stream(), Transport.REST);
-    } else if (protoMethod.httpBindings() == null) {
-      return String.format(
-          "Not implemented: %s(). %s transport is not supported for this method yet",
-          callableName, Transport.REST);
     } else {
-      return String.format("Not implemented: %s()", callableName);
+      return String.format(
+          "Not implemented: %s(). %s transport is not implemented for this method yet",
+          callableName, Transport.REST);
     }
   }
 
