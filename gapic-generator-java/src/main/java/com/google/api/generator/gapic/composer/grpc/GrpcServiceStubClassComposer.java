@@ -91,10 +91,6 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     return new TypeStore(concreteClazzes);
   }
 
-  protected boolean isSupportedMethod(Method method) {
-    return method.isMethodSupportedByTransport(Transport.GRPC);
-  }
-
   @Override
   protected Statement createMethodDescriptorVariableDecl(
       Service service,

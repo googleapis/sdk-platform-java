@@ -792,13 +792,13 @@ public class HttpJsonMessagingStub extends MessagingStub {
   @Override
   public ClientStreamingCallable<CreateBlurbRequest, SendBlurbsResponse> sendBlurbsCallable() {
     throw new UnsupportedOperationException(
-        "Not supported: sendBlurbsCallable(). CLIENT streaming is not implemented for REST");
+        "Not supported: sendBlurbsCallable(). CLIENT streaming is not supported for REST");
   }
 
   @Override
   public BidiStreamingCallable<ConnectRequest, StreamBlurbsResponse> connectCallable() {
     throw new UnsupportedOperationException(
-        "Not supported: connectCallable(). BIDI streaming is not implemented for REST");
+        "Not supported: connectCallable(). BIDI streaming is not supported for REST");
   }
 
   @Override

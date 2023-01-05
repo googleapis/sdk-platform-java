@@ -57,7 +57,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
@@ -119,7 +118,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   protected boolean isSupportedMethod(Method method) {
-    return method.isMethodSupportedByTransport(Transport.REST);
+    return method.isSupportedByTransport(Transport.REST);
   }
 
   protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
