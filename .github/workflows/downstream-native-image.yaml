@@ -8,6 +8,8 @@ on:
 # repositories than needed this downstream check for GraalVM native image
 # compilation.
 name: downstream
+env:
+  SHOWCASE_VERSION: 0.25.0
 jobs:
   # GraalVM job ensures the compatibility of GraaVM version
   graalvm:
@@ -44,6 +46,7 @@ jobs:
     - name: Run Showcase tests with GraalVM
       working-directory: showcase
       run: |
+        java -version
         sudo apt-get update -y
         sudo apt-get install libxml2-utils
         java -version
