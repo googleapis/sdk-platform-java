@@ -99,13 +99,9 @@ public abstract class Method {
     return operationPollingMethod();
   }
 
-  private boolean isRESTEnabled() {
-    return httpBindings() != null && stream() != Stream.BIDI && stream() != Stream.CLIENT;
-  }
-
   public boolean isSupportedByTransport(Transport transport) {
     if (transport == Transport.REST) {
-      return isRESTEnabled();
+      return httpBindings() != null && stream() != Stream.BIDI && stream() != Stream.CLIENT;
     } else {
       return true;
     }

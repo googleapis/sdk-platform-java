@@ -117,8 +117,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             TypeRegistry.class));
   }
 
-  protected boolean isSupportedMethod(Method method) {
-    return method.isSupportedByTransport(Transport.REST);
+  @Override
+  protected Transport getTransport() {
+    return Transport.REST;
   }
 
   protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
@@ -1287,7 +1288,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private List<MethodDefinition> createInvalidClassMethods(Service service) {
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
-      if (!isSupportedMethod(protoMethod)) {
+      if (!protoMethod.isSupportedByTransport(getTransport())) {
         String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
         String callableName =
             String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
