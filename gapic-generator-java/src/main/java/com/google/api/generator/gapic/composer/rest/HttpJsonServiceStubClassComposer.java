@@ -122,7 +122,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return Transport.REST;
   }
 
-  protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
+  private String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
     if (protoMethod.stream() == Method.Stream.BIDI
         || protoMethod.stream() == Method.Stream.CLIENT) {
       return String.format(
