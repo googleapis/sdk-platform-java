@@ -17,9 +17,6 @@ jobs:
       matrix:
         graalvm: [22.3.0]
         java: [11, 17]
-        repo:
-        # GAPIC library that doesn't use a real GCP project in integration tests
-        - orgpolicy
     steps:
     - uses: actions/checkout@v2
     - uses: stCarolas/setup-maven@v4
@@ -35,7 +32,19 @@ jobs:
         # Example: https://github.com/googleapis/testing-infra-docker/pull/195
         graalvm-version: ${{matrix.graalvm}}
         native-image: true
-    - run: java -version
-    - run: sudo apt-get update -y
-    - run: sudo apt-get install libxml2-utils
-    - run: .kokoro/downstream-client-library-check.sh ${{matrix.repo}} graalvm
+    - name: Install showcase server
+        run: |
+          sudo mkdir -p /usr/src/showcase
+          sudo chown -R ${USER} /usr/src/
+          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${SHOWCASE_VERSION}/gapic-showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz
+          cd /usr/src/showcase/
+          tar -xf showcase-*
+          ./gapic-showcase run &
+          cd -
+    - name: Run Showcase tests with GraalVM
+      working-directory: showcase
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install libxml2-utils
+        java -version
+        mvn test -Pnative -Denforcer.skip=true
