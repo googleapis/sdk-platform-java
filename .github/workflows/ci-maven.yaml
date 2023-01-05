@@ -75,22 +75,20 @@ jobs:
           java-version: 11
           distribution: temurin
           cache: maven
-      - name: Install modules outside gapic-generator-java
+      - name: Install all modules using Java 11
         shell: bash
         run: |
-          mvn -B -ntp install --projects '!gapic-generator-java' \
-              -Dcheckstyle.skip -Dfmt.skip -DskipTests
+          mvn -V -B -ntp clean install -DskipTests
       - uses: actions/setup-java@v3
         with:
           java-version: 8
           distribution: temurin
           cache: maven
       - run: java -version
-      - name: Run test only for gapic-generator-java using Java 8
+      - name: Run tests in Java 8 with the source compiled in Java 11 for gapic-generator-java
         shell: bash
         run: |
-          mvn -B -ntp verify --projects 'gapic-generator-java' \
-              -Dcheckstyle.skip -Dfmt.skip
+          mvn -V -B -ntp surefire:test --projects 'gapic-generator-java'
 
   lint:
     runs-on: ubuntu-latest
