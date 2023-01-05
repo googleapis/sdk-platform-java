@@ -1,5 +1,40 @@
 # Changelog
 
+## [2.13.0](https://github.com/googleapis/gapic-generator-java/compare/v2.12.0...v2.13.0) (2023-01-05)
+
+
+### Features
+
+* Parent pom and gapic-generator-java-bom ([#1170](https://github.com/googleapis/gapic-generator-java/issues/1170)) ([4dd5fcf](https://github.com/googleapis/gapic-generator-java/commit/4dd5fcf7b817c56bcfd90c3977bf003f212fbddf))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency com.google.auth:google-auth-library-oauth2-http to v1.14.0 ([#1183](https://github.com/googleapis/gapic-generator-java/issues/1183)) ([45fd2cb](https://github.com/googleapis/gapic-generator-java/commit/45fd2cbf4713ef070b7a78133169668541a14e74))
+* **deps:** Update dependency com.google.auto.value:auto-value-annotations to v1.10.1 ([#1184](https://github.com/googleapis/gapic-generator-java/issues/1184)) ([e2e01a0](https://github.com/googleapis/gapic-generator-java/commit/e2e01a01b7b222f629ddb3b57fe2537a5d3906de))
+* **deps:** Update dependency com.google.cloud:google-iam-policy to v1.6.22 ([#1145](https://github.com/googleapis/gapic-generator-java/issues/1145)) ([83f3aec](https://github.com/googleapis/gapic-generator-java/commit/83f3aec3d920bca422b12f91f007081d49d0c4cb))
+* **deps:** Update dependency com.google.cloud:libraries-bom to v26.2.0 ([#1185](https://github.com/googleapis/gapic-generator-java/issues/1185)) ([83766f1](https://github.com/googleapis/gapic-generator-java/commit/83766f1c180b756e58bf8c147ea697fbe51a4d13))
+* **deps:** Update dependency com.google.errorprone:error_prone_annotations to v2.17.0 - abandoned ([#1205](https://github.com/googleapis/gapic-generator-java/issues/1205)) ([031fff6](https://github.com/googleapis/gapic-generator-java/commit/031fff6f99694b6035c134fe96b7bef1a6143111))
+* **deps:** Update dependency com.google.errorprone:error_prone_annotations to v2.17.0 ([#1202](https://github.com/googleapis/gapic-generator-java/issues/1202)) ([c9a35b9](https://github.com/googleapis/gapic-generator-java/commit/c9a35b9eb04e1db8b30a81547afb170947f630ec))
+* **deps:** Update dependency com.google.guava:guava to v31.1-jre ([#1146](https://github.com/googleapis/gapic-generator-java/issues/1146)) ([e70f7f6](https://github.com/googleapis/gapic-generator-java/commit/e70f7f6d6e13ab6ddb2a91d378ddd2b286e8902b))
+* **deps:** Update dependency com.google.protobuf:protobuf-bom to v3.21.12 ([#1116](https://github.com/googleapis/gapic-generator-java/issues/1116)) ([41a220c](https://github.com/googleapis/gapic-generator-java/commit/41a220c227195c159fd408b8df07df7f3e7332cd))
+* **deps:** Update dependency com.google.protobuf:protobuf-java to v3.21.12 ([#1155](https://github.com/googleapis/gapic-generator-java/issues/1155)) ([ddb7edf](https://github.com/googleapis/gapic-generator-java/commit/ddb7edfa261540927db240363d3ec5715db2b3db))
+* **deps:** Update dependency io.grpc:grpc-bom to v1.51.1 ([#1137](https://github.com/googleapis/gapic-generator-java/issues/1137)) ([582c796](https://github.com/googleapis/gapic-generator-java/commit/582c796ee9dacc3a127aef0821c40afd8eb537ef))
+* **deps:** Update dependency io.grpc:grpc-bom to v1.51.1 ([#1157](https://github.com/googleapis/gapic-generator-java/issues/1157)) ([7528b45](https://github.com/googleapis/gapic-generator-java/commit/7528b45fb2e8a5046c931dc28619ef17143810ed))
+* **deps:** Update dependency io.grpc:grpc-protobuf to v1.51.1 ([#1158](https://github.com/googleapis/gapic-generator-java/issues/1158)) ([14081a1](https://github.com/googleapis/gapic-generator-java/commit/14081a1048d030748abeb200b26e6ca9add7ba8e))
+* **deps:** Update dependency io.grpc:grpc-stub to v1.51.1 ([#1159](https://github.com/googleapis/gapic-generator-java/issues/1159)) ([8745b57](https://github.com/googleapis/gapic-generator-java/commit/8745b570a033563a44e0d8f9763c2a03e2fa77b2))
+* **deps:** Update dependency jacoco to v0.8.8 ([#1204](https://github.com/googleapis/gapic-generator-java/issues/1204)) ([8c5e17b](https://github.com/googleapis/gapic-generator-java/commit/8c5e17ba325b7711f9ba9501992ab48e736ffc18))
+* **deps:** Update dependency org.mockito:mockito-core to v4.10.0 ([#1186](https://github.com/googleapis/gapic-generator-java/issues/1186)) ([1d791fb](https://github.com/googleapis/gapic-generator-java/commit/1d791fb932052b9e72ec5aabd0cb2fde36ed7a55))
+* **deps:** Update dependency org.mockito:mockito-core to v4.11.0 ([#1200](https://github.com/googleapis/gapic-generator-java/issues/1200)) ([25c7b26](https://github.com/googleapis/gapic-generator-java/commit/25c7b266edf1d2e1332bab8fbfe28486cb237ed6))
+* **deps:** Update dependency org.threeten:threetenbp to v1.6.5 ([#1160](https://github.com/googleapis/gapic-generator-java/issues/1160)) ([53be6b7](https://github.com/googleapis/gapic-generator-java/commit/53be6b7cfd0928675518cf5ba4784ce57c973993))
+* Focus 'Running the Plugin' documentation on googleapis, not showcase ([#1196](https://github.com/googleapis/gapic-generator-java/issues/1196)) ([d58b2e5](https://github.com/googleapis/gapic-generator-java/commit/d58b2e53238d42477ac246eefe9166192618180a))
+
+
+### Documentation
+
+* Development with local gapic-generator-java ([#1132](https://github.com/googleapis/gapic-generator-java/issues/1132)) ([079d830](https://github.com/googleapis/gapic-generator-java/commit/079d830a234bb6923f3b71894f40fd0fc31649e6))
+* Development with local gapic-generator-java ([#1132](https://github.com/googleapis/gapic-generator-java/issues/1132)) ([cbb9dce](https://github.com/googleapis/gapic-generator-java/commit/cbb9dce85438942f7b4f1b163756e311f54d75ea))
+
 ## [2.12.0](https://github.com/googleapis/gapic-generator-java/compare/v2.11.0...v2.12.0) (2022-12-09)
 
 
