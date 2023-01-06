@@ -37,6 +37,10 @@ jobs:
     - name: Install maven modules
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl unzip
     - name: Install showcase server
       run: |
         sudo mkdir -p /usr/src/showcase
@@ -52,4 +56,4 @@ jobs:
         java -version
         sudo apt-get update -y
         sudo apt-get install libxml2-utils
-        mvn test -P enable-integration-tests -Denforcer.skip=true
+        mvn verify -Penable-integration-tests -Pnative -Denforcer.skip=true
