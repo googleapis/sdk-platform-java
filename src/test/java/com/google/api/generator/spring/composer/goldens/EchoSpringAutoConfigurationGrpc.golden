@@ -88,11 +88,19 @@ public class EchoSpringAutoConfiguration {
       @Qualifier("defaultEchoTransportChannelProvider")
           TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {
-    EchoSettings.Builder clientSettingsBuilder =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(this.credentialsProvider)
-            .setTransportChannelProvider(defaultTransportChannelProvider)
-            .setHeaderProvider(this.userAgentHeaderProvider());
+    EchoSettings.Builder clientSettingsBuilder;
+    if (this.clientProperties.getUseRest()) {
+      clientSettingsBuilder = EchoSettings.newHttpJsonBuilder();
+      if (LOGGER.isTraceEnabled()) {
+        LOGGER.trace("Using REST (HTTP/JSON) transport.");
+      }
+    } else {
+      clientSettingsBuilder = EchoSettings.newBuilder();
+    }
+    clientSettingsBuilder
+        .setCredentialsProvider(this.credentialsProvider)
+        .setTransportChannelProvider(defaultTransportChannelProvider)
+        .setHeaderProvider(this.userAgentHeaderProvider());
     if (this.clientProperties.getQuotaProjectId() != null) {
       clientSettingsBuilder.setQuotaProjectId(this.clientProperties.getQuotaProjectId());
       if (LOGGER.isTraceEnabled()) {
