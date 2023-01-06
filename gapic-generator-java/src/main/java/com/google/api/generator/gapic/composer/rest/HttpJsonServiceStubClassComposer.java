@@ -122,19 +122,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return Transport.REST;
   }
 
-  private String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
-    if (protoMethod.stream() == Method.Stream.BIDI
-        || protoMethod.stream() == Method.Stream.CLIENT) {
-      return String.format(
-          "Not supported: %s(). %s streaming is not supported for %s",
-          callableName, protoMethod.stream(), Transport.REST);
-    } else {
-      return String.format(
-          "Not implemented: %s(). %s transport is not implemented for this method yet",
-          callableName, Transport.REST);
-    }
-  }
-
   @Override
   protected boolean generateOperationsStubLogic(Service service) {
     return service.hasLroMethods();
@@ -1305,8 +1292,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                             ThrowExpr.builder()
                                 .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
                                 .setMessageExpr(
-                                    getUnsupportedOperationExceptionReason(
-                                        callableName, protoMethod))
+                                        String.format("Not implemented: %s(). %s transport is not implemented for this method yet", callableName, getTransport()))
                                 .build())))
                 .build());
       }

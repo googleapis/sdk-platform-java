@@ -529,13 +529,13 @@ public class HttpJsonEchoStub extends EchoStub {
   @Override
   public ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
     throw new UnsupportedOperationException(
-        "Not supported: collectCallable(). CLIENT streaming is not supported for REST");
+        "Not implemented: collectCallable(). REST transport is not implemented for this method yet");
   }
 
   @Override
   public BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
     throw new UnsupportedOperationException(
-        "Not supported: chatCallable(). BIDI streaming is not supported for REST");
+        "Not implemented: chatCallable(). REST transport is not implemented for this method yet");
   }
 
   @Override
