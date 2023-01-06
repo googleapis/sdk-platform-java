@@ -41,10 +41,10 @@ public class SpringAutoconfigCommentComposer {
           + "configuration data files.";
 
   public static final String TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION =
-      "Provides a default channel provider bean. The default is gRPC and will default to it unless the "
+      "Provides a default transport channel provider bean. The default is gRPC and will default to it unless the "
           + "useRest option is provided to use HTTP transport instead";
   public static final String TRANSPORT_CHANNEL_PROVIDER_RETURN =
-      "Returns the default channel provider.";
+      "a default transport channel provider.";
   public static final String CLIENT_SETTINGS_BEAN_GENERAL_DESCRIPTION =
       "Provides a %sSettings bean configured to "
           + "use the default credentials provider (obtained with %sCredentials()) and its default "
