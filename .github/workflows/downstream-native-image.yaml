@@ -52,4 +52,4 @@ jobs:
         java -version
         sudo apt-get update -y
         sudo apt-get install libxml2-utils
-        mvn -Dtest=IT*,*ClientTest test -Denforcer.skip=true
+        mvn test -P enable-integration-tests -Denforcer.skip=true
