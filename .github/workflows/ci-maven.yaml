@@ -7,7 +7,7 @@ name: ci-maven
 env:
   SHOWCASE_VERSION: 0.25.0
 jobs:
-  units:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,11 +22,34 @@ jobs:
       - run: java -version
       - name: Unit Tests
         run: |
-          mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+          mvn install --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip
+      - run: bazelisk version
+      - name: Integration Tests
+        run: |
+          bazel --batch test //test/integration/...
+      - name: Gradle Build Generated Storage Client Library
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
 
-  units-java8:
-    name: "units (8) except gapic-generator-java"
+      - name: Gradle Build Generated Compute Client Library
+        run: |
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+  build-java8-except-gapic-generator-java:
+    name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -65,8 +88,8 @@ jobs:
               -Dcheckstyle.skip -Dmaven.compiler.useIncrementalCompilation=false \
               -Dfmt.skip
 
-  units-java8-gapic-generator-java:
-    name: "units (8) for gapic-generator-java"
+  build-java8-gapic-generator-java:
+    name: "build(8) for gapic-generator-java"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -89,6 +112,29 @@ jobs:
         shell: bash
         run: |
           mvn -V -B -ntp surefire:test --projects 'gapic-generator-java'
+      - run: bazelisk version
+      - name: Integration Tests
+        run: |
+          bazelisk --batch test //test/integration/...
+      - name: Gradle Build Generated Storage Client Library
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+      - name: Gradle Build Generated Compute Client Library
+        run: |
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
 
   lint:
     runs-on: ubuntu-latest
@@ -116,26 +162,6 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
       - run: java -version
-
-      - name: Bazel File Cache Setup
-        id: cache-bazel
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/bazel
-          key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
-          restore-keys: ${{ runner.os }}-
-      - name: Bazel Cache Not Found
-        if: steps.cache-bazel.outputs.cache-hit != 'true'
-        run: |
-          echo "No cache found."
-      - name: Bazel Cache Found
-        if: steps.cache-bazel.outputs.cache-hit == 'true'
-        run: |
-          echo -n "Cache found. Cache size: "
-          du -sh ~/.cache/bazel          
-          echo "If the cache seems broken, update the root WORKSPACE file with a trivial change."
-          echo "The old cache will disappear after 7 days."
-
       - name: Install maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
