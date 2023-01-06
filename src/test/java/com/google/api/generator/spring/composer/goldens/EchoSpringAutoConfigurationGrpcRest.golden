@@ -69,6 +69,10 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(name = "defaultEchoTransportChannelProvider")
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
+    if (this.clientProperties.getUseRest()) {
+      clientSettingsBuilder.setTransportChannelProvider(
+          EchoSettings.defaultHttpJsonTransportProviderBuilder().build());
+    }
     return EchoSettings.defaultTransportChannelProvider();
   }
 

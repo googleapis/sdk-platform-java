@@ -124,7 +124,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 Arrays.asList(
                     createConstructor(service, className, dynamicTypes, thisExpr),
                     createTransportChannelProviderBeanMethod(
-                        transportChannelProviderName, dynamicTypes),
+                        transportChannelProviderName,
+                        service,
+                        thisExpr,
+                        hasRestOption,
+                        dynamicTypes),
                     createSettingsBeanMethod(
                         service,
                         transportChannelProviderName,
@@ -328,14 +332,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createTransportChannelProviderBeanMethod(
-      String methodName, Map<String, TypeNode> types) {
-
-    MethodInvocationExpr returnExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName("defaultTransportChannelProvider")
-            .setStaticReferenceType(types.get("ServiceSettings"))
-            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
-            .build();
+      String methodName,
+      Service service,
+      Expr thisExpr,
+      boolean hasRestOption,
+      Map<String, TypeNode> types) {
 
     AssignmentExpr nameStringAssignmentExpr =
         AssignmentExpr.builder()
@@ -350,17 +351,84 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .addDescription(nameStringAssignmentExpr)
             .build();
 
-    return MethodDefinition.builder()
-        .setHeaderCommentStatements(
-            SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
-        .setName(methodName)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
-        .setAnnotations(
-            Arrays.asList(
-                AnnotationNode.withType(STATIC_TYPES.get("Bean")), conditionalOnMissingBean))
-        .setReturnExpr(returnExpr)
-        .build();
+    MethodDefinition.Builder beanMethodBuilder =
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
+            .setName(methodName)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(STATIC_TYPES.get("Bean")), conditionalOnMissingBean));
+
+    // LanguageServiceSettings.defaultTransportChannelProvider()
+    MethodInvocationExpr defaultTransportChannelProviderExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("defaultTransportChannelProvider")
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+            .build();
+
+    if (hasRestOption) {
+      //      if (clientProperties.isUseRest()) {
+      //        return LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build();
+      //      }
+      Variable clientPropertiesVar =
+          Variable.builder()
+              .setName("clientProperties")
+              .setType(types.get(Utils.getServicePropertiesClassName(service)))
+              .build();
+      VariableExpr thisClientPropertiesVarExpr =
+          VariableExpr.withVariable(clientPropertiesVar)
+              .toBuilder()
+              .setExprReferenceExpr(thisExpr)
+              .build();
+
+      MethodInvocationExpr getUseRest =
+          MethodInvocationExpr.builder()
+              .setMethodName("getUseRest")
+              .setReturnType(TypeNode.BOOLEAN)
+              .setExprReferenceExpr(thisClientPropertiesVarExpr)
+              .build();
+
+      Variable settingBuilderVariable =
+          Variable.builder()
+              .setName("clientSettingsBuilder")
+              .setType(types.get("ServiceSettingsBuilder"))
+              .build();
+
+      // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
+      Expr defaultTransportProviderExprChain =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("ServiceSettings"))
+              .setMethodName("defaultHttpJsonTransportProviderBuilder")
+              .build();
+      defaultTransportProviderExprChain =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(defaultTransportProviderExprChain)
+              .setMethodName("build")
+              .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
+              .build();
+      MethodInvocationExpr defaultHttpJsonTransportProviderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setMethodName("setTransportChannelProvider")
+              .setArguments(defaultTransportProviderExprChain)
+              .build();
+
+      IfStatement returnTransportChannelProviderStatement =
+          createIfStatement(
+              getUseRest,
+              Arrays.asList(ExprStatement.withExpr(defaultHttpJsonTransportProviderExpr)),
+              null);
+
+      return beanMethodBuilder
+          .setBody(Arrays.asList(returnTransportChannelProviderStatement))
+          .setReturnExpr(defaultTransportChannelProviderExpr)
+          .build();
+    }
+    return beanMethodBuilder.setReturnExpr(defaultTransportChannelProviderExpr).build();
   }
 
   private static IfStatement createIfStatement(
