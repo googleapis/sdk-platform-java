@@ -470,18 +470,16 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setName("clientSettingsBuilder")
             .setType(types.get("ServiceSettingsBuilder"))
             .build();
+
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(settingBuilderVariable).toBuilder().setIsDecl(true).build();
 
-    // LanguageServiceSettings.Builder clientSettingsBuilder;
-    ExprStatement clientSettingsBuilderStatement = ExprStatement.withExpr(settingsVarExpr);
-    bodyStatements.add(clientSettingsBuilderStatement);
-
-    //    if (clientProperties.isUseRest()) {
-    //      clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
-    //    } else {
-    //      clientSettingsBuilder = LanguageServiceSettings.newBuilder();
-    //    }
+    Expr newBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setMethodName("newBuilder")
+            .setReturnType(types.get("ServiceSettingsBuilder"))
+            .build();
 
     Variable clientPropertiesVar =
         Variable.builder()
@@ -494,56 +492,73 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setExprReferenceExpr(thisExpr)
             .build();
 
-    MethodInvocationExpr getUseRest =
-        MethodInvocationExpr.builder()
-            .setMethodName("getUseRest")
-            .setReturnType(TypeNode.BOOLEAN)
-            .setExprReferenceExpr(thisClientPropertiesVarExpr)
-            .build();
+    if (hasRestOption) {
+      // For GRPC+REST libraries
+      // LanguageServiceSettings.Builder clientSettingsBuilder;
+      //    if (clientProperties.isUseRest()) {
+      //      clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
+      //    } else {
+      //      clientSettingsBuilder = LanguageServiceSettings.newBuilder();
+      //    }
+      MethodInvocationExpr getUseRest =
+          MethodInvocationExpr.builder()
+              .setMethodName("getUseRest")
+              .setReturnType(TypeNode.BOOLEAN)
+              .setExprReferenceExpr(thisClientPropertiesVarExpr)
+              .build();
 
-    // clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
-    Expr newHttpJsonBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get("ServiceSettings"))
-            .setMethodName("newHttpJsonBuilder")
-            .setReturnType(types.get("ServiceSettingsBuilder"))
-            .build();
+      // clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
+      Expr newHttpJsonBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("ServiceSettings"))
+              .setMethodName("newHttpJsonBuilder")
+              .setReturnType(types.get("ServiceSettingsBuilder"))
+              .build();
 
-    AssignmentExpr newHttpJsonBuilderAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(VariableExpr.withVariable(settingBuilderVariable))
-            .setValueExpr(newHttpJsonBuilderExpr)
-            .build();
+      AssignmentExpr newHttpJsonBuilderAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setValueExpr(newHttpJsonBuilderExpr)
+              .build();
 
-    // clientSettingsBuilder = LanguageServiceSettings.newBuilder();
-    Expr newBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get("ServiceSettings"))
-            .setMethodName("newBuilder")
-            .setReturnType(types.get("ServiceSettingsBuilder"))
-            .build();
+      // clientSettingsBuilder = LanguageServiceSettings.newBuilder();
+      AssignmentExpr newBuilderAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setValueExpr(newBuilderExpr)
+              .build();
 
-    AssignmentExpr newBuilderAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(VariableExpr.withVariable(settingBuilderVariable))
-            .setValueExpr(newBuilderExpr)
-            .build();
+      ExprStatement newBuilderStatement = ExprStatement.withExpr(newBuilderAssignmentExpr);
+      ExprStatement newHttpJsonBuilderStatement =
+          ExprStatement.withExpr(newHttpJsonBuilderAssignmentExpr);
 
-    ExprStatement newBuilderStatement = ExprStatement.withExpr(newBuilderAssignmentExpr);
-    ExprStatement newHttpJsonBuilderStatement =
-        ExprStatement.withExpr(newHttpJsonBuilderAssignmentExpr);
+      IfStatement setClientSettingsBuilderStatement =
+          createIfStatement(
+              getUseRest,
+              Arrays.asList(
+                  newHttpJsonBuilderStatement,
+                  LoggerUtils.createLoggerStatement(
+                      ValueExpr.withValue(
+                          StringObjectValue.withValue("Using REST (HTTP/JSON) transport.")),
+                      types)),
+              Arrays.asList(newBuilderStatement));
 
-    IfStatement setClientSettingsBuilderStatement =
-        createIfStatement(
-            getUseRest,
-            Arrays.asList(
-                newHttpJsonBuilderStatement,
-                LoggerUtils.createLoggerStatement(
-                    ValueExpr.withValue(
-                        StringObjectValue.withValue("Using REST (HTTP/JSON) transport.")),
-                    types)),
-            Arrays.asList(newBuilderStatement));
-    bodyStatements.add(setClientSettingsBuilderStatement);
+      bodyStatements.add(ExprStatement.withExpr(settingsVarExpr));
+      bodyStatements.add(setClientSettingsBuilderStatement);
+
+    } else {
+      // For GRPC-only libraries
+      // LanguageServiceSettings.Builder clientSettingsBuilder =
+      // LanguageServiceSettings.newBuilder();
+
+      AssignmentExpr clientSettingsBuilderAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(settingsVarExpr)
+              .setValueExpr(newBuilderExpr)
+              .build();
+
+      bodyStatements.add(ExprStatement.withExpr(clientSettingsBuilderAssignmentExpr));
+    }
 
     VariableExpr thisCredentialsProvider =
         VariableExpr.withVariable(
