@@ -484,7 +484,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     if (hasRestOption) {
       // For GRPC+REST libraries
       // LanguageServiceSettings.Builder clientSettingsBuilder;
-      //    if (clientProperties.isUseRest()) {
+      //    if (this.clientProperties.isUseRest()) {
       //      clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
       //    } else {
       //      clientSettingsBuilder = LanguageServiceSettings.newBuilder();
