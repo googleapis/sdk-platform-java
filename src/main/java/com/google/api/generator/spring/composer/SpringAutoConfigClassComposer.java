@@ -58,6 +58,7 @@ import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentC
 import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.LoggerUtils;
 import com.google.api.generator.spring.utils.Utils;
+import com.google.cloud.spring.autoconfigure.core.GcpContextAutoConfiguration;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.common.base.CaseFormat;
@@ -71,6 +72,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -265,6 +267,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations(
       Service service, Map<String, TypeNode> types) {
     // @AutoConfiguration
+    // @AutoConfigureAfter(GcpContextAutoConfiguration.class)
     // @ConditionalOnClass(LanguageServiceClient.class)
     // @ConditionalOnProperty(value =
     // "com.google.cloud.language.v1.spring.auto.language-service.enabled", matchIfMissing = true)
@@ -307,6 +310,16 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                     .setStaticReferenceType(types.get("ServiceClient"))
                     .build())
             .build();
+    AnnotationNode autoConfigureAfterNode =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("AutoConfigureAfter"))
+            .setDescription(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+                    .setStaticReferenceType(STATIC_TYPES.get("GcpContextAutoConfiguration"))
+                    .build())
+            .build();
     AnnotationNode configurationNode =
         AnnotationNode.builder().setType(STATIC_TYPES.get("AutoConfiguration")).build();
     AnnotationNode enableConfigurationPropertiesNode =
@@ -322,6 +335,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     return Arrays.asList(
         configurationNode,
+        autoConfigureAfterNode,
         conditionalOnClassNode,
         conditionalOnPropertyNode,
         enableConfigurationPropertiesNode);
@@ -958,7 +972,9 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             ConditionalOnMissingBean.class,
             EnableConfigurationProperties.class,
             CredentialsProvider.class,
+            GcpContextAutoConfiguration.class,
             AutoConfiguration.class,
+            AutoConfigureAfter.class,
             Bean.class,
             Qualifier.class,
             DefaultCredentialsProvider.class,

@@ -5,6 +5,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.cloud.spring.autoconfigure.core.GcpContextAutoConfiguration;
 import com.google.cloud.spring.core.Credentials;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.cloud.spring.core.Retry;
@@ -17,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -38,6 +40,7 @@ import org.springframework.context.annotation.Bean;
  * </ul>
  */
 @AutoConfiguration
+@AutoConfigureAfter(GcpContextAutoConfiguration.class)
 @ConditionalOnClass(EchoClient.class)
 @ConditionalOnProperty(value = "com.google.showcase.v1beta1.echo.enabled", matchIfMissing = true)
 @EnableConfigurationProperties(EchoSpringProperties.class)
