@@ -46,12 +46,12 @@ import java.util.stream.Collectors;
 
 public class ConfiguredSnippetComposer {
 
-  // TODO: Update import statements
   // TODO: Depending on call type, generate a different sample
-  // For now, just generate a Standard sample
+  // For now, just generate a Standard Operation sample
 
   static List<CommentStatement> fileHeader = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
 
+  // Generates the JavaDoc comments for each configured snippet that includes the request parameters, response type, and snippet description provided by the snippet config
   public static List<CommentStatement> composeHeaderStatements(GapicSnippetConfig snippetConfig) {
     JavaDocComment.Builder javaDocComment =
         JavaDocComment.builder()
@@ -60,9 +60,7 @@ public class ConfiguredSnippetComposer {
             .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
 
     if (GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig).length() > 1) {
-      javaDocComment.addComment(
-          String.format(
-              "\nReturns %s", GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig)));
+      javaDocComment.setReturn(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig),"");
     }
 
     Iterator<Map.Entry<String, List>> iterator =
@@ -164,23 +162,23 @@ public class ConfiguredSnippetComposer {
             .setMethodName("newBuilder")
             .build();
 
-    // TODO update to value as String directly; may need to substantiate variable at the top
+    // TODO update to intake from config instead of hardcode
     MethodInvocationExpr setValueTitanic =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
             .setArguments(
-                VariableExpr.withVariable(
-                    Variable.builder().setName("Titanic").setType(TypeNode.STRING).build()))
+                    ValueExpr.withValue(
+                            StringObjectValue.withValue("Titanic")))
             .setMethodName("setValue")
             .build();
 
-    // TODO update to value as String directly; may need to substantiate variable at the top
+    // TODO update to intake from config instead of hardcode
     MethodInvocationExpr setValueRMSQueenMary =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
             .setArguments(
-                VariableExpr.withVariable(
-                    Variable.builder().setName("RMSQueenMary").setType(TypeNode.STRING).build()))
+                    ValueExpr.withValue(
+                            StringObjectValue.withValue("RMSQueenMary")))
             .setMethodName("setValue")
             .build();
 

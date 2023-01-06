@@ -31,10 +31,9 @@ import com.google.cloud.speech.v1.CustomClass.ClassItem;
  *
  * <p>Shows how to create a custom class
  *
- * <p>Returns google.cloud.speech.v1.CustomClass
- *
  * @param parent The custom class parent element
  * @param customClassId The id for the custom class
+ * @return google.cloud.speech.v1.CustomClass
  */
 public class CreateCustomClass {
 
@@ -56,8 +55,8 @@ public class CreateCustomClass {
               .setCustomClass(
                   CustomClass.newBuilder()
                       .addItems(
-                          CustomClass.ClassItem.newBuilder().setValue(Titanic),
-                          CustomClass.ClassItem.newBuilder().setValue(RMSQueenMary))
+                          CustomClass.ClassItem.newBuilder().setValue("Titanic"),
+                          CustomClass.ClassItem.newBuilder().setValue("RMSQueenMary"))
                       .build())
               .build();
       System.out.println("Calling the CreateCustomClass operation.");

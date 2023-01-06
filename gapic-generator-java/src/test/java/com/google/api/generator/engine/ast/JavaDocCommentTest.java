@@ -200,10 +200,13 @@ public class JavaDocCommentTest {
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
     String throwsType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
+    String returnType = "Book";
+    String returnDescription = "if the remote call succeeds.";
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .setDeprecated(deprecatedText)
             .setThrows(throwsType, throwsDescription)
+            .setReturn(returnType, returnDescription)
             .addParam(paramName1, paramDescription1)
             .addComment(content)
             .addParagraph(paragraph1)
@@ -226,6 +229,7 @@ public class JavaDocCommentTest {
             "@param shelfName The name of the shelf where books are published to.\n",
             "@param shelf The shelf to create.\n",
             "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
+            "@return Book if the remote call succeeds.\n",
             "@deprecated Use the {@link ArchivedBookName} class instead.");
     assertEquals(expected, javaDocComment.comment());
   }
