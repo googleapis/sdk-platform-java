@@ -66,8 +66,10 @@ public class EchoSpringAutoConfiguration {
   }
 
   /**
-   * Returns the default channel provider. The default is gRPC and will default to it unless the
+   * Provides a default channel provider bean. The default is gRPC and will default to it unless the
    * useRest option is provided to use HTTP transport instead
+   *
+   * @return Returns the default channel provider.
    */
   @Bean
   @ConditionalOnMissingBean(name = "defaultEchoTransportChannelProvider")
@@ -85,6 +87,9 @@ public class EchoSpringAutoConfiguration {
    * <p>Retry settings are also configured from service-level and method-level properties specified
    * in EchoSpringProperties. Method-level properties will take precedence over service-level
    * properties if available, and client library defaults will be used if neither are specified.
+   *
+   * @param defaultTransportChannelProvider TransportChannelProvider to use in the settings.
+   * @return a {@link EchoSettings} bean configured with {@link TransportChannelProvider} bean.
    */
   @Bean
   @ConditionalOnMissingBean
@@ -290,7 +295,12 @@ public class EchoSpringAutoConfiguration {
     return clientSettingsBuilder.build();
   }
 
-  /** Provides a EchoClient bean configured with EchoSettings. */
+  /**
+   * Provides a EchoClient bean configured with EchoSettings.
+   *
+   * @param echoSettings settings to configure an instance of client bean.
+   * @return a {@link EchoClient} bean configured with {@link EchoSettings}
+   */
   @Bean
   @ConditionalOnMissingBean
   public EchoClient echoClient(EchoSettings echoSettings) throws IOException {
