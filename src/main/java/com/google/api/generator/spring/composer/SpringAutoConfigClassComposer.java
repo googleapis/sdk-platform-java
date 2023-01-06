@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -124,16 +125,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 Arrays.asList(
                     createConstructor(service, className, dynamicTypes, thisExpr),
                     createTransportChannelProviderBeanMethod(
-                        transportChannelProviderName,
                         service,
+                        transportChannelProviderName,
+                        dynamicTypes,
                         thisExpr,
-                        hasRestOption,
-                        dynamicTypes),
+                        hasRestOption),
                     createSettingsBeanMethod(
                         service,
                         transportChannelProviderName,
                         dynamicTypes,
-                        gapicServiceConfig,
                         thisExpr,
                         hasRestOption,
                         serviceSettingsMethodName),
@@ -332,12 +332,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createTransportChannelProviderBeanMethod(
-      String methodName,
       Service service,
+      String methodName,
+      Map<String, TypeNode> types,
       Expr thisExpr,
-      boolean hasRestOption,
-      Map<String, TypeNode> types) {
-
+      boolean hasRestOption) {
     AssignmentExpr nameStringAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
@@ -370,8 +369,21 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
             .build();
 
+    // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
+    Expr defaultTransportProviderExprChain =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setMethodName("defaultHttpJsonTransportProviderBuilder")
+            .build();
+    MethodInvocationExpr defaultHttpJsonTransportProviderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(defaultTransportProviderExprChain)
+            .setMethodName("build")
+            .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
+            .build();
+
     if (hasRestOption) {
-      //      if (clientProperties.isUseRest()) {
+      //      if (this.clientProperties.isUseRest()) {
       //        return LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build();
       //      }
       Variable clientPropertiesVar =
@@ -392,42 +404,20 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               .setExprReferenceExpr(thisClientPropertiesVarExpr)
               .build();
 
-      Variable settingBuilderVariable =
-          Variable.builder()
-              .setName("clientSettingsBuilder")
-              .setType(types.get("ServiceSettingsBuilder"))
-              .build();
-
-      // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
-      Expr defaultTransportProviderExprChain =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(types.get("ServiceSettings"))
-              .setMethodName("defaultHttpJsonTransportProviderBuilder")
-              .build();
-      defaultTransportProviderExprChain =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(defaultTransportProviderExprChain)
-              .setMethodName("build")
-              .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
-              .build();
-      MethodInvocationExpr defaultHttpJsonTransportProviderExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-              .setMethodName("setTransportChannelProvider")
-              .setArguments(defaultTransportProviderExprChain)
-              .build();
-
-      IfStatement returnTransportChannelProviderStatement =
+      IfStatement returnHttpJsonTransportChannelProviderStatement =
           createIfStatement(
               getUseRest,
-              Arrays.asList(ExprStatement.withExpr(defaultHttpJsonTransportProviderExpr)),
+              Arrays.asList(
+                  ExprStatement.withExpr(
+                      ReturnExpr.withExpr(defaultHttpJsonTransportProviderExpr))),
               null);
 
       return beanMethodBuilder
-          .setBody(Arrays.asList(returnTransportChannelProviderStatement))
+          .setBody(Arrays.asList(returnHttpJsonTransportChannelProviderStatement))
           .setReturnExpr(defaultTransportChannelProviderExpr)
           .build();
     }
+
     return beanMethodBuilder.setReturnExpr(defaultTransportChannelProviderExpr).build();
   }
 
@@ -445,7 +435,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       Service service,
       String transportChannelProviderName,
       Map<String, TypeNode> types,
-      GapicServiceConfig gapicServiceConfig,
       Expr thisExpr,
       boolean hasRestOption,
       String serviceSettingsMethodName) {
