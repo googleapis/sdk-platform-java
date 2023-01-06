@@ -624,29 +624,29 @@ public class ChannelPoolTest {
         GrpcCallableFactory.createServerStreamingCallable(
             GrpcCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE), settings, context);
     Color request = Color.newBuilder().setRed(0.5f).build();
-    try {
-      streamingCallable.call(
-          request,
-          new ResponseObserver() {
-            @Override
-            public void onStart(StreamController controller) {
-              controller.cancel();
-            }
 
-            @Override
-            public void onResponse(Object response) {}
+    IllegalStateException e =
+        Assert.assertThrows(
+            IllegalStateException.class,
+            () ->
+                streamingCallable.call(
+                    request,
+                    new ResponseObserver() {
+                      @Override
+                      public void onStart(StreamController controller) {
+                        controller.cancel();
+                      }
 
-            @Override
-            public void onError(Throwable t) {}
+                      @Override
+                      public void onResponse(Object response) {}
 
-            @Override
-            public void onComplete() {}
-          });
-      Assert.fail("Request should be cancelled");
-    } catch (Exception e) {
-      assertThat(e).isInstanceOf(IllegalStateException.class);
-      assertThat(e.getCause()).isInstanceOf(CancellationException.class);
-      assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
-    }
+                      @Override
+                      public void onError(Throwable t) {}
+
+                      @Override
+                      public void onComplete() {}
+                    }));
+    assertThat(e.getCause()).isInstanceOf(CancellationException.class);
+    assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
   }
 }

@@ -74,9 +74,8 @@ class GrpcDirectStreamController<RequestT, ResponseT> implements StreamControlle
 
   @Override
   public void cancel() {
-    String message = "User cancelled stream";
-    cancellationException = new CancellationException(message);
-    clientCall.cancel(message, cancellationException);
+    cancellationException = new CancellationException("User cancelled stream");
+    clientCall.cancel(null, cancellationException);
   }
 
   @Override

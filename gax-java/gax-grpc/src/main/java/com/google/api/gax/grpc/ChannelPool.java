@@ -519,7 +519,7 @@ class ChannelPool extends ManagedChannel {
 
   /** ClientCall wrapper that makes sure to decrement the outstanding RPC count on completion. */
   static class ReleasingClientCall<ReqT, RespT> extends SimpleForwardingClientCall<ReqT, RespT> {
-    private CancellationException cancellationException;
+    @Nullable private CancellationException cancellationException;
     final Entry entry;
 
     public ReleasingClientCall(ClientCall<ReqT, RespT> delegate, Entry entry) {
