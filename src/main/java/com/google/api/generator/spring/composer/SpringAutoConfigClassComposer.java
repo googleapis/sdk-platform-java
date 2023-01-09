@@ -369,19 +369,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
             .build();
 
-    // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
-    Expr defaultTransportProviderExprChain =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get("ServiceSettings"))
-            .setMethodName("defaultHttpJsonTransportProviderBuilder")
-            .build();
-    MethodInvocationExpr defaultHttpJsonTransportProviderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(defaultTransportProviderExprChain)
-            .setMethodName("build")
-            .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
-            .build();
-
     if (hasRestOption) {
       //      if (this.clientProperties.isUseRest()) {
       //        return LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build();
@@ -402,6 +389,19 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
               .setMethodName("getUseRest")
               .setReturnType(TypeNode.BOOLEAN)
               .setExprReferenceExpr(thisClientPropertiesVarExpr)
+              .build();
+
+      // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
+      Expr defaultTransportProviderExprChain =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("ServiceSettings"))
+              .setMethodName("defaultHttpJsonTransportProviderBuilder")
+              .build();
+      MethodInvocationExpr defaultHttpJsonTransportProviderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(defaultTransportProviderExprChain)
+              .setMethodName("build")
+              .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
               .build();
 
       IfStatement returnHttpJsonTransportChannelProviderStatement =
