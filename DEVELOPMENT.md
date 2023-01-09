@@ -16,55 +16,38 @@
 
 - Run linter checks without actually doing the formatting.
 
-  ```sh
-  bazel run //:google_java_format_verification
-  ```
-  or
-  ```sh
-  mvn fmt:check
-  ```
+    ```sh
+    mvn fmt:check
+    ```
 
 - Format files.
 
-  ```sh
-  bazel run //:google_java_format
-  ```
-  or
-  ```sh
-  mvn fmt:format
-  ```
+    ```sh
+    mvn fmt:format
+    ```
 
 ## Test Running
 
 - Run all unit and integration tests.
 
-  ```sh
-  bazel test //...
-  ```
+    ```sh
+    mvn test          # unit tests
+    bazel test //...  # integration tests
+    ```
 
 - Run all unit tests.
 
-  ```sh
-  bazel test //:units
-  ```
-  or
-  ```sh
-  mvn test
-  ```
+    ```sh
+    mvn test
+    ```
 
-- Run a single unit test like `JavaCodeGeneratorTest.java`:
+-   Run a single or multiple unit tests:
 
-  ```sh
-  bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
-  ```
-  or
-  ```sh
-  mvn test -Dtest=JavaCodeGeneratorTest
+    ```sh
+    mvn test -Dtest=JavaCodeGeneratorTest
 
-  mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
-  ```
-
-￼
+    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+    ```
 
 - Update all unit test golden files:
 
@@ -74,10 +57,6 @@
 
 - Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
-  ```sh
-  bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
-  ```
-  or
   ```sh
   mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
   ```

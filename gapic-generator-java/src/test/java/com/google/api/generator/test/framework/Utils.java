@@ -34,6 +34,10 @@ public class Utils {
    * @param codegen the generated code from JUnit test
    */
   public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
+    if (System.getProperty("updateUnitGoldens") == null) {
+      return;
+    }
+
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
     saveCodeToFile(relativeGoldenDir, fileName, codegen);
   }
@@ -45,18 +49,7 @@ public class Utils {
   }
 
   private static void saveCodeToFile(String relativeGoldenDir, String fileName, String codegen) {
-    Path testOutputDir =
-        Paths.get( "src", "test", "java", relativeGoldenDir);
-
-    // Auto-detect project workspace when running `bazel run //:update_TargetTest`.
-    // TODO: remove when we don't use Bazel.
-    String workspaceDir = System.getenv("BUILD_WORKSPACE_DIRECTORY");
-    if (workspaceDir != null) {
-      testOutputDir = Paths.get(workspaceDir).resolve(testOutputDir);
-    } else if (System.getProperty("updateUnitGoldens") == null) {
-      return;
-    }
-
+    Path testOutputDir = Paths.get("src", "test", "java", relativeGoldenDir);
     testOutputDir.toFile().mkdirs();
     try (FileWriter myWriter = new FileWriter(testOutputDir.resolve(fileName).toFile())) {
       myWriter.write(codegen);
