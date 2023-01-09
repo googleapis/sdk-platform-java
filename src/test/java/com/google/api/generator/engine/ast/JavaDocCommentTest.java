@@ -180,8 +180,6 @@ public class JavaDocCommentTest {
 
   @Test
   public void createJavaDocComment_paramsAndReturn() {
-    // No matter how many times or order `setThrows` and `setDeprecated` are called,
-    // only one @throws and @deprecated will be printed.
     String paramName1 = "shelfName";
     String paramDescription1 = "The name of the shelf where books are published to.";
     String paramName2 = "shelf";
