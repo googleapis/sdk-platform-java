@@ -87,6 +87,7 @@ public class ConfiguredSnippetComposer {
     }
   }
 
+  // Composes request and response handling within the sample method
   public static List<Statement> composeSampleMethodBodyStatements(
       GapicSnippetConfig snippetConfig) {
     List<Statement> sampleBodyStatements = new ArrayList<>();
@@ -343,9 +344,11 @@ public class ConfiguredSnippetComposer {
     return sampleBodyStatements;
   }
 
+  // Composes the client settings initialization with an endpoint if specified in the config as well as the actual client initialization using the settings
+  // Includes try-catch wrapper around sample method
   public static List<Statement> composeClientInitializationStatements(
       GapicSnippetConfig snippetConfig) {
-    // TODO: parse PreClientInitializationStatements
+    // TODO: parse PreClientInitializationStatements (P2 feature, likely H2 2023)
     List<Statement> clientInitializationStatements = new ArrayList<>();
 
     // Initialize client settings with builder() method.
@@ -373,6 +376,7 @@ public class ConfiguredSnippetComposer {
             .setMethodName("newBuilder")
             .build();
     Expr buildMethodExpr;
+
     // Set endpoint if configured
     if (GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig) != null) {
       VariableExpr endpointVar =

@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// TODO add Return type comment to this
-
 @AutoValue
 public abstract class JavaDocComment implements Comment {
   @Override
