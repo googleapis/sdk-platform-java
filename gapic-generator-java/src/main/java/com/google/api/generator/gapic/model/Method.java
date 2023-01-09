@@ -99,11 +99,22 @@ public abstract class Method {
     return operationPollingMethod();
   }
 
+  /**
+   * Determines if method is both eligible and enabled for the Transport. GRPC+REST Transport is not
+   * supported as each transport's sub composers will invoke this method the specific transport
+   * (GRPC or REST)
+   *
+   * @param transport Expects either GRPC or REST Transport
+   * @return boolean is method should be generated for the transport
+   */
   public boolean isSupportedByTransport(Transport transport) {
     if (transport == Transport.REST) {
       return httpBindings() != null && stream() != Stream.BIDI && stream() != Stream.CLIENT;
-    } else {
+    } else if (transport == Transport.GRPC) {
       return true;
+    } else {
+      throw new IllegalArgumentException(
+          String.format("Invalid Transport: %s. Expecting GRPC or REST", transport.name()));
     }
   }
 
