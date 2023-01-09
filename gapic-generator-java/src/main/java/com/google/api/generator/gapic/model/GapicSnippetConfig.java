@@ -380,11 +380,10 @@ public class GapicSnippetConfig {
 
   // PakkageName for Types in configured Snippet
   public static String getConfiguredSnippetPakkageString(GapicSnippetConfig gapicSnippetConfig) {
-    return
-            "com."
-            + gapicSnippetConfig.configRpc.get("proto_package")
-            + "."
-            + gapicSnippetConfig.configRpc.get("api_version");
+    return "com."
+        + gapicSnippetConfig.configRpc.get("proto_package")
+        + "."
+        + gapicSnippetConfig.configRpc.get("api_version");
   }
 
   // ApiShortName for regionTag for configured Snippet

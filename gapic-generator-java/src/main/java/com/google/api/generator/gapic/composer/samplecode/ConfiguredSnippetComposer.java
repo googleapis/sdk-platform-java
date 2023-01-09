@@ -51,7 +51,8 @@ public class ConfiguredSnippetComposer {
 
   static List<CommentStatement> fileHeader = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
 
-  // Generates the JavaDoc comments for each configured snippet that includes the request parameters, response type, and snippet description provided by the snippet config
+  // Generates the JavaDoc comments for each configured snippet that includes the request
+  // parameters, response type, and snippet description provided by the snippet config
   public static List<CommentStatement> composeHeaderStatements(GapicSnippetConfig snippetConfig) {
     JavaDocComment.Builder javaDocComment =
         JavaDocComment.builder()
@@ -60,7 +61,8 @@ public class ConfiguredSnippetComposer {
             .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
 
     if (GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig).length() > 1) {
-      javaDocComment.setReturn(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig),"");
+      javaDocComment.setReturn(
+          GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig), "");
     }
 
     Iterator<Map.Entry<String, List>> iterator =
@@ -167,9 +169,7 @@ public class ConfiguredSnippetComposer {
     MethodInvocationExpr setValueTitanic =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
-            .setArguments(
-                    ValueExpr.withValue(
-                            StringObjectValue.withValue("Titanic")))
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("Titanic")))
             .setMethodName("setValue")
             .build();
 
@@ -177,9 +177,7 @@ public class ConfiguredSnippetComposer {
     MethodInvocationExpr setValueRMSQueenMary =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
-            .setArguments(
-                    ValueExpr.withValue(
-                            StringObjectValue.withValue("RMSQueenMary")))
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("RMSQueenMary")))
             .setMethodName("setValue")
             .build();
 
@@ -344,7 +342,8 @@ public class ConfiguredSnippetComposer {
     return sampleBodyStatements;
   }
 
-  // Composes the client settings initialization with an endpoint if specified in the config as well as the actual client initialization using the settings
+  // Composes the client settings initialization with an endpoint if specified in the config as well
+  // as the actual client initialization using the settings
   // Includes try-catch wrapper around sample method
   public static List<Statement> composeClientInitializationStatements(
       GapicSnippetConfig snippetConfig) {
@@ -380,21 +379,18 @@ public class ConfiguredSnippetComposer {
     // Set endpoint if configured
     if (GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig) != null) {
       VariableExpr endpointVar =
-              VariableExpr.builder()
-                      .setVariable(
-                              Variable.builder()
-                                      .setType(TypeNode.STRING)
-                                      .setName("endpoint")
-                                      .build())
-                      .setIsDecl(true)
-                      .build();
-        AssignmentExpr endpointAssignment =
-                AssignmentExpr.builder()
-                        .setVariableExpr(endpointVar)
-                        .setValueExpr(
-                                ValueExpr.withValue(
-                                        StringObjectValue.withValue(GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig))))
-                        .build();
+          VariableExpr.builder()
+              .setVariable(Variable.builder().setType(TypeNode.STRING).setName("endpoint").build())
+              .setIsDecl(true)
+              .build();
+      AssignmentExpr endpointAssignment =
+          AssignmentExpr.builder()
+              .setVariableExpr(endpointVar)
+              .setValueExpr(
+                  ValueExpr.withValue(
+                      StringObjectValue.withValue(
+                          GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig))))
+              .build();
 
       Statement endpointStatement = ExprStatement.withExpr(endpointAssignment);
       clientInitializationStatements.add(endpointStatement);

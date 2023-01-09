@@ -152,7 +152,7 @@ public abstract class JavaDocComment implements Comment {
       }
       if (!Strings.isNullOrEmpty(returnType)) {
         componentsList.add(
-                String.format("@return %s %s", returnType, HtmlEscaper.process(returnDescription)));
+            String.format("@return %s %s", returnType, HtmlEscaper.process(returnDescription)));
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
