@@ -672,11 +672,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     List<Statement> updateRetrySettingsStatementBody = new ArrayList<>();
 
-    for (Method method : service.methods()) {
-      List<Statement> updateMethodWithServiceRetryStatments =
+    for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
+      List<Statement> updateMethodWithServiceRetryStatements =
           createUpdateRetrySettingsStatements(
               method.name(), settingBuilderVariable, serviceRetryPropertiesVar, types);
-      updateRetrySettingsStatementBody.addAll(updateMethodWithServiceRetryStatments);
+      updateRetrySettingsStatementBody.addAll(updateMethodWithServiceRetryStatements);
       updateRetrySettingsStatementBody.add(EMPTY_LINE_STATEMENT);
     }
 
@@ -693,7 +693,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     bodyStatements.add(setRetrySettingsStatement);
 
     // If-blocks to update with method-level properties
-    for (Method method : service.methods()) {
+    for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
       String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
 
       Variable methodRetryPropertiesVar =

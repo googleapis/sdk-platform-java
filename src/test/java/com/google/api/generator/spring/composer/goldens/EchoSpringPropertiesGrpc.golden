@@ -26,26 +26,6 @@ public class EchoSpringProperties implements CredentialsSupplier {
    */
   @NestedConfigurationProperty private Retry echoRetry;
   /**
-   * Allow override of retry settings at method-level for expand. If defined, this takes precedence
-   * over service-level retry configurations for that RPC method.
-   */
-  @NestedConfigurationProperty private Retry expandRetry;
-  /**
-   * Allow override of retry settings at method-level for collect. If defined, this takes precedence
-   * over service-level retry configurations for that RPC method.
-   */
-  @NestedConfigurationProperty private Retry collectRetry;
-  /**
-   * Allow override of retry settings at method-level for chat. If defined, this takes precedence
-   * over service-level retry configurations for that RPC method.
-   */
-  @NestedConfigurationProperty private Retry chatRetry;
-  /**
-   * Allow override of retry settings at method-level for chatAgain. If defined, this takes
-   * precedence over service-level retry configurations for that RPC method.
-   */
-  @NestedConfigurationProperty private Retry chatAgainRetry;
-  /**
    * Allow override of retry settings at method-level for pagedExpand. If defined, this takes
    * precedence over service-level retry configurations for that RPC method.
    */
@@ -55,11 +35,6 @@ public class EchoSpringProperties implements CredentialsSupplier {
    * precedence over service-level retry configurations for that RPC method.
    */
   @NestedConfigurationProperty private Retry simplePagedExpandRetry;
-  /**
-   * Allow override of retry settings at method-level for wait. If defined, this takes precedence
-   * over service-level retry configurations for that RPC method.
-   */
-  @NestedConfigurationProperty private Retry waitRetry;
   /**
    * Allow override of retry settings at method-level for block. If defined, this takes precedence
    * over service-level retry configurations for that RPC method.
@@ -108,38 +83,6 @@ public class EchoSpringProperties implements CredentialsSupplier {
     this.echoRetry = echoRetry;
   }
 
-  public Retry getExpandRetry() {
-    return this.expandRetry;
-  }
-
-  public void setExpandRetry(Retry expandRetry) {
-    this.expandRetry = expandRetry;
-  }
-
-  public Retry getCollectRetry() {
-    return this.collectRetry;
-  }
-
-  public void setCollectRetry(Retry collectRetry) {
-    this.collectRetry = collectRetry;
-  }
-
-  public Retry getChatRetry() {
-    return this.chatRetry;
-  }
-
-  public void setChatRetry(Retry chatRetry) {
-    this.chatRetry = chatRetry;
-  }
-
-  public Retry getChatAgainRetry() {
-    return this.chatAgainRetry;
-  }
-
-  public void setChatAgainRetry(Retry chatAgainRetry) {
-    this.chatAgainRetry = chatAgainRetry;
-  }
-
   public Retry getPagedExpandRetry() {
     return this.pagedExpandRetry;
   }
@@ -154,14 +97,6 @@ public class EchoSpringProperties implements CredentialsSupplier {
 
   public void setSimplePagedExpandRetry(Retry simplePagedExpandRetry) {
     this.simplePagedExpandRetry = simplePagedExpandRetry;
-  }
-
-  public Retry getWaitRetry() {
-    return this.waitRetry;
-  }
-
-  public void setWaitRetry(Retry waitRetry) {
-    this.waitRetry = waitRetry;
   }
 
   public Retry getBlockRetry() {

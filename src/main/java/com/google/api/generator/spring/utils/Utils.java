@@ -16,10 +16,12 @@ package com.google.api.generator.spring.utils;
 
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.CaseFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Utils {
 
@@ -79,6 +81,14 @@ public class Utils {
     // Service name is converted to lower hyphen as required by ConfigurationPropertyName
     // https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/properties/source/ConfigurationPropertyName.html
     return packageName + "." + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
+  }
+
+  public static List<Method> getMethodsForRetryConfiguration(Service service) {
+    // Returns list of methods with retry configuration support
+    // This currently excludes streaming and LRO methods
+    return service.methods().stream()
+        .filter(m -> m.stream().equals(Method.Stream.NONE) && !m.hasLro())
+        .collect(Collectors.toList());
   }
 
   private static TypeStore createStaticTypes() {

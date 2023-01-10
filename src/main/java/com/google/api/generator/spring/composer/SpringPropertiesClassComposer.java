@@ -171,7 +171,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     statements.add(SpringPropertiesCommentComposer.createServiceRetryPropertyComment());
     statements.add(retryPropertiesStatement);
 
-    for (Method method : service.methods()) {
+    for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
       String methodNameLowerCamel =
           CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
       String methodPropertiesVarName = methodNameLowerCamel + "Retry";
@@ -216,7 +216,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(createGetterMethod(thisClassType, "retry", types.get("Retry"), null));
     methodDefinitions.add(createSetterMethod(thisClassType, "retry", types.get("Retry")));
 
-    for (Method method : service.methods()) {
+    for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
       String methodPropertiesVarName =
           CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "Retry";
       methodDefinitions.add(
