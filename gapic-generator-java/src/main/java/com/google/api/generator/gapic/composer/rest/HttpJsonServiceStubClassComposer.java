@@ -1294,7 +1294,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                               .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
                               .setMessageExpr(
                                   String.format(
-                                      "Not implemented: %s(). %s transport is not implemented for this method yet. It is either not enabled or not supported (BIDI or Client Streaming)",
+                                      "Not implemented: %s(). %s transport is not implemented for this method yet.",
                                       callableName, getTransport()))
                               .build())))
               .build());

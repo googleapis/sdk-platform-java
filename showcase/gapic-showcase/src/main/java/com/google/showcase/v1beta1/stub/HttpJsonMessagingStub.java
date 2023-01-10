@@ -792,13 +792,13 @@ public class HttpJsonMessagingStub extends MessagingStub {
   @Override
   public ClientStreamingCallable<CreateBlurbRequest, SendBlurbsResponse> sendBlurbsCallable() {
     throw new UnsupportedOperationException(
-        "Not implemented: sendBlurbsCallable(). REST transport is not implemented for this method yet. It is either not enabled or not supported (BIDI or Client Streaming)");
+        "Not implemented: sendBlurbsCallable(). REST transport is not implemented for this method yet.");
   }
 
   @Override
   public BidiStreamingCallable<ConnectRequest, StreamBlurbsResponse> connectCallable() {
     throw new UnsupportedOperationException(
-        "Not implemented: connectCallable(). REST transport is not implemented for this method yet. It is either not enabled or not supported (BIDI or Client Streaming)");
+        "Not implemented: connectCallable(). REST transport is not implemented for this method yet.");
   }
 
   @Override
