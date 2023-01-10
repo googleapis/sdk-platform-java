@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -126,12 +127,15 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 Arrays.asList(
                     createConstructor(service, className, dynamicTypes, thisExpr),
                     createTransportChannelProviderBeanMethod(
-                        transportChannelProviderName, dynamicTypes),
+                        service,
+                        transportChannelProviderName,
+                        dynamicTypes,
+                        thisExpr,
+                        hasRestOption),
                     createSettingsBeanMethod(
                         service,
                         transportChannelProviderName,
                         dynamicTypes,
-                        gapicServiceConfig,
                         thisExpr,
                         hasRestOption,
                         serviceSettingsMethodName),
@@ -342,15 +346,11 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createTransportChannelProviderBeanMethod(
-      String methodName, Map<String, TypeNode> types) {
-
-    MethodInvocationExpr returnExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName("defaultTransportChannelProvider")
-            .setStaticReferenceType(types.get("ServiceSettings"))
-            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
-            .build();
-
+      Service service,
+      String methodName,
+      Map<String, TypeNode> types,
+      Expr thisExpr,
+      boolean hasRestOption) {
     AssignmentExpr nameStringAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
@@ -364,17 +364,75 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .addDescription(nameStringAssignmentExpr)
             .build();
 
-    return MethodDefinition.builder()
-        .setHeaderCommentStatements(
-            SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
-        .setName(methodName)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
-        .setAnnotations(
-            Arrays.asList(
-                AnnotationNode.withType(STATIC_TYPES.get("Bean")), conditionalOnMissingBean))
-        .setReturnExpr(returnExpr)
-        .build();
+    MethodDefinition.Builder beanMethodBuilder =
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                SpringAutoconfigCommentComposer.createTransportChannelProviderComment())
+            .setName(methodName)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(STATIC_TYPES.get("Bean")), conditionalOnMissingBean));
+
+    // LanguageServiceSettings.defaultTransportChannelProvider()
+    MethodInvocationExpr defaultTransportChannelProviderExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("defaultTransportChannelProvider")
+            .setStaticReferenceType(types.get("ServiceSettings"))
+            .setReturnType(STATIC_TYPES.get("TransportChannelProvider"))
+            .build();
+
+    if (hasRestOption) {
+      //      if (this.clientProperties.isUseRest()) {
+      //        return LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build();
+      //      }
+      Variable clientPropertiesVar =
+          Variable.builder()
+              .setName("clientProperties")
+              .setType(types.get(Utils.getServicePropertiesClassName(service)))
+              .build();
+      VariableExpr thisClientPropertiesVarExpr =
+          VariableExpr.withVariable(clientPropertiesVar)
+              .toBuilder()
+              .setExprReferenceExpr(thisExpr)
+              .build();
+
+      MethodInvocationExpr getUseRest =
+          MethodInvocationExpr.builder()
+              .setMethodName("getUseRest")
+              .setReturnType(TypeNode.BOOLEAN)
+              .setExprReferenceExpr(thisClientPropertiesVarExpr)
+              .build();
+
+      // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
+      Expr defaultTransportProviderExprChain =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("ServiceSettings"))
+              .setMethodName("defaultHttpJsonTransportProviderBuilder")
+              .build();
+      MethodInvocationExpr defaultHttpJsonTransportProviderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(defaultTransportProviderExprChain)
+              .setMethodName("build")
+              .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
+              .build();
+
+      IfStatement returnHttpJsonTransportChannelProviderStatement =
+          createIfStatement(
+              getUseRest,
+              Arrays.asList(
+                  ExprStatement.withExpr(
+                      ReturnExpr.withExpr(defaultHttpJsonTransportProviderExpr))),
+              null);
+
+      return beanMethodBuilder
+          .setBody(Arrays.asList(returnHttpJsonTransportChannelProviderStatement))
+          .setReturnExpr(defaultTransportChannelProviderExpr)
+          .build();
+    }
+
+    return beanMethodBuilder.setReturnExpr(defaultTransportChannelProviderExpr).build();
   }
 
   private static IfStatement createIfStatement(
@@ -391,7 +449,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       Service service,
       String transportChannelProviderName,
       Map<String, TypeNode> types,
-      GapicServiceConfig gapicServiceConfig,
       Expr thisExpr,
       boolean hasRestOption,
       String serviceSettingsMethodName) {
@@ -410,24 +467,101 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                 .build());
 
     List<Statement> bodyStatements = new ArrayList<>();
-    //   LanguageServiceSettings.Builder clientSettingsBuilder =
-    //       LanguageServiceSettings.newBuilder()
-    //           .setCredentialsProvider(credentialsProvider)
-    //           .setTransportChannelProvider(defaultTransportChannelProvider)
-    //           .setHeaderProvider(
-    //               new UserAgentHeaderProvider(this.getClass()));
+
     Variable settingBuilderVariable =
         Variable.builder()
             .setName("clientSettingsBuilder")
             .setType(types.get("ServiceSettingsBuilder"))
             .build();
+
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(settingBuilderVariable).toBuilder().setIsDecl(true).build();
-    Expr settingsBuilderExpr =
+
+    Expr newBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(types.get("ServiceSettings"))
             .setMethodName("newBuilder")
+            .setReturnType(types.get("ServiceSettingsBuilder"))
             .build();
+
+    Variable clientPropertiesVar =
+        Variable.builder()
+            .setName("clientProperties")
+            .setType(types.get(Utils.getServicePropertiesClassName(service)))
+            .build();
+    VariableExpr thisClientPropertiesVarExpr =
+        VariableExpr.withVariable(clientPropertiesVar)
+            .toBuilder()
+            .setExprReferenceExpr(thisExpr)
+            .build();
+
+    if (hasRestOption) {
+      // For GRPC+REST libraries
+      // LanguageServiceSettings.Builder clientSettingsBuilder;
+      //    if (this.clientProperties.isUseRest()) {
+      //      clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
+      //    } else {
+      //      clientSettingsBuilder = LanguageServiceSettings.newBuilder();
+      //    }
+      MethodInvocationExpr getUseRest =
+          MethodInvocationExpr.builder()
+              .setMethodName("getUseRest")
+              .setReturnType(TypeNode.BOOLEAN)
+              .setExprReferenceExpr(thisClientPropertiesVarExpr)
+              .build();
+
+      // clientSettingsBuilder = LanguageServiceSettings.newHttpJsonBuilder();
+      Expr newHttpJsonBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(types.get("ServiceSettings"))
+              .setMethodName("newHttpJsonBuilder")
+              .setReturnType(types.get("ServiceSettingsBuilder"))
+              .build();
+
+      AssignmentExpr newHttpJsonBuilderAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setValueExpr(newHttpJsonBuilderExpr)
+              .build();
+
+      // clientSettingsBuilder = LanguageServiceSettings.newBuilder();
+      AssignmentExpr newBuilderAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(VariableExpr.withVariable(settingBuilderVariable))
+              .setValueExpr(newBuilderExpr)
+              .build();
+
+      ExprStatement newBuilderStatement = ExprStatement.withExpr(newBuilderAssignmentExpr);
+      ExprStatement newHttpJsonBuilderStatement =
+          ExprStatement.withExpr(newHttpJsonBuilderAssignmentExpr);
+
+      IfStatement setClientSettingsBuilderStatement =
+          createIfStatement(
+              getUseRest,
+              Arrays.asList(
+                  newHttpJsonBuilderStatement,
+                  LoggerUtils.createLoggerStatement(
+                      ValueExpr.withValue(
+                          StringObjectValue.withValue("Using REST (HTTP/JSON) transport.")),
+                      types)),
+              Arrays.asList(newBuilderStatement));
+
+      bodyStatements.add(ExprStatement.withExpr(settingsVarExpr));
+      bodyStatements.add(setClientSettingsBuilderStatement);
+
+    } else {
+      // For GRPC-only libraries
+      // LanguageServiceSettings.Builder clientSettingsBuilder =
+      // LanguageServiceSettings.newBuilder();
+
+      AssignmentExpr clientSettingsBuilderAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(settingsVarExpr)
+              .setValueExpr(newBuilderExpr)
+              .build();
+
+      bodyStatements.add(ExprStatement.withExpr(clientSettingsBuilderAssignmentExpr));
+    }
 
     VariableExpr thisCredentialsProvider =
         VariableExpr.withVariable(
@@ -438,12 +572,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .toBuilder()
             .setExprReferenceExpr(thisExpr)
             .build();
-    settingsBuilderExpr =
+
+    Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(settingsBuilderExpr)
+            .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
             .setMethodName("setCredentialsProvider")
             .setArguments(thisCredentialsProvider)
             .build();
+    //    clientSettingsBuilder
     //           .setTransportChannelProvider(defaultTransportChannelProvider)
     settingsBuilderExpr =
         MethodInvocationExpr.builder()
@@ -465,29 +601,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setArguments(userAgentHeaderProviderInvocation)
             .setReturnType(settingBuilderVariable.type())
             .build();
-    AssignmentExpr settingCreateExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(settingsVarExpr)
-            .setValueExpr(settingsBuilderExpr)
-            .build();
 
-    bodyStatements.add(ExprStatement.withExpr(settingCreateExpr));
+    bodyStatements.add(ExprStatement.withExpr(settingsBuilderExpr));
 
     //   if (this.clientProperties.getQuotaProjectId() != null) {
     //     clientSettingsBuilder.setQuotaProjectId(clientProperties.getQuotaProjectId());
     //     LOGGER.info("Quota project id set to: " + clientProperties.getQuotaProjectId()
     //         + ", this overrides project id from credentials.");
     //   }
-    Variable clientPropertiesVar =
-        Variable.builder()
-            .setName("clientProperties")
-            .setType(types.get(Utils.getServicePropertiesClassName(service)))
-            .build();
-    VariableExpr thisClientPropertiesVarExpr =
-        VariableExpr.withVariable(clientPropertiesVar)
-            .toBuilder()
-            .setExprReferenceExpr(thisExpr)
-            .build();
 
     MethodInvocationExpr getQuotaProjectId =
         MethodInvocationExpr.builder()
@@ -594,52 +715,6 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             null);
 
     bodyStatements.add(setBackgroundExecutorProviderStatement);
-
-    if (hasRestOption) {
-      //   if (clientProperties.getUseRest()) {
-      //     clientSettingsBuilder.setTransportChannelProvider(
-      //         LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build());
-      //   }
-
-      MethodInvocationExpr getUseRest =
-          MethodInvocationExpr.builder()
-              .setMethodName("getUseRest")
-              .setReturnType(TypeNode.BOOLEAN)
-              .setExprReferenceExpr(thisClientPropertiesVarExpr)
-              .build();
-
-      // LanguageServiceSettings.defaultHttpJsonTransportProviderBuilder().build()
-      Expr defaultTransportProviderExprChain =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(types.get("ServiceSettings"))
-              .setMethodName("defaultHttpJsonTransportProviderBuilder")
-              .build();
-      defaultTransportProviderExprChain =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(defaultTransportProviderExprChain)
-              .setMethodName("build")
-              .setReturnType(STATIC_TYPES.get("InstantiatingHttpJsonChannelProvider"))
-              .build();
-
-      MethodInvocationExpr setTransportProvider =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(VariableExpr.withVariable(settingBuilderVariable))
-              .setMethodName("setTransportChannelProvider")
-              .setArguments(defaultTransportProviderExprChain)
-              .build();
-      IfStatement setTransportChannelProviderStatement =
-          createIfStatement(
-              getUseRest,
-              Arrays.asList(
-                  ExprStatement.withExpr(setTransportProvider),
-                  LoggerUtils.createLoggerStatement(
-                      ValueExpr.withValue(
-                          StringObjectValue.withValue("Using HTTP transport channel")),
-                      types)),
-              null);
-
-      bodyStatements.add(setTransportChannelProviderStatement);
-    }
 
     // If service-level properties configured, update retry settings for each method
 

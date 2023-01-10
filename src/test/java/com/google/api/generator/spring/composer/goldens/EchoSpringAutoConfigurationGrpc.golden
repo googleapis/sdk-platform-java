@@ -96,11 +96,11 @@ public class EchoSpringAutoConfiguration {
       @Qualifier("defaultEchoTransportChannelProvider")
           TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {
-    EchoSettings.Builder clientSettingsBuilder =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(this.credentialsProvider)
-            .setTransportChannelProvider(defaultTransportChannelProvider)
-            .setHeaderProvider(this.userAgentHeaderProvider());
+    EchoSettings.Builder clientSettingsBuilder = EchoSettings.newBuilder();
+    clientSettingsBuilder
+        .setCredentialsProvider(this.credentialsProvider)
+        .setTransportChannelProvider(defaultTransportChannelProvider)
+        .setHeaderProvider(this.userAgentHeaderProvider());
     if (this.clientProperties.getQuotaProjectId() != null) {
       clientSettingsBuilder.setQuotaProjectId(this.clientProperties.getQuotaProjectId());
       if (LOGGER.isTraceEnabled()) {

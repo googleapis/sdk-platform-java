@@ -74,6 +74,9 @@ public class EchoSpringAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(name = "defaultEchoTransportChannelProvider")
   public TransportChannelProvider defaultEchoTransportChannelProvider() {
+    if (this.clientProperties.getUseRest()) {
+      return EchoSettings.defaultHttpJsonTransportProviderBuilder().build();
+    }
     return EchoSettings.defaultTransportChannelProvider();
   }
 
@@ -97,11 +100,19 @@ public class EchoSpringAutoConfiguration {
       @Qualifier("defaultEchoTransportChannelProvider")
           TransportChannelProvider defaultTransportChannelProvider)
       throws IOException {
-    EchoSettings.Builder clientSettingsBuilder =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(this.credentialsProvider)
-            .setTransportChannelProvider(defaultTransportChannelProvider)
-            .setHeaderProvider(this.userAgentHeaderProvider());
+    EchoSettings.Builder clientSettingsBuilder;
+    if (this.clientProperties.getUseRest()) {
+      clientSettingsBuilder = EchoSettings.newHttpJsonBuilder();
+      if (LOGGER.isTraceEnabled()) {
+        LOGGER.trace("Using REST (HTTP/JSON) transport.");
+      }
+    } else {
+      clientSettingsBuilder = EchoSettings.newBuilder();
+    }
+    clientSettingsBuilder
+        .setCredentialsProvider(this.credentialsProvider)
+        .setTransportChannelProvider(defaultTransportChannelProvider)
+        .setHeaderProvider(this.userAgentHeaderProvider());
     if (this.clientProperties.getQuotaProjectId() != null) {
       clientSettingsBuilder.setQuotaProjectId(this.clientProperties.getQuotaProjectId());
       if (LOGGER.isTraceEnabled()) {
@@ -121,13 +132,6 @@ public class EchoSpringAutoConfiguration {
         LOGGER.trace(
             "Background executor thread count is "
                 + this.clientProperties.getExecutorThreadCount());
-      }
-    }
-    if (this.clientProperties.getUseRest()) {
-      clientSettingsBuilder.setTransportChannelProvider(
-          EchoSettings.defaultHttpJsonTransportProviderBuilder().build());
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("Using HTTP transport channel");
       }
     }
     Retry serviceRetry = clientProperties.getRetry();
