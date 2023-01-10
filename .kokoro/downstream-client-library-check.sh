@@ -31,11 +31,11 @@ cd "${scriptDir}"/..
 mvn -B -ntp install --projects '!gapic-generator-java' \
     -Dcheckstyle.skip -Dfmt.skip -DskipTests
 
-# Read current gax version
-GAX_VERSION=$( sed -e 's/xmlns=".*"//' gax-java/pom.xml | xmllint --xpath '/project/version/text()' - )
+# Read current gapic-generator-java-bom version
+GAPIC_GENERATOR_JAVA_BOM_VERSION=$( sed -e 's/xmlns=".*"//' gapic-generator-java-bom/pom.xml | xmllint --xpath '/project/version/text()' - )
 
 # Round 2
-# Run this gax-java against HEAD of java-shared dependencies
+# Run this gapic-generator-java-bom against HEAD of java-shared dependencies
 
 git clone "https://github.com/googleapis/java-shared-dependencies.git" --depth=1
 pushd java-shared-dependencies/first-party-dependencies
@@ -43,13 +43,9 @@ pushd java-shared-dependencies/first-party-dependencies
 # replace version
 xmllint --shell pom.xml << EOF
 setns x=http://maven.apache.org/POM/4.0.0
-cd .//x:artifactId[text()="gax-bom"]
+cd .//x:artifactId[text()="gapic-generator-java-bom"]
 cd ../x:version
-set ${GAX_VERSION}
-cd ../..
-cd .//x:artifactId[text()="gax-grpc"]
-cd ../x:version
-set ${GAX_VERSION}
+set ${GAPIC_GENERATOR_JAVA_BOM_VERSION}
 save pom.xml
 EOF
 
