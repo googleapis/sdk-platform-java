@@ -56,4 +56,4 @@ jobs:
         java -version
         sudo apt-get update -y
         sudo apt-get install libxml2-utils
-        mvn verify -Pnative -Dtest="com.google.showcase.v1beta1.it.ITFirstHttp" -Denforcer.skip=true
+        mvn verify -Pnative2 -Dtest="com.google.showcase.v1beta1.it.ITFirstHttp" -Denforcer.skip=true
