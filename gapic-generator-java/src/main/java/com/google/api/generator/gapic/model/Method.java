@@ -105,7 +105,7 @@ public abstract class Method {
    * (GRPC or REST)
    *
    * @param transport Expects either GRPC or REST Transport
-   * @return boolean is method should be generated for the transport
+   * @return boolean if method should be generated for the transport
    */
   public boolean isSupportedByTransport(Transport transport) {
     if (transport == Transport.REST) {
