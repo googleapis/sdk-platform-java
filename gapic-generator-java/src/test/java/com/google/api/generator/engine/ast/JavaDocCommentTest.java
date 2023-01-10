@@ -155,6 +155,7 @@ public class JavaDocCommentTest {
   @Test
   public void createJavaDocComment_multipleParamsAndReturn() {
     // Parameters should be grouped together and get printed after block comments.
+    // Return text should get printed at the very end.
     String comment = "This is a block comment.";
     String paramName1 = "shelfName";
     String paramDescription1 = "The name of the shelf where books are published to.";
@@ -177,9 +178,9 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_throwsAndDeprecated() {
-    // No matter how many times or order `setThrows` and `setDeprecated` are called,
-    // only one @throws and @deprecated will be printed.
+  public void createJavaDocComment_throwsAndDeprecatedAndReturn() {
+    // No matter how many times or order `setThrows`, `setDeprecated`, `setReturn` are called,
+    // only one @throws, @deprecated, and @return will be printed.
     String throwsType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
     String throwsType_print = "java.lang.RuntimeException";
@@ -188,17 +189,23 @@ public class JavaDocCommentTest {
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String deprecatedText_print = "Use the {@link ShelfBookName} class instead.";
 
+    String returnText = "This is the incorrect method return text.";
+    String returnText_print = "This is the correct method return text.";
+
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .setThrows(throwsType, throwsDescription)
             .setDeprecated(deprecatedText)
+            .setReturn(returnText)
             .setThrows(throwsType_print, throwsDescription_print)
             .setDeprecated(deprecatedText_print)
+            .setReturn(returnText_print)
             .build();
     String expected =
         LineFormatter.lines(
             "@throws java.lang.RuntimeException if the remote call fails.\n",
-            "@deprecated Use the {@link ShelfBookName} class instead.");
+            "@deprecated Use the {@link ShelfBookName} class instead.\n",
+            "@return This is the correct method return text.");
     assertEquals(expected, javaDocComment.comment());
   }
 
