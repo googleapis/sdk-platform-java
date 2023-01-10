@@ -70,8 +70,6 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    // Per https://google.github.io/styleguide/javaguide.html#s7.2-summary-fragment, use this only
-    // for non-fragment contexts
     public Builder setReturn(String returnText) {
       returnDescription = returnText;
       return this;
