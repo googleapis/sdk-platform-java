@@ -153,6 +153,30 @@ public class JavaDocCommentTest {
   }
 
   @Test
+  public void createJavaDocComment_multipleParamsAndReturn() {
+    // Parameters should be grouped together and get printed after block comments.
+    String comment = "This is a block comment.";
+    String paramName1 = "shelfName";
+    String paramDescription1 = "The name of the shelf where books are published to.";
+    String paramName2 = "shelfId";
+    String paramDescription2 = "The shelfId of the shelf where books are published to.";
+    String returnText = "This is the method return text.";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addParam(paramName1, paramDescription1)
+            .addParam(paramName2, paramDescription2)
+            .addComment(comment)
+            .setReturn(returnText)
+            .build();
+    String expected =
+        "This is a block comment.\n"
+            + "@param shelfName The name of the shelf where books are published to.\n"
+            + "@param shelfId The shelfId of the shelf where books are published to.\n"
+            + "@return This is the method return text.";
+    assertEquals(expected, javaDocComment.comment());
+  }
+
+  @Test
   public void createJavaDocComment_throwsAndDeprecated() {
     // No matter how many times or order `setThrows` and `setDeprecated` are called,
     // only one @throws and @deprecated will be printed.
@@ -180,12 +204,13 @@ public class JavaDocCommentTest {
 
   @Test
   public void createJavaDocComment_allComponents() {
-    // No matter what order `setThrows`, `setDeprecated` are called,
+    // No matter what order `setThrows`, `setDeprecated`, and `setReturn` are called,
     // They will be printed at the end. And `@param` should be grouped,
-    // they should always be printed right before `@throws` and `@deprecated`.
+    // they should always be printed right before `@throws`, `@deprecated`, and `@return`.
     // All other add methods should keep the order of how they are added.
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    String returnText = "This is the method return text.";
     String paramName1 = "shelfName";
     String paramDescription1 = "The name of the shelf where books are published to.";
     String paramName2 = "shelf";
@@ -204,6 +229,7 @@ public class JavaDocCommentTest {
         JavaDocComment.builder()
             .setDeprecated(deprecatedText)
             .setThrows(throwsType, throwsDescription)
+            .setReturn(returnText)
             .addParam(paramName1, paramDescription1)
             .addComment(content)
             .addParagraph(paragraph1)
@@ -226,7 +252,8 @@ public class JavaDocCommentTest {
             "@param shelfName The name of the shelf where books are published to.\n",
             "@param shelf The shelf to create.\n",
             "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
-            "@deprecated Use the {@link ArchivedBookName} class instead.");
+            "@deprecated Use the {@link ArchivedBookName} class instead.\n",
+            "@return This is the method return text.");
     assertEquals(expected, javaDocComment.comment());
   }
 }

@@ -51,6 +51,7 @@ public abstract class JavaDocComment implements Comment {
     String throwsType = null;
     String throwsDescription = null;
     String deprecated = null;
+    String returnDescription = null;
     List<String> paramsList = new ArrayList<>();
     List<String> componentsList = new ArrayList<>();
     // Private accessor, set complete and consolidated comment.
@@ -66,6 +67,13 @@ public abstract class JavaDocComment implements Comment {
 
     public Builder setDeprecated(String deprecatedText) {
       deprecated = deprecatedText;
+      return this;
+    }
+
+    // Per https://google.github.io/styleguide/javaguide.html#s7.2-summary-fragment, use this only
+    // for non-fragment contexts
+    public Builder setReturn(String returnText) {
+      returnDescription = returnText;
       return this;
     }
 
@@ -129,12 +137,13 @@ public abstract class JavaDocComment implements Comment {
       return Strings.isNullOrEmpty(throwsType)
           && Strings.isNullOrEmpty(throwsDescription)
           && Strings.isNullOrEmpty(deprecated)
+          && Strings.isNullOrEmpty(returnDescription)
           && paramsList.isEmpty()
           && componentsList.isEmpty();
     }
 
     public JavaDocComment build() {
-      // @param, @throws and @deprecated should always get printed at the end.
+      // @param, @throws, @return, and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
         componentsList.add(
@@ -142,6 +151,9 @@ public abstract class JavaDocComment implements Comment {
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
+      }
+      if (!Strings.isNullOrEmpty(returnDescription)) {
+        componentsList.add(String.format("@return %s", returnDescription));
       }
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.
