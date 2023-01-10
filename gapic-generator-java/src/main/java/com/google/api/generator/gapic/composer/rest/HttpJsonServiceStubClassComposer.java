@@ -1276,28 +1276,28 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private List<MethodDefinition> createInvalidClassMethods(Service service) {
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
-      if (!protoMethod.isSupportedByTransport(getTransport())) {
-        String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
-        String callableName =
-            String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
-        methodDefinitions.add(
-            MethodDefinition.builder()
-                .setIsOverride(true)
-                .setScope(ScopeNode.PUBLIC)
-                .setName(callableName)
-                .setReturnType(getCallableType(protoMethod))
-                .setBody(
-                    Arrays.asList(
-                        ExprStatement.withExpr(
-                            ThrowExpr.builder()
-                                .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
-                                .setMessageExpr(
-                                    String.format(
-                                        "Not implemented: %s(). %s transport is not implemented for this method yet",
-                                        callableName, getTransport()))
-                                .build())))
-                .build());
+      if (protoMethod.isSupportedByTransport(getTransport())) {
+        continue;
       }
+      String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
+      String callableName = String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
+      methodDefinitions.add(
+          MethodDefinition.builder()
+              .setIsOverride(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setName(callableName)
+              .setReturnType(getCallableType(protoMethod))
+              .setBody(
+                  Arrays.asList(
+                      ExprStatement.withExpr(
+                          ThrowExpr.builder()
+                              .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
+                              .setMessageExpr(
+                                  String.format(
+                                      "Not implemented: %s(). %s transport is not implemented for this method yet. It is either not enabled or not supported (BIDI or Client Streaming)",
+                                      callableName, getTransport()))
+                              .build())))
+              .build());
     }
     return methodDefinitions;
   }

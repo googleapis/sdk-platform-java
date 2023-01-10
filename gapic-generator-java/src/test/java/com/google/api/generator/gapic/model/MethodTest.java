@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
@@ -161,10 +162,12 @@ public class MethodTest {
     assertThat(methodBiDiStreamingNoHttpBindings.isSupportedByTransport(Transport.GRPC)).isTrue();
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void isSupportedByTransport_shouldThrowExceptionIfPassedGRPCRESTTransport() {
     Method methodClientStreaming =
         METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.CLIENT).build();
-    methodClientStreaming.isSupportedByTransport(Transport.GRPC_REST);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> methodClientStreaming.isSupportedByTransport(Transport.GRPC_REST));
   }
 }
