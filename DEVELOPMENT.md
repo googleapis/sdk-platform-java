@@ -160,7 +160,7 @@ $ cd showcase
 $ mvn compile -P update
 ```
 
-## Running the Plugin
+## Running the Plugin under googleapis with local gapic-generator-java
 
 See also above section "Showcase Integration Testing".
 
@@ -171,28 +171,52 @@ To generate a production GAPIC API:
 2. Point to local gapic-generator-java
 
    Normally, googleapis's build pulls in googleapis/gapic-generator-java from the
-   Internet:
-
-   ```
-   # Java microgenerator.
-   …
-   _gapic_generator_java_version = "2.1.0"
+   Internet, we need to build a local SNAPSHOT jar first and point googleapis to the SNAPSHOT jar and local copy of the repo.
    
-   http_archive(
-       name = "gapic_generator_java",
-       …
-       urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
-   )
+   Before:
+   ```
+   _gapic_generator_java_version = "2.13.0"
+
+    maven_install(
+        artifacts = [
+            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+        ],
+        #Update this False for local development
+        fail_on_missing_checksum = True,
+        repositories = [
+            "m2Local",
+            "https://repo.maven.apache.org/maven2/",
+        ]
+    )
+    
+    http_archive(
+        name = "gapic_generator_java",
+        strip_prefix = "gapic-generator-java-%s" % _gapic_generator_java_version,
+        urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
+    )
    ```
 
-   By replacing this portion using the built-in local_repository rule, you can make
-   it refer to your local development repo:
+   After
 
    ```
-   local_repository(
-     name = "gapic_generator_java",
-     path = "/home/<your id>/gapic-generator-java",
-   )
+   _gapic_generator_java_version = "2.13.1-SNAPSHOT"
+
+    maven_install(
+        artifacts = [
+            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+        ],
+        #Update this False for local development
+        fail_on_missing_checksum = False,
+        repositories = [
+            "m2Local",
+            "https://repo.maven.apache.org/maven2/",
+        ]
+    )
+    
+    local_repository(
+        name = "gapic_generator_java",
+        path = "/absolute/path/to/your/local/gapic-generator-java",
+    )
    ```
 
 3. Build the new target.
