@@ -52,6 +52,7 @@ public abstract class JavaDocComment implements Comment {
     String throwsDescription = null;
     String deprecated = null;
     List<String> paramsList = new ArrayList<>();
+    String returnText = null;
     List<String> componentsList = new ArrayList<>();
     // Private accessor, set complete and consolidated comment.
     abstract Builder setComment(String comment);
@@ -66,6 +67,11 @@ public abstract class JavaDocComment implements Comment {
 
     public Builder setDeprecated(String deprecatedText) {
       deprecated = deprecatedText;
+      return this;
+    }
+
+    public Builder setReturn(String returnDescription) {
+      returnText = returnDescription;
       return this;
     }
 
@@ -130,12 +136,16 @@ public abstract class JavaDocComment implements Comment {
           && Strings.isNullOrEmpty(throwsDescription)
           && Strings.isNullOrEmpty(deprecated)
           && paramsList.isEmpty()
+          && Strings.isNullOrEmpty(returnText)
           && componentsList.isEmpty();
     }
 
     public JavaDocComment build() {
-      // @param, @throws and @deprecated should always get printed at the end.
+      // @param, @return, @throws and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
+      if (!Strings.isNullOrEmpty(returnText)) {
+        componentsList.add(String.format("@return %s", returnText));
+      }
       if (!Strings.isNullOrEmpty(throwsType)) {
         componentsList.add(
             String.format("@throws %s %s", throwsType, HtmlEscaper.process(throwsDescription)));

@@ -41,8 +41,10 @@ public class SpringAutoconfigCommentComposer {
           + "configuration data files.";
 
   public static final String TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION =
-      "Returns the default channel provider. The default is gRPC and will default to it unless the "
+      "Provides a default transport channel provider bean. The default is gRPC and will default to it unless the "
           + "useRest option is provided to use HTTP transport instead";
+  public static final String TRANSPORT_CHANNEL_PROVIDER_RETURN =
+      "a default transport channel provider.";
   public static final String CLIENT_SETTINGS_BEAN_GENERAL_DESCRIPTION =
       "Provides a %sSettings bean configured to "
           + "use the default credentials provider (obtained with %sCredentials()) and its default "
@@ -54,9 +56,13 @@ public class SpringAutoconfigCommentComposer {
       "Retry settings are also configured from service-level and method-level properties specified in %s. "
           + "Method-level properties will take precedence over service-level properties if available, "
           + "and client library defaults will be used if neither are specified.";
+  public static final String CLIENT_SETTINGS_BEAN_RETURN_STATEMENT =
+      "a {@link %sSettings} bean configured with {@link TransportChannelProvider} bean.";
 
   public static final String CLIENT_BEAN_GENERAL_DESCRIPTION =
       "Provides a %sClient bean configured with %sSettings.";
+  public static final String CLIENT_BEAN_RETURN_STATEMENT =
+      "a {@link %sClient} bean configured with {@link %sSettings}";
 
   public SpringAutoconfigCommentComposer() {}
 
@@ -88,6 +94,7 @@ public class SpringAutoconfigCommentComposer {
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(TRANSPORT_CHANNEL_PROVIDER_GENERAL_DESCRIPTION)
+            .setReturn(TRANSPORT_CHANNEL_PROVIDER_RETURN)
             .build());
   }
 
@@ -104,13 +111,22 @@ public class SpringAutoconfigCommentComposer {
                     channelProviderName))
             .addParagraph(
                 String.format(CLIENT_SETTINGS_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
+            .addParam(
+                "defaultTransportChannelProvider",
+                "TransportChannelProvider to use in the settings.")
+            .setReturn(String.format(CLIENT_SETTINGS_BEAN_RETURN_STATEMENT, serviceName))
             .build());
   }
 
   public static CommentStatement createClientBeanComment(String serviceName) {
+    String lowerServiceName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(String.format(CLIENT_BEAN_GENERAL_DESCRIPTION, serviceName, serviceName))
+            .addParam(
+                String.format("%sSettings", lowerServiceName),
+                "settings to configure an instance of client bean.")
+            .setReturn(String.format(CLIENT_BEAN_RETURN_STATEMENT, serviceName, serviceName))
             .build());
   }
 }
