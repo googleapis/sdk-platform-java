@@ -23,6 +23,16 @@ import org.junit.Test;
 
 public class JavaDocCommentTest {
   @Test
+  public void emptyJavaDocComment() {
+    JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
+    assertEquals(true, javaDocCommentBuilder.emptyComments());
+
+    String content = "testing return";
+    javaDocCommentBuilder.setReturn(content);
+    assertEquals(false, javaDocCommentBuilder.emptyComments());
+  }
+
+  @Test
   public void createJavaDocComment_basic() {
     String content = "this is a test comment";
     JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).build();
