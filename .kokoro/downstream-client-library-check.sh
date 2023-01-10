@@ -40,7 +40,7 @@ GAPIC_GENERATOR_JAVA_BOM_VERSION=$( sed -e 's/xmlns=".*"//' gapic-generator-java
 git clone "https://github.com/googleapis/java-shared-dependencies.git" --depth=1
 pushd java-shared-dependencies/first-party-dependencies
 
-# replace version
+# replace gapic-generator-java-bom version
 xmllint --shell pom.xml << EOF
 setns x=http://maven.apache.org/POM/4.0.0
 cd .//x:artifactId[text()="gapic-generator-java-bom"]
