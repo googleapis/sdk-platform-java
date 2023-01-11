@@ -57,7 +57,7 @@ public class Writer {
     }
 
     for (GapicClass gapicClazz : clazzes) {
-      if (!gapicClazz.shouldGenerateClass()) {
+      if (gapicClazz.kind() == GapicClass.Kind.NON_GENERATED) {
         continue;
       }
       String classPath = writeClazz(gapicClazz, codeWriter, jos);

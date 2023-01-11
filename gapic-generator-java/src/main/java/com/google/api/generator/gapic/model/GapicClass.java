@@ -27,7 +27,8 @@ public abstract class GapicClass {
     MAIN,
     STUB,
     TEST,
-    PROTO
+    PROTO,
+    NON_GENERATED
   };
 
   public abstract Kind kind();
@@ -42,8 +43,6 @@ public abstract class GapicClass {
   // Only used for generating the region tag for samples; therefore only used in select Composers.
   public abstract String apiVersion();
 
-  public abstract boolean shouldGenerateClass();
-
   /**
    * Create an empty GapicClass with minimal information. This is intended to be used for
    * GapicClasses that will not generate any Java files
@@ -52,14 +51,13 @@ public abstract class GapicClass {
    */
   public static GapicClass createNonGeneratedGapicClass() {
     return builder()
-        .setKind(Kind.STUB)
+        .setKind(Kind.NON_GENERATED)
         .setClassDefinition(
             ClassDefinition.builder()
                 .setPackageString("Empty Package")
                 .setName("Empty Name")
                 .setScope(ScopeNode.PUBLIC)
                 .build())
-        .setShouldGenerateClass(false)
         .build();
   }
 
@@ -76,8 +74,7 @@ public abstract class GapicClass {
     return new AutoValue_GapicClass.Builder()
         .setSamples(Collections.emptyList())
         .setApiShortName("")
-        .setApiVersion("")
-        .setShouldGenerateClass(true);
+        .setApiVersion("");
   }
 
   abstract Builder toBuilder();
@@ -105,8 +102,6 @@ public abstract class GapicClass {
     abstract Builder setApiShortName(String apiShortName);
 
     abstract Builder setApiVersion(String apiVersion);
-
-    abstract Builder setShouldGenerateClass(boolean shouldGenerateClass);
 
     abstract GapicClass build();
   }
