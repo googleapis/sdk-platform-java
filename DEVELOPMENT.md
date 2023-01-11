@@ -230,6 +230,10 @@ To generate a production GAPIC API:
    ```
    bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
    ```
-
-
-
+    
+   Note: If you are running into bazel build issues, you can try to remove gapic-generator-java cached in your local m2
+   Try running this command:
+   ```
+   rm -rf ~/.m2/repository/com/google/api/
+   ```
+   and then rebuild gapic-generator-java (`mvn clean install`).
