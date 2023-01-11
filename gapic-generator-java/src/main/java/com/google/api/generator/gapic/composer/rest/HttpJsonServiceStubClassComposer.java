@@ -1250,10 +1250,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .build()));
   }
 
-<<<<<<< HEAD
-=======
   @Override
->>>>>>> main-rest_method_generation
   protected List<MethodDefinition> createClassMethods(
       GapicContext context,
       Service service,

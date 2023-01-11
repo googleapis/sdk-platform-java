@@ -229,13 +229,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return GapicClass.create(kind, classDef);
   }
 
-<<<<<<< HEAD
-  protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
-    return String.format("Not implemented: %s()", callableName);
-  }
-
-=======
->>>>>>> main-rest_method_generation
   protected Transport getTransport() {
     return Transport.GRPC;
   }

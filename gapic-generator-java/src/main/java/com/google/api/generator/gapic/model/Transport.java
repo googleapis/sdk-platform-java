@@ -20,12 +20,13 @@ public enum Transport {
   GRPC_REST;
 
   /**
-   * Parse command line transport argument in the format `grpc+rest`.
+   * Parse command line transport argument in the format `grpc+rest`. Convert name String to
+   * lowercase as `gRPC` is not valid but `grpc` is
    *
    * @param name name of the transport. Valid inputs are "grpc", "rest", "grpc+rest"
    * @return the {@code Transport} enum matching the command line argument
    */
   public static Transport parse(String name) {
-    return valueOf(name.replace('+', '_').toUpperCase());
+    return valueOf(name.toLowerCase().replace('+', '_').toUpperCase());
   }
 }
