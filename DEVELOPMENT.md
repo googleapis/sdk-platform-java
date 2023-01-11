@@ -168,7 +168,7 @@ To generate a production GAPIC API:
 
 1. Clone [googleapis](https://github.com/googleapis/googleapis).
 
-2. Point to local gapic-generator-java
+2. Modify `googleapis/WORKSPACE` to point to local gapic-generator-java
 
    Normally, googleapis's build pulls in googleapis/gapic-generator-java from the
    Internet, we need to build a local SNAPSHOT jar first and point googleapis to the SNAPSHOT jar and local copy of the repo.
