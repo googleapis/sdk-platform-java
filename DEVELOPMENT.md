@@ -201,7 +201,7 @@ To generate a production GAPIC API:
    ```
    _gapic_generator_java_version = "2.13.1-SNAPSHOT"
 
-    maven_install(
+   maven_install(
         artifacts = [
             "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
         ],
