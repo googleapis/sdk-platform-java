@@ -63,6 +63,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -385,6 +386,14 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     while (providerBuilderNamesIt.hasNext()
         && channelProviderClassesIt.hasNext()
         && transportNamesIt.hasNext()) {
+      String providerBuilderName = providerBuilderNamesIt.next();
+      Class<?> channelProviderClass = channelProviderClassesIt.next();
+      String transportName = transportNamesIt.next();
+
+      if (!service.hasAnyEnabledMethodsForTransport(Transport.parse(transportName))) {
+        continue;
+      }
+
       List<AnnotationNode> annotations = ImmutableList.of();
 
       // For clients supporting multiple transports (mainly grpc+rest case) make secondary transport
@@ -397,16 +406,13 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
           SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
       if (getTransportContext().transportNames().size() > 1) {
         commentStatement =
-            new SettingsCommentComposer(transportNamesIt.next())
-                .getTransportProviderBuilderMethodComment();
+            new SettingsCommentComposer(transportName).getTransportProviderBuilderMethodComment();
       }
 
       javaMethods.add(
           methodMakerFn.apply(
               methodStarterFn
-                  .apply(
-                      providerBuilderNamesIt.next(),
-                      typeMakerFn.apply(channelProviderClassesIt.next()))
+                  .apply(providerBuilderName, typeMakerFn.apply(channelProviderClass))
                   .setAnnotations(annotations),
               commentStatement));
       secondaryTransportProviderBuilder = true;

@@ -17,6 +17,8 @@ package com.google.api.generator.gapic.composer.grpcrest;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
+import java.util.Collections;
 import java.util.List;
 
 public class HttpJsonServiceStubClassComposer
@@ -35,6 +37,9 @@ public class HttpJsonServiceStubClassComposer
   @Override
   protected List<MethodDefinition> createStaticCreatorMethods(
       Service service, TypeStore typeStore, String newBuilderMethod) {
-    return super.createStaticCreatorMethods(service, typeStore, "newHttpJsonBuilder");
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      return super.createStaticCreatorMethods(service, typeStore, "newHttpJsonBuilder");
+    }
+    return Collections.emptyList();
   }
 }

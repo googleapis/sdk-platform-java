@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +42,27 @@ public abstract class GapicClass {
   // Only used for generating the region tag for samples; therefore only used in select Composers.
   public abstract String apiVersion();
 
+  public abstract boolean shouldGenerateClass();
+
+  /**
+   * Create an empty GapicClass with minimal information. This is intended to be used for
+   * GapicClasses that will not generate any Java files
+   *
+   * @return Minimal GapicClass with setShouldGenerateClass set to False
+   */
+  public static GapicClass createNonGeneratedGapicClass() {
+    return builder()
+        .setKind(Kind.STUB)
+        .setClassDefinition(
+            ClassDefinition.builder()
+                .setPackageString("Empty Package")
+                .setName("Empty Name")
+                .setScope(ScopeNode.PUBLIC)
+                .build())
+        .setShouldGenerateClass(false)
+        .build();
+  }
+
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
   }
@@ -54,7 +76,8 @@ public abstract class GapicClass {
     return new AutoValue_GapicClass.Builder()
         .setSamples(Collections.emptyList())
         .setApiShortName("")
-        .setApiVersion("");
+        .setApiVersion("")
+        .setShouldGenerateClass(true);
   }
 
   abstract Builder toBuilder();
@@ -82,6 +105,8 @@ public abstract class GapicClass {
     abstract Builder setApiShortName(String apiShortName);
 
     abstract Builder setApiVersion(String apiVersion);
+
+    abstract Builder setShouldGenerateClass(boolean shouldGenerateClass);
 
     abstract GapicClass build();
   }

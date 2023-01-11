@@ -83,18 +83,18 @@ import javax.annotation.Nullable;
 public abstract class AbstractTransportServiceStubClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
-  private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
-  private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
+  protected static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
+  protected static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+  protected static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
 
-  private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
-  private static final String CALLABLE_NAME = "Callable";
-  private static final String CALLABLE_FACTORY_MEMBER_NAME = "callableFactory";
+  protected static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
+  protected static final String CALLABLE_NAME = "Callable";
+  protected static final String CALLABLE_FACTORY_MEMBER_NAME = "callableFactory";
   protected static final String CALLABLE_CLASS_MEMBER_PATTERN = "%sCallable";
-  private static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
-  private static final String OPERATION_CALLABLE_NAME = "OperationCallable";
+  protected static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
+  protected static final String OPERATION_CALLABLE_NAME = "OperationCallable";
   // private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
-  private static final String PAGED_CALLABLE_NAME = "PagedCallable";
+  protected static final String PAGED_CALLABLE_NAME = "PagedCallable";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
@@ -134,6 +134,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
+    if (!service.hasAnyEnabledMethodsForTransport(getTransport())) {
+      return GapicClass.createNonGeneratedGapicClass();
+    }
+
     String pakkage = service.pakkage() + ".stub";
     TypeStore typeStore = createDynamicTypes(service, pakkage);
     String className = getTransportContext().classNames().getTransportServiceStubClassName(service);
@@ -223,6 +227,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setStatements(classStatements)
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  protected String getUnsupportedOperationExceptionReason(String callableName, Method protoMethod) {
+    return String.format("Not implemented: %s()", callableName);
   }
 
   protected Transport getTransport() {

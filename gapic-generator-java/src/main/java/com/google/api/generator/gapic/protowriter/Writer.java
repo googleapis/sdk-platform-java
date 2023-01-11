@@ -57,6 +57,9 @@ public class Writer {
     }
 
     for (GapicClass gapicClazz : clazzes) {
+      if (!gapicClazz.shouldGenerateClass()) {
+        continue;
+      }
       String classPath = writeClazz(gapicClazz, codeWriter, jos);
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }

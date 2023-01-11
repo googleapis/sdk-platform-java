@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +54,11 @@ public class HttpJsonServiceCallableFactoryClassComposer
 
   public static HttpJsonServiceCallableFactoryClassComposer instance() {
     return INSTANCE;
+  }
+
+  @Override
+  protected Transport getTransport() {
+    return Transport.REST;
   }
 
   @Override

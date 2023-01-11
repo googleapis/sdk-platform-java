@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.common.AbstractServiceStubSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -53,14 +54,18 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   @Override
   protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
-    return Collections.singletonList(
-        createApiClientHeaderProviderBuilderMethod(
-            service,
-            typeStore,
-            "defaultApiClientHeaderProviderBuilder",
-            FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()),
-            "getHttpJsonTokenName",
-            "getHttpJsonVersion"));
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      return Collections.singletonList(
+          createApiClientHeaderProviderBuilderMethod(
+              service,
+              typeStore,
+              "defaultApiClientHeaderProviderBuilder",
+              FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()),
+              "getHttpJsonTokenName",
+              "getHttpJsonVersion"));
+    } else {
+      return Collections.emptyList();
+    }
   }
 
   @Override

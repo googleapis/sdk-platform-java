@@ -42,6 +42,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,8 +61,17 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return transportContext;
   }
 
+  protected Transport getTransport() {
+    return Transport.GRPC;
+  }
+
   @Override
   public GapicClass generate(GapicContext context, Service service) {
+    // Do not generate the Callable Factory if there are no RPCs enabled for the Transport
+    if (!service.hasAnyEnabledMethodsForTransport(getTransport())) {
+      return GapicClass.createNonGeneratedGapicClass();
+    }
+
     TypeStore typeStore = createTypes(service);
 
     String className =

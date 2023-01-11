@@ -34,7 +34,7 @@ import com.google.api.generator.gapic.composer.common.AbstractServiceStubSetting
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.collect.ImmutableList;
+import com.google.api.generator.gapic.model.Transport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -118,21 +118,26 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
     TypeNode returnType =
         TypeNode.withReference(ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class));
 
-    return ImmutableList.of(
+    List<MethodDefinition> methodDefinitions = new ArrayList<>();
+    methodDefinitions.add(
         createApiClientHeaderProviderBuilderMethod(
             service,
             typeStore,
             "defaultGrpcApiClientHeaderProviderBuilder",
             TypeNode.withReference(ConcreteReference.withClazz(GaxGrpcProperties.class)),
             "getGrpcTokenName",
-            "getGrpcVersion"),
-        createApiClientHeaderProviderBuilderMethod(
-            service,
-            typeStore,
-            "defaultHttpJsonApiClientHeaderProviderBuilder",
-            TypeNode.withReference(ConcreteReference.withClazz(GaxHttpJsonProperties.class)),
-            "getHttpJsonTokenName",
-            "getHttpJsonVersion"),
+            "getGrpcVersion"));
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      methodDefinitions.add(
+          createApiClientHeaderProviderBuilderMethod(
+              service,
+              typeStore,
+              "defaultHttpJsonApiClientHeaderProviderBuilder",
+              TypeNode.withReference(ConcreteReference.withClazz(GaxHttpJsonProperties.class)),
+              "getHttpJsonTokenName",
+              "getHttpJsonVersion"));
+    }
+    methodDefinitions.add(
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
@@ -146,6 +151,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
                     .setReturnType(returnType)
                     .build())
             .build());
+    return methodDefinitions;
   }
 
   @Override
@@ -169,20 +175,26 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   }
 
   @Override
-  protected List<MethodDefinition> createNestedClassCreateDefaultMethods(TypeStore typeStore) {
-    return ImmutableList.of(
+  protected List<MethodDefinition> createNestedClassCreateDefaultMethods(
+      Service service, TypeStore typeStore) {
+    List<MethodDefinition> methodDefinitions = new ArrayList<>();
+    methodDefinitions.add(
         createNestedClassCreateDefaultMethod(
             typeStore,
             "createDefault",
             "defaultTransportChannelProvider",
             null,
-            "defaultApiClientHeaderProviderBuilder"),
-        createNestedClassCreateDefaultMethod(
-            typeStore,
-            "createHttpJsonDefault",
-            null,
-            "defaultHttpJsonTransportProviderBuilder",
-            "defaultHttpJsonApiClientHeaderProviderBuilder"));
+            "defaultApiClientHeaderProviderBuilder"));
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      methodDefinitions.add(
+          createNestedClassCreateDefaultMethod(
+              typeStore,
+              "createHttpJsonDefault",
+              null,
+              "defaultHttpJsonTransportProviderBuilder",
+              "defaultHttpJsonApiClientHeaderProviderBuilder"));
+    }
+    return methodDefinitions;
   }
 
   @Override
@@ -202,14 +214,16 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
             "createDefault",
             new SettingsCommentComposer(transportNames.next())
                 .getNewTransportBuilderMethodComment()));
-    methods.addAll(
-        super.createNewBuilderMethods(
-            service,
-            typeStore,
-            "newHttpJsonBuilder",
-            "createHttpJsonDefault",
-            new SettingsCommentComposer(transportNames.next())
-                .getNewTransportBuilderMethodComment()));
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      methods.addAll(
+          super.createNewBuilderMethods(
+              service,
+              typeStore,
+              "newHttpJsonBuilder",
+              "createHttpJsonDefault",
+              new SettingsCommentComposer(transportNames.next())
+                  .getNewTransportBuilderMethodComment()));
+    }
     return methods;
   }
 }
