@@ -21,8 +21,6 @@ import com.google.api.generator.gapic.composer.rest.ServiceClientTestClassCompos
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Map;
 
