@@ -58,8 +58,7 @@ public class ConfiguredSnippetComposer {
             .addParagraph(GapicSnippetConfig.getConfiguredSnippetSnippetDescription(snippetConfig));
 
     if (GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig).length() > 1) {
-      javaDocComment.setReturn(
-          GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
+      javaDocComment.setReturn(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
     }
 
     Iterator<Map.Entry<String, List>> iterator =
@@ -78,7 +77,8 @@ public class ConfiguredSnippetComposer {
     return Arrays.asList(CommentStatement.withComment(javaDocComment.build()));
   }
 
-  // Generate the sample method name for the configured snippet. If `both` is specified as the SyncPreference, then we should return both a sync and an async sample.
+  // Generate the sample method name for the configured snippet. If `both` is specified as the
+  // SyncPreference, then we should return both a sync and an async sample.
   public static String composeSampleMethodName(GapicSnippetConfig snippetConfig) {
     if (GapicSnippetConfig.parseSyncPreference(snippetConfig)) {
       return "async" + GapicSnippetConfig.getConfiguredSnippetRpcName(snippetConfig);
@@ -246,7 +246,8 @@ public class ConfiguredSnippetComposer {
 
     // TODO: Build logic that if returnType is a messageType, then need to do additional processing
     String returnType =
-            SampleComposerUtil.convertMessageTypeToReturnType(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
+        SampleComposerUtil.convertMessageTypeToReturnType(
+            GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
     TypeNode responseType =
         TypeNode.withReference(
             VaporReference.builder()

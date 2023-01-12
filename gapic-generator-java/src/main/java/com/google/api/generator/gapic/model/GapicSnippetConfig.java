@@ -174,8 +174,7 @@ public class GapicSnippetConfig {
     configSignature.put("sync_preference", rawConfigSignature.getSyncPreference());
     configSignature.put("has_return_type", rawConfigSignature.hasReturnType());
     if (rawConfigSignature.hasReturnType()) {
-      configSignature.put(
-          "return_type", rawConfigSignature.getReturnType());
+      configSignature.put("return_type", rawConfigSignature.getReturnType());
     }
 
     // Order of parameters matters
@@ -315,7 +314,9 @@ public class GapicSnippetConfig {
 
   public static String getConfiguredSnippetReturnType(GapicSnippetConfig gapicSnippetConfig) {
     if ((Boolean) gapicSnippetConfig.configSignature.get("has_return_type")) {
-      return (String) SampleComposerUtil.convertTypeToString((Type) gapicSnippetConfig.configSignature.get("return_type"));
+      return (String)
+          SampleComposerUtil.convertTypeToString(
+              (Type) gapicSnippetConfig.configSignature.get("return_type"));
     }
     return "";
   }

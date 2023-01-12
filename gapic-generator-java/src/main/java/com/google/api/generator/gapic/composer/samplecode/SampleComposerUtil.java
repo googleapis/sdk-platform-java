@@ -122,24 +122,25 @@ public class SampleComposerUtil {
     return uniqueSamples;
   }
 
-  // Convert Type to String for use as Return Type in configured sample. Handles Scalar, Enum, and Message Types.
+  // Convert Type to String for use as Return Type in configured sample. Handles Scalar, Enum, and
+  // Message Types.
   // TODO: Handle RepeatedType (P1), MapType (P1), BytesType (P3)
-  public static String convertTypeToString(Type type){
-    if(type.hasMessageType()){
+  public static String convertTypeToString(Type type) {
+    if (type.hasMessageType()) {
       return type.getMessageType().getMessageFullName();
     }
-    if(type.hasScalarType()){
+    if (type.hasScalarType()) {
       return type.getScalarType().name();
     }
-    if(type.hasEnumType()){
+    if (type.hasEnumType()) {
       return type.getEnumType().getEnumFullName();
-    }
-    else{
+    } else {
       return "";
     }
   }
 
-  // If the return type is a message Type, need to do additional parsing to get return Type for sample method
+  // If the return type is a message Type, need to do additional parsing to get return Type for
+  // sample method
   public static String convertMessageTypeToReturnType(String messageType) {
     String[] splitString = messageType.split("\\.");
     return splitString[splitString.length - 1];

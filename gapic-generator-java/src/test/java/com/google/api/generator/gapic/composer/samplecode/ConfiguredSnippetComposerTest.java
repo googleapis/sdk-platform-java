@@ -16,12 +16,9 @@ package com.google.api.generator.gapic.composer.samplecode;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
-import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
@@ -33,8 +30,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
 public class ConfiguredSnippetComposerTest {
@@ -51,20 +46,19 @@ public class ConfiguredSnippetComposerTest {
 
   @Test
   public void composeHeaderStatements() {
-    List<CommentStatement> sampleResult = ConfiguredSnippetComposer.composeHeaderStatements(snippetConfig);
+    List<CommentStatement> sampleResult =
+        ConfiguredSnippetComposer.composeHeaderStatements(snippetConfig);
     JavaDocComment.Builder javaDocComment =
-            JavaDocComment.builder()
-                    .addComment("AUTO-GENERATED DOCUMENTATION\n")
-                    .addComment("Custom Class Creation")
-                    .addParagraph("Shows how to create a custom class")
-                    .addParam("parent", "The custom class parent element")
-                    .addParam("customClassId", "The id for the custom class")
-                    .setReturn("google.cloud.speech.v1.CustomClass");
+        JavaDocComment.builder()
+            .addComment("AUTO-GENERATED DOCUMENTATION\n")
+            .addComment("Custom Class Creation")
+            .addParagraph("Shows how to create a custom class")
+            .addParam("parent", "The custom class parent element")
+            .addParam("customClassId", "The id for the custom class")
+            .setReturn("google.cloud.speech.v1.CustomClass");
 
-    List<CommentStatement> expected = Arrays.asList(
-            CommentStatement.withComment(javaDocComment.build())
-            );
-
+    List<CommentStatement> expected =
+        Arrays.asList(CommentStatement.withComment(javaDocComment.build()));
 
     assertEquals(expected, sampleResult);
   }
