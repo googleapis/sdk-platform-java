@@ -113,6 +113,10 @@ public abstract class Service {
     return false;
   }
 
+  public boolean hasAnyEnabledMethodsForTransport(String transportName) {
+    return hasAnyEnabledMethodsForTransport(Transport.parse(transportName));
+  }
+
   /**
    * Determines if a Service contains any methods that are both eligible and enabled for the
    * Transport. GRPC+REST Transport is not supported as each transport's sub composers will invoke

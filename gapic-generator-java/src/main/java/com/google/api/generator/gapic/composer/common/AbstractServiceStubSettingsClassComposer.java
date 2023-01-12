@@ -95,7 +95,6 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -266,7 +265,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       String builderName = builderNamesIt.next();
       String transportName = transportNamesIt.next();
 
-      if (!service.hasAnyEnabledMethodsForTransport(Transport.parse(transportName))) {
+      if (!service.hasAnyEnabledMethodsForTransport(transportName)) {
         continue;
       }
 
@@ -1069,7 +1068,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       String getterName = getterNameIt.next();
       String serivceStubClassName = serivceStubClassNameIt.next();
 
-      if (!service.hasAnyEnabledMethodsForTransport(Transport.parse(transportName))) {
+      if (!service.hasAnyEnabledMethodsForTransport(transportName)) {
         continue;
       }
 

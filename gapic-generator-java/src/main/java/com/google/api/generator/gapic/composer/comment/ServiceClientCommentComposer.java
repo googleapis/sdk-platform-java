@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.composer.utils.CommentFormatter;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,7 +149,9 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
-    if (transportSampleCode != null) {
+
+    // Generate Secondary Transport sample if Transport Sample exists and HttpJson code is generated
+    if (transportSampleCode != null && service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
       classHeaderJavadocBuilder.addParagraph(
           String.format(
               SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING, secondaryTransport, primaryTransport));
