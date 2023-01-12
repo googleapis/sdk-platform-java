@@ -18,6 +18,7 @@ import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.CaseFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -30,11 +31,11 @@ public class Utils {
   private static final String BRAND_NAME = "spring.cloud.gcp";
 
   public static String getServiceAutoConfigurationClassName(Service service) {
-    return service.name() + "SpringAutoConfiguration";
+    return JavaStyle.toUpperCamelCase(service.name()) + "SpringAutoConfiguration";
   }
 
   public static String getServicePropertiesClassName(Service service) {
-    return service.name() + "SpringProperties";
+    return JavaStyle.toUpperCamelCase(service.name()) + "SpringProperties";
   }
 
   public static String getLibName(GapicContext context) {

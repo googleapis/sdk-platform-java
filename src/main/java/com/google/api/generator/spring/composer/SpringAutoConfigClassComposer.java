@@ -55,6 +55,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.spring.composer.comment.SpringAutoconfigCommentComposer;
 import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.LoggerUtils;
@@ -97,7 +98,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String packageName = Utils.getSpringPackageName(service.pakkage());
     Map<String, TypeNode> dynamicTypes = createDynamicTypes(service, packageName);
     String serviceName = service.name();
-    String serviceNameLowerCamel = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, serviceName);
+    String serviceNameLowerCamel = JavaStyle.toLowerCamelCase(serviceName);
     String serviceNameLowerHyphen = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, serviceName);
     String className = Utils.getServiceAutoConfigurationClassName(service);
     String credentialsProviderName = serviceNameLowerCamel + "Credentials";
@@ -110,8 +111,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(dynamicTypes.get(className)));
     Transport transport = context.transport();
     boolean hasRestOption = transport.equals(Transport.GRPC_REST);
-    String serviceSettingsMethodName =
-        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Settings";
+    String serviceSettingsMethodName = JavaStyle.toLowerCamelCase(service.name() + "Settings");
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -769,10 +769,14 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
 
     // If-blocks to update with method-level properties
     for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
-      String methodName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
+      String methodNameLowerCamel = JavaStyle.toLowerCamelCase(method.name());
+      String methodNameUpperCamel = JavaStyle.toUpperCamelCase(method.name());
 
       Variable methodRetryPropertiesVar =
-          Variable.builder().setName(methodName + "Retry").setType(types.get("Retry")).build();
+          Variable.builder()
+              .setName(methodNameLowerCamel + "Retry")
+              .setType(types.get("Retry"))
+              .build();
 
       VariableExpr methodRetryPropertiesVarExpr =
           VariableExpr.builder().setVariable(methodRetryPropertiesVar).setIsDecl(true).build();
@@ -781,7 +785,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
       MethodInvocationExpr methodRetryPropertiesExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(VariableExpr.withVariable(clientPropertiesVar))
-              .setMethodName(String.format("get%sRetry", method.name()))
+              .setMethodName(String.format("get%sRetry", methodNameUpperCamel))
               .setReturnType(types.get("Retry"))
               .build();
 
@@ -807,7 +811,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
                   StringObjectValue.withValue(
                       String.format(
                           "Configured method-level retry settings for %s from properties.",
-                          methodName))),
+                          methodNameLowerCamel))),
               types));
 
       IfStatement setMethodRetrySettingsStatement =
@@ -858,14 +862,13 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
   }
 
   private static List<Statement> createUpdateRetrySettingsStatements(
-      String methodNameUpperCamel,
+      String methodName,
       Variable settingBuilderVariable,
       Variable retryFromPropertiesVar,
       Map<String, TypeNode> types) {
 
     List<Statement> results = new ArrayList<>();
-    String methodNameLowerCamel =
-        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, methodNameUpperCamel);
+    String methodNameLowerCamel = JavaStyle.toLowerCamelCase(methodName);
     String settingsVarName = methodNameLowerCamel + "Settings";
     String retrySettingsVarName = methodNameLowerCamel + "RetrySettings";
 
@@ -939,8 +942,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .build();
     List<VariableExpr> argumentsVariableExprs =
         Arrays.asList(clientSettingsVariableExpr.toBuilder().setIsDecl(true).build());
-    String methodName =
-        CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name()) + "Client";
+    String methodName = JavaStyle.toLowerCamelCase(service.name()) + "Client";
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             SpringAutoconfigCommentComposer.createClientBeanComment(service.name()))

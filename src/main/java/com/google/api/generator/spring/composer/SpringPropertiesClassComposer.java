@@ -43,6 +43,7 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.spring.composer.comment.SpringPropertiesCommentComposer;
 import com.google.api.generator.spring.utils.ComposerUtils;
 import com.google.api.generator.spring.utils.Utils;
@@ -172,8 +173,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     statements.add(retryPropertiesStatement);
 
     for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
-      String methodNameLowerCamel =
-          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name());
+      String methodNameLowerCamel = JavaStyle.toLowerCamelCase(method.name());
       String methodPropertiesVarName = methodNameLowerCamel + "Retry";
       ExprStatement methodRetryPropertiesStatement =
           ComposerUtils.createMemberVarStatement(
@@ -217,8 +217,7 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     methodDefinitions.add(createSetterMethod(thisClassType, "retry", types.get("Retry")));
 
     for (Method method : Utils.getMethodsForRetryConfiguration(service)) {
-      String methodPropertiesVarName =
-          CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, method.name()) + "Retry";
+      String methodPropertiesVarName = JavaStyle.toLowerCamelCase(method.name()) + "Retry";
       methodDefinitions.add(
           createGetterMethod(thisClassType, methodPropertiesVarName, types.get("Retry"), null));
       methodDefinitions.add(
