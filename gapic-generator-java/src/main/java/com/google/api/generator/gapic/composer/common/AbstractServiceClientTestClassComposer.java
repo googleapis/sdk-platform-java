@@ -56,6 +56,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -103,12 +104,20 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     return transportContext;
   }
 
+  protected Transport getTransport() {
+    return Transport.GRPC;
+  }
+
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     return generate(ClassNames.getServiceClientTestClassName(service), context, service);
   }
 
   protected GapicClass generate(String className, GapicContext context, Service service) {
+    if (!service.hasAnyEnabledMethodsForTransport(getTransport())) {
+      return GapicClass.createNonGeneratedGapicClass();
+    }
+
     Map<String, ResourceName> resourceNames = context.helperResourceNames();
     String pakkage = service.pakkage();
     TypeStore typeStore = new TypeStore();
@@ -129,10 +138,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
                 createClassMethods(service, context, classMemberVarExprs, typeStore, resourceNames))
             .build();
     return GapicClass.create(kind, classDef);
-  }
-
-  protected boolean isSupportedMethod(Method method) {
-    return true;
   }
 
   private List<AnnotationNode> createClassAnnotations() {
@@ -230,7 +235,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     Map<String, Message> messageTypes = context.messages();
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
-      if (!isSupportedMethod(method)) {
+      if (!method.isSupportedByTransport(getTransport())) {
         javaMethods.add(createUnsupportedTestMethod(method));
         continue;
       }
