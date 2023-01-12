@@ -51,7 +51,6 @@ public abstract class JavaDocComment implements Comment {
     String throwsType = null;
     String throwsDescription = null;
     String deprecated = null;
-    String returnType = null;
     String returnDescription = null;
     List<String> paramsList = new ArrayList<>();
     List<String> componentsList = new ArrayList<>();
@@ -66,14 +65,13 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    public Builder setReturn(String type, String description) {
-      returnType = type;
-      returnDescription = description;
+    public Builder setDeprecated(String deprecatedText) {
+      deprecated = deprecatedText;
       return this;
     }
 
-    public Builder setDeprecated(String deprecatedText) {
-      deprecated = deprecatedText;
+    public Builder setReturn(String returnText) {
+      returnDescription = returnText;
       return this;
     }
 
@@ -136,26 +134,24 @@ public abstract class JavaDocComment implements Comment {
     public boolean emptyComments() {
       return Strings.isNullOrEmpty(throwsType)
           && Strings.isNullOrEmpty(throwsDescription)
-          && Strings.isNullOrEmpty(returnType)
-          && Strings.isNullOrEmpty(returnDescription)
           && Strings.isNullOrEmpty(deprecated)
+          && Strings.isNullOrEmpty(returnDescription)
           && paramsList.isEmpty()
           && componentsList.isEmpty();
     }
 
     public JavaDocComment build() {
-      // @param, @throws and @deprecated should always get printed at the end.
+      // @param, @throws, @return, and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
         componentsList.add(
             String.format("@throws %s %s", throwsType, HtmlEscaper.process(throwsDescription)));
       }
-      if (!Strings.isNullOrEmpty(returnType)) {
-        componentsList.add(
-            String.format("@return %s %s", returnType, HtmlEscaper.process(returnDescription)));
-      }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
+      }
+      if (!Strings.isNullOrEmpty(returnDescription)) {
+        componentsList.add(String.format("@return %s", returnDescription));
       }
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.

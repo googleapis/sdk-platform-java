@@ -45,6 +45,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.ThisObjectValue;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -52,12 +53,13 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
@@ -115,10 +117,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             TypeRegistry.class));
   }
 
-  protected boolean isSupportedMethod(Method method) {
-    return method.httpBindings() != null
-        && method.stream() != Stream.BIDI
-        && method.stream() != Stream.CLIENT;
+  @Override
+  protected Transport getTransport() {
+    return Transport.REST;
   }
 
   @Override
@@ -1247,5 +1248,57 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .setVariableExpr(typeRegistryVarExpr)
                 .setValueExpr(typeRegistryBuilderExpr)
                 .build()));
+  }
+
+  @Override
+  protected List<MethodDefinition> createClassMethods(
+      GapicContext context,
+      Service service,
+      TypeStore typeStore,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, VariableExpr> callableClassMemberVarExprs,
+      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
+      List<Statement> classStatements) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    javaMethods.addAll(
+        super.createClassMethods(
+            context,
+            service,
+            typeStore,
+            classMemberVarExprs,
+            callableClassMemberVarExprs,
+            protoMethodNameToDescriptorVarExprs,
+            classStatements));
+    javaMethods.addAll(createInvalidClassMethods(service));
+    return javaMethods;
+  }
+
+  private List<MethodDefinition> createInvalidClassMethods(Service service) {
+    List<MethodDefinition> methodDefinitions = new ArrayList<>();
+    for (Method protoMethod : service.methods()) {
+      if (protoMethod.isSupportedByTransport(getTransport())) {
+        continue;
+      }
+      String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
+      String callableName = String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
+      methodDefinitions.add(
+          MethodDefinition.builder()
+              .setIsOverride(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setName(callableName)
+              .setReturnType(getCallableType(protoMethod))
+              .setBody(
+                  Arrays.asList(
+                      ExprStatement.withExpr(
+                          ThrowExpr.builder()
+                              .setType(FIXED_TYPESTORE.get("UnsupportedOperationException"))
+                              .setMessageExpr(
+                                  String.format(
+                                      "Not implemented: %s(). %s transport is not implemented for this method yet.",
+                                      callableName, getTransport()))
+                              .build())))
+              .build());
+    }
+    return methodDefinitions;
   }
 }
