@@ -77,18 +77,6 @@ public class GapicSnippetConfig {
           new LinkedHashMap(),
           Collections.emptyMap());
 
-  // Get sample method return type
-  private static String parseSnippetSignatureReturnType(Type type) {
-    if (type.hasScalarType()) {
-      return SampleComposerUtil.convertScalarTypeToJavaTypeString(type.getScalarType());
-    }
-    if (type.hasMessageType()) {
-      return type.getMessageType().getMessageFullName();
-    }
-    // TODO: add additional types to parse (map type, repeated type, bytes type)
-    return "";
-  }
-
   // Order matters
   // Key is name of parameter
   // Value is array with first element being parameter description, second element is the TypeKind
@@ -187,7 +175,7 @@ public class GapicSnippetConfig {
     configSignature.put("has_return_type", rawConfigSignature.hasReturnType());
     if (rawConfigSignature.hasReturnType()) {
       configSignature.put(
-          "return_type", parseSnippetSignatureReturnType(rawConfigSignature.getReturnType()));
+          "return_type", rawConfigSignature.getReturnType());
     }
 
     // Order of parameters matters
@@ -303,8 +291,8 @@ public class GapicSnippetConfig {
     return (String) gapicSnippetConfig.configSnippet.get("response_name");
   }
 
-  public static String getRequestValue(GapicSnippetConfig gapicSnippetConfig) {
-    return (String) gapicSnippetConfig.configSnippet.get("request_value");
+  public static Map<String, Object> getRequestValue(GapicSnippetConfig gapicSnippetConfig) {
+    return (Map<String, Object>) gapicSnippetConfig.configSnippet.get("request_value");
   }
 
   public static String getRequestName(GapicSnippetConfig gapicSnippetConfig) {
@@ -327,7 +315,7 @@ public class GapicSnippetConfig {
 
   public static String getConfiguredSnippetReturnType(GapicSnippetConfig gapicSnippetConfig) {
     if ((Boolean) gapicSnippetConfig.configSignature.get("has_return_type")) {
-      return (String) gapicSnippetConfig.configSignature.get("return_type");
+      return (String) SampleComposerUtil.convertTypeToString((Type) gapicSnippetConfig.configSignature.get("return_type"));
     }
     return "";
   }

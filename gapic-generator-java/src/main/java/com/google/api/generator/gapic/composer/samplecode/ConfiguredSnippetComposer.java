@@ -46,9 +46,6 @@ import java.util.stream.Collectors;
 
 public class ConfiguredSnippetComposer {
 
-  // TODO: Depending on call type, generate a different sample
-  // For now, just generate a Standard Operation sample
-
   static List<CommentStatement> fileHeader = Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT);
 
   // Generates the JavaDoc comments for each configured snippet that includes the request
@@ -62,7 +59,7 @@ public class ConfiguredSnippetComposer {
 
     if (GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig).length() > 1) {
       javaDocComment.setReturn(
-          GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig), "");
+          GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
     }
 
     Iterator<Map.Entry<String, List>> iterator =
@@ -81,6 +78,7 @@ public class ConfiguredSnippetComposer {
     return Arrays.asList(CommentStatement.withComment(javaDocComment.build()));
   }
 
+  // Generate the sample method name for the configured snippet. If `both` is specified as the SyncPreference, then we should return both a sync and an async sample.
   public static String composeSampleMethodName(GapicSnippetConfig snippetConfig) {
     if (GapicSnippetConfig.parseSyncPreference(snippetConfig)) {
       return "async" + GapicSnippetConfig.getConfiguredSnippetRpcName(snippetConfig);
@@ -90,6 +88,10 @@ public class ConfiguredSnippetComposer {
   }
 
   // Composes request and response handling within the sample method
+  // Currently only generates a Standard Operation sample
+  // TODO: add support for Paginated Operation (P2, with exception that paginated responses are P0),
+  // LRO (P2, with exception that Polling type response handling is P0), Server Streaming (P3),
+  // Client Streaming (P3), and Bidi Streaming (P3)
   public static List<Statement> composeSampleMethodBodyStatements(
       GapicSnippetConfig snippetConfig) {
     List<Statement> sampleBodyStatements = new ArrayList<>();
@@ -120,6 +122,10 @@ public class ConfiguredSnippetComposer {
     // golden sample
     // .setParent(parent)
     // .setCustomClassId(customClassId)
+
+    // Have a map where the key is the name of the variable, first value is the TypeNode
+    // MethodName is "set + name of variable"
+    // TODO: how to handle nested requests?
     MethodInvocationExpr firstRequestMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(newBuilderMethodExpr)
@@ -181,6 +187,7 @@ public class ConfiguredSnippetComposer {
             .setMethodName("setValue")
             .build();
 
+    // Need to invoke method twice
     MethodInvocationExpr addItemsMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedFirstNewBuilderMethodExpr)
@@ -236,9 +243,10 @@ public class ConfiguredSnippetComposer {
     //    e.g. ApiFuture<CustomClass> future =
     // adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
     //    CustomClass createdCustomClass = future.get();
+
+    // TODO: Build logic that if returnType is a messageType, then need to do additional processing
     String returnType =
-        SampleComposerUtil.convertMessageTypeToReturnType(
-            GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
+            SampleComposerUtil.convertMessageTypeToReturnType(GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
     TypeNode responseType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -344,14 +352,14 @@ public class ConfiguredSnippetComposer {
 
   // Composes the client settings initialization with an endpoint if specified in the config as well
   // as the actual client initialization using the settings
-  // Includes try-catch wrapper around sample method
+  // Includes try-catch wrapper within sample method
   public static List<Statement> composeClientInitializationStatements(
       GapicSnippetConfig snippetConfig) {
-    // TODO: parse PreClientInitializationStatements (P2 feature, likely H2 2023)
+    // TODO: parse PreClientInitializationStatements (P2)
     List<Statement> clientInitializationStatements = new ArrayList<>();
 
     // Initialize client settings with builder() method.
-    // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
+    // e.g. EchoSettings echoSettings = EchoSettings.newBuilder();
     String settingsName =
         String.format(
             "%sSettings",
@@ -377,6 +385,7 @@ public class ConfiguredSnippetComposer {
     Expr buildMethodExpr;
 
     // Set endpoint if configured
+    // e.g. .setEndpoint("endpoint").build()
     if (GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig) != null) {
       VariableExpr endpointVar =
           VariableExpr.builder()
@@ -459,7 +468,8 @@ public class ConfiguredSnippetComposer {
     TryCatchStatement sampleStatement =
         TryCatchStatement.builder()
             .setTryResourceExpr(initClientVarExpr)
-            .setTryBody(composeSampleMethodBodyStatements(snippetConfig))
+            .setTryBody(
+                composeSampleMethodBodyStatements(snippetConfig)) // Set based on configuration
             .setIsSampleCode(true)
             .build();
 

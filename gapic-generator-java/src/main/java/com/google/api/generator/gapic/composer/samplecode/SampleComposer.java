@@ -161,26 +161,4 @@ public class SampleComposer {
         .setBody(sampleMethodBody)
         .build();
   }
-
-  // TODO: update to include valid return type
-  public static MethodDefinition composeSampleMethodWithSpecifiedReturnType(
-      String sampleMethodName,
-      List<VariableExpr> sampleMethodArgs,
-      List<Statement> sampleMethodBody,
-      String returnType,
-      String pakkageName) {
-    TypeNode returnTypeNode =
-        TypeNode.withReference(
-            VaporReference.builder().setName(returnType).setPakkage(pakkageName).build());
-    return MethodDefinition.builder()
-        .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
-        .setReturnType(returnTypeNode)
-        .setName(sampleMethodName)
-        .setArguments(sampleMethodArgs)
-        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
-        .setBody(sampleMethodBody)
-        // .setReturnExpr(ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue(returnType))))
-        .build();
-  }
 }

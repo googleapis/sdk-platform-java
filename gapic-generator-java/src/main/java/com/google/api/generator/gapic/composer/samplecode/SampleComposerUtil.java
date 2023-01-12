@@ -122,6 +122,33 @@ public class SampleComposerUtil {
     return uniqueSamples;
   }
 
+  // Convert Type to String for use as Return Type in configured sample. Handles Scalar, Enum, and Message Types.
+  // TODO: Handle RepeatedType (P1), MapType (P1), BytesType (P3)
+  public static String convertTypeToString(Type type){
+    if(type.hasMessageType()){
+      return type.getMessageType().getMessageFullName();
+    }
+    if(type.hasScalarType()){
+      return type.getScalarType().name();
+    }
+    if(type.hasEnumType()){
+      return type.getEnumType().getEnumFullName();
+    }
+    else{
+      return "";
+    }
+  }
+
+  // If the return type is a message Type, need to do additional parsing to get return Type for sample method
+  public static String convertMessageTypeToReturnType(String messageType) {
+    String[] splitString = messageType.split("\\.");
+    return splitString[splitString.length - 1];
+  }
+
+  // Handle configLanguage.Type conversion
+  // Handles Scalar, Enum, and Message Types
+  // TODO: Handle Repeated type (P1), Map type (P1), and Bytes type (P3)
+
   // Convert configLanguage.Type to TypeNode
   // https://developers.google.com/protocol-buffers/docs/proto3#scalar
   public static TypeNode convertScalarTypeToTypeNode(Type.ScalarType configType) {
@@ -172,14 +199,11 @@ public class SampleComposerUtil {
     }
   }
 
-  // Get return type from full message Type
-  public static String convertMessageTypeToReturnType(String messageType) {
-    String[] splitString = messageType.split("\\.");
-    return splitString[splitString.length - 1];
-  }
-
-  //   Convert expression type to String
-  // TODO: add handling for BytesValue, ComplexValue, MapValue, ConditionalValue
+  // Convert config.Language Epression to String
+  // Currently handles Boolean, String, NameValue Expressions
+  // TODO: add handling for ComplexValue (P0), Enum (P0), Number (P0), NameValue with Path (P1),
+  // ListValue (P1), MapValue (P1), ConditionalValue (P2), NullValue (P2), BytesValue (P3), and
+  // DefaultValue (P3)
   public static String convertExpressionToString(Expression expression) {
     if (expression.hasBooleanValue()) {
       return String.valueOf(expression.getBooleanValue());
@@ -204,13 +228,15 @@ public class SampleComposerUtil {
     }
   }
 
-  // Convert Statement of Iteration type to Statement
+  // Convert configLanguage.Statement to Statement
+  // Handles Standard Output, Return, Declaration, and Declaration Assignment Statements
+  // TODO: Handle Iteration.Repeated (P1), Iteration.Map (P1), Conditional (P2),
+  // Iteration.NumberSequence (P2), and Iteration.bytes (P3) Statements
   // Currently only works for repeated_iteration
   //        List<CustomClass.ClassItem> itemsList = createdCustomClass.getItemsList();
   //        for(items : itemsList){
   //          System.out.println(item)
   //        }
-  // TODO: handle for other iteration_types
   public static Statement convertIterationTypeStatementToStatement(
       com.google.cloud.tools.snippetgen.configlanguage.v1.Statement statement) {
     if (statement.hasIteration() && statement.getIteration().hasRepeatedIteration()) {
