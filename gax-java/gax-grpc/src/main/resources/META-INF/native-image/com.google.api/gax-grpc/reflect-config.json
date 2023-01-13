@@ -109,34 +109,6 @@
     "allDeclaredFields": true
   },
   {
-    "name": "com.google.cloud.oslogin.v1.it.ITSystemTest",
-    "allDeclaredFields": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicConstructors": true,
-    "methods": [
-      {
-        "name": "<init>",
-        "parameterTypes": []
-      },
-      {
-        "name": "after",
-        "parameterTypes": []
-      },
-      {
-        "name": "before",
-        "parameterTypes": []
-      },
-      {
-        "name": "getLoginProfileTest",
-        "parameterTypes": []
-      },
-      {
-        "name": "setup",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
     "name": "com.google.protobuf.ExtensionRegistry",
     "methods": [
       {
