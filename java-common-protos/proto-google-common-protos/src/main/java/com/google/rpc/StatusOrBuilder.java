@@ -27,7 +27,8 @@ public interface StatusOrBuilder
    *
    *
    * <pre>
-   * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+   * The status code, which should be an enum value of
+   * [google.rpc.Code][google.rpc.Code].
    * </pre>
    *
    * <code>int32 code = 1;</code>
@@ -42,7 +43,8 @@ public interface StatusOrBuilder
    * <pre>
    * A developer-facing error message, which should be in English. Any
    * user-facing error message should be localized and sent in the
-   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+   * by the client.
    * </pre>
    *
    * <code>string message = 2;</code>
@@ -56,7 +58,8 @@ public interface StatusOrBuilder
    * <pre>
    * A developer-facing error message, which should be in English. Any
    * user-facing error message should be localized and sent in the
-   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+   * by the client.
    * </pre>
    *
    * <code>string message = 2;</code>
