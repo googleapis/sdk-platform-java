@@ -3,29 +3,6 @@
     "name": "[B"
   },
   {
-    "name": "com.google.api.client.http.GenericUrl",
-    "allDeclaredFields": true
-  },
-  {
-    "name": "com.google.api.client.http.HttpHeaders",
-    "allDeclaredFields": true,
-    "queryAllDeclaredMethods": true
-  },
-  {
-    "name": "com.google.api.client.json.GenericJson",
-    "allDeclaredFields": true,
-    "methods": [
-      {
-        "name": "<init>",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
-    "name": "com.google.api.client.util.GenericData",
-    "allDeclaredFields": true
-  },
-  {
     "name": "com.google.auth.Credentials",
     "allDeclaredFields": true
   },
