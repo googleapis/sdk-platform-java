@@ -26,7 +26,7 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * Service Description: ## API Overview
+ * Service Description: API Overview
  *
  * <p>Manages Identity and Access Management (IAM) policies.
  *
@@ -63,6 +63,7 @@ import javax.annotation.Generated;
  *       SetIamPolicyRequest.newBuilder()
  *           .setResource("SetIamPolicyRequest1223629066".toString())
  *           .setPolicy(Policy.newBuilder().build())
+ *           .setUpdateMask(FieldMask.newBuilder().build())
  *           .build();
  *   Policy response = iAMPolicyClient.setIamPolicy(request);
  * }
@@ -176,6 +177,8 @@ public class IAMPolicyClient implements BackgroundResource {
   /**
    * Sets the access control policy on the specified resource. Replaces any existing policy.
    *
+   * <p>Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+   *
    * <p>Sample code:
    *
    * <pre>{@code
@@ -189,6 +192,7 @@ public class IAMPolicyClient implements BackgroundResource {
    *       SetIamPolicyRequest.newBuilder()
    *           .setResource("SetIamPolicyRequest1223629066".toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   Policy response = iAMPolicyClient.setIamPolicy(request);
    * }
@@ -205,6 +209,8 @@ public class IAMPolicyClient implements BackgroundResource {
   /**
    * Sets the access control policy on the specified resource. Replaces any existing policy.
    *
+   * <p>Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+   *
    * <p>Sample code:
    *
    * <pre>{@code
@@ -218,6 +224,7 @@ public class IAMPolicyClient implements BackgroundResource {
    *       SetIamPolicyRequest.newBuilder()
    *           .setResource("SetIamPolicyRequest1223629066".toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = iAMPolicyClient.setIamPolicyCallable().futureCall(request);
    *   // Do something.
@@ -291,7 +298,7 @@ public class IAMPolicyClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns permissions that a caller has on the specified resource. If the resource does not
-   * exist, this will return an empty set of permissions, not a NOT_FOUND error.
+   * exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
    *
    * <p>Note: This operation is designed to be used for building permission-aware UIs and
    * command-line tools, not for authorization checking. This operation may "fail open" without
@@ -325,7 +332,7 @@ public class IAMPolicyClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns permissions that a caller has on the specified resource. If the resource does not
-   * exist, this will return an empty set of permissions, not a NOT_FOUND error.
+   * exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
    *
    * <p>Note: This operation is designed to be used for building permission-aware UIs and
    * command-line tools, not for authorization checking. This operation may "fail open" without
