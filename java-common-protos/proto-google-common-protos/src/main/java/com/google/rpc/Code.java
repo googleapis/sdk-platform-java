@@ -36,7 +36,7 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * Not an error; returned on success
+   * Not an error; returned on success.
    * HTTP Mapping: 200 OK
    * </pre>
    *
@@ -104,7 +104,7 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * Some requested entity (e.g., file or directory) was not found.
    * Note to server developers: if a request is denied for an entire class
-   * of users, such as gradual feature rollout or undocumented whitelist,
+   * of users, such as gradual feature rollout or undocumented allowlist,
    * `NOT_FOUND` may be used. If a request is denied for some users within
    * a class of users, such as user-based access control, `PERMISSION_DENIED`
    * must be used.
@@ -179,11 +179,11 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * Service implementors can use the following guidelines to decide
    * between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`:
    *  (a) Use `UNAVAILABLE` if the client can retry just the failing call.
-   *  (b) Use `ABORTED` if the client should retry at a higher level
-   *      (e.g., when a client-specified test-and-set fails, indicating the
-   *      client should restart a read-modify-write sequence).
+   *  (b) Use `ABORTED` if the client should retry at a higher level. For
+   *      example, when a client-specified test-and-set fails, indicating the
+   *      client should restart a read-modify-write sequence.
    *  (c) Use `FAILED_PRECONDITION` if the client should not retry until
-   *      the system state has been explicitly fixed.  E.g., if an "rmdir"
+   *      the system state has been explicitly fixed. For example, if an "rmdir"
    *      fails because the directory is non-empty, `FAILED_PRECONDITION`
    *      should be returned since the client should not retry unless
    *      the files are deleted from the directory.
@@ -289,7 +289,7 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * Not an error; returned on success
+   * Not an error; returned on success.
    * HTTP Mapping: 200 OK
    * </pre>
    *
@@ -357,7 +357,7 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * Some requested entity (e.g., file or directory) was not found.
    * Note to server developers: if a request is denied for an entire class
-   * of users, such as gradual feature rollout or undocumented whitelist,
+   * of users, such as gradual feature rollout or undocumented allowlist,
    * `NOT_FOUND` may be used. If a request is denied for some users within
    * a class of users, such as user-based access control, `PERMISSION_DENIED`
    * must be used.
@@ -432,11 +432,11 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * Service implementors can use the following guidelines to decide
    * between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`:
    *  (a) Use `UNAVAILABLE` if the client can retry just the failing call.
-   *  (b) Use `ABORTED` if the client should retry at a higher level
-   *      (e.g., when a client-specified test-and-set fails, indicating the
-   *      client should restart a read-modify-write sequence).
+   *  (b) Use `ABORTED` if the client should retry at a higher level. For
+   *      example, when a client-specified test-and-set fails, indicating the
+   *      client should restart a read-modify-write sequence.
    *  (c) Use `FAILED_PRECONDITION` if the client should not retry until
-   *      the system state has been explicitly fixed.  E.g., if an "rmdir"
+   *      the system state has been explicitly fixed. For example, if an "rmdir"
    *      fails because the directory is non-empty, `FAILED_PRECONDITION`
    *      should be returned since the client should not retry unless
    *      the files are deleted from the directory.
