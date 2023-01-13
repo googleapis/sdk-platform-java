@@ -16,37 +16,32 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_Publisher_SetIamPolicy_async]
-import com.google.api.core.ApiFuture;
-import com.google.cloud.pubsub.v1.TopicAdminClient;
-import com.google.iam.v1.Policy;
-import com.google.iam.v1.SetIamPolicyRequest;
-import com.google.protobuf.FieldMask;
-import com.google.pubsub.v1.SnapshotName;
+// [START pubsub_v1_generated_SchemaService_DeleteSchemaRevision_sync]
+import com.google.cloud.pubsub.v1.SchemaServiceClient;
+import com.google.pubsub.v1.DeleteSchemaRevisionRequest;
+import com.google.pubsub.v1.Schema;
+import com.google.pubsub.v1.SchemaName;
 
-public class AsyncSetIamPolicy {
+public class SyncDeleteSchemaRevision {
 
   public static void main(String[] args) throws Exception {
-    asyncSetIamPolicy();
+    syncDeleteSchemaRevision();
   }
 
-  public static void asyncSetIamPolicy() throws Exception {
+  public static void syncDeleteSchemaRevision() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-      SetIamPolicyRequest request =
-          SetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-              .setPolicy(Policy.newBuilder().build())
-              .setUpdateMask(FieldMask.newBuilder().build())
+    try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+      DeleteSchemaRevisionRequest request =
+          DeleteSchemaRevisionRequest.newBuilder()
+              .setName(SchemaName.of("[PROJECT]", "[SCHEMA]").toString())
+              .setRevisionId("revisionId-1507445162")
               .build();
-      ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
-      // Do something.
-      Policy response = future.get();
+      Schema response = schemaServiceClient.deleteSchemaRevision(request);
     }
   }
 }
-// [END pubsub_v1_generated_Publisher_SetIamPolicy_async]
+// [END pubsub_v1_generated_SchemaService_DeleteSchemaRevision_sync]

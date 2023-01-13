@@ -16,37 +16,28 @@
 
 package com.google.cloud.pubsub.v1.samples;
 
-// [START pubsub_v1_generated_Publisher_SetIamPolicy_async]
-import com.google.api.core.ApiFuture;
-import com.google.cloud.pubsub.v1.TopicAdminClient;
-import com.google.iam.v1.Policy;
-import com.google.iam.v1.SetIamPolicyRequest;
-import com.google.protobuf.FieldMask;
-import com.google.pubsub.v1.SnapshotName;
+// [START pubsub_v1_generated_SchemaService_CommitSchema_StringSchema_sync]
+import com.google.cloud.pubsub.v1.SchemaServiceClient;
+import com.google.pubsub.v1.Schema;
+import com.google.pubsub.v1.SchemaName;
 
-public class AsyncSetIamPolicy {
+public class SyncCommitSchemaStringSchema {
 
   public static void main(String[] args) throws Exception {
-    asyncSetIamPolicy();
+    syncCommitSchemaStringSchema();
   }
 
-  public static void asyncSetIamPolicy() throws Exception {
+  public static void syncCommitSchemaStringSchema() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-      SetIamPolicyRequest request =
-          SetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
-              .setPolicy(Policy.newBuilder().build())
-              .setUpdateMask(FieldMask.newBuilder().build())
-              .build();
-      ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
-      // Do something.
-      Policy response = future.get();
+    try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
+      String name = SchemaName.of("[PROJECT]", "[SCHEMA]").toString();
+      Schema schema = Schema.newBuilder().build();
+      Schema response = schemaServiceClient.commitSchema(name, schema);
     }
   }
 }
-// [END pubsub_v1_generated_Publisher_SetIamPolicy_async]
+// [END pubsub_v1_generated_SchemaService_CommitSchema_StringSchema_sync]
