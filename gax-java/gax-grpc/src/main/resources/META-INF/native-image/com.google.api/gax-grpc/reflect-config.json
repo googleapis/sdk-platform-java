@@ -32,79 +32,6 @@
     "allDeclaredFields": true
   },
   {
-    "name": "com.google.auth.oauth2.ServiceAccountCredentials",
-    "methods": [
-      {
-        "name": "getClientEmail",
-        "parameterTypes": []
-      },
-      {
-        "name": "getClientId",
-        "parameterTypes": []
-      },
-      {
-        "name": "getPrivateKey",
-        "parameterTypes": []
-      },
-      {
-        "name": "getPrivateKeyId",
-        "parameterTypes": []
-      },
-      {
-        "name": "getScopes",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
-    "name": "com.google.auth.oauth2.ServiceAccountJwtAccessCredentials",
-    "methods": [
-      {
-        "name": "newBuilder",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
-    "name": "com.google.auth.oauth2.ServiceAccountJwtAccessCredentials$Builder",
-    "methods": [
-      {
-        "name": "build",
-        "parameterTypes": []
-      },
-      {
-        "name": "setClientEmail",
-        "parameterTypes": [
-          "java.lang.String"
-        ]
-      },
-      {
-        "name": "setClientId",
-        "parameterTypes": [
-          "java.lang.String"
-        ]
-      },
-      {
-        "name": "setPrivateKey",
-        "parameterTypes": [
-          "java.security.PrivateKey"
-        ]
-      },
-      {
-        "name": "setPrivateKeyId",
-        "parameterTypes": [
-          "java.lang.String"
-        ]
-      },
-      {
-        "name": "setQuotaProjectId",
-        "parameterTypes": [
-          "java.lang.String"
-        ]
-      }
-    ]
-  },
-  {
     "name": "com.google.auth.oauth2.UserCredentials",
     "allDeclaredFields": true
   },
@@ -145,10 +72,6 @@
     "name": "io.grpc.internal.PickFirstLoadBalancerProvider"
   },
   {
-    "name": "io.grpc.netty.shaded.io.netty.buffer.AbstractByteBufAllocator",
-    "queryAllDeclaredMethods": true
-  },
-  {
     "name": "io.grpc.netty.shaded.io.netty.buffer.AbstractReferenceCountedByteBuf",
     "fields": [
       {
@@ -160,29 +83,7 @@
     "name": "io.grpc.netty.shaded.io.netty.channel.DefaultFileRegion"
   },
   {
-    "name": "io.grpc.netty.shaded.io.netty.channel.epoll.Epoll",
-    "methods": [
-      {
-        "name": "isAvailable",
-        "parameterTypes": []
-      },
-      {
-        "name": "unavailabilityCause",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
     "name": "io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel",
-    "methods": [
-      {
-        "name": "<init>",
-        "parameterTypes": []
-      }
-    ]
   },
   {
     "name": "io.grpc.netty.shaded.io.netty.channel.unix.PeerCredentials"
@@ -213,42 +114,6 @@
     "fields": [
       {
         "name": "refCnt"
-      }
-    ]
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.util.internal.NativeLibraryUtil",
-    "methods": [
-      {
-        "name": "loadLibrary",
-        "parameterTypes": [
-          "java.lang.String",
-          "boolean"
-        ]
-      }
-    ]
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields",
-    "fields": [
-      {
-        "name": "producerLimit"
-      }
-    ]
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields",
-    "fields": [
-      {
-        "name": "consumerIndex"
-      }
-    ]
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields",
-    "fields": [
-      {
-        "name": "producerIndex"
       }
     ]
   },
@@ -382,14 +247,6 @@
   },
   {
     "name": "javax.naming.directory.InitialDirContext"
-  },
-  {
-    "name": "javax.net.ssl.SSLContext",
-    "fields": [
-      {
-        "name": "contextSpi"
-      }
-    ]
   },
   {
     "name": "javax.security.auth.x500.X500Principal",
