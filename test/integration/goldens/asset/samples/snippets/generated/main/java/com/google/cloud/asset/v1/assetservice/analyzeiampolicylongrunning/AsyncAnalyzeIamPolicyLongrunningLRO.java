@@ -41,6 +41,7 @@ public class AsyncAnalyzeIamPolicyLongrunningLRO {
       AnalyzeIamPolicyLongrunningRequest request =
           AnalyzeIamPolicyLongrunningRequest.newBuilder()
               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+              .setSavedAnalysisQuery("savedAnalysisQuery376058885")
               .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
               .build();
       OperationFuture<AnalyzeIamPolicyLongrunningResponse, AnalyzeIamPolicyLongrunningMetadata>

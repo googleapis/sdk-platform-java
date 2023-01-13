@@ -18,7 +18,9 @@ package com.google.cloud.asset.v1;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.httpjson.longrunning.OperationsClient;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
@@ -31,8 +33,8 @@ import com.google.cloud.asset.v1.stub.AssetServiceStub;
 import com.google.cloud.asset.v1.stub.AssetServiceStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
-import com.google.longrunning.OperationsClient;
 import com.google.protobuf.Empty;
+import com.google.protobuf.FieldMask;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +56,7 @@ import javax.annotation.Generated;
  * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
  *   BatchGetAssetsHistoryRequest request =
  *       BatchGetAssetsHistoryRequest.newBuilder()
- *           .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
+ *           .setParent(FolderName.of("[FOLDER]").toString())
  *           .addAllAssetNames(new ArrayList<String>())
  *           .setContentType(ContentType.forNumber(0))
  *           .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -118,13 +120,27 @@ import javax.annotation.Generated;
  * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
  * }</pre>
  *
+ * <p>To use REST (HTTP1.1/JSON) transport (instead of gRPC) for sending and receiving requests over
+ * the wire:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * AssetServiceSettings assetServiceSettings = AssetServiceSettings.newHttpJsonBuilder().build();
+ * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ * }</pre>
+ *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @Generated("by gapic-generator-java")
 public class AssetServiceClient implements BackgroundResource {
   private final AssetServiceSettings settings;
   private final AssetServiceStub stub;
-  private final OperationsClient operationsClient;
+  private final OperationsClient httpJsonOperationsClient;
+  private final com.google.longrunning.OperationsClient operationsClient;
 
   /** Constructs an instance of AssetServiceClient with default settings. */
   public static final AssetServiceClient create() throws IOException {
@@ -155,13 +171,17 @@ public class AssetServiceClient implements BackgroundResource {
   protected AssetServiceClient(AssetServiceSettings settings) throws IOException {
     this.settings = settings;
     this.stub = ((AssetServiceStubSettings) settings.getStubSettings()).createStub();
-    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
+    this.operationsClient =
+        com.google.longrunning.OperationsClient.create(this.stub.getOperationsStub());
+    this.httpJsonOperationsClient = OperationsClient.create(this.stub.getHttpJsonOperationsStub());
   }
 
   protected AssetServiceClient(AssetServiceStub stub) {
     this.settings = null;
     this.stub = stub;
-    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
+    this.operationsClient =
+        com.google.longrunning.OperationsClient.create(this.stub.getOperationsStub());
+    this.httpJsonOperationsClient = OperationsClient.create(this.stub.getHttpJsonOperationsStub());
   }
 
   public final AssetServiceSettings getSettings() {
@@ -176,8 +196,17 @@ public class AssetServiceClient implements BackgroundResource {
    * Returns the OperationsClient that can be used to query the status of a long-running operation
    * returned by another API method call.
    */
-  public final OperationsClient getOperationsClient() {
+  public final com.google.longrunning.OperationsClient getOperationsClient() {
     return operationsClient;
+  }
+
+  /**
+   * Returns the OperationsClient that can be used to query the status of a long-running operation
+   * returned by another API method call.
+   */
+  @BetaApi
+  public final OperationsClient getHttpJsonOperationsClient() {
+    return httpJsonOperationsClient;
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -185,8 +214,8 @@ public class AssetServiceClient implements BackgroundResource {
    * Exports assets with time and resource types to a given Cloud Storage location/BigQuery table.
    * For Cloud Storage location destinations, the output format is newline-delimited JSON. Each line
    * represents a [google.cloud.asset.v1.Asset][google.cloud.asset.v1.Asset] in the JSON format; for
-   * BigQuery table destinations, the output table stores the fields in asset proto as columns. This
-   * API implements the [google.longrunning.Operation][google.longrunning.Operation] API , which
+   * BigQuery table destinations, the output table stores the fields in asset Protobuf as columns.
+   * This API implements the [google.longrunning.Operation][google.longrunning.Operation] API, which
    * allows you to keep track of the export. We recommend intervals of at least 2 seconds with
    * exponential retry to poll the export operation result. For regular-size resource parent, the
    * export operation usually finishes within 5 minutes.
@@ -202,7 +231,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request =
    *       ExportAssetsRequest.newBuilder()
-   *           .setParent("ExportAssetsRequest-846449128".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -226,8 +255,8 @@ public class AssetServiceClient implements BackgroundResource {
    * Exports assets with time and resource types to a given Cloud Storage location/BigQuery table.
    * For Cloud Storage location destinations, the output format is newline-delimited JSON. Each line
    * represents a [google.cloud.asset.v1.Asset][google.cloud.asset.v1.Asset] in the JSON format; for
-   * BigQuery table destinations, the output table stores the fields in asset proto as columns. This
-   * API implements the [google.longrunning.Operation][google.longrunning.Operation] API , which
+   * BigQuery table destinations, the output table stores the fields in asset Protobuf as columns.
+   * This API implements the [google.longrunning.Operation][google.longrunning.Operation] API, which
    * allows you to keep track of the export. We recommend intervals of at least 2 seconds with
    * exponential retry to poll the export operation result. For regular-size resource parent, the
    * export operation usually finishes within 5 minutes.
@@ -243,7 +272,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request =
    *       ExportAssetsRequest.newBuilder()
-   *           .setParent("ExportAssetsRequest-846449128".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -267,8 +296,8 @@ public class AssetServiceClient implements BackgroundResource {
    * Exports assets with time and resource types to a given Cloud Storage location/BigQuery table.
    * For Cloud Storage location destinations, the output format is newline-delimited JSON. Each line
    * represents a [google.cloud.asset.v1.Asset][google.cloud.asset.v1.Asset] in the JSON format; for
-   * BigQuery table destinations, the output table stores the fields in asset proto as columns. This
-   * API implements the [google.longrunning.Operation][google.longrunning.Operation] API , which
+   * BigQuery table destinations, the output table stores the fields in asset Protobuf as columns.
+   * This API implements the [google.longrunning.Operation][google.longrunning.Operation] API, which
    * allows you to keep track of the export. We recommend intervals of at least 2 seconds with
    * exponential retry to poll the export operation result. For regular-size resource parent, the
    * export operation usually finishes within 5 minutes.
@@ -284,7 +313,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request =
    *       ExportAssetsRequest.newBuilder()
-   *           .setParent("ExportAssetsRequest-846449128".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -314,35 +343,17 @@ public class AssetServiceClient implements BackgroundResource {
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   ResourceName parent =
-   *       new ResourceName() {
-   *         {@literal @}Override
-   *         public Map<String, String> getFieldValuesMap() {
-   *           Map<String, String> fieldValuesMap = new HashMap<>();
-   *           fieldValuesMap.put("parent", "parent-4715/parent-4715");
-   *           return fieldValuesMap;
-   *         }
-   *
-   *         {@literal @}Override
-   *         public String getFieldValue(String fieldName) {
-   *           return getFieldValuesMap().get(fieldName);
-   *         }
-   *
-   *         {@literal @}Override
-   *         public String toString() {
-   *           return "parent-4715/parent-4715";
-   *         }
-   *       };
+   *   ResourceName parent = FolderName.of("[FOLDER]");
    *   for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
    * }</pre>
    *
-   * @param parent Required. Name of the organization or project the assets belong to. Format:
-   *     "organizations/[organization-number]" (such as "organizations/123"),
-   *     "projects/[project-id]" (such as "projects/my-project-id"), or "projects/[project-number]"
-   *     (such as "projects/12345").
+   * @param parent Required. Name of the organization, folder, or project the assets belong to.
+   *     Format: "organizations/[organization-number]" (such as "organizations/123"),
+   *     "projects/[project-id]" (such as "projects/my-project-id"), "projects/[project-number]"
+   *     (such as "projects/12345"), or "folders/[folder-number]" (such as "folders/12345").
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListAssetsPagedResponse listAssets(ResourceName parent) {
@@ -371,10 +382,10 @@ public class AssetServiceClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param parent Required. Name of the organization or project the assets belong to. Format:
-   *     "organizations/[organization-number]" (such as "organizations/123"),
-   *     "projects/[project-id]" (such as "projects/my-project-id"), or "projects/[project-number]"
-   *     (such as "projects/12345").
+   * @param parent Required. Name of the organization, folder, or project the assets belong to.
+   *     Format: "organizations/[organization-number]" (such as "organizations/123"),
+   *     "projects/[project-id]" (such as "projects/my-project-id"), "projects/[project-number]"
+   *     (such as "projects/12345"), or "folders/[folder-number]" (such as "folders/12345").
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListAssetsPagedResponse listAssets(String parent) {
@@ -397,7 +408,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ListAssetsRequest request =
    *       ListAssetsRequest.newBuilder()
-   *           .setParent("ListAssetsRequest-221586066".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -433,7 +444,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ListAssetsRequest request =
    *       ListAssetsRequest.newBuilder()
-   *           .setParent("ListAssetsRequest-221586066".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -468,7 +479,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ListAssetsRequest request =
    *       ListAssetsRequest.newBuilder()
-   *           .setParent("ListAssetsRequest-221586066".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .setReadTime(Timestamp.newBuilder().build())
    *           .addAllAssetTypes(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
@@ -514,7 +525,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   BatchGetAssetsHistoryRequest request =
    *       BatchGetAssetsHistoryRequest.newBuilder()
-   *           .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .addAllAssetNames(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
    *           .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -551,7 +562,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   BatchGetAssetsHistoryRequest request =
    *       BatchGetAssetsHistoryRequest.newBuilder()
-   *           .setParent("BatchGetAssetsHistoryRequest1575208378".toString())
+   *           .setParent(FolderName.of("[FOLDER]").toString())
    *           .addAllAssetNames(new ArrayList<String>())
    *           .setContentType(ContentType.forNumber(0))
    *           .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -1100,7 +1111,17 @@ public class AssetServiceClient implements BackgroundResource {
    *           "prod".
    *       <li>`labels.env:&#42;` to find Cloud resources that have a label "env".
    *       <li>`kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key
+   *           whose name contains "key" as a word. This field is deprecated. Please use the
+   *           `kmsKeys` field to retrieve KMS key information.
+   *       <li>`kmsKeys:key` to find Cloud resources encrypted with customer-managed encryption keys
    *           whose name contains the word "key".
+   *       <li>`relationships:instance-group-1` to find Cloud resources that have relationships with
+   *           "instance-group-1" in the related resource name.
+   *       <li>`relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances that have
+   *           relationships of type "INSTANCE_TO_INSTANCEGROUP".
+   *       <li>`relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find compute instances
+   *           that have relationships with "instance-group-1" in the compute instance group
+   *           resource name, for relationship type "INSTANCE_TO_INSTANCEGROUP".
    *       <li>`state:ACTIVE` to find Cloud resources whose state contains "ACTIVE" as a word.
    *       <li>`NOT state:ACTIVE` to find Cloud resources whose state doesn't contain "ACTIVE" as a
    *           word.
@@ -1310,10 +1331,10 @@ public class AssetServiceClient implements BackgroundResource {
    *     query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query)
    *     for more information. If not specified or empty, it will search all the IAM policies within
    *     the specified `scope`. Note that the query string is compared against each Cloud IAM policy
-   *     binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM
+   *     binding, including its principals, roles, and Cloud IAM conditions. The returned Cloud IAM
    *     policies will only contain the bindings that match your query. To learn more about the IAM
-   *     policy structure, see [IAM policy
-   *     doc](https://cloud.google.com/iam/docs/policies#structure).
+   *     policy structure, see the [IAM policy
+   *     documentation](https://cloud.google.com/iam/help/allow-policies/structure).
    *     <p>Examples:
    *     <ul>
    *       <li>`policy:amy{@literal @}gmail.com` to find IAM policy bindings that specify user
@@ -1340,7 +1361,8 @@ public class AssetServiceClient implements BackgroundResource {
    *           set on resources "instance1" or "instance2" and also specify user "amy".
    *       <li>`roles:roles/compute.admin` to find IAM policy bindings that specify the Compute
    *           Admin role.
-   *       <li>`memberTypes:user` to find IAM policy bindings that contain the "user" member type.
+   *       <li>`memberTypes:user` to find IAM policy bindings that contain the principal type
+   *           "user".
    *     </ul>
    *
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1489,6 +1511,7 @@ public class AssetServiceClient implements BackgroundResource {
    *   AnalyzeIamPolicyRequest request =
    *       AnalyzeIamPolicyRequest.newBuilder()
    *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *           .setSavedAnalysisQuery("savedAnalysisQuery376058885")
    *           .setExecutionTimeout(Duration.newBuilder().build())
    *           .build();
    *   AnalyzeIamPolicyResponse response = assetServiceClient.analyzeIamPolicy(request);
@@ -1518,6 +1541,7 @@ public class AssetServiceClient implements BackgroundResource {
    *   AnalyzeIamPolicyRequest request =
    *       AnalyzeIamPolicyRequest.newBuilder()
    *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *           .setSavedAnalysisQuery("savedAnalysisQuery376058885")
    *           .setExecutionTimeout(Duration.newBuilder().build())
    *           .build();
    *   ApiFuture<AnalyzeIamPolicyResponse> future =
@@ -1555,6 +1579,7 @@ public class AssetServiceClient implements BackgroundResource {
    *   AnalyzeIamPolicyLongrunningRequest request =
    *       AnalyzeIamPolicyLongrunningRequest.newBuilder()
    *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *           .setSavedAnalysisQuery("savedAnalysisQuery376058885")
    *           .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
    *           .build();
    *   AnalyzeIamPolicyLongrunningResponse response =
@@ -1594,6 +1619,7 @@ public class AssetServiceClient implements BackgroundResource {
    *   AnalyzeIamPolicyLongrunningRequest request =
    *       AnalyzeIamPolicyLongrunningRequest.newBuilder()
    *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *           .setSavedAnalysisQuery("savedAnalysisQuery376058885")
    *           .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
    *           .build();
    *   OperationFuture<AnalyzeIamPolicyLongrunningResponse, AnalyzeIamPolicyLongrunningMetadata>
@@ -1635,6 +1661,7 @@ public class AssetServiceClient implements BackgroundResource {
    *   AnalyzeIamPolicyLongrunningRequest request =
    *       AnalyzeIamPolicyLongrunningRequest.newBuilder()
    *           .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+   *           .setSavedAnalysisQuery("savedAnalysisQuery376058885")
    *           .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
    *           .build();
    *   ApiFuture<Operation> future =
@@ -1711,6 +1738,970 @@ public class AssetServiceClient implements BackgroundResource {
    */
   public final UnaryCallable<AnalyzeMoveRequest, AnalyzeMoveResponse> analyzeMoveCallable() {
     return stub.analyzeMoveCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Issue a job that queries assets using a SQL statement compatible with [BigQuery Standard
+   * SQL](http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
+   *
+   * <p>If the query execution finishes within timeout and there's no pagination, the full query
+   * results will be returned in the `QueryAssetsResponse`.
+   *
+   * <p>Otherwise, full query results can be obtained by issuing extra requests with the
+   * `job_reference` from the a previous `QueryAssets` call.
+   *
+   * <p>Note, the query result has approximately 10 GB limitation enforced by BigQuery
+   * https://cloud.google.com/bigquery/docs/best-practices-performance-output, queries return larger
+   * results will result in errors.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   QueryAssetsRequest request =
+   *       QueryAssetsRequest.newBuilder()
+   *           .setParent(FolderName.of("[FOLDER]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setTimeout(Duration.newBuilder().build())
+   *           .setOutputConfig(QueryAssetsOutputConfig.newBuilder().build())
+   *           .build();
+   *   QueryAssetsResponse response = assetServiceClient.queryAssets(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final QueryAssetsResponse queryAssets(QueryAssetsRequest request) {
+    return queryAssetsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Issue a job that queries assets using a SQL statement compatible with [BigQuery Standard
+   * SQL](http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
+   *
+   * <p>If the query execution finishes within timeout and there's no pagination, the full query
+   * results will be returned in the `QueryAssetsResponse`.
+   *
+   * <p>Otherwise, full query results can be obtained by issuing extra requests with the
+   * `job_reference` from the a previous `QueryAssets` call.
+   *
+   * <p>Note, the query result has approximately 10 GB limitation enforced by BigQuery
+   * https://cloud.google.com/bigquery/docs/best-practices-performance-output, queries return larger
+   * results will result in errors.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   QueryAssetsRequest request =
+   *       QueryAssetsRequest.newBuilder()
+   *           .setParent(FolderName.of("[FOLDER]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setTimeout(Duration.newBuilder().build())
+   *           .setOutputConfig(QueryAssetsOutputConfig.newBuilder().build())
+   *           .build();
+   *   ApiFuture<QueryAssetsResponse> future =
+   *       assetServiceClient.queryAssetsCallable().futureCall(request);
+   *   // Do something.
+   *   QueryAssetsResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<QueryAssetsRequest, QueryAssetsResponse> queryAssetsCallable() {
+    return stub.queryAssetsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a saved query in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   SavedQuery savedQuery = SavedQuery.newBuilder().build();
+   *   String savedQueryId = "savedQueryId378086268";
+   *   SavedQuery response = assetServiceClient.createSavedQuery(parent, savedQuery, savedQueryId);
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The name of the project/folder/organization where this saved_query
+   *     should be created in. It can only be an organization number (such as "organizations/123"),
+   *     a folder number (such as "folders/123"), a project ID (such as "projects/my-project-id")",
+   *     or a project number (such as "projects/12345").
+   * @param savedQuery Required. The saved_query details. The `name` field must be empty as it will
+   *     be generated based on the parent and saved_query_id.
+   * @param savedQueryId Required. The ID to use for the saved query, which must be unique in the
+   *     specified parent. It will become the final component of the saved query's resource name.
+   *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
+   *     <p>Notice that this field is required in the saved query creation, and the `name` field of
+   *     the `saved_query` will be ignored.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery createSavedQuery(
+      FolderName parent, SavedQuery savedQuery, String savedQueryId) {
+    CreateSavedQueryRequest request =
+        CreateSavedQueryRequest.newBuilder()
+            .setParent(parent == null ? null : parent.toString())
+            .setSavedQuery(savedQuery)
+            .setSavedQueryId(savedQueryId)
+            .build();
+    return createSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a saved query in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   SavedQuery savedQuery = SavedQuery.newBuilder().build();
+   *   String savedQueryId = "savedQueryId378086268";
+   *   SavedQuery response = assetServiceClient.createSavedQuery(parent, savedQuery, savedQueryId);
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The name of the project/folder/organization where this saved_query
+   *     should be created in. It can only be an organization number (such as "organizations/123"),
+   *     a folder number (such as "folders/123"), a project ID (such as "projects/my-project-id")",
+   *     or a project number (such as "projects/12345").
+   * @param savedQuery Required. The saved_query details. The `name` field must be empty as it will
+   *     be generated based on the parent and saved_query_id.
+   * @param savedQueryId Required. The ID to use for the saved query, which must be unique in the
+   *     specified parent. It will become the final component of the saved query's resource name.
+   *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
+   *     <p>Notice that this field is required in the saved query creation, and the `name` field of
+   *     the `saved_query` will be ignored.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery createSavedQuery(
+      OrganizationName parent, SavedQuery savedQuery, String savedQueryId) {
+    CreateSavedQueryRequest request =
+        CreateSavedQueryRequest.newBuilder()
+            .setParent(parent == null ? null : parent.toString())
+            .setSavedQuery(savedQuery)
+            .setSavedQueryId(savedQueryId)
+            .build();
+    return createSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a saved query in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   SavedQuery savedQuery = SavedQuery.newBuilder().build();
+   *   String savedQueryId = "savedQueryId378086268";
+   *   SavedQuery response = assetServiceClient.createSavedQuery(parent, savedQuery, savedQueryId);
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The name of the project/folder/organization where this saved_query
+   *     should be created in. It can only be an organization number (such as "organizations/123"),
+   *     a folder number (such as "folders/123"), a project ID (such as "projects/my-project-id")",
+   *     or a project number (such as "projects/12345").
+   * @param savedQuery Required. The saved_query details. The `name` field must be empty as it will
+   *     be generated based on the parent and saved_query_id.
+   * @param savedQueryId Required. The ID to use for the saved query, which must be unique in the
+   *     specified parent. It will become the final component of the saved query's resource name.
+   *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
+   *     <p>Notice that this field is required in the saved query creation, and the `name` field of
+   *     the `saved_query` will be ignored.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery createSavedQuery(
+      ProjectName parent, SavedQuery savedQuery, String savedQueryId) {
+    CreateSavedQueryRequest request =
+        CreateSavedQueryRequest.newBuilder()
+            .setParent(parent == null ? null : parent.toString())
+            .setSavedQuery(savedQuery)
+            .setSavedQueryId(savedQueryId)
+            .build();
+    return createSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a saved query in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String parent = ProjectName.of("[PROJECT]").toString();
+   *   SavedQuery savedQuery = SavedQuery.newBuilder().build();
+   *   String savedQueryId = "savedQueryId378086268";
+   *   SavedQuery response = assetServiceClient.createSavedQuery(parent, savedQuery, savedQueryId);
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The name of the project/folder/organization where this saved_query
+   *     should be created in. It can only be an organization number (such as "organizations/123"),
+   *     a folder number (such as "folders/123"), a project ID (such as "projects/my-project-id")",
+   *     or a project number (such as "projects/12345").
+   * @param savedQuery Required. The saved_query details. The `name` field must be empty as it will
+   *     be generated based on the parent and saved_query_id.
+   * @param savedQueryId Required. The ID to use for the saved query, which must be unique in the
+   *     specified parent. It will become the final component of the saved query's resource name.
+   *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
+   *     <p>Notice that this field is required in the saved query creation, and the `name` field of
+   *     the `saved_query` will be ignored.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery createSavedQuery(
+      String parent, SavedQuery savedQuery, String savedQueryId) {
+    CreateSavedQueryRequest request =
+        CreateSavedQueryRequest.newBuilder()
+            .setParent(parent)
+            .setSavedQuery(savedQuery)
+            .setSavedQueryId(savedQueryId)
+            .build();
+    return createSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a saved query in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   CreateSavedQueryRequest request =
+   *       CreateSavedQueryRequest.newBuilder()
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
+   *           .setSavedQuery(SavedQuery.newBuilder().build())
+   *           .setSavedQueryId("savedQueryId378086268")
+   *           .build();
+   *   SavedQuery response = assetServiceClient.createSavedQuery(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery createSavedQuery(CreateSavedQueryRequest request) {
+    return createSavedQueryCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a saved query in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   CreateSavedQueryRequest request =
+   *       CreateSavedQueryRequest.newBuilder()
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
+   *           .setSavedQuery(SavedQuery.newBuilder().build())
+   *           .setSavedQueryId("savedQueryId378086268")
+   *           .build();
+   *   ApiFuture<SavedQuery> future =
+   *       assetServiceClient.createSavedQueryCallable().futureCall(request);
+   *   // Do something.
+   *   SavedQuery response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<CreateSavedQueryRequest, SavedQuery> createSavedQueryCallable() {
+    return stub.createSavedQueryCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets details about a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SavedQueryName name = SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]");
+   *   SavedQuery response = assetServiceClient.getSavedQuery(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The name of the saved query and it must be in the format of:
+   *     <ul>
+   *       <li>projects/project_number/savedQueries/saved_query_id
+   *       <li>folders/folder_number/savedQueries/saved_query_id
+   *       <li>organizations/organization_number/savedQueries/saved_query_id
+   *     </ul>
+   *
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery getSavedQuery(SavedQueryName name) {
+    GetSavedQueryRequest request =
+        GetSavedQueryRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+    return getSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets details about a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String name = SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]").toString();
+   *   SavedQuery response = assetServiceClient.getSavedQuery(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The name of the saved query and it must be in the format of:
+   *     <ul>
+   *       <li>projects/project_number/savedQueries/saved_query_id
+   *       <li>folders/folder_number/savedQueries/saved_query_id
+   *       <li>organizations/organization_number/savedQueries/saved_query_id
+   *     </ul>
+   *
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery getSavedQuery(String name) {
+    GetSavedQueryRequest request = GetSavedQueryRequest.newBuilder().setName(name).build();
+    return getSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets details about a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   GetSavedQueryRequest request =
+   *       GetSavedQueryRequest.newBuilder()
+   *           .setName(
+   *               SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]").toString())
+   *           .build();
+   *   SavedQuery response = assetServiceClient.getSavedQuery(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery getSavedQuery(GetSavedQueryRequest request) {
+    return getSavedQueryCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets details about a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   GetSavedQueryRequest request =
+   *       GetSavedQueryRequest.newBuilder()
+   *           .setName(
+   *               SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]").toString())
+   *           .build();
+   *   ApiFuture<SavedQuery> future = assetServiceClient.getSavedQueryCallable().futureCall(request);
+   *   // Do something.
+   *   SavedQuery response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<GetSavedQueryRequest, SavedQuery> getSavedQueryCallable() {
+    return stub.getSavedQueryCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   for (SavedQuery element : assetServiceClient.listSavedQueries(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The parent project/folder/organization whose savedQueries are to be
+   *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
+   *     or a project ID (such as "projects/my-project-id").
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListSavedQueriesPagedResponse listSavedQueries(FolderName parent) {
+    ListSavedQueriesRequest request =
+        ListSavedQueriesRequest.newBuilder()
+            .setParent(parent == null ? null : parent.toString())
+            .build();
+    return listSavedQueries(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   for (SavedQuery element : assetServiceClient.listSavedQueries(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The parent project/folder/organization whose savedQueries are to be
+   *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
+   *     or a project ID (such as "projects/my-project-id").
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListSavedQueriesPagedResponse listSavedQueries(OrganizationName parent) {
+    ListSavedQueriesRequest request =
+        ListSavedQueriesRequest.newBuilder()
+            .setParent(parent == null ? null : parent.toString())
+            .build();
+    return listSavedQueries(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   for (SavedQuery element : assetServiceClient.listSavedQueries(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The parent project/folder/organization whose savedQueries are to be
+   *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
+   *     or a project ID (such as "projects/my-project-id").
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListSavedQueriesPagedResponse listSavedQueries(ProjectName parent) {
+    ListSavedQueriesRequest request =
+        ListSavedQueriesRequest.newBuilder()
+            .setParent(parent == null ? null : parent.toString())
+            .build();
+    return listSavedQueries(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String parent = ProjectName.of("[PROJECT]").toString();
+   *   for (SavedQuery element : assetServiceClient.listSavedQueries(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The parent project/folder/organization whose savedQueries are to be
+   *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
+   *     or a project ID (such as "projects/my-project-id").
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListSavedQueriesPagedResponse listSavedQueries(String parent) {
+    ListSavedQueriesRequest request =
+        ListSavedQueriesRequest.newBuilder().setParent(parent).build();
+    return listSavedQueries(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ListSavedQueriesRequest request =
+   *       ListSavedQueriesRequest.newBuilder()
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (SavedQuery element : assetServiceClient.listSavedQueries(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListSavedQueriesPagedResponse listSavedQueries(ListSavedQueriesRequest request) {
+    return listSavedQueriesPagedCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ListSavedQueriesRequest request =
+   *       ListSavedQueriesRequest.newBuilder()
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<SavedQuery> future =
+   *       assetServiceClient.listSavedQueriesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (SavedQuery element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListSavedQueriesRequest, ListSavedQueriesPagedResponse>
+      listSavedQueriesPagedCallable() {
+    return stub.listSavedQueriesPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists all saved queries in a parent project/folder/organization.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ListSavedQueriesRequest request =
+   *       ListSavedQueriesRequest.newBuilder()
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   while (true) {
+   *     ListSavedQueriesResponse response =
+   *         assetServiceClient.listSavedQueriesCallable().call(request);
+   *     for (SavedQuery element : response.getSavedQueriesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListSavedQueriesRequest, ListSavedQueriesResponse>
+      listSavedQueriesCallable() {
+    return stub.listSavedQueriesCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SavedQuery savedQuery = SavedQuery.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   SavedQuery response = assetServiceClient.updateSavedQuery(savedQuery, updateMask);
+   * }
+   * }</pre>
+   *
+   * @param savedQuery Required. The saved query to update.
+   *     <p>The saved query's `name` field is used to identify the one to update, which has format
+   *     as below:
+   *     <ul>
+   *       <li>projects/project_number/savedQueries/saved_query_id
+   *       <li>folders/folder_number/savedQueries/saved_query_id
+   *       <li>organizations/organization_number/savedQueries/saved_query_id
+   *     </ul>
+   *
+   * @param updateMask Required. The list of fields to update.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery updateSavedQuery(SavedQuery savedQuery, FieldMask updateMask) {
+    UpdateSavedQueryRequest request =
+        UpdateSavedQueryRequest.newBuilder()
+            .setSavedQuery(savedQuery)
+            .setUpdateMask(updateMask)
+            .build();
+    return updateSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   UpdateSavedQueryRequest request =
+   *       UpdateSavedQueryRequest.newBuilder()
+   *           .setSavedQuery(SavedQuery.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   SavedQuery response = assetServiceClient.updateSavedQuery(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final SavedQuery updateSavedQuery(UpdateSavedQueryRequest request) {
+    return updateSavedQueryCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   UpdateSavedQueryRequest request =
+   *       UpdateSavedQueryRequest.newBuilder()
+   *           .setSavedQuery(SavedQuery.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<SavedQuery> future =
+   *       assetServiceClient.updateSavedQueryCallable().futureCall(request);
+   *   // Do something.
+   *   SavedQuery response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<UpdateSavedQueryRequest, SavedQuery> updateSavedQueryCallable() {
+    return stub.updateSavedQueryCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SavedQueryName name = SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]");
+   *   assetServiceClient.deleteSavedQuery(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The name of the saved query to delete. It must be in the format of:
+   *     <ul>
+   *       <li>projects/project_number/savedQueries/saved_query_id
+   *       <li>folders/folder_number/savedQueries/saved_query_id
+   *       <li>organizations/organization_number/savedQueries/saved_query_id
+   *     </ul>
+   *
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteSavedQuery(SavedQueryName name) {
+    DeleteSavedQueryRequest request =
+        DeleteSavedQueryRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+    deleteSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String name = SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]").toString();
+   *   assetServiceClient.deleteSavedQuery(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The name of the saved query to delete. It must be in the format of:
+   *     <ul>
+   *       <li>projects/project_number/savedQueries/saved_query_id
+   *       <li>folders/folder_number/savedQueries/saved_query_id
+   *       <li>organizations/organization_number/savedQueries/saved_query_id
+   *     </ul>
+   *
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteSavedQuery(String name) {
+    DeleteSavedQueryRequest request = DeleteSavedQueryRequest.newBuilder().setName(name).build();
+    deleteSavedQuery(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   DeleteSavedQueryRequest request =
+   *       DeleteSavedQueryRequest.newBuilder()
+   *           .setName(
+   *               SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]").toString())
+   *           .build();
+   *   assetServiceClient.deleteSavedQuery(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteSavedQuery(DeleteSavedQueryRequest request) {
+    deleteSavedQueryCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a saved query.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   DeleteSavedQueryRequest request =
+   *       DeleteSavedQueryRequest.newBuilder()
+   *           .setName(
+   *               SavedQueryName.ofProjectSavedQueryName("[PROJECT]", "[SAVED_QUERY]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = assetServiceClient.deleteSavedQueryCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<DeleteSavedQueryRequest, Empty> deleteSavedQueryCallable() {
+    return stub.deleteSavedQueryCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets effective IAM policies for a batch of resources.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   BatchGetEffectiveIamPoliciesRequest request =
+   *       BatchGetEffectiveIamPoliciesRequest.newBuilder()
+   *           .setScope(FolderName.of("[FOLDER]").toString())
+   *           .addAllNames(new ArrayList<String>())
+   *           .build();
+   *   BatchGetEffectiveIamPoliciesResponse response =
+   *       assetServiceClient.batchGetEffectiveIamPolicies(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final BatchGetEffectiveIamPoliciesResponse batchGetEffectiveIamPolicies(
+      BatchGetEffectiveIamPoliciesRequest request) {
+    return batchGetEffectiveIamPoliciesCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets effective IAM policies for a batch of resources.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   BatchGetEffectiveIamPoliciesRequest request =
+   *       BatchGetEffectiveIamPoliciesRequest.newBuilder()
+   *           .setScope(FolderName.of("[FOLDER]").toString())
+   *           .addAllNames(new ArrayList<String>())
+   *           .build();
+   *   ApiFuture<BatchGetEffectiveIamPoliciesResponse> future =
+   *       assetServiceClient.batchGetEffectiveIamPoliciesCallable().futureCall(request);
+   *   // Do something.
+   *   BatchGetEffectiveIamPoliciesResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<
+          BatchGetEffectiveIamPoliciesRequest, BatchGetEffectiveIamPoliciesResponse>
+      batchGetEffectiveIamPoliciesCallable() {
+    return stub.batchGetEffectiveIamPoliciesCallable();
   }
 
   @Override
@@ -1985,6 +2976,83 @@ public class AssetServiceClient implements BackgroundResource {
     protected SearchAllIamPoliciesFixedSizeCollection createCollection(
         List<SearchAllIamPoliciesPage> pages, int collectionSize) {
       return new SearchAllIamPoliciesFixedSizeCollection(pages, collectionSize);
+    }
+  }
+
+  public static class ListSavedQueriesPagedResponse
+      extends AbstractPagedListResponse<
+          ListSavedQueriesRequest,
+          ListSavedQueriesResponse,
+          SavedQuery,
+          ListSavedQueriesPage,
+          ListSavedQueriesFixedSizeCollection> {
+
+    public static ApiFuture<ListSavedQueriesPagedResponse> createAsync(
+        PageContext<ListSavedQueriesRequest, ListSavedQueriesResponse, SavedQuery> context,
+        ApiFuture<ListSavedQueriesResponse> futureResponse) {
+      ApiFuture<ListSavedQueriesPage> futurePage =
+          ListSavedQueriesPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage,
+          input -> new ListSavedQueriesPagedResponse(input),
+          MoreExecutors.directExecutor());
+    }
+
+    private ListSavedQueriesPagedResponse(ListSavedQueriesPage page) {
+      super(page, ListSavedQueriesFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class ListSavedQueriesPage
+      extends AbstractPage<
+          ListSavedQueriesRequest, ListSavedQueriesResponse, SavedQuery, ListSavedQueriesPage> {
+
+    private ListSavedQueriesPage(
+        PageContext<ListSavedQueriesRequest, ListSavedQueriesResponse, SavedQuery> context,
+        ListSavedQueriesResponse response) {
+      super(context, response);
+    }
+
+    private static ListSavedQueriesPage createEmptyPage() {
+      return new ListSavedQueriesPage(null, null);
+    }
+
+    @Override
+    protected ListSavedQueriesPage createPage(
+        PageContext<ListSavedQueriesRequest, ListSavedQueriesResponse, SavedQuery> context,
+        ListSavedQueriesResponse response) {
+      return new ListSavedQueriesPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<ListSavedQueriesPage> createPageAsync(
+        PageContext<ListSavedQueriesRequest, ListSavedQueriesResponse, SavedQuery> context,
+        ApiFuture<ListSavedQueriesResponse> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class ListSavedQueriesFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          ListSavedQueriesRequest,
+          ListSavedQueriesResponse,
+          SavedQuery,
+          ListSavedQueriesPage,
+          ListSavedQueriesFixedSizeCollection> {
+
+    private ListSavedQueriesFixedSizeCollection(
+        List<ListSavedQueriesPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static ListSavedQueriesFixedSizeCollection createEmptyCollection() {
+      return new ListSavedQueriesFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected ListSavedQueriesFixedSizeCollection createCollection(
+        List<ListSavedQueriesPage> pages, int collectionSize) {
+      return new ListSavedQueriesFixedSizeCollection(pages, collectionSize);
     }
   }
 }
