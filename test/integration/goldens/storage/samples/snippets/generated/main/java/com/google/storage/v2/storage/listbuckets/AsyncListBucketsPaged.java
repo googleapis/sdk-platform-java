@@ -20,7 +20,6 @@ package com.google.storage.v2.samples;
 import com.google.common.base.Strings;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ListBucketsRequest;
 import com.google.storage.v2.ListBucketsResponse;
 import com.google.storage.v2.ProjectName;
@@ -46,7 +45,6 @@ public class AsyncListBucketsPaged {
               .setPageToken("pageToken873572522")
               .setPrefix("prefix-980110702")
               .setReadMask(FieldMask.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       while (true) {
         ListBucketsResponse response = storageClient.listBucketsCallable().call(request);
