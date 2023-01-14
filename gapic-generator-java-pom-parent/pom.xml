@@ -26,7 +26,7 @@
     <!-- External dependencies, expecially gRPC and Protobuf version, should be
         consistent across modules in this repository -->
     <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
-    <grpc.version>1.51.1</grpc.version>
+    <grpc.version>1.52.1</grpc.version>
     <google.auth.version>1.14.0</google.auth.version>
     <gson.version>2.10</gson.version>
     <guava.version>31.1-jre</guava.version>
