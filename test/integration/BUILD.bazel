@@ -256,7 +256,7 @@ java_gapic_test(
     runtime_deps = [":pubsub_java_gapic_test"],
 )
 
-# Speech (for snippetgen nuanced samples).
+# Speech (for snippetgen nuanced samples). Protos copied from https://github.com/googleapis/googleapis/tree/master/google/cloud/speech/v1
 proto_library(
     name = "speech_proto",
     srcs = [
