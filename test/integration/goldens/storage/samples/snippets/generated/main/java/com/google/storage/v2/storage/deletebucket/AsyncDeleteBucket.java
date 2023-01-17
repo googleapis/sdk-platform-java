@@ -20,7 +20,6 @@ package com.google.storage.v2.samples;
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.Empty;
 import com.google.storage.v2.BucketName;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.DeleteBucketRequest;
 import com.google.storage.v2.StorageClient;
 
@@ -42,7 +41,6 @@ public class AsyncDeleteBucket {
               .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
               .setIfMetagenerationMatch(1043427781)
               .setIfMetagenerationNotMatch(1025430873)
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       ApiFuture<Empty> future = storageClient.deleteBucketCallable().futureCall(request);
       // Do something.

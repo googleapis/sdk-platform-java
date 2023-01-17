@@ -1312,6 +1312,7 @@ public class TopicAdminClient implements BackgroundResource {
    *       SetIamPolicyRequest.newBuilder()
    *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   Policy response = topicAdminClient.setIamPolicy(request);
    * }
@@ -1343,6 +1344,7 @@ public class TopicAdminClient implements BackgroundResource {
    *       SetIamPolicyRequest.newBuilder()
    *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
    *   // Do something.

@@ -26,7 +26,7 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-_googleapis_commit = "44d6bef0ca6db8bba3fb324c8186e694bcc4829c"
+_googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
 http_archive(
     name = "com_google_googleapis",

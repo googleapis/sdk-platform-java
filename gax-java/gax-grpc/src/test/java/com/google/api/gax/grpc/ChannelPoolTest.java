@@ -29,11 +29,17 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.grpc.testing.FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeMethodDescriptor;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.ResponseObserver;
+import com.google.api.gax.rpc.ServerStreamingCallSettings;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.StreamController;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.type.Color;
@@ -49,12 +55,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -594,5 +602,51 @@ public class ChannelPoolTest {
     captor.getValue().onClose(Status.ABORTED, new Metadata());
     // Now the channel should be closed
     Mockito.verify(channels.get(1), Mockito.times(1)).shutdown();
+  }
+
+  @Test
+  public void testReleasingClientCallCancelEarly() throws IOException {
+    ClientCall mockClientCall = Mockito.mock(ClientCall.class);
+    Mockito.doAnswer(invocation -> null).when(mockClientCall).cancel(Mockito.any(), Mockito.any());
+    ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
+    Mockito.when(fakeChannel.newCall(Mockito.any(), Mockito.any())).thenReturn(mockClientCall);
+    ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
+    ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
+    ChannelPool channelPool = ChannelPool.create(channelPoolSettings, factory);
+    ClientContext context =
+        ClientContext.newBuilder()
+            .setTransportChannel(GrpcTransportChannel.create(channelPool))
+            .setDefaultCallContext(GrpcCallContext.of(channelPool, CallOptions.DEFAULT))
+            .build();
+    ServerStreamingCallSettings settings =
+        ServerStreamingCallSettings.<Color, Money>newBuilder().build();
+    ServerStreamingCallable streamingCallable =
+        GrpcCallableFactory.createServerStreamingCallable(
+            GrpcCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE), settings, context);
+    Color request = Color.newBuilder().setRed(0.5f).build();
+
+    IllegalStateException e =
+        Assert.assertThrows(
+            IllegalStateException.class,
+            () ->
+                streamingCallable.call(
+                    request,
+                    new ResponseObserver() {
+                      @Override
+                      public void onStart(StreamController controller) {
+                        controller.cancel();
+                      }
+
+                      @Override
+                      public void onResponse(Object response) {}
+
+                      @Override
+                      public void onError(Throwable t) {}
+
+                      @Override
+                      public void onComplete() {}
+                    }));
+    assertThat(e.getCause()).isInstanceOf(CancellationException.class);
+    assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
   }
 }

@@ -31,10 +31,13 @@ public interface CommonLanguageSettingsOrBuilder
    * https://cloud.google.com/nodejs/docs/reference/asset/latest
    * </pre>
    *
-   * <code>string reference_docs_uri = 1;</code>
+   * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
+   * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+   *     google/api/client.proto;l=106
    * @return The referenceDocsUri.
    */
+  @java.lang.Deprecated
   java.lang.String getReferenceDocsUri();
   /**
    *
@@ -44,10 +47,13 @@ public interface CommonLanguageSettingsOrBuilder
    * https://cloud.google.com/nodejs/docs/reference/asset/latest
    * </pre>
    *
-   * <code>string reference_docs_uri = 1;</code>
+   * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
+   * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+   *     google/api/client.proto;l=106
    * @return The bytes for referenceDocsUri.
    */
+  @java.lang.Deprecated
   com.google.protobuf.ByteString getReferenceDocsUriBytes();
 
   /**

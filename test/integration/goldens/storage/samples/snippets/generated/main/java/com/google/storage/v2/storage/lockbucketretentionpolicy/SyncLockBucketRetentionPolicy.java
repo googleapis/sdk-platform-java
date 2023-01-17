@@ -19,7 +19,6 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_LockBucketRetentionPolicy_sync]
 import com.google.storage.v2.Bucket;
 import com.google.storage.v2.BucketName;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.LockBucketRetentionPolicyRequest;
 import com.google.storage.v2.StorageClient;
 
@@ -40,7 +39,6 @@ public class SyncLockBucketRetentionPolicy {
           LockBucketRetentionPolicyRequest.newBuilder()
               .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
               .setIfMetagenerationMatch(1043427781)
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       Bucket response = storageClient.lockBucketRetentionPolicy(request);
     }
