@@ -113,6 +113,13 @@ public abstract class Service {
     return false;
   }
 
+  /**
+   * Wrapper for hasAnyEnabledMethodsForTransport(Transport). Some invocations are called with
+   * `gRPC` which can't match with the correct Transport (GRPC)
+   *
+   * @param transportName String transport value
+   * @return boolean if service contains any enabled methods for a transport
+   */
   public boolean hasAnyEnabledMethodsForTransport(String transportName) {
     return hasAnyEnabledMethodsForTransport(Transport.parse(transportName));
   }

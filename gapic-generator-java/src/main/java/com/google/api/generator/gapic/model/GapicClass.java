@@ -44,10 +44,10 @@ public abstract class GapicClass {
   public abstract String apiVersion();
 
   /**
-   * Create an empty GapicClass with minimal information. This is intended to be used for
-   * GapicClasses that will not generate any Java files
+   * Create a GapicClass with minimal information. This is intended to be used for GapicClasses that
+   * will not generate any Java files (Writer will skip)
    *
-   * @return Minimal GapicClass with setShouldGenerateClass set to False
+   * @return GapicClass denoted with NON_GENERATED Kind enum
    */
   public static GapicClass createNonGeneratedGapicClass() {
     return builder()
