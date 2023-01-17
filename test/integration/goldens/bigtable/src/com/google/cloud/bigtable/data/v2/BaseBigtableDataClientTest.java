@@ -28,16 +28,20 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.bigtable.v2.CheckAndMutateRowRequest;
 import com.google.bigtable.v2.CheckAndMutateRowResponse;
+import com.google.bigtable.v2.InstanceName;
 import com.google.bigtable.v2.MutateRowRequest;
 import com.google.bigtable.v2.MutateRowResponse;
 import com.google.bigtable.v2.MutateRowsRequest;
 import com.google.bigtable.v2.MutateRowsResponse;
 import com.google.bigtable.v2.Mutation;
+import com.google.bigtable.v2.PingAndWarmRequest;
+import com.google.bigtable.v2.PingAndWarmResponse;
 import com.google.bigtable.v2.ReadModifyWriteRowRequest;
 import com.google.bigtable.v2.ReadModifyWriteRowResponse;
 import com.google.bigtable.v2.ReadModifyWriteRule;
 import com.google.bigtable.v2.ReadRowsRequest;
 import com.google.bigtable.v2.ReadRowsResponse;
+import com.google.bigtable.v2.RequestStats;
 import com.google.bigtable.v2.Row;
 import com.google.bigtable.v2.RowFilter;
 import com.google.bigtable.v2.RowSet;
@@ -105,6 +109,7 @@ public class BaseBigtableDataClientTest {
         ReadRowsResponse.newBuilder()
             .addAllChunks(new ArrayList<ReadRowsResponse.CellChunk>())
             .setLastScannedRowKey(ByteString.EMPTY)
+            .setRequestStats(RequestStats.newBuilder().build())
             .build();
     mockBigtable.addResponse(expectedResponse);
     ReadRowsRequest request =
@@ -627,6 +632,152 @@ public class BaseBigtableDataClientTest {
       String appProfileId = "appProfileId704923523";
       client.checkAndMutateRow(
           tableName, rowKey, predicateFilter, trueMutations, falseMutations, appProfileId);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void pingAndWarmTest() throws Exception {
+    PingAndWarmResponse expectedResponse = PingAndWarmResponse.newBuilder().build();
+    mockBigtable.addResponse(expectedResponse);
+
+    InstanceName name = InstanceName.of("[PROJECT]", "[INSTANCE]");
+
+    PingAndWarmResponse actualResponse = client.pingAndWarm(name);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockBigtable.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    PingAndWarmRequest actualRequest = ((PingAndWarmRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void pingAndWarmExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockBigtable.addException(exception);
+
+    try {
+      InstanceName name = InstanceName.of("[PROJECT]", "[INSTANCE]");
+      client.pingAndWarm(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void pingAndWarmTest2() throws Exception {
+    PingAndWarmResponse expectedResponse = PingAndWarmResponse.newBuilder().build();
+    mockBigtable.addResponse(expectedResponse);
+
+    String name = "name3373707";
+
+    PingAndWarmResponse actualResponse = client.pingAndWarm(name);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockBigtable.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    PingAndWarmRequest actualRequest = ((PingAndWarmRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void pingAndWarmExceptionTest2() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockBigtable.addException(exception);
+
+    try {
+      String name = "name3373707";
+      client.pingAndWarm(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void pingAndWarmTest3() throws Exception {
+    PingAndWarmResponse expectedResponse = PingAndWarmResponse.newBuilder().build();
+    mockBigtable.addResponse(expectedResponse);
+
+    InstanceName name = InstanceName.of("[PROJECT]", "[INSTANCE]");
+    String appProfileId = "appProfileId704923523";
+
+    PingAndWarmResponse actualResponse = client.pingAndWarm(name, appProfileId);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockBigtable.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    PingAndWarmRequest actualRequest = ((PingAndWarmRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertEquals(appProfileId, actualRequest.getAppProfileId());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void pingAndWarmExceptionTest3() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockBigtable.addException(exception);
+
+    try {
+      InstanceName name = InstanceName.of("[PROJECT]", "[INSTANCE]");
+      String appProfileId = "appProfileId704923523";
+      client.pingAndWarm(name, appProfileId);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void pingAndWarmTest4() throws Exception {
+    PingAndWarmResponse expectedResponse = PingAndWarmResponse.newBuilder().build();
+    mockBigtable.addResponse(expectedResponse);
+
+    String name = "name3373707";
+    String appProfileId = "appProfileId704923523";
+
+    PingAndWarmResponse actualResponse = client.pingAndWarm(name, appProfileId);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockBigtable.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    PingAndWarmRequest actualRequest = ((PingAndWarmRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertEquals(appProfileId, actualRequest.getAppProfileId());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void pingAndWarmExceptionTest4() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockBigtable.addException(exception);
+
+    try {
+      String name = "name3373707";
+      String appProfileId = "appProfileId704923523";
+      client.pingAndWarm(name, appProfileId);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.

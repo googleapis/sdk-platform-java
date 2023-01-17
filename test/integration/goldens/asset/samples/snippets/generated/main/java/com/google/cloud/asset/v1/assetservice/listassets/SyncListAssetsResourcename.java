@@ -20,8 +20,7 @@ package com.google.cloud.asset.v1.samples;
 import com.google.api.resourcenames.ResourceName;
 import com.google.cloud.asset.v1.Asset;
 import com.google.cloud.asset.v1.AssetServiceClient;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.cloud.asset.v1.FolderName;
 
 public class SyncListAssetsResourcename {
 
@@ -36,25 +35,7 @@ public class SyncListAssetsResourcename {
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-      ResourceName parent =
-          new ResourceName() {
-            @Override
-            public Map<String, String> getFieldValuesMap() {
-              Map<String, String> fieldValuesMap = new HashMap<>();
-              fieldValuesMap.put("parent", "parent-4715/parent-4715");
-              return fieldValuesMap;
-            }
-
-            @Override
-            public String getFieldValue(String fieldName) {
-              return getFieldValuesMap().get(fieldName);
-            }
-
-            @Override
-            public String toString() {
-              return "parent-4715/parent-4715";
-            }
-          };
+      ResourceName parent = FolderName.of("[FOLDER]");
       for (Asset element : assetServiceClient.listAssets(parent).iterateAll()) {
         // doThingsWith(element);
       }
