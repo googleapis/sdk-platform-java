@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_UpdateHmacKey_sync]
 import com.google.protobuf.FieldMask;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.UpdateHmacKeyRequest;
@@ -39,7 +38,6 @@ public class SyncUpdateHmacKey {
       UpdateHmacKeyRequest request =
           UpdateHmacKeyRequest.newBuilder()
               .setHmacKey(HmacKeyMetadata.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       HmacKeyMetadata response = storageClient.updateHmacKey(request);

@@ -187,7 +187,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The identity of this peer. Similar to `Request.auth.principal`, but
      * relative to the peer instead of the request. For example, the
-     * idenity associated with a load balancer that forwared the request.
+     * identity associated with a load balancer that forwarded the request.
      * </pre>
      *
      * <code>string principal = 7;</code>
@@ -201,7 +201,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The identity of this peer. Similar to `Request.auth.principal`, but
      * relative to the peer instead of the request. For example, the
-     * idenity associated with a load balancer that forwared the request.
+     * identity associated with a load balancer that forwarded the request.
      * </pre>
      *
      * <code>string principal = 7;</code>
@@ -478,7 +478,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The identity of this peer. Similar to `Request.auth.principal`, but
      * relative to the peer instead of the request. For example, the
-     * idenity associated with a load balancer that forwared the request.
+     * identity associated with a load balancer that forwarded the request.
      * </pre>
      *
      * <code>string principal = 7;</code>
@@ -503,7 +503,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The identity of this peer. Similar to `Request.auth.principal`, but
      * relative to the peer instead of the request. For example, the
-     * idenity associated with a load balancer that forwared the request.
+     * identity associated with a load balancer that forwarded the request.
      * </pre>
      *
      * <code>string principal = 7;</code>
@@ -1355,7 +1355,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The identity of this peer. Similar to `Request.auth.principal`, but
        * relative to the peer instead of the request. For example, the
-       * idenity associated with a load balancer that forwared the request.
+       * identity associated with a load balancer that forwarded the request.
        * </pre>
        *
        * <code>string principal = 7;</code>
@@ -1379,7 +1379,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The identity of this peer. Similar to `Request.auth.principal`, but
        * relative to the peer instead of the request. For example, the
-       * idenity associated with a load balancer that forwared the request.
+       * identity associated with a load balancer that forwarded the request.
        * </pre>
        *
        * <code>string principal = 7;</code>
@@ -1403,7 +1403,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The identity of this peer. Similar to `Request.auth.principal`, but
        * relative to the peer instead of the request. For example, the
-       * idenity associated with a load balancer that forwared the request.
+       * identity associated with a load balancer that forwarded the request.
        * </pre>
        *
        * <code>string principal = 7;</code>
@@ -1426,7 +1426,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The identity of this peer. Similar to `Request.auth.principal`, but
        * relative to the peer instead of the request. For example, the
-       * idenity associated with a load balancer that forwared the request.
+       * identity associated with a load balancer that forwarded the request.
        * </pre>
        *
        * <code>string principal = 7;</code>
@@ -1445,7 +1445,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The identity of this peer. Similar to `Request.auth.principal`, but
        * relative to the peer instead of the request. For example, the
-       * idenity associated with a load balancer that forwared the request.
+       * identity associated with a load balancer that forwarded the request.
        * </pre>
        *
        * <code>string principal = 7;</code>
@@ -5366,7 +5366,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The HTTP URL path.
+     * The HTTP URL path, excluding the query parameters.
      * </pre>
      *
      * <code>string path = 4;</code>
@@ -5378,7 +5378,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The HTTP URL path.
+     * The HTTP URL path, excluding the query parameters.
      * </pre>
      *
      * <code>string path = 4;</code>
@@ -5895,7 +5895,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The HTTP URL path.
+     * The HTTP URL path, excluding the query parameters.
      * </pre>
      *
      * <code>string path = 4;</code>
@@ -5918,7 +5918,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The HTTP URL path.
+     * The HTTP URL path, excluding the query parameters.
      * </pre>
      *
      * <code>string path = 4;</code>
@@ -7346,7 +7346,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The HTTP URL path.
+       * The HTTP URL path, excluding the query parameters.
        * </pre>
        *
        * <code>string path = 4;</code>
@@ -7368,7 +7368,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The HTTP URL path.
+       * The HTTP URL path, excluding the query parameters.
        * </pre>
        *
        * <code>string path = 4;</code>
@@ -7390,7 +7390,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The HTTP URL path.
+       * The HTTP URL path, excluding the query parameters.
        * </pre>
        *
        * <code>string path = 4;</code>
@@ -7411,7 +7411,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The HTTP URL path.
+       * The HTTP URL path, excluding the query parameters.
        * </pre>
        *
        * <code>string path = 4;</code>
@@ -7428,7 +7428,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The HTTP URL path.
+       * The HTTP URL path, excluding the query parameters.
        * </pre>
        *
        * <code>string path = 4;</code>
@@ -8641,7 +8641,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The length of time it takes the backend service to fully respond to a
+     * The amount of time it takes the backend service to fully respond to a
      * request. Measured from when the destination service starts to send the
      * request to the backend until when the destination service receives the
      * complete response from the backend.
@@ -8656,7 +8656,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The length of time it takes the backend service to fully respond to a
+     * The amount of time it takes the backend service to fully respond to a
      * request. Measured from when the destination service starts to send the
      * request to the backend until when the destination service receives the
      * complete response from the backend.
@@ -8671,7 +8671,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The length of time it takes the backend service to fully respond to a
+     * The amount of time it takes the backend service to fully respond to a
      * request. Measured from when the destination service starts to send the
      * request to the backend until when the destination service receives the
      * complete response from the backend.
@@ -8938,7 +8938,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The length of time it takes the backend service to fully respond to a
+     * The amount of time it takes the backend service to fully respond to a
      * request. Measured from when the destination service starts to send the
      * request to the backend until when the destination service receives the
      * complete response from the backend.
@@ -8956,7 +8956,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The length of time it takes the backend service to fully respond to a
+     * The amount of time it takes the backend service to fully respond to a
      * request. Measured from when the destination service starts to send the
      * request to the backend until when the destination service receives the
      * complete response from the backend.
@@ -8976,7 +8976,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * The length of time it takes the backend service to fully respond to a
+     * The amount of time it takes the backend service to fully respond to a
      * request. Measured from when the destination service starts to send the
      * request to the backend until when the destination service receives the
      * complete response from the backend.
@@ -9943,7 +9943,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -9960,7 +9960,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -9983,7 +9983,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10008,7 +10008,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10030,7 +10030,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10059,7 +10059,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10082,7 +10082,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10099,7 +10099,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10120,7 +10120,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * The length of time it takes the backend service to fully respond to a
+       * The amount of time it takes the backend service to fully respond to a
        * request. Measured from when the destination service starts to send the
        * request to the backend until when the destination service receives the
        * complete response from the backend.
@@ -10292,7 +10292,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
-     * For Google APIs, the type format must be "{service}/{kind}".
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -10306,7 +10307,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
-     * For Google APIs, the type format must be "{service}/{kind}".
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -10892,7 +10894,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
-     * For Google APIs, the type format must be "{service}/{kind}".
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -10917,7 +10920,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
-     * For Google APIs, the type format must be "{service}/{kind}".
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -12458,7 +12462,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
-       * For Google APIs, the type format must be "{service}/{kind}".
+       * For Google APIs, the type format must be "{service}/{kind}", such as
+       * "pubsub.googleapis.com/Topic".
        * </pre>
        *
        * <code>string type = 3;</code>
@@ -12482,7 +12487,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
-       * For Google APIs, the type format must be "{service}/{kind}".
+       * For Google APIs, the type format must be "{service}/{kind}", such as
+       * "pubsub.googleapis.com/Topic".
        * </pre>
        *
        * <code>string type = 3;</code>
@@ -12506,7 +12512,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
-       * For Google APIs, the type format must be "{service}/{kind}".
+       * For Google APIs, the type format must be "{service}/{kind}", such as
+       * "pubsub.googleapis.com/Topic".
        * </pre>
        *
        * <code>string type = 3;</code>
@@ -12529,7 +12536,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
-       * For Google APIs, the type format must be "{service}/{kind}".
+       * For Google APIs, the type format must be "{service}/{kind}", such as
+       * "pubsub.googleapis.com/Topic".
        * </pre>
        *
        * <code>string type = 3;</code>
@@ -12548,7 +12556,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
-       * For Google APIs, the type format must be "{service}/{kind}".
+       * For Google APIs, the type format must be "{service}/{kind}", such as
+       * "pubsub.googleapis.com/Topic".
        * </pre>
        *
        * <code>string type = 3;</code>

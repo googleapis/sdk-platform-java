@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_ListHmacKeys_Paged_async]
 import com.google.common.base.Strings;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
 import com.google.storage.v2.ListHmacKeysRequest;
 import com.google.storage.v2.ListHmacKeysResponse;
@@ -45,7 +44,6 @@ public class AsyncListHmacKeysPaged {
               .setPageToken("pageToken873572522")
               .setServiceAccountEmail("serviceAccountEmail1825953988")
               .setShowDeletedKeys(true)
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       while (true) {
         ListHmacKeysResponse response = storageClient.listHmacKeysCallable().call(request);
