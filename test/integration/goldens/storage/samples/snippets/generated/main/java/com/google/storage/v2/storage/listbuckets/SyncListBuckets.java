@@ -19,7 +19,6 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_ListBuckets_sync]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.Bucket;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ListBucketsRequest;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -44,7 +43,6 @@ public class SyncListBuckets {
               .setPageToken("pageToken873572522")
               .setPrefix("prefix-980110702")
               .setReadMask(FieldMask.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       for (Bucket element : storageClient.listBuckets(request).iterateAll()) {
         // doThingsWith(element);

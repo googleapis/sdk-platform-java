@@ -40,6 +40,7 @@ public class AsyncAnalyzeIamPolicy {
       AnalyzeIamPolicyRequest request =
           AnalyzeIamPolicyRequest.newBuilder()
               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+              .setSavedAnalysisQuery("savedAnalysisQuery376058885")
               .setExecutionTimeout(Duration.newBuilder().build())
               .build();
       ApiFuture<AnalyzeIamPolicyResponse> future =

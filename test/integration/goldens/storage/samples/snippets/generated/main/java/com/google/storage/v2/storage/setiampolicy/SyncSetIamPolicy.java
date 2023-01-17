@@ -19,6 +19,7 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_SetIamPolicy_sync]
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CryptoKeyName;
 import com.google.storage.v2.StorageClient;
 
@@ -41,6 +42,7 @@ public class SyncSetIamPolicy {
                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
                       .toString())
               .setPolicy(Policy.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       Policy response = storageClient.setIamPolicy(request);
     }
