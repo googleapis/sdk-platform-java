@@ -17,7 +17,6 @@
 package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_CreateHmacKey_sync]
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.CreateHmacKeyRequest;
 import com.google.storage.v2.CreateHmacKeyResponse;
 import com.google.storage.v2.ProjectName;
@@ -40,7 +39,6 @@ public class SyncCreateHmacKey {
           CreateHmacKeyRequest.newBuilder()
               .setProject(ProjectName.of("[PROJECT]").toString())
               .setServiceAccountEmail("serviceAccountEmail1825953988")
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       CreateHmacKeyResponse response = storageClient.createHmacKey(request);
     }

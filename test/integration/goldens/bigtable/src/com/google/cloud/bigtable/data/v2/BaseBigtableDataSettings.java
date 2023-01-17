@@ -34,6 +34,8 @@ import com.google.bigtable.v2.MutateRowRequest;
 import com.google.bigtable.v2.MutateRowResponse;
 import com.google.bigtable.v2.MutateRowsRequest;
 import com.google.bigtable.v2.MutateRowsResponse;
+import com.google.bigtable.v2.PingAndWarmRequest;
+import com.google.bigtable.v2.PingAndWarmResponse;
 import com.google.bigtable.v2.ReadModifyWriteRowRequest;
 import com.google.bigtable.v2.ReadModifyWriteRowResponse;
 import com.google.bigtable.v2.ReadRowsRequest;
@@ -110,6 +112,11 @@ public class BaseBigtableDataSettings extends ClientSettings<BaseBigtableDataSet
   public UnaryCallSettings<CheckAndMutateRowRequest, CheckAndMutateRowResponse>
       checkAndMutateRowSettings() {
     return ((BigtableStubSettings) getStubSettings()).checkAndMutateRowSettings();
+  }
+
+  /** Returns the object with the settings used for calls to pingAndWarm. */
+  public UnaryCallSettings<PingAndWarmRequest, PingAndWarmResponse> pingAndWarmSettings() {
+    return ((BigtableStubSettings) getStubSettings()).pingAndWarmSettings();
   }
 
   /** Returns the object with the settings used for calls to readModifyWriteRow. */
@@ -242,6 +249,12 @@ public class BaseBigtableDataSettings extends ClientSettings<BaseBigtableDataSet
     public UnaryCallSettings.Builder<CheckAndMutateRowRequest, CheckAndMutateRowResponse>
         checkAndMutateRowSettings() {
       return getStubSettingsBuilder().checkAndMutateRowSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to pingAndWarm. */
+    public UnaryCallSettings.Builder<PingAndWarmRequest, PingAndWarmResponse>
+        pingAndWarmSettings() {
+      return getStubSettingsBuilder().pingAndWarmSettings();
     }
 
     /** Returns the builder for the settings used for calls to readModifyWriteRow. */
