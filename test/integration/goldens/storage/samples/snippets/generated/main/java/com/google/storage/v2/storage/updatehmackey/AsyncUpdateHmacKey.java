@@ -19,7 +19,6 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_UpdateHmacKey_async]
 import com.google.api.core.ApiFuture;
 import com.google.protobuf.FieldMask;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
 import com.google.storage.v2.StorageClient;
 import com.google.storage.v2.UpdateHmacKeyRequest;
@@ -40,7 +39,6 @@ public class AsyncUpdateHmacKey {
       UpdateHmacKeyRequest request =
           UpdateHmacKeyRequest.newBuilder()
               .setHmacKey(HmacKeyMetadata.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       ApiFuture<HmacKeyMetadata> future = storageClient.updateHmacKeyCallable().futureCall(request);

@@ -19,9 +19,11 @@ package com.google.cloud.logging.v2;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
+import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.logging.v2.stub.ConfigServiceV2Stub;
@@ -30,6 +32,9 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.logging.v2.BillingAccountLocationName;
 import com.google.logging.v2.BillingAccountName;
 import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CopyLogEntriesMetadata;
+import com.google.logging.v2.CopyLogEntriesRequest;
+import com.google.logging.v2.CopyLogEntriesResponse;
 import com.google.logging.v2.CreateBucketRequest;
 import com.google.logging.v2.CreateExclusionRequest;
 import com.google.logging.v2.CreateSinkRequest;
@@ -43,6 +48,7 @@ import com.google.logging.v2.FolderName;
 import com.google.logging.v2.GetBucketRequest;
 import com.google.logging.v2.GetCmekSettingsRequest;
 import com.google.logging.v2.GetExclusionRequest;
+import com.google.logging.v2.GetSettingsRequest;
 import com.google.logging.v2.GetSinkRequest;
 import com.google.logging.v2.GetViewRequest;
 import com.google.logging.v2.ListBucketsRequest;
@@ -63,12 +69,17 @@ import com.google.logging.v2.LogView;
 import com.google.logging.v2.OrganizationLocationName;
 import com.google.logging.v2.OrganizationName;
 import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.Settings;
+import com.google.logging.v2.SettingsName;
 import com.google.logging.v2.UndeleteBucketRequest;
 import com.google.logging.v2.UpdateBucketRequest;
 import com.google.logging.v2.UpdateCmekSettingsRequest;
 import com.google.logging.v2.UpdateExclusionRequest;
+import com.google.logging.v2.UpdateSettingsRequest;
 import com.google.logging.v2.UpdateSinkRequest;
 import com.google.logging.v2.UpdateViewRequest;
+import com.google.longrunning.Operation;
+import com.google.longrunning.OperationsClient;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
@@ -159,6 +170,7 @@ import javax.annotation.Generated;
 public class ConfigClient implements BackgroundResource {
   private final ConfigSettings settings;
   private final ConfigServiceV2Stub stub;
+  private final OperationsClient operationsClient;
 
   /** Constructs an instance of ConfigClient with default settings. */
   public static final ConfigClient create() throws IOException {
@@ -188,11 +200,13 @@ public class ConfigClient implements BackgroundResource {
   protected ConfigClient(ConfigSettings settings) throws IOException {
     this.settings = settings;
     this.stub = ((ConfigServiceV2StubSettings) settings.getStubSettings()).createStub();
+    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
   }
 
   protected ConfigClient(ConfigServiceV2Stub stub) {
     this.settings = null;
     this.stub = stub;
+    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
   }
 
   public final ConfigSettings getSettings() {
@@ -203,9 +217,17 @@ public class ConfigClient implements BackgroundResource {
     return stub;
   }
 
+  /**
+   * Returns the OperationsClient that can be used to query the status of a long-running operation
+   * returned by another API method call.
+   */
+  public final OperationsClient getOperationsClient() {
+    return operationsClient;
+  }
+
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -243,7 +265,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -280,7 +302,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -317,7 +339,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -354,7 +376,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -388,7 +410,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -420,7 +442,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -452,7 +474,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets.
+   * Lists log buckets.
    *
    * <p>Sample code:
    *
@@ -490,7 +512,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets a bucket.
+   * Gets a log bucket.
    *
    * <p>Sample code:
    *
@@ -520,7 +542,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets a bucket.
+   * Gets a log bucket.
    *
    * <p>Sample code:
    *
@@ -549,8 +571,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a bucket that can be used to store log entries. Once a bucket has been created, the
-   * region cannot be changed.
+   * Creates a log bucket that can be used to store log entries. After a bucket has been created,
+   * the bucket's location cannot be changed.
    *
    * <p>Sample code:
    *
@@ -580,8 +602,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a bucket that can be used to store log entries. Once a bucket has been created, the
-   * region cannot be changed.
+   * Creates a log bucket that can be used to store log entries. After a bucket has been created,
+   * the bucket's location cannot be changed.
    *
    * <p>Sample code:
    *
@@ -610,16 +632,16 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates a bucket. This method replaces the following fields in the existing bucket with values
-   * from the new bucket: `retention_period`
+   * Updates a log bucket. This method replaces the following fields in the existing bucket with
+   * values from the new bucket: `retention_period`
    *
-   * <p>If the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be
+   * <p>If the retention period is decreased and the bucket is locked, `FAILED_PRECONDITION` will be
    * returned.
    *
-   * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
-   * returned.
+   * <p>If the bucket has a `lifecycle_state` of `DELETE_REQUESTED`, then `FAILED_PRECONDITION` will
+   * be returned.
    *
-   * <p>A buckets region may not be modified after it is created.
+   * <p>After a bucket has been created, the bucket's location cannot be changed.
    *
    * <p>Sample code:
    *
@@ -651,16 +673,16 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates a bucket. This method replaces the following fields in the existing bucket with values
-   * from the new bucket: `retention_period`
+   * Updates a log bucket. This method replaces the following fields in the existing bucket with
+   * values from the new bucket: `retention_period`
    *
-   * <p>If the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be
+   * <p>If the retention period is decreased and the bucket is locked, `FAILED_PRECONDITION` will be
    * returned.
    *
-   * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
-   * returned.
+   * <p>If the bucket has a `lifecycle_state` of `DELETE_REQUESTED`, then `FAILED_PRECONDITION` will
+   * be returned.
    *
-   * <p>A buckets region may not be modified after it is created.
+   * <p>After a bucket has been created, the bucket's location cannot be changed.
    *
    * <p>Sample code:
    *
@@ -691,8 +713,10 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a bucket. Moves the bucket to the DELETE_REQUESTED state. After 7 days, the bucket will
-   * be purged and all logs in the bucket will be permanently deleted.
+   * Deletes a log bucket.
+   *
+   * <p>Changes the bucket's `lifecycle_state` to the `DELETE_REQUESTED` state. After 7 days, the
+   * bucket will be purged and all log entries in the bucket will be permanently deleted.
    *
    * <p>Sample code:
    *
@@ -722,8 +746,10 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a bucket. Moves the bucket to the DELETE_REQUESTED state. After 7 days, the bucket will
-   * be purged and all logs in the bucket will be permanently deleted.
+   * Deletes a log bucket.
+   *
+   * <p>Changes the bucket's `lifecycle_state` to the `DELETE_REQUESTED` state. After 7 days, the
+   * bucket will be purged and all log entries in the bucket will be permanently deleted.
    *
    * <p>Sample code:
    *
@@ -752,8 +778,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Undeletes a bucket. A bucket that has been deleted may be undeleted within the grace period of
-   * 7 days.
+   * Undeletes a log bucket. A bucket that has been deleted can be undeleted within the grace period
+   * of 7 days.
    *
    * <p>Sample code:
    *
@@ -783,8 +809,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Undeletes a bucket. A bucket that has been deleted may be undeleted within the grace period of
-   * 7 days.
+   * Undeletes a log bucket. A bucket that has been deleted can be undeleted within the grace period
+   * of 7 days.
    *
    * <p>Sample code:
    *
@@ -813,7 +839,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists views on a bucket.
+   * Lists views on a log bucket.
    *
    * <p>Sample code:
    *
@@ -842,7 +868,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists views on a bucket.
+   * Lists views on a log bucket.
    *
    * <p>Sample code:
    *
@@ -874,7 +900,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists views on a bucket.
+   * Lists views on a log bucket.
    *
    * <p>Sample code:
    *
@@ -905,7 +931,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists views on a bucket.
+   * Lists views on a log bucket.
    *
    * <p>Sample code:
    *
@@ -943,7 +969,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets a view.
+   * Gets a view on a log bucket..
    *
    * <p>Sample code:
    *
@@ -974,7 +1000,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets a view.
+   * Gets a view on a log bucket..
    *
    * <p>Sample code:
    *
@@ -1004,7 +1030,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.
+   * Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
    *
    * <p>Sample code:
    *
@@ -1034,7 +1060,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.
+   * Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
    *
    * <p>Sample code:
    *
@@ -1063,8 +1089,10 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates a view. This method replaces the following fields in the existing view with values from
-   * the new view: `filter`.
+   * Updates a view on a log bucket. This method replaces the following fields in the existing view
+   * with values from the new view: `filter`. If an `UNAVAILABLE` error is returned, this indicates
+   * that system is not in a state where it can update the view. If this occurs, please try again in
+   * a few minutes.
    *
    * <p>Sample code:
    *
@@ -1094,8 +1122,10 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates a view. This method replaces the following fields in the existing view with values from
-   * the new view: `filter`.
+   * Updates a view on a log bucket. This method replaces the following fields in the existing view
+   * with values from the new view: `filter`. If an `UNAVAILABLE` error is returned, this indicates
+   * that system is not in a state where it can update the view. If this occurs, please try again in
+   * a few minutes.
    *
    * <p>Sample code:
    *
@@ -1124,7 +1154,9 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a view from a bucket.
+   * Deletes a view on a log bucket. If an `UNAVAILABLE` error is returned, this indicates that
+   * system is not in a state where it can delete the view. If this occurs, please try again in a
+   * few minutes.
    *
    * <p>Sample code:
    *
@@ -1155,7 +1187,9 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a view from a bucket.
+   * Deletes a view on a log bucket. If an `UNAVAILABLE` error is returned, this indicates that
+   * system is not in a state where it can delete the view. If this occurs, please try again in a
+   * few minutes.
    *
    * <p>Sample code:
    *
@@ -1461,7 +1495,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(LogSinkName sinkName) {
@@ -1495,7 +1530,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(String sinkName) {
@@ -1583,7 +1619,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1622,7 +1659,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1661,7 +1699,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1700,7 +1739,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1739,7 +1779,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1844,7 +1885,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1887,7 +1929,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1928,18 +1971,21 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @param updateMask Optional. Field mask that specifies the fields in `sink` that need an update.
    *     A sink field will be overwritten if, and only if, it is in the update mask. `name` and
    *     output only fields cannot be updated.
-   *     <p>An empty updateMask is temporarily treated as using the following mask for backwards
-   *     compatibility purposes: destination,filter,includeChildren At some point in the future,
-   *     behavior will be removed and specifying an empty updateMask will be an error.
+   *     <p>An empty `updateMask` is temporarily treated as using the following mask for backwards
+   *     compatibility purposes:
+   *     <p>`destination,filter,includeChildren`
+   *     <p>At some point in the future, behavior will be removed and specifying an empty
+   *     `updateMask` will be an error.
    *     <p>For a detailed `FieldMask` definition, see
    *     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
-   *     <p>Example: `updateMask=filter`.
+   *     <p>For example: `updateMask=filter`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(LogSinkName sinkName, LogSink sink, FieldMask updateMask) {
@@ -1982,18 +2028,21 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @param updateMask Optional. Field mask that specifies the fields in `sink` that need an update.
    *     A sink field will be overwritten if, and only if, it is in the update mask. `name` and
    *     output only fields cannot be updated.
-   *     <p>An empty updateMask is temporarily treated as using the following mask for backwards
-   *     compatibility purposes: destination,filter,includeChildren At some point in the future,
-   *     behavior will be removed and specifying an empty updateMask will be an error.
+   *     <p>An empty `updateMask` is temporarily treated as using the following mask for backwards
+   *     compatibility purposes:
+   *     <p>`destination,filter,includeChildren`
+   *     <p>At some point in the future, behavior will be removed and specifying an empty
+   *     `updateMask` will be an error.
    *     <p>For a detailed `FieldMask` definition, see
    *     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
-   *     <p>Example: `updateMask=filter`.
+   *     <p>For example: `updateMask=filter`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(String sinkName, LogSink sink, FieldMask updateMask) {
@@ -2100,7 +2149,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSink(LogSinkName sinkName) {
@@ -2136,7 +2186,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
-   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/sinks/my-sink"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSink(String sinkName) {
@@ -2203,7 +2254,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2236,7 +2287,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2269,7 +2320,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2302,7 +2353,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2335,7 +2386,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2365,7 +2416,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2397,7 +2448,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2430,7 +2481,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists all the exclusions in a parent resource.
+   * Lists all the exclusions on the _Default sink in a parent resource.
    *
    * <p>Sample code:
    *
@@ -2469,7 +2520,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the description of an exclusion.
+   * Gets the description of an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2490,7 +2541,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
-   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/exclusions/my-exclusion"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(LogExclusionName name) {
@@ -2501,7 +2553,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the description of an exclusion.
+   * Gets the description of an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2522,7 +2574,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
-   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/exclusions/my-exclusion"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(String name) {
@@ -2532,7 +2585,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the description of an exclusion.
+   * Gets the description of an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2561,7 +2614,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the description of an exclusion.
+   * Gets the description of an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2589,8 +2642,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2610,7 +2663,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2626,8 +2680,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2647,7 +2701,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2663,8 +2718,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2684,7 +2739,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2700,8 +2756,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2721,7 +2777,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2737,8 +2794,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2758,7 +2815,8 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>For examples:
+   *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2771,8 +2829,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2801,8 +2859,8 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
-   * resource can be excluded. You can have up to 10 exclusions in a resource.
+   * Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries
+   * belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
    *
@@ -2830,7 +2888,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Changes one or more properties of an existing exclusion.
+   * Changes one or more properties of an existing exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2853,7 +2911,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
-   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/exclusions/my-exclusion"`
    * @param exclusion Required. New values for the existing exclusion. Only the fields specified in
    *     `update_mask` are relevant.
    * @param updateMask Required. A non-empty list of fields to change in the existing exclusion. New
@@ -2877,7 +2936,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Changes one or more properties of an existing exclusion.
+   * Changes one or more properties of an existing exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2900,7 +2959,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
-   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/exclusions/my-exclusion"`
    * @param exclusion Required. New values for the existing exclusion. Only the fields specified in
    *     `update_mask` are relevant.
    * @param updateMask Required. A non-empty list of fields to change in the existing exclusion. New
@@ -2924,7 +2984,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Changes one or more properties of an existing exclusion.
+   * Changes one or more properties of an existing exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2955,7 +3015,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Changes one or more properties of an existing exclusion.
+   * Changes one or more properties of an existing exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -2985,7 +3045,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes an exclusion.
+   * Deletes an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -3006,7 +3066,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
-   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/exclusions/my-exclusion"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteExclusion(LogExclusionName name) {
@@ -3017,7 +3078,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes an exclusion.
+   * Deletes an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -3038,7 +3099,8 @@ public class ConfigClient implements BackgroundResource {
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
-   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     <p>For example:
+   *     <p>`"projects/my-project/exclusions/my-exclusion"`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteExclusion(String name) {
@@ -3048,7 +3110,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes an exclusion.
+   * Deletes an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -3077,7 +3139,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes an exclusion.
+   * Deletes an exclusion in the _Default sink.
    *
    * <p>Sample code:
    *
@@ -3105,12 +3167,13 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the Logs Router CMEK settings for the given resource.
+   * Gets the Logging CMEK settings for the given resource.
    *
-   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
-   * configured, it applies to all projects and folders in the GCP organization.
+   * <p>Note: CMEK for the Log Router can be configured for Google Cloud projects, folders,
+   * organizations and billing accounts. Once configured for an organization, it applies to all
+   * projects and folders in the Google Cloud organization.
    *
-   * <p>See [Enabling CMEK for Logs
+   * <p>See [Enabling CMEK for Log
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -3139,12 +3202,13 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the Logs Router CMEK settings for the given resource.
+   * Gets the Logging CMEK settings for the given resource.
    *
-   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
-   * configured, it applies to all projects and folders in the GCP organization.
+   * <p>Note: CMEK for the Log Router can be configured for Google Cloud projects, folders,
+   * organizations and billing accounts. Once configured for an organization, it applies to all
+   * projects and folders in the Google Cloud organization.
    *
-   * <p>See [Enabling CMEK for Logs
+   * <p>See [Enabling CMEK for Log
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -3172,17 +3236,18 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the Logs Router CMEK settings for the given resource.
+   * Updates the Log Router CMEK settings for the given resource.
    *
-   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
-   * configured, it applies to all projects and folders in the GCP organization.
+   * <p>Note: CMEK for the Log Router can currently only be configured for Google Cloud
+   * organizations. Once configured, it applies to all projects and folders in the Google Cloud
+   * organization.
    *
    * <p>[UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
    * `kms_key_name` is invalid, or 2) the associated service account does not have the required
    * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
    * is disabled.
    *
-   * <p>See [Enabling CMEK for Logs
+   * <p>See [Enabling CMEK for Log
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -3213,17 +3278,18 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the Logs Router CMEK settings for the given resource.
+   * Updates the Log Router CMEK settings for the given resource.
    *
-   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
-   * configured, it applies to all projects and folders in the GCP organization.
+   * <p>Note: CMEK for the Log Router can currently only be configured for Google Cloud
+   * organizations. Once configured, it applies to all projects and folders in the Google Cloud
+   * organization.
    *
    * <p>[UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
    * `kms_key_name` is invalid, or 2) the associated service account does not have the required
    * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
    * is disabled.
    *
-   * <p>See [Enabling CMEK for Logs
+   * <p>See [Enabling CMEK for Log
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -3250,6 +3316,385 @@ public class ConfigClient implements BackgroundResource {
    */
   public final UnaryCallable<UpdateCmekSettingsRequest, CmekSettings> updateCmekSettingsCallable() {
     return stub.updateCmekSettingsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can be get for Google Cloud projects, folders,
+   * organizations and billing accounts. Currently it can only be configured for organizations. Once
+   * configured for an organization, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   SettingsName name = SettingsName.ofProjectName("[PROJECT]");
+   *   Settings response = configClient.getSettings(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The resource for which to retrieve settings.
+   *     <p>"projects/[PROJECT_ID]/settings" "organizations/[ORGANIZATION_ID]/settings"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings"
+   *     <p>For example:
+   *     <p>`"organizations/12345/settings"`
+   *     <p>Note: Settings for the Log Router can be get for Google Cloud projects, folders,
+   *     organizations and billing accounts. Currently it can only be configured for organizations.
+   *     Once configured for an organization, it applies to all projects and folders in the Google
+   *     Cloud organization.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Settings getSettings(SettingsName name) {
+    GetSettingsRequest request =
+        GetSettingsRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+    return getSettings(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can be get for Google Cloud projects, folders,
+   * organizations and billing accounts. Currently it can only be configured for organizations. Once
+   * configured for an organization, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String name = SettingsName.ofProjectName("[PROJECT]").toString();
+   *   Settings response = configClient.getSettings(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The resource for which to retrieve settings.
+   *     <p>"projects/[PROJECT_ID]/settings" "organizations/[ORGANIZATION_ID]/settings"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings"
+   *     <p>For example:
+   *     <p>`"organizations/12345/settings"`
+   *     <p>Note: Settings for the Log Router can be get for Google Cloud projects, folders,
+   *     organizations and billing accounts. Currently it can only be configured for organizations.
+   *     Once configured for an organization, it applies to all projects and folders in the Google
+   *     Cloud organization.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Settings getSettings(String name) {
+    GetSettingsRequest request = GetSettingsRequest.newBuilder().setName(name).build();
+    return getSettings(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can be get for Google Cloud projects, folders,
+   * organizations and billing accounts. Currently it can only be configured for organizations. Once
+   * configured for an organization, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetSettingsRequest request =
+   *       GetSettingsRequest.newBuilder()
+   *           .setName(SettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
+   *   Settings response = configClient.getSettings(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Settings getSettings(GetSettingsRequest request) {
+    return getSettingsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can be get for Google Cloud projects, folders,
+   * organizations and billing accounts. Currently it can only be configured for organizations. Once
+   * configured for an organization, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetSettingsRequest request =
+   *       GetSettingsRequest.newBuilder()
+   *           .setName(SettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
+   *   ApiFuture<Settings> future = configClient.getSettingsCallable().futureCall(request);
+   *   // Do something.
+   *   Settings response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<GetSettingsRequest, Settings> getSettingsCallable() {
+    return stub.getSettingsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can currently only be configured for Google Cloud
+   * organizations. Once configured, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>[UpdateSettings][google.logging.v2.ConfigServiceV2.UpdateSettings] will fail if 1)
+   * `kms_key_name` is invalid, or 2) the associated service account does not have the required
+   * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
+   * is disabled. 4) `location_id` is not supported by Logging. 5) `location_id` violate OrgPolicy.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   Settings settings = Settings.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   Settings response = configClient.updateSettings(settings, updateMask);
+   * }
+   * }</pre>
+   *
+   * @param settings Required. The settings to update.
+   *     <p>See [Enabling CMEK for Log
+   *     Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more
+   *     information.
+   * @param updateMask Optional. Field mask identifying which fields from `settings` should be
+   *     updated. A field will be overwritten if and only if it is in the update mask. Output only
+   *     fields cannot be updated.
+   *     <p>See [FieldMask][google.protobuf.FieldMask] for more information.
+   *     <p>For example: `"updateMask=kmsKeyName"`
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Settings updateSettings(Settings settings, FieldMask updateMask) {
+    UpdateSettingsRequest request =
+        UpdateSettingsRequest.newBuilder().setSettings(settings).setUpdateMask(updateMask).build();
+    return updateSettings(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can currently only be configured for Google Cloud
+   * organizations. Once configured, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>[UpdateSettings][google.logging.v2.ConfigServiceV2.UpdateSettings] will fail if 1)
+   * `kms_key_name` is invalid, or 2) the associated service account does not have the required
+   * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
+   * is disabled. 4) `location_id` is not supported by Logging. 5) `location_id` violate OrgPolicy.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateSettingsRequest request =
+   *       UpdateSettingsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setSettings(Settings.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   Settings response = configClient.updateSettings(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Settings updateSettings(UpdateSettingsRequest request) {
+    return updateSettingsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates the Log Router settings for the given resource.
+   *
+   * <p>Note: Settings for the Log Router can currently only be configured for Google Cloud
+   * organizations. Once configured, it applies to all projects and folders in the Google Cloud
+   * organization.
+   *
+   * <p>[UpdateSettings][google.logging.v2.ConfigServiceV2.UpdateSettings] will fail if 1)
+   * `kms_key_name` is invalid, or 2) the associated service account does not have the required
+   * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
+   * is disabled. 4) `location_id` is not supported by Logging. 5) `location_id` violate OrgPolicy.
+   *
+   * <p>See [Enabling CMEK for Log
+   * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateSettingsRequest request =
+   *       UpdateSettingsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setSettings(Settings.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Settings> future = configClient.updateSettingsCallable().futureCall(request);
+   *   // Do something.
+   *   Settings response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<UpdateSettingsRequest, Settings> updateSettingsCallable() {
+    return stub.updateSettingsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Copies a set of log entries from a log bucket to a Cloud Storage bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CopyLogEntriesRequest request =
+   *       CopyLogEntriesRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setDestination("destination-1429847026")
+   *           .build();
+   *   CopyLogEntriesResponse response = configClient.copyLogEntriesAsync(request).get();
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final OperationFuture<CopyLogEntriesResponse, CopyLogEntriesMetadata> copyLogEntriesAsync(
+      CopyLogEntriesRequest request) {
+    return copyLogEntriesOperationCallable().futureCall(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Copies a set of log entries from a log bucket to a Cloud Storage bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CopyLogEntriesRequest request =
+   *       CopyLogEntriesRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setDestination("destination-1429847026")
+   *           .build();
+   *   OperationFuture<CopyLogEntriesResponse, CopyLogEntriesMetadata> future =
+   *       configClient.copyLogEntriesOperationCallable().futureCall(request);
+   *   // Do something.
+   *   CopyLogEntriesResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final OperationCallable<
+          CopyLogEntriesRequest, CopyLogEntriesResponse, CopyLogEntriesMetadata>
+      copyLogEntriesOperationCallable() {
+    return stub.copyLogEntriesOperationCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Copies a set of log entries from a log bucket to a Cloud Storage bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CopyLogEntriesRequest request =
+   *       CopyLogEntriesRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setDestination("destination-1429847026")
+   *           .build();
+   *   ApiFuture<Operation> future = configClient.copyLogEntriesCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<CopyLogEntriesRequest, Operation> copyLogEntriesCallable() {
+    return stub.copyLogEntriesCallable();
   }
 
   @Override

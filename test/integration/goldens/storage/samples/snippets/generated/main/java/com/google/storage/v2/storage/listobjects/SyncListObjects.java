@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_ListObjects_sync]
 import com.google.protobuf.FieldMask;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ListObjectsRequest;
 import com.google.storage.v2.Object;
 import com.google.storage.v2.ProjectName;
@@ -49,7 +48,6 @@ public class SyncListObjects {
               .setReadMask(FieldMask.newBuilder().build())
               .setLexicographicStart("lexicographicStart-2093413008")
               .setLexicographicEnd("lexicographicEnd1646968169")
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       for (Object element : storageClient.listObjects(request).iterateAll()) {
         // doThingsWith(element);

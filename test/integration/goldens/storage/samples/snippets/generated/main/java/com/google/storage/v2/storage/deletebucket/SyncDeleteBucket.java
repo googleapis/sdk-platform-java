@@ -19,7 +19,6 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_DeleteBucket_sync]
 import com.google.protobuf.Empty;
 import com.google.storage.v2.BucketName;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.DeleteBucketRequest;
 import com.google.storage.v2.StorageClient;
 
@@ -41,7 +40,6 @@ public class SyncDeleteBucket {
               .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
               .setIfMetagenerationMatch(1043427781)
               .setIfMetagenerationNotMatch(1025430873)
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       storageClient.deleteBucket(request);
     }
