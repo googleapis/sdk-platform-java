@@ -151,9 +151,7 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
 
     // Transport example
-    // Generate Secondary Transport sample if Transport Sample exists and if HttpJson code is
-    // generated for this service
-    if (transportSampleCode != null && service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+    if (transportSampleCode != null) {
       classHeaderJavadocBuilder.addParagraph(
           String.format(
               SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING, secondaryTransport, primaryTransport));
