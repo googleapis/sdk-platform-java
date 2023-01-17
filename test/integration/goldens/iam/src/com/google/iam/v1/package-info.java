@@ -19,7 +19,7 @@
  *
  * <p>======================= IAMPolicyClient =======================
  *
- * <p>Service Description: ## API Overview
+ * <p>Service Description: API Overview
  *
  * <p>Manages Identity and Access Management (IAM) policies.
  *
@@ -55,6 +55,7 @@
  *       SetIamPolicyRequest.newBuilder()
  *           .setResource("resource-341064690")
  *           .setPolicy(Policy.newBuilder().build())
+ *           .setUpdateMask(FieldMask.newBuilder().build())
  *           .build();
  *   Policy response = iAMPolicyClient.setIamPolicy(request);
  * }

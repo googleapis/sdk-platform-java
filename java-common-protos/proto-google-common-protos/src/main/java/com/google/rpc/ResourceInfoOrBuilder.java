@@ -58,7 +58,8 @@ public interface ResourceInfoOrBuilder
    * <pre>
    * The name of the resource being accessed.  For example, a shared calendar
    * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
-   * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
+   * error is
+   * [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
    * </pre>
    *
    * <code>string resource_name = 2;</code>
@@ -72,7 +73,8 @@ public interface ResourceInfoOrBuilder
    * <pre>
    * The name of the resource being accessed.  For example, a shared calendar
    * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
-   * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
+   * error is
+   * [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
    * </pre>
    *
    * <code>string resource_name = 2;</code>

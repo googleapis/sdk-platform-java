@@ -21,6 +21,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.protobuf.FieldMask;
 import com.google.pubsub.v1.SnapshotName;
 
 public class AsyncSetIamPolicy {
@@ -40,6 +41,7 @@ public class AsyncSetIamPolicy {
           SetIamPolicyRequest.newBuilder()
               .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
               .setPolicy(Policy.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       ApiFuture<Policy> future = topicAdminClient.setIamPolicyCallable().futureCall(request);
       // Do something.
