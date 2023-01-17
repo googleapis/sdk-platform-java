@@ -20,6 +20,11 @@ scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 ## cd to the parent directory, i.e. the root of the git repo
 cd "${scriptDir}/.."
 
+if [ -z "${MODULES_UNDER_TEST}" ]; then
+  echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
+  exit 1
+fi
+
 # Use GCP Maven Mirror
 mkdir -p "${HOME}/.m2"
 cp settings.xml "${HOME}/.m2"
@@ -83,8 +88,6 @@ EOF
 echo "Modifications to google-cloud-java:"
 git diff
 echo
-
-MODULES_UNDER_TEST=java-os-login,java-asset
 
 cd ..
 source ./.kokoro/common.sh
