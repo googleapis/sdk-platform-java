@@ -18,7 +18,7 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_StartResumableWrite_sync]
 import com.google.storage.v2.CommonObjectRequestParams;
-import com.google.storage.v2.CommonRequestParams;
+import com.google.storage.v2.ObjectChecksums;
 import com.google.storage.v2.StartResumableWriteRequest;
 import com.google.storage.v2.StartResumableWriteResponse;
 import com.google.storage.v2.StorageClient;
@@ -41,7 +41,7 @@ public class SyncStartResumableWrite {
           StartResumableWriteRequest.newBuilder()
               .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+              .setObjectChecksums(ObjectChecksums.newBuilder().build())
               .build();
       StartResumableWriteResponse response = storageClient.startResumableWrite(request);
     }

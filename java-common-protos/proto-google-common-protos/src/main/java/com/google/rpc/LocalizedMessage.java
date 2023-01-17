@@ -74,7 +74,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The locale used following the specification defined at
-   * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+   * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
    * Examples are: "en-US", "fr-CH", "es-MX"
    * </pre>
    *
@@ -99,7 +99,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The locale used following the specification defined at
-   * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+   * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
    * Examples are: "en-US", "fr-CH", "es-MX"
    * </pre>
    *
@@ -523,7 +523,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The locale used following the specification defined at
-     * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+     * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
@@ -547,7 +547,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The locale used following the specification defined at
-     * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+     * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
@@ -571,7 +571,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The locale used following the specification defined at
-     * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+     * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
@@ -594,7 +594,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The locale used following the specification defined at
-     * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+     * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
@@ -613,7 +613,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The locale used following the specification defined at
-     * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+     * https://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *

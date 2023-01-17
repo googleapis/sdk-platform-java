@@ -24,6 +24,8 @@ import com.google.bigtable.v2.MutateRowRequest;
 import com.google.bigtable.v2.MutateRowResponse;
 import com.google.bigtable.v2.MutateRowsRequest;
 import com.google.bigtable.v2.MutateRowsResponse;
+import com.google.bigtable.v2.PingAndWarmRequest;
+import com.google.bigtable.v2.PingAndWarmResponse;
 import com.google.bigtable.v2.ReadModifyWriteRowRequest;
 import com.google.bigtable.v2.ReadModifyWriteRowResponse;
 import com.google.bigtable.v2.ReadRowsRequest;
@@ -171,6 +173,27 @@ public class MockBigtableImpl extends BigtableImplBase {
                   "Unrecognized response type %s for method CheckAndMutateRow, expected %s or %s",
                   response == null ? "null" : response.getClass().getName(),
                   CheckAndMutateRowResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void pingAndWarm(
+      PingAndWarmRequest request, StreamObserver<PingAndWarmResponse> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof PingAndWarmResponse) {
+      requests.add(request);
+      responseObserver.onNext(((PingAndWarmResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method PingAndWarm, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  PingAndWarmResponse.class.getName(),
                   Exception.class.getName())));
     }
   }

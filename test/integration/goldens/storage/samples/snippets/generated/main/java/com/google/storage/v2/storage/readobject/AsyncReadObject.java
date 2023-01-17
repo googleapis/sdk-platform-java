@@ -20,7 +20,6 @@ package com.google.storage.v2.samples;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ReadObjectRequest;
 import com.google.storage.v2.ReadObjectResponse;
 import com.google.storage.v2.StorageClient;
@@ -50,7 +49,6 @@ public class AsyncReadObject {
               .setIfMetagenerationMatch(1043427781)
               .setIfMetagenerationNotMatch(1025430873)
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .setReadMask(FieldMask.newBuilder().build())
               .build();
       ServerStream<ReadObjectResponse> stream = storageClient.readObjectCallable().call(request);
