@@ -20,6 +20,7 @@ package com.google.iam.v1.samples;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.protobuf.FieldMask;
 
 public class SyncSetIamPolicy {
 
@@ -38,6 +39,7 @@ public class SyncSetIamPolicy {
           SetIamPolicyRequest.newBuilder()
               .setResource("SetIamPolicyRequest1223629066".toString())
               .setPolicy(Policy.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       Policy response = iAMPolicyClient.setIamPolicy(request);
     }

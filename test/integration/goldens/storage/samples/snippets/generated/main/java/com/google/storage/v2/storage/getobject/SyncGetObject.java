@@ -19,7 +19,6 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_GetObject_sync]
 import com.google.protobuf.FieldMask;
 import com.google.storage.v2.CommonObjectRequestParams;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.GetObjectRequest;
 import com.google.storage.v2.Object;
 import com.google.storage.v2.StorageClient;
@@ -47,7 +46,6 @@ public class SyncGetObject {
               .setIfMetagenerationMatch(1043427781)
               .setIfMetagenerationNotMatch(1025430873)
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .setReadMask(FieldMask.newBuilder().build())
               .build();
       Object response = storageClient.getObject(request);

@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
@@ -111,5 +112,62 @@ public class MethodTest {
   public void shouldSetParamsExtractor_shouldReturnFalseIfHasNoHttpBindingsAndNoRoutingHeaders() {
     Method method = METHOD.toBuilder().setHttpBindings(null).setRoutingHeaderRule(null).build();
     assertThat(method.shouldSetParamsExtractor()).isFalse();
+  }
+
+  @Test
+  public void
+      isSupportedByTransport_shouldReturnTrueIfHasHttpBindingsAndIsRESTEligibleForRESTTransport() {
+    Method methodNoStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.NONE).build();
+    assertThat(methodNoStreaming.isSupportedByTransport(Transport.REST)).isTrue();
+    Method methodServerSideStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.SERVER).build();
+    assertThat(methodServerSideStreaming.isSupportedByTransport(Transport.REST)).isTrue();
+  }
+
+  @Test
+  public void isSupportedByTransport_shouldReturnFalseIfNoHttpBindingsForRESTTransport() {
+    Method methodNoStreaming =
+        METHOD.toBuilder().setHttpBindings(null).setStream(Method.Stream.NONE).build();
+    assertThat(methodNoStreaming.isSupportedByTransport(Transport.REST)).isFalse();
+    Method methodServerSideStreaming =
+        METHOD.toBuilder().setHttpBindings(null).setStream(Method.Stream.SERVER).build();
+    assertThat(methodServerSideStreaming.isSupportedByTransport(Transport.REST)).isFalse();
+  }
+
+  @Test
+  public void
+      isSupportedByTransport_shouldReturnFalseIfHasHttpBindingsAndIsNotRESTEligibleForRESTTransport() {
+    Method methodClientSideStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.CLIENT).build();
+    assertThat(methodClientSideStreaming.isSupportedByTransport(Transport.REST)).isFalse();
+    Method methodBiDiStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.BIDI).build();
+    assertThat(methodBiDiStreaming.isSupportedByTransport(Transport.REST)).isFalse();
+  }
+
+  @Test
+  public void isSupportedByTransport_shouldReturnTrueForGRPCTransport() {
+    Method methodNoStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.NONE).build();
+    assertThat(methodNoStreaming.isSupportedByTransport(Transport.GRPC)).isTrue();
+    Method methodBiDiStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.BIDI).build();
+    assertThat(methodBiDiStreaming.isSupportedByTransport(Transport.GRPC)).isTrue();
+    Method methodNoStreamingNoHttpBindings =
+        METHOD.toBuilder().setStream(Method.Stream.NONE).build();
+    assertThat(methodNoStreamingNoHttpBindings.isSupportedByTransport(Transport.GRPC)).isTrue();
+    Method methodBiDiStreamingNoHttpBindings =
+        METHOD.toBuilder().setStream(Method.Stream.BIDI).build();
+    assertThat(methodBiDiStreamingNoHttpBindings.isSupportedByTransport(Transport.GRPC)).isTrue();
+  }
+
+  @Test
+  public void isSupportedByTransport_shouldThrowExceptionIfPassedGRPCRESTTransport() {
+    Method methodClientStreaming =
+        METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.CLIENT).build();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> methodClientStreaming.isSupportedByTransport(Transport.GRPC_REST));
   }
 }

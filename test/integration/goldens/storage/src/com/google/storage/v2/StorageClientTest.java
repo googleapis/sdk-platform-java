@@ -35,6 +35,7 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.resourcenames.ResourceName;
 import com.google.common.collect.Lists;
+import com.google.iam.v1.AuditConfig;
 import com.google.iam.v1.Binding;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
@@ -174,6 +175,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -198,6 +200,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -237,6 +240,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -261,6 +265,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -300,6 +305,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -324,6 +330,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -369,6 +376,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -393,6 +401,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -526,6 +535,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -550,6 +560,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -590,6 +601,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -614,6 +626,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -654,6 +667,7 @@ public class StorageClientTest {
         Policy.newBuilder()
             .setVersion(351608024)
             .addAllBindings(new ArrayList<Binding>())
+            .addAllAuditConfigs(new ArrayList<AuditConfig>())
             .setEtag(ByteString.EMPTY)
             .build();
     mockStorage.addResponse(expectedResponse);
@@ -696,6 +710,7 @@ public class StorageClientTest {
         Policy.newBuilder()
             .setVersion(351608024)
             .addAllBindings(new ArrayList<Binding>())
+            .addAllAuditConfigs(new ArrayList<AuditConfig>())
             .setEtag(ByteString.EMPTY)
             .build();
     mockStorage.addResponse(expectedResponse);
@@ -736,6 +751,7 @@ public class StorageClientTest {
         Policy.newBuilder()
             .setVersion(351608024)
             .addAllBindings(new ArrayList<Binding>())
+            .addAllAuditConfigs(new ArrayList<AuditConfig>())
             .setEtag(ByteString.EMPTY)
             .build();
     mockStorage.addResponse(expectedResponse);
@@ -781,6 +797,7 @@ public class StorageClientTest {
         Policy.newBuilder()
             .setVersion(351608024)
             .addAllBindings(new ArrayList<Binding>())
+            .addAllAuditConfigs(new ArrayList<AuditConfig>())
             .setEtag(ByteString.EMPTY)
             .build();
     mockStorage.addResponse(expectedResponse);
@@ -904,6 +921,7 @@ public class StorageClientTest {
         Bucket.newBuilder()
             .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
             .setBucketId("bucketId-1603305307")
+            .setEtag("etag3123477")
             .setProject(ProjectName.of("[PROJECT]").toString())
             .setMetageneration(1048558813)
             .setLocation("location1901043637")
@@ -928,6 +946,7 @@ public class StorageClientTest {
             .setIamConfig(Bucket.IamConfig.newBuilder().build())
             .setSatisfiesPzs(true)
             .setCustomPlacementConfig(Bucket.CustomPlacementConfig.newBuilder().build())
+            .setAutoclass(Bucket.Autoclass.newBuilder().build())
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -1038,6 +1057,7 @@ public class StorageClientTest {
         Notification.newBuilder()
             .setName(NotificationName.of("[PROJECT]", "[BUCKET]", "[NOTIFICATION]").toString())
             .setTopic("topic110546223")
+            .setEtag("etag3123477")
             .addAllEventTypes(new ArrayList<String>())
             .putAllCustomAttributes(new HashMap<String, String>())
             .setObjectNamePrefix("objectNamePrefix-1978236516")
@@ -1081,6 +1101,7 @@ public class StorageClientTest {
         Notification.newBuilder()
             .setName(NotificationName.of("[PROJECT]", "[BUCKET]", "[NOTIFICATION]").toString())
             .setTopic("topic110546223")
+            .setEtag("etag3123477")
             .addAllEventTypes(new ArrayList<String>())
             .putAllCustomAttributes(new HashMap<String, String>())
             .setObjectNamePrefix("objectNamePrefix-1978236516")
@@ -1124,6 +1145,7 @@ public class StorageClientTest {
         Notification.newBuilder()
             .setName(NotificationName.of("[PROJECT]", "[BUCKET]", "[NOTIFICATION]").toString())
             .setTopic("topic110546223")
+            .setEtag("etag3123477")
             .addAllEventTypes(new ArrayList<String>())
             .putAllCustomAttributes(new HashMap<String, String>())
             .setObjectNamePrefix("objectNamePrefix-1978236516")
@@ -1170,6 +1192,7 @@ public class StorageClientTest {
         Notification.newBuilder()
             .setName(NotificationName.of("[PROJECT]", "[BUCKET]", "[NOTIFICATION]").toString())
             .setTopic("topic110546223")
+            .setEtag("etag3123477")
             .addAllEventTypes(new ArrayList<String>())
             .putAllCustomAttributes(new HashMap<String, String>())
             .setObjectNamePrefix("objectNamePrefix-1978236516")
@@ -1304,6 +1327,7 @@ public class StorageClientTest {
         Object.newBuilder()
             .setName("name3373707")
             .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+            .setEtag("etag3123477")
             .setGeneration(305703192)
             .setMetageneration(1048558813)
             .setStorageClass("storageClass871353277")
@@ -1337,14 +1361,14 @@ public class StorageClientTest {
         ComposeObjectRequest.newBuilder()
             .setDestination(Object.newBuilder().build())
             .addAllSourceObjects(new ArrayList<ComposeObjectRequest.SourceObject>())
-            .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+            .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
             .setIfGenerationMatch(-1086241088)
             .setIfMetagenerationMatch(1043427781)
             .setKmsKey(
                 CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
                     .toString())
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+            .setObjectChecksums(ObjectChecksums.newBuilder().build())
             .build();
 
     Object actualResponse = client.composeObject(request);
@@ -1364,7 +1388,7 @@ public class StorageClientTest {
     Assert.assertEquals(request.getKmsKey(), actualRequest.getKmsKey());
     Assert.assertEquals(
         request.getCommonObjectRequestParams(), actualRequest.getCommonObjectRequestParams());
-    Assert.assertEquals(request.getCommonRequestParams(), actualRequest.getCommonRequestParams());
+    Assert.assertEquals(request.getObjectChecksums(), actualRequest.getObjectChecksums());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -1381,14 +1405,14 @@ public class StorageClientTest {
           ComposeObjectRequest.newBuilder()
               .setDestination(Object.newBuilder().build())
               .addAllSourceObjects(new ArrayList<ComposeObjectRequest.SourceObject>())
-              .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+              .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
               .setIfGenerationMatch(-1086241088)
               .setIfMetagenerationMatch(1043427781)
               .setKmsKey(
                   CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
                       .toString())
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+              .setObjectChecksums(ObjectChecksums.newBuilder().build())
               .build();
       client.composeObject(request);
       Assert.fail("No exception raised");
@@ -1475,11 +1499,49 @@ public class StorageClientTest {
   }
 
   @Test
+  public void cancelResumableWriteTest() throws Exception {
+    CancelResumableWriteResponse expectedResponse =
+        CancelResumableWriteResponse.newBuilder().build();
+    mockStorage.addResponse(expectedResponse);
+
+    String uploadId = "uploadId1563990780";
+
+    CancelResumableWriteResponse actualResponse = client.cancelResumableWrite(uploadId);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    CancelResumableWriteRequest actualRequest =
+        ((CancelResumableWriteRequest) actualRequests.get(0));
+
+    Assert.assertEquals(uploadId, actualRequest.getUploadId());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void cancelResumableWriteExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockStorage.addException(exception);
+
+    try {
+      String uploadId = "uploadId1563990780";
+      client.cancelResumableWrite(uploadId);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void getObjectTest() throws Exception {
     Object expectedResponse =
         Object.newBuilder()
             .setName("name3373707")
             .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+            .setEtag("etag3123477")
             .setGeneration(305703192)
             .setMetageneration(1048558813)
             .setStorageClass("storageClass871353277")
@@ -1548,6 +1610,7 @@ public class StorageClientTest {
         Object.newBuilder()
             .setName("name3373707")
             .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+            .setEtag("etag3123477")
             .setGeneration(305703192)
             .setMetageneration(1048558813)
             .setStorageClass("storageClass871353277")
@@ -1635,7 +1698,6 @@ public class StorageClientTest {
             .setIfMetagenerationMatch(1043427781)
             .setIfMetagenerationNotMatch(1025430873)
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
             .setReadMask(FieldMask.newBuilder().build())
             .build();
 
@@ -1666,7 +1728,6 @@ public class StorageClientTest {
             .setIfMetagenerationMatch(1043427781)
             .setIfMetagenerationNotMatch(1025430873)
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
             .setReadMask(FieldMask.newBuilder().build())
             .build();
 
@@ -1692,6 +1753,7 @@ public class StorageClientTest {
         Object.newBuilder()
             .setName("name3373707")
             .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
+            .setEtag("etag3123477")
             .setGeneration(305703192)
             .setMetageneration(1048558813)
             .setStorageClass("storageClass871353277")
@@ -1764,7 +1826,6 @@ public class StorageClientTest {
             .setObjectChecksums(ObjectChecksums.newBuilder().build())
             .setFinishWrite(true)
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
             .build();
 
     MockStreamObserver<WriteObjectResponse> responseObserver = new MockStreamObserver<>();
@@ -1792,7 +1853,6 @@ public class StorageClientTest {
             .setObjectChecksums(ObjectChecksums.newBuilder().build())
             .setFinishWrite(true)
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
             .build();
 
     MockStreamObserver<WriteObjectResponse> responseObserver = new MockStreamObserver<>();
@@ -1926,7 +1986,7 @@ public class StorageClientTest {
             .setSourceObject("sourceObject1196439354")
             .setSourceGeneration(1232209852)
             .setRewriteToken("rewriteToken80654285")
-            .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+            .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
             .setIfGenerationMatch(-1086241088)
             .setIfGenerationNotMatch(1475720404)
             .setIfMetagenerationMatch(1043427781)
@@ -1940,7 +2000,7 @@ public class StorageClientTest {
             .setCopySourceEncryptionKeyBytes(ByteString.EMPTY)
             .setCopySourceEncryptionKeySha256Bytes(ByteString.EMPTY)
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+            .setObjectChecksums(ObjectChecksums.newBuilder().build())
             .build();
 
     RewriteResponse actualResponse = client.rewriteObject(request);
@@ -1987,7 +2047,7 @@ public class StorageClientTest {
         actualRequest.getCopySourceEncryptionKeySha256Bytes());
     Assert.assertEquals(
         request.getCommonObjectRequestParams(), actualRequest.getCommonObjectRequestParams());
-    Assert.assertEquals(request.getCommonRequestParams(), actualRequest.getCommonRequestParams());
+    Assert.assertEquals(request.getObjectChecksums(), actualRequest.getObjectChecksums());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -2012,7 +2072,7 @@ public class StorageClientTest {
               .setSourceObject("sourceObject1196439354")
               .setSourceGeneration(1232209852)
               .setRewriteToken("rewriteToken80654285")
-              .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+              .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
               .setIfGenerationMatch(-1086241088)
               .setIfGenerationNotMatch(1475720404)
               .setIfMetagenerationMatch(1043427781)
@@ -2026,7 +2086,7 @@ public class StorageClientTest {
               .setCopySourceEncryptionKeyBytes(ByteString.EMPTY)
               .setCopySourceEncryptionKeySha256Bytes(ByteString.EMPTY)
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+              .setObjectChecksums(ObjectChecksums.newBuilder().build())
               .build();
       client.rewriteObject(request);
       Assert.fail("No exception raised");
@@ -2045,7 +2105,7 @@ public class StorageClientTest {
         StartResumableWriteRequest.newBuilder()
             .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
             .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-            .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+            .setObjectChecksums(ObjectChecksums.newBuilder().build())
             .build();
 
     StartResumableWriteResponse actualResponse = client.startResumableWrite(request);
@@ -2058,7 +2118,7 @@ public class StorageClientTest {
     Assert.assertEquals(request.getWriteObjectSpec(), actualRequest.getWriteObjectSpec());
     Assert.assertEquals(
         request.getCommonObjectRequestParams(), actualRequest.getCommonObjectRequestParams());
-    Assert.assertEquals(request.getCommonRequestParams(), actualRequest.getCommonRequestParams());
+    Assert.assertEquals(request.getObjectChecksums(), actualRequest.getObjectChecksums());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -2075,7 +2135,7 @@ public class StorageClientTest {
           StartResumableWriteRequest.newBuilder()
               .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+              .setObjectChecksums(ObjectChecksums.newBuilder().build())
               .build();
       client.startResumableWrite(request);
       Assert.fail("No exception raised");
@@ -2360,6 +2420,7 @@ public class StorageClientTest {
             .setState("state109757585")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
+            .setEtag("etag3123477")
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -2407,6 +2468,7 @@ public class StorageClientTest {
             .setState("state109757585")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
+            .setEtag("etag3123477")
             .build();
     mockStorage.addResponse(expectedResponse);
 
@@ -2542,6 +2604,7 @@ public class StorageClientTest {
             .setState("state109757585")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
+            .setEtag("etag3123477")
             .build();
     mockStorage.addResponse(expectedResponse);
 

@@ -39,6 +39,7 @@ public class SyncAnalyzeIamPolicy {
       AnalyzeIamPolicyRequest request =
           AnalyzeIamPolicyRequest.newBuilder()
               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+              .setSavedAnalysisQuery("savedAnalysisQuery376058885")
               .setExecutionTimeout(Duration.newBuilder().build())
               .build();
       AnalyzeIamPolicyResponse response = assetServiceClient.analyzeIamPolicy(request);

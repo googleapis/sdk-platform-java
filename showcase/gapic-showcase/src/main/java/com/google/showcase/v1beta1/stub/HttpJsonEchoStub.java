@@ -32,7 +32,9 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
 import com.google.api.gax.longrunning.OperationSnapshot;
+import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
@@ -522,6 +524,18 @@ public class HttpJsonEchoStub extends EchoStub {
   @Override
   public UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     return blockCallable;
+  }
+
+  @Override
+  public ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
+    throw new UnsupportedOperationException(
+        "Not implemented: collectCallable(). REST transport is not implemented for this method yet.");
+  }
+
+  @Override
+  public BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
+    throw new UnsupportedOperationException(
+        "Not implemented: chatCallable(). REST transport is not implemented for this method yet.");
   }
 
   @Override
