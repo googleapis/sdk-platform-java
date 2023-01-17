@@ -249,7 +249,6 @@ public class StorageClient implements BackgroundResource {
    *           .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   storageClient.deleteBucket(request);
    * }
@@ -280,7 +279,6 @@ public class StorageClient implements BackgroundResource {
    *           .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Empty> future = storageClient.deleteBucketCallable().futureCall(request);
    *   // Do something.
@@ -363,7 +361,6 @@ public class StorageClient implements BackgroundResource {
    *           .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .build();
    *   Bucket response = storageClient.getBucket(request);
@@ -395,7 +392,6 @@ public class StorageClient implements BackgroundResource {
    *           .setName(BucketName.of("[PROJECT]", "[BUCKET]").toString())
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Bucket> future = storageClient.getBucketCallable().futureCall(request);
@@ -429,8 +425,9 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param parent Required. The project to which this bucket will belong.
-   * @param bucket Required. Properties of the new bucket being inserted. The project and name of
-   *     the bucket are specified in this request, not in the bucket resource.
+   * @param bucket Properties of the new bucket being inserted. The project and name of the bucket
+   *     are specified in the parent and bucket_id fields, respectively. Populating those fields in
+   *     `bucket` will result in an error.
    * @param bucketId Required. The ID to use for this bucket, which will become the final component
    *     of the bucket's resource name. For example, the value `foo` might result in a bucket with
    *     the name `projects/123456/buckets/foo`.
@@ -467,8 +464,9 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param parent Required. The project to which this bucket will belong.
-   * @param bucket Required. Properties of the new bucket being inserted. The project and name of
-   *     the bucket are specified in this request, not in the bucket resource.
+   * @param bucket Properties of the new bucket being inserted. The project and name of the bucket
+   *     are specified in the parent and bucket_id fields, respectively. Populating those fields in
+   *     `bucket` will result in an error.
    * @param bucketId Required. The ID to use for this bucket, which will become the final component
    *     of the bucket's resource name. For example, the value `foo` might result in a bucket with
    *     the name `projects/123456/buckets/foo`.
@@ -502,8 +500,8 @@ public class StorageClient implements BackgroundResource {
    *           .setParent(ProjectName.of("[PROJECT]").toString())
    *           .setBucket(Bucket.newBuilder().build())
    *           .setBucketId("bucketId-1603305307")
-   *           .setPredefinedAcl(PredefinedBucketAcl.forNumber(0))
-   *           .setPredefinedDefaultObjectAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setPredefinedAcl("predefinedAcl1207041188")
+   *           .setPredefinedDefaultObjectAcl("predefinedDefaultObjectAcl2109168048")
    *           .build();
    *   Bucket response = storageClient.createBucket(request);
    * }
@@ -534,8 +532,8 @@ public class StorageClient implements BackgroundResource {
    *           .setParent(ProjectName.of("[PROJECT]").toString())
    *           .setBucket(Bucket.newBuilder().build())
    *           .setBucketId("bucketId-1603305307")
-   *           .setPredefinedAcl(PredefinedBucketAcl.forNumber(0))
-   *           .setPredefinedDefaultObjectAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setPredefinedAcl("predefinedAcl1207041188")
+   *           .setPredefinedDefaultObjectAcl("predefinedDefaultObjectAcl2109168048")
    *           .build();
    *   ApiFuture<Bucket> future = storageClient.createBucketCallable().futureCall(request);
    *   // Do something.
@@ -626,7 +624,6 @@ public class StorageClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setPrefix("prefix-980110702")
    *           .setReadMask(FieldMask.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   for (Bucket element : storageClient.listBuckets(request).iterateAll()) {
    *     // doThingsWith(element);
@@ -661,7 +658,6 @@ public class StorageClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setPrefix("prefix-980110702")
    *           .setReadMask(FieldMask.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Bucket> future = storageClient.listBucketsPagedCallable().futureCall(request);
    *   // Do something.
@@ -696,7 +692,6 @@ public class StorageClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setPrefix("prefix-980110702")
    *           .setReadMask(FieldMask.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   while (true) {
    *     ListBucketsResponse response = storageClient.listBucketsCallable().call(request);
@@ -790,7 +785,6 @@ public class StorageClient implements BackgroundResource {
    *       LockBucketRetentionPolicyRequest.newBuilder()
    *           .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
    *           .setIfMetagenerationMatch(1043427781)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   Bucket response = storageClient.lockBucketRetentionPolicy(request);
    * }
@@ -820,7 +814,6 @@ public class StorageClient implements BackgroundResource {
    *       LockBucketRetentionPolicyRequest.newBuilder()
    *           .setBucket(BucketName.of("[PROJECT]", "[BUCKET]").toString())
    *           .setIfMetagenerationMatch(1043427781)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Bucket> future =
    *       storageClient.lockBucketRetentionPolicyCallable().futureCall(request);
@@ -836,7 +829,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the IAM policy for a specified bucket.
+   * Gets the IAM policy for a specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -867,7 +862,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the IAM policy for a specified bucket.
+   * Gets the IAM policy for a specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -895,7 +892,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the IAM policy for a specified bucket.
+   * Gets the IAM policy for a specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -926,7 +925,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the IAM policy for a specified bucket.
+   * Gets the IAM policy for a specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -956,7 +957,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates an IAM policy for the specified bucket.
+   * Updates an IAM policy for the specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -992,7 +995,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates an IAM policy for the specified bucket.
+   * Updates an IAM policy for the specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -1025,7 +1030,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates an IAM policy for the specified bucket.
+   * Updates an IAM policy for the specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -1042,6 +1049,7 @@ public class StorageClient implements BackgroundResource {
    *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
    *                   .toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   Policy response = storageClient.setIamPolicy(request);
    * }
@@ -1056,7 +1064,9 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates an IAM policy for the specified bucket.
+   * Updates an IAM policy for the specified bucket or object. The `resource` field in the request
+   * should be projects/_/buckets/&lt;bucket_name&gt; for a bucket or
+   * projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an object.
    *
    * <p>Sample code:
    *
@@ -1073,6 +1083,7 @@ public class StorageClient implements BackgroundResource {
    *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
    *                   .toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = storageClient.setIamPolicyCallable().futureCall(request);
    *   // Do something.
@@ -1086,7 +1097,10 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Tests a set of permissions on the given bucket to see which, if any, are held by the caller.
+   * Tests a set of permissions on the given bucket or object to see which, if any, are held by the
+   * caller. The `resource` field in the request should be projects/_/buckets/&lt;bucket_name&gt;
+   * for a bucket or projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an
+   * object.
    *
    * <p>Sample code:
    *
@@ -1123,7 +1137,10 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Tests a set of permissions on the given bucket to see which, if any, are held by the caller.
+   * Tests a set of permissions on the given bucket or object to see which, if any, are held by the
+   * caller. The `resource` field in the request should be projects/_/buckets/&lt;bucket_name&gt;
+   * for a bucket or projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an
+   * object.
    *
    * <p>Sample code:
    *
@@ -1160,7 +1177,10 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Tests a set of permissions on the given bucket to see which, if any, are held by the caller.
+   * Tests a set of permissions on the given bucket or object to see which, if any, are held by the
+   * caller. The `resource` field in the request should be projects/_/buckets/&lt;bucket_name&gt;
+   * for a bucket or projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an
+   * object.
    *
    * <p>Sample code:
    *
@@ -1191,7 +1211,10 @@ public class StorageClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Tests a set of permissions on the given bucket to see which, if any, are held by the caller.
+   * Tests a set of permissions on the given bucket or object to see which, if any, are held by the
+   * caller. The `resource` field in the request should be projects/_/buckets/&lt;bucket_name&gt;
+   * for a bucket or projects/_/buckets/&lt;bucket_name&gt;/objects/&lt;object_name&gt; for an
+   * object.
    *
    * <p>Sample code:
    *
@@ -1240,9 +1263,9 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param bucket The bucket to update. The bucket's `name` field will be used to identify the
-   *     bucket.
-   * @param updateMask List of fields to be updated.
+   * @param bucket Required. The bucket to update. The bucket's `name` field will be used to
+   *     identify the bucket.
+   * @param updateMask Required. List of fields to be updated.
    *     <p>To specify ALL fields, equivalent to the JSON API's "update" function, specify a single
    *     field with the value `&#42;`. Note: not recommended. If a new field is introduced at a
    *     later time, an older client updating with the `&#42;` may accidentally reset the new
@@ -1275,10 +1298,9 @@ public class StorageClient implements BackgroundResource {
    *           .setBucket(Bucket.newBuilder().build())
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setPredefinedAcl(PredefinedBucketAcl.forNumber(0))
-   *           .setPredefinedDefaultObjectAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setPredefinedAcl("predefinedAcl1207041188")
+   *           .setPredefinedDefaultObjectAcl("predefinedDefaultObjectAcl2109168048")
    *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   Bucket response = storageClient.updateBucket(request);
    * }
@@ -1309,10 +1331,9 @@ public class StorageClient implements BackgroundResource {
    *           .setBucket(Bucket.newBuilder().build())
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setPredefinedAcl(PredefinedBucketAcl.forNumber(0))
-   *           .setPredefinedDefaultObjectAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setPredefinedAcl("predefinedAcl1207041188")
+   *           .setPredefinedDefaultObjectAcl("predefinedDefaultObjectAcl2109168048")
    *           .setUpdateMask(FieldMask.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Bucket> future = storageClient.updateBucketCallable().futureCall(request);
    *   // Do something.
@@ -1857,14 +1878,14 @@ public class StorageClient implements BackgroundResource {
    *       ComposeObjectRequest.newBuilder()
    *           .setDestination(Object.newBuilder().build())
    *           .addAllSourceObjects(new ArrayList<ComposeObjectRequest.SourceObject>())
-   *           .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
    *           .setIfGenerationMatch(-1086241088)
    *           .setIfMetagenerationMatch(1043427781)
    *           .setKmsKey(
    *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
    *                   .toString())
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .build();
    *   Object response = storageClient.composeObject(request);
    * }
@@ -1894,14 +1915,14 @@ public class StorageClient implements BackgroundResource {
    *       ComposeObjectRequest.newBuilder()
    *           .setDestination(Object.newBuilder().build())
    *           .addAllSourceObjects(new ArrayList<ComposeObjectRequest.SourceObject>())
-   *           .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
    *           .setIfGenerationMatch(-1086241088)
    *           .setIfMetagenerationMatch(1043427781)
    *           .setKmsKey(
    *               CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]")
    *                   .toString())
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .build();
    *   ApiFuture<Object> future = storageClient.composeObjectCallable().futureCall(request);
    *   // Do something.
@@ -1934,7 +1955,8 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param bucket Required. Name of the bucket in which the object resides.
-   * @param object Required. The name of the object to delete (when not using a resumable write).
+   * @param object Required. The name of the finalized object to delete. Note: If you want to delete
+   *     an unfinalized resumable upload please use `CancelResumableWrite`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteObject(String bucket, String object) {
@@ -1965,7 +1987,8 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param bucket Required. Name of the bucket in which the object resides.
-   * @param object Required. The name of the object to delete (when not using a resumable write).
+   * @param object Required. The name of the finalized object to delete. Note: If you want to delete
+   *     an unfinalized resumable upload please use `CancelResumableWrite`.
    * @param generation If present, permanently deletes a specific revision of this object (as
    *     opposed to the latest version, the default).
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1998,14 +2021,12 @@ public class StorageClient implements BackgroundResource {
    *       DeleteObjectRequest.newBuilder()
    *           .setBucket("bucket-1378203158")
    *           .setObject("object-1023368385")
-   *           .setUploadId("uploadId1563990780")
    *           .setGeneration(305703192)
    *           .setIfGenerationMatch(-1086241088)
    *           .setIfGenerationNotMatch(1475720404)
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   storageClient.deleteObject(request);
    * }
@@ -2036,14 +2057,12 @@ public class StorageClient implements BackgroundResource {
    *       DeleteObjectRequest.newBuilder()
    *           .setBucket("bucket-1378203158")
    *           .setObject("object-1023368385")
-   *           .setUploadId("uploadId1563990780")
    *           .setGeneration(305703192)
    *           .setIfGenerationMatch(-1086241088)
    *           .setIfGenerationNotMatch(1475720404)
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Empty> future = storageClient.deleteObjectCallable().futureCall(request);
    *   // Do something.
@@ -2053,6 +2072,88 @@ public class StorageClient implements BackgroundResource {
    */
   public final UnaryCallable<DeleteObjectRequest, Empty> deleteObjectCallable() {
     return stub.deleteObjectCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Cancels an in-progress resumable upload.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (StorageClient storageClient = StorageClient.create()) {
+   *   String uploadId = "uploadId1563990780";
+   *   CancelResumableWriteResponse response = storageClient.cancelResumableWrite(uploadId);
+   * }
+   * }</pre>
+   *
+   * @param uploadId Required. The upload_id of the resumable upload to cancel. This should be
+   *     copied from the `upload_id` field of `StartResumableWriteResponse`.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final CancelResumableWriteResponse cancelResumableWrite(String uploadId) {
+    CancelResumableWriteRequest request =
+        CancelResumableWriteRequest.newBuilder().setUploadId(uploadId).build();
+    return cancelResumableWrite(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Cancels an in-progress resumable upload.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (StorageClient storageClient = StorageClient.create()) {
+   *   CancelResumableWriteRequest request =
+   *       CancelResumableWriteRequest.newBuilder().setUploadId("uploadId1563990780").build();
+   *   CancelResumableWriteResponse response = storageClient.cancelResumableWrite(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final CancelResumableWriteResponse cancelResumableWrite(
+      CancelResumableWriteRequest request) {
+    return cancelResumableWriteCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Cancels an in-progress resumable upload.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (StorageClient storageClient = StorageClient.create()) {
+   *   CancelResumableWriteRequest request =
+   *       CancelResumableWriteRequest.newBuilder().setUploadId("uploadId1563990780").build();
+   *   ApiFuture<CancelResumableWriteResponse> future =
+   *       storageClient.cancelResumableWriteCallable().futureCall(request);
+   *   // Do something.
+   *   CancelResumableWriteResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<CancelResumableWriteRequest, CancelResumableWriteResponse>
+      cancelResumableWriteCallable() {
+    return stub.cancelResumableWriteCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -2143,7 +2244,6 @@ public class StorageClient implements BackgroundResource {
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .build();
    *   Object response = storageClient.getObject(request);
@@ -2180,7 +2280,6 @@ public class StorageClient implements BackgroundResource {
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Object> future = storageClient.getObjectCallable().futureCall(request);
@@ -2218,7 +2317,6 @@ public class StorageClient implements BackgroundResource {
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .build();
    *   ServerStream<ReadObjectResponse> stream = storageClient.readObjectCallable().call(request);
@@ -2251,11 +2349,11 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param object The object to update. The object's bucket and name fields are used to identify
-   *     the object to update. If present, the object's generation field selects a specific revision
-   *     of this object whose metadata should be updated. Otherwise, assumes the current, live
+   * @param object Required. The object to update. The object's bucket and name fields are used to
+   *     identify the object to update. If present, the object's generation field selects a specific
+   *     revision of this object whose metadata should be updated. Otherwise, assumes the live
    *     version of the object.
-   * @param updateMask List of fields to be updated.
+   * @param updateMask Required. List of fields to be updated.
    *     <p>To specify ALL fields, equivalent to the JSON API's "update" function, specify a single
    *     field with the value `&#42;`. Note: not recommended. If a new field is introduced at a
    *     later time, an older client updating with the `&#42;` may accidentally reset the new
@@ -2290,10 +2388,9 @@ public class StorageClient implements BackgroundResource {
    *           .setIfGenerationNotMatch(1475720404)
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setPredefinedAcl("predefinedAcl1207041188")
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   Object response = storageClient.updateObject(request);
    * }
@@ -2326,10 +2423,9 @@ public class StorageClient implements BackgroundResource {
    *           .setIfGenerationNotMatch(1475720404)
    *           .setIfMetagenerationMatch(1043427781)
    *           .setIfMetagenerationNotMatch(1025430873)
-   *           .setPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setPredefinedAcl("predefinedAcl1207041188")
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Object> future = storageClient.updateObjectCallable().futureCall(request);
    *   // Do something.
@@ -2351,18 +2447,38 @@ public class StorageClient implements BackgroundResource {
    * preconditions. Additionally, the final message must set 'finish_write' to true, or else it is
    * an error.
    *
-   * <p>For a resumable write, the client should instead call `StartResumableWrite()` and provide
-   * that method an `WriteObjectSpec.` They should then attach the returned `upload_id` to the first
-   * message of each following call to `Create`. If there is an error or the connection is broken
-   * during the resumable `Create()`, the client should check the status of the `Create()` by
-   * calling `QueryWriteStatus()` and continue writing from the returned `persisted_size`. This may
-   * be less than the amount of data the client previously sent.
+   * <p>For a resumable write, the client should instead call `StartResumableWrite()`, populating a
+   * `WriteObjectSpec` into that request. They should then attach the returned `upload_id` to the
+   * first message of each following call to `WriteObject`. If the stream is closed before finishing
+   * the upload (either explicitly by the client or due to a network error or an error response from
+   * the server), the client should do as follows: - Check the result Status of the stream, to
+   * determine if writing can be resumed on this stream or must be restarted from scratch (by
+   * calling `StartResumableWrite()`). The resumable errors are DEADLINE_EXCEEDED, INTERNAL, and
+   * UNAVAILABLE. For each case, the client should use binary exponential backoff before retrying.
+   * Additionally, writes can be resumed after RESOURCE_EXHAUSTED errors, but only after taking
+   * appropriate measures, which may include reducing aggregate send rate across clients and/or
+   * requesting a quota increase for your project. - If the call to `WriteObject` returns `ABORTED`,
+   * that indicates concurrent attempts to update the resumable write, caused either by multiple
+   * racing clients or by a single client where the previous request was timed out on the client
+   * side but nonetheless reached the server. In this case the client should take steps to prevent
+   * further concurrent writes (e.g., increase the timeouts, stop using more than one process to
+   * perform the upload, etc.), and then should follow the steps below for resuming the upload. -
+   * For resumable errors, the client should call `QueryWriteStatus()` and then continue writing
+   * from the returned `persisted_size`. This may be less than the amount of data the client
+   * previously sent. Note also that it is acceptable to send data starting at an offset earlier
+   * than the returned `persisted_size`; in this case, the service will skip data at offsets that
+   * were already persisted (without checking that it matches the previously written data), and
+   * write only the data starting from the persisted offset. This behavior can make client-side
+   * handling simpler in some cases.
    *
    * <p>The service will not view the object as complete until the client has sent a
    * `WriteObjectRequest` with `finish_write` set to `true`. Sending any requests on a stream after
    * sending a request with `finish_write` set to `true` will cause an error. The client
    * &#42;&#42;should&#42;&#42; check the response it receives to determine how much data the
    * service was able to commit and whether the service views the object as complete.
+   *
+   * <p>Attempting to resume an already finalized object will result in an OK status, with a
+   * WriteObjectResponse containing the finalized object's metadata.
    *
    * <p>Sample code:
    *
@@ -2398,7 +2514,6 @@ public class StorageClient implements BackgroundResource {
    *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .setFinishWrite(true)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   requestObserver.onNext(request);
    * }
@@ -2493,7 +2608,6 @@ public class StorageClient implements BackgroundResource {
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .setLexicographicStart("lexicographicStart-2093413008")
    *           .setLexicographicEnd("lexicographicEnd1646968169")
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   for (Object element : storageClient.listObjects(request).iterateAll()) {
    *     // doThingsWith(element);
@@ -2533,7 +2647,6 @@ public class StorageClient implements BackgroundResource {
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .setLexicographicStart("lexicographicStart-2093413008")
    *           .setLexicographicEnd("lexicographicEnd1646968169")
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Object> future = storageClient.listObjectsPagedCallable().futureCall(request);
    *   // Do something.
@@ -2573,7 +2686,6 @@ public class StorageClient implements BackgroundResource {
    *           .setReadMask(FieldMask.newBuilder().build())
    *           .setLexicographicStart("lexicographicStart-2093413008")
    *           .setLexicographicEnd("lexicographicEnd1646968169")
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   while (true) {
    *     ListObjectsResponse response = storageClient.listObjectsCallable().call(request);
@@ -2619,7 +2731,7 @@ public class StorageClient implements BackgroundResource {
    *           .setSourceObject("sourceObject1196439354")
    *           .setSourceGeneration(1232209852)
    *           .setRewriteToken("rewriteToken80654285")
-   *           .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
    *           .setIfGenerationMatch(-1086241088)
    *           .setIfGenerationNotMatch(1475720404)
    *           .setIfMetagenerationMatch(1043427781)
@@ -2633,7 +2745,7 @@ public class StorageClient implements BackgroundResource {
    *           .setCopySourceEncryptionKeyBytes(ByteString.EMPTY)
    *           .setCopySourceEncryptionKeySha256Bytes(ByteString.EMPTY)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .build();
    *   RewriteResponse response = storageClient.rewriteObject(request);
    * }
@@ -2671,7 +2783,7 @@ public class StorageClient implements BackgroundResource {
    *           .setSourceObject("sourceObject1196439354")
    *           .setSourceGeneration(1232209852)
    *           .setRewriteToken("rewriteToken80654285")
-   *           .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+   *           .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
    *           .setIfGenerationMatch(-1086241088)
    *           .setIfGenerationNotMatch(1475720404)
    *           .setIfMetagenerationMatch(1043427781)
@@ -2685,7 +2797,7 @@ public class StorageClient implements BackgroundResource {
    *           .setCopySourceEncryptionKeyBytes(ByteString.EMPTY)
    *           .setCopySourceEncryptionKeySha256Bytes(ByteString.EMPTY)
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .build();
    *   ApiFuture<RewriteResponse> future = storageClient.rewriteObjectCallable().futureCall(request);
    *   // Do something.
@@ -2715,7 +2827,7 @@ public class StorageClient implements BackgroundResource {
    *       StartResumableWriteRequest.newBuilder()
    *           .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .build();
    *   StartResumableWriteResponse response = storageClient.startResumableWrite(request);
    * }
@@ -2746,7 +2858,7 @@ public class StorageClient implements BackgroundResource {
    *       StartResumableWriteRequest.newBuilder()
    *           .setWriteObjectSpec(WriteObjectSpec.newBuilder().build())
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+   *           .setObjectChecksums(ObjectChecksums.newBuilder().build())
    *           .build();
    *   ApiFuture<StartResumableWriteResponse> future =
    *       storageClient.startResumableWriteCallable().futureCall(request);
@@ -2825,7 +2937,6 @@ public class StorageClient implements BackgroundResource {
    *       QueryWriteStatusRequest.newBuilder()
    *           .setUploadId("uploadId1563990780")
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   QueryWriteStatusResponse response = storageClient.queryWriteStatus(request);
    * }
@@ -2865,7 +2976,6 @@ public class StorageClient implements BackgroundResource {
    *       QueryWriteStatusRequest.newBuilder()
    *           .setUploadId("uploadId1563990780")
    *           .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<QueryWriteStatusResponse> future =
    *       storageClient.queryWriteStatusCallable().futureCall(request);
@@ -2897,7 +3007,8 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param project Required. Project ID.
+   * @param project Required. Project ID, in the format of "projects/&lt;projectIdentifier&gt;".
+   *     &lt;projectIdentifier&gt; can be the project ID or project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ServiceAccount getServiceAccount(ProjectName project) {
@@ -2926,7 +3037,8 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param project Required. Project ID.
+   * @param project Required. Project ID, in the format of "projects/&lt;projectIdentifier&gt;".
+   *     &lt;projectIdentifier&gt; can be the project ID or project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ServiceAccount getServiceAccount(String project) {
@@ -2951,7 +3063,6 @@ public class StorageClient implements BackgroundResource {
    *   GetServiceAccountRequest request =
    *       GetServiceAccountRequest.newBuilder()
    *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ServiceAccount response = storageClient.getServiceAccount(request);
    * }
@@ -2980,7 +3091,6 @@ public class StorageClient implements BackgroundResource {
    *   GetServiceAccountRequest request =
    *       GetServiceAccountRequest.newBuilder()
    *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<ServiceAccount> future =
    *       storageClient.getServiceAccountCallable().futureCall(request);
@@ -3012,7 +3122,9 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param project Required. The project that the HMAC-owning service account lives in.
+   * @param project Required. The project that the HMAC-owning service account lives in, in the
+   *     format of "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the
+   *     project ID or project number.
    * @param serviceAccountEmail Required. The service account to create the HMAC for.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -3045,7 +3157,9 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param project Required. The project that the HMAC-owning service account lives in.
+   * @param project Required. The project that the HMAC-owning service account lives in, in the
+   *     format of "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the
+   *     project ID or project number.
    * @param serviceAccountEmail Required. The service account to create the HMAC for.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -3075,7 +3189,6 @@ public class StorageClient implements BackgroundResource {
    *       CreateHmacKeyRequest.newBuilder()
    *           .setProject(ProjectName.of("[PROJECT]").toString())
    *           .setServiceAccountEmail("serviceAccountEmail1825953988")
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   CreateHmacKeyResponse response = storageClient.createHmacKey(request);
    * }
@@ -3105,7 +3218,6 @@ public class StorageClient implements BackgroundResource {
    *       CreateHmacKeyRequest.newBuilder()
    *           .setProject(ProjectName.of("[PROJECT]").toString())
    *           .setServiceAccountEmail("serviceAccountEmail1825953988")
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<CreateHmacKeyResponse> future =
    *       storageClient.createHmacKeyCallable().futureCall(request);
@@ -3138,7 +3250,9 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param accessId Required. The identifying key for the HMAC to delete.
-   * @param project Required. The project id the HMAC key lies in.
+   * @param project Required. The project that owns the HMAC key, in the format of
+   *     "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the project ID or
+   *     project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteHmacKey(String accessId, ProjectName project) {
@@ -3170,7 +3284,9 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param accessId Required. The identifying key for the HMAC to delete.
-   * @param project Required. The project id the HMAC key lies in.
+   * @param project Required. The project that owns the HMAC key, in the format of
+   *     "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the project ID or
+   *     project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteHmacKey(String accessId, String project) {
@@ -3196,7 +3312,6 @@ public class StorageClient implements BackgroundResource {
    *       DeleteHmacKeyRequest.newBuilder()
    *           .setAccessId("accessId-2146437729")
    *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   storageClient.deleteHmacKey(request);
    * }
@@ -3226,7 +3341,6 @@ public class StorageClient implements BackgroundResource {
    *       DeleteHmacKeyRequest.newBuilder()
    *           .setAccessId("accessId-2146437729")
    *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<Empty> future = storageClient.deleteHmacKeyCallable().futureCall(request);
    *   // Do something.
@@ -3258,7 +3372,9 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param accessId Required. The identifying key for the HMAC to delete.
-   * @param project Required. The project id the HMAC key lies in.
+   * @param project Required. The project the HMAC key lies in, in the format of
+   *     "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the project ID or
+   *     project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final HmacKeyMetadata getHmacKey(String accessId, ProjectName project) {
@@ -3290,7 +3406,9 @@ public class StorageClient implements BackgroundResource {
    * }</pre>
    *
    * @param accessId Required. The identifying key for the HMAC to delete.
-   * @param project Required. The project id the HMAC key lies in.
+   * @param project Required. The project the HMAC key lies in, in the format of
+   *     "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the project ID or
+   *     project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final HmacKeyMetadata getHmacKey(String accessId, String project) {
@@ -3316,7 +3434,6 @@ public class StorageClient implements BackgroundResource {
    *       GetHmacKeyRequest.newBuilder()
    *           .setAccessId("accessId-2146437729")
    *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   HmacKeyMetadata response = storageClient.getHmacKey(request);
    * }
@@ -3346,7 +3463,6 @@ public class StorageClient implements BackgroundResource {
    *       GetHmacKeyRequest.newBuilder()
    *           .setAccessId("accessId-2146437729")
    *           .setProject(ProjectName.of("[PROJECT]").toString())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<HmacKeyMetadata> future = storageClient.getHmacKeyCallable().futureCall(request);
    *   // Do something.
@@ -3378,7 +3494,9 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param project Required. The project id to list HMAC keys for.
+   * @param project Required. The project to list HMAC keys for, in the format of
+   *     "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the project ID or
+   *     project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListHmacKeysPagedResponse listHmacKeys(ProjectName project) {
@@ -3409,7 +3527,9 @@ public class StorageClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param project Required. The project id to list HMAC keys for.
+   * @param project Required. The project to list HMAC keys for, in the format of
+   *     "projects/&lt;projectIdentifier&gt;". &lt;projectIdentifier&gt; can be the project ID or
+   *     project number.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListHmacKeysPagedResponse listHmacKeys(String project) {
@@ -3437,7 +3557,6 @@ public class StorageClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setServiceAccountEmail("serviceAccountEmail1825953988")
    *           .setShowDeletedKeys(true)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   for (HmacKeyMetadata element : storageClient.listHmacKeys(request).iterateAll()) {
    *     // doThingsWith(element);
@@ -3472,7 +3591,6 @@ public class StorageClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setServiceAccountEmail("serviceAccountEmail1825953988")
    *           .setShowDeletedKeys(true)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   ApiFuture<HmacKeyMetadata> future =
    *       storageClient.listHmacKeysPagedCallable().futureCall(request);
@@ -3508,7 +3626,6 @@ public class StorageClient implements BackgroundResource {
    *           .setPageToken("pageToken873572522")
    *           .setServiceAccountEmail("serviceAccountEmail1825953988")
    *           .setShowDeletedKeys(true)
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .build();
    *   while (true) {
    *     ListHmacKeysResponse response = storageClient.listHmacKeysCallable().call(request);
@@ -3551,7 +3668,8 @@ public class StorageClient implements BackgroundResource {
    * @param hmacKey Required. The HMAC key to update. If present, the hmac_key's `id` field will be
    *     used to identify the key. Otherwise, the hmac_key's access_id and project fields will be
    *     used to identify the key.
-   * @param updateMask Update mask for hmac_key.
+   * @param updateMask Update mask for hmac_key. Not specifying any fields will mean only the
+   *     `state` field is updated to the value specified in `hmac_key`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final HmacKeyMetadata updateHmacKey(HmacKeyMetadata hmacKey, FieldMask updateMask) {
@@ -3576,7 +3694,6 @@ public class StorageClient implements BackgroundResource {
    *   UpdateHmacKeyRequest request =
    *       UpdateHmacKeyRequest.newBuilder()
    *           .setHmacKey(HmacKeyMetadata.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   HmacKeyMetadata response = storageClient.updateHmacKey(request);
@@ -3606,7 +3723,6 @@ public class StorageClient implements BackgroundResource {
    *   UpdateHmacKeyRequest request =
    *       UpdateHmacKeyRequest.newBuilder()
    *           .setHmacKey(HmacKeyMetadata.newBuilder().build())
-   *           .setCommonRequestParams(CommonRequestParams.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<HmacKeyMetadata> future = storageClient.updateHmacKeyCallable().futureCall(request);

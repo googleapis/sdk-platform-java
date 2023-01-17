@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_ListHmacKeys_async]
 import com.google.api.core.ApiFuture;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
 import com.google.storage.v2.ListHmacKeysRequest;
 import com.google.storage.v2.ProjectName;
@@ -44,7 +43,6 @@ public class AsyncListHmacKeys {
               .setPageToken("pageToken873572522")
               .setServiceAccountEmail("serviceAccountEmail1825953988")
               .setShowDeletedKeys(true)
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       ApiFuture<HmacKeyMetadata> future =
           storageClient.listHmacKeysPagedCallable().futureCall(request);
