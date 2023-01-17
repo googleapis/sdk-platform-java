@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_GetServiceAccount_async]
 import com.google.api.core.ApiFuture;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.GetServiceAccountRequest;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.ServiceAccount;
@@ -40,7 +39,6 @@ public class AsyncGetServiceAccount {
       GetServiceAccountRequest request =
           GetServiceAccountRequest.newBuilder()
               .setProject(ProjectName.of("[PROJECT]").toString())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       ApiFuture<ServiceAccount> future =
           storageClient.getServiceAccountCallable().futureCall(request);

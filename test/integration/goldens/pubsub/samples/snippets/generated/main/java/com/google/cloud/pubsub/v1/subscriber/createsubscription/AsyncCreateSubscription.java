@@ -20,6 +20,7 @@ package com.google.cloud.pubsub.v1.samples;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.protobuf.Duration;
+import com.google.pubsub.v1.BigQueryConfig;
 import com.google.pubsub.v1.DeadLetterPolicy;
 import com.google.pubsub.v1.ExpirationPolicy;
 import com.google.pubsub.v1.PushConfig;
@@ -47,6 +48,7 @@ public class AsyncCreateSubscription {
               .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
               .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
               .setPushConfig(PushConfig.newBuilder().build())
+              .setBigqueryConfig(BigQueryConfig.newBuilder().build())
               .setAckDeadlineSeconds(2135351438)
               .setRetainAckedMessages(true)
               .setMessageRetentionDuration(Duration.newBuilder().build())

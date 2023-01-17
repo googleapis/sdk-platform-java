@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_CreateHmacKey_async]
 import com.google.api.core.ApiFuture;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.CreateHmacKeyRequest;
 import com.google.storage.v2.CreateHmacKeyResponse;
 import com.google.storage.v2.ProjectName;
@@ -41,7 +40,6 @@ public class AsyncCreateHmacKey {
           CreateHmacKeyRequest.newBuilder()
               .setProject(ProjectName.of("[PROJECT]").toString())
               .setServiceAccountEmail("serviceAccountEmail1825953988")
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       ApiFuture<CreateHmacKeyResponse> future =
           storageClient.createHmacKeyCallable().futureCall(request);
