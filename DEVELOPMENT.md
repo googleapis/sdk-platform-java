@@ -41,7 +41,7 @@
     mvn test
     ```
 
--   Run a single or multiple unit tests:
+- Run a single or multiple unit tests:
 
     ```sh
     mvn test -Dtest=JavaCodeGeneratorTest
@@ -51,30 +51,30 @@
 
 - Update all unit test golden files:
 
-  ```sh
-  mvn test -DupdateUnitGoldens
-  ```
+    ```sh
+    mvn test -DupdateUnitGoldens
+    ```
 
 - Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
-  ```sh
-  mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
-  ```
+    ```sh
+    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+    ```
 
 - Run a single integration test for API like `Redis`, it generates Java source
   code using the Java microgenerator and compares them with the goldens files
   in `test/integration/goldens/redis`.
 
-  ```sh
-  bazel test //test/integration:redis
-  ```
+    ```sh
+    bazel test //test/integration:redis
+    ```
 
 - Update integration test golden files, for example `Redis`. This clobbers all the
   files in `test/integration/goldens/redis`.
 
-  ```sh
-  bazel run //test/integration:update_redis
-  ```
+    ```sh
+    bazel run //test/integration:update_redis
+    ```
 
 ## Showcase Integration Testing
 
@@ -171,8 +171,9 @@ To generate a production GAPIC API:
 2. Modify `googleapis/WORKSPACE` to point to local gapic-generator-java
 
    Normally, googleapis's build pulls in googleapis/gapic-generator-java from the
-   Internet, we need to build a local SNAPSHOT jar first and point googleapis to the SNAPSHOT jar and local copy of the repo.
-   
+   Internet, we need to build a local SNAPSHOT jar first and point googleapis to the SNAPSHOT jar and local copy of the
+   repo.
+
    Before:
    ```
    _gapic_generator_java_version = "2.13.0"
@@ -230,10 +231,27 @@ To generate a production GAPIC API:
    ```
    bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
    ```
-    
-   Note: If you are running into bazel build issues, you can try removing gapic-generator-java cached in your local Maven repository.
+
+   Note: If you are running into bazel build issues, you can try to remove gapic-generator-java cached in your local m2
    Try running this command:
    ```
-   rm -rf ~/.m2/repository/com/google/api/
+    rm -rf ~/.m2/repository/com/google/api/
    ```
    and then rebuild gapic-generator-java (`mvn clean install`).
+
+## FAQ
+
+### Error in workspace: workspace() got unexpected keyword argument 'managed_directories'
+
+Full Error:
+
+```
+ERROR: Traceback (most recent call last):
+        File "/home/alicejli/googleapis/WORKSPACE", line 1, column 10, in <toplevel>
+                workspace(
+Error in workspace: workspace() got unexpected keyword argument 'managed_directories'
+ERROR: Error computing the main repository mapping: Encountered error while reading extension file 'tools/build_defs/repo/http.bzl': no such package '@bazel_tools//tools/build_defs/repo': error loading package 'external': Could not load //external package
+```
+
+You may be using the latest version of bazel which this project does not support yet. Try installing bazelisk to force
+bazel to use the version specified in `.bazeliskrc`
