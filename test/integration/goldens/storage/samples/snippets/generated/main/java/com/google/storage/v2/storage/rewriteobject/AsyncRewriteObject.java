@@ -21,10 +21,9 @@ import com.google.api.core.ApiFuture;
 import com.google.protobuf.ByteString;
 import com.google.storage.v2.BucketName;
 import com.google.storage.v2.CommonObjectRequestParams;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.CryptoKeyName;
 import com.google.storage.v2.Object;
-import com.google.storage.v2.PredefinedObjectAcl;
+import com.google.storage.v2.ObjectChecksums;
 import com.google.storage.v2.RewriteObjectRequest;
 import com.google.storage.v2.RewriteResponse;
 import com.google.storage.v2.StorageClient;
@@ -54,7 +53,7 @@ public class AsyncRewriteObject {
               .setSourceObject("sourceObject1196439354")
               .setSourceGeneration(1232209852)
               .setRewriteToken("rewriteToken80654285")
-              .setDestinationPredefinedAcl(PredefinedObjectAcl.forNumber(0))
+              .setDestinationPredefinedAcl("destinationPredefinedAcl1111125814")
               .setIfGenerationMatch(-1086241088)
               .setIfGenerationNotMatch(1475720404)
               .setIfMetagenerationMatch(1043427781)
@@ -68,7 +67,7 @@ public class AsyncRewriteObject {
               .setCopySourceEncryptionKeyBytes(ByteString.EMPTY)
               .setCopySourceEncryptionKeySha256Bytes(ByteString.EMPTY)
               .setCommonObjectRequestParams(CommonObjectRequestParams.newBuilder().build())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
+              .setObjectChecksums(ObjectChecksums.newBuilder().build())
               .build();
       ApiFuture<RewriteResponse> future = storageClient.rewriteObjectCallable().futureCall(request);
       // Do something.
