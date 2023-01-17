@@ -21,6 +21,7 @@ import com.google.api.core.ApiFuture;
 import com.google.iam.v1.IAMPolicyClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.protobuf.FieldMask;
 
 public class AsyncSetIamPolicy {
 
@@ -39,6 +40,7 @@ public class AsyncSetIamPolicy {
           SetIamPolicyRequest.newBuilder()
               .setResource("SetIamPolicyRequest1223629066".toString())
               .setPolicy(Policy.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       ApiFuture<Policy> future = iAMPolicyClient.setIamPolicyCallable().futureCall(request);
       // Do something.

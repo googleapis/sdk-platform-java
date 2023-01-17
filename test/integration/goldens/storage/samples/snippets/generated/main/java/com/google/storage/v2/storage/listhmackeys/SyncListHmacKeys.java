@@ -17,7 +17,6 @@
 package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_ListHmacKeys_sync]
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.HmacKeyMetadata;
 import com.google.storage.v2.ListHmacKeysRequest;
 import com.google.storage.v2.ProjectName;
@@ -43,7 +42,6 @@ public class SyncListHmacKeys {
               .setPageToken("pageToken873572522")
               .setServiceAccountEmail("serviceAccountEmail1825953988")
               .setShowDeletedKeys(true)
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       for (HmacKeyMetadata element : storageClient.listHmacKeys(request).iterateAll()) {
         // doThingsWith(element);

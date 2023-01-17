@@ -18,7 +18,6 @@ package com.google.storage.v2.samples;
 
 // [START storage_v2_generated_Storage_DeleteHmacKey_sync]
 import com.google.protobuf.Empty;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.DeleteHmacKeyRequest;
 import com.google.storage.v2.ProjectName;
 import com.google.storage.v2.StorageClient;
@@ -40,7 +39,6 @@ public class SyncDeleteHmacKey {
           DeleteHmacKeyRequest.newBuilder()
               .setAccessId("accessId-2146437729")
               .setProject(ProjectName.of("[PROJECT]").toString())
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       storageClient.deleteHmacKey(request);
     }
