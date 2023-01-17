@@ -28,6 +28,14 @@ public final class ErrorDetailsProto {
   }
 
   static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_rpc_ErrorInfo_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_rpc_ErrorInfo_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_rpc_ErrorInfo_MetadataEntry_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_rpc_ErrorInfo_MetadataEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_rpc_RetryInfo_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_rpc_RetryInfo_fieldAccessorTable;
@@ -43,14 +51,6 @@ public final class ErrorDetailsProto {
       internal_static_google_rpc_QuotaFailure_Violation_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_rpc_QuotaFailure_Violation_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_google_rpc_ErrorInfo_descriptor;
-  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_google_rpc_ErrorInfo_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_google_rpc_ErrorInfo_MetadataEntry_descriptor;
-  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_google_rpc_ErrorInfo_MetadataEntry_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_rpc_PreconditionFailure_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -97,17 +97,17 @@ public final class ErrorDetailsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\036google/rpc/error_details.proto\022\ngoogle"
-          + ".rpc\032\036google/protobuf/duration.proto\";\n\t"
-          + "RetryInfo\022.\n\013retry_delay\030\001 \001(\0132\031.google."
-          + "protobuf.Duration\"2\n\tDebugInfo\022\025\n\rstack_"
-          + "entries\030\001 \003(\t\022\016\n\006detail\030\002 \001(\t\"y\n\014QuotaFa"
-          + "ilure\0226\n\nviolations\030\001 \003(\0132\".google.rpc.Q"
-          + "uotaFailure.Violation\0321\n\tViolation\022\017\n\007su"
-          + "bject\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\"\223\001\n\tErr"
-          + "orInfo\022\016\n\006reason\030\001 \001(\t\022\016\n\006domain\030\002 \001(\t\0225"
-          + "\n\010metadata\030\003 \003(\0132#.google.rpc.ErrorInfo."
-          + "MetadataEntry\032/\n\rMetadataEntry\022\013\n\003key\030\001 "
-          + "\001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\225\001\n\023PreconditionF"
+          + ".rpc\032\036google/protobuf/duration.proto\"\223\001\n"
+          + "\tErrorInfo\022\016\n\006reason\030\001 \001(\t\022\016\n\006domain\030\002 \001"
+          + "(\t\0225\n\010metadata\030\003 \003(\0132#.google.rpc.ErrorI"
+          + "nfo.MetadataEntry\032/\n\rMetadataEntry\022\013\n\003ke"
+          + "y\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\";\n\tRetryInfo\022"
+          + ".\n\013retry_delay\030\001 \001(\0132\031.google.protobuf.D"
+          + "uration\"2\n\tDebugInfo\022\025\n\rstack_entries\030\001 "
+          + "\003(\t\022\016\n\006detail\030\002 \001(\t\"y\n\014QuotaFailure\0226\n\nv"
+          + "iolations\030\001 \003(\0132\".google.rpc.QuotaFailur"
+          + "e.Violation\0321\n\tViolation\022\017\n\007subject\030\001 \001("
+          + "\t\022\023\n\013description\030\002 \001(\t\"\225\001\n\023PreconditionF"
           + "ailure\022=\n\nviolations\030\001 \003(\0132).google.rpc."
           + "PreconditionFailure.Violation\032?\n\tViolati"
           + "on\022\014\n\004type\030\001 \001(\t\022\017\n\007subject\030\002 \001(\t\022\023\n\013des"
@@ -133,36 +133,7 @@ public final class ErrorDetailsProto {
             new com.google.protobuf.Descriptors.FileDescriptor[] {
               com.google.protobuf.DurationProto.getDescriptor(),
             });
-    internal_static_google_rpc_RetryInfo_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_google_rpc_RetryInfo_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_google_rpc_RetryInfo_descriptor,
-            new java.lang.String[] {
-              "RetryDelay",
-            });
-    internal_static_google_rpc_DebugInfo_descriptor = getDescriptor().getMessageTypes().get(1);
-    internal_static_google_rpc_DebugInfo_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_google_rpc_DebugInfo_descriptor,
-            new java.lang.String[] {
-              "StackEntries", "Detail",
-            });
-    internal_static_google_rpc_QuotaFailure_descriptor = getDescriptor().getMessageTypes().get(2);
-    internal_static_google_rpc_QuotaFailure_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_google_rpc_QuotaFailure_descriptor,
-            new java.lang.String[] {
-              "Violations",
-            });
-    internal_static_google_rpc_QuotaFailure_Violation_descriptor =
-        internal_static_google_rpc_QuotaFailure_descriptor.getNestedTypes().get(0);
-    internal_static_google_rpc_QuotaFailure_Violation_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_google_rpc_QuotaFailure_Violation_descriptor,
-            new java.lang.String[] {
-              "Subject", "Description",
-            });
-    internal_static_google_rpc_ErrorInfo_descriptor = getDescriptor().getMessageTypes().get(3);
+    internal_static_google_rpc_ErrorInfo_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_google_rpc_ErrorInfo_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_rpc_ErrorInfo_descriptor,
@@ -176,6 +147,35 @@ public final class ErrorDetailsProto {
             internal_static_google_rpc_ErrorInfo_MetadataEntry_descriptor,
             new java.lang.String[] {
               "Key", "Value",
+            });
+    internal_static_google_rpc_RetryInfo_descriptor = getDescriptor().getMessageTypes().get(1);
+    internal_static_google_rpc_RetryInfo_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_rpc_RetryInfo_descriptor,
+            new java.lang.String[] {
+              "RetryDelay",
+            });
+    internal_static_google_rpc_DebugInfo_descriptor = getDescriptor().getMessageTypes().get(2);
+    internal_static_google_rpc_DebugInfo_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_rpc_DebugInfo_descriptor,
+            new java.lang.String[] {
+              "StackEntries", "Detail",
+            });
+    internal_static_google_rpc_QuotaFailure_descriptor = getDescriptor().getMessageTypes().get(3);
+    internal_static_google_rpc_QuotaFailure_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_rpc_QuotaFailure_descriptor,
+            new java.lang.String[] {
+              "Violations",
+            });
+    internal_static_google_rpc_QuotaFailure_Violation_descriptor =
+        internal_static_google_rpc_QuotaFailure_descriptor.getNestedTypes().get(0);
+    internal_static_google_rpc_QuotaFailure_Violation_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_rpc_QuotaFailure_Violation_descriptor,
+            new java.lang.String[] {
+              "Subject", "Description",
             });
     internal_static_google_rpc_PreconditionFailure_descriptor =
         getDescriptor().getMessageTypes().get(4);

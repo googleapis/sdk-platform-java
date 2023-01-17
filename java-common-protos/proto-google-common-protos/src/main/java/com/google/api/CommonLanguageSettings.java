@@ -77,11 +77,14 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
    * https://cloud.google.com/nodejs/docs/reference/asset/latest
    * </pre>
    *
-   * <code>string reference_docs_uri = 1;</code>
+   * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
+   * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+   *     google/api/client.proto;l=106
    * @return The referenceDocsUri.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public java.lang.String getReferenceDocsUri() {
     java.lang.Object ref = referenceDocsUri_;
     if (ref instanceof java.lang.String) {
@@ -101,11 +104,14 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
    * https://cloud.google.com/nodejs/docs/reference/asset/latest
    * </pre>
    *
-   * <code>string reference_docs_uri = 1;</code>
+   * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
+   * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+   *     google/api/client.proto;l=106
    * @return The bytes for referenceDocsUri.
    */
   @java.lang.Override
+  @java.lang.Deprecated
   public com.google.protobuf.ByteString getReferenceDocsUriBytes() {
     java.lang.Object ref = referenceDocsUri_;
     if (ref instanceof java.lang.String) {
@@ -615,10 +621,13 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * https://cloud.google.com/nodejs/docs/reference/asset/latest
      * </pre>
      *
-     * <code>string reference_docs_uri = 1;</code>
+     * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+     *     google/api/client.proto;l=106
      * @return The referenceDocsUri.
      */
+    @java.lang.Deprecated
     public java.lang.String getReferenceDocsUri() {
       java.lang.Object ref = referenceDocsUri_;
       if (!(ref instanceof java.lang.String)) {
@@ -638,10 +647,13 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * https://cloud.google.com/nodejs/docs/reference/asset/latest
      * </pre>
      *
-     * <code>string reference_docs_uri = 1;</code>
+     * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+     *     google/api/client.proto;l=106
      * @return The bytes for referenceDocsUri.
      */
+    @java.lang.Deprecated
     public com.google.protobuf.ByteString getReferenceDocsUriBytes() {
       java.lang.Object ref = referenceDocsUri_;
       if (ref instanceof String) {
@@ -661,11 +673,14 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * https://cloud.google.com/nodejs/docs/reference/asset/latest
      * </pre>
      *
-     * <code>string reference_docs_uri = 1;</code>
+     * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+     *     google/api/client.proto;l=106
      * @param value The referenceDocsUri to set.
      * @return This builder for chaining.
      */
+    @java.lang.Deprecated
     public Builder setReferenceDocsUri(java.lang.String value) {
       if (value == null) {
         throw new NullPointerException();
@@ -683,10 +698,13 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * https://cloud.google.com/nodejs/docs/reference/asset/latest
      * </pre>
      *
-     * <code>string reference_docs_uri = 1;</code>
+     * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+     *     google/api/client.proto;l=106
      * @return This builder for chaining.
      */
+    @java.lang.Deprecated
     public Builder clearReferenceDocsUri() {
 
       referenceDocsUri_ = getDefaultInstance().getReferenceDocsUri();
@@ -701,11 +719,14 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * https://cloud.google.com/nodejs/docs/reference/asset/latest
      * </pre>
      *
-     * <code>string reference_docs_uri = 1;</code>
+     * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
+     * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
+     *     google/api/client.proto;l=106
      * @param value The bytes for referenceDocsUri to set.
      * @return This builder for chaining.
      */
+    @java.lang.Deprecated
     public Builder setReferenceDocsUriBytes(com.google.protobuf.ByteString value) {
       if (value == null) {
         throw new NullPointerException();
