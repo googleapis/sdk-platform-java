@@ -25,6 +25,7 @@ import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.FieldMask;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class IAMPolicyClientTest {
         Policy.newBuilder()
             .setVersion(351608024)
             .addAllBindings(new ArrayList<Binding>())
+            .addAllAuditConfigs(new ArrayList<AuditConfig>())
             .setEtag(ByteString.EMPTY)
             .build();
     mockIAMPolicy.addResponse(expectedResponse);
@@ -91,6 +93,7 @@ public class IAMPolicyClientTest {
         SetIamPolicyRequest.newBuilder()
             .setResource("SetIamPolicyRequest1223629066".toString())
             .setPolicy(Policy.newBuilder().build())
+            .setUpdateMask(FieldMask.newBuilder().build())
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
@@ -102,6 +105,7 @@ public class IAMPolicyClientTest {
 
     Assert.assertEquals(request.getResource(), actualRequest.getResource());
     Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
+    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -118,6 +122,7 @@ public class IAMPolicyClientTest {
           SetIamPolicyRequest.newBuilder()
               .setResource("SetIamPolicyRequest1223629066".toString())
               .setPolicy(Policy.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
       Assert.fail("No exception raised");
@@ -132,6 +137,7 @@ public class IAMPolicyClientTest {
         Policy.newBuilder()
             .setVersion(351608024)
             .addAllBindings(new ArrayList<Binding>())
+            .addAllAuditConfigs(new ArrayList<AuditConfig>())
             .setEtag(ByteString.EMPTY)
             .build();
     mockIAMPolicy.addResponse(expectedResponse);
