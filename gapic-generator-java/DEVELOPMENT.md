@@ -4,13 +4,13 @@
 
 1.  Clone this repo.
 
-2. Copy the Git pre-commit hooks. This will automatically check the build, run
-   tests, and perform linting before each commit. (Symlinks don't seem to work,
-   but if you find a way, please add it here!)
+2.  Copy the Git pre-commit hooks. This will automatically check the build, run
+    tests, and perform linting before each commit. (Symlinks don't seem to work,
+    but if you find a way, please add it here!)
 
-   ```sh
-   cp .githooks/pre-commit .git/hooks/pre-commit
-   ```
+    ```sh
+    cp .githooks/pre-commit .git/hooks/pre-commit
+    ```
 
 ## Code Formatting
 
