@@ -49,7 +49,6 @@ import com.google.longrunning.Operation;
  *
  * <p>This class is for advanced usage.
  */
-@BetaApi
 public class HttpJsonOperationsCallableFactory
     implements HttpJsonStubCallableFactory<Operation, BackgroundResource> {
 

@@ -37,7 +37,6 @@ import javax.annotation.Nullable;
 import org.threeten.bp.Instant;
 
 /** Options for an http-json call, including deadline and credentials. */
-@BetaApi
 @AutoValue
 public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();

@@ -84,7 +84,6 @@ import java.util.List;
  * OperationsSettings operationsSettings = operationsSettingsBuilder.build();
  * }</pre>
  */
-@BetaApi
 public class OperationsSettings extends ClientSettings<OperationsSettings> {
 
   /** Returns the object with the settings used for calls to listOperations. */

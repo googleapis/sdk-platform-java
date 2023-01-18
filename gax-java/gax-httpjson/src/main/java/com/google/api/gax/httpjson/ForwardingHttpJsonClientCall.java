@@ -36,7 +36,6 @@ import javax.annotation.Nullable;
  * A {@link HttpJsonClientCall} which forwards all of its methods to another {@link
  * HttpJsonClientCall}.
  */
-@BetaApi
 public abstract class ForwardingHttpJsonClientCall<RequestT, ResponseT>
     extends HttpJsonClientCall<RequestT, ResponseT> {
 

@@ -50,7 +50,6 @@ import java.util.Map;
  * URL path parameters, and query parameters. It deserializes JSON responses into response protobuf
  * message.
  */
-@BetaApi
 public class ProtoRestSerializer<RequestT extends Message> {
 
   private final TypeRegistry registry;

@@ -37,7 +37,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 @AutoValue
-@BetaApi
 @InternalExtensionOnly
 public abstract class HttpJsonMetadata {
   public abstract Map<String, Object> getHeaders();

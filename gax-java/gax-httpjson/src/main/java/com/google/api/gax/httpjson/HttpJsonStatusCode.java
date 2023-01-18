@@ -35,7 +35,6 @@ import com.google.api.gax.rpc.StatusCode;
 import java.util.Objects;
 
 /** A failure code specific to an HTTP call. */
-@BetaApi
 @InternalExtensionOnly
 public class HttpJsonStatusCode implements StatusCode {
   private final int httpStatus;
