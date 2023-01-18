@@ -4,7 +4,7 @@
 
 1. Clone this repo.
 
-2.  (OPTIONAL) Copy the Git pre-commit hooks. This will automatically check the build, run
+2. (OPTIONAL) Copy the Git pre-commit hooks. This will automatically check the build, run
     tests, and perform linting before each commit. (Symlinks don't seem to work,
     but if you find a way, please add it here!)
 
