@@ -25,9 +25,12 @@ if [ -z "${MODULES_UNDER_TEST}" ]; then
   exit 1
 fi
 
+echo "$PWD"
+ls .kokoro
+
 # Use GCP Maven Mirror
 mkdir -p "${HOME}/.m2"
-cp .kokoro/settings.xml "${HOME}/.m2"
+cp ".kokoro/settings.xml" "${HOME}/.m2"
 
 ### Round 1
 # Publish this repo's modules to local maven to make them available for downstream libraries
