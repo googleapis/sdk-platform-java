@@ -16,17 +16,17 @@
 
 package com.google.cloud.iam.credentials.v1.samples;
 
-// [START iamcredentials_v1_generated_IAMCredentials_Create_SetCredentialsProvider1_sync]
+// [START iamcredentials_v1_generated_IAMCredentials_Create_ComposeTransport_sync]
 import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
 import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class SyncCreateComposeTransport {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    syncCreateComposeTransport();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void syncCreateComposeTransport() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -37,4 +37,4 @@ public class SyncCreateSetCredentialsProvider1 {
     IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END iamcredentials_v1_generated_IAMCredentials_Create_SetCredentialsProvider1_sync]
+// [END iamcredentials_v1_generated_IAMCredentials_Create_ComposeTransport_sync]
