@@ -27,7 +27,7 @@ fi
 
 # Use GCP Maven Mirror
 mkdir -p "${HOME}/.m2"
-cp settings.xml "${HOME}/.m2"
+cp .kokoro/settings.xml "${HOME}/.m2"
 
 ### Round 1
 # Publish this repo's modules to local maven to make them available for downstream libraries
