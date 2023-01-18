@@ -37,9 +37,7 @@ import static com.google.api.gax.nativeimage.NativeImageUtils.registerForUnsafeF
 
 import org.graalvm.nativeimage.hosted.Feature;
 
-/**
- * Configures Native Image settings for the grpc-netty-shaded dependency.
- */
+/** Configures Native Image settings for the grpc-netty-shaded dependency. */
 final class GrpcNettyFeature implements Feature {
 
   private static final String GRPC_NETTY_SHADED_CLASS =
@@ -80,10 +78,10 @@ final class GrpcNettyFeature implements Feature {
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.util.ReferenceCountUtil");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.buffer.AbstractByteBufAllocator");
-      registerForUnsafeFieldAccess(access,
-          "io.grpc.netty.shaded.io.netty.buffer.AbstractReferenceCountedByteBuf", "refCnt");
-      registerForUnsafeFieldAccess(access,
-          "io.grpc.netty.shaded.io.netty.util.AbstractReferenceCounted", "refCnt");
+      registerForUnsafeFieldAccess(
+          access, "io.grpc.netty.shaded.io.netty.buffer.AbstractReferenceCountedByteBuf", "refCnt");
+      registerForUnsafeFieldAccess(
+          access, "io.grpc.netty.shaded.io.netty.util.AbstractReferenceCounted", "refCnt");
       registerForReflectiveInstantiation(
           access, "io.grpc.netty.shaded.io.netty.channel.DefaultFileRegion");
       registerForReflectiveInstantiation(
@@ -99,7 +97,8 @@ final class GrpcNettyFeature implements Feature {
           access, "io.grpc.netty.shaded.io.netty.channel.epoll.EpollServerSocketChannel");
       registerForReflectiveInstantiation(
           access, "io.grpc.netty.shaded.io.netty.channel.epoll.EpollSocketChannel");
-      registerForReflectiveInstantiation(access,
+      registerForReflectiveInstantiation(
+          access,
           "io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket");
 
       // tcnative
@@ -146,9 +145,7 @@ final class GrpcNettyFeature implements Feature {
     }
   }
 
-  /**
-   * Miscellaneous classes that need to be registered coming from various JARs.
-   */
+  /** Miscellaneous classes that need to be registered coming from various JARs. */
   private static void loadMiscClasses(BeforeAnalysisAccess access) {
     registerClassHierarchyForReflection(access, "com.google.protobuf.DescriptorProtos");
     registerClassForReflection(access, "com.google.api.FieldBehavior");
