@@ -16,17 +16,17 @@
 
 package com.google.cloud.example.library.v1.samples;
 
-// [START example_v1_generated_LibraryService_Create_SetCredentialsProvider1_sync]
+// [START example_v1_generated_LibraryService_Create_ComposeTransport_sync]
 import com.google.cloud.example.library.v1.LibraryServiceClient;
 import com.google.cloud.example.library.v1.LibraryServiceSettings;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class SyncCreateComposeTransport {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    syncCreateComposeTransport();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void syncCreateComposeTransport() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -37,4 +37,4 @@ public class SyncCreateSetCredentialsProvider1 {
     LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
   }
 }
-// [END example_v1_generated_LibraryService_Create_SetCredentialsProvider1_sync]
+// [END example_v1_generated_LibraryService_Create_ComposeTransport_sync]
