@@ -23,7 +23,6 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

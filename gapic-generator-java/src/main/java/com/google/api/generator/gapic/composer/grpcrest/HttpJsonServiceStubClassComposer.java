@@ -17,8 +17,6 @@ package com.google.api.generator.gapic.composer.grpcrest;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
-import java.util.Collections;
 import java.util.List;
 
 public class HttpJsonServiceStubClassComposer
