@@ -176,13 +176,13 @@ To generate a production GAPIC API:
 
 2. Modify `googleapis/WORKSPACE` to point to local gapic-generator-java
 
-   Normally, googleapis's build pulls in googleapis/gapic-generator-java from the
-   Internet, we need to build a local SNAPSHOT jar first and point googleapis to the SNAPSHOT jar and local copy of the
-   repo.
+   Normally, googleapis's build pulls in gapic-generator-java from Maven Central. 
+   For a local run, we first need to build a local SNAPSHOT jar of the generator. Then we point googleapis to 
+   both the local SNAPSHOT jar and the local copy of the generator.
 
    Before:
    ```
-   _gapic_generator_java_version = "2.13.0"
+    _gapic_generator_java_version = "2.13.0"
 
     maven_install(
         artifacts = [
@@ -206,11 +206,11 @@ To generate a production GAPIC API:
    After
 
    ```
-   _gapic_generator_java_version = "2.13.1-SNAPSHOT"
+    _gapic_generator_java_version = "2.13.1-SNAPSHOT"
 
-   maven_install(
+    maven_install(
         artifacts = [
-            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+           "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
         ],
         #Update this False for local development
         fail_on_missing_checksum = False,
@@ -220,11 +220,13 @@ To generate a production GAPIC API:
         ]
     )
     
-    local_repository(
-        name = "gapic_generator_java",
-        path = "/absolute/path/to/your/local/gapic-generator-java",
-    )
+   local_repository(
+       name = "gapic_generator_java",
+       path = "/absolute/path/to/your/local/gapic-generator-java",
+   )
    ```
+   
+   Note: At the time of writing, the gapic-generator version was `2.13.0`. Update the version to the latest version in the pom.xml
 
 3. Build the new target.
 
