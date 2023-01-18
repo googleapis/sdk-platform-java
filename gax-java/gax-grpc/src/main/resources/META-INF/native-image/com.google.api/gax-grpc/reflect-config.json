@@ -72,52 +72,6 @@
     "name": "io.grpc.internal.PickFirstLoadBalancerProvider"
   },
   {
-    "name": "io.grpc.netty.shaded.io.netty.buffer.AbstractReferenceCountedByteBuf",
-    "fields": [
-      {
-        "name": "refCnt"
-      }
-    ]
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.channel.DefaultFileRegion"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.channel.unix.PeerCredentials"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.CertificateCallback"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.CertificateCallbackTask"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLContext"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodDecryptTask"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodSignTask"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodTask"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLTask"
-  },
-  {
-    "name": "io.grpc.netty.shaded.io.netty.util.AbstractReferenceCounted",
-    "fields": [
-      {
-        "name": "refCnt"
-      }
-    ]
-  },
-  {
     "name": "io.grpc.util.SecretRoundRobinLoadBalancerProvider$Provider",
     "methods": [
       {
