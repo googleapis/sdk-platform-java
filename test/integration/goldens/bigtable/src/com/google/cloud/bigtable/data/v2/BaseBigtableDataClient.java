@@ -21,11 +21,14 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.bigtable.v2.CheckAndMutateRowRequest;
 import com.google.bigtable.v2.CheckAndMutateRowResponse;
+import com.google.bigtable.v2.InstanceName;
 import com.google.bigtable.v2.MutateRowRequest;
 import com.google.bigtable.v2.MutateRowResponse;
 import com.google.bigtable.v2.MutateRowsRequest;
 import com.google.bigtable.v2.MutateRowsResponse;
 import com.google.bigtable.v2.Mutation;
+import com.google.bigtable.v2.PingAndWarmRequest;
+import com.google.bigtable.v2.PingAndWarmResponse;
 import com.google.bigtable.v2.ReadModifyWriteRowRequest;
 import com.google.bigtable.v2.ReadModifyWriteRowResponse;
 import com.google.bigtable.v2.ReadModifyWriteRule;
@@ -819,6 +822,190 @@ public class BaseBigtableDataClient implements BackgroundResource {
   public final UnaryCallable<CheckAndMutateRowRequest, CheckAndMutateRowResponse>
       checkAndMutateRowCallable() {
     return stub.checkAndMutateRowCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Warm up associated instance metadata for this connection. This call is not required but may be
+   * useful for connection keep-alive.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[INSTANCE]");
+   *   PingAndWarmResponse response = baseBigtableDataClient.pingAndWarm(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The unique name of the instance to check permissions for as well as
+   *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PingAndWarmResponse pingAndWarm(InstanceName name) {
+    PingAndWarmRequest request =
+        PingAndWarmRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+    return pingAndWarm(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Warm up associated instance metadata for this connection. This call is not required but may be
+   * useful for connection keep-alive.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
+   *   String name = InstanceName.of("[PROJECT]", "[INSTANCE]").toString();
+   *   PingAndWarmResponse response = baseBigtableDataClient.pingAndWarm(name);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The unique name of the instance to check permissions for as well as
+   *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PingAndWarmResponse pingAndWarm(String name) {
+    PingAndWarmRequest request = PingAndWarmRequest.newBuilder().setName(name).build();
+    return pingAndWarm(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Warm up associated instance metadata for this connection. This call is not required but may be
+   * useful for connection keep-alive.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[INSTANCE]");
+   *   String appProfileId = "appProfileId704923523";
+   *   PingAndWarmResponse response = baseBigtableDataClient.pingAndWarm(name, appProfileId);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The unique name of the instance to check permissions for as well as
+   *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
+   * @param appProfileId This value specifies routing for replication. If not specified, the
+   *     "default" application profile will be used.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PingAndWarmResponse pingAndWarm(InstanceName name, String appProfileId) {
+    PingAndWarmRequest request =
+        PingAndWarmRequest.newBuilder()
+            .setName(name == null ? null : name.toString())
+            .setAppProfileId(appProfileId)
+            .build();
+    return pingAndWarm(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Warm up associated instance metadata for this connection. This call is not required but may be
+   * useful for connection keep-alive.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
+   *   String name = InstanceName.of("[PROJECT]", "[INSTANCE]").toString();
+   *   String appProfileId = "appProfileId704923523";
+   *   PingAndWarmResponse response = baseBigtableDataClient.pingAndWarm(name, appProfileId);
+   * }
+   * }</pre>
+   *
+   * @param name Required. The unique name of the instance to check permissions for as well as
+   *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
+   * @param appProfileId This value specifies routing for replication. If not specified, the
+   *     "default" application profile will be used.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PingAndWarmResponse pingAndWarm(String name, String appProfileId) {
+    PingAndWarmRequest request =
+        PingAndWarmRequest.newBuilder().setName(name).setAppProfileId(appProfileId).build();
+    return pingAndWarm(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Warm up associated instance metadata for this connection. This call is not required but may be
+   * useful for connection keep-alive.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
+   *   PingAndWarmRequest request =
+   *       PingAndWarmRequest.newBuilder()
+   *           .setName(InstanceName.of("[PROJECT]", "[INSTANCE]").toString())
+   *           .setAppProfileId("appProfileId704923523")
+   *           .build();
+   *   PingAndWarmResponse response = baseBigtableDataClient.pingAndWarm(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final PingAndWarmResponse pingAndWarm(PingAndWarmRequest request) {
+    return pingAndWarmCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Warm up associated instance metadata for this connection. This call is not required but may be
+   * useful for connection keep-alive.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (BaseBigtableDataClient baseBigtableDataClient = BaseBigtableDataClient.create()) {
+   *   PingAndWarmRequest request =
+   *       PingAndWarmRequest.newBuilder()
+   *           .setName(InstanceName.of("[PROJECT]", "[INSTANCE]").toString())
+   *           .setAppProfileId("appProfileId704923523")
+   *           .build();
+   *   ApiFuture<PingAndWarmResponse> future =
+   *       baseBigtableDataClient.pingAndWarmCallable().futureCall(request);
+   *   // Do something.
+   *   PingAndWarmResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<PingAndWarmRequest, PingAndWarmResponse> pingAndWarmCallable() {
+    return stub.pingAndWarmCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
