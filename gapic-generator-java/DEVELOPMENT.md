@@ -4,19 +4,13 @@
 
 1.  Clone this repo.
 
-2.  (OPTIONAL) Copy the Git pre-commit hooks. This will automatically check the build, run
-    tests, and perform linting before each commit. (Symlinks don't seem to work,
-    but if you find a way, please add it here!)
+2. Copy the Git pre-commit hooks. This will automatically check the build, run
+   tests, and perform linting before each commit. (Symlinks don't seem to work,
+   but if you find a way, please add it here!)
 
-    ```sh
-    cp .githooks/pre-commit .git/hooks/pre-commit
-    ```
-    
-    ### Note: You may see this error with the pre-commits due to the monorepo migration:
-    ```
-    [ERROR] No plugin found for prefix 'fmt' in the current project and in the plugin groups [org.apache.maven.plugins, org.codehaus.mojo] available from the repositories [local (/home/alicejli/.m2/repository), central (https://repo.maven.apache.org/maven2)] -> [Help 1]
-    ```
-    Remove the pre-commit hooks. Tracking the issue in https://github.com/googleapis/gapic-generator-java/issues/1253
+   ```sh
+   cp .githooks/pre-commit .git/hooks/pre-commit
+   ```
 
 ## Code Formatting
 
