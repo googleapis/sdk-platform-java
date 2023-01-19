@@ -18,7 +18,7 @@ set -eo pipefail
 ## Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 ## cd to the parent directory, i.e. the root of the git repo
-cd "${scriptDir}/.."
+cd "${scriptDir}/../.."
 
 if [ -z "${MODULES_UNDER_TEST}" ]; then
   echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
@@ -27,7 +27,7 @@ fi
 
 # Use GCP Maven Mirror
 mkdir -p "${HOME}/.m2"
-cp .kokoro/settings.xml "${HOME}/.m2"
+cp settings.xml "${HOME}/.m2"
 
 ### Round 1
 # Publish this repo's modules to local maven to make them available for downstream libraries
