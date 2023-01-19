@@ -68,7 +68,6 @@ java_gapic_library(
 java_gapic_library(
     name = "showcase_java_gapic_extended",
     srcs = [":showcase_proto_extended_with_info"],
-    gapic_yaml = None,
     rest_numeric_enums = True,
     test_deps = [
         ":showcase_java_grpc_extended"
@@ -86,12 +85,19 @@ java_gapic_assembly_gradle_pkg(
     transport = "grpc+rest",
     deps = [
         ":showcase_java_gapic",
-        ":showcase_java_gapic_extended",
         ":showcase_java_grpc",
-        ":showcase_java_grpc_extended",
         ":showcase_java_proto",
-        ":showcase_java_proto_extended",
         "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
+    ],
+)
+
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-showcase-extended-v1beta1-java",
+    transport = "grpc+rest",
+    deps = [
+        ":showcase_java_gapic_extended",
+        ":showcase_java_grpc_extended",
+        ":showcase_java_proto_extended",
         "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
     ],
 )
@@ -161,6 +167,7 @@ sh_binary(
 # Proto Showcase : Update and Verify
 PROTO_DATA = [
     "proto-google-cloud-showcase-v1beta1-java.tar.gz",
+    "proto-google-cloud-showcase-extended-v1beta1-java.tar.gz",
     ":proto_gapic_showcase_files",
     "//showcase:showcase_java_proto",
     "//showcase:showcase_java_proto_extended",

@@ -26,17 +26,20 @@ case $1 in
   proto)
     PROTO_PROJECT_DIR=proto-gapic-showcase-v1beta1
     PROTO_ARCHIVE=$(find . -name 'proto-google-cloud-showcase-v1beta1-java.tar.gz')
+    PROTO_ARCHIVE_EXTENDED=$(find . -name 'proto-google-cloud-showcase-extended-v1beta1-java.tar.gz')
     clear_existing $PROTO_PROJECT_DIR
     create_unpack_dir proto_unpacked
     PROTO_UNPACK_DIR=$PWD
 
     tar -xzf "$BAZEL_ROOT/$PROTO_ARCHIVE"
-    delete_unneeded
-    # TODO(lawrenceqiu): Determine why WickedGrpc.java is generated in the proto job
+    tar -xzf "$BAZEL_ROOT/$PROTO_ARCHIVE_EXTENDED"
+    # TODO(lawrenceqiu): Why is it generating Grpc files for the showcase-extended protos only?
     find . -name '*Grpc*.java' -delete
+    delete_unneeded
     cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$PROTO_PROJECT_DIR"
     mkdir -p ./src
     cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-v1beta1-java/src/* ./src
+    cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-extended-v1beta1-java/src/* ./src
     ;;
 
   grpc)
