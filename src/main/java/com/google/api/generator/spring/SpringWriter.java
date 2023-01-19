@@ -224,7 +224,7 @@ public class SpringWriter {
                 + "  <parent>\n"
                 + "    <groupId>com.google.cloud</groupId>\n"
                 + "    <artifactId>spring-cloud-gcp-starters</artifactId>\n"
-                + "    <version>%s</version>\n"
+                + "    <version>%s</version><!-- {x-version-update:spring-cloud-gcp:current} -->\n"
                 + "    <relativePath>../../spring-cloud-gcp-starters/pom.xml</relativePath>\n"
                 + "  </parent>\n"
                 + "  <artifactId>%s</artifactId>\n"
