@@ -16,24 +16,34 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START localhost7469_v1beta1_generated_Compliance_Create_SetCredentialsProvider1_sync]
-import com.google.showcase.v1beta1.ComplianceClient;
-import com.google.showcase.v1beta1.ComplianceSettings;
+// [START localhost7469_v1beta1_generated_Wicked_BrainstormEvilPlans_async]
+import com.google.api.gax.rpc.BidiStream;
+import com.google.showcase.v1beta1.EvilRequest;
+import com.google.showcase.v1beta1.EvilResponse;
+import com.google.showcase.v1beta1.WickedClient;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class AsyncBrainstormEvilPlans {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    asyncBrainstormEvilPlans();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void asyncBrainstormEvilPlans() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    ComplianceSettings complianceSettings = ComplianceSettings.newHttpJsonBuilder().build();
-    ComplianceClient complianceClient = ComplianceClient.create(complianceSettings);
+    try (WickedClient wickedClient = WickedClient.create()) {
+      BidiStream<EvilRequest, EvilResponse> bidiStream =
+          wickedClient.brainstormEvilPlansCallable().call();
+      EvilRequest request =
+          EvilRequest.newBuilder().setMaliciousIdea("maliciousIdea712541645").build();
+      bidiStream.send(request);
+      for (EvilResponse response : bidiStream) {
+        // Do something when a response is received.
+      }
+    }
   }
 }
-// [END localhost7469_v1beta1_generated_Compliance_Create_SetCredentialsProvider1_sync]
+// [END localhost7469_v1beta1_generated_Wicked_BrainstormEvilPlans_async]

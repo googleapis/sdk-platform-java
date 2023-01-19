@@ -16,17 +16,17 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START localhost7469_v1beta1_generated_Messaging_Create_SetCredentialsProvider1_sync]
+// [START localhost7469_v1beta1_generated_Messaging_Create_ComposeTransport_sync]
 import com.google.showcase.v1beta1.MessagingClient;
 import com.google.showcase.v1beta1.MessagingSettings;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class SyncCreateComposeTransport {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    syncCreateComposeTransport();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void syncCreateComposeTransport() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -36,4 +36,4 @@ public class SyncCreateSetCredentialsProvider1 {
     MessagingClient messagingClient = MessagingClient.create(messagingSettings);
   }
 }
-// [END localhost7469_v1beta1_generated_Messaging_Create_SetCredentialsProvider1_sync]
+// [END localhost7469_v1beta1_generated_Messaging_Create_ComposeTransport_sync]
