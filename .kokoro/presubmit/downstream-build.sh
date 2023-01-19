@@ -94,6 +94,5 @@ source ./.kokoro/common.sh
 RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
-install_modules
 run_graalvm_tests "$MODULES_UNDER_TEST"
 exit $RETURN_CODE
