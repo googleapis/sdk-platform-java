@@ -27,21 +27,10 @@ java_proto_library(
     ],
 )
 
-java_proto_library(
-    name = "showcase_java_proto_extended",
-    deps = [
-        "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
-    ],
-)
-
 java_grpc_library(
     name = "showcase_java_grpc",
-    srcs = [
-        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
-    ],
-    deps = [
-        ":showcase_java_proto",
-    ],
+    srcs = ["@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto"],
+    deps = [":showcase_java_proto"],
 )
 
 java_grpc_library(
@@ -49,9 +38,7 @@ java_grpc_library(
     srcs = [
         "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
     ],
-    deps = [
-        ":showcase_java_proto_extended",
-    ],
+    deps = [":showcase_java_proto"],
 )
 
 java_gapic_library(
@@ -68,7 +55,6 @@ java_gapic_library(
     transport = "grpc+rest",
     deps = [
         ":showcase_java_proto",
-        ":showcase_java_proto_extended",
         "@com_google_googleapis//google/api:api_java_proto",
     ],
 )
@@ -79,10 +65,11 @@ java_gapic_assembly_gradle_pkg(
     transport = "grpc+rest",
     deps = [
         ":showcase_java_gapic",
+        # TODO(lawrenceqiu): Not adding :showcase_java_grpc_extended dep as that includes WickedGrpc.java
+        # Need to figure out why it's being included
         ":showcase_java_grpc",
         ":showcase_java_proto",
         "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
-        "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
     ],
 )
 
@@ -151,7 +138,7 @@ PROTO_DATA = [
     "proto-google-cloud-showcase-v1beta1-java.tar.gz",
     ":proto_gapic_showcase_files",
     ":showcase_java_proto",
-    ":showcase_java_proto_extended",
+#    ":showcase_java_proto_extended",
 ]
 
 sh_binary(
