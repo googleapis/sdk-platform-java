@@ -78,6 +78,13 @@ final class GrpcNettyFeature implements Feature {
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.util.ReferenceCountUtil");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.buffer.AbstractByteBufAllocator");
+      registerForUnsafeFieldAccess(
+          access, "io.grpc.netty.shaded.io.netty.buffer.AbstractReferenceCountedByteBuf", "refCnt");
+      registerForUnsafeFieldAccess(
+          access, "io.grpc.netty.shaded.io.netty.util.AbstractReferenceCounted", "refCnt");
+      registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.channel.DefaultFileRegion");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.channel.unix.PeerCredentials");
 
       // Epoll Libraries
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.channel.epoll.Epoll");
@@ -89,6 +96,24 @@ final class GrpcNettyFeature implements Feature {
           access, "io.grpc.netty.shaded.io.netty.channel.epoll.EpollServerSocketChannel");
       registerForReflectiveInstantiation(
           access, "io.grpc.netty.shaded.io.netty.channel.epoll.EpollSocketChannel");
+      registerClassForReflection(
+          access,
+          "io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket");
+
+      // tcnative
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.internal.tcnative.CertificateCallback");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.internal.tcnative.CertificateCallbackTask");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLContext");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodDecryptTask");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodSignTask");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodTask");
+      registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLTask");
 
       // Unsafe field accesses
       registerForUnsafeFieldAccess(
