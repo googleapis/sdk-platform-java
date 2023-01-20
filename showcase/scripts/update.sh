@@ -26,20 +26,15 @@ case $1 in
   proto)
     PROTO_PROJECT_DIR=proto-gapic-showcase-v1beta1
     PROTO_ARCHIVE=$(find . -name 'proto-google-cloud-showcase-v1beta1-java.tar.gz')
-    PROTO_ARCHIVE_EXTENDED=$(find . -name 'proto-google-cloud-showcase-extended-v1beta1-java.tar.gz')
     clear_existing $PROTO_PROJECT_DIR
     create_unpack_dir proto_unpacked
     PROTO_UNPACK_DIR=$PWD
 
     tar -xzf "$BAZEL_ROOT/$PROTO_ARCHIVE"
-    tar -xzf "$BAZEL_ROOT/$PROTO_ARCHIVE_EXTENDED"
-    # TODO(lawrenceqiu): Why is it generating Grpc files for the showcase-extended protos only?
-    find . -name '*Grpc*.java' -delete
     delete_unneeded
     cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$PROTO_PROJECT_DIR"
     mkdir -p ./src
     cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-v1beta1-java/src/* ./src
-    cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-extended-v1beta1-java/src/* ./src
     ;;
 
   grpc)
@@ -60,13 +55,11 @@ case $1 in
   gapic)
     GAPIC_PROJECT_DIR=gapic-showcase
     GAPIC_JAR=$(find . -name 'showcase_java_gapic_srcjar_raw.srcjar')
-    GAPIC_JAR_EXTENDED=$(find . -name 'showcase_java_gapic_extended_srcjar_raw.srcjar')
     clear_existing $GAPIC_PROJECT_DIR
     create_unpack_dir gapic_unpacked
     GAPIC_UNPACK_DIR=$PWD
 
     unzip -q -c "$BAZEL_ROOT/$GAPIC_JAR" temp-codegen.srcjar | jar x
-    unzip -q -c "$BAZEL_ROOT/$GAPIC_JAR_EXTENDED" temp-codegen.srcjar | jar x
     cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$GAPIC_PROJECT_DIR"
     cp -r "$GAPIC_UNPACK_DIR"/* ./
     ;;
