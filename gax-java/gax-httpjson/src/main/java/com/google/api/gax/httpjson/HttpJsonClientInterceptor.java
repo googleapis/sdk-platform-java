@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-
 /**
  * Interface for intercepting outgoing calls before they are dispatched by a {@link
  * HttpJsonChannel}.

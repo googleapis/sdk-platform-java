@@ -30,7 +30,6 @@
 
 package com.google.api.gax.httpjson;
 
-
 /**
  * A {@link HttpJsonClientCall.Listener} which forwards all of its methods to another {@link
  * HttpJsonClientCall.Listener}.
