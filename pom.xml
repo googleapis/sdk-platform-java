@@ -9,17 +9,18 @@
   <version>0.1.0-SNAPSHOT</version>
 
   <properties>
-    <checkstyle.skip>true</checkstyle.skip>
+    <clirr.skip>true</clirr.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <modules>
+    <module>gapic-generator-java-pom-parent</module>
     <module>api-common-java</module>
     <module>gax-java</module>
     <module>gapic-generator-java</module>
     <module>java-common-protos</module>
     <module>java-iam</module>
-    <!-- TODO: Add BOM -->
+    <module>gapic-generator-java-bom</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>

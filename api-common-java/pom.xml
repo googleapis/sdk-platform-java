@@ -5,15 +5,15 @@
     <groupId>com.google.api</groupId>
     <artifactId>api-common</artifactId>
     <packaging>jar</packaging>
-    <version>2.3.1</version><!-- {x-version-update:api-common:current} -->
+    <version>2.5.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
     <name>API Common</name>
-    <url>https://github.com/googleapis/api-common-java</url>
     <description>Common utilities for Google APIs in Java</description>
 
     <parent>
-        <groupId>com.google.cloud</groupId>
-        <artifactId>google-cloud-shared-config</artifactId>
-        <version>1.5.5</version>
+        <groupId>com.google.api</groupId>
+        <artifactId>gapic-generator-java-pom-parent</artifactId>
+        <version>2.14.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <relativePath>../gapic-generator-java-pom-parent</relativePath>
     </parent>
 
     <developers>
@@ -25,11 +25,6 @@
             <organizationUrl>https://www.google.com</organizationUrl>
         </developer>
     </developers>
-
-    <scm>
-        <connection>scm:git:https://github.com/googleapis/api-common-java.git</connection>
-        <url>https://github.com/googleapis/api-common-java</url>
-    </scm>
 
     <licenses>
         <license>
@@ -49,7 +44,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.auto.value</groupId>
@@ -69,12 +64,12 @@
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
+            <version>${javax.annotation-api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_annotations</artifactId>
-            <version>2.16</version>
+            <version>2.18.0</version>
             <scope>compile</scope>
         </dependency>
 

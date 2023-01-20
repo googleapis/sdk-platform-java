@@ -1,32 +1,6 @@
 workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-
-# DO NOT REMOVE.
-# This is needed to clobber any transitively-pulled in versions of bazel_skylib so that packages
-# like protobuf will build.
-http_archive(
-    name = "bazel_skylib",
-    sha256 = "74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
-        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
-    ],
-)
-
-jvm_maven_import_external(
-    name = "google_java_format_all_deps",
-    artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:1.7",
-    licenses = [
-        "notice",
-        "reciprocal",
-    ],
-    server_urls = [
-        "https://repo.maven.apache.org/maven2/",
-        "http://repo1.maven.org/maven2/",
-    ],
-)
 
 # gax-java and its transitive dependencies must be imported before
 # gapic-generator-java dependencies to match the order in googleapis repository,
@@ -52,7 +26,7 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-_googleapis_commit = "44d6bef0ca6db8bba3fb324c8186e694bcc4829c"
+_googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
 http_archive(
     name = "com_google_googleapis",
@@ -62,14 +36,10 @@ http_archive(
     ],
 )
 
-load("//:repositories.bzl", "gapic_generator_java_repositories")
-
-gapic_generator_java_repositories()
-
 # protobuf
-RULES_JVM_EXTERNAL_TAG = "4.2"
+RULES_JVM_EXTERNAL_TAG = "4.5"
 
-RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
+RULES_JVM_EXTERNAL_SHA = "b17d7388feb9bfa7f2fa09031b32707df529f26c91ab9e5d909eb1676badd9a6"
 
 http_archive(
     name = "rules_jvm_external",
@@ -78,13 +48,31 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
 )
 
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
+
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
     artifacts = PROTOBUF_MAVEN_ARTIFACTS,
-    generate_compat_repositories = True,
+    repositories = ["https://repo.maven.apache.org/maven2/"],
+)
+
+_gapic_generator_java_version = "2.14.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+
+maven_install(
+    artifacts = [
+        "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+    ],
+    fail_on_missing_checksum = False,
     repositories = [
+        "m2Local",
         "https://repo.maven.apache.org/maven2/",
     ],
 )
@@ -125,8 +113,11 @@ http_archive(
 # Showcase
 _showcase_commit = "90d73532a0cab753a85f45c158394f24fc21d91a"
 
+_showcase_sha256 = "0f582541a379be0746e6b8bc5af3df511581d4b1f18f7dfb9ce203be1a64cef1"
+
 http_archive(
     name = "com_google_gapic_showcase",
+    sha256 = _showcase_sha256,
     strip_prefix = "gapic-showcase-%s" % _showcase_commit,
     urls = [
         # "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
