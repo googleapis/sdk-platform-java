@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import java.util.concurrent.TimeUnit;
 
 class ManagedHttpJsonInterceptorChannel extends ManagedHttpJsonChannel {

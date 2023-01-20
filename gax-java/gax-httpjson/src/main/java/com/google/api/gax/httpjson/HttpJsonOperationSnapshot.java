@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.StatusCode;

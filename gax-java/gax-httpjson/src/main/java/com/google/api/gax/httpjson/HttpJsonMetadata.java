@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;

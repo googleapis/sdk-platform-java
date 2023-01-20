@@ -31,7 +31,6 @@ package com.google.api.gax.httpjson;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;

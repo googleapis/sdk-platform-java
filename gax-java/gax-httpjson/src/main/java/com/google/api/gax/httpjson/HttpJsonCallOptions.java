@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;

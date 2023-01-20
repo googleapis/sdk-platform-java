@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import javax.annotation.Nullable;
 
 // This class mimics the structure and behavior of the corresponding ClientCall from gRPC package as

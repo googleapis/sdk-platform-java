@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 
 /**
  * An exception thrown when a protobuf message cannot be serialized/deserialized for REST

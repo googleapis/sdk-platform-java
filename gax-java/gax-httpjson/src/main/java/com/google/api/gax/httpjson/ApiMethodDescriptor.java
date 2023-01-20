@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
 import javax.annotation.Nullable;
 

@@ -32,7 +32,6 @@ package com.google.api.gax.httpjson.longrunning;
 import static com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPagedResponse;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
