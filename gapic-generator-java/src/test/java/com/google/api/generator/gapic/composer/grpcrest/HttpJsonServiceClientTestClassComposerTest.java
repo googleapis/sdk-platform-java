@@ -20,6 +20,7 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,5 +40,18 @@ public class HttpJsonServiceClientTestClassComposerTest {
     Path goldenFilePath =
         Paths.get(Utils.getGoldenDir(this.getClass()), "EchoClientHttpJsonTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceClassesWicked() {
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
+    Service wickedProtoService = context.services().get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, wickedProtoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "WickedClientHttpJsonTest.golden", visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "WickedClientHttpJsonTest.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

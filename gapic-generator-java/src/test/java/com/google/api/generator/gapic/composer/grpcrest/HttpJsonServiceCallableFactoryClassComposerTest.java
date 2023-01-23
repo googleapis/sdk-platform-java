@@ -40,4 +40,17 @@ public class HttpJsonServiceCallableFactoryClassComposerTest {
         Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonEchoCallableFactory.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
+
+  @Test
+  public void generateServiceClassesWicked() {
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
+    Service wickedProtoService = context.services().get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, wickedProtoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "HttpJsonWickedCallableFactory.golden", visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonWickedCallableFactory.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
 }
