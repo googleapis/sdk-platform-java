@@ -161,7 +161,7 @@
  * <p>Service Description: This service is used to show a Service with either non-enabled or
  * non-eligible RPCs for HttpJson (Http 1.1). Non-Enabled: Missing the (google.api.http) annotation
  * to enabled it Non-Eligible: BIDI and Client side streaming are not supported with Http 1.1
- * Service name is reference to `No REST for the Wicked` (Credit: {@literal @}BurkeDavison)
+ * Service name is reference to `No REST for the Wicked`
  *
  * <p>Sample for WickedClient:
  *
