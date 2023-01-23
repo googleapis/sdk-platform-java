@@ -52,6 +52,11 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   }
 
   @Override
+  public Transport getTransport() {
+    return Transport.REST;
+  }
+
+  @Override
   protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
     if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {

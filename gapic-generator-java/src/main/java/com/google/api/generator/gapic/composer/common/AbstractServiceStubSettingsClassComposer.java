@@ -95,6 +95,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -161,6 +162,10 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   public TransportContext getTransportContext() {
     return transportContext;
+  }
+
+  public Transport getTransport() {
+    return Transport.GRPC;
   }
 
   @Override
@@ -1779,13 +1784,19 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   protected List<MethodDefinition> createNestedClassCreateDefaultMethods(
       Service service, TypeStore typeStore) {
-    return Collections.singletonList(
-        createNestedClassCreateDefaultMethod(
-            typeStore,
-            "createDefault",
-            "defaultTransportChannelProvider",
-            null,
-            "defaultApiClientHeaderProviderBuilder"));
+    if (service.hasAnyEnabledMethodsForTransport(getTransport())) {
+      List<MethodDefinition> methodDefinitions = new ArrayList<>();
+      methodDefinitions.add(
+          createNestedClassCreateDefaultMethod(
+              typeStore,
+              "createDefault",
+              "defaultTransportChannelProvider",
+              null,
+              "defaultApiClientHeaderProviderBuilder"));
+      return methodDefinitions;
+    } else {
+      return Collections.emptyList();
+    }
   }
 
   protected MethodDefinition createNestedClassCreateDefaultMethod(
