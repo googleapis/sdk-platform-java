@@ -87,7 +87,7 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
   public GapicContext parseShowcaseWicked() {
     FileDescriptor fileDescriptor = WickedOuterClass.getDescriptor();
     ServiceDescriptor messagingService = fileDescriptor.getServices().get(0);
-    assertEquals(messagingService.getName(), "Wicked");
+    assertEquals("Wicked", messagingService.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
