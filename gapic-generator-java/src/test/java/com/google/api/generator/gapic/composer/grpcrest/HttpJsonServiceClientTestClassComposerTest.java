@@ -51,7 +51,8 @@ public class HttpJsonServiceClientTestClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "WickedClientHttpJsonTest.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "WickedClientHttpJsonTest.golden");
+    Path goldenFilePath =
+        Paths.get(Utils.getGoldenDir(this.getClass()), "WickedClientHttpJsonTest.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

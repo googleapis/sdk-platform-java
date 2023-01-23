@@ -48,7 +48,8 @@ public class HttpJsonServiceStubClassComposerTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "HttpJsonWickedStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonWickedStub.golden");
+    Path goldenFilePath =
+        Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonWickedStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

@@ -46,7 +46,8 @@ public class ServiceClientTestClassComposerTest {
   public void generateServiceClassesWicked() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
     Service wickedProtoService = context.services().get(0);
-    GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, wickedProtoService);
+    GapicClass clazz =
+        ServiceClientTestClassComposer.instance().generate(context, wickedProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

@@ -49,8 +49,10 @@ public class HttpJsonServiceCallableFactoryClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "HttpJsonWickedCallableFactory.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonWickedCallableFactory.golden");
+    Utils.saveCodegenToFile(
+        this.getClass(), "HttpJsonWickedCallableFactory.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonWickedCallableFactory.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

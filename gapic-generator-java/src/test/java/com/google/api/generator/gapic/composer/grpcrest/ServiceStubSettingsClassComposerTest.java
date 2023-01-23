@@ -43,12 +43,14 @@ public class ServiceStubSettingsClassComposerTest {
   public void generateServiceClassesWicked() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
     Service wickedProtoService = context.services().get(0);
-    GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, wickedProtoService);
+    GapicClass clazz =
+        ServiceStubSettingsClassComposer.instance().generate(context, wickedProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "WickedStubSettings.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "WickedStubSettings.golden");
+    Path goldenFilePath =
+        Paths.get(Utils.getGoldenDir(this.getClass()), "WickedStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

@@ -31,9 +31,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.StructProto;
 import com.google.showcase.grpcrest.v1beta1.EchoGrpcrest;
-import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.WickedOuterClass;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -98,8 +96,8 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-            Parser.parseService(
-                    fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
@@ -108,12 +106,12 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setServiceConfig(config)
-            .setHelperResourceNames(outputResourceNames)
-            .setTransport(getTransport())
-            .build();
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(getTransport())
+        .build();
   }
 }
