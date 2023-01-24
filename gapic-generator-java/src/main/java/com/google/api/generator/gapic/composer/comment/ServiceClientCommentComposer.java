@@ -148,7 +148,6 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
-
     if (transportSampleCode != null) {
       classHeaderJavadocBuilder.addParagraph(
           String.format(
