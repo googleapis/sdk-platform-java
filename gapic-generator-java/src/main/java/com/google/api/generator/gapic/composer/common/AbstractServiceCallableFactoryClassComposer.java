@@ -42,7 +42,6 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

@@ -59,7 +59,6 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;

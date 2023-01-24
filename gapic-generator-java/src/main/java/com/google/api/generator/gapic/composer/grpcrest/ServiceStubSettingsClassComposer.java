@@ -179,12 +179,12 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
       Service service, TypeStore typeStore) {
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
     methodDefinitions.add(
-            createNestedClassCreateDefaultMethod(
-                    typeStore,
-                    "createDefault",
-                    "defaultTransportChannelProvider",
-                    null,
-                    "defaultApiClientHeaderProviderBuilder"));
+        createNestedClassCreateDefaultMethod(
+            typeStore,
+            "createDefault",
+            "defaultTransportChannelProvider",
+            null,
+            "defaultApiClientHeaderProviderBuilder"));
     if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
       methodDefinitions.add(
           createNestedClassCreateDefaultMethod(

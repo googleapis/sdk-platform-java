@@ -33,7 +33,6 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
