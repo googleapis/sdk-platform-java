@@ -28,6 +28,8 @@ public abstract class GapicClass {
     STUB,
     TEST,
     PROTO,
+    // Used to denote a Gapic Class that has no intention of being generated
+    // The Writer will skip generating code for this class
     NON_GENERATED
   };
 
