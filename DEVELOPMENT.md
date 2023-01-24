@@ -140,6 +140,13 @@ $ gapic-showcase run
 
 ### Running the Integration Tests
 
+Before running the integration tests, make sure to install bazelisk:
+
+```shell
+$ go install github.com/bazelbuild/bazelisk@latest
+$ export PATH=$PATH:$(go env GOPATH)/bin
+```
+
 Open a new terminal window in the root project directory.
 
 ```shell
