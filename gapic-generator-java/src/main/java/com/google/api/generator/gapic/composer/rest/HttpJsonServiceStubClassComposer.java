@@ -118,11 +118,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   @Override
-  protected Transport getTransport() {
-    return Transport.REST;
-  }
-
-  @Override
   protected boolean generateOperationsStubLogic(Service service) {
     return service.hasLroMethods();
   }
@@ -1276,7 +1271,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private List<MethodDefinition> createInvalidClassMethods(Service service) {
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
-      if (protoMethod.isSupportedByTransport(getTransport())) {
+      if (protoMethod.isSupportedByTransport(getTransportContext().transport())) {
         continue;
       }
       String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
@@ -1295,7 +1290,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                               .setMessageExpr(
                                   String.format(
                                       "Not implemented: %s(). %s transport is not implemented for this method yet.",
-                                      callableName, getTransport()))
+                                      callableName, getTransportContext().transport()))
                               .build())))
               .build());
     }

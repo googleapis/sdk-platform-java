@@ -93,11 +93,6 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
   }
 
   @Override
-  protected Transport getTransport() {
-    return Transport.REST;
-  }
-
-  @Override
   protected Map<String, VariableExpr> createClassMemberVarExprs(
       Service service, GapicContext context, TypeStore typeStore) {
     BiFunction<String, TypeNode, VariableExpr> varExprFn =

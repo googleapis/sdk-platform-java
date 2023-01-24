@@ -104,10 +104,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     return transportContext;
   }
 
-  protected Transport getTransport() {
-    return Transport.GRPC;
-  }
-
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     return generate(ClassNames.getServiceClientTestClassName(service), context, service);
@@ -115,7 +111,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected GapicClass generate(String className, GapicContext context, Service service) {
     // Do not generate Client Test code for Transport if there are no matching RPCs for a Transport
-    if (!service.hasAnyEnabledMethodsForTransport(getTransport())) {
+    if (!service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
       return GapicClass.createNonGeneratedGapicClass();
     }
 
@@ -236,7 +232,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
     Map<String, Message> messageTypes = context.messages();
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
-      if (!method.isSupportedByTransport(getTransport())) {
+      if (!method.isSupportedByTransport(getTransportContext().transport())) {
         javaMethods.add(createUnsupportedTestMethod(method));
         continue;
       }

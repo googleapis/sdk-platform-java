@@ -57,11 +57,6 @@ public class HttpJsonServiceCallableFactoryClassComposer
   }
 
   @Override
-  protected Transport getTransport() {
-    return Transport.REST;
-  }
-
-  @Override
   protected List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
     List<AnnotationNode> annotations = super.createClassAnnotations(service, typeStore);
     // Always add @BetaApi annotation to the generated CallableFactory for now. It is a public class

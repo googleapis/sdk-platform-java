@@ -164,10 +164,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return transportContext;
   }
 
-  public Transport getTransport() {
-    return Transport.GRPC;
-  }
-
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     // TODO(miraleung): Robustify this against a null serviceConfig.
@@ -1784,7 +1780,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   protected List<MethodDefinition> createNestedClassCreateDefaultMethods(
       Service service, TypeStore typeStore) {
-    if (service.hasAnyEnabledMethodsForTransport(getTransport())) {
+    if (service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
       List<MethodDefinition> methodDefinitions = new ArrayList<>();
       methodDefinitions.add(
           createNestedClassCreateDefaultMethod(
