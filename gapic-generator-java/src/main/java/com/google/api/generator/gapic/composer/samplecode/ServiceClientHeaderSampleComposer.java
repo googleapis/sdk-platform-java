@@ -342,7 +342,7 @@ public class ServiceClientHeaderSampleComposer {
         RegionTag.builder()
             .setServiceName(service.name())
             .setRpcName(rpcName)
-            .setOverloadDisambiguation("composeTransport")
+            .setOverloadDisambiguation("setCredentialsProvider")
             .build();
     return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
   }
