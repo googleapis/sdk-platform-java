@@ -10,23 +10,23 @@ Thanks for stopping by to let us know something could be better!
 
 Please run down the following list and make sure you've tried the usual "quick fixes":
 
-  - Search the issues already opened: https://github.com/googleapis/api-common-java/issues
-  - Check for answers on StackOverflow: http://stackoverflow.com/questions/tagged/google-cloud-platform
+- Search the issues already opened: https://github.com/googleapis/gapic-generator-java/issues
+- Check for answers on StackOverflow: http://stackoverflow.com/questions/tagged/google-cloud-platform
 
 If you are still having issues, please include as much information as possible:
 
 #### Environment details
 
-1. Specify the API at the beginning of the title. For example, "BigQuery: ...").
-   General, Core, and Other are also allowed as types
+1. Specify the artifact at the beginning of the title. For example, "api-common", "gax" etc)
 2. OS type and version:
 3. Java version:
-4. api-common-java version(s):
+4. artifact version(s):
 
 #### Steps to reproduce
+If possible, please provide a test case or sample application that reproduces the problem. This makes it much easier for us to diagnose the problem and to verify that we have fixed it.
 
-  1. ?
-  2. ?
+1. ?
+2. ?
 
 #### Code example
 
