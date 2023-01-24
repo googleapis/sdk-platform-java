@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.grpcrest;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.rest.HttpJsonServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -45,14 +47,9 @@ public class HttpJsonServiceCallableFactoryClassComposerTest {
   public void generateServiceClassesWicked() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
     Service wickedProtoService = context.services().get(0);
-    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, wickedProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(
-        this.getClass(), "HttpJsonWickedCallableFactory.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonWickedCallableFactory.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+    GapicClass clazz =
+        HttpJsonServiceCallableFactoryClassComposer.instance()
+            .generate(context, wickedProtoService);
+    assertThat(clazz.kind()).isEqualTo(GapicClass.Kind.NON_GENERATED);
   }
 }
