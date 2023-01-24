@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package com.google.cloud.iam.credentials.v1.samples;
+package com.google.showcase.v1beta1.samples;
 
-// [START iamcredentials_v1_generated_IAMCredentials_Create_ComposeTransport_sync]
-import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
-import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
+// [START localhost7469_v1beta1_generated_Messaging_Create_SetCredentialsProvider1_sync]
+import com.google.showcase.v1beta1.MessagingClient;
+import com.google.showcase.v1beta1.MessagingSettings;
 
-public class SyncCreateComposeTransport {
+public class SyncCreateSetCredentialsProvider1 {
 
   public static void main(String[] args) throws Exception {
-    syncCreateComposeTransport();
+    syncCreateSetCredentialsProvider1();
   }
 
-  public static void syncCreateComposeTransport() throws Exception {
+  public static void syncCreateSetCredentialsProvider1() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    IamCredentialsSettings iamCredentialsSettings =
-        IamCredentialsSettings.newHttpJsonBuilder().build();
-    IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
+    MessagingSettings messagingSettings = MessagingSettings.newHttpJsonBuilder().build();
+    MessagingClient messagingClient = MessagingClient.create(messagingSettings);
   }
 }
-// [END iamcredentials_v1_generated_IAMCredentials_Create_ComposeTransport_sync]
+// [END localhost7469_v1beta1_generated_Messaging_Create_SetCredentialsProvider1_sync]

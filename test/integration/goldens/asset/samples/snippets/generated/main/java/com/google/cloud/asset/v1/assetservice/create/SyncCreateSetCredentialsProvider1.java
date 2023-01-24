@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package com.google.showcase.v1beta1.samples;
+package com.google.cloud.asset.v1.samples;
 
-// [START localhost7469_v1beta1_generated_Messaging_Create_ComposeTransport_sync]
-import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.MessagingSettings;
+// [START cloudasset_v1_generated_AssetService_Create_SetCredentialsProvider1_sync]
+import com.google.cloud.asset.v1.AssetServiceClient;
+import com.google.cloud.asset.v1.AssetServiceSettings;
 
-public class SyncCreateComposeTransport {
+public class SyncCreateSetCredentialsProvider1 {
 
   public static void main(String[] args) throws Exception {
-    syncCreateComposeTransport();
+    syncCreateSetCredentialsProvider1();
   }
 
-  public static void syncCreateComposeTransport() throws Exception {
+  public static void syncCreateSetCredentialsProvider1() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    MessagingSettings messagingSettings = MessagingSettings.newHttpJsonBuilder().build();
-    MessagingClient messagingClient = MessagingClient.create(messagingSettings);
+    AssetServiceSettings assetServiceSettings = AssetServiceSettings.newHttpJsonBuilder().build();
+    AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
   }
 }
-// [END localhost7469_v1beta1_generated_Messaging_Create_ComposeTransport_sync]
+// [END cloudasset_v1_generated_AssetService_Create_SetCredentialsProvider1_sync]

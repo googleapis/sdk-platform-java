@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-package com.google.cloud.asset.v1.samples;
+package com.google.showcase.v1beta1.samples;
 
-// [START cloudasset_v1_generated_AssetService_Create_ComposeTransport_sync]
-import com.google.cloud.asset.v1.AssetServiceClient;
-import com.google.cloud.asset.v1.AssetServiceSettings;
+// [START localhost7469_v1beta1_generated_SequenceService_Create_SetCredentialsProvider1_sync]
+import com.google.showcase.v1beta1.SequenceServiceClient;
+import com.google.showcase.v1beta1.SequenceServiceSettings;
 
-public class SyncCreateComposeTransport {
+public class SyncCreateSetCredentialsProvider1 {
 
   public static void main(String[] args) throws Exception {
-    syncCreateComposeTransport();
+    syncCreateSetCredentialsProvider1();
   }
 
-  public static void syncCreateComposeTransport() throws Exception {
+  public static void syncCreateSetCredentialsProvider1() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    AssetServiceSettings assetServiceSettings = AssetServiceSettings.newHttpJsonBuilder().build();
-    AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+    SequenceServiceSettings sequenceServiceSettings =
+        SequenceServiceSettings.newHttpJsonBuilder().build();
+    SequenceServiceClient sequenceServiceClient =
+        SequenceServiceClient.create(sequenceServiceSettings);
   }
 }
-// [END cloudasset_v1_generated_AssetService_Create_ComposeTransport_sync]
+// [END localhost7469_v1beta1_generated_SequenceService_Create_SetCredentialsProvider1_sync]

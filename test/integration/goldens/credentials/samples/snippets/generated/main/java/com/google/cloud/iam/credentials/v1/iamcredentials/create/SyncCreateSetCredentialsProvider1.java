@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package com.google.showcase.v1beta1.samples;
+package com.google.cloud.iam.credentials.v1.samples;
 
-// [START localhost7469_v1beta1_generated_Identity_Create_ComposeTransport_sync]
-import com.google.showcase.v1beta1.IdentityClient;
-import com.google.showcase.v1beta1.IdentitySettings;
+// [START iamcredentials_v1_generated_IAMCredentials_Create_SetCredentialsProvider1_sync]
+import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 
-public class SyncCreateComposeTransport {
+public class SyncCreateSetCredentialsProvider1 {
 
   public static void main(String[] args) throws Exception {
-    syncCreateComposeTransport();
+    syncCreateSetCredentialsProvider1();
   }
 
-  public static void syncCreateComposeTransport() throws Exception {
+  public static void syncCreateSetCredentialsProvider1() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    IdentitySettings identitySettings = IdentitySettings.newHttpJsonBuilder().build();
-    IdentityClient identityClient = IdentityClient.create(identitySettings);
+    IamCredentialsSettings iamCredentialsSettings =
+        IamCredentialsSettings.newHttpJsonBuilder().build();
+    IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END localhost7469_v1beta1_generated_Identity_Create_ComposeTransport_sync]
+// [END iamcredentials_v1_generated_IAMCredentials_Create_SetCredentialsProvider1_sync]

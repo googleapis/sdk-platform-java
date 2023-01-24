@@ -16,26 +16,24 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START localhost7469_v1beta1_generated_SequenceService_Create_ComposeTransport_sync]
-import com.google.showcase.v1beta1.SequenceServiceClient;
-import com.google.showcase.v1beta1.SequenceServiceSettings;
+// [START localhost7469_v1beta1_generated_Identity_Create_SetCredentialsProvider1_sync]
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.IdentitySettings;
 
-public class SyncCreateComposeTransport {
+public class SyncCreateSetCredentialsProvider1 {
 
   public static void main(String[] args) throws Exception {
-    syncCreateComposeTransport();
+    syncCreateSetCredentialsProvider1();
   }
 
-  public static void syncCreateComposeTransport() throws Exception {
+  public static void syncCreateSetCredentialsProvider1() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    SequenceServiceSettings sequenceServiceSettings =
-        SequenceServiceSettings.newHttpJsonBuilder().build();
-    SequenceServiceClient sequenceServiceClient =
-        SequenceServiceClient.create(sequenceServiceSettings);
+    IdentitySettings identitySettings = IdentitySettings.newHttpJsonBuilder().build();
+    IdentityClient identityClient = IdentityClient.create(identitySettings);
   }
 }
-// [END localhost7469_v1beta1_generated_SequenceService_Create_ComposeTransport_sync]
+// [END localhost7469_v1beta1_generated_Identity_Create_SetCredentialsProvider1_sync]

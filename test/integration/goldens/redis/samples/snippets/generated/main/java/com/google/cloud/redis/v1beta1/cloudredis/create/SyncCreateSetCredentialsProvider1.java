@@ -16,17 +16,17 @@
 
 package com.google.cloud.redis.v1beta1.samples;
 
-// [START redis_v1beta1_generated_CloudRedis_Create_ComposeTransport_sync]
+// [START redis_v1beta1_generated_CloudRedis_Create_SetCredentialsProvider1_sync]
 import com.google.cloud.redis.v1beta1.CloudRedisClient;
 import com.google.cloud.redis.v1beta1.CloudRedisSettings;
 
-public class SyncCreateComposeTransport {
+public class SyncCreateSetCredentialsProvider1 {
 
   public static void main(String[] args) throws Exception {
-    syncCreateComposeTransport();
+    syncCreateSetCredentialsProvider1();
   }
 
-  public static void syncCreateComposeTransport() throws Exception {
+  public static void syncCreateSetCredentialsProvider1() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -36,4 +36,4 @@ public class SyncCreateComposeTransport {
     CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
   }
 }
-// [END redis_v1beta1_generated_CloudRedis_Create_ComposeTransport_sync]
+// [END redis_v1beta1_generated_CloudRedis_Create_SetCredentialsProvider1_sync]
