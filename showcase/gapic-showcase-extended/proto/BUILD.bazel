@@ -21,10 +21,8 @@ load ("@rules_proto//proto:defs.bzl", "proto_library")
 # This is an API workspace, having public visibility by default makes perfect sense.
 package(default_visibility = ["//visibility:public"])
 
-proto_library(
-  name = "showcase_proto_extended",
-  srcs = [ ":wicked.proto" ],
-  deps = [
-    "@com_google_googleapis//google/api:client_proto",
-  ]
-)
+#proto_library(
+#  name = "showcase_proto_extended",
+#  srcs = [],
+#  deps = []
+#)
