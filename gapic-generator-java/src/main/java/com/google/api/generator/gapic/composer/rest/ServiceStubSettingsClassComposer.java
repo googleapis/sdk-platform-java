@@ -54,7 +54,7 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   @Override
   protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
-    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+    if (service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
       return Collections.singletonList(
           createApiClientHeaderProviderBuilderMethod(
               service,

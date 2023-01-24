@@ -1780,15 +1780,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   protected List<MethodDefinition> createNestedClassCreateDefaultMethods(
       Service service, TypeStore typeStore) {
     if (service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
-      List<MethodDefinition> methodDefinitions = new ArrayList<>();
-      methodDefinitions.add(
+      return Arrays.asList(
           createNestedClassCreateDefaultMethod(
               typeStore,
               "createDefault",
               "defaultTransportChannelProvider",
               null,
               "defaultApiClientHeaderProviderBuilder"));
-      return methodDefinitions;
     } else {
       return Collections.emptyList();
     }
