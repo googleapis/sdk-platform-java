@@ -148,7 +148,7 @@ jobs:
       - run: java -version
       - name: Java Linter
         # Exclude the root project
-        run: mvn -B -ntp --projects '!.' fmt:check
+        run: mvn -B -ntp fmt:check
 
   showcase:
     runs-on: ubuntu-latest
