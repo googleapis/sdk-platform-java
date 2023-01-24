@@ -59,7 +59,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ServiceClientTestClassComposer extends AbstractServiceClientTestClassComposer {
+public class ServiceClientTestClassComposer extends AbstractSServiceClientTestClassComposer {
 
   private static final String MOCK_SERVICE_VAR_NAME = "mockService";
 
