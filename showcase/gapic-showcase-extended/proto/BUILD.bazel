@@ -21,6 +21,12 @@ load ("@rules_proto//proto:defs.bzl", "proto_library")
 # This is an API workspace, having public visibility by default makes perfect sense.
 package(default_visibility = ["//visibility:public"])
 
+# This BUILD file is the framework for gapic-showcase-extended (an extension to the existing gapic-showcase)
+# It serves to augment the existing showcase project with generic protos not *yet* suited to the upstream project
+#
+# gapic-showcase project is used to test the generated client behavior with a showcase server
+# gapic-showcase-extension project is used to test the generator's behavior
+
 #proto_library(
 #  name = "showcase_proto_extended",
 #  srcs = [],

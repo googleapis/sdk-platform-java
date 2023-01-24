@@ -1,3 +1,6 @@
+# Note: The commented section is the framework for gapic-showcase-extended
+# See gapic-showcase-extended folder for more info
+
 load(
     "//rules_java_gapic:java_gapic.bzl",
     "java_gapic_library",
