@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.14.0](https://github.com/googleapis/gapic-generator-java/compare/v2.13.0...v2.14.0) (2023-01-19)
+
+
+### Features
+
+* Add callable getters for non-eligible or non-enabled REST methods ([#1211](https://github.com/googleapis/gapic-generator-java/issues/1211)) ([84a1355](https://github.com/googleapis/gapic-generator-java/commit/84a1355a6db4754404196f153958359f9ba55437))
+* Add the google.rpc.context.AuditContext and google.rpc.http message to the open source ([#1248](https://github.com/googleapis/gapic-generator-java/issues/1248)) ([1538ad8](https://github.com/googleapis/gapic-generator-java/commit/1538ad8e88db7e03ed14337b83c0ddfae287538e))
+* Update JavaDoc to use [@return](https://github.com/return) ([#1233](https://github.com/googleapis/gapic-generator-java/issues/1233)) ([d13d3c3](https://github.com/googleapis/gapic-generator-java/commit/d13d3c381bb64e1833cbc443a12781084e89494b))
+
+
+### Bug Fixes
+
+* Add native image reflect-config.json to gax-grpc ([#1251](https://github.com/googleapis/gapic-generator-java/issues/1251)) ([ff2d118](https://github.com/googleapis/gapic-generator-java/commit/ff2d118341dfc95f34bcf114b005625d2fc930f6))
+* **deps:** Update dependency com.google.api:api-common to v2.4.0 ([#1228](https://github.com/googleapis/gapic-generator-java/issues/1228)) ([422315e](https://github.com/googleapis/gapic-generator-java/commit/422315ef0ee35740a2772eaa59cfc757ee499e28))
+* **deps:** Update dependency com.google.code.gson:gson to v2.10.1 ([#1219](https://github.com/googleapis/gapic-generator-java/issues/1219)) ([5a3aed2](https://github.com/googleapis/gapic-generator-java/commit/5a3aed2a8f9a89657d5a8ea858b668ff6ab92b96))
+* **deps:** Update dependency com.google.errorprone:error_prone_annotations to v2.18.0 ([#1231](https://github.com/googleapis/gapic-generator-java/issues/1231)) ([746cc9d](https://github.com/googleapis/gapic-generator-java/commit/746cc9d28809636afdecc85833a2122ec4fbeb76))
+* **deps:** Update dependency com.google.errorprone:error_prone_annotations to v2.18.0 ([#1232](https://github.com/googleapis/gapic-generator-java/issues/1232)) ([467ea48](https://github.com/googleapis/gapic-generator-java/commit/467ea485a32bcb3e9c0f69274edfd66a595e70d8))
+* **deps:** Update dependency io.grpc:grpc-bom to v1.52.1 ([#1240](https://github.com/googleapis/gapic-generator-java/issues/1240)) ([89e0fa2](https://github.com/googleapis/gapic-generator-java/commit/89e0fa2f4efdc48a5d6dbd59706beeae4793f3f3))
+* **deps:** Update dependency io.grpc:grpc-protobuf to v1.52.1 ([#1241](https://github.com/googleapis/gapic-generator-java/issues/1241)) ([f30d96c](https://github.com/googleapis/gapic-generator-java/commit/f30d96c9b9333c48e2d0067af1324bc9447f3580))
+* **deps:** Update dependency io.grpc:grpc-stub to v1.52.1 ([#1242](https://github.com/googleapis/gapic-generator-java/issues/1242)) ([44cef75](https://github.com/googleapis/gapic-generator-java/commit/44cef75afc94516632d1e7e04beffa2a2c7c56d0))
+* **deps:** Update dependency org.graalvm.sdk:graal-sdk to v22.3.1 ([#1252](https://github.com/googleapis/gapic-generator-java/issues/1252)) ([328f4e1](https://github.com/googleapis/gapic-generator-java/commit/328f4e1fb82fb3e413725f0b5a27e05fc45a800d))
+* Handle cancel in ReleasingClientCall and rethrow the exception in start ([#1221](https://github.com/googleapis/gapic-generator-java/issues/1221)) ([8a61249](https://github.com/googleapis/gapic-generator-java/commit/8a6124950ba51f79f0a42afd20f758e937002b35))
+* Rename gapic-parent-pom to groupId to google.cloud.api ([#1238](https://github.com/googleapis/gapic-generator-java/issues/1238)) ([7e6e750](https://github.com/googleapis/gapic-generator-java/commit/7e6e75062eacad157c92c7c9063dcb1899a9953d))
+
 ## [2.13.0](https://github.com/googleapis/gapic-generator-java/compare/v2.12.0...v2.13.0) (2023-01-06)
 
 
