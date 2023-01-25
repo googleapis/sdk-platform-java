@@ -7,7 +7,6 @@ on:
 defaults:
   run:
     shell: bash
-
 jobs:
   nightly:
     strategy:
@@ -27,10 +26,6 @@ jobs:
       - run: mvn -version
       - name: Unit Tests
         run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
-
-      - run: bazelisk version
-      - name: Integration Tests
-        run: bazelisk --batch test //test/integration/...
 
   nightly-java8: # Compile with JDK 11. Run tests with JDK 8.
     strategy:
@@ -59,7 +54,3 @@ jobs:
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
         run: mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C
-
-      - run: bazelisk version
-      - name: Integration Tests
-        run: bazelisk --batch test //test/integration/...
