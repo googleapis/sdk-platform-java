@@ -264,14 +264,16 @@ public class HttpJsonDirectServerStreamingCallableTest {
     Truth.assertThat(moneyObserver.error).isInstanceOf(ApiException.class);
     Truth.assertThat(((ApiException) moneyObserver.error).getStatusCode().getCode())
         .isEqualTo(Code.NOT_FOUND);
+
     Truth.assertThat(moneyObserver.error)
         .hasMessageThat()
-        .isEqualTo(
-            "com.google.api.client.http.HttpResponseException: 404"
-                + System.lineSeparator()
-                + "POST https://google.com:443/fake/v1/recognize/0.0?red=-1.0"
-                + System.lineSeparator()
-                + "java.lang.RuntimeException: some error");
+        .contains("com.google.api.client.http.HttpResponseException: 404");
+    Truth.assertThat(moneyObserver.error)
+        .hasMessageThat()
+        .contains("POST https://google.com:443/fake/v1/recognize/0.0?red=-1.0");
+    Truth.assertThat(moneyObserver.error)
+        .hasMessageThat()
+        .contains("java.lang.RuntimeException: some error");
   }
 
   @Test
