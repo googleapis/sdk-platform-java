@@ -1,0 +1,68 @@
+name: Nightly
+on:
+  pull_request:
+  #schedule:
+  #  - cron: '0 1 * * *' # Nightly at 1am
+
+jobs:
+  nightly:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+        java: [ 11, 17 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+      - run: mvn -version
+      - name: Unit Tests
+        run: |
+          mvn install \
+              --errors --batch-mode --no-transfer-progress \
+              -Dcheckstyle.skip \
+              -Dfmt.skip
+
+      - run: bazelisk version
+      - name: Integration Tests
+        run: bazelisk --batch test //test/integration/...
+
+  nightly-java8: # Compile with JDK 11. Run tests with JDK 8.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: maven
+      - run: mvn -version
+      - name: Install with Java 11
+        run: |
+          mvn install \
+              --errors --batch-mode --no-transfer-progress \
+              -Dcheckstyle.skip \
+              -DskipTests \
+              -Dfmt.skip
+
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+      - run: mvn -version
+      - name: Test with Java 8
+        # Direct goal invocation ("surefire:test") prevents recompiling tests
+        run: mvn surefire:test --errors --batch-mode --no-transfer-progress
+
+      - run: bazelisk version
+      - name: Integration Tests
+        run: bazelisk --batch test //test/integration/...
