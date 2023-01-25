@@ -11,6 +11,7 @@
    ```sh
    cp .githooks/pre-commit .git/hooks/pre-commit
    ```
+3. Install [`bazelisk`](https://github.com/bazelbuild/bazelisk) on your `PATH`.
 
 ## Code Formatting
 
@@ -139,13 +140,6 @@ $ gapic-showcase run
 ```
 
 ### Running the Integration Tests
-
-Before running the integration tests, make sure to install bazelisk:
-
-```shell
-$ go install github.com/bazelbuild/bazelisk@latest
-$ export PATH=$PATH:$(go env GOPATH)/bin
-```
 
 Open a new terminal window in the root project directory.
 
