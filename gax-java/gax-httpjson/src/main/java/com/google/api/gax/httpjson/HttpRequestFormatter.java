@@ -52,7 +52,6 @@ public interface HttpRequestFormatter<MessageFormatT> {
   PathTemplate getPathTemplate();
 
   /** Additional (alternative) path templates for endpoint URL path. */
-  @BetaApi
   default List<PathTemplate> getAdditionalPathTemplates() {
     return Collections.emptyList();
   }

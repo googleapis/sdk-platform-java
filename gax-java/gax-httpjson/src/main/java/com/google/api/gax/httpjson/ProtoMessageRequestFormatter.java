@@ -101,7 +101,6 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     return pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
   }
 
-  @BetaApi
   @Override
   public List<PathTemplate> getAdditionalPathTemplates() {
     return additionalPathTemplates;
@@ -141,7 +140,6 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
       return this;
     }
 
-    @BetaApi
     public Builder<RequestT> setAdditionalPaths(String... rawAdditionalPaths) {
       this.rawAdditionalPaths = Arrays.asList(rawAdditionalPaths);
       return this;

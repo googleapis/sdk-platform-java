@@ -326,7 +326,6 @@ public final class HttpJsonCallContext implements ApiCallContext {
     return streamIdleTimeout;
   }
 
-  @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
   @Override
   public ApiCallContext withExtraHeaders(Map<String, List<String>> extraHeaders) {
     Preconditions.checkNotNull(extraHeaders);
@@ -345,7 +344,6 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes);
   }
 
-  @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
   @Override
   public Map<String, List<String>> getExtraHeaders() {
     return extraHeaders;
