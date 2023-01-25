@@ -19,7 +19,6 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.base.CaseFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,11 +46,9 @@ public class SpringAutoconfigCommentComposer {
   public static final String TRANSPORT_CHANNEL_PROVIDER_RETURN =
       "a default transport channel provider.";
   public static final String CLIENT_SETTINGS_BEAN_GENERAL_DESCRIPTION =
-      "Provides a %s bean configured to "
-          + "use the default credentials provider (obtained with %sCredentials()) and its default "
-          + "transport channel provider (%s()). It also configures the quota project ID if provided. It "
-          + "will configure an executor provider in case there is more than one thread configured "
-          + "in the client ";
+      "Provides a %s bean configured to use a DefaultCredentialsProvider "
+          + "and the client library's default transport channel provider (%s()). "
+          + "It also configures the quota project ID and executor thread count, if provided through properties.";
 
   public static final String CLIENT_SETTINGS_BEAN_RETRY_SETTINGS_DESCRIPTION =
       "Retry settings are also configured from service-level and method-level properties specified in %s. "
@@ -102,14 +99,12 @@ public class SpringAutoconfigCommentComposer {
 
   public static CommentStatement createSettingsBeanComment(
       Service service, String propertiesClazzName, String channelProviderName) {
-    String credentialsBaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name());
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(
                 String.format(
                     CLIENT_SETTINGS_BEAN_GENERAL_DESCRIPTION,
                     ClassNames.getServiceSettingsClassName(service),
-                    credentialsBaseName,
                     channelProviderName))
             .addParagraph(
                 String.format(CLIENT_SETTINGS_BEAN_RETRY_SETTINGS_DESCRIPTION, propertiesClazzName))
@@ -123,8 +118,8 @@ public class SpringAutoconfigCommentComposer {
             .build());
   }
 
-  public static CommentStatement createClientBeanComment(Service service) {
-    String lowerServiceName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, service.name());
+  public static CommentStatement createClientBeanComment(
+      Service service, String serviceSettingsMethodName) {
     return CommentStatement.withComment(
         JavaDocComment.builder()
             .addParagraph(
@@ -133,8 +128,7 @@ public class SpringAutoconfigCommentComposer {
                     ClassNames.getServiceClientClassName(service),
                     ClassNames.getServiceSettingsClassName(service)))
             .addParam(
-                String.format("%sSettings", lowerServiceName),
-                "settings to configure an instance of client bean.")
+                serviceSettingsMethodName, "settings to configure an instance of client bean.")
             .setReturn(
                 String.format(
                     CLIENT_BEAN_RETURN_STATEMENT,
