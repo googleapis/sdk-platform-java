@@ -68,6 +68,7 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class HttpJsonDirectServerStreamingCallableTest {
+
   private static final ApiMethodDescriptor<Color, Money> METHOD_SERVER_STREAMING_RECOGNIZE =
       ApiMethodDescriptor.<Color, Money>newBuilder()
           .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
@@ -161,7 +162,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testBadContext() {
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE});
     streamingCallable =
         HttpJsonCallableFactory.createServerStreamingCallable(
             HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
@@ -186,7 +187,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testServerStreamingStart() throws InterruptedException {
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE});
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
@@ -202,7 +203,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   @Test
   public void testServerStreaming() throws InterruptedException {
 
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE, DEFAULTER_RESPONSE});
     CountDownLatch latch = new CountDownLatch(3);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
@@ -216,7 +217,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testManualFlowControl() throws Exception {
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE});
     CountDownLatch latch = new CountDownLatch(2);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
 
@@ -236,7 +237,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testCancelClientCall() throws Exception {
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE});
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
 
@@ -266,21 +267,24 @@ public class HttpJsonDirectServerStreamingCallableTest {
     Truth.assertThat(moneyObserver.error)
         .hasMessageThat()
         .isEqualTo(
-            "com.google.api.client.http.HttpResponseException: 404\n"
-                + "POST https://google.com:443/fake/v1/recognize/0.0?red=-1.0\n"
+            "com.google.api.client.http.HttpResponseException: 404"
+                + System.lineSeparator()
+                + "POST https://google.com:443/fake/v1/recognize/0.0?red=-1.0"
+                + System.lineSeparator()
                 + "java.lang.RuntimeException: some error");
   }
 
   @Test
   public void testObserverErrorCancelsCall() throws Throwable {
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE});
     final RuntimeException expectedCause = new RuntimeException("some error");
     final SettableApiFuture<Throwable> actualErrorF = SettableApiFuture.create();
 
     ResponseObserver<Money> moneyObserver =
         new StateCheckingResponseObserver<Money>() {
           @Override
-          protected void onStartImpl(StreamController controller) {}
+          protected void onStartImpl(StreamController controller) {
+          }
 
           @Override
           protected void onResponseImpl(Money response) {
@@ -313,7 +317,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testBlockingServerStreaming() {
-    MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
+    MOCK_SERVICE.addResponse(new Money[]{DEFAULT_RESPONSE});
     Color request = Color.newBuilder().setRed(0.5f).build();
     ServerStream<Money> response = streamingCallable.call(request);
     List<Money> responseData = Lists.newArrayList(response);
@@ -323,6 +327,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   static class MoneyObserver extends StateCheckingResponseObserver<Money> {
+
     private final boolean autoFlowControl;
     private final CountDownLatch latch;
 
