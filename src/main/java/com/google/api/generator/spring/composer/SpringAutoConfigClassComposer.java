@@ -119,7 +119,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
             .setName(className)
             .setScope(ScopeNode.PUBLIC)
             .setHeaderCommentStatements(
-                SpringAutoconfigCommentComposer.createClassHeaderComments(className, serviceName))
+                SpringAutoconfigCommentComposer.createClassHeaderComments(service))
             .setStatements(
                 createMemberVariables(service, packageName, dynamicTypes, gapicServiceConfig))
             .setAnnotations(createClassAnnotations(service, dynamicTypes))
@@ -844,7 +844,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             SpringAutoconfigCommentComposer.createSettingsBeanComment(
-                service.name(),
+                service,
                 Utils.getServicePropertiesClassName(service),
                 transportChannelProviderName))
         .setName(serviceSettingsMethodName)
@@ -945,7 +945,7 @@ public class SpringAutoConfigClassComposer implements ClassComposer {
     String methodName = JavaStyle.toLowerCamelCase(service.name()) + "Client";
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            SpringAutoconfigCommentComposer.createClientBeanComment(service.name()))
+            SpringAutoconfigCommentComposer.createClientBeanComment(service))
         .setName(methodName)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(types.get("ServiceClient"))
