@@ -22,11 +22,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Unit Tests
-        run: |
-          mvn install \
-              --errors --batch-mode --no-transfer-progress \
-              -Dcheckstyle.skip \
-              -Dfmt.skip
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip
 
       - run: bazelisk version
       - name: Integration Tests
@@ -48,12 +44,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Install with Java 11
-        run: |
-          mvn install \
-              --errors --batch-mode --no-transfer-progress \
-              -Dcheckstyle.skip \
-              -DskipTests \
-              -Dfmt.skip
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests
 
       - uses: actions/setup-java@v3
         with:
