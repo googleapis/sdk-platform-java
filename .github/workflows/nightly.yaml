@@ -3,7 +3,6 @@ on:
   pull_request:
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
-
 defaults:
   run:
     shell: bash
@@ -12,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+        os: [ macOS-12, ubuntu-22.04, windows-2022 ]
         java: [ 11, 17 ]
     runs-on: ${{ matrix.os }}
     steps:
@@ -31,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+        os: [ macOS-12, ubuntu-22.04, windows-2022 ]
     runs-on: ${{ matrix.os }}
     steps:
       - run: git config --global core.longpaths true
