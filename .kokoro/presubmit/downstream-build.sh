@@ -18,7 +18,7 @@ set -eo pipefail
 ## Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 ## cd to the parent directory, i.e. the root of the git repo
-cd "${scriptDir}/.."
+cd "${scriptDir}/../.."
 
 if [ -z "${MODULES_UNDER_TEST}" ]; then
   echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
@@ -94,6 +94,5 @@ source ./.kokoro/common.sh
 RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
-install_modules
 run_graalvm_tests "$MODULES_UNDER_TEST"
 exit $RETURN_CODE
