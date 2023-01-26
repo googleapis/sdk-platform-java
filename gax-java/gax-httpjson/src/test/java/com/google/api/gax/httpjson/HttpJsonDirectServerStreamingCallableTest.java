@@ -68,7 +68,6 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class HttpJsonDirectServerStreamingCallableTest {
-
   private static final ApiMethodDescriptor<Color, Money> METHOD_SERVER_STREAMING_RECOGNIZE =
       ApiMethodDescriptor.<Color, Money>newBuilder()
           .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
@@ -328,7 +327,6 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   static class MoneyObserver extends StateCheckingResponseObserver<Money> {
-
     private final boolean autoFlowControl;
     private final CountDownLatch latch;
 
