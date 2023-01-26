@@ -25,9 +25,6 @@
   <profiles>
     <profile>
       <id>enable-golden-tests</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
