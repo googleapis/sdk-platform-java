@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -163,7 +164,7 @@ public class ConfiguredSnippetComposer {
         VaporReference.builder()
             .setEnclosingClassNames("CustomClass")
             .setName("ClassItem")
-            .setPakkage("java.lang")
+            .setPakkage(GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig))
             .build();
     MethodInvocationExpr nestedSecondNewBuilderMethodExpr =
         MethodInvocationExpr.builder()
@@ -172,6 +173,7 @@ public class ConfiguredSnippetComposer {
             .build();
 
     // TODO update to intake from config instead of hardcode
+    // TODO currently this parameter is duplicated; fix
     MethodInvocationExpr setValueTitanic =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedSecondNewBuilderMethodExpr)
@@ -187,11 +189,10 @@ public class ConfiguredSnippetComposer {
             .setMethodName("setValue")
             .build();
 
-    // Need to invoke method twice
     MethodInvocationExpr addItemsMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(nestedFirstNewBuilderMethodExpr)
-            .setArguments(setValueTitanic, setValueRMSQueenMary)
+            .setArguments(setValueTitanic)
             .setMethodName("addItems")
             .build();
 
@@ -202,10 +203,24 @@ public class ConfiguredSnippetComposer {
             .setMethodName("build")
             .build();
 
+    MethodInvocationExpr addItemsMethodExpr2 =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(addItemsMethodExpr)
+                    .setArguments(setValueRMSQueenMary)
+                    .setMethodName("addItems")
+                    .build();
+
+    MethodInvocationExpr innerNestedBuildMethodExpr2 =
+            MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(addItemsMethodExpr2)
+                    .setReturnType(requestType)
+                    .setMethodName("build")
+                    .build();
+
     MethodInvocationExpr thirdRequestMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(secondRequestMethodExpr)
-            .setArguments(innerNestedBuildMethodExpr)
+            .setArguments(innerNestedBuildMethodExpr, innerNestedBuildMethodExpr2)
             .setMethodName("setCustomClass")
             .build();
 
@@ -242,11 +257,12 @@ public class ConfiguredSnippetComposer {
     // invoking callable method
     //    e.g. ApiFuture<CustomClass> future =
     // adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
-    //    CustomClass createdCustomClass = future.get();
 
-    // TODO: Build logic that if returnType is a messageType, then need to do additional processing
+    // TODO: Confirm that this works for non-message Return Types
+    // TODO: Build in logic if there is no return how to handle
+
     String returnType =
-        SampleComposerUtil.convertMessageTypeToReturnType(
+        SampleComposerUtil.convertTypeToReturnType(
             GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig));
     TypeNode responseType =
         TypeNode.withReference(
@@ -299,12 +315,16 @@ public class ConfiguredSnippetComposer {
             .setArguments(requestVarExpr)
             .setReturnType(apiFutureType)
             .build();
+
     AssignmentExpr futureAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(callableMethodInvocationExpr)
             .build();
     sampleBodyStatements.add(ExprStatement.withExpr(futureAssignmentExpr));
+
+    // Get the future call
+    //  CustomClass createdCustomClass = future.get();
 
     MethodInvocationExpr getMethodInvocationExpr =
         MethodInvocationExpr.builder()
@@ -335,12 +355,8 @@ public class ConfiguredSnippetComposer {
     for (com.google.cloud.tools.snippetgen.configlanguage.v1.Statement statement :
         finalStatements) {
       if (statement.hasStandardOutput()) {
-        // TODO update if it's not a string value to use the value directly
         sampleBodyStatements.add(
-            ExprStatement.withExpr(
-                SampleComposerUtil.systemOutPrint(
-                    SampleComposerUtil.convertExpressionToString(
-                        statement.getStandardOutput().getValue()))));
+               SampleComposerUtil.convertStandardOutputStatementToStatement(statement));
       }
       if (statement.hasIteration()) {
         sampleBodyStatements.add(

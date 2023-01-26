@@ -54,9 +54,11 @@ public class CreateCustomClass {
               .setCustomClassId(customClassId)
               .setCustomClass(
                   CustomClass.newBuilder()
-                      .addItems(
-                          CustomClass.ClassItem.newBuilder().setValue("Titanic"),
-                          CustomClass.ClassItem.newBuilder().setValue("RMSQueenMary"))
+                      .addItems(CustomClass.ClassItem.newBuilder().setValue("Titanic"))
+                      .build(),
+                  CustomClass.newBuilder()
+                      .addItems(CustomClass.ClassItem.newBuilder().setValue("Titanic"))
+                      .addItems(CustomClass.ClassItem.newBuilder().setValue("RMSQueenMary"))
                       .build())
               .build();
       System.out.println("Calling the CreateCustomClass operation.");
@@ -64,7 +66,7 @@ public class CreateCustomClass {
           adaptationClient.createCustomClassCallable().futureCall(createCustomClassRequest);
       CustomClass createdCustomClass = future.get();
       System.out.println("A Custom Class with the following name has been created.");
-      System.out.println("createdCustomClass.getName()");
+      System.out.println(createdCustomClass.getName());
       System.out.println("The Custom class contains the following items.");
       for (ClassItem item : createdCustomClass.getItemsList()) {
         System.out.println(item);

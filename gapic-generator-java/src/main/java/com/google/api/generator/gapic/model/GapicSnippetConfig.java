@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/** Represents the data in a snippet_config.json file. */
+/** A convenience wrapper for the data in com.google.cloud.tools.snippetgen.configlanguage for generating configured Java samples. */
 public class GapicSnippetConfig {
 
   private final Map<String, Object> configMetadata;
@@ -141,12 +141,8 @@ public class GapicSnippetConfig {
     return mainMethodVariables;
   }
 
-  public static GapicSnippetConfig create(Optional<SnippetConfig> snippetConfigOpt) {
-    if (!snippetConfigOpt.isPresent()) {
-      return emptyGapicSnippetConfig;
-    }
+  public static GapicSnippetConfig create(SnippetConfig snippetConfig) {
 
-    SnippetConfig snippetConfig = snippetConfigOpt.get();
     SnippetConfigMetadata rawConfigMetadata = snippetConfig.getMetadata();
     Map<String, Object> configMetadata = new HashMap<>();
     // check if Java is a skipped language

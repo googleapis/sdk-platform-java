@@ -57,6 +57,26 @@ public class GapicSnippetConfigTest {
         GapicSnippetConfig.getConfiguredSnippetPakkageString(snippetConfig));
   }
 
+  @Test
+  public void snippetConfig_getSnippetEndpoint() {
+    assertEquals(
+            "us-speech.googleapis.com:443",
+            GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig));
+  }
+
+  @Test
+  public void parseSnippetSignatureReturnType_test() {
+    String actualReturnValue = GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig);
+
+    assertEquals("google.cloud.speech.v1.CustomClass", actualReturnValue);
+  }
+
+  @Test
+  public void getSnippetResponseValue_test() {
+    String actualResponseValue = GapicSnippetConfig.getResponseValue(snippetConfig);
+
+    assertEquals("createdCustomClass", actualResponseValue);
+  }
   // Add test for getRequestValues()
   //  @Test
   //  public void snippetConfig_getRequestValues() {
@@ -106,26 +126,5 @@ public class GapicSnippetConfigTest {
 
     assertEquals(sampleVariableExpr, listOfVarExpr);
     assertEquals(sampleAssignmentExpr, listOfAssignmentExpr);
-  }
-
-  @Test
-  public void snippetConfig_getSnippetEndpoint() {
-    assertEquals(
-        "us-speech.googleapis.com:443",
-        GapicSnippetConfig.getConfiguredSnippetEndpoint(snippetConfig));
-  }
-
-  @Test
-  public void parseSnippetSignatureReturnType_test() {
-    String actualReturnValue = GapicSnippetConfig.getConfiguredSnippetReturnType(snippetConfig);
-
-    assertEquals("google.cloud.speech.v1.CustomClass", actualReturnValue);
-  }
-
-  @Test
-  public void getSnippetResponseValue_test() {
-    String actualResponseValue = GapicSnippetConfig.getResponseValue(snippetConfig);
-
-    assertEquals("createdCustomClass", actualResponseValue);
   }
 }

@@ -141,15 +141,14 @@ public class Parser {
         serviceYamlConfigPathOpt.flatMap(ServiceYamlParser::parse);
 
     // TODO: @alicejli Each snippet config will have its own path, will need to update this to get
-    // the list from wherever it will live
+    // the list from wherever it will live. Need to build ability to parse  multiple configurations.
     Optional<String> snippetConfigPathOpt = PluginArgumentParser.parseSnippetConfigPath(request);
 
     Optional<GapicSnippetConfig> configuredSnippetOpt =
         SnippetConfigParser.parse(snippetConfigPathOpt.orElse(null));
     List<GapicSnippetConfig> listOfSnippetConfigs = new ArrayList<>();
-    if (snippetConfigPathOpt.isPresent() && configuredSnippetOpt.isPresent()) {
-      GapicSnippetConfig gapicSnippetConfig = configuredSnippetOpt.get();
-      listOfSnippetConfigs.add(gapicSnippetConfig);
+    if (snippetConfigPathOpt.isPresent()) {
+      listOfSnippetConfigs.add(configuredSnippetOpt.get());
     }
 
     // Collect the resource references seen in messages.

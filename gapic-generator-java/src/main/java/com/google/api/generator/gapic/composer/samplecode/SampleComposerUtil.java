@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -26,6 +27,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.GapicSnippetConfig;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
@@ -141,8 +143,8 @@ public class SampleComposerUtil {
 
   // If the return type is a message Type, need to do additional parsing to get return Type for
   // sample method
-  public static String convertMessageTypeToReturnType(String messageType) {
-    String[] splitString = messageType.split("\\.");
+  public static String convertTypeToReturnType(String type) {
+    String[] splitString = type.split("\\.");
     return splitString[splitString.length - 1];
   }
 
@@ -200,7 +202,7 @@ public class SampleComposerUtil {
     }
   }
 
-  // Convert config.Language Epression to String
+  // Convert config.Language Expression to String
   // Currently handles Boolean, String, NameValue Expressions
   // TODO: add handling for ComplexValue (P0), Enum (P0), Number (P0), NameValue with Path (P1),
   // ListValue (P1), MapValue (P1), ConditionalValue (P2), NullValue (P2), BytesValue (P3), and
@@ -270,17 +272,73 @@ public class SampleComposerUtil {
 
       Statement BodyStatement = ExprStatement.withExpr(systemOutPrint(variableExpr));
 
-      ForStatement forStatement =
-          ForStatement.builder()
-              .setLocalVariableExpr(variableExpr)
-              .setCollectionExpr(methodExpr)
-              .setBody(Arrays.asList(BodyStatement))
-              .build();
-
-      return forStatement;
+      return ForStatement.builder()
+          .setLocalVariableExpr(variableExpr)
+          .setCollectionExpr(methodExpr)
+          .setBody(Arrays.asList(BodyStatement))
+          .build();
     }
     return null;
   }
+
+  // Convert configLanguage.Statement of StandardOutput to Statement
+  // Support StandardOutput
+  // TODO: Support Return (P0), Declaration (P0), Declaration Assigment (P0)
+  // TODO: Support Iteration.Repeated (P1), Iteration.Map (P1), Conditional (P2), Iteration.NumberSequence(P2), Iteration.bytes(P3)
+  public static Statement convertStandardOutputStatementToStatement(
+          com.google.cloud.tools.snippetgen.configlanguage.v1.Statement statement) {
+    if (statement.hasStandardOutput()) {
+      if(statement.getStandardOutput().getValue().hasStringValue()) {
+        String val = convertExpressionToString(statement.getStandardOutput().getValue());
+        Expr content = ValueExpr.withValue(StringObjectValue.withValue(val));
+        return ExprStatement.withExpr(composeSystemOutPrint(content));
+      }
+      if(statement.getStandardOutput().getValue().hasNameValue()){
+        // If path does not exist in NameValue, print out Name
+        if(statement.getStandardOutput().getValue().getNameValue().getPathList().isEmpty()){
+          VariableExpr content =
+                  VariableExpr.builder()
+                          .setVariable(
+                                  Variable.builder()
+                                          .setType(TypeNode.STRING)
+                                          .setName(JavaStyle.toLowerCamelCase(statement.getStandardOutput().getValue().getNameValue().getName()))
+                                          .build())
+                          .setIsDecl(true)
+                          .build();
+          return ExprStatement.withExpr(systemOutPrint(content));
+        }
+        // If path exists in NameValue, print out Name.get<Path>
+        TypeNode contentType =
+                TypeNode.withReference(
+                        ConcreteReference.builder()
+                                .setClazz(Object.class)
+                                .build());
+        VariableExpr contentVarExpr =
+                VariableExpr.withVariable(
+                        Variable.builder().setName(JavaStyle.toLowerCamelCase(statement.getStandardOutput().getValue().getNameValue().getName())).setType(contentType).build());
+        MethodInvocationExpr initialGetMethodInvocationExpr =
+                MethodInvocationExpr.builder()
+                        .setExprReferenceExpr(contentVarExpr)
+                        .setMethodName(String.format("get%s", JavaStyle.toUpperCamelCase(statement.getStandardOutput().getValue().getNameValue().getPathList().get(0))))
+                        .setReturnType(TypeNode.VOID)
+                        .build();
+
+        // If path is nested, recursively add get() methods
+//        for(String pathField : statement.getStandardOutput().getValue().getNameValue().getPathList()){
+//          MethodInvocationExpr nextGetMethodInvocationExpr =
+//                  MethodInvocationExpr.builder()
+//                          .setExprReferenceExpr(initialGetMethodInvocationExpr)
+//                          .setMethodName(String.format("get%s", JavaStyle.toUpperCamelCase(pathField)))
+//                          .setReturnType(TypeNode.VOID)
+//                          .build();
+//          return ExprStatement.withExpr(systemOutPrint(nextGetMethodInvocationExpr));
+//        }
+        return ExprStatement.withExpr(systemOutPrint(initialGetMethodInvocationExpr));
+      }
+    }
+    // Return empty print statement if invalid
+    return ExprStatement.withExpr(systemOutPrint(""));
+    }
 
   // Create Statement from standardOutput
   public static MethodInvocationExpr systemOutPrint(String content) {
@@ -291,11 +349,11 @@ public class SampleComposerUtil {
     return composeSystemOutPrint(variableExpr.toBuilder().setIsDecl(false).build());
   }
 
-  private Expr systemOutPrint(MethodInvocationExpr response) {
-    return composeSystemOutPrint(response);
+  public static  MethodInvocationExpr systemOutPrint(MethodInvocationExpr nestedVariableExpr) {
+    return composeSystemOutPrint(nestedVariableExpr.toBuilder().build());
   }
 
-  private static MethodInvocationExpr composeSystemOutPrint(Expr content) {
+  public static MethodInvocationExpr composeSystemOutPrint(Expr content) {
     VaporReference out =
         VaporReference.builder()
             .setEnclosingClassNames("System")
