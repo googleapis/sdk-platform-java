@@ -19,10 +19,7 @@
 
   <profiles>
     <profile>
-      <id>diff</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+      <id>enable-golden-tests</id>
       <build>
         <plugins>
           <plugin>

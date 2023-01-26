@@ -5,14 +5,14 @@
     <groupId>com.google.api</groupId>
     <artifactId>api-common</artifactId>
     <packaging>jar</packaging>
-    <version>2.4.0</version><!-- {x-version-update:api-common:current} -->
+    <version>2.5.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
     <name>API Common</name>
     <description>Common utilities for Google APIs in Java</description>
 
     <parent>
-        <groupId>com.google.cloud</groupId>
+        <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java-pom-parent</artifactId>
-        <version>2.13.0</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.14.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
         <relativePath>../gapic-generator-java-pom-parent</relativePath>
     </parent>
 
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_annotations</artifactId>
-            <version>2.17.0</version>
+            <version>2.18.0</version>
             <scope>compile</scope>
         </dependency>
 

@@ -240,8 +240,8 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     messages. Format is `projects/{project}/topics/{topic}`. The value of this field will be
    *     `_deleted-topic_` if the topic has been deleted.
    * @param pushConfig If push delivery is used with this subscription, this field is used to
-   *     configure it. An empty `pushConfig` signifies that the subscriber will pull and ack
-   *     messages using API methods.
+   *     configure it. Either `pushConfig` or `bigQueryConfig` can be set, but not both. If both are
+   *     empty, then the subscriber will pull and ack messages using API methods.
    * @param ackDeadlineSeconds The approximate amount of time (on a best-effort basis) Pub/Sub waits
    *     for the subscriber to acknowledge receipt before resending the message. In the interval
    *     after the message is delivered and before it is acknowledged, it is considered to be
@@ -311,8 +311,8 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     messages. Format is `projects/{project}/topics/{topic}`. The value of this field will be
    *     `_deleted-topic_` if the topic has been deleted.
    * @param pushConfig If push delivery is used with this subscription, this field is used to
-   *     configure it. An empty `pushConfig` signifies that the subscriber will pull and ack
-   *     messages using API methods.
+   *     configure it. Either `pushConfig` or `bigQueryConfig` can be set, but not both. If both are
+   *     empty, then the subscriber will pull and ack messages using API methods.
    * @param ackDeadlineSeconds The approximate amount of time (on a best-effort basis) Pub/Sub waits
    *     for the subscriber to acknowledge receipt before resending the message. In the interval
    *     after the message is delivered and before it is acknowledged, it is considered to be
@@ -382,8 +382,8 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     messages. Format is `projects/{project}/topics/{topic}`. The value of this field will be
    *     `_deleted-topic_` if the topic has been deleted.
    * @param pushConfig If push delivery is used with this subscription, this field is used to
-   *     configure it. An empty `pushConfig` signifies that the subscriber will pull and ack
-   *     messages using API methods.
+   *     configure it. Either `pushConfig` or `bigQueryConfig` can be set, but not both. If both are
+   *     empty, then the subscriber will pull and ack messages using API methods.
    * @param ackDeadlineSeconds The approximate amount of time (on a best-effort basis) Pub/Sub waits
    *     for the subscriber to acknowledge receipt before resending the message. In the interval
    *     after the message is delivered and before it is acknowledged, it is considered to be
@@ -453,8 +453,8 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     messages. Format is `projects/{project}/topics/{topic}`. The value of this field will be
    *     `_deleted-topic_` if the topic has been deleted.
    * @param pushConfig If push delivery is used with this subscription, this field is used to
-   *     configure it. An empty `pushConfig` signifies that the subscriber will pull and ack
-   *     messages using API methods.
+   *     configure it. Either `pushConfig` or `bigQueryConfig` can be set, but not both. If both are
+   *     empty, then the subscriber will pull and ack messages using API methods.
    * @param ackDeadlineSeconds The approximate amount of time (on a best-effort basis) Pub/Sub waits
    *     for the subscriber to acknowledge receipt before resending the message. In the interval
    *     after the message is delivered and before it is acknowledged, it is considered to be
@@ -511,6 +511,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *           .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
    *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
    *           .setPushConfig(PushConfig.newBuilder().build())
+   *           .setBigqueryConfig(BigQueryConfig.newBuilder().build())
    *           .setAckDeadlineSeconds(2135351438)
    *           .setRetainAckedMessages(true)
    *           .setMessageRetentionDuration(Duration.newBuilder().build())
@@ -562,6 +563,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *           .setName(SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]").toString())
    *           .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
    *           .setPushConfig(PushConfig.newBuilder().build())
+   *           .setBigqueryConfig(BigQueryConfig.newBuilder().build())
    *           .setAckDeadlineSeconds(2135351438)
    *           .setRetainAckedMessages(true)
    *           .setMessageRetentionDuration(Duration.newBuilder().build())
@@ -2641,6 +2643,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *       SetIamPolicyRequest.newBuilder()
    *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   Policy response = subscriptionAdminClient.setIamPolicy(request);
    * }
@@ -2672,6 +2675,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *       SetIamPolicyRequest.newBuilder()
    *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = subscriptionAdminClient.setIamPolicyCallable().futureCall(request);
    *   // Do something.

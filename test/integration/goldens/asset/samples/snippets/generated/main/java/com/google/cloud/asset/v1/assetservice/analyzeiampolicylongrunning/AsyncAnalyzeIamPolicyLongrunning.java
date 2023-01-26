@@ -40,6 +40,7 @@ public class AsyncAnalyzeIamPolicyLongrunning {
       AnalyzeIamPolicyLongrunningRequest request =
           AnalyzeIamPolicyLongrunningRequest.newBuilder()
               .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+              .setSavedAnalysisQuery("savedAnalysisQuery376058885")
               .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
               .build();
       ApiFuture<Operation> future =
