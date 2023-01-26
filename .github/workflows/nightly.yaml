@@ -2,7 +2,10 @@ name: Nightly
 on:
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
-
+env:
+  WINDOWS: windows-2022
+  MAC: macos-12
+  LINUX: ubuntu-22.04
 defaults:
   run:
     shell: bash
@@ -11,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+        os: [ ${{ env.MAC }}, ${{ env.LINUX }}, ${{ env.WINDOWS }} ]
         java: [ 11, 17 ]
     runs-on: ${{ matrix.os }}
     steps:
@@ -30,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+        os: [ ${{ env.MAC }}, ${{ env.LINUX }}, ${{ env.WINDOWS }} ]
     runs-on: ${{ matrix.os }}
     steps:
       - run: git config --global core.longpaths true
