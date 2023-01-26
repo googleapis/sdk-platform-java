@@ -13,7 +13,7 @@ env:
 jobs:
   # GraalVM job ensures the compatibility of GraaVM version
   graalvm:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:

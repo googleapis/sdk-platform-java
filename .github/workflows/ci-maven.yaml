@@ -6,10 +6,9 @@ on:
 name: ci-maven
 env:
   SHOWCASE_VERSION: 0.25.0
-defaults:
-  runs-on: ubuntu-22.04
 jobs:
   build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         java: [ 11, 17 ]
@@ -51,6 +50,7 @@ jobs:
 
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
@@ -90,6 +90,7 @@ jobs:
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -136,6 +137,7 @@ jobs:
           popd
 
   lint:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v3
@@ -149,6 +151,7 @@ jobs:
         run: mvn -B -ntp fmt:check
 
   showcase:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         java: [ 11, 17 ]
