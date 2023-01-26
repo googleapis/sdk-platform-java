@@ -33,7 +33,7 @@
 
     ```sh
     mvn test          # unit tests
-    bazel test //...  # integration tests
+    bazelisk test //...  # integration tests
     ```
 
 - Run all unit tests.
@@ -42,13 +42,13 @@
     mvn test
     ```
 
--   Run a single or multiple unit tests:
+- Run a single or multiple unit tests:
 
-    ```sh
-    mvn test -Dtest=JavaCodeGeneratorTest
+  ```sh
+  mvn test -Dtest=JavaCodeGeneratorTest
 
-    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
-    ```
+  mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+  ```
 
 - Update all unit test golden files:
 
@@ -67,14 +67,14 @@
   in `test/integration/goldens/redis`.
 
   ```sh
-  bazel test //test/integration:redis
+  bazelisk test //test/integration:redis
   ```
 
 - Update integration test golden files, for example `Redis`. This clobbers all the
   files in `test/integration/goldens/redis`.
 
   ```sh
-  bazel run //test/integration:update_redis
+  bazelisk run //test/integration:update_redis
   ```
 
 ## Showcase Integration Testing
@@ -205,7 +205,7 @@ To generate a production GAPIC API:
    run:
 
    ```
-   bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
+   bazelisk build //google/cloud/speech/v2:google-cloud-speech-v2-java
    ```
 
 
