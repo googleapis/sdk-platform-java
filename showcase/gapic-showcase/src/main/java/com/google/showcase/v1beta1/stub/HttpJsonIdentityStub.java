@@ -78,7 +78,6 @@ public class HttpJsonIdentityStub extends IdentityStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateUserRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -114,7 +113,6 @@ public class HttpJsonIdentityStub extends IdentityStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetUserRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -148,7 +146,6 @@ public class HttpJsonIdentityStub extends IdentityStub {
                         ProtoRestSerializer<UpdateUserRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -183,7 +180,6 @@ public class HttpJsonIdentityStub extends IdentityStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteUserRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -218,7 +214,6 @@ public class HttpJsonIdentityStub extends IdentityStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)

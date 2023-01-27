@@ -1003,22 +1003,22 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     }
 
     // Add a fixed query param for numeric enum, see b/232457244 for details
-    if (restNumericEnumsEnabled && serializerMethodName.equals("putQueryParam")) {
-      ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
-
-      paramsPutArgs.add(fieldsVarExpr);
-      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("$alt")));
-      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("json;enum-encoding=int")));
-
-      Expr paramsPutExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(serializerVarExpr)
-              .setMethodName(serializerMethodName)
-              .setArguments(paramsPutArgs.build())
-              .setReturnType(extractorReturnType)
-              .build();
-      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
-    }
+//    if (restNumericEnumsEnabled && serializerMethodName.equals("putQueryParam")) {
+//      ImmutableList.Builder<Expr> paramsPutArgs = ImmutableList.builder();
+//
+//      paramsPutArgs.add(fieldsVarExpr);
+////      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("$alt")));
+////      paramsPutArgs.add(ValueExpr.withValue(StringObjectValue.withValue("json;enum-encoding=int")));
+//
+//      Expr paramsPutExpr =
+//          MethodInvocationExpr.builder()
+//              .setExprReferenceExpr(serializerVarExpr)
+//              .setMethodName(serializerMethodName)
+//              .setArguments(paramsPutArgs.build())
+//              .setReturnType(extractorReturnType)
+//              .build();
+//      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
+//    }
 
     // Overrides FieldsExtractor
     // (https://github.com/googleapis/gax-java/blob/12b18ee255d3fabe13bb3969df40753b29f830d5/gax-httpjson/src/main/java/com/google/api/gax/httpjson/FieldsExtractor.java).

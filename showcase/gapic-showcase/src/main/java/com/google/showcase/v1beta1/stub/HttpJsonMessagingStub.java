@@ -105,7 +105,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -141,7 +140,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -175,7 +173,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         ProtoRestSerializer<UpdateRoomRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -210,7 +207,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -245,7 +241,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -279,7 +274,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -316,7 +310,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -351,7 +344,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         ProtoRestSerializer<UpdateBlurbRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -387,7 +379,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -424,7 +415,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -459,7 +449,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<SearchBlurbsRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -500,7 +489,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<StreamBlurbsRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(

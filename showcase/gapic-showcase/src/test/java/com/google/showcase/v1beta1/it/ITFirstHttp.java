@@ -39,7 +39,7 @@ public class ITFirstHttp {
   @BeforeClass
   public static void createClient() throws IOException, GeneralSecurityException {
     EchoSettings echoSettings =
-        EchoSettings.newBuilder()
+        EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -61,13 +61,8 @@ public class ITFirstHttp {
   // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
   @Test
   public void testEcho() {
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> assertEquals("http-echo?", echo("http-echo?")));
-
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> assertEquals("http-echo!", echo("http-echo!")));
+    assertEquals("http-echo?", echo("http-echo?"));
+    assertEquals("http-echo!", echo("http-echo!"));
   }
 
   private String echo(String value) {

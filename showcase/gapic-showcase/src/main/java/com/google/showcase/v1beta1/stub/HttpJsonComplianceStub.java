@@ -73,7 +73,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<RepeatRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -128,7 +127,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             }
                             serializer.putQueryParam(
                                 fields, "serverVerify", request.getServerVerify());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -183,7 +181,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             }
                             serializer.putQueryParam(
                                 fields, "serverVerify", request.getServerVerify());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -246,7 +243,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             }
                             serializer.putQueryParam(
                                 fields, "serverVerify", request.getServerVerify());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -309,7 +305,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             }
                             serializer.putQueryParam(
                                 fields, "serverVerify", request.getServerVerify());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -369,7 +364,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             }
                             serializer.putQueryParam(
                                 fields, "serverVerify", request.getServerVerify());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -402,7 +396,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<RepeatRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -438,7 +431,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<RepeatRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -472,7 +464,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<EnumRequest> serializer = ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "unknownEnum", request.getUnknownEnum());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -504,7 +495,6 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                         ProtoRestSerializer<EnumResponse> serializer = ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "continent", request.getContinentValue());
                         serializer.putQueryParam(fields, "request", request.getRequest());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)

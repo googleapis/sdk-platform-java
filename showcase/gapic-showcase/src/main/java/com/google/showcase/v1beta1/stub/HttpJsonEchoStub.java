@@ -93,7 +93,6 @@ public class HttpJsonEchoStub extends EchoStub {
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<EchoRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -128,7 +127,6 @@ public class HttpJsonEchoStub extends EchoStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<ExpandRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -164,7 +162,6 @@ public class HttpJsonEchoStub extends EchoStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<PagedExpandRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -200,7 +197,6 @@ public class HttpJsonEchoStub extends EchoStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<PagedExpandLegacyRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -236,7 +232,6 @@ public class HttpJsonEchoStub extends EchoStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<PagedExpandRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
@@ -269,7 +264,6 @@ public class HttpJsonEchoStub extends EchoStub {
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<WaitRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
@@ -305,7 +299,6 @@ public class HttpJsonEchoStub extends EchoStub {
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<BlockRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
