@@ -49,7 +49,7 @@ java_gapic_library(
     srcs = [":showcase_proto_with_info"],
     gapic_yaml = None,
     grpc_service_config = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_grpc_service_config.json",
-    rest_numeric_enums = True,
+    rest_numeric_enums = False,
     service_yaml = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml",
     test_deps = [
         ":showcase_java_grpc",

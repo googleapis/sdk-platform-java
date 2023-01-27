@@ -17,11 +17,9 @@
 package com.google.showcase.v1beta1.it;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -39,7 +37,7 @@ public class ITFirstHttp {
   @BeforeClass
   public static void createClient() throws IOException, GeneralSecurityException {
     EchoSettings echoSettings =
-        EchoSettings.newBuilder()
+        EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -57,17 +55,10 @@ public class ITFirstHttp {
     client.close();
   }
 
-  // TODO(#1187): For 'throws' explanation, see
-  // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
   @Test
   public void testEcho() {
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> assertEquals("http-echo?", echo("http-echo?")));
-
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> assertEquals("http-echo!", echo("http-echo!")));
+    assertEquals("http-echo?", echo("http-echo?"));
+    assertEquals("http-echo!", echo("http-echo!"));
   }
 
   private String echo(String value) {

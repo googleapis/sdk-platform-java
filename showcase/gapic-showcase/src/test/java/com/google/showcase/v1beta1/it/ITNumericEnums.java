@@ -16,16 +16,19 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.EnumRequest;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
+import com.google.showcase.v1beta1.EnumResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,18 +57,11 @@ public class ITNumericEnums {
     client.close();
   }
 
-  // TODO(#1187): For 'throws' explanation, see
-  // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
   @Test
   public void verifyEnums() {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
-
-    // EnumResponse initialResponse =
-    assertThrows(InvalidArgumentException.class, () -> client.getEnum(request));
-
-    //    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
-    //
-    //    Assert.assertNotNull(initialResponse);
-    //    Assert.assertEquals(initialResponse, verifiedResponse);
+    EnumResponse initialResponse = client.getEnum(request);
+    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
+    assertEquals(initialResponse, verifiedResponse);
   }
 }

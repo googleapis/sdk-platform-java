@@ -105,13 +105,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().build(), true))
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Room>newBuilder()
@@ -141,7 +140,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -175,12 +173,11 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         ProtoRestSerializer<UpdateRoomRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("room", request.getRoom(), true))
+                          ProtoRestSerializer.create().toBody("room", request.getRoom(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Room>newBuilder()
@@ -210,7 +207,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -245,7 +241,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -279,13 +274,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().clearParent().build(), true))
+                              .toBody("*", request.toBuilder().clearParent().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Blurb>newBuilder()
@@ -316,7 +310,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -351,12 +344,11 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         ProtoRestSerializer<UpdateBlurbRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("blurb", request.getBlurb(), true))
+                          ProtoRestSerializer.create().toBody("blurb", request.getBlurb(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Blurb>newBuilder()
@@ -387,7 +379,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -424,7 +415,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -459,13 +449,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<SearchBlurbsRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().clearParent().build(), true))
+                                  .toBody("*", request.toBuilder().clearParent().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<Operation>newBuilder()
@@ -500,13 +489,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<StreamBlurbsRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().clearName().build(), true))
+                                  .toBody("*", request.toBuilder().clearName().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<StreamBlurbsResponse>newBuilder()
