@@ -17,8 +17,6 @@
 package com.google.showcase.v1beta1.it;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -61,7 +59,6 @@ public class ITNumericEnums {
   public void verifyEnums() {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
     EnumResponse initialResponse = client.getEnum(request);
-    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
-    assertEquals(initialResponse, verifiedResponse);
+    assertEquals(initialResponse, client.verifyEnum(initialResponse));
   }
 }
