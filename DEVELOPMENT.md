@@ -11,6 +11,7 @@
    ```sh
    cp .githooks/pre-commit .git/hooks/pre-commit
    ```
+3. Install [`bazelisk`](https://github.com/bazelbuild/bazelisk) in your `PATH`.
 
 ## Code Formatting
 

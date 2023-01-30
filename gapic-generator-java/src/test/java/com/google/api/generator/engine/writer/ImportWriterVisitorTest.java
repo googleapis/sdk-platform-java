@@ -62,6 +62,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -387,6 +388,43 @@ public class ImportWriterVisitorTest {
         LineFormatter.lines(
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import javax.annotation.Generated;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeVariableExprImports_annotationsWithDescription() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+
+    VariableExpr annotationDescription =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(List.class)))
+            .build();
+
+    // Constructs with annotation @Repeatable(List.class)
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.builder()
+                        .setType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Repeatable.class)))
+                        .setDescription(annotationDescription)
+                        .build()))
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import java.lang.annotation.Repeatable;\n",
+            "import java.util.List;\n\n"),
         writerVisitor.write());
   }
 
