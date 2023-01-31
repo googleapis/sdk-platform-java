@@ -42,6 +42,7 @@ import com.google.cloud.compute.v1small.InsertAddressRequest;
 import com.google.cloud.compute.v1small.ListAddressesRequest;
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.Operation.Status;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -258,6 +259,9 @@ public class HttpJsonAddressesStub extends AddressesStub {
                   .build())
           .build();
 
+  private static final Map<String, String> operationCustomHttpBindings =
+      ImmutableMap.<String, String>builder().build();
+
   private final UnaryCallable<AggregatedListAddressesRequest, AddressAggregatedList>
       aggregatedListCallable;
   private final UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
@@ -312,7 +316,8 @@ public class HttpJsonAddressesStub extends AddressesStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonRegionOperationsStub.create(clientContext, callableFactory);
+        HttpJsonRegionOperationsStub.create(
+            clientContext, callableFactory, operationCustomHttpBindings);
 
     HttpJsonCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
         aggregatedListTransportSettings =

@@ -36,6 +36,7 @@ import com.google.cloud.iam.credentials.v1.SignBlobRequest;
 import com.google.cloud.iam.credentials.v1.SignBlobResponse;
 import com.google.cloud.iam.credentials.v1.SignJwtRequest;
 import com.google.cloud.iam.credentials.v1.SignJwtResponse;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -203,6 +204,9 @@ public class HttpJsonIamCredentialsStub extends IamCredentialsStub {
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
+
+  private static final Map<String, String> operationCustomHttpBindings =
+      ImmutableMap.<String, String>builder().build();
 
   private final UnaryCallable<GenerateAccessTokenRequest, GenerateAccessTokenResponse>
       generateAccessTokenCallable;

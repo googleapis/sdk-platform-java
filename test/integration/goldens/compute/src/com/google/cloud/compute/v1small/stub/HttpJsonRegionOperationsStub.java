@@ -36,6 +36,7 @@ import com.google.cloud.compute.v1small.GetRegionOperationRequest;
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.Operation.Status;
 import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -146,6 +147,9 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
+
+  private static final Map<String, String> operationCustomHttpBindings =
+      ImmutableMap.<String, String>builder().build();
 
   private final UnaryCallable<GetRegionOperationRequest, Operation> getCallable;
   private final UnaryCallable<WaitRegionOperationRequest, Operation> waitCallable;

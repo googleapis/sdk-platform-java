@@ -48,6 +48,7 @@ import com.google.cloud.redis.v1beta1.ListInstancesResponse;
 import com.google.cloud.redis.v1beta1.RescheduleMaintenanceRequest;
 import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
 import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
@@ -500,6 +501,22 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
                       HttpJsonOperationSnapshot.create(response))
               .build();
 
+  private static final Map<String, String> operationCustomHttpBindings =
+      ImmutableMap.<String, String>builder()
+          .put(
+              "google.longrunning.Operations.GetOperation",
+              "/v1beta1/{name=projects/*/locations/*/operations/*}")
+          .put(
+              "google.longrunning.Operations.ListOperations",
+              "/v1beta1/{name=projects/*/locations/*}/operations")
+          .put(
+              "google.longrunning.Operations.DeleteOperation",
+              "/v1beta1/{name=projects/*/locations/*/operations/*}")
+          .put(
+              "google.longrunning.Operations.CancelOperation",
+              "/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
+          .build();
+
   private final UnaryCallable<ListInstancesRequest, ListInstancesResponse> listInstancesCallable;
   private final UnaryCallable<ListInstancesRequest, ListInstancesPagedResponse>
       listInstancesPagedCallable;
@@ -575,7 +592,8 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(clientContext, callableFactory, typeRegistry);
+        HttpJsonOperationsStub.create(
+            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
 
     HttpJsonCallSettings<ListInstancesRequest, ListInstancesResponse>
         listInstancesTransportSettings =
