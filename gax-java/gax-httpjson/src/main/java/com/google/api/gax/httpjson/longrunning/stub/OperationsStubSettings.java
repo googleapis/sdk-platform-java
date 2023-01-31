@@ -64,6 +64,7 @@ import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import org.threeten.bp.Duration;
 
@@ -190,7 +191,7 @@ public class OperationsStubSettings extends StubSettings<OperationsStubSettings>
     if (getTransportChannelProvider()
         .getTransportName()
         .equals(HttpJsonTransportChannel.getHttpJsonTransportName())) {
-      return HttpJsonOperationsStub.create(this);
+      return HttpJsonOperationsStub.create(this, new HashMap<>());
     }
     throw new UnsupportedOperationException(
         String.format(

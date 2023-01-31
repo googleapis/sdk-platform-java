@@ -73,7 +73,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private static final Pattern CLIENT_PACKAGE_VERSION_PATTERN =
       Pattern.compile("\\.(?<version>v\\d+[a-zA-Z]*\\d*[a-zA-Z]*\\d*)\\.[\\w.]*stub");
 
-  private static final ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
+  private static ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
       listOperationsMethodDescriptor =
           ApiMethodDescriptor.<ListOperationsRequest, ListOperationsResponse>newBuilder()
               .setFullMethodName("google.longrunning.Operations/ListOperations")
@@ -107,37 +107,36 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .build())
               .build();
 
-  private static final ApiMethodDescriptor<GetOperationRequest, Operation>
-      getOperationMethodDescriptor =
-          ApiMethodDescriptor.<GetOperationRequest, Operation>newBuilder()
-              .setFullMethodName("google.longrunning.Operations/GetOperation")
-              .setHttpMethod(HttpMethods.GET)
-              .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<GetOperationRequest>newBuilder()
-                      .setPath(
-                          "/v1/{name=**/operations/*}",
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<GetOperationRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(request -> new HashMap<>())
-                      .setRequestBodyExtractor(request -> null)
-                      .build())
-              .setResponseParser(
-                  ProtoMessageResponseParser.<Operation>newBuilder()
-                      .setDefaultInstance(Operation.getDefaultInstance())
-                      .build())
-              .setOperationSnapshotFactory(
-                  (request, response) -> HttpJsonOperationSnapshot.create(response))
-              .setPollingRequestFactory(
-                  compoundOperationId ->
-                      GetOperationRequest.newBuilder().setName(compoundOperationId).build())
-              .build();
+  private static ApiMethodDescriptor<GetOperationRequest, Operation> getOperationMethodDescriptor =
+      ApiMethodDescriptor.<GetOperationRequest, Operation>newBuilder()
+          .setFullMethodName("google.longrunning.Operations/GetOperation")
+          .setHttpMethod(HttpMethods.GET)
+          .setRequestFormatter(
+              ProtoMessageRequestFormatter.<GetOperationRequest>newBuilder()
+                  .setPath(
+                      "/v1/{name=**/operations/*}",
+                      request -> {
+                        Map<String, String> fields = new HashMap<>();
+                        ProtoRestSerializer<GetOperationRequest> serializer =
+                            ProtoRestSerializer.create();
+                        serializer.putPathParam(fields, "name", request.getName());
+                        return fields;
+                      })
+                  .setQueryParamsExtractor(request -> new HashMap<>())
+                  .setRequestBodyExtractor(request -> null)
+                  .build())
+          .setResponseParser(
+              ProtoMessageResponseParser.<Operation>newBuilder()
+                  .setDefaultInstance(Operation.getDefaultInstance())
+                  .build())
+          .setOperationSnapshotFactory(
+              (request, response) -> HttpJsonOperationSnapshot.create(response))
+          .setPollingRequestFactory(
+              compoundOperationId ->
+                  GetOperationRequest.newBuilder().setName(compoundOperationId).build())
+          .build();
 
-  private static final ApiMethodDescriptor<DeleteOperationRequest, Empty>
+  private static ApiMethodDescriptor<DeleteOperationRequest, Empty>
       deleteOperationMethodDescriptor =
           ApiMethodDescriptor.<DeleteOperationRequest, Empty>newBuilder()
               .setFullMethodName("google.longrunning.Operations/DeleteOperation")
@@ -162,7 +161,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .build())
               .build();
 
-  private static final ApiMethodDescriptor<CancelOperationRequest, Empty>
+  private static ApiMethodDescriptor<CancelOperationRequest, Empty>
       cancelOperationMethodDescriptor =
           ApiMethodDescriptor.<CancelOperationRequest, Empty>newBuilder()
               .setFullMethodName("google.longrunning.Operations/CancelOperation")
@@ -198,32 +197,44 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
 
-  public static final HttpJsonOperationsStub create(OperationsStubSettings settings)
+  public static final HttpJsonOperationsStub create(
+      OperationsStubSettings settings, Map<String, String> customOperationPaths)
       throws IOException {
-    return new HttpJsonOperationsStub(settings, ClientContext.create(settings));
-  }
-
-  public static final HttpJsonOperationsStub create(ClientContext clientContext)
-      throws IOException {
-    return new HttpJsonOperationsStub(OperationsStubSettings.newBuilder().build(), clientContext);
+    return new HttpJsonOperationsStub(
+        settings, ClientContext.create(settings), customOperationPaths);
   }
 
   public static final HttpJsonOperationsStub create(
-      ClientContext clientContext, HttpJsonStubCallableFactory callableFactory) throws IOException {
+      ClientContext clientContext, Map<String, String> customOperationPaths) throws IOException {
     return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(),
-        clientContext,
-        callableFactory,
-        TypeRegistry.getEmptyTypeRegistry());
+        OperationsStubSettings.newBuilder().build(), clientContext, customOperationPaths);
   }
 
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
-      TypeRegistry typeRegistry)
+      Map<String, String> customOperationPaths)
       throws IOException {
     return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(), clientContext, callableFactory, typeRegistry);
+        OperationsStubSettings.newBuilder().build(),
+        clientContext,
+        callableFactory,
+        TypeRegistry.getEmptyTypeRegistry(),
+        customOperationPaths);
+  }
+
+  public static final HttpJsonOperationsStub create(
+      ClientContext clientContext,
+      HttpJsonStubCallableFactory callableFactory,
+      TypeRegistry typeRegistry,
+      Map<String, String> customOperationPaths)
+      throws IOException {
+    return new HttpJsonOperationsStub(
+        OperationsStubSettings.newBuilder().build(),
+        clientContext,
+        callableFactory,
+        typeRegistry,
+        customOperationPaths);
   }
 
   /**
@@ -231,13 +242,17 @@ public class HttpJsonOperationsStub extends OperationsStub {
    * so that it is easy to make a subclass, but otherwise, the static factory methods should be
    * preferred.
    */
-  protected HttpJsonOperationsStub(OperationsStubSettings settings, ClientContext clientContext)
+  protected HttpJsonOperationsStub(
+      OperationsStubSettings settings,
+      ClientContext clientContext,
+      Map<String, String> customOperationPaths)
       throws IOException {
     this(
         settings,
         clientContext,
         new HttpJsonOperationsCallableFactory(),
-        TypeRegistry.getEmptyTypeRegistry());
+        TypeRegistry.getEmptyTypeRegistry(),
+        customOperationPaths);
   }
 
   /**
@@ -249,7 +264,8 @@ public class HttpJsonOperationsStub extends OperationsStub {
       OperationsStubSettings settings,
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
-      TypeRegistry typeRegistry)
+      TypeRegistry typeRegistry,
+      Map<String, String> customOperationPaths)
       throws IOException {
     this.callableFactory = callableFactory;
 
@@ -257,6 +273,8 @@ public class HttpJsonOperationsStub extends OperationsStub {
         CLIENT_PACKAGE_VERSION_PATTERN.matcher(callableFactory.getClass().getPackage().getName());
 
     String apiVersion = packageMatcher.find() ? packageMatcher.group("version") : null;
+
+    updateDefaultOperationApiMethodDescriptors(customOperationPaths);
 
     HttpJsonCallSettings<ListOperationsRequest, ListOperationsResponse>
         listOperationsTransportSettings =
@@ -307,6 +325,102 @@ public class HttpJsonOperationsStub extends OperationsStub {
             getOperationMethodDescriptor.getPollingRequestFactory());
 
     backgroundResources = new BackgroundResourceAggregation(clientContext.getBackgroundResources());
+  }
+
+  private static void updateDefaultOperationApiMethodDescriptors(
+      Map<String, String> customOperationPath) {
+    if (customOperationPath.containsKey("google.longrunning.Operations.ListOperations")) {
+      listOperationsMethodDescriptor =
+          listOperationsMethodDescriptor
+              .toBuilder()
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<ListOperationsRequest>newBuilder()
+                      .setPath(
+                          customOperationPath.get("ListOperations"),
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<ListOperationsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<ListOperationsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "filter", request.getFilter());
+                            serializer.putQueryParam(fields, "pageSize", request.getPageSize());
+                            serializer.putQueryParam(fields, "pageToken", request.getPageToken());
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .build();
+    }
+
+    if (customOperationPath.containsKey("google.longrunning.Operations.GetOperation")) {
+      getOperationMethodDescriptor =
+          getOperationMethodDescriptor
+              .toBuilder()
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<GetOperationRequest>newBuilder()
+                      .setPath(
+                          customOperationPath.get("google.longrunning.Operations.GetOperation"),
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<GetOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(request -> new HashMap<>())
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .build();
+    }
+
+    if (customOperationPath.containsKey("google.longrunning.Operations.DeleteOperation")) {
+      deleteOperationMethodDescriptor =
+          deleteOperationMethodDescriptor
+              .toBuilder()
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<DeleteOperationRequest>newBuilder()
+                      .setPath(
+                          customOperationPath.get("google.longrunning.Operations.DeleteOperation"),
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<DeleteOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(request -> new HashMap<>())
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .build();
+    }
+
+    if (customOperationPath.containsKey("google.longrunning.Operations.CancelOperation")) {
+      cancelOperationMethodDescriptor =
+          cancelOperationMethodDescriptor
+              .toBuilder()
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<CancelOperationRequest>newBuilder()
+                      .setPath(
+                          customOperationPath.get("google.longrunning.Operations.CancelOperation"),
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<CancelOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(request -> new HashMap<>())
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .build();
+    }
   }
 
   private static <RequestT extends Message, ResponseT>
