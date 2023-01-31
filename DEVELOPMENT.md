@@ -20,6 +20,8 @@
 [ERROR] gapic-generator-java/gapic-generator-java/src/main/java/com/google/api/generator/gapic/composer/grpc/ServiceClientTestClassComposer.java:[18,39] package com.google.api.gax.grpc.testing does not exist
     ```
     Remove the pre-commit hooks. Tracking the issue in https://github.com/googleapis/gapic-generator-java/issues/1253
+    
+3. Install [`bazelisk`](https://github.com/bazelbuild/bazelisk) in your `PATH`.
 
 ## Code Formatting
 

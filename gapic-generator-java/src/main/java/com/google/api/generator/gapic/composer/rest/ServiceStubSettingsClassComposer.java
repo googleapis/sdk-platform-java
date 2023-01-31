@@ -53,14 +53,18 @@ public class ServiceStubSettingsClassComposer extends AbstractServiceStubSetting
   @Override
   protected List<MethodDefinition> createApiClientHeaderProviderBuilderMethods(
       Service service, TypeStore typeStore) {
-    return Collections.singletonList(
-        createApiClientHeaderProviderBuilderMethod(
-            service,
-            typeStore,
-            "defaultApiClientHeaderProviderBuilder",
-            FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()),
-            "getHttpJsonTokenName",
-            "getHttpJsonVersion"));
+    if (service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
+      return Collections.singletonList(
+          createApiClientHeaderProviderBuilderMethod(
+              service,
+              typeStore,
+              "defaultApiClientHeaderProviderBuilder",
+              FIXED_REST_TYPESTORE.get(GaxHttpJsonProperties.class.getSimpleName()),
+              "getHttpJsonTokenName",
+              "getHttpJsonVersion"));
+    } else {
+      return Collections.emptyList();
+    }
   }
 
   @Override

@@ -34,6 +34,8 @@ API_GAPIC_TARGETS = {
     "compute": "@com_google_googleapis//google/cloud/compute/v1small:compute_small_java_gapic",
     # Routing headers.
     "bigtable": "@com_google_googleapis//google/bigtable/v2:bigtable_java_gapic",
+    # REGAPIC REST Client Generation
+    "apigeeconnect": "@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_java_gapic",
 }
 
 [filegroup(
@@ -133,6 +135,13 @@ java_gapic_test(
         "com.google.cloud.bigtable.data.v2.BaseBigtableDataClientTest",
     ],
     runtime_deps = ["@com_google_googleapis//google/bigtable/v2:bigtable_java_gapic_test"],
+)
+
+# Apigee Connect V1 API
+java_gapic_test(
+    name = "apigeeconnect_java_gapic_test_suite",
+    test_classes = [],
+    runtime_deps = ["@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_java_gapic_test"],
 )
 
 # IAM (for a standalone mixed-in API).
