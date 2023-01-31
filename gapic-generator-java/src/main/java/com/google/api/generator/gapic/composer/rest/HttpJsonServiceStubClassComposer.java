@@ -64,6 +64,7 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,6 +91,15 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                   .setType(FIXED_REST_TYPESTORE.get(TypeRegistry.class.getSimpleName()))
                   .build())
           .build();
+
+  private static final VariableExpr OPERATION_CUSTOM_HTTP_BINDINGS =
+      VariableExpr.builder()
+          .setVariable(
+              Variable.builder()
+                  .setName("operationCustomHttpBindings")
+                  .setType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+                  .build())
+          .build();
   private static final String LRO_NAME_PREFIX = "google.longrunning.Operations";
 
   protected HttpJsonServiceStubClassComposer() {
@@ -112,6 +122,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             HttpJsonOperationSnapshot.class,
             HttpJsonStubCallableFactory.class,
             Map.class,
+            ImmutableMap.class,
             ProtoMessageRequestFormatter.class,
             ProtoMessageResponseParser.class,
             ProtoRestSerializer.class,
@@ -121,6 +132,65 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   @Override
   protected boolean generateOperationsStubLogic(Service service) {
     return service.hasLroMethods();
+  }
+
+  @Override
+  protected List<Statement> createOperationCustomHttpBindingsMapDeclaration(GapicContext context) {
+    VariableExpr operationCustomHttpBindingsVarExpr =
+        VariableExpr.withVariable(
+                Variable.builder()
+                    .setType(
+                        TypeNode.withReference(
+                            ConcreteReference.builder()
+                                .setClazz(Map.class)
+                                .setGenerics(
+                                    Arrays.asList(
+                                        ConcreteReference.withClazz(String.class),
+                                        ConcreteReference.withClazz(String.class)))
+                                .build()))
+                    .setName("operationCustomHttpBindings")
+                    .build())
+            .toBuilder()
+            .setIsDecl(true)
+            .setIsStatic(true)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsFinal(true)
+            .build();
+
+    Expr operationCustomHttpBindingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+            .setMethodName("builder")
+            .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
+            .build();
+
+    for (Map.Entry<String, String> entrySet : parseCustomHttpBindings(context).entrySet()) {
+      String selector = entrySet.getKey();
+      String path = entrySet.getValue();
+      operationCustomHttpBindingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+              .setMethodName("put")
+              .setArguments(
+                  Arrays.asList(
+                      ValueExpr.withValue(StringObjectValue.withValue(selector)),
+                      ValueExpr.withValue(StringObjectValue.withValue(path))))
+              .build();
+    }
+
+    operationCustomHttpBindingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+            .build();
+
+    return Collections.singletonList(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(operationCustomHttpBindingsVarExpr)
+                .setValueExpr(operationCustomHttpBindingsBuilderExpr)
+                .build()));
   }
 
   @Override
@@ -1091,51 +1161,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
+    arguments.add(OPERATION_CUSTOM_HTTP_BINDINGS);
 
-    List<Expr> exprs = new ArrayList<>();
-    VariableExpr customHttpBindingsVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setType(
-                    TypeNode.withReference(
-                        ConcreteReference.builder()
-                            .setClazz(Map.class)
-                            .setGenerics(
-                                Arrays.asList(
-                                    ConcreteReference.withClazz(String.class),
-                                    ConcreteReference.withClazz(String.class)))
-                            .build()))
-                .setName("customHttpBindingsMap")
-                .build());
-    AssignmentExpr customHttpBindingsAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(customHttpBindingsVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(
-                NewObjectExpr.builder()
-                    .setType(FIXED_REST_TYPESTORE.get("HashMap"))
-                    .setIsGeneric(true)
-                    .build())
-            .build();
-
-    exprs.add(customHttpBindingsAssignmentExpr);
-    Map<String, String> operationCustomHttpBindings = parseCustomHttpBindings(context);
-    for (Map.Entry<String, String> entrySet : operationCustomHttpBindings.entrySet()) {
-      String selector = entrySet.getKey();
-      String path = entrySet.getValue();
-      exprs.add(
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(customHttpBindingsVarExpr)
-              .setMethodName("put")
-              .setArguments(
-                  Arrays.asList(
-                      ValueExpr.withValue(StringObjectValue.withValue(selector)),
-                      ValueExpr.withValue(StringObjectValue.withValue(path))))
-              .build());
-    }
-
-    arguments.add(customHttpBindingsVarExpr);
-
-    exprs.add(
+    return Collections.singletonList(
         AssignmentExpr.builder()
             .setVariableExpr(
                 operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
@@ -1147,7 +1175,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                     .setReturnType(operationsStubClassVarExpr.type())
                     .build())
             .build());
-    return exprs;
   }
 
   private Map<String, String> parseCustomHttpBindings(GapicContext context) {

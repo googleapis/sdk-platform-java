@@ -188,6 +188,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     Map<String, Message> messageTypes = context.messages();
     List<Statement> classStatements =
         createClassStatements(
+            context,
             service,
             protoMethodNameToDescriptorVarExprs,
             callableClassMemberVarExprs,
@@ -278,6 +279,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   protected List<Statement> createClassStatements(
+      GapicContext context,
       Service service,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
@@ -298,6 +300,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       classStatements.add(EMPTY_LINE_STATEMENT);
     }
 
+    classStatements.addAll(createOperationCustomHttpBindingsMapDeclaration(context));
+    classStatements.add(EMPTY_LINE_STATEMENT);
+
     classStatements.addAll(createClassMemberFieldDeclarations(callableClassMemberVarExprs));
     classStatements.add(EMPTY_LINE_STATEMENT);
 
@@ -305,6 +310,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     classStatements.add(EMPTY_LINE_STATEMENT);
 
     return classStatements;
+  }
+
+  protected List<Statement> createOperationCustomHttpBindingsMapDeclaration(GapicContext context) {
+    return new ArrayList<>();
   }
 
   protected List<Statement> createMethodDescriptorVariableDecls(

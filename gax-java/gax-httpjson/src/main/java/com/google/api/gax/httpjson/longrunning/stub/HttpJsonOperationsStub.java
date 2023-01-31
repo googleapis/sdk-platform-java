@@ -70,14 +70,16 @@ import java.util.regex.Pattern;
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
 public class HttpJsonOperationsStub extends OperationsStub {
-    private static final Pattern CLIENT_PACKAGE_VERSION_PATTERN =
+  private static final Pattern CLIENT_PACKAGE_VERSION_PATTERN =
       Pattern.compile("\\.(?<version>v\\d+[a-zA-Z]*\\d*[a-zA-Z]*\\d*)\\.[\\w.]*stub");
-    private static final String LRO_LIST_OPERATIONS = "google.longrunning.Operations.ListOperations";
-    private static final String LRO_GET_OPERATION = "google.longrunning.Operations.GetOperation";
-    private static final String LRO_DELETE_OPERATION = "google.longrunning.Operations.DeleteOperation";
-    private static final String LRO_CANCEL_OPERATION = "google.longrunning.Operations.CancelOperation";
+  private static final String LRO_LIST_OPERATIONS = "google.longrunning.Operations.ListOperations";
+  private static final String LRO_GET_OPERATION = "google.longrunning.Operations.GetOperation";
+  private static final String LRO_DELETE_OPERATION =
+      "google.longrunning.Operations.DeleteOperation";
+  private static final String LRO_CANCEL_OPERATION =
+      "google.longrunning.Operations.CancelOperation";
 
-    private static ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
+  private static ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
       listOperationsMethodDescriptor =
           ApiMethodDescriptor.<ListOperationsRequest, ListOperationsResponse>newBuilder()
               .setFullMethodName("google.longrunning.Operations/ListOperations")
