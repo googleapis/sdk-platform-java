@@ -173,7 +173,7 @@ $ mvn compile -P update
 
 ## Running the Plugin under googleapis with local gapic-generator-java
 
-See also above section "Showcase Integration Testing".
+For running the Plugin with showcase protos and local gapic-generator-java, see above section "Showcase Integration Testing".
 
 To generate a production GAPIC API:
 
