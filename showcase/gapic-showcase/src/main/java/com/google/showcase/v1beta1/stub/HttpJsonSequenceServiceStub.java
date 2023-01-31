@@ -28,6 +28,7 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.AttemptSequenceRequest;
@@ -160,6 +161,16 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
+
+  private static final Map<String, String> operationCustomHttpBindings =
+      ImmutableMap.<String, String>builder()
+          .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
+          .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
+          .put("google.longrunning.Operations.DeleteOperation", "/v1beta1/{name=operations/**}")
+          .put(
+              "google.longrunning.Operations.CancelOperation",
+              "/v1beta1/{name=operations/**}:cancel")
+          .build();
 
   private final UnaryCallable<CreateSequenceRequest, Sequence> createSequenceCallable;
   private final UnaryCallable<GetSequenceReportRequest, SequenceReport> getSequenceReportCallable;

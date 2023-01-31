@@ -100,6 +100,19 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                   .setType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
                   .build())
           .build();
+
+  private static final String LRO_LIST_OPERATIONS = "google.longrunning.Operations.ListOperations";
+  private static final String LRO_GET_OPERATION = "google.longrunning.Operations.GetOperation";
+  private static final String LRO_DELETE_OPERATION =
+          "google.longrunning.Operations.DeleteOperation";
+  private static final String LRO_CANCEL_OPERATION =
+          "google.longrunning.Operations.CancelOperation";
+
+  private static final Map<String, Function<HttpRule, String>> HTTP_RULE_OPERATION = ImmutableMap.<String, Function<HttpRule, String>>builder()
+          .put(LRO_LIST_OPERATIONS, HttpRule::getGet)
+          .put(LRO_GET_OPERATION, HttpRule::getGet)
+          .put(LRO_DELETE_OPERATION, HttpRule::getDelete)
+          .put(LRO_CANCEL_OPERATION, HttpRule::getPost).build();
   private static final String LRO_NAME_PREFIX = "google.longrunning.Operations";
 
   protected HttpJsonServiceStubClassComposer() {
@@ -1184,7 +1197,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       for (HttpRule httpRule : service.getHttp().getRulesList()) {
         String selector = httpRule.getSelector();
         if (selector.contains(LRO_NAME_PREFIX)) {
-          customHttpBindings.put(selector, httpRule.getGet());
+          customHttpBindings.put(selector, HTTP_RULE_OPERATION.get(selector).apply(httpRule));
         }
       }
     }

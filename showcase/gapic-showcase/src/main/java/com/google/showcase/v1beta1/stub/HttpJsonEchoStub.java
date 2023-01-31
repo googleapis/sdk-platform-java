@@ -38,6 +38,7 @@ import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.BlockRequest;
@@ -320,6 +321,16 @@ public class HttpJsonEchoStub extends EchoStub {
                   .build())
           .build();
 
+  private static final Map<String, String> operationCustomHttpBindings =
+      ImmutableMap.<String, String>builder()
+          .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
+          .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
+          .put("google.longrunning.Operations.DeleteOperation", "/v1beta1/{name=operations/**}")
+          .put(
+              "google.longrunning.Operations.CancelOperation",
+              "/v1beta1/{name=operations/**}:cancel")
+          .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -373,7 +384,8 @@ public class HttpJsonEchoStub extends EchoStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(clientContext, callableFactory, typeRegistry);
+        HttpJsonOperationsStub.create(
+            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
