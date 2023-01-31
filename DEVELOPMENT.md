@@ -42,17 +42,17 @@
 - Run all unit and integration tests.
 
     ```sh
-    mvn test          # unit tests
+    mvn install          # unit tests, maven test wouldn't work in root folder because gapic-generator-java is dependant on test jars of gax-java
     bazel test //...  # integration tests
     ```
 
 - Run all unit tests.
 
     ```sh
-    mvn test
+    mvn install
     ```
-
-- Run a single or multiple unit tests:
+- For running unit tests in `gapic-generator-java` submodule, first build all modules with `mvn install -DskipTests`, then `cd` into `gapic-generator-java` submodule for the following commands:
+  - Run a single or multiple unit tests:
 
     ```sh
     mvn test -Dtest=JavaCodeGeneratorTest
@@ -60,13 +60,13 @@
     mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
     ```
 
-- Update all unit test golden files:
+  - Update all unit test golden files:
 
     ```sh
     mvn test -DupdateUnitGoldens
     ```
 
-- Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+  - Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
 
     ```sh
     mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
@@ -185,7 +185,7 @@ To generate a production GAPIC API:
    For a local run, we first need to build a local SNAPSHOT jar of the generator. Then we point googleapis to 
    both the local SNAPSHOT jar and the local copy of the generator.
 
-   Before:
+   Replace the following section in googleapis
    ```
     _gapic_generator_java_version = "2.13.0"
 
@@ -208,7 +208,7 @@ To generate a production GAPIC API:
     )
    ```
 
-   After
+   to
 
    ```
     _gapic_generator_java_version = "2.13.1-SNAPSHOT"
