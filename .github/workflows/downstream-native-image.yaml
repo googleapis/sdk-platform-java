@@ -13,14 +13,14 @@ env:
 jobs:
   # GraalVM job ensures the compatibility of GraaVM version
   graalvm:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         graalvm: [22.3.0]
         java: [11, 17]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: stCarolas/setup-maven@v4
       with:
         maven-version: 3.8.1
@@ -37,10 +37,6 @@ jobs:
     - name: Install maven modules
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y curl unzip
     - name: Install showcase server
       run: |
         sudo mkdir -p /usr/src/showcase

@@ -31,6 +31,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.StructProto;
 import com.google.showcase.grpcrest.v1beta1.EchoGrpcrest;
+import com.google.showcase.v1beta1.WickedOuterClass;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -66,6 +67,37 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     List<Service> services =
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(getTransport())
+        .build();
+  }
+
+  public GapicContext parseShowcaseWicked() {
+    FileDescriptor fileDescriptor = WickedOuterClass.getDescriptor();
+    ServiceDescriptor messagingService = fileDescriptor.getServices().get(0);
+    assertEquals("Wicked", messagingService.getName());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
+    messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
+
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);

@@ -35,6 +35,8 @@ public class HttpJsonServiceStubClassComposer
   @Override
   protected List<MethodDefinition> createStaticCreatorMethods(
       Service service, TypeStore typeStore, String newBuilderMethod) {
+    // No need to check if REST Transport is enabled
+    // AbstractTransportServiceStubClassComposer won't generate a file if REST isn't enabled
     return super.createStaticCreatorMethods(service, typeStore, "newHttpJsonBuilder");
   }
 }

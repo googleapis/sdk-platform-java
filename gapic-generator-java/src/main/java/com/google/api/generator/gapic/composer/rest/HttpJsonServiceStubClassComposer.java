@@ -59,7 +59,6 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
@@ -115,11 +114,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             ProtoMessageResponseParser.class,
             ProtoRestSerializer.class,
             TypeRegistry.class));
-  }
-
-  @Override
-  protected Transport getTransport() {
-    return Transport.REST;
   }
 
   @Override
@@ -1276,7 +1270,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private List<MethodDefinition> createInvalidClassMethods(Service service) {
     List<MethodDefinition> methodDefinitions = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
-      if (protoMethod.isSupportedByTransport(getTransport())) {
+      if (protoMethod.isSupportedByTransport(getTransportContext().transport())) {
         continue;
       }
       String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
@@ -1295,7 +1289,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                               .setMessageExpr(
                                   String.format(
                                       "Not implemented: %s(). %s transport is not implemented for this method yet.",
-                                      callableName, getTransport()))
+                                      callableName, getTransportContext().transport()))
                               .build())))
               .build());
     }
