@@ -1180,10 +1180,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private Map<String, String> parseCustomHttpBindings(GapicContext context) {
     Map<String, String> customHttpBindings = new HashMap<>();
     com.google.api.Service service = context.serviceYamlProto();
-    for (HttpRule httpRule : service.getHttp().getRulesList()) {
-      String selector = httpRule.getSelector();
-      if (selector.contains(LRO_NAME_PREFIX)) {
-        customHttpBindings.put(selector, httpRule.getGet());
+    if (service != null && service.getHttp() != null) {
+      for (HttpRule httpRule : service.getHttp().getRulesList()) {
+        String selector = httpRule.getSelector();
+        if (selector.contains(LRO_NAME_PREFIX)) {
+          customHttpBindings.put(selector, httpRule.getGet());
+        }
       }
     }
     return customHttpBindings;
