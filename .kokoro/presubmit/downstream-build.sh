@@ -39,8 +39,8 @@ GAPIC_BOM_VERSION=$(sed -e 's/xmlns=".*"//' gapic-generator-java-bom/pom.xml | x
 
 ### Round 2
 # Run the updated GAPIC BOM against HEAD of java-shared-dependencies
-git clone "https://github.com/googleapis/java-shared-dependencies.git" --depth=1
-pushd java-shared-dependencies/first-party-dependencies
+git clone "https://github.com/googleapis/google-cloud-java.git" --depth=1
+pushd google-cloud-java/java-shared-dependencies/first-party-dependencies
 
 # Replace GAPIC BOM version
 xmllint --shell pom.xml <<EOF
@@ -55,6 +55,7 @@ echo "Modifications to java-shared-dependencies:"
 git diff
 echo
 
+# Go to google-cloud-java/java-shared-dependencies
 cd ..
 mvn verify install -B -V -ntp -fae \
   -DskipTests=true \
@@ -72,6 +73,18 @@ fi
 popd
 
 ### Round 3
+# Install google-cloud-core-bom (part of java-shared-dependencies)
+popd
+cd google-cloud-java/java-core
+
+echo "Installing $(pwd)"
+mvn verify install -B -V -ntp -fae \
+  -DskipTests=true \
+  -Dmaven.javadoc.skip=true \
+  -Dgcloud.download.skip=true \
+  -Denforcer.skip=true
+
+### Round 4
 # Run the updated java-shared-dependencies BOM against google-cloud-java
 git clone "https://github.com/googleapis/google-cloud-java.git" --depth=1
 pushd google-cloud-java/google-cloud-jar-parent
