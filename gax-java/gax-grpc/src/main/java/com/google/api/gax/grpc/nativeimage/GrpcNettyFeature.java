@@ -85,6 +85,26 @@ final class GrpcNettyFeature implements Feature {
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.channel.DefaultFileRegion");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.channel.unix.PeerCredentials");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.channel.DefaultChannelPipeline");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.grpc.netty.WriteBufferingAndExceptionHandler");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.channel.ProtocolNegotiators");
+      registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.handler.ssl.SslHandler");
+      registerClassForReflection(access, "io.grpc.netty.shaded.io.grpc.netty.NettyClientHandler");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.channel.DefaultChannelPipeline$HeadContext");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.channel.DefaultChannelPipeline$TailContext");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.grpc.netty.ProtocolNegotiators$WaitUntilActiveHandler");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.grpc.netty.ProtocolNegotiators$ClientTlsHandler");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.grpc.netty.ProtocolNegotiators$GrpcNegotiationHandler");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.channel.ChannelHandlerMask");
 
       // Epoll Libraries
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.channel.epoll.Epoll");
