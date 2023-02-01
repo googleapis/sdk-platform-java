@@ -203,6 +203,45 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
 
+    public static final HttpJsonOperationsStub create(
+            OperationsStubSettings settings)
+            throws IOException {
+        return new HttpJsonOperationsStub(
+                settings, ClientContext.create(settings), new HashMap<>());
+    }
+
+    public static final HttpJsonOperationsStub create(
+            ClientContext clientContext)
+            throws IOException {
+        return new HttpJsonOperationsStub(
+                OperationsStubSettings.newBuilder().build(), clientContext, new HashMap<>());
+    }
+
+    public static final HttpJsonOperationsStub create(
+            ClientContext clientContext,
+            HttpJsonStubCallableFactory callableFactory)
+            throws IOException {
+        return new HttpJsonOperationsStub(
+                OperationsStubSettings.newBuilder().build(),
+                clientContext,
+                callableFactory,
+                TypeRegistry.getEmptyTypeRegistry(),
+                new HashMap<>());
+    }
+
+    public static final HttpJsonOperationsStub create(
+            ClientContext clientContext,
+            HttpJsonStubCallableFactory callableFactory,
+            TypeRegistry typeRegistry)
+            throws IOException {
+        return new HttpJsonOperationsStub(
+                OperationsStubSettings.newBuilder().build(),
+                clientContext,
+                callableFactory,
+                typeRegistry,
+                new HashMap<>());
+    }
+
   public static final HttpJsonOperationsStub create(
       OperationsStubSettings settings, Map<String, String> customOperationHttpBindings)
       throws IOException {
