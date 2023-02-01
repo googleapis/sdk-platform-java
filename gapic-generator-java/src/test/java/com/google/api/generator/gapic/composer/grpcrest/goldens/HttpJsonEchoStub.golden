@@ -331,9 +331,6 @@ public class HttpJsonEchoStub extends EchoStub {
                   .build())
           .build();
 
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder().build();
-
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
