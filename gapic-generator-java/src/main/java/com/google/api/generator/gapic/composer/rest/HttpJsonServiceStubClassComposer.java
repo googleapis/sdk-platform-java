@@ -1184,18 +1184,18 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       arguments.add(OPERATION_CUSTOM_HTTP_BINDINGS);
     } else {
       Expr operationCustomHttpBindingsBuilderExpr =
-              MethodInvocationExpr.builder()
-                      .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-                      .setMethodName("builder")
-                      .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
-                      .build();
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .setMethodName("builder")
+              .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
+              .build();
 
       operationCustomHttpBindingsBuilderExpr =
-              MethodInvocationExpr.builder()
-                      .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
-                      .setMethodName("build")
-                      .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-                      .build();
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+              .setMethodName("build")
+              .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .build();
       arguments.add(operationCustomHttpBindingsBuilderExpr);
     }
 
