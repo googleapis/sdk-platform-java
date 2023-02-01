@@ -864,9 +864,6 @@ public class HttpJsonAssetServiceStub extends AssetServiceStub {
                       .build())
               .build();
 
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder().build();
-
   private final UnaryCallable<ExportAssetsRequest, Operation> exportAssetsCallable;
   private final OperationCallable<ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
       exportAssetsOperationCallable;
@@ -954,7 +951,10 @@ public class HttpJsonAssetServiceStub extends AssetServiceStub {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, String>builder().build());
 
     HttpJsonCallSettings<ExportAssetsRequest, Operation> exportAssetsTransportSettings =
         HttpJsonCallSettings.<ExportAssetsRequest, Operation>newBuilder()

@@ -31,7 +31,6 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableMap;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.CreateBookRequest;
 import com.google.example.library.v1.CreateShelfRequest;
@@ -448,9 +447,6 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   .setDefaultTypeRegistry(typeRegistry)
                   .build())
           .build();
-
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder().build();
 
   private final UnaryCallable<CreateShelfRequest, Shelf> createShelfCallable;
   private final UnaryCallable<GetShelfRequest, Shelf> getShelfCallable;

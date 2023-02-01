@@ -1180,7 +1180,24 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
-    arguments.add(OPERATION_CUSTOM_HTTP_BINDINGS);
+    if (parseCustomHttpBindings(context).size() > 0) {
+      arguments.add(OPERATION_CUSTOM_HTTP_BINDINGS);
+    } else {
+      Expr operationCustomHttpBindingsBuilderExpr =
+              MethodInvocationExpr.builder()
+                      .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+                      .setMethodName("builder")
+                      .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
+                      .build();
+
+      operationCustomHttpBindingsBuilderExpr =
+              MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+                      .setMethodName("build")
+                      .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+                      .build();
+      arguments.add(operationCustomHttpBindingsBuilderExpr);
+    }
 
     return Collections.singletonList(
         AssignmentExpr.builder()

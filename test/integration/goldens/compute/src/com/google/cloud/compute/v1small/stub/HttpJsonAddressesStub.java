@@ -259,9 +259,6 @@ public class HttpJsonAddressesStub extends AddressesStub {
                   .build())
           .build();
 
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder().build();
-
   private final UnaryCallable<AggregatedListAddressesRequest, AddressAggregatedList>
       aggregatedListCallable;
   private final UnaryCallable<AggregatedListAddressesRequest, AggregatedListPagedResponse>
@@ -317,7 +314,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
         HttpJsonRegionOperationsStub.create(
-            clientContext, callableFactory, operationCustomHttpBindings);
+            clientContext, callableFactory, ImmutableMap.<String, String>builder().build());
 
     HttpJsonCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
         aggregatedListTransportSettings =

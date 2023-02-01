@@ -32,7 +32,6 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsRequest;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsResponse;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,9 +87,6 @@ public class HttpJsonConnectionServiceStub extends ConnectionServiceStub {
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
-
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder().build();
 
   private final UnaryCallable<ListConnectionsRequest, ListConnectionsResponse>
       listConnectionsCallable;

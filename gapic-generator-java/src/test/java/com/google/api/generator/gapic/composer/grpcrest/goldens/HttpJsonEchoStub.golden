@@ -384,7 +384,10 @@ public class HttpJsonEchoStub extends EchoStub {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, String>builder().build());
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
