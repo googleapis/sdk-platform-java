@@ -66,6 +66,7 @@ import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -188,10 +189,14 @@ public class OperationsStubSettings extends StubSettings<OperationsStubSettings>
   }
 
   public OperationsStub createStub() throws IOException {
+    return createStub(new HashMap<>());
+  }
+
+  public OperationsStub createStub(Map<String, String> customHttpBindings) throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()
         .equals(HttpJsonTransportChannel.getHttpJsonTransportName())) {
-      return HttpJsonOperationsStub.create(this, new HashMap<>());
+      return HttpJsonOperationsStub.create(this, customHttpBindings);
     }
     throw new UnsupportedOperationException(
         String.format(

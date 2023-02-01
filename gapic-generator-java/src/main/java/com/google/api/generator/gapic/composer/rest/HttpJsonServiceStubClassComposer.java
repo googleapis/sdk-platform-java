@@ -104,15 +104,17 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private static final String LRO_LIST_OPERATIONS = "google.longrunning.Operations.ListOperations";
   private static final String LRO_GET_OPERATION = "google.longrunning.Operations.GetOperation";
   private static final String LRO_DELETE_OPERATION =
-          "google.longrunning.Operations.DeleteOperation";
+      "google.longrunning.Operations.DeleteOperation";
   private static final String LRO_CANCEL_OPERATION =
-          "google.longrunning.Operations.CancelOperation";
+      "google.longrunning.Operations.CancelOperation";
 
-  private static final Map<String, Function<HttpRule, String>> HTTP_RULE_OPERATION = ImmutableMap.<String, Function<HttpRule, String>>builder()
+  private static final Map<String, Function<HttpRule, String>> HTTP_RULE_OPERATION =
+      ImmutableMap.<String, Function<HttpRule, String>>builder()
           .put(LRO_LIST_OPERATIONS, HttpRule::getGet)
           .put(LRO_GET_OPERATION, HttpRule::getGet)
           .put(LRO_DELETE_OPERATION, HttpRule::getDelete)
-          .put(LRO_CANCEL_OPERATION, HttpRule::getPost).build();
+          .put(LRO_CANCEL_OPERATION, HttpRule::getPost)
+          .build();
   private static final String LRO_NAME_PREFIX = "google.longrunning.Operations";
 
   protected HttpJsonServiceStubClassComposer() {
