@@ -179,7 +179,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
             .build();
 
-    for (Map.Entry<String, String> entrySet : parseCustomHttpBindings(context).entrySet()) {
+    Map<String, String> operationCustomHttpBindingsMap = parseCustomHttpBindings(context);
+    if (operationCustomHttpBindingsMap.size() == 0) {
+      return Collections.emptyList();
+    }
+    for (Map.Entry<String, String> entrySet : operationCustomHttpBindingsMap.entrySet()) {
       String selector = entrySet.getKey();
       String path = entrySet.getValue();
       operationCustomHttpBindingsBuilderExpr =
