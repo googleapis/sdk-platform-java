@@ -300,7 +300,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       classStatements.add(EMPTY_LINE_STATEMENT);
     }
 
-    classStatements.addAll(createOperationCustomHttpBindingsMapDeclaration(context));
+    classStatements.addAll(createCustomHttpBindingsMapDeclaration(context));
     classStatements.add(EMPTY_LINE_STATEMENT);
 
     classStatements.addAll(createClassMemberFieldDeclarations(callableClassMemberVarExprs));
@@ -312,7 +312,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return classStatements;
   }
 
-  protected List<Statement> createOperationCustomHttpBindingsMapDeclaration(GapicContext context) {
+  protected List<Statement> createCustomHttpBindingsMapDeclaration(GapicContext context) {
     return new ArrayList<>();
   }
 
