@@ -1094,9 +1094,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
+    Map<String, String> customHttpBindings = parseCustomHttpBindings(context);
     Map<String, String> operationCustomHttpBindings =
-        filterCustomHttpBindingsMap(
-            parseCustomHttpBindings(context), x -> x.getKey().contains(LRO_NAME_PREFIX));
+        filterCustomHttpBindingsMap(customHttpBindings, x -> x.getKey().contains(LRO_NAME_PREFIX));
     if (operationCustomHttpBindings.size() > 0) {
       Expr operationCustomHttpBindingsBuilderExpr =
           MethodInvocationExpr.builder()
@@ -1158,7 +1158,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       Map<String, String> customHttpBindings, Predicate<Map.Entry<String, String>> predicate) {
     return customHttpBindings.entrySet().stream()
         .filter(predicate)
-        .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   private String getValueBasedOnPatternCase(HttpRule httpRule) {

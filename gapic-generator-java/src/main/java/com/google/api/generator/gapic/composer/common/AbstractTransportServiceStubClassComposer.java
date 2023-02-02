@@ -188,7 +188,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     Map<String, Message> messageTypes = context.messages();
     List<Statement> classStatements =
         createClassStatements(
-            context,
             service,
             protoMethodNameToDescriptorVarExprs,
             callableClassMemberVarExprs,
@@ -279,7 +278,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   protected List<Statement> createClassStatements(
-      GapicContext context,
       Service service,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
