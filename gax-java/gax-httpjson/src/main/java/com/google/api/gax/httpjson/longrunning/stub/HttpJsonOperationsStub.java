@@ -238,44 +238,44 @@ public class HttpJsonOperationsStub extends OperationsStub {
   }
 
   public static final HttpJsonOperationsStub create(
-      OperationsStubSettings settings, Map<String, String> customOperationHttpBindings)
+      OperationsStubSettings settings, Map<String, String> customHttpBindings)
       throws IOException {
     return new HttpJsonOperationsStub(
-        settings, ClientContext.create(settings), customOperationHttpBindings);
+        settings, ClientContext.create(settings), customHttpBindings);
   }
 
   public static final HttpJsonOperationsStub create(
-      ClientContext clientContext, Map<String, String> customOperationHttpBindings)
+      ClientContext clientContext, Map<String, String> customHttpBindings)
       throws IOException {
     return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(), clientContext, customOperationHttpBindings);
+        OperationsStubSettings.newBuilder().build(), clientContext, customHttpBindings);
   }
 
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
-      Map<String, String> customOperationHttpBindings)
+      Map<String, String> customHttpBindings)
       throws IOException {
     return new HttpJsonOperationsStub(
         OperationsStubSettings.newBuilder().build(),
         clientContext,
         callableFactory,
         TypeRegistry.getEmptyTypeRegistry(),
-        customOperationHttpBindings);
+            customHttpBindings);
   }
 
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
       TypeRegistry typeRegistry,
-      Map<String, String> customOperationHttpBindings)
+      Map<String, String> customHttpBindings)
       throws IOException {
     return new HttpJsonOperationsStub(
         OperationsStubSettings.newBuilder().build(),
         clientContext,
         callableFactory,
         typeRegistry,
-        customOperationHttpBindings);
+            customHttpBindings);
   }
 
   /**
@@ -286,14 +286,14 @@ public class HttpJsonOperationsStub extends OperationsStub {
   protected HttpJsonOperationsStub(
       OperationsStubSettings settings,
       ClientContext clientContext,
-      Map<String, String> customOperationHttpBindings)
+      Map<String, String> customHttpBindings)
       throws IOException {
     this(
         settings,
         clientContext,
         new HttpJsonOperationsCallableFactory(),
         TypeRegistry.getEmptyTypeRegistry(),
-        customOperationHttpBindings);
+            customHttpBindings);
   }
 
   /**
@@ -306,7 +306,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
       TypeRegistry typeRegistry,
-      Map<String, String> customOperationHttpBindings)
+      Map<String, String> customHttpBindings)
       throws IOException {
     this.callableFactory = callableFactory;
 
@@ -315,7 +315,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
 
     String apiVersion = packageMatcher.find() ? packageMatcher.group("version") : null;
 
-    updateDefaultOperationApiMethodDescriptors(customOperationHttpBindings);
+    updateDefaultApiMethodDescriptors(customHttpBindings);
 
     HttpJsonCallSettings<ListOperationsRequest, ListOperationsResponse>
         listOperationsTransportSettings =
@@ -368,7 +368,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
     backgroundResources = new BackgroundResourceAggregation(clientContext.getBackgroundResources());
   }
 
-  private static void updateDefaultOperationApiMethodDescriptors(
+  private static void updateDefaultApiMethodDescriptors(
       Map<String, String> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
