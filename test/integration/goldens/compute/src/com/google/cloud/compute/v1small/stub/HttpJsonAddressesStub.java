@@ -42,7 +42,6 @@ import com.google.cloud.compute.v1small.InsertAddressRequest;
 import com.google.cloud.compute.v1small.ListAddressesRequest;
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.Operation.Status;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -313,8 +312,7 @@ public class HttpJsonAddressesStub extends AddressesStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonRegionOperationsStub.create(
-            clientContext, callableFactory, ImmutableMap.<String, String>builder().build());
+        HttpJsonRegionOperationsStub.create(clientContext, callableFactory);
 
     HttpJsonCallSettings<AggregatedListAddressesRequest, AddressAggregatedList>
         aggregatedListTransportSettings =

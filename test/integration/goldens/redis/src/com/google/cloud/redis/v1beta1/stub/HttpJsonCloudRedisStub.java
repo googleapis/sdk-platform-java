@@ -501,22 +501,6 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
                       HttpJsonOperationSnapshot.create(response))
               .build();
 
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder()
-          .put(
-              "google.longrunning.Operations.GetOperation",
-              "/v1beta1/{name=projects/*/locations/*/operations/*}")
-          .put(
-              "google.longrunning.Operations.ListOperations",
-              "/v1beta1/{name=projects/*/locations/*}/operations")
-          .put(
-              "google.longrunning.Operations.DeleteOperation",
-              "/v1beta1/{name=projects/*/locations/*/operations/*}")
-          .put(
-              "google.longrunning.Operations.CancelOperation",
-              "/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
-          .build();
-
   private final UnaryCallable<ListInstancesRequest, ListInstancesResponse> listInstancesCallable;
   private final UnaryCallable<ListInstancesRequest, ListInstancesPagedResponse>
       listInstancesPagedCallable;
@@ -593,7 +577,23 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, String>builder()
+                .put(
+                    "google.longrunning.Operations.GetOperation",
+                    "/v1beta1/{name=projects/*/locations/*/operations/*}")
+                .put(
+                    "google.longrunning.Operations.ListOperations",
+                    "/v1beta1/{name=projects/*/locations/*}/operations")
+                .put(
+                    "google.longrunning.Operations.DeleteOperation",
+                    "/v1beta1/{name=projects/*/locations/*/operations/*}")
+                .put(
+                    "google.longrunning.Operations.CancelOperation",
+                    "/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
+                .build());
 
     HttpJsonCallSettings<ListInstancesRequest, ListInstancesResponse>
         listInstancesTransportSettings =

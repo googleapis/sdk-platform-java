@@ -72,7 +72,6 @@ import com.google.cloud.asset.v1.SearchAllResourcesRequest;
 import com.google.cloud.asset.v1.SearchAllResourcesResponse;
 import com.google.cloud.asset.v1.UpdateFeedRequest;
 import com.google.cloud.asset.v1.UpdateSavedQueryRequest;
-import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
@@ -950,11 +949,7 @@ public class HttpJsonAssetServiceStub extends AssetServiceStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(
-            clientContext,
-            callableFactory,
-            typeRegistry,
-            ImmutableMap.<String, String>builder().build());
+        HttpJsonOperationsStub.create(clientContext, callableFactory, typeRegistry);
 
     HttpJsonCallSettings<ExportAssetsRequest, Operation> exportAssetsTransportSettings =
         HttpJsonCallSettings.<ExportAssetsRequest, Operation>newBuilder()

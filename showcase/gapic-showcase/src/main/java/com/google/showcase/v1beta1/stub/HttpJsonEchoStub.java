@@ -321,16 +321,6 @@ public class HttpJsonEchoStub extends EchoStub {
                   .build())
           .build();
 
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder()
-          .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
-          .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
-          .put("google.longrunning.Operations.DeleteOperation", "/v1beta1/{name=operations/**}")
-          .put(
-              "google.longrunning.Operations.CancelOperation",
-              "/v1beta1/{name=operations/**}:cancel")
-          .build();
-
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -385,7 +375,19 @@ public class HttpJsonEchoStub extends EchoStub {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, String>builder()
+                .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
+                .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
+                .put(
+                    "google.longrunning.Operations.DeleteOperation",
+                    "/v1beta1/{name=operations/**}")
+                .put(
+                    "google.longrunning.Operations.CancelOperation",
+                    "/v1beta1/{name=operations/**}:cancel")
+                .build());
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()

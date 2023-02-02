@@ -92,21 +92,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                   .setType(FIXED_REST_TYPESTORE.get(TypeRegistry.class.getSimpleName()))
                   .build())
           .build();
-
-  private static final String LRO_LIST_OPERATIONS = "google.longrunning.Operations.ListOperations";
-  private static final String LRO_GET_OPERATION = "google.longrunning.Operations.GetOperation";
-  private static final String LRO_DELETE_OPERATION =
-      "google.longrunning.Operations.DeleteOperation";
-  private static final String LRO_CANCEL_OPERATION =
-      "google.longrunning.Operations.CancelOperation";
-
-  private static final Map<String, Function<HttpRule, String>> HTTP_RULE_OPERATION =
-      ImmutableMap.<String, Function<HttpRule, String>>builder()
-          .put(LRO_LIST_OPERATIONS, HttpRule::getGet)
-          .put(LRO_GET_OPERATION, HttpRule::getGet)
-          .put(LRO_DELETE_OPERATION, HttpRule::getDelete)
-          .put(LRO_CANCEL_OPERATION, HttpRule::getPost)
-          .build();
   private static final String LRO_NAME_PREFIX = "google.longrunning.Operations";
 
   protected HttpJsonServiceStubClassComposer() {
@@ -139,69 +124,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   @Override
   protected boolean generateOperationsStubLogic(Service service) {
     return service.hasLroMethods();
-  }
-
-  @Override
-  protected List<Statement> createCustomHttpBindingsMapDeclaration(GapicContext context) {
-    VariableExpr customHttpBindingsVarExpr =
-        VariableExpr.withVariable(
-                Variable.builder()
-                    .setType(
-                        TypeNode.withReference(
-                            ConcreteReference.builder()
-                                .setClazz(Map.class)
-                                .setGenerics(
-                                    Arrays.asList(
-                                        ConcreteReference.withClazz(String.class),
-                                        ConcreteReference.withClazz(String.class)))
-                                .build()))
-                    .setName("customHttpBindings")
-                    .build())
-            .toBuilder()
-            .setIsDecl(true)
-            .setIsStatic(true)
-            .setScope(ScopeNode.PRIVATE)
-            .setIsFinal(true)
-            .build();
-
-    Expr customHttpBindingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-            .setMethodName("builder")
-            .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
-            .build();
-
-    Map<String, String> customHttpBindingsMap = parseCustomHttpBindings(context);
-    if (customHttpBindingsMap.size() == 0) {
-      return Collections.emptyList();
-    }
-    for (Map.Entry<String, String> entrySet : customHttpBindingsMap.entrySet()) {
-      String selector = entrySet.getKey();
-      String path = entrySet.getValue();
-      customHttpBindingsBuilderExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(customHttpBindingsBuilderExpr)
-              .setMethodName("put")
-              .setArguments(
-                  Arrays.asList(
-                      ValueExpr.withValue(StringObjectValue.withValue(selector)),
-                      ValueExpr.withValue(StringObjectValue.withValue(path))))
-              .build();
-    }
-
-    customHttpBindingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(customHttpBindingsBuilderExpr)
-            .setMethodName("build")
-            .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-            .build();
-
-    return Collections.singletonList(
-        ExprStatement.withExpr(
-            AssignmentExpr.builder()
-                .setVariableExpr(customHttpBindingsVarExpr)
-                .setValueExpr(customHttpBindingsBuilderExpr)
-                .build()));
   }
 
   @Override
@@ -1172,36 +1094,40 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
-    Expr operationCustomHttpBindingsBuilderExpr =
-            MethodInvocationExpr.builder()
-                    .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-                    .setMethodName("builder")
-                    .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
-                    .build();
+    Map<String, String> operationCustomHttpBindings =
+        filterCustomHttpBindingsMap(
+            parseCustomHttpBindings(context), x -> x.getKey().contains(LRO_NAME_PREFIX));
+    if (operationCustomHttpBindings.size() > 0) {
+      Expr operationCustomHttpBindingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .setMethodName("builder")
+              .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
+              .build();
 
-    Map<String, String> operationCustomHttpBindings = filterCustomHttpBindingsMap(parseCustomHttpBindings(context), x -> x.getKey().contains(LRO_NAME_PREFIX));
-    for (Map.Entry<String, String> entrySet : operationCustomHttpBindings.entrySet()) {
-      String selector = entrySet.getKey();
-      String path = entrySet.getValue();
+      for (Map.Entry<String, String> entrySet : operationCustomHttpBindings.entrySet()) {
+        String selector = entrySet.getKey();
+        String path = entrySet.getValue();
+        operationCustomHttpBindingsBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+                .setMethodName("put")
+                .setArguments(
+                    Arrays.asList(
+                        ValueExpr.withValue(StringObjectValue.withValue(selector)),
+                        ValueExpr.withValue(StringObjectValue.withValue(path))))
+                .build();
+      }
+
       operationCustomHttpBindingsBuilderExpr =
-              MethodInvocationExpr.builder()
-                      .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
-                      .setMethodName("put")
-                      .setArguments(
-                              Arrays.asList(
-                                      ValueExpr.withValue(StringObjectValue.withValue(selector)),
-                                      ValueExpr.withValue(StringObjectValue.withValue(path))))
-                      .build();
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+              .setMethodName("build")
+              .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .build();
+
+      arguments.add(operationCustomHttpBindingsBuilderExpr);
     }
-
-    operationCustomHttpBindingsBuilderExpr =
-            MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
-                    .setMethodName("build")
-                    .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-                    .build();
-
-    arguments.add(operationCustomHttpBindingsBuilderExpr);
 
     return Collections.singletonList(
         AssignmentExpr.builder()
@@ -1228,8 +1154,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return customHttpBindings;
   }
 
-  private Map<String, String> filterCustomHttpBindingsMap(Map<String, String> customHttpBindings, Predicate<Map.Entry<String, String>> predicate) {
-    return customHttpBindings.entrySet().stream().filter(predicate).collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+  private Map<String, String> filterCustomHttpBindingsMap(
+      Map<String, String> customHttpBindings, Predicate<Map.Entry<String, String>> predicate) {
+    return customHttpBindings.entrySet().stream()
+        .filter(predicate)
+        .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
   }
 
   private String getValueBasedOnPatternCase(HttpRule httpRule) {

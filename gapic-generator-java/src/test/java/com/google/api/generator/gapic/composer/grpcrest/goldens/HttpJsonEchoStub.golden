@@ -21,7 +21,6 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.grpcrest.v1beta1.BlockRequest;
@@ -383,11 +382,7 @@ public class HttpJsonEchoStub extends EchoStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(
-            clientContext,
-            callableFactory,
-            typeRegistry,
-            ImmutableMap.<String, String>builder().build());
+        HttpJsonOperationsStub.create(clientContext, callableFactory, typeRegistry);
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()

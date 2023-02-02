@@ -203,6 +203,40 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
 
+  public static final HttpJsonOperationsStub create(OperationsStubSettings settings)
+      throws IOException {
+    return new HttpJsonOperationsStub(settings, ClientContext.create(settings), new HashMap<>());
+  }
+
+  public static final HttpJsonOperationsStub create(ClientContext clientContext)
+      throws IOException {
+    return new HttpJsonOperationsStub(
+        OperationsStubSettings.newBuilder().build(), clientContext, new HashMap<>());
+  }
+
+  public static final HttpJsonOperationsStub create(
+      ClientContext clientContext, HttpJsonStubCallableFactory callableFactory) throws IOException {
+    return new HttpJsonOperationsStub(
+        OperationsStubSettings.newBuilder().build(),
+        clientContext,
+        callableFactory,
+        TypeRegistry.getEmptyTypeRegistry(),
+        new HashMap<>());
+  }
+
+  public static final HttpJsonOperationsStub create(
+      ClientContext clientContext,
+      HttpJsonStubCallableFactory callableFactory,
+      TypeRegistry typeRegistry)
+      throws IOException {
+    return new HttpJsonOperationsStub(
+        OperationsStubSettings.newBuilder().build(),
+        clientContext,
+        callableFactory,
+        typeRegistry,
+        new HashMap<>());
+  }
+
   public static final HttpJsonOperationsStub create(
       OperationsStubSettings settings, Map<String, String> customOperationHttpBindings)
       throws IOException {
@@ -341,27 +375,10 @@ public class HttpJsonOperationsStub extends OperationsStub {
           listOperationsMethodDescriptor
               .toBuilder()
               .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<ListOperationsRequest>newBuilder()
-                      .setPath(
-                          customOperationHttpBindings.get(LRO_LIST_OPERATIONS),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<ListOperationsRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(
-                          request -> {
-                            Map<String, List<String>> fields = new HashMap<>();
-                            ProtoRestSerializer<ListOperationsRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "filter", request.getFilter());
-                            serializer.putQueryParam(fields, "pageSize", request.getPageSize());
-                            serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            return fields;
-                          })
-                      .setRequestBodyExtractor(request -> null)
+                  ((ProtoMessageRequestFormatter<ListOperationsRequest>)
+                          listOperationsMethodDescriptor.getRequestFormatter())
+                      .toBuilder()
+                      .updateRawPath(customOperationHttpBindings.get(LRO_LIST_OPERATIONS))
                       .build())
               .build();
     }
@@ -371,18 +388,10 @@ public class HttpJsonOperationsStub extends OperationsStub {
           getOperationMethodDescriptor
               .toBuilder()
               .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<GetOperationRequest>newBuilder()
-                      .setPath(
-                          customOperationHttpBindings.get(LRO_GET_OPERATION),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<GetOperationRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(request -> new HashMap<>())
-                      .setRequestBodyExtractor(request -> null)
+                  ((ProtoMessageRequestFormatter<GetOperationRequest>)
+                          getOperationMethodDescriptor.getRequestFormatter())
+                      .toBuilder()
+                      .updateRawPath(customOperationHttpBindings.get(LRO_GET_OPERATION))
                       .build())
               .build();
     }
@@ -392,18 +401,10 @@ public class HttpJsonOperationsStub extends OperationsStub {
           deleteOperationMethodDescriptor
               .toBuilder()
               .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<DeleteOperationRequest>newBuilder()
-                      .setPath(
-                          customOperationHttpBindings.get(LRO_DELETE_OPERATION),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<DeleteOperationRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(request -> new HashMap<>())
-                      .setRequestBodyExtractor(request -> null)
+                  ((ProtoMessageRequestFormatter<DeleteOperationRequest>)
+                          deleteOperationMethodDescriptor.getRequestFormatter())
+                      .toBuilder()
+                      .updateRawPath(customOperationHttpBindings.get(LRO_DELETE_OPERATION))
                       .build())
               .build();
     }
@@ -413,18 +414,10 @@ public class HttpJsonOperationsStub extends OperationsStub {
           cancelOperationMethodDescriptor
               .toBuilder()
               .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<CancelOperationRequest>newBuilder()
-                      .setPath(
-                          customOperationHttpBindings.get(LRO_CANCEL_OPERATION),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<CancelOperationRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(request -> new HashMap<>())
-                      .setRequestBodyExtractor(request -> null)
+                  ((ProtoMessageRequestFormatter<CancelOperationRequest>)
+                          cancelOperationMethodDescriptor.getRequestFormatter())
+                      .toBuilder()
+                      .updateRawPath(customOperationHttpBindings.get(LRO_CANCEL_OPERATION))
                       .build())
               .build();
     }

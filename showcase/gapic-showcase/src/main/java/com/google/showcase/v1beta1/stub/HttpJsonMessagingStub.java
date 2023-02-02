@@ -516,16 +516,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                       .build())
               .build();
 
-  private static final Map<String, String> operationCustomHttpBindings =
-      ImmutableMap.<String, String>builder()
-          .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
-          .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
-          .put("google.longrunning.Operations.DeleteOperation", "/v1beta1/{name=operations/**}")
-          .put(
-              "google.longrunning.Operations.CancelOperation",
-              "/v1beta1/{name=operations/**}:cancel")
-          .build();
-
   private final UnaryCallable<CreateRoomRequest, Room> createRoomCallable;
   private final UnaryCallable<GetRoomRequest, Room> getRoomCallable;
   private final UnaryCallable<UpdateRoomRequest, Room> updateRoomCallable;
@@ -587,7 +577,19 @@ public class HttpJsonMessagingStub extends MessagingStub {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            clientContext, callableFactory, typeRegistry, operationCustomHttpBindings);
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, String>builder()
+                .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
+                .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
+                .put(
+                    "google.longrunning.Operations.DeleteOperation",
+                    "/v1beta1/{name=operations/**}")
+                .put(
+                    "google.longrunning.Operations.CancelOperation",
+                    "/v1beta1/{name=operations/**}:cancel")
+                .build());
 
     HttpJsonCallSettings<CreateRoomRequest, Room> createRoomTransportSettings =
         HttpJsonCallSettings.<CreateRoomRequest, Room>newBuilder()
