@@ -37,6 +37,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Phaser;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -69,7 +70,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
   // Dummy value to convert the ConcurrentHashMap into a Set
   private static Object PRESENT = new Object();
   private final ConcurrentHashMap<WatchdogStream, Object> openStreams = new ConcurrentHashMap<>();
-
+  private final Phaser phaser;
   private final ApiClock clock;
   private final Duration scheduleInterval;
   private final ScheduledExecutorService executor;
@@ -87,6 +88,8 @@ public final class Watchdog implements Runnable, BackgroundResource {
     this.clock = Preconditions.checkNotNull(clock, "clock can't be null");
     this.scheduleInterval = scheduleInterval;
     this.executor = executor;
+    // Register the main thread
+    this.phaser = new Phaser(1);
   }
 
   private void start() {
@@ -116,10 +119,15 @@ public final class Watchdog implements Runnable, BackgroundResource {
 
   @Override
   public void run() {
+    // Register the current thread
+    phaser.register();
     try {
       runUnsafe();
     } catch (Throwable t) {
       LOG.log(Level.SEVERE, "Caught throwable in periodic Watchdog run. Continuing.", t);
+    } finally {
+      // Unregister the current thread
+      phaser.arriveAndDeregister();
     }
   }
 
@@ -136,7 +144,9 @@ public final class Watchdog implements Runnable, BackgroundResource {
 
   @Override
   public void shutdown() {
-    future.cancel(false);
+    if (future.cancel(false)) {
+      phaser.arriveAndDeregister();
+    }
   }
 
   @Override
@@ -151,13 +161,19 @@ public final class Watchdog implements Runnable, BackgroundResource {
 
   @Override
   public void shutdownNow() {
-    future.cancel(true);
+    if (future.cancel(true)) {
+      phaser.arriveAndDeregister();
+    }
   }
 
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
     try {
       future.get(duration, unit);
+      // Default phase is 0, this method wait until all parties arrive and unregister(meaning
+      // waiting for the current "run" method to complete), then
+      // terminate the Phaser
+      phaser.awaitAdvanceInterruptibly(0, duration, unit);
       return true;
     } catch (ExecutionException | CancellationException e) {
       return true;
@@ -183,6 +199,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
   }
 
   class WatchdogStream<ResponseT> extends StateCheckingResponseObserver<ResponseT> {
+
     private final Object lock = new Object();
 
     private final Duration waitTimeout;
