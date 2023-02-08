@@ -21,6 +21,7 @@ import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.common.AbstractServiceSettingsClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,24 +45,25 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
       String newBuilderMethodName,
       String createDefaultMethodName,
       List<AnnotationNode> annotations) {
-    List<MethodDefinition> methods = new ArrayList<>();
     AnnotationNode betaApiAnnotaiton =
         AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build();
 
+    List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(
         super.createNestedBuilderCreatorMethods(
             service, typeStore, "newBuilder", "createDefault", annotations));
-    methods.addAll(
-        super.createNestedBuilderCreatorMethods(
-            service,
-            typeStore,
-            "newHttpJsonBuilder",
-            "createHttpJsonDefault",
-            ImmutableList.<AnnotationNode>builder()
-                .addAll(annotations)
-                .add(betaApiAnnotaiton)
-                .build()));
-
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      methods.addAll(
+          super.createNestedBuilderCreatorMethods(
+              service,
+              typeStore,
+              "newHttpJsonBuilder",
+              "createHttpJsonDefault",
+              ImmutableList.<AnnotationNode>builder()
+                  .addAll(annotations)
+                  .add(betaApiAnnotaiton)
+                  .build()));
+    }
     return methods;
   }
 
@@ -89,19 +91,20 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
             annotations,
             new SettingsCommentComposer(transportNames.next())
                 .getNewTransportBuilderMethodComment()));
-    methods.addAll(
-        super.createNewBuilderMethods(
-            service,
-            typeStore,
-            "newHttpJsonBuilder",
-            "createHttpJsonDefault",
-            ImmutableList.<AnnotationNode>builder()
-                .addAll(annotations)
-                .add(betaApiAnnotaiton)
-                .build(),
-            new SettingsCommentComposer(transportNames.next())
-                .getNewTransportBuilderMethodComment()));
-
+    if (service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      methods.addAll(
+          super.createNewBuilderMethods(
+              service,
+              typeStore,
+              "newHttpJsonBuilder",
+              "createHttpJsonDefault",
+              ImmutableList.<AnnotationNode>builder()
+                  .addAll(annotations)
+                  .add(betaApiAnnotaiton)
+                  .build(),
+              new SettingsCommentComposer(transportNames.next())
+                  .getNewTransportBuilderMethodComment()));
+    }
     return methods;
   }
 }

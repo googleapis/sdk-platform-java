@@ -14,8 +14,12 @@
 
 package com.google.api.generator.gapic.model;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -30,6 +34,21 @@ public class ServiceTest {
           .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
           .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
           .setOverriddenName("Echo");
+
+  private static final Method.Builder testMethodBuilder =
+      Method.builder()
+          .setName("My method")
+          .setInputType(TypeNode.STRING)
+          .setOutputType(TypeNode.STRING);
+
+  private static final HttpBindings.Builder testHttpBindingsBuilder =
+      HttpBindings.builder()
+          .setPathParameters(
+              ImmutableSet.of(HttpBindings.HttpBinding.builder().setName("table").build()))
+          .setPattern("/pattern/test")
+          .setAdditionalPatterns(Arrays.asList("/extra_pattern/test", "/extra_pattern/hey"))
+          .setIsAsteriskBody(false)
+          .setHttpVerb(HttpBindings.HttpVerb.GET);
 
   @Test
   public void apiShortName_shouldReturnApiShortNameIfHostContainsRegionalEndpoint() {
@@ -71,5 +90,91 @@ public class ServiceTest {
     String protoPackage = "com.google.showcase";
     Service testService = testServiceBuilder.setProtoPakkage(protoPackage).build();
     assertEquals("", testService.apiVersion());
+  }
+
+  @Test
+  public void
+      hasAnyEnabledMethodsForTransport_shouldReturnFalseForEmptyMethodListForBothTransports() {
+    Service testService = testServiceBuilder.setMethods(ImmutableList.of()).build();
+    assertThat(testService.hasAnyEnabledMethodsForTransport(Transport.GRPC)).isFalse();
+    assertThat(testService.hasAnyEnabledMethodsForTransport(Transport.REST)).isFalse();
+  }
+
+  @Test
+  public void
+      hasAnyEnabledMethodsForTransport_shouldReturnTrueForAnyNonEmptyMethodListGRPCTransport() {
+    Method testMethod1 =
+        testMethodBuilder
+            .setStream(Method.Stream.NONE)
+            .setHttpBindings(testHttpBindingsBuilder.build())
+            .build();
+    Service testService1 = testServiceBuilder.setMethods(ImmutableList.of(testMethod1)).build();
+    assertThat(testService1.hasAnyEnabledMethodsForTransport(Transport.GRPC)).isTrue();
+
+    Method testMethod2 =
+        testMethodBuilder
+            .setStream(Method.Stream.BIDI)
+            .setHttpBindings(testHttpBindingsBuilder.build())
+            .build();
+    Service testService2 = testServiceBuilder.setMethods(ImmutableList.of(testMethod2)).build();
+    assertThat(testService2.hasAnyEnabledMethodsForTransport(Transport.GRPC)).isTrue();
+
+    Service testService3 =
+        testServiceBuilder.setMethods(ImmutableList.of(testMethod1, testMethod2)).build();
+    assertThat(testService3.hasAnyEnabledMethodsForTransport(Transport.GRPC)).isTrue();
+  }
+
+  @Test
+  public void
+      hasAnyEnabledMethodsForTransport_shouldReturnTrueForAnyNonEmptyAndValidMethodListRESTTransport() {
+    Method testMethod1 =
+        testMethodBuilder
+            .setStream(Method.Stream.NONE)
+            .setHttpBindings(testHttpBindingsBuilder.build())
+            .build();
+    Service testService1 = testServiceBuilder.setMethods(ImmutableList.of(testMethod1)).build();
+    assertThat(testService1.hasAnyEnabledMethodsForTransport(Transport.REST)).isTrue();
+
+    Method testMethod2 =
+        testMethodBuilder
+            .setStream(Method.Stream.SERVER)
+            .setHttpBindings(testHttpBindingsBuilder.build())
+            .build();
+    Service testService2 = testServiceBuilder.setMethods(ImmutableList.of(testMethod2)).build();
+    assertThat(testService2.hasAnyEnabledMethodsForTransport(Transport.REST)).isTrue();
+
+    Service testService3 =
+        testServiceBuilder.setMethods(ImmutableList.of(testMethod1, testMethod2)).build();
+    assertThat(testService3.hasAnyEnabledMethodsForTransport(Transport.REST)).isTrue();
+  }
+
+  @Test
+  public void
+      hasAnyEnabledMethodsForTransport_shouldReturnFalseForAnyNonEmptyButInvalidMethodListRESTTransport() {
+    Method testMethod1 =
+        testMethodBuilder
+            .setStream(Method.Stream.BIDI)
+            .setHttpBindings(testHttpBindingsBuilder.build())
+            .build();
+    Service testService1 = testServiceBuilder.setMethods(ImmutableList.of(testMethod1)).build();
+    assertThat(testService1.hasAnyEnabledMethodsForTransport(Transport.REST)).isFalse();
+
+    Method testMethod2 =
+        testMethodBuilder
+            .setStream(Method.Stream.CLIENT)
+            .setHttpBindings(testHttpBindingsBuilder.build())
+            .build();
+    Service testService2 = testServiceBuilder.setMethods(ImmutableList.of(testMethod2)).build();
+    assertThat(testService2.hasAnyEnabledMethodsForTransport(Transport.REST)).isFalse();
+
+    Service testService3 =
+        testServiceBuilder.setMethods(ImmutableList.of(testMethod1, testMethod2)).build();
+    assertThat(testService3.hasAnyEnabledMethodsForTransport(Transport.REST)).isFalse();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void hasAnyEnabledMethodsForTransport_shouldThrowExceptionForGRPCRESTTransport() {
+    Service testService = testServiceBuilder.build();
+    testService.hasAnyEnabledMethodsForTransport(Transport.GRPC_REST);
   }
 }

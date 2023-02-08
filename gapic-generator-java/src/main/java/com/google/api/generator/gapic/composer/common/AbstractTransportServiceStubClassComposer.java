@@ -59,7 +59,6 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -94,7 +93,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   private static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
   private static final String OPERATION_CALLABLE_NAME = "OperationCallable";
   // private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
-  private static final String PAGED_CALLABLE_NAME = "PagedCallable";
+  protected static final String PAGED_CALLABLE_NAME = "PagedCallable";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
@@ -134,6 +133,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
+    if (!service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
+      return GapicClass.createNonGeneratedGapicClass();
+    }
+
     String pakkage = service.pakkage() + ".stub";
     TypeStore typeStore = createDynamicTypes(service, pakkage);
     String className = getTransportContext().classNames().getTransportServiceStubClassName(service);
@@ -225,10 +228,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return GapicClass.create(kind, classDef);
   }
 
-  protected Transport getTransport() {
-    return Transport.GRPC;
-  }
-
   protected abstract Statement createMethodDescriptorVariableDecl(
       Service service,
       Method protoMethod,
@@ -314,7 +313,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Map<String, Message> messageTypes,
       boolean restNumericEnumsEnabled) {
     return service.methods().stream()
-        .filter(x -> x.isSupportedByTransport(getTransport()))
+        .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
         .map(
             m ->
                 createMethodDescriptorVariableDecl(
@@ -343,7 +342,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   protected Map<String, VariableExpr> createProtoMethodNameToDescriptorClassMembers(
       Service service, Class<?> descriptorClass) {
     return service.methods().stream()
-        .filter(x -> x.isSupportedByTransport(getTransport()))
+        .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
         .collect(
             Collectors.toMap(
                 Method::name,
@@ -375,7 +374,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     Map<String, VariableExpr> callableClassMembers = new LinkedHashMap<>();
     // Using a for-loop because the output cardinality is not a 1:1 mapping to the input set.
     for (Method protoMethod : service.methods()) {
-      if (!protoMethod.isSupportedByTransport(getTransport())) {
+      if (!protoMethod.isSupportedByTransport(getTransportContext().transport())) {
         continue;
       }
       String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
@@ -664,7 +663,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     // Transport settings local variables.
     Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs =
         service.methods().stream()
-            .filter(x -> x.isSupportedByTransport(getTransport()))
+            .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
             .collect(
                 Collectors.toMap(
                     m -> JavaStyle.toLowerCamelCase(m.name()),
@@ -688,7 +687,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
     secondCtorExprs.addAll(
         service.methods().stream()
-            .filter(x -> x.isSupportedByTransport(getTransport()))
+            .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
             .map(
                 m ->
                     createTransportSettingsInitExpr(
@@ -1059,7 +1058,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
 
   private boolean checkOperationPollingMethod(Service service) {
     return service.methods().stream()
-        .filter(x -> x.isSupportedByTransport(getTransport()))
+        .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
         .anyMatch(Method::isOperationPollingMethod);
   }
 
@@ -1098,7 +1097,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     typeStore.putAll(
         service.pakkage(),
         service.methods().stream()
-            .filter(x -> x.isSupportedByTransport(getTransport()))
+            .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
             .filter(Method::isPaged)
             .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),

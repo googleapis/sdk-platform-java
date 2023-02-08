@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.grpcrest;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -37,5 +39,14 @@ public class HttpJsonServiceStubClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "HttpJsonEchoStub.golden", visitor.write());
     Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonEchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceClassesWicked() {
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
+    Service wickedProtoService = context.services().get(0);
+    GapicClass clazz =
+        HttpJsonServiceStubClassComposer.instance().generate(context, wickedProtoService);
+    assertThat(clazz.kind()).isEqualTo(GapicClass.Kind.NON_GENERATED);
   }
 }

@@ -54,7 +54,6 @@ public interface PagedExpandLegacyMappedResponseOrBuilder extends
    *
    * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
    */
-
   /* nullable */
 com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrDefault(
       java.lang.String key,
@@ -69,7 +68,6 @@ com.google.showcase.v1beta1.PagedExpandResponseList defaultValue);
    *
    * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
    */
-
   com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrThrow(
       java.lang.String key);
 
