@@ -11,15 +11,6 @@
     ```sh
     cp .githooks/pre-commit .git/hooks/pre-commit
     ```
-
-    ### Note: You may see this error with the pre-commits due to the monorepo migration:
-    ```
-    [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project gapic-generator-java: Compilation failure: Compilation failure: 
-    [ERROR] gapic-generator-java/gapic-generator-java/src/main/java/com/google/api/generator/gapic/composer/rest/ServiceClientTestClassComposer.java:[19,43] package com.google.api.gax.httpjson.testing does not exist
-    [ERROR] gapic-generator-java/gapic-generator-java/src/main/java/com/google/api/generator/gapic/composer/rest/ServiceClientTestClassComposer.java:[24,38] package com.google.api.gax.rpc.testing does not exist
-    [ERROR] gapic-generator-java/gapic-generator-java/src/main/java/com/google/api/generator/gapic/composer/grpc/ServiceClientTestClassComposer.java:[18,39] package com.google.api.gax.grpc.testing does not exist
-    ```
-    Remove the pre-commit hooks. Tracking the issue in https://github.com/googleapis/gapic-generator-java/issues/1253
     
 3. Install [`bazelisk`](https://github.com/bazelbuild/bazelisk) in your `PATH`.
 
