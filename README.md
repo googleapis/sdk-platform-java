@@ -17,13 +17,6 @@ This repository consists of the following modules:
   produced from this repository. This is used by [google-cloud-java/java-shared-dependencies](
   https://github.com/googleapis/google-cloud-java/blob/main/java-shared-dependencies/first-party-dependencies/pom.xml).
 
-## Run Tests for All Modules
+## Development Setup
 
-You need Java 11 or higher to run the build. The build produces Java 8-compatible
-bytecode.
-
-- Run all unit tests in all modules.
-
-    ```sh
-    mvn install
-    ```
+See [DEVELOPMENT.md](DEVELOPMENT.md).

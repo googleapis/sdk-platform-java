@@ -1,33 +1,5 @@
 # Development Workflow
 
-## Set Up
-
-1. Clone this repo.
-
-2. (OPTIONAL) Copy the Git pre-commit hooks. This will automatically check the build, run
-   tests, and perform linting before each commit. (Symlinks don't seem to work,
-   but if you find a way, please add it here!)
-
-    ```sh
-    cp .githooks/pre-commit .git/hooks/pre-commit
-    ```
-
-3. Install [`bazelisk`](https://github.com/bazelbuild/bazelisk) in your `PATH`.
-
-## Code Formatting
-
-- Run linter checks without actually doing the formatting.
-
-    ```sh
-    mvn fmt:check
-    ```
-
-- Format files.
-
-    ```sh
-    mvn fmt:format
-    ```
-
 ## Test Running
 
 - Run all unit and integration tests.
