@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.15.0](https://github.com/googleapis/gapic-generator-java/compare/v2.14.0...v2.15.0) (2023-02-02)
+
+
+### Features
+
+* Do not generate Service REST code if there are no matching RPC in a Service ([#1236](https://github.com/googleapis/gapic-generator-java/issues/1236)) ([9c06bc9](https://github.com/googleapis/gapic-generator-java/commit/9c06bc95b9aac869bf21c343cbb4b857aa25b593))
+
+
+### Bug Fixes
+
+* **ast:** Update import generation to cover annotation parameters ([#1229](https://github.com/googleapis/gapic-generator-java/issues/1229)) ([bdf12b0](https://github.com/googleapis/gapic-generator-java/commit/bdf12b0df91446abac8cb1bf2d361bb886eb91a2))
+* **deps:** Update dependency com.google.auth:google-auth-library-bom to v1.15.0 ([#1278](https://github.com/googleapis/gapic-generator-java/issues/1278)) ([f80861b](https://github.com/googleapis/gapic-generator-java/commit/f80861ba0518be2b9774b3235535f4bd3a27216a))
+* **java:** Initialize netty-shaded at run-time and add reflection configurations for netty classes ([#1290](https://github.com/googleapis/gapic-generator-java/issues/1290)) ([b7ca95f](https://github.com/googleapis/gapic-generator-java/commit/b7ca95f12dfe8287c133e09534be1fc46882ce6c))
+* Support mvn fmt:check and fmt:format ([#1266](https://github.com/googleapis/gapic-generator-java/issues/1266)) ([c96a2e7](https://github.com/googleapis/gapic-generator-java/commit/c96a2e7cf647cf245199c33ad989c8050208646e))
+
 ## [2.14.0](https://github.com/googleapis/gapic-generator-java/compare/v2.13.0...v2.14.0) (2023-01-19)
 
 

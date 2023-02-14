@@ -8,12 +8,12 @@ env:
   SHOWCASE_VERSION: 0.25.0
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         java: [ 11, 17 ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
@@ -27,7 +27,7 @@ jobs:
       - run: bazelisk version
       - name: Integration Tests
         run: |
-          bazel --batch test //test/integration/...
+          bazelisk --batch test //test/integration/...
       - name: Gradle Build Generated Storage Client Library
         run: |
           echo "Building Storage lib from generated source..."
@@ -50,7 +50,7 @@ jobs:
 
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
@@ -90,7 +90,7 @@ jobs:
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -137,9 +137,9 @@ jobs:
           popd
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           java-version: 11
@@ -148,28 +148,32 @@ jobs:
       - run: java -version
       - name: Java Linter
         # Exclude the root project
-        run: mvn -B -ntp --projects '!.' fmt:check
+        run: mvn -B -ntp fmt:check
 
   showcase:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         java: [ 11, 17 ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
-      - run: java -version
+      - run: mvn -version
       - name: Install maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 
-      - name: Install system dependencies
+      - name: Showcase golden tests
+        working-directory: showcase
         run: |
-          sudo apt-get update
-          sudo apt-get install -y curl unzip
+          mvn test \
+            -P enable-golden-tests \
+            --batch-mode \
+            --no-transfer-progress
+
       - name: Install showcase server
         run: |
           sudo mkdir -p /usr/src/showcase
@@ -183,7 +187,6 @@ jobs:
         working-directory: showcase
         run: |
           mvn verify \
-            -P enable-golden-tests \
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress

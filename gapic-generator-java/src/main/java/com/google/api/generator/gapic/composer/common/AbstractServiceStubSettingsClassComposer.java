@@ -243,7 +243,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  protected List<MethodDefinition> createDefaultTransportTransportProviderBuilderMethods() {
+  protected List<MethodDefinition> createDefaultTransportTransportProviderBuilderMethods(
+      Service service) {
     // Create the defaultGrpcTransportProviderBuilder method.
     Iterator<Class<?>> providerClassIt =
         getTransportContext().instantiatingChannelProviderClasses().iterator();
@@ -259,10 +260,19 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         && providerBuilderClassIt.hasNext()
         && builderNamesIt.hasNext()
         && transportNamesIt.hasNext()) {
+      Class<?> providerClass = providerClassIt.next();
+      Class<?> providerBuilderClass = providerBuilderClassIt.next();
+      String builderName = builderNamesIt.next();
+      String transportName = transportNamesIt.next();
+
+      if (!service.hasAnyEnabledMethodsForTransport(transportName)) {
+        continue;
+      }
+
       TypeNode returnType =
-          TypeNode.withReference(ConcreteReference.withClazz(providerBuilderClassIt.next()));
+          TypeNode.withReference(ConcreteReference.withClazz(providerBuilderClass));
       TypeNode channelProviderType =
-          TypeNode.withReference(ConcreteReference.withClazz(providerClassIt.next()));
+          TypeNode.withReference(ConcreteReference.withClazz(providerClass));
 
       MethodInvocationExpr transportChannelProviderBuilderExpr =
           MethodInvocationExpr.builder()
@@ -281,8 +291,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
           SettingsCommentComposer.DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT;
       if (getTransportContext().transportNames().size() > 1) {
         commentStatement =
-            new SettingsCommentComposer(transportNamesIt.next())
-                .getTransportProviderBuilderMethodComment();
+            new SettingsCommentComposer(transportName).getTransportProviderBuilderMethodComment();
       }
 
       MethodDefinition method =
@@ -292,7 +301,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
               .setReturnType(returnType)
-              .setName(builderNamesIt.next())
+              .setName(builderName)
               .setReturnExpr(returnExpr)
               .build();
 
@@ -1047,17 +1056,23 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setMethodName("getTransportName")
             .build();
 
+    Iterator<String> transportNamesIt = getTransportContext().transportNames().iterator();
     Iterator<TypeNode> channelTypesIt = getTransportContext().transportChannelTypes().iterator();
     Iterator<String> getterNameIt = getTransportContext().transportGetterNames().iterator();
     Iterator<String> serivceStubClassNameIt =
         getTransportContext().classNames().getTransportServiceStubClassNames(service).iterator();
 
     while (channelTypesIt.hasNext() && getterNameIt.hasNext()) {
+      String transportName = transportNamesIt.next();
       TypeNode channelType = channelTypesIt.next();
       String getterName = getterNameIt.next();
       String serivceStubClassName = serivceStubClassNameIt.next();
 
-      Expr tRansportNameExpr =
+      if (!service.hasAnyEnabledMethodsForTransport(transportName)) {
+        continue;
+      }
+
+      Expr transportNameExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(channelType)
               .setMethodName(getterName)
@@ -1067,7 +1082,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(getTransportNameExpr)
               .setMethodName("equals")
-              .setArguments(tRansportNameExpr)
+              .setArguments(transportNameExpr)
               .setReturnType(TypeNode.BOOLEAN)
               .build();
 
@@ -1191,7 +1206,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build());
 
     javaMethods.add(createDefaultCredentialsProviderBuilderMethod());
-    javaMethods.addAll(createDefaultTransportTransportProviderBuilderMethods());
+    javaMethods.addAll(createDefaultTransportTransportProviderBuilderMethods(service));
     javaMethods.add(createDefaultTransportChannelProviderMethod());
     javaMethods.addAll(createApiClientHeaderProviderBuilderMethods(service, typeStore));
 
@@ -1424,7 +1439,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     nestedClassMethods.addAll(
         createNestedClassConstructorMethods(
             service, serviceConfig, nestedMethodSettingsMemberVarExprs, typeStore));
-    nestedClassMethods.addAll(createNestedClassCreateDefaultMethods(typeStore));
+    nestedClassMethods.addAll(createNestedClassCreateDefaultMethods(service, typeStore));
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, typeStore));
     nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, typeStore));
     nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
@@ -1762,14 +1777,19 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return ctorMethods;
   }
 
-  protected List<MethodDefinition> createNestedClassCreateDefaultMethods(TypeStore typeStore) {
-    return Collections.singletonList(
-        createNestedClassCreateDefaultMethod(
-            typeStore,
-            "createDefault",
-            "defaultTransportChannelProvider",
-            null,
-            "defaultApiClientHeaderProviderBuilder"));
+  protected List<MethodDefinition> createNestedClassCreateDefaultMethods(
+      Service service, TypeStore typeStore) {
+    if (service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
+      return Arrays.asList(
+          createNestedClassCreateDefaultMethod(
+              typeStore,
+              "createDefault",
+              "defaultTransportChannelProvider",
+              null,
+              "defaultApiClientHeaderProviderBuilder"));
+    } else {
+      return Collections.emptyList();
+    }
   }
 
   protected MethodDefinition createNestedClassCreateDefaultMethod(
