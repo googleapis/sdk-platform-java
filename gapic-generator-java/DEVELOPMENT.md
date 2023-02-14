@@ -2,34 +2,28 @@
 
 ## Set Up
 
-1.  Clone this repo.
+1. Clone this repo.
 
-2.  Copy the Git pre-commit hooks. This will automatically check the build, run
-    tests, and perform linting before each commit. (Symlinks don't seem to work,
-    but if you find a way, please add it here!)
+2. (OPTIONAL) Copy the Git pre-commit hooks. This will automatically check the build, run
+   tests, and perform linting before each commit. (Symlinks don't seem to work,
+   but if you find a way, please add it here!)
 
     ```sh
     cp .githooks/pre-commit .git/hooks/pre-commit
     ```
 
+3. Install [`bazelisk`](https://github.com/bazelbuild/bazelisk) in your `PATH`.
+
 ## Code Formatting
 
--   Run linter checks without actually doing the formatting.
+- Run linter checks without actually doing the formatting.
 
-    ```sh
-    bazel run //:google_java_format_verification
-    ```
-    or
     ```sh
     mvn fmt:check
     ```
 
--   Format files.
+- Format files.
 
-    ```sh
-    bazel run //:google_java_format
-    ```
-    or
     ```sh
     mvn fmt:format
     ```
