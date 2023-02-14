@@ -4,3 +4,5 @@
 Generates a Java client library from protocol buffers. 
 Replaces the Java parts of the 
 [older monolithic generator](https://github.com/googleapis/gapic-generator).
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for setting up development environment.
