@@ -3,4 +3,5 @@
     "config:base"
   ],
   "ignorePaths": [".kokoro/requirements.txt"]
+  "ignoreDeps": ["rules_pkg"]
 }
