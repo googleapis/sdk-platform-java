@@ -1,9 +1,7 @@
 Google API Extensions for Java
 ==============================
 
-[![Build Status](https://travis-ci.org/googleapis/gax-java.svg?branch=main)](https://travis-ci.org/googleapis/gax-java)
-
-- [Documentation](https://googleapis.dev/java/gax/latest/)
+- [API Documentation](https://cloud.google.com/java/docs/reference/gax/latest/overview.html)
 
 Google API Extensions for Java (GAX Java) is a library which aids in the
 development of client libraries for server APIs, based on [GRPC](http://grpc.io)
@@ -15,7 +13,7 @@ files can use services such as paged list iteration, request batching, and
 polling of long-running operations to provide a more convenient and idiomatic
 API surface to callers.
 
-Currently, this library shouldn't be used independently from google-cloud-java, otherwise there is
+Currently, this library shouldn't be used independently of google-cloud-java, otherwise there is
 a high risk of diamond dependency problems, because google-cloud-java uses beta features from this
 library which can change in breaking ways between versions. See [VERSIONING](#versioning) for
 more information.
@@ -36,29 +34,31 @@ If you are using Maven, add this to your pom.xml file
 <dependency>
   <groupId>com.google.api</groupId>
   <artifactId>gax</artifactId>
-  <version>2.8.1</version>
+  <version>2.23.0</version>
 </dependency>
 <dependency>
   <groupId>com.google.api</groupId>
   <artifactId>gax-grpc</artifactId>
-  <version>2.8.1</version>
+  <version>2.23.0</version>
 </dependency>
 ```
 
 If you are using Gradle, add this to your dependencies
 
 ```Groovy
-compile 'com.google.api:gax:2.8.1',
-  'com.google.api:gax-grpc:2.8.1'
+compile 'com.google.api:gax:2.23.0',
+  'com.google.api:gax-grpc:2.23.0'
 ```
 
 If you are using SBT, add this to your dependencies
 
 ```Scala
-libraryDependencies += "com.google.api" % "gax" % "2.8.1"
-libraryDependencies += "com.google.api" % "gax-grpc" % "2.8.1"
+libraryDependencies += "com.google.api" % "gax" % "2.23.0"
+libraryDependencies += "com.google.api" % "gax-grpc" % "2.23.0"
 ```
 [//]: # ({x-version-update-end})
+
+To find the latest version, see https://search.maven.org/artifact/com.google.api/gax.
 
 Java Versions
 -------------
