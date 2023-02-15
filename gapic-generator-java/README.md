@@ -14,7 +14,8 @@ Java class files.
 They are needed to generate client libraries for gRPC-based Google services.
 
 The source of `src/main/proto/service_config.proto` is the
-https://github.com/grpc/grpc-proto repository.
+[https://github.com/grpc/grpc-proto repository](
+https://github.com/grpc/grpc-proto/blob/master/grpc/service_config/service_config.proto).
 We copy the file from the repository when a new enhancement is made in the file
 and the service team asks us to incorporate the enhancement into the code
 generator.
