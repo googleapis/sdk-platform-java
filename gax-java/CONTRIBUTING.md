@@ -20,21 +20,6 @@ frustration later on.
 All submissions, including submissions by project members, require review. We
 use Github pull requests for this purpose.
 
-### Building
-To build GAX:
-
-```sh
-# Go to the repository root
-cd gapic-generator-java
-
-# Install dependency modules to local Maven repository. Note that
-# gapic-generator-java module is not a dependency of gax-java
-mvn -B -ntp install -DskipTests --projects '!gapic-generator-java,!gax-java'
-
-# Build and install gax-java
-mvn clean install -f gax-java
-```
-
 ### The small print
 Contributions made by corporations are covered by a different agreement than
 the one above, the
