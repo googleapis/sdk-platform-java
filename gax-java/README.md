@@ -1,9 +1,7 @@
 Google API Extensions for Java
 ==============================
 
-[![Build Status](https://travis-ci.org/googleapis/gax-java.svg?branch=main)](https://travis-ci.org/googleapis/gax-java)
-
-- [Documentation](https://googleapis.dev/java/gax/latest/)
+- [API Documentation](https://cloud.google.com/java/docs/reference/gax/latest/overview.html)
 
 Google API Extensions for Java (GAX Java) is a library which aids in the
 development of client libraries for server APIs, based on [GRPC](http://grpc.io)
