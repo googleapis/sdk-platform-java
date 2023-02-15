@@ -15,7 +15,7 @@ files can use services such as paged list iteration, request batching, and
 polling of long-running operations to provide a more convenient and idiomatic
 API surface to callers.
 
-Currently, this library shouldn't be used independently from google-cloud-java, otherwise there is
+Currently, this library shouldn't be used independently of google-cloud-java, otherwise there is
 a high risk of diamond dependency problems, because google-cloud-java uses beta features from this
 library which can change in breaking ways between versions. See [VERSIONING](#versioning) for
 more information.
