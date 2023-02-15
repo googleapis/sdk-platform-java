@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.15.1](https://github.com/googleapis/gapic-generator-java/compare/v2.15.0...v2.15.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* **batcher:** Exceptions in unaryCaller bubble up ([#1166](https://github.com/googleapis/gapic-generator-java/issues/1166)) ([bcf5ed8](https://github.com/googleapis/gapic-generator-java/commit/bcf5ed856d664f84fa033cee0cc27fb57b97b678))
+* **deps:** Update dependency com.google.auth:google-auth-library-bom to v1.16.0 ([#1355](https://github.com/googleapis/gapic-generator-java/issues/1355)) ([b7de1bc](https://github.com/googleapis/gapic-generator-java/commit/b7de1bc260a641e0c0ca717a33d61fbaa8a2fcf6))
+* **deps:** Update dependency io.grpc:grpc-bom to v1.53.0 ([#1345](https://github.com/googleapis/gapic-generator-java/issues/1345)) ([1e82422](https://github.com/googleapis/gapic-generator-java/commit/1e824223afa0b8a62e9e50ae38cc73e8036e6348))
+* Use pkg_tar from rules_pkg ([#1303](https://github.com/googleapis/gapic-generator-java/issues/1303)) ([fbae565](https://github.com/googleapis/gapic-generator-java/commit/fbae565291aee092acab3df86de858aea129b670))
+
 ## [2.15.0](https://github.com/googleapis/gapic-generator-java/compare/v2.14.0...v2.15.0) (2023-02-02)
 
 
