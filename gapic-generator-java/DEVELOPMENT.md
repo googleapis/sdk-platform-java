@@ -1,210 +1,174 @@
 # Development Workflow
 
-## Set Up
-
-1.  Clone this repo.
-
-2.  Copy the Git pre-commit hooks. This will automatically check the build, run
-    tests, and perform linting before each commit. (Symlinks don't seem to work,
-    but if you find a way, please add it here!)
-
-    ```sh
-    cp .githooks/pre-commit .git/hooks/pre-commit
-    ```
-
-## Code Formatting
-
--   Run linter checks without actually doing the formatting.
-
-    ```sh
-    bazel run //:google_java_format_verification
-    ```
-    or
-    ```sh
-    mvn fmt:check
-    ```
-
--   Format files.
-
-    ```sh
-    bazel run //:google_java_format
-    ```
-    or
-    ```sh
-    mvn fmt:format
-    ```
-
 ## Test Running
 
--   Run all unit and integration tests.
+### Unit Tests
+
+To run the unit tests in `gapic-generator-java` submodule, first build all
+modules with `mvn -pl '!gapic-generator-java' install -DskipTests` at the root
+directory,
+then `cd` into `gapic-generator-java` submodule for the following commands:
+
+- Run all unit tests:
+
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test
+  ```
+
+- Run a single or multiple unit tests:
+
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test -Dtest=JavaCodeGeneratorTest
+
+  mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+  ```
+
+- Update all unit test golden files:
+
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test -DupdateUnitGoldens
+  ```
+
+- Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+  ```
+
+Note that `mvn -pl '!gapic-generator-java' install -DskipTests`
+at the root directory is needed for `mvn test` commands,
+because the gapic-generator-java submodule depends on the "test jars" of
+gax-java. The test jars are absent until Maven's "package" phase, which is later
+than the "test" phase.
+
+### Integration Tests
+
+To run integration test for gapic-generator-java, run this Bazel command in the
+root of the repository (where you have WORKSPACE file for Bazel.)
+
+```sh
+# In the repository root directory
+bazelisk test //...  # integration tests
+```
+
+
+- Run a single integration test for API like `Redis`, it generates Java source
+  code using the Java microgenerator and compares them with the goldens files
+  in `test/integration/goldens/redis`.
 
     ```sh
-    bazel test //...
+    # In the repository root directory
+    bazelisk test //test/integration:redis
     ```
 
--   Run all unit tests.
+- Update integration test golden files, for example `Redis`. This clobbers all the
+  files in `test/integration/goldens/redis`.
 
     ```sh
-    bazel test //:units
-    ```
-    or
-    ```sh
-    mvn test
+    # In the repository root directory
+    bazelisk run //test/integration:update_redis
     ```
 
--   Run a single unit test like `JavaCodeGeneratorTest.java`:
+## Running the Plugin under googleapis with local gapic-generator-java
 
-    ```sh
-    bazel test //:unit_com_google_api_generator_engine_JavaCodeGeneratorTest
-    ```
-    or
-    ```sh
-    mvn test -Dtest=JavaCodeGeneratorTest
+For running the Plugin with showcase protos and local gapic-generator-java, see
+[Showcase Integration Testing](../showcase/README.md).
 
-    mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
-    ```
-￼
--   Update all unit test golden files:
+To generate a production GAPIC API:
 
-    ```sh
-    mvn test -DupdateUnitGoldens
-    ```
+1. Clone [googleapis](https://github.com/googleapis/googleapis).
 
--   Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+2. Modify `googleapis/WORKSPACE` to point to local gapic-generator-java
 
-    ```sh
-    bazel run //:update_com_google_api_generator_engine_JavaCodeGeneratorTest
-    ```
-    or
-    ```sh
-    mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
-    ```
+   Normally, googleapis's build pulls in gapic-generator-java from Maven Central.
+   For a local run, we first need to build a local SNAPSHOT jar of the generator. Then we point googleapis to
+   both the local SNAPSHOT jar and the local copy of the generator.
 
--   Run a single integration test for API like `Redis`, it generates Java source
-    code using the Java microgenerator and compares them with the goldens files
-    in `test/integration/goldens/redis`.
-
-    ```sh
-    bazel test //test/integration:redis
-    ```
-
--   Update integration test golden files, for example `Redis`. This clobbers all the
-    files in `test/integration/goldens/redis`.
-
-    ```sh
-    bazel run //test/integration:update_redis
-    ```
-
-## Running the Plugin
-
-1. Clone [googleapis](https://github.com/googleapis/googleapis) and
-    [gapic-showcase](https://github.com/googleapis/gapic-showcase/).
-
-2. Copy the protos from Showcase into googleapis/google/showcase.
-
-    ```sh
-    mkdir googleapis/google/showcase
-    cp -r gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta1
-    ```
-
-3. Add the new microgenerator rules to
-    `googleapis/google/showcase/v1beta1/BUILD.bazel` file as follows:
-
-    ```python
-    load(
-        "@com_google_googleapis_imports//:imports.bzl",
-        # Existing rules here.
-        "java_gapic_assembly_gradle_pkg",
-        "java_gapic_library",
-        "java_proto_library",
-        "proto_library_with_info",
-    )
-
-    proto_library_with_info(
-        name = "showcase_proto_with_info",
-        deps = [
-            ":showcase_proto",
-        ],
-    )
-
-    java_proto_library(
-        name = "showcase_java_proto",
-        deps = [
-            ":showcase_proto",
-        ],
-    )
-
-    # This should either replace the existing monolith target or have a unique name
-    # that includes "java_gapic".
-    java_gapic_library(
-        name = "showcase_java_gapic",
-        srcs = [":showcase_proto_with_info"],
-        grpc_service_config = "showcase_grpc_service_config.json",
-        test_deps = [
-            ":showcase_java_grpc",
-        ],
-        deps = [
-            ":showcase_java_proto",
-        ],
-    )
-
-    java_gapic_assembly_gradle_pkg(
-        # This name should be unique from the existing target name.
-        name = "google-cloud-showcase-v1beta1-java",
-        deps = [
-            # This is the new microgen target above.
-            ":showcase_java_gapic",
-            # The following targets already exist.
-            ":showcase_java_grpc",
-            ":showcase_java_proto",
-            ":showcase_proto",
-        ],
-    )
-    ```
-
-4. Point to local gapic-generator-java
-   
-   Normally, googleapis's build pulls in googleapis/gapic-generator-java from the
-   Internet:
-
+   Replace the following section in googleapis
    ```
-   # Java microgenerator.
-   …
-   _gapic_generator_java_version = "2.1.0"
-   
-   http_archive(
-       name = "gapic_generator_java",
-       …
-       urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
-   )
-   ```
+    _gapic_generator_java_version = "2.13.0"
 
-   By replacing this portion using the built-in local_repository rule, you can mak
-   it refer to your local development repo:
-
-   ```
-   local_repository(
-     name = "gapic_generator_java",
-     path = "/home/<your id>/gapic-generator-java",
-   )
-   ```
-
-5. Build the new target.
-
-   ```sh
-   cd googleapis
-   bazel build //google/showcase/v1beta1:showcase_java_gapic
-   ```
+    maven_install(
+        artifacts = [
+            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+        ],
+        #Update this False for local development
+        fail_on_missing_checksum = True,
+        repositories = [
+            "m2Local",
+            "https://repo.maven.apache.org/maven2/",
+        ]
+    )
     
+    http_archive(
+        name = "gapic_generator_java",
+        strip_prefix = "gapic-generator-java-%s" % _gapic_generator_java_version,
+        urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
+    )
+   ```
+
+   to
+
+   ```
+    _gapic_generator_java_version = "2.13.1-SNAPSHOT"
+
+    maven_install(
+        artifacts = [
+           "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+        ],
+        #Update this False for local development
+        fail_on_missing_checksum = False,
+        repositories = [
+            "m2Local",
+            "https://repo.maven.apache.org/maven2/",
+        ]
+    )
+    
+   local_repository(
+       name = "gapic_generator_java",
+       path = "/absolute/path/to/your/local/gapic-generator-java",
+   )
+   ```
+
+   Note: At the time of writing, the gapic-generator version was `2.13.0`. Update the version to the latest version in the pom.xml
+
+3. Build the new target.
+
    You can generate any client library based on the protos within googleapis.
    You just need the name of the service within the `java_gapic_assembly_gradle_pkg`
    rules within the service's `BUILD.bazel` file.
    For instance, to run your local generator on the `speech`'s v2 service, you can
    run:
-    
+
    ```
-   bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
+   bazelisk build //google/cloud/speech/v2:google-cloud-speech-v2-java
    ```
 
+   Note: If you are running into bazel build issues, you can try to remove gapic-generator-java cached in your local m2
+   Try running this command:
+   ```
+    rm -rf ~/.m2/repository/com/google/api/
+   ```
+   and then rebuild gapic-generator-java (`mvn clean install`).
 
+## FAQ
+
+### Error in workspace: workspace() got unexpected keyword argument 'managed_directories'
+
+Full Error:
+
+```
+ERROR: Traceback (most recent call last):
+        File "/home/alicejli/googleapis/WORKSPACE", line 1, column 10, in <toplevel>
+                workspace(
+Error in workspace: workspace() got unexpected keyword argument 'managed_directories'
+ERROR: Error computing the main repository mapping: Encountered error while reading extension file 'tools/build_defs/repo/http.bzl': no such package '@bazel_tools//tools/build_defs/repo': error loading package 'external': Could not load //external package
+```
+
+You may be using the latest version of bazel which this project does not support yet. Try installing bazelisk to force
+bazel to use the version specified in `.bazeliskrc`
 

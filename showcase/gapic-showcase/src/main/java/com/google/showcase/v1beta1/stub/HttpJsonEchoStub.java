@@ -93,13 +93,12 @@ public class HttpJsonEchoStub extends EchoStub {
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<EchoRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().build(), true))
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<EchoResponse>newBuilder()
@@ -128,13 +127,12 @@ public class HttpJsonEchoStub extends EchoStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<ExpandRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().build(), true))
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<EchoResponse>newBuilder()
@@ -164,13 +162,12 @@ public class HttpJsonEchoStub extends EchoStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<PagedExpandRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().build(), true))
+                                  .toBody("*", request.toBuilder().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<PagedExpandResponse>newBuilder()
@@ -200,13 +197,12 @@ public class HttpJsonEchoStub extends EchoStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<PagedExpandLegacyRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().build(), true))
+                                  .toBody("*", request.toBuilder().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<PagedExpandResponse>newBuilder()
@@ -236,13 +232,12 @@ public class HttpJsonEchoStub extends EchoStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<PagedExpandRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().build(), true))
+                                  .toBody("*", request.toBuilder().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<PagedExpandLegacyMappedResponse>newBuilder()
@@ -269,13 +264,12 @@ public class HttpJsonEchoStub extends EchoStub {
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<WaitRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().build(), true))
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Operation>newBuilder()
@@ -305,13 +299,12 @@ public class HttpJsonEchoStub extends EchoStub {
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<BlockRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().build(), true))
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<BlockResponse>newBuilder()

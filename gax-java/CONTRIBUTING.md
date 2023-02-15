@@ -20,15 +20,7 @@ frustration later on.
 All submissions, including submissions by project members, require review. We
 use Github pull requests for this purpose.
 
-### Building
-To build GAX:
-
-```sh
-mvn clean install
-```
-
 ### The small print
 Contributions made by corporations are covered by a different agreement than
 the one above, the
-[Software Grant and Corporate Contributor License Agreement]
-(https://cla.developers.google.com/about/google-corporate).
+[Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).

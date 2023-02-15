@@ -21,8 +21,6 @@ import com.google.api.generator.gapic.composer.rest.ServiceClientTestClassCompos
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Map;
 
@@ -44,12 +42,6 @@ public class HttpJsonServiceClientTestClassComposer extends ServiceClientTestCla
         getTransportContext().classNames().getServiceClientTestClassNames(service).get(0),
         context,
         service);
-  }
-
-  protected boolean isSupportedMethod(Method method) {
-    return method.httpBindings() != null
-        && method.stream() != Stream.BIDI
-        && method.stream() != Stream.CLIENT;
   }
 
   @Override

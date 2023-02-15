@@ -2,5 +2,6 @@
   "extends": [
     "config:base"
   ],
-  "ignorePaths": [".kokoro/requirements.txt"]
+  "ignorePaths": [".kokoro/requirements.txt"],
+  "ignoreDeps": ["rules_pkg"]
 }
