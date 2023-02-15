@@ -52,7 +52,7 @@ root of the repository (where you have WORKSPACE file for Bazel.)
 
 ```sh
 # In the repository root directory
-bazel test //...  # integration tests
+bazelisk test //...  # integration tests
 ```
 
 
@@ -62,7 +62,7 @@ bazel test //...  # integration tests
 
     ```sh
     # In the repository root directory
-    bazel test //test/integration:redis
+    bazelisk test //test/integration:redis
     ```
 
 - Update integration test golden files, for example `Redis`. This clobbers all the
@@ -70,7 +70,7 @@ bazel test //...  # integration tests
 
     ```sh
     # In the repository root directory
-    bazel run //test/integration:update_redis
+    bazelisk run //test/integration:update_redis
     ```
 
 ## Running the Plugin under googleapis with local gapic-generator-java
@@ -145,7 +145,7 @@ To generate a production GAPIC API:
    run:
 
    ```
-   bazel build //google/cloud/speech/v2:google-cloud-speech-v2-java
+   bazelisk build //google/cloud/speech/v2:google-cloud-speech-v2-java
    ```
 
    Note: If you are running into bazel build issues, you can try to remove gapic-generator-java cached in your local m2
