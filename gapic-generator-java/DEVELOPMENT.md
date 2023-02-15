@@ -2,38 +2,66 @@
 
 ## Test Running
 
-- Run all unit and integration tests.
+### Unit Tests
 
-    ```sh
-    mvn install          # unit tests, maven test wouldn't work in root folder because gapic-generator-java is dependant on test jars of gax-java
-    bazel test //...  # integration tests
-    ```
-- For running unit tests in `gapic-generator-java` submodule, first build all modules with `mvn install -DskipTests`, then `cd` into `gapic-generator-java` submodule for the following commands:
-    - Run a single or multiple unit tests:
+To run the unit tests in `gapic-generator-java` submodule, first build all
+modules with `mvn -pl '!gapic-generator-java' install -DskipTests` at the root
+directory,
+then `cd` into `gapic-generator-java` submodule for the following commands:
 
-      ```sh
-      mvn test -Dtest=JavaCodeGeneratorTest
-  
-      mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
-      ```
+- Run all unit tests:
 
-    - Update all unit test golden files:
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test
+  ```
 
-      ```sh
-      mvn test -DupdateUnitGoldens
-      ```
+- Run a single or multiple unit tests:
 
-    - Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test -Dtest=JavaCodeGeneratorTest
 
-      ```sh
-      mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
-      ```
+  mvn test "-Dtest=Basic*, !%regex[.*.Unstable.*], !%regex[.*.MyTest.class#one.*|two.*], %regex[#fast.*|slow.*]"
+  ```
+
+- Update all unit test golden files:
+
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test -DupdateUnitGoldens
+  ```
+
+- Update a single unit test golden file, for example `JavaCodeGeneratorTest.java`:
+
+  ```sh
+  # In gapic-generator-java submodule
+  mvn test -DupdateUnitGoldens -Dtest=JavaCodeGeneratorTest
+  ```
+
+Note that `mvn -pl '!gapic-generator-java' install -DskipTests`
+at the root directory is needed for `mvn test` commands,
+because the gapic-generator-java submodule depends on the "test jars" of
+gax-java. The test jars are absent until Maven's "package" phase, which is later
+than the "test" phase.
+
+### Integration Tests
+
+To run integration test for gapic-generator-java, run this Bazel command in the
+root of the repository (where you have WORKSPACE file for Bazel.)
+
+```sh
+# In the repository root directory
+bazel test //...  # integration tests
+```
+
 
 - Run a single integration test for API like `Redis`, it generates Java source
   code using the Java microgenerator and compares them with the goldens files
   in `test/integration/goldens/redis`.
 
     ```sh
+    # In the repository root directory
     bazel test //test/integration:redis
     ```
 
@@ -41,6 +69,7 @@
   files in `test/integration/goldens/redis`.
 
     ```sh
+    # In the repository root directory
     bazel run //test/integration:update_redis
     ```
 
