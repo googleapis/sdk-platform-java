@@ -75,7 +75,18 @@ public class SpringPropertiesClassComposer implements ClassComposer {
     String className = Utils.getServicePropertiesClassName(service);
     GapicServiceConfig gapicServiceConfig = context.serviceConfig();
     Map<String, TypeNode> dynamicTypes = createDynamicTypes(service, packageName);
-    boolean hasRestOption = context.transport().equals(Transport.GRPC_REST);
+    // TODO(emmwang): this condition is adapted from latest gapic-generator-java changes as part of
+    // https://github.com/googleapis/gapic-generator-java/issues/1117, but should be updated to use
+    // the gapic-implemented helpers once spring generator code is migrated.
+    boolean hasRestSupportedMethod =
+        service.methods().stream()
+            .anyMatch(
+                x ->
+                    x.httpBindings() != null
+                        && x.stream() != Method.Stream.BIDI
+                        && x.stream() != Method.Stream.CLIENT);
+    boolean hasRestOption =
+        context.transport().equals(Transport.GRPC_REST) && hasRestSupportedMethod;
 
     // TODO: this is the prefix user will use to set properties, may need to change depending on
     // branding.
