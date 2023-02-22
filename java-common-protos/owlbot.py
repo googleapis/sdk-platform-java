@@ -48,4 +48,3 @@ java.common_templates(monorepo=True,excludes=[
   "renovate.json",
   ".gitignore"
 ])
-
