@@ -62,17 +62,6 @@ maven_install(
 
 _gapic_generator_java_version = "2.15.2-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
-maven_install(
-    artifacts = [
-        "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
-    ],
-    fail_on_missing_checksum = False,
-    repositories = [
-        "m2Local",
-        "https://repo.maven.apache.org/maven2/",
-    ],
-)
-
 protobuf_deps()
 
 # Bazel rules.
