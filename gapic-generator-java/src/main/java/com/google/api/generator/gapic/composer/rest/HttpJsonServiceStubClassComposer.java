@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
+import com.google.api.CustomHttpPattern;
 import com.google.api.HttpRule;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
@@ -113,6 +114,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             HttpJsonCallSettings.class,
             HttpJsonOperationSnapshot.class,
             HttpJsonStubCallableFactory.class,
+            HttpRule.class,
             Map.class,
             ImmutableMap.class,
             ProtoMessageRequestFormatter.class,
@@ -1094,20 +1096,46 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
-    Map<String, String> customHttpBindings = parseCustomHttpBindings(context);
-    Map<String, String> operationCustomHttpBindings =
-        filterCustomHttpBindingsMap(customHttpBindings, x -> x.getKey().contains(LRO_NAME_PREFIX));
+    Map<String, HttpRule> operationCustomHttpBindings =
+        parseCustomHttpBindings(context, x -> x.getSelector().contains(LRO_NAME_PREFIX));
     if (operationCustomHttpBindings.size() > 0) {
       Expr operationCustomHttpBindingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
               .setMethodName("builder")
-              .setGenerics(Arrays.asList(TypeNode.STRING.reference(), TypeNode.STRING.reference()))
+              .setGenerics(
+                  Arrays.asList(
+                      TypeNode.STRING.reference(),
+                      FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()).reference()))
               .build();
 
-      for (Map.Entry<String, String> entrySet : operationCustomHttpBindings.entrySet()) {
+      for (Map.Entry<String, HttpRule> entrySet : operationCustomHttpBindings.entrySet()) {
         String selector = entrySet.getKey();
-        String path = entrySet.getValue();
+        HttpRule httpRule = entrySet.getValue();
+
+        Expr httpRuleBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+                .setMethodName("newBuilder")
+                .build();
+
+        httpRuleBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(httpRuleBuilderExpr)
+                .setMethodName(getKeyBasedOnPatternCase(httpRule))
+                .setArguments(
+                    ValueExpr.withValue(
+                        StringObjectValue.withValue(getValueBasedOnPatternCase(httpRule))))
+                .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+                .build();
+
+        httpRuleBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(httpRuleBuilderExpr)
+                .setMethodName("build")
+                .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+                .build();
+
         operationCustomHttpBindingsBuilderExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
@@ -1115,7 +1143,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .setArguments(
                     Arrays.asList(
                         ValueExpr.withValue(StringObjectValue.withValue(selector)),
-                        ValueExpr.withValue(StringObjectValue.withValue(path))))
+                        httpRuleBuilderExpr))
                 .build();
       }
 
@@ -1143,22 +1171,38 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .build());
   }
 
-  private Map<String, String> parseCustomHttpBindings(GapicContext context) {
-    Map<String, String> customHttpBindings = new HashMap<>();
+  private Map<String, HttpRule> parseCustomHttpBindings(
+      GapicContext context, Predicate<HttpRule> predicate) {
     com.google.api.Service service = context.serviceYamlProto();
-    if (service != null && service.getHttp() != null) {
-      for (HttpRule httpRule : service.getHttp().getRulesList()) {
-        customHttpBindings.put(httpRule.getSelector(), getValueBasedOnPatternCase(httpRule));
+    if (service == null || service.getHttp() == null) {
+      return ImmutableMap.of();
+    }
+    Map<String, HttpRule> customHttpBindings = new HashMap<>();
+    for (HttpRule httpRule : service.getHttp().getRulesList()) {
+      if (predicate.test(httpRule)) {
+        customHttpBindings.put(httpRule.getSelector(), httpRule);
       }
     }
     return customHttpBindings;
   }
 
-  private Map<String, String> filterCustomHttpBindingsMap(
-      Map<String, String> customHttpBindings, Predicate<Map.Entry<String, String>> predicate) {
-    return customHttpBindings.entrySet().stream()
-        .filter(predicate)
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  private String getKeyBasedOnPatternCase(HttpRule httpRule) {
+    switch (httpRule.getPatternCase().getNumber()) {
+      case 2:
+        return "setGet";
+      case 3:
+        return "setPut";
+      case 4:
+        return "setPost";
+      case 5:
+        return "setDelete";
+      case 6:
+        return "setPatch";
+//      case 8:
+//        return "Custom";
+      default:
+        return null;
+    }
   }
 
   private String getValueBasedOnPatternCase(HttpRule httpRule) {

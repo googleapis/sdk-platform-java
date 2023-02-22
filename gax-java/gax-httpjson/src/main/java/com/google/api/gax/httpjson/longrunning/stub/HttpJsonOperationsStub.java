@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.httpjson.longrunning.stub;
 
+import com.google.api.HttpRule;
 import com.google.api.client.http.HttpMethods;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -238,12 +239,13 @@ public class HttpJsonOperationsStub extends OperationsStub {
   }
 
   public static final HttpJsonOperationsStub create(
-      OperationsStubSettings settings, Map<String, String> customHttpBindings) throws IOException {
+      OperationsStubSettings settings, Map<String, HttpRule> customHttpBindings)
+      throws IOException {
     return new HttpJsonOperationsStub(settings, ClientContext.create(settings), customHttpBindings);
   }
 
   public static final HttpJsonOperationsStub create(
-      ClientContext clientContext, Map<String, String> customHttpBindings) throws IOException {
+      ClientContext clientContext, Map<String, HttpRule> customHttpBindings) throws IOException {
     return new HttpJsonOperationsStub(
         OperationsStubSettings.newBuilder().build(), clientContext, customHttpBindings);
   }
@@ -251,7 +253,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
-      Map<String, String> customHttpBindings)
+      Map<String, HttpRule> customHttpBindings)
       throws IOException {
     return new HttpJsonOperationsStub(
         OperationsStubSettings.newBuilder().build(),
@@ -265,7 +267,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
       TypeRegistry typeRegistry,
-      Map<String, String> customHttpBindings)
+      Map<String, HttpRule> customHttpBindings)
       throws IOException {
     return new HttpJsonOperationsStub(
         OperationsStubSettings.newBuilder().build(),
@@ -283,7 +285,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   protected HttpJsonOperationsStub(
       OperationsStubSettings settings,
       ClientContext clientContext,
-      Map<String, String> customHttpBindings)
+      Map<String, HttpRule> customHttpBindings)
       throws IOException {
     this(
         settings,
@@ -303,7 +305,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
       TypeRegistry typeRegistry,
-      Map<String, String> customHttpBindings)
+      Map<String, HttpRule> customHttpBindings)
       throws IOException {
     this.callableFactory = callableFactory;
 
@@ -366,7 +368,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   }
 
   private static void updateDefaultApiMethodDescriptors(
-      Map<String, String> customOperationHttpBindings) {
+      Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
           listOperationsMethodDescriptor
@@ -375,7 +377,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                   ((ProtoMessageRequestFormatter<ListOperationsRequest>)
                           listOperationsMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(customOperationHttpBindings.get(LRO_LIST_OPERATIONS))
+                      .updateRawPath(customOperationHttpBindings.get(LRO_LIST_OPERATIONS).getGet())
                       .build())
               .build();
     }
@@ -388,7 +390,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                   ((ProtoMessageRequestFormatter<GetOperationRequest>)
                           getOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(customOperationHttpBindings.get(LRO_GET_OPERATION))
+                      .updateRawPath(customOperationHttpBindings.get(LRO_GET_OPERATION).getGet())
                       .build())
               .build();
     }
@@ -401,7 +403,8 @@ public class HttpJsonOperationsStub extends OperationsStub {
                   ((ProtoMessageRequestFormatter<DeleteOperationRequest>)
                           deleteOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(customOperationHttpBindings.get(LRO_DELETE_OPERATION))
+                      .updateRawPath(
+                          customOperationHttpBindings.get(LRO_DELETE_OPERATION).getDelete())
                       .build())
               .build();
     }
@@ -414,7 +417,8 @@ public class HttpJsonOperationsStub extends OperationsStub {
                   ((ProtoMessageRequestFormatter<CancelOperationRequest>)
                           cancelOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(customOperationHttpBindings.get(LRO_CANCEL_OPERATION))
+                      .updateRawPath(
+                          customOperationHttpBindings.get(LRO_CANCEL_OPERATION).getPost())
                       .build())
               .build();
     }
