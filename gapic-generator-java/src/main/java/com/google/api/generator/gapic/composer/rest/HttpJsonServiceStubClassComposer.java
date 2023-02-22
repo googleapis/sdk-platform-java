@@ -1113,28 +1113,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         String selector = entrySet.getKey();
         HttpRule httpRule = entrySet.getValue();
 
-        Expr httpRuleBuilderExpr =
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
-                .setMethodName("newBuilder")
-                .build();
-
-        httpRuleBuilderExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(httpRuleBuilderExpr)
-                .setMethodName(getKeyBasedOnPatternCase(httpRule))
-                .setArguments(
-                    ValueExpr.withValue(
-                        StringObjectValue.withValue(getValueBasedOnPatternCase(httpRule))))
-                .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
-                .build();
-
-        httpRuleBuilderExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(httpRuleBuilderExpr)
-                .setMethodName("build")
-                .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
-                .build();
+        Expr httpRuleBuilderExpr = getHttpRuleBuilderExpr(httpRule, false);
 
         operationCustomHttpBindingsBuilderExpr =
             MethodInvocationExpr.builder()
@@ -1169,6 +1148,39 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                     .setReturnType(operationsStubClassVarExpr.type())
                     .build())
             .build());
+  }
+
+  private Expr getHttpRuleBuilderExpr(HttpRule httpRule, boolean isNested) {
+    Expr httpRuleBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+            .setMethodName("newBuilder")
+            .build();
+
+    httpRuleBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(httpRuleBuilderExpr)
+            .setMethodName(getKeyBasedOnPatternCase(httpRule))
+            .setArguments(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(getValueBasedOnPatternCase(httpRule))))
+            .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+            .build();
+
+    if (!isNested) {
+      for (HttpRule additionalBindings : httpRule.getAdditionalBindingsList()) {
+        httpRuleBuilderExpr = MethodInvocationExpr.builder().setExprReferenceExpr(httpRuleBuilderExpr).setMethodName("addAdditionalBindings")
+                .setArguments(Arrays.asList(getHttpRuleBuilderExpr(additionalBindings, true))).build();
+      }
+    }
+
+    httpRuleBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(httpRuleBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+            .build();
+    return httpRuleBuilderExpr;
   }
 
   private Map<String, HttpRule> parseCustomHttpBindings(
