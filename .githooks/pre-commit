@@ -105,11 +105,11 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Running Java linter..."
-  bazel --batch run --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
+  mvn fmt:check
   FORMAT_STATUS=$?
   if [ $FORMAT_STATUS != 0 ]
   then
-    echo_error "Linting failed." "Please run :google_java_format and try again."
+    echo_error "Linting failed." "Please run mvn fmt:format and try again."
     exit 1
   fi
 fi
@@ -118,7 +118,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_UNIT_GOLDEN_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking unit tests..."
-  bazel --batch test //:units --disk_cache="$BAZEL_CACHE_DIR"
+  mvn install --batch-mode --no-transfer-progress -Dcheckstyle.skip -Dfmt.skip
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
@@ -133,7 +133,7 @@ if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] \
   || [ $NUM_INTEGRATION_BAZEL_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking integration tests..."
-  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
+  bazelisk --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then

@@ -19,7 +19,6 @@ package com.google.storage.v2.samples;
 // [START storage_v2_generated_Storage_ListObjects_Paged_async]
 import com.google.common.base.Strings;
 import com.google.protobuf.FieldMask;
-import com.google.storage.v2.CommonRequestParams;
 import com.google.storage.v2.ListObjectsRequest;
 import com.google.storage.v2.ListObjectsResponse;
 import com.google.storage.v2.Object;
@@ -51,7 +50,6 @@ public class AsyncListObjectsPaged {
               .setReadMask(FieldMask.newBuilder().build())
               .setLexicographicStart("lexicographicStart-2093413008")
               .setLexicographicEnd("lexicographicEnd1646968169")
-              .setCommonRequestParams(CommonRequestParams.newBuilder().build())
               .build();
       while (true) {
         ListObjectsResponse response = storageClient.listObjectsCallable().call(request);
