@@ -19,6 +19,7 @@ package com.google.showcase.v1beta1.stub;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandLegacyMappedPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
 
+import com.google.api.HttpRule;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -371,15 +372,19 @@ public class HttpJsonEchoStub extends EchoStub {
             clientContext,
             callableFactory,
             typeRegistry,
-            ImmutableMap.<String, String>builder()
-                .put("google.longrunning.Operations.ListOperations", "/v1beta1/operations")
-                .put("google.longrunning.Operations.GetOperation", "/v1beta1/{name=operations/**}")
+            ImmutableMap.<String, HttpRule>builder()
+                .put(
+                    "google.longrunning.Operations.ListOperations",
+                    HttpRule.newBuilder().setGet("/v1beta1/operations").build())
+                .put(
+                    "google.longrunning.Operations.GetOperation",
+                    HttpRule.newBuilder().setGet("/v1beta1/{name=operations/**}").build())
                 .put(
                     "google.longrunning.Operations.DeleteOperation",
-                    "/v1beta1/{name=operations/**}")
+                    HttpRule.newBuilder().setDelete("/v1beta1/{name=operations/**}").build())
                 .put(
                     "google.longrunning.Operations.CancelOperation",
-                    "/v1beta1/{name=operations/**}:cancel")
+                    HttpRule.newBuilder().setPost("/v1beta1/{name=operations/**}:cancel").build())
                 .build());
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =

@@ -18,6 +18,7 @@ package com.google.cloud.redis.v1beta1.stub;
 
 import static com.google.cloud.redis.v1beta1.CloudRedisClient.ListInstancesPagedResponse;
 
+import com.google.api.HttpRule;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -580,19 +581,27 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
             clientContext,
             callableFactory,
             typeRegistry,
-            ImmutableMap.<String, String>builder()
+            ImmutableMap.<String, HttpRule>builder()
                 .put(
                     "google.longrunning.Operations.GetOperation",
-                    "/v1beta1/{name=projects/*/locations/*/operations/*}")
+                    HttpRule.newBuilder()
+                        .setGet("/v1beta1/{name=projects/*/locations/*/operations/*}")
+                        .build())
                 .put(
                     "google.longrunning.Operations.ListOperations",
-                    "/v1beta1/{name=projects/*/locations/*}/operations")
+                    HttpRule.newBuilder()
+                        .setGet("/v1beta1/{name=projects/*/locations/*}/operations")
+                        .build())
                 .put(
                     "google.longrunning.Operations.DeleteOperation",
-                    "/v1beta1/{name=projects/*/locations/*/operations/*}")
+                    HttpRule.newBuilder()
+                        .setDelete("/v1beta1/{name=projects/*/locations/*/operations/*}")
+                        .build())
                 .put(
                     "google.longrunning.Operations.CancelOperation",
-                    "/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
+                    HttpRule.newBuilder()
+                        .setPost("/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
+                        .build())
                 .build());
 
     HttpJsonCallSettings<ListInstancesRequest, ListInstancesResponse>
