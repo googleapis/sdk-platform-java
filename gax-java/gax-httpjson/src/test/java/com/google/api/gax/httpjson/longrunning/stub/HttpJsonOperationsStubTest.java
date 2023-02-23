@@ -32,6 +32,7 @@ package com.google.api.gax.httpjson.longrunning.stub;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.HttpRule;
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.common.collect.ImmutableMap;
 import java.util.List;
@@ -46,7 +47,9 @@ public class HttpJsonOperationsStubTest {
   public static void setUp() throws Exception {
     httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            OperationsStubSettings.newBuilder().build(),
+            OperationsStubSettings.newBuilder()
+                .setCredentialsProvider(NoCredentialsProvider.create())
+                .build(),
             ImmutableMap.of(
                 "google.longrunning.Operations.ListOperations",
                 HttpRule.newBuilder().setGet("testList").build(),
