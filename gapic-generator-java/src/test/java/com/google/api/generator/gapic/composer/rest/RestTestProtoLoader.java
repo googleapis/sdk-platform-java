@@ -54,25 +54,25 @@ public class RestTestProtoLoader extends TestProtoLoader {
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     assertEquals(echoServiceDescriptor.getName(), "Compliance");
 
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-
-    String jsonFilename = "showcase_grpc_service_config.json";
-    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
-    GapicServiceConfig config = configOpt.get();
-
     String serviceYamlFileName = "showcase_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
     Optional<com.google.api.Service> serviceYamlOpt =
         ServiceYamlParser.parse(serviceYamlPath.toString());
     assertTrue(serviceYamlOpt.isPresent());
     com.google.api.Service service = serviceYamlOpt.get();
+
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
         .setMessages(messageTypes)
