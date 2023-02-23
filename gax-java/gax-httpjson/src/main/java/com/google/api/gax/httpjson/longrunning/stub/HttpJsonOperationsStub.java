@@ -55,7 +55,6 @@ import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

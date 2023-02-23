@@ -26,6 +26,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.ComplianceOuterClass;
@@ -66,11 +67,19 @@ public class RestTestProtoLoader extends TestProtoLoader {
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
+    String serviceYamlFileName = "showcase_v1beta1.yaml";
+    Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+    com.google.api.Service service = serviceYamlOpt.get();
+
     return GapicContext.builder()
         .setMessages(messageTypes)
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
+        .setServiceYamlProto(service)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
         .setRestNumericEnumsEnabled(true)
