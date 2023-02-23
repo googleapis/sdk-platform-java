@@ -29,15 +29,14 @@
  */
 package com.google.api.gax.httpjson.longrunning.stub;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.api.HttpRule;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.common.collect.ImmutableMap;
+import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
 
 public class HttpJsonOperationsStubTest {
 
