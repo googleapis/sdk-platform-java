@@ -46,6 +46,7 @@ import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPa
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.CancelOperationRequest;
 import com.google.longrunning.DeleteOperationRequest;
 import com.google.longrunning.GetOperationRequest;
@@ -53,7 +54,6 @@ import com.google.longrunning.ListOperationsRequest;
 import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
-import com.google.protobuf.Message;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -381,7 +381,13 @@ public class HttpJsonOperationsStub extends OperationsStub {
     }
   }
 
-  private static void updateDefaultApiMethodDescriptors(
+  /**
+   * This is to allow libraries to customize the Operation MethodDescriptors from the service yaml
+   * file
+   *
+   * @param customOperationHttpBindings Mapping of Mixin RPC to the HttpRule
+   */
+  private void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
@@ -458,22 +464,13 @@ public class HttpJsonOperationsStub extends OperationsStub {
     }
   }
 
-  private static <RequestT extends Message, ResponseT>
-      ApiMethodDescriptor<RequestT, ResponseT> getApiVersionedMethodDescriptor(
-          ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor, String apiVersion) {
-    if (apiVersion == null) {
-      return methodDescriptor;
-    }
-
-    ApiMethodDescriptor.Builder<RequestT, ResponseT> descriptorBuilder =
-        methodDescriptor.toBuilder();
-    ProtoMessageRequestFormatter<RequestT> requestFormatter =
-        (ProtoMessageRequestFormatter<RequestT>) descriptorBuilder.getRequestFormatter();
-
-    return descriptorBuilder
-        .setRequestFormatter(
-            requestFormatter.toBuilder().updateRawPath("/v1/", '/' + apiVersion + '/').build())
-        .build();
+  @InternalApi
+  public List<ApiMethodDescriptor> getAllMethodDescriptors() {
+    return ImmutableList.of(
+        listOperationsMethodDescriptor,
+        getOperationMethodDescriptor,
+        deleteOperationMethodDescriptor,
+        cancelOperationMethodDescriptor);
   }
 
   @InternalApi
