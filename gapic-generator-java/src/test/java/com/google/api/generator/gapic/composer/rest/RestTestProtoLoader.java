@@ -27,9 +27,13 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
+import com.google.longrunning.OperationsProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.StructProto;
 import com.google.showcase.v1beta1.ComplianceOuterClass;
+import com.google.showcase.v1beta1.EchoOuterClass;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -50,23 +54,16 @@ public class RestTestProtoLoader extends TestProtoLoader {
   }
 
   public GapicContext parseCompliance() {
-    FileDescriptor echoFileDescriptor = ComplianceOuterClass.getDescriptor();
-    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoServiceDescriptor.getName(), "Compliance");
+    FileDescriptor complianceFileDescriptor = ComplianceOuterClass.getDescriptor();
+    ServiceDescriptor complianceServiceDescriptor = complianceFileDescriptor.getServices().get(0);
+    assertEquals(complianceServiceDescriptor.getName(), "Compliance");
 
-    String serviceYamlFileName = "showcase_v1beta1.yaml";
-    Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
-    Optional<com.google.api.Service> serviceYamlOpt =
-        ServiceYamlParser.parse(serviceYamlPath.toString());
-    assertTrue(serviceYamlOpt.isPresent());
-    com.google.api.Service service = serviceYamlOpt.get();
-
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(complianceFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(complianceFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
+            complianceFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
@@ -79,10 +76,48 @@ public class RestTestProtoLoader extends TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
-        .setServiceYamlProto(service)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
         .setRestNumericEnumsEnabled(true)
         .build();
+  }
+
+  public GapicContext parseEcho() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    assertEquals(echoServiceDescriptor.getName(), "Echo");
+
+    String serviceYamlFileName = "showcase_v1beta1.yaml";
+    Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
+    Optional<com.google.api.Service> serviceYamlOpt =
+            ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+    com.google.api.Service service = serviceYamlOpt.get();
+
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
+    messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+            Parser.parseService(
+                    echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setServiceConfig(config)
+            .setServiceYamlProto(service)
+            .setHelperResourceNames(outputResourceNames)
+            .setTransport(getTransport())
+            .setRestNumericEnumsEnabled(true)
+            .build();
   }
 }
