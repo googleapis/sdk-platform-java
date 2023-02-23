@@ -55,13 +55,13 @@ import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -71,8 +71,6 @@ import java.util.stream.Collectors;
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
 public class HttpJsonOperationsStub extends OperationsStub {
-  private static final Pattern CLIENT_PACKAGE_VERSION_PATTERN =
-      Pattern.compile("\\.(?<version>v\\d+[a-zA-Z]*\\d*[a-zA-Z]*\\d*)\\.[\\w.]*stub");
   private static final String LRO_LIST_OPERATIONS = "google.longrunning.Operations.ListOperations";
   private static final String LRO_GET_OPERATION = "google.longrunning.Operations.GetOperation";
   private static final String LRO_DELETE_OPERATION =
@@ -378,7 +376,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
    *
    * @param customOperationHttpBindings Mapping of Mixin RPC to the HttpRule
    */
-  private void updateDefaultApiMethodDescriptors(
+  private static void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
