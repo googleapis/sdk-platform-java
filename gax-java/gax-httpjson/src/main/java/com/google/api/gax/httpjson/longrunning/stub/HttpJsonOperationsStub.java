@@ -203,7 +203,6 @@ public class HttpJsonOperationsStub extends OperationsStub {
 
   private final LongRunningClient longRunningClient;
   private final BackgroundResource backgroundResources;
-  private final HttpJsonStubCallableFactory callableFactory;
 
   public static final HttpJsonOperationsStub create(OperationsStubSettings settings)
       throws IOException {
@@ -308,13 +307,6 @@ public class HttpJsonOperationsStub extends OperationsStub {
       TypeRegistry typeRegistry,
       Map<String, HttpRule> customHttpBindings)
       throws IOException {
-    this.callableFactory = callableFactory;
-
-    Matcher packageMatcher =
-        CLIENT_PACKAGE_VERSION_PATTERN.matcher(callableFactory.getClass().getPackage().getName());
-
-    String apiVersion = packageMatcher.find() ? packageMatcher.group("version") : null;
-
     updateDefaultApiMethodDescriptors(customHttpBindings);
 
     HttpJsonCallSettings<ListOperationsRequest, ListOperationsResponse>
