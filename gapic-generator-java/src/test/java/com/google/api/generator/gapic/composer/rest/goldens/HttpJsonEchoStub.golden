@@ -360,16 +360,34 @@ public class HttpJsonEchoStub extends EchoStub {
             ImmutableMap.<String, HttpRule>builder()
                 .put(
                     "google.longrunning.Operations.ListOperations",
-                    HttpRule.newBuilder().setGet("/v1beta1/operations").build())
+                    HttpRule.newBuilder()
+                        .setGet("/v1beta1/operations")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setGet("/v1/operations").build())
+                        .build())
                 .put(
                     "google.longrunning.Operations.GetOperation",
-                    HttpRule.newBuilder().setGet("/v1beta1/{name=operations/**}").build())
+                    HttpRule.newBuilder()
+                        .setGet("/v1beta1/{name=operations/**}")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setGet("/v1/{name=operations/**}").build())
+                        .build())
                 .put(
                     "google.longrunning.Operations.DeleteOperation",
-                    HttpRule.newBuilder().setDelete("/v1beta1/{name=operations/**}").build())
+                    HttpRule.newBuilder()
+                        .setDelete("/v1beta1/{name=operations/**}")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setDelete("/v1/{name=operations/**}").build())
+                        .build())
                 .put(
                     "google.longrunning.Operations.CancelOperation",
-                    HttpRule.newBuilder().setPost("/v1beta1/{name=operations/**}:cancel").build())
+                    HttpRule.newBuilder()
+                        .setPost("/v1beta1/{name=operations/**}:cancel")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder()
+                                .setPost("/v1/{name=operations/**}:cancel")
+                                .build())
+                        .build())
                 .build());
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =

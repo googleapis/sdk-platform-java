@@ -77,9 +77,17 @@ http:
           body: '*'
     - selector: google.longrunning.Operations.ListOperations
       get: '/v1beta1/operations'
+      additional_bindings:
+        - get: '/v1/operations'
     - selector: google.longrunning.Operations.GetOperation
       get: '/v1beta1/{name=operations/**}'
+      additional_bindings:
+        - get: '/v1/{name=operations/**}'
     - selector: google.longrunning.Operations.DeleteOperation
       delete: '/v1beta1/{name=operations/**}'
+      additional_bindings:
+        - delete: '/v1/{name=operations/**}'
     - selector: google.longrunning.Operations.CancelOperation
       post: '/v1beta1/{name=operations/**}:cancel'
+      additional_bindings:
+        - post: '/v1/{name=operations/**}:cancel'

@@ -34,7 +34,12 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.HttpRule;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.common.collect.ImmutableMap;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
 import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,17 +57,29 @@ public class HttpJsonOperationsStubTest {
                 .build(),
             ImmutableMap.of(
                 "google.longrunning.Operations.ListOperations",
-                HttpRule.newBuilder().setGet("testList").build(),
+                HttpRule.newBuilder()
+                    .setGet("testList")
+                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testList2"))
+                    .build(),
                 "google.longrunning.Operations.GetOperation",
-                HttpRule.newBuilder().setGet("testGet").build(),
+                HttpRule.newBuilder()
+                    .setGet("testGet")
+                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testGet2"))
+                    .build(),
                 "google.longrunning.Operations.DeleteOperation",
-                HttpRule.newBuilder().setDelete("testDelete").build(),
+                HttpRule.newBuilder()
+                    .setDelete("testDelete")
+                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testDelete2"))
+                    .build(),
                 "google.longrunning.Operations.CancelOperation",
-                HttpRule.newBuilder().setPost("testCancel").build()));
+                HttpRule.newBuilder()
+                    .setPost("testCancel")
+                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testCancel2"))
+                    .build()));
   }
 
   @Test
-  public void testCorrectMethodDescriptors() {
+  public void testMethodDescriptorsURI() {
     List<ApiMethodDescriptor> apiMethodDescriptorList =
         httpJsonOperationsStub.getAllMethodDescriptors();
     assertThat(apiMethodDescriptorList.get(0).getRequestFormatter().getPathTemplate().toRawString())
@@ -73,5 +90,59 @@ public class HttpJsonOperationsStubTest {
         .isEqualTo("testDelete");
     assertThat(apiMethodDescriptorList.get(3).getRequestFormatter().getPathTemplate().toRawString())
         .isEqualTo("testCancel");
+  }
+
+  @Test
+  public void testMethodDescriptorsAdditionalBindings() {
+    List<ApiMethodDescriptor> apiMethodDescriptorList =
+        httpJsonOperationsStub.getAllMethodDescriptors();
+    ProtoMessageRequestFormatter<ListOperationsRequest>
+        listOperationsRequestProtoMessageRequestFormatter =
+            (ProtoMessageRequestFormatter<ListOperationsRequest>)
+                apiMethodDescriptorList.get(0).getRequestFormatter();
+    assertThat(listOperationsRequestProtoMessageRequestFormatter.getAdditionalPathTemplates())
+        .hasSize(1);
+    assertThat(
+            listOperationsRequestProtoMessageRequestFormatter
+                .getAdditionalPathTemplates()
+                .get(0)
+                .toRawString())
+        .isEqualTo("testList2");
+    ProtoMessageRequestFormatter<GetOperationRequest>
+        getOperationRequestProtoMessageRequestFormatter =
+            (ProtoMessageRequestFormatter<GetOperationRequest>)
+                apiMethodDescriptorList.get(1).getRequestFormatter();
+    assertThat(getOperationRequestProtoMessageRequestFormatter.getAdditionalPathTemplates())
+        .hasSize(1);
+    assertThat(
+            getOperationRequestProtoMessageRequestFormatter
+                .getAdditionalPathTemplates()
+                .get(0)
+                .toRawString())
+        .isEqualTo("testGet2");
+    ProtoMessageRequestFormatter<DeleteOperationRequest>
+        deleteOperationRequestProtoMessageRequestFormatter =
+            (ProtoMessageRequestFormatter<DeleteOperationRequest>)
+                apiMethodDescriptorList.get(2).getRequestFormatter();
+    assertThat(deleteOperationRequestProtoMessageRequestFormatter.getAdditionalPathTemplates())
+        .hasSize(1);
+    assertThat(
+            deleteOperationRequestProtoMessageRequestFormatter
+                .getAdditionalPathTemplates()
+                .get(0)
+                .toRawString())
+        .isEqualTo("testDelete2");
+    ProtoMessageRequestFormatter<CancelOperationRequest>
+        cancelOperationRequestProtoMessageRequestFormatter =
+            (ProtoMessageRequestFormatter<CancelOperationRequest>)
+                apiMethodDescriptorList.get(3).getRequestFormatter();
+    assertThat(cancelOperationRequestProtoMessageRequestFormatter.getAdditionalPathTemplates())
+        .hasSize(1);
+    assertThat(
+            cancelOperationRequestProtoMessageRequestFormatter
+                .getAdditionalPathTemplates()
+                .get(0)
+                .toRawString())
+        .isEqualTo("testCancel2");
   }
 }

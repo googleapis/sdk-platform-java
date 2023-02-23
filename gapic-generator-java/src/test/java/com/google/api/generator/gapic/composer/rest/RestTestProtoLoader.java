@@ -33,7 +33,6 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.StructProto;
 import com.google.showcase.v1beta1.ComplianceOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -63,7 +62,11 @@ public class RestTestProtoLoader extends TestProtoLoader {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            complianceFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+            complianceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
@@ -90,7 +93,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
     String serviceYamlFileName = "showcase_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
     Optional<com.google.api.Service> serviceYamlOpt =
-            ServiceYamlParser.parse(serviceYamlPath.toString());
+        ServiceYamlParser.parse(serviceYamlPath.toString());
     assertTrue(serviceYamlOpt.isPresent());
     com.google.api.Service service = serviceYamlOpt.get();
 
@@ -100,8 +103,8 @@ public class RestTestProtoLoader extends TestProtoLoader {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-            Parser.parseService(
-                    echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
@@ -110,14 +113,14 @@ public class RestTestProtoLoader extends TestProtoLoader {
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setServiceConfig(config)
-            .setServiceYamlProto(service)
-            .setHelperResourceNames(outputResourceNames)
-            .setTransport(getTransport())
-            .setRestNumericEnumsEnabled(true)
-            .build();
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setServiceYamlProto(service)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(getTransport())
+        .setRestNumericEnumsEnabled(true)
+        .build();
   }
 }
