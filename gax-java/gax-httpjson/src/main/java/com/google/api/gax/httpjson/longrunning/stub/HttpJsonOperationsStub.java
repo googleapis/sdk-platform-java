@@ -63,6 +63,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -319,26 +320,22 @@ public class HttpJsonOperationsStub extends OperationsStub {
     HttpJsonCallSettings<ListOperationsRequest, ListOperationsResponse>
         listOperationsTransportSettings =
             HttpJsonCallSettings.<ListOperationsRequest, ListOperationsResponse>newBuilder()
-                .setMethodDescriptor(
-                    getApiVersionedMethodDescriptor(listOperationsMethodDescriptor, apiVersion))
+                .setMethodDescriptor(listOperationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
                 .build();
     HttpJsonCallSettings<GetOperationRequest, Operation> getOperationTransportSettings =
         HttpJsonCallSettings.<GetOperationRequest, Operation>newBuilder()
-            .setMethodDescriptor(
-                getApiVersionedMethodDescriptor(getOperationMethodDescriptor, apiVersion))
+            .setMethodDescriptor(getOperationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<DeleteOperationRequest, Empty> deleteOperationTransportSettings =
         HttpJsonCallSettings.<DeleteOperationRequest, Empty>newBuilder()
-            .setMethodDescriptor(
-                getApiVersionedMethodDescriptor(deleteOperationMethodDescriptor, apiVersion))
+            .setMethodDescriptor(deleteOperationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
             .build();
     HttpJsonCallSettings<CancelOperationRequest, Empty> cancelOperationTransportSettings =
         HttpJsonCallSettings.<CancelOperationRequest, Empty>newBuilder()
-            .setMethodDescriptor(
-                getApiVersionedMethodDescriptor(cancelOperationMethodDescriptor, apiVersion))
+            .setMethodDescriptor(cancelOperationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
             .build();
 
@@ -367,6 +364,23 @@ public class HttpJsonOperationsStub extends OperationsStub {
     backgroundResources = new BackgroundResourceAggregation(clientContext.getBackgroundResources());
   }
 
+  private static String getValueBasedOnPatternCase(HttpRule httpRule) {
+    switch (httpRule.getPatternCase().getNumber()) {
+      case 2:
+        return httpRule.getGet();
+      case 3:
+        return httpRule.getPut();
+      case 4:
+        return httpRule.getPost();
+      case 5:
+        return httpRule.getDelete();
+      case 6:
+        return httpRule.getPatch();
+      default:
+        return null;
+    }
+  }
+
   private static void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
@@ -378,6 +392,11 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           listOperationsMethodDescriptor.getRequestFormatter())
                       .toBuilder()
                       .updateRawPath(customOperationHttpBindings.get(LRO_LIST_OPERATIONS).getGet())
+                      .setAdditionalPaths(
+                          customOperationHttpBindings.get(LRO_LIST_OPERATIONS)
+                              .getAdditionalBindingsList().stream()
+                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .collect(Collectors.toList()))
                       .build())
               .build();
     }
@@ -391,6 +410,11 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           getOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
                       .updateRawPath(customOperationHttpBindings.get(LRO_GET_OPERATION).getGet())
+                      .setAdditionalPaths(
+                          customOperationHttpBindings.get(LRO_GET_OPERATION)
+                              .getAdditionalBindingsList().stream()
+                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .collect(Collectors.toList()))
                       .build())
               .build();
     }
@@ -405,6 +429,11 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .toBuilder()
                       .updateRawPath(
                           customOperationHttpBindings.get(LRO_DELETE_OPERATION).getDelete())
+                      .setAdditionalPaths(
+                          customOperationHttpBindings.get(LRO_DELETE_OPERATION)
+                              .getAdditionalBindingsList().stream()
+                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .collect(Collectors.toList()))
                       .build())
               .build();
     }
@@ -419,6 +448,11 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .toBuilder()
                       .updateRawPath(
                           customOperationHttpBindings.get(LRO_CANCEL_OPERATION).getPost())
+                      .setAdditionalPaths(
+                          customOperationHttpBindings.get(LRO_CANCEL_OPERATION)
+                              .getAdditionalBindingsList().stream()
+                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .collect(Collectors.toList()))
                       .build())
               .build();
     }

@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import com.google.api.CustomHttpPattern;
 import com.google.api.HttpRule;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
@@ -80,7 +79,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
-
   private static final HttpJsonServiceStubClassComposer INSTANCE =
       new HttpJsonServiceStubClassComposer();
 
@@ -1096,9 +1094,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     if (standardOpStub.equals(operationsStubType.reference().fullName())) {
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
-    Map<String, HttpRule> operationCustomHttpBindings =
-        parseCustomHttpBindings(context, x -> x.getSelector().contains(LRO_NAME_PREFIX));
-    if (operationCustomHttpBindings.size() > 0) {
+
+    // If the Service contains custom HttpRules for Operations, we pass a map of the custom rules to
+    // the Operations Client
+    Map<String, HttpRule> operationCustomHttpRules =
+        parseCustomHttpRules(context, x -> x.getSelector().contains(LRO_NAME_PREFIX));
+    if (operationCustomHttpRules.size() > 0) {
       Expr operationCustomHttpBindingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
@@ -1109,11 +1110,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                       FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()).reference()))
               .build();
 
-      for (Map.Entry<String, HttpRule> entrySet : operationCustomHttpBindings.entrySet()) {
+      for (Map.Entry<String, HttpRule> entrySet : operationCustomHttpRules.entrySet()) {
         String selector = entrySet.getKey();
         HttpRule httpRule = entrySet.getValue();
 
-        Expr httpRuleBuilderExpr = getHttpRuleBuilderExpr(httpRule, false);
+        Expr httpRuleBuilderExpr = createHttpRuleExpr(httpRule, true);
 
         operationCustomHttpBindingsBuilderExpr =
             MethodInvocationExpr.builder()
@@ -1150,7 +1151,17 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .build());
   }
 
-  private Expr getHttpRuleBuilderExpr(HttpRule httpRule, boolean isNested) {
+  /**
+   * Build an Expr that creates an HttpRule. Creates a builder and adds the http verb, custom path,
+   * and any additional bindings.
+   *
+   * <p>`additional_bindings` can only be nested one layer deep, so we only check once
+   *
+   * @param httpRule HttpRule to be re-created for the library to send over
+   * @param checkAdditionalBindings Boolean to check if we parse for any `additional_bindings`
+   * @return Expr with the HttpRule built
+   */
+  private Expr createHttpRuleExpr(HttpRule httpRule, boolean checkAdditionalBindings) {
     Expr httpRuleBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
@@ -1160,17 +1171,20 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     httpRuleBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(httpRuleBuilderExpr)
-            .setMethodName(getKeyBasedOnPatternCase(httpRule))
+            .setMethodName(getHttpVerbSetterFromHttpRule(httpRule))
             .setArguments(
-                ValueExpr.withValue(
-                    StringObjectValue.withValue(getValueBasedOnPatternCase(httpRule))))
+                ValueExpr.withValue(StringObjectValue.withValue(getURIValueFromHttpRule(httpRule))))
             .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
             .build();
 
-    if (!isNested) {
+    if (checkAdditionalBindings) {
       for (HttpRule additionalBindings : httpRule.getAdditionalBindingsList()) {
-        httpRuleBuilderExpr = MethodInvocationExpr.builder().setExprReferenceExpr(httpRuleBuilderExpr).setMethodName("addAdditionalBindings")
-                .setArguments(Arrays.asList(getHttpRuleBuilderExpr(additionalBindings, true))).build();
+        httpRuleBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(httpRuleBuilderExpr)
+                .setMethodName("addAdditionalBindings")
+                .setArguments(Arrays.asList(createHttpRuleExpr(additionalBindings, false)))
+                .build();
       }
     }
 
@@ -1183,22 +1197,36 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return httpRuleBuilderExpr;
   }
 
-  private Map<String, HttpRule> parseCustomHttpBindings(
+  /**
+   * Parses the Service Yaml file's for custom HttpRules. Filter the rules based on a predicate to
+   * match for certain custom rules.
+   *
+   * @param context GapicContext that contains the Service Yaml information
+   * @param predicate HttpRule predicate to filter for certain rules
+   * @return Map contains KV pairing of (HttpRule Selector -> HttpRule object)
+   */
+  private Map<String, HttpRule> parseCustomHttpRules(
       GapicContext context, Predicate<HttpRule> predicate) {
     com.google.api.Service service = context.serviceYamlProto();
     if (service == null || service.getHttp() == null) {
       return ImmutableMap.of();
     }
-    Map<String, HttpRule> customHttpBindings = new HashMap<>();
-    for (HttpRule httpRule : service.getHttp().getRulesList()) {
-      if (predicate.test(httpRule)) {
-        customHttpBindings.put(httpRule.getSelector(), httpRule);
-      }
-    }
-    return customHttpBindings;
+    return service.getHttp().getRulesList().stream()
+        .filter(predicate)
+        .collect(Collectors.toMap(HttpRule::getSelector, x -> x));
   }
 
-  private String getKeyBasedOnPatternCase(HttpRule httpRule) {
+  /**
+   * Parse the HttpRule for the HttpVerb containing the custom URI. Concat the Http Verb to return
+   * the setting function name.
+   *
+   * <p>This ignores the `Custom` HttpRule. Operation proto only supports GET, POST, DELETE and
+   * Custom requires special logic.
+   *
+   * @param httpRule HttpRule to parse
+   * @return HttpRule.Builder's setter function name when setting for an HttpVerb
+   */
+  private String getHttpVerbSetterFromHttpRule(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
         return "setGet";
@@ -1210,14 +1238,21 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         return "setDelete";
       case 6:
         return "setPatch";
-//      case 8:
-//        return "Custom";
       default:
         return null;
     }
   }
 
-  private String getValueBasedOnPatternCase(HttpRule httpRule) {
+  /**
+   * Parse the HttpRule for the HttpVerb containing the custom URI.
+   *
+   * <p>This ignores the `Custom` HttpRule. Operation proto only supports GET, POST, DELETE and
+   * Custom requires special logic.
+   *
+   * @param httpRule HttpRule to parse
+   * @return Custom HttpRule's URI value
+   */
+  private String getURIValueFromHttpRule(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
         return httpRule.getGet();
@@ -1229,8 +1264,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         return httpRule.getDelete();
       case 6:
         return httpRule.getPatch();
-      case 8:
-        return httpRule.getCustom().getPath();
       default:
         return null;
     }
