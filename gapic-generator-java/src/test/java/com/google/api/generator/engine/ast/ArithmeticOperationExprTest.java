@@ -24,11 +24,11 @@ public class ArithmeticOperationExprTest {
     // valid type-checking for x + getSomeString()
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("x").build());
-    MethodInvocationExpr rhsExpr =
-        MethodInvocationExpr.builder()
-            .setReturnType(TypeNode.STRING)
-            .setMethodName("getSomeString")
-            .build();
+//    MethodInvocationExpr rhsExpr =
+//        MethodInvocationExpr.builder()
+//            .setReturnType(TypeNode.STRING)
+//            .setMethodName("getSomeString")
+//            .build();
     ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
