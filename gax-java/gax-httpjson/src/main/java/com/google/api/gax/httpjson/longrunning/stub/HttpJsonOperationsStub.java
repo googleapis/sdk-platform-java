@@ -237,18 +237,8 @@ public class HttpJsonOperationsStub extends OperationsStub {
         new HashMap<>());
   }
 
-  public static final HttpJsonOperationsStub create(
-      OperationsStubSettings settings, Map<String, HttpRule> customHttpBindings)
-      throws IOException {
-    return new HttpJsonOperationsStub(settings, ClientContext.create(settings), customHttpBindings);
-  }
-
-  public static final HttpJsonOperationsStub create(
-      ClientContext clientContext, Map<String, HttpRule> customHttpBindings) throws IOException {
-    return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(), clientContext, customHttpBindings);
-  }
-
+  // We choose to only override these two constructors
+  // The generator can generate these two combinations with custom HttpRules
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,

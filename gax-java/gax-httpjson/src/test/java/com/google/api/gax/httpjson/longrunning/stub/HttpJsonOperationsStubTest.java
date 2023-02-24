@@ -35,11 +35,14 @@ import com.google.api.HttpRule;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.CancelOperationRequest;
 import com.google.longrunning.DeleteOperationRequest;
 import com.google.longrunning.GetOperationRequest;
 import com.google.longrunning.ListOperationsRequest;
+import com.google.protobuf.TypeRegistry;
 import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,9 +55,12 @@ public class HttpJsonOperationsStubTest {
   public static void setUp() throws Exception {
     httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
-            OperationsStubSettings.newBuilder()
-                .setCredentialsProvider(NoCredentialsProvider.create())
+            ClientContext.newBuilder()
+                .setCredentials(NoCredentialsProvider.create().getCredentials())
+                .setDefaultCallContext(FakeCallContext.createDefault())
                 .build(),
+            new HttpJsonOperationsCallableFactory(),
+            TypeRegistry.newBuilder().build(),
             ImmutableMap.of(
                 "google.longrunning.Operations.ListOperations",
                 HttpRule.newBuilder()

@@ -31,7 +31,6 @@ package com.google.api.gax.httpjson.longrunning.stub;
 
 import static com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPagedResponse;
 
-import com.google.api.HttpRule;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.GaxProperties;
@@ -65,9 +64,7 @@ import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -190,14 +187,10 @@ public class OperationsStubSettings extends StubSettings<OperationsStubSettings>
   }
 
   public OperationsStub createStub() throws IOException {
-    return createStub(new HashMap<>());
-  }
-
-  public OperationsStub createStub(Map<String, HttpRule> customHttpBindings) throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()
         .equals(HttpJsonTransportChannel.getHttpJsonTransportName())) {
-      return HttpJsonOperationsStub.create(this, customHttpBindings);
+      return HttpJsonOperationsStub.create(this);
     }
     throw new UnsupportedOperationException(
         String.format(
