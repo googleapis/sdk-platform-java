@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue create \
-            --title "${GITHUB_WORKFLOW} build #${GITHUB_RUN_ID} failed." \
+            --title "${GITHUB_WORKFLOW} build for ${{ matrix.java }} on ${{ matrix.os }} failed." \
             --body "The build has failed : https://github.com/googleapis/gapic-generator-java/actions/runs/${GITHUB_RUN_ID}"
   nightly-java8: # Compile with JDK 11. Run tests with JDK 8.
     strategy:
@@ -61,10 +61,10 @@ jobs:
         # Direct goal invocation ("surefire:test") prevents recompiling tests
         run: mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C
       - name: Create issue if previous step fails
-          if: ${{ failure() }}
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            gh issue create \
-              --title "${GITHUB_WORKFLOW} build #${GITHUB_RUN_ID} failed." \
-              --body "The build has failed : https://github.com/googleapis/gapic-generator-java/actions/runs/${GITHUB_RUN_ID}"
+        if: ${{ failure() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "${GITHUB_WORKFLOW} build for ${{ matrix.os }} failed." \
+            --body "The build has failed : https://github.com/googleapis/gapic-generator-java/actions/runs/${GITHUB_RUN_ID}"
