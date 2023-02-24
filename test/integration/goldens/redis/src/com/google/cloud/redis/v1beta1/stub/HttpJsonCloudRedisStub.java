@@ -583,6 +583,16 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
             typeRegistry,
             ImmutableMap.<String, HttpRule>builder()
                 .put(
+                    "google.longrunning.Operations.CancelOperation",
+                    HttpRule.newBuilder()
+                        .setPost("/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
+                        .build())
+                .put(
+                    "google.longrunning.Operations.DeleteOperation",
+                    HttpRule.newBuilder()
+                        .setDelete("/v1beta1/{name=projects/*/locations/*/operations/*}")
+                        .build())
+                .put(
                     "google.longrunning.Operations.GetOperation",
                     HttpRule.newBuilder()
                         .setGet("/v1beta1/{name=projects/*/locations/*/operations/*}")
@@ -591,16 +601,6 @@ public class HttpJsonCloudRedisStub extends CloudRedisStub {
                     "google.longrunning.Operations.ListOperations",
                     HttpRule.newBuilder()
                         .setGet("/v1beta1/{name=projects/*/locations/*}/operations")
-                        .build())
-                .put(
-                    "google.longrunning.Operations.DeleteOperation",
-                    HttpRule.newBuilder()
-                        .setDelete("/v1beta1/{name=projects/*/locations/*/operations/*}")
-                        .build())
-                .put(
-                    "google.longrunning.Operations.CancelOperation",
-                    HttpRule.newBuilder()
-                        .setPost("/v1beta1/{name=projects/*/locations/*/operations/*}:cancel")
                         .build())
                 .build());
 

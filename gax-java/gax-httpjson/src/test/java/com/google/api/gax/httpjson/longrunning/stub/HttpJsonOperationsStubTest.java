@@ -69,12 +69,12 @@ public class HttpJsonOperationsStubTest {
                 "google.longrunning.Operations.DeleteOperation",
                 HttpRule.newBuilder()
                     .setDelete("testDelete")
-                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testDelete2"))
+                    .addAdditionalBindings(HttpRule.newBuilder().setDelete("testDelete2"))
                     .build(),
                 "google.longrunning.Operations.CancelOperation",
                 HttpRule.newBuilder()
                     .setPost("testCancel")
-                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testCancel2"))
+                    .addAdditionalBindings(HttpRule.newBuilder().setPost("testCancel2"))
                     .build()));
   }
 
@@ -94,6 +94,8 @@ public class HttpJsonOperationsStubTest {
 
   @Test
   public void testMethodDescriptorsAdditionalBindings() {
+    // getAllMethodDescriptors() returns the MethodDescriptors in specific order
+    // The order is: List, Get, Delete, Cancel
     List<ApiMethodDescriptor> apiMethodDescriptorList =
         httpJsonOperationsStub.getAllMethodDescriptors();
     ProtoMessageRequestFormatter<ListOperationsRequest>

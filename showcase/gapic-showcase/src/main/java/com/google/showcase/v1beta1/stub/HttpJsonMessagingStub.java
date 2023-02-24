@@ -571,17 +571,17 @@ public class HttpJsonMessagingStub extends MessagingStub {
             typeRegistry,
             ImmutableMap.<String, HttpRule>builder()
                 .put(
-                    "google.longrunning.Operations.ListOperations",
-                    HttpRule.newBuilder().setGet("/v1beta1/operations").build())
-                .put(
-                    "google.longrunning.Operations.GetOperation",
-                    HttpRule.newBuilder().setGet("/v1beta1/{name=operations/**}").build())
+                    "google.longrunning.Operations.CancelOperation",
+                    HttpRule.newBuilder().setPost("/v1beta1/{name=operations/**}:cancel").build())
                 .put(
                     "google.longrunning.Operations.DeleteOperation",
                     HttpRule.newBuilder().setDelete("/v1beta1/{name=operations/**}").build())
                 .put(
-                    "google.longrunning.Operations.CancelOperation",
-                    HttpRule.newBuilder().setPost("/v1beta1/{name=operations/**}:cancel").build())
+                    "google.longrunning.Operations.GetOperation",
+                    HttpRule.newBuilder().setGet("/v1beta1/{name=operations/**}").build())
+                .put(
+                    "google.longrunning.Operations.ListOperations",
+                    HttpRule.newBuilder().setGet("/v1beta1/operations").build())
                 .build());
 
     HttpJsonCallSettings<CreateRoomRequest, Room> createRoomTransportSettings =
