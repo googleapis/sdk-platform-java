@@ -1171,7 +1171,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     httpRuleBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(httpRuleBuilderExpr)
-            .setMethodName(getHttpVerbSetterFromHttpRule(httpRule))
+            .setMethodName(setMethodFormat(getHttpVerbSetterFromHttpRule(httpRule)))
             .setArguments(
                 ValueExpr.withValue(StringObjectValue.withValue(getURIValueFromHttpRule(httpRule))))
             .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
@@ -1229,15 +1229,15 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   private String getHttpVerbSetterFromHttpRule(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
-        return "setGet";
+        return "get";
       case 3:
-        return "setPut";
+        return "put";
       case 4:
-        return "setPost";
+        return "post";
       case 5:
-        return "setDelete";
+        return "delete";
       case 6:
-        return "setPatch";
+        return "patch";
       default:
         return null;
     }
