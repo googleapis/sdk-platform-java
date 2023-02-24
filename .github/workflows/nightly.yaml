@@ -32,7 +32,7 @@ jobs:
         run: |
           gh issue create \
             --title "Build failed on ${GITHUB_WORKFLOW}" \
-            --body "The build has failed ${{ github.workflow }}: ${{ github.run_number }}."
+            --body "The build has failed ${{ github.workflow }}: ${{ github.run_number }}. Link ${{ github.event.workflow_run.url }}"
 
   nightly-java8: # Compile with JDK 11. Run tests with JDK 8.
     strategy:
