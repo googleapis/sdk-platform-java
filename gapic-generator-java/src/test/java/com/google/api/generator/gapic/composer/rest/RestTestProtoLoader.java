@@ -14,8 +14,7 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -55,7 +54,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
   public GapicContext parseCompliance() {
     FileDescriptor complianceFileDescriptor = ComplianceOuterClass.getDescriptor();
     ServiceDescriptor complianceServiceDescriptor = complianceFileDescriptor.getServices().get(0);
-    assertEquals(complianceServiceDescriptor.getName(), "Compliance");
+    assertThat(complianceServiceDescriptor.getName()).isEqualTo("Compliance");
 
     Map<String, Message> messageTypes = Parser.parseMessages(complianceFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(complianceFileDescriptor);
@@ -71,7 +70,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
+    assertThat(configOpt.isPresent()).isTrue();
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
@@ -88,13 +87,13 @@ public class RestTestProtoLoader extends TestProtoLoader {
   public GapicContext parseEcho() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoServiceDescriptor.getName(), "Echo");
+    assertThat(echoServiceDescriptor.getName()).isEqualTo("Echo");
 
     String serviceYamlFileName = "showcase_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
     Optional<com.google.api.Service> serviceYamlOpt =
         ServiceYamlParser.parse(serviceYamlPath.toString());
-    assertTrue(serviceYamlOpt.isPresent());
+    assertThat(serviceYamlOpt.isPresent()).isTrue();
     com.google.api.Service service = serviceYamlOpt.get();
 
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -109,7 +108,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
+    assertThat(configOpt.isPresent()).isTrue();
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
