@@ -1110,10 +1110,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                       FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()).reference()))
               .build();
 
-      for (Map.Entry<String, HttpRule> entrySet : operationCustomHttpRules.entrySet()) {
-        String selector = entrySet.getKey();
-        HttpRule httpRule = entrySet.getValue();
-
+      for (String selector :
+          operationCustomHttpRules.keySet().stream().sorted().collect(Collectors.toList())) {
+        HttpRule httpRule = operationCustomHttpRules.get(selector);
         Expr httpRuleBuilderExpr = createHttpRuleExpr(httpRule, true);
 
         operationCustomHttpBindingsBuilderExpr =
