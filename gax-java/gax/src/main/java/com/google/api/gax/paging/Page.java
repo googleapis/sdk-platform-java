@@ -29,6 +29,9 @@
  */
 package com.google.api.gax.paging;
 
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 /**
  * A Page object wraps an API list method response.
  *
@@ -60,4 +63,12 @@ public interface Page<ResourceT> {
 
   /** Returns an iterable over the elements in this page. */
   Iterable<ResourceT> getValues();
+
+  default Stream<ResourceT> streamAll() {
+    return StreamSupport.stream(iterateAll().spliterator(), false);
+  }
+
+  default Stream<ResourceT> streamValues() {
+    return StreamSupport.stream(getValues().spliterator(), false);
+  }
 }
