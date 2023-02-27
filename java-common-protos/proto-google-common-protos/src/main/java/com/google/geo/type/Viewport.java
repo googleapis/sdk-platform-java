@@ -132,7 +132,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.type.LatLngOrBuilder getLowOrBuilder() {
-    return getLow();
+    return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
   }
 
   public static final int HIGH_FIELD_NUMBER = 2;
@@ -178,7 +178,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.type.LatLngOrBuilder getHighOrBuilder() {
-    return getHigh();
+    return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -419,16 +419,15 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (lowBuilder_ == null) {
-        low_ = null;
-      } else {
-        low_ = null;
+      bitField0_ = 0;
+      low_ = null;
+      if (lowBuilder_ != null) {
+        lowBuilder_.dispose();
         lowBuilder_ = null;
       }
-      if (highBuilder_ == null) {
-        high_ = null;
-      } else {
-        high_ = null;
+      high_ = null;
+      if (highBuilder_ != null) {
+        highBuilder_.dispose();
         highBuilder_ = null;
       }
       return this;
@@ -456,18 +455,21 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.geo.type.Viewport buildPartial() {
       com.google.geo.type.Viewport result = new com.google.geo.type.Viewport(this);
-      if (lowBuilder_ == null) {
-        result.low_ = low_;
-      } else {
-        result.low_ = lowBuilder_.build();
-      }
-      if (highBuilder_ == null) {
-        result.high_ = high_;
-      } else {
-        result.high_ = highBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.geo.type.Viewport result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.low_ = lowBuilder_ == null ? low_ : lowBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.high_ = highBuilder_ == null ? high_ : highBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -550,13 +552,13 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 input.readMessage(getLowFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 input.readMessage(getHighFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -576,6 +578,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    private int bitField0_;
+
     private com.google.type.LatLng low_;
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
@@ -592,7 +596,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the low field is set.
      */
     public boolean hasLow() {
-      return lowBuilder_ != null || low_ != null;
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      *
@@ -627,11 +631,11 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         low_ = value;
-        onChanged();
       } else {
         lowBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -646,11 +650,11 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     public Builder setLow(com.google.type.LatLng.Builder builderForValue) {
       if (lowBuilder_ == null) {
         low_ = builderForValue.build();
-        onChanged();
       } else {
         lowBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -664,16 +668,18 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeLow(com.google.type.LatLng value) {
       if (lowBuilder_ == null) {
-        if (low_ != null) {
-          low_ = com.google.type.LatLng.newBuilder(low_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000001) != 0)
+            && low_ != null
+            && low_ != com.google.type.LatLng.getDefaultInstance()) {
+          getLowBuilder().mergeFrom(value);
         } else {
           low_ = value;
         }
-        onChanged();
       } else {
         lowBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -686,14 +692,13 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng low = 1;</code>
      */
     public Builder clearLow() {
-      if (lowBuilder_ == null) {
-        low_ = null;
-        onChanged();
-      } else {
-        low_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      low_ = null;
+      if (lowBuilder_ != null) {
+        lowBuilder_.dispose();
         lowBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -706,7 +711,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng low = 1;</code>
      */
     public com.google.type.LatLng.Builder getLowBuilder() {
-
+      bitField0_ |= 0x00000001;
       onChanged();
       return getLowFieldBuilder().getBuilder();
     }
@@ -765,7 +770,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the high field is set.
      */
     public boolean hasHigh() {
-      return highBuilder_ != null || high_ != null;
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      *
@@ -800,11 +805,11 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         high_ = value;
-        onChanged();
       } else {
         highBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -819,11 +824,11 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     public Builder setHigh(com.google.type.LatLng.Builder builderForValue) {
       if (highBuilder_ == null) {
         high_ = builderForValue.build();
-        onChanged();
       } else {
         highBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -837,16 +842,18 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeHigh(com.google.type.LatLng value) {
       if (highBuilder_ == null) {
-        if (high_ != null) {
-          high_ = com.google.type.LatLng.newBuilder(high_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000002) != 0)
+            && high_ != null
+            && high_ != com.google.type.LatLng.getDefaultInstance()) {
+          getHighBuilder().mergeFrom(value);
         } else {
           high_ = value;
         }
-        onChanged();
       } else {
         highBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -859,14 +866,13 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng high = 2;</code>
      */
     public Builder clearHigh() {
-      if (highBuilder_ == null) {
-        high_ = null;
-        onChanged();
-      } else {
-        high_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      high_ = null;
+      if (highBuilder_ != null) {
+        highBuilder_.dispose();
         highBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -879,7 +885,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng high = 2;</code>
      */
     public com.google.type.LatLng.Builder getHighBuilder() {
-
+      bitField0_ |= 0x00000002;
       onChanged();
       return getHighFieldBuilder().getBuilder();
     }

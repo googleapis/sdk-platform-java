@@ -67,6 +67,8 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BINDING_DELTAS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.BindingDelta> bindingDeltas_;
   /**
    *
@@ -136,6 +138,8 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int AUDIT_CONFIG_DELTAS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.AuditConfigDelta> auditConfigDeltas_;
   /**
    *
@@ -411,6 +415,7 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (bindingDeltasBuilder_ == null) {
         bindingDeltas_ = java.util.Collections.emptyList();
       } else {
@@ -450,7 +455,15 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.PolicyDelta buildPartial() {
       com.google.iam.v1.PolicyDelta result = new com.google.iam.v1.PolicyDelta(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v1.PolicyDelta result) {
       if (bindingDeltasBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           bindingDeltas_ = java.util.Collections.unmodifiableList(bindingDeltas_);
@@ -469,8 +482,10 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.auditConfigDeltas_ = auditConfigDeltasBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.PolicyDelta result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

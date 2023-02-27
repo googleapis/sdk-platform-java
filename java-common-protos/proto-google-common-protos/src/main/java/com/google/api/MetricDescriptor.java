@@ -684,7 +684,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     public static final int LAUNCH_STAGE_FIELD_NUMBER = 1;
-    private int launchStage_;
+    private int launchStage_ = 0;
     /**
      *
      *
@@ -719,8 +719,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     @java.lang.Deprecated
     public com.google.api.LaunchStage getLaunchStage() {
-      @SuppressWarnings("deprecation")
-      com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
+      com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
       return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
     }
 
@@ -778,7 +777,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getSamplePeriodOrBuilder() {
-      return getSamplePeriod();
+      return samplePeriod_ == null
+          ? com.google.protobuf.Duration.getDefaultInstance()
+          : samplePeriod_;
     }
 
     public static final int INGEST_DELAY_FIELD_NUMBER = 3;
@@ -832,7 +833,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getIngestDelayOrBuilder() {
-      return getIngestDelay();
+      return ingestDelay_ == null
+          ? com.google.protobuf.Duration.getDefaultInstance()
+          : ingestDelay_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1063,18 +1066,16 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         launchStage_ = 0;
-
-        if (samplePeriodBuilder_ == null) {
-          samplePeriod_ = null;
-        } else {
-          samplePeriod_ = null;
+        samplePeriod_ = null;
+        if (samplePeriodBuilder_ != null) {
+          samplePeriodBuilder_.dispose();
           samplePeriodBuilder_ = null;
         }
-        if (ingestDelayBuilder_ == null) {
-          ingestDelay_ = null;
-        } else {
-          ingestDelay_ = null;
+        ingestDelay_ = null;
+        if (ingestDelayBuilder_ != null) {
+          ingestDelayBuilder_.dispose();
           ingestDelayBuilder_ = null;
         }
         return this;
@@ -1104,19 +1105,26 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public com.google.api.MetricDescriptor.MetricDescriptorMetadata buildPartial() {
         com.google.api.MetricDescriptor.MetricDescriptorMetadata result =
             new com.google.api.MetricDescriptor.MetricDescriptorMetadata(this);
-        result.launchStage_ = launchStage_;
-        if (samplePeriodBuilder_ == null) {
-          result.samplePeriod_ = samplePeriod_;
-        } else {
-          result.samplePeriod_ = samplePeriodBuilder_.build();
-        }
-        if (ingestDelayBuilder_ == null) {
-          result.ingestDelay_ = ingestDelay_;
-        } else {
-          result.ingestDelay_ = ingestDelayBuilder_.build();
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.api.MetricDescriptor.MetricDescriptorMetadata result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.launchStage_ = launchStage_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.samplePeriod_ =
+              samplePeriodBuilder_ == null ? samplePeriod_ : samplePeriodBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.ingestDelay_ =
+              ingestDelayBuilder_ == null ? ingestDelay_ : ingestDelayBuilder_.build();
+        }
       }
 
       @java.lang.Override
@@ -1205,19 +1213,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               case 8:
                 {
                   launchStage_ = input.readEnum();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 8
               case 18:
                 {
                   input.readMessage(getSamplePeriodFieldBuilder().getBuilder(), extensionRegistry);
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 18
               case 26:
                 {
                   input.readMessage(getIngestDelayFieldBuilder().getBuilder(), extensionRegistry);
-
+                  bitField0_ |= 0x00000004;
                   break;
                 } // case 26
               default:
@@ -1236,6 +1244,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private int launchStage_ = 0;
       /**
@@ -1272,8 +1282,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Deprecated
       public Builder setLaunchStageValue(int value) {
-
         launchStage_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -1293,8 +1303,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       @java.lang.Override
       @java.lang.Deprecated
       public com.google.api.LaunchStage getLaunchStage() {
-        @SuppressWarnings("deprecation")
-        com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
+        com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
         return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
       }
       /**
@@ -1316,7 +1325,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         if (value == null) {
           throw new NullPointerException();
         }
-
+        bitField0_ |= 0x00000001;
         launchStage_ = value.getNumber();
         onChanged();
         return this;
@@ -1336,7 +1345,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Deprecated
       public Builder clearLaunchStage() {
-
+        bitField0_ = (bitField0_ & ~0x00000001);
         launchStage_ = 0;
         onChanged();
         return this;
@@ -1363,7 +1372,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * @return Whether the samplePeriod field is set.
        */
       public boolean hasSamplePeriod() {
-        return samplePeriodBuilder_ != null || samplePeriod_ != null;
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        *
@@ -1406,11 +1415,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             throw new NullPointerException();
           }
           samplePeriod_ = value;
-          onChanged();
         } else {
           samplePeriodBuilder_.setMessage(value);
         }
-
+        bitField0_ |= 0x00000002;
+        onChanged();
         return this;
       }
       /**
@@ -1428,11 +1437,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public Builder setSamplePeriod(com.google.protobuf.Duration.Builder builderForValue) {
         if (samplePeriodBuilder_ == null) {
           samplePeriod_ = builderForValue.build();
-          onChanged();
         } else {
           samplePeriodBuilder_.setMessage(builderForValue.build());
         }
-
+        bitField0_ |= 0x00000002;
+        onChanged();
         return this;
       }
       /**
@@ -1449,19 +1458,18 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        */
       public Builder mergeSamplePeriod(com.google.protobuf.Duration value) {
         if (samplePeriodBuilder_ == null) {
-          if (samplePeriod_ != null) {
-            samplePeriod_ =
-                com.google.protobuf.Duration.newBuilder(samplePeriod_)
-                    .mergeFrom(value)
-                    .buildPartial();
+          if (((bitField0_ & 0x00000002) != 0)
+              && samplePeriod_ != null
+              && samplePeriod_ != com.google.protobuf.Duration.getDefaultInstance()) {
+            getSamplePeriodBuilder().mergeFrom(value);
           } else {
             samplePeriod_ = value;
           }
-          onChanged();
         } else {
           samplePeriodBuilder_.mergeFrom(value);
         }
-
+        bitField0_ |= 0x00000002;
+        onChanged();
         return this;
       }
       /**
@@ -1477,14 +1485,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration sample_period = 2;</code>
        */
       public Builder clearSamplePeriod() {
-        if (samplePeriodBuilder_ == null) {
-          samplePeriod_ = null;
-          onChanged();
-        } else {
-          samplePeriod_ = null;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        samplePeriod_ = null;
+        if (samplePeriodBuilder_ != null) {
+          samplePeriodBuilder_.dispose();
           samplePeriodBuilder_ = null;
         }
-
+        onChanged();
         return this;
       }
       /**
@@ -1500,7 +1507,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration sample_period = 2;</code>
        */
       public com.google.protobuf.Duration.Builder getSamplePeriodBuilder() {
-
+        bitField0_ |= 0x00000002;
         onChanged();
         return getSamplePeriodFieldBuilder().getBuilder();
       }
@@ -1574,7 +1581,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * @return Whether the ingestDelay field is set.
        */
       public boolean hasIngestDelay() {
-        return ingestDelayBuilder_ != null || ingestDelay_ != null;
+        return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        *
@@ -1615,11 +1622,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             throw new NullPointerException();
           }
           ingestDelay_ = value;
-          onChanged();
         } else {
           ingestDelayBuilder_.setMessage(value);
         }
-
+        bitField0_ |= 0x00000004;
+        onChanged();
         return this;
       }
       /**
@@ -1636,11 +1643,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public Builder setIngestDelay(com.google.protobuf.Duration.Builder builderForValue) {
         if (ingestDelayBuilder_ == null) {
           ingestDelay_ = builderForValue.build();
-          onChanged();
         } else {
           ingestDelayBuilder_.setMessage(builderForValue.build());
         }
-
+        bitField0_ |= 0x00000004;
+        onChanged();
         return this;
       }
       /**
@@ -1656,19 +1663,18 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        */
       public Builder mergeIngestDelay(com.google.protobuf.Duration value) {
         if (ingestDelayBuilder_ == null) {
-          if (ingestDelay_ != null) {
-            ingestDelay_ =
-                com.google.protobuf.Duration.newBuilder(ingestDelay_)
-                    .mergeFrom(value)
-                    .buildPartial();
+          if (((bitField0_ & 0x00000004) != 0)
+              && ingestDelay_ != null
+              && ingestDelay_ != com.google.protobuf.Duration.getDefaultInstance()) {
+            getIngestDelayBuilder().mergeFrom(value);
           } else {
             ingestDelay_ = value;
           }
-          onChanged();
         } else {
           ingestDelayBuilder_.mergeFrom(value);
         }
-
+        bitField0_ |= 0x00000004;
+        onChanged();
         return this;
       }
       /**
@@ -1683,14 +1689,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration ingest_delay = 3;</code>
        */
       public Builder clearIngestDelay() {
-        if (ingestDelayBuilder_ == null) {
-          ingestDelay_ = null;
-          onChanged();
-        } else {
-          ingestDelay_ = null;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        ingestDelay_ = null;
+        if (ingestDelayBuilder_ != null) {
+          ingestDelayBuilder_.dispose();
           ingestDelayBuilder_ = null;
         }
-
+        onChanged();
         return this;
       }
       /**
@@ -1705,7 +1710,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration ingest_delay = 3;</code>
        */
       public com.google.protobuf.Duration.Builder getIngestDelayBuilder() {
-
+        bitField0_ |= 0x00000004;
         onChanged();
         return getIngestDelayFieldBuilder().getBuilder();
       }
@@ -1822,7 +1827,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -1871,7 +1878,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int TYPE_FIELD_NUMBER = 8;
-  private volatile java.lang.Object type_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object type_ = "";
   /**
    *
    *
@@ -1932,6 +1941,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int LABELS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.LabelDescriptor> labels_;
   /**
    *
@@ -2026,7 +2037,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int METRIC_KIND_FIELD_NUMBER = 3;
-  private int metricKind_;
+  private int metricKind_ = 0;
   /**
    *
    *
@@ -2057,14 +2068,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.api.MetricDescriptor.MetricKind getMetricKind() {
-    @SuppressWarnings("deprecation")
     com.google.api.MetricDescriptor.MetricKind result =
-        com.google.api.MetricDescriptor.MetricKind.valueOf(metricKind_);
+        com.google.api.MetricDescriptor.MetricKind.forNumber(metricKind_);
     return result == null ? com.google.api.MetricDescriptor.MetricKind.UNRECOGNIZED : result;
   }
 
   public static final int VALUE_TYPE_FIELD_NUMBER = 4;
-  private int valueType_;
+  private int valueType_ = 0;
   /**
    *
    *
@@ -2095,14 +2105,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.api.MetricDescriptor.ValueType getValueType() {
-    @SuppressWarnings("deprecation")
     com.google.api.MetricDescriptor.ValueType result =
-        com.google.api.MetricDescriptor.ValueType.valueOf(valueType_);
+        com.google.api.MetricDescriptor.ValueType.forNumber(valueType_);
     return result == null ? com.google.api.MetricDescriptor.ValueType.UNRECOGNIZED : result;
   }
 
   public static final int UNIT_FIELD_NUMBER = 5;
-  private volatile java.lang.Object unit_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object unit_ = "";
   /**
    *
    *
@@ -2315,7 +2326,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 6;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -2364,7 +2377,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 7;
-  private volatile java.lang.Object displayName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object displayName_ = "";
   /**
    *
    *
@@ -2463,11 +2478,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
-    return getMetadata();
+    return metadata_ == null
+        ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance()
+        : metadata_;
   }
 
   public static final int LAUNCH_STAGE_FIELD_NUMBER = 12;
-  private int launchStage_;
+  private int launchStage_ = 0;
   /**
    *
    *
@@ -2496,12 +2513,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.api.LaunchStage getLaunchStage() {
-    @SuppressWarnings("deprecation")
-    com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
+    com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
     return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
   }
 
   public static final int MONITORED_RESOURCE_TYPES_FIELD_NUMBER = 13;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList monitoredResourceTypes_;
   /**
    *
@@ -2883,37 +2901,29 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       type_ = "";
-
       if (labelsBuilder_ == null) {
         labels_ = java.util.Collections.emptyList();
       } else {
         labels_ = null;
         labelsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000004);
       metricKind_ = 0;
-
       valueType_ = 0;
-
       unit_ = "";
-
       description_ = "";
-
       displayName_ = "";
-
-      if (metadataBuilder_ == null) {
-        metadata_ = null;
-      } else {
-        metadata_ = null;
+      metadata_ = null;
+      if (metadataBuilder_ != null) {
+        metadataBuilder_.dispose();
         metadataBuilder_ = null;
       }
       launchStage_ = 0;
-
       monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000400);
       return this;
     }
 
@@ -2939,36 +2949,60 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.api.MetricDescriptor buildPartial() {
       com.google.api.MetricDescriptor result = new com.google.api.MetricDescriptor(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
-      result.type_ = type_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.MetricDescriptor result) {
       if (labelsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           labels_ = java.util.Collections.unmodifiableList(labels_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.labels_ = labels_;
       } else {
         result.labels_ = labelsBuilder_.build();
       }
-      result.metricKind_ = metricKind_;
-      result.valueType_ = valueType_;
-      result.unit_ = unit_;
-      result.description_ = description_;
-      result.displayName_ = displayName_;
-      if (metadataBuilder_ == null) {
-        result.metadata_ = metadata_;
-      } else {
-        result.metadata_ = metadataBuilder_.build();
-      }
-      result.launchStage_ = launchStage_;
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000400) != 0)) {
         monitoredResourceTypes_ = monitoredResourceTypes_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000400);
       }
       result.monitoredResourceTypes_ = monitoredResourceTypes_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.MetricDescriptor result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.type_ = type_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.metricKind_ = metricKind_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.valueType_ = valueType_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.unit_ = unit_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.description_ = description_;
+      }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.displayName_ = displayName_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.metadata_ = metadataBuilder_ == null ? metadata_ : metadataBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.launchStage_ = launchStage_;
+      }
     }
 
     @java.lang.Override
@@ -3018,17 +3052,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (other == com.google.api.MetricDescriptor.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getType().isEmpty()) {
         type_ = other.type_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (labelsBuilder_ == null) {
         if (!other.labels_.isEmpty()) {
           if (labels_.isEmpty()) {
             labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureLabelsIsMutable();
             labels_.addAll(other.labels_);
@@ -3041,7 +3077,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             labelsBuilder_.dispose();
             labelsBuilder_ = null;
             labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
             labelsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getLabelsFieldBuilder()
@@ -3059,14 +3095,17 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       if (!other.getUnit().isEmpty()) {
         unit_ = other.unit_;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000040;
         onChanged();
       }
       if (!other.getDisplayName().isEmpty()) {
         displayName_ = other.displayName_;
+        bitField0_ |= 0x00000080;
         onChanged();
       }
       if (other.hasMetadata()) {
@@ -3078,7 +3117,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (!other.monitoredResourceTypes_.isEmpty()) {
         if (monitoredResourceTypes_.isEmpty()) {
           monitoredResourceTypes_ = other.monitoredResourceTypes_;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000400);
         } else {
           ensureMonitoredResourceTypesIsMutable();
           monitoredResourceTypes_.addAll(other.monitoredResourceTypes_);
@@ -3114,7 +3153,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -3132,49 +3171,49 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             case 24:
               {
                 metricKind_ = input.readEnum();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 24
             case 32:
               {
                 valueType_ = input.readEnum();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 32
             case 42:
               {
                 unit_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 42
             case 50:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000040;
                 break;
               } // case 50
             case 58:
               {
                 displayName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000080;
                 break;
               } // case 58
             case 66:
               {
                 type_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 66
             case 82:
               {
                 input.readMessage(getMetadataFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000100;
                 break;
               } // case 82
             case 96:
               {
                 launchStage_ = input.readEnum();
-
+                bitField0_ |= 0x00000200;
                 break;
               } // case 96
             case 106:
@@ -3264,8 +3303,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -3281,8 +3320,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -3303,8 +3342,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -3388,8 +3427,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       type_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -3411,8 +3450,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearType() {
-
       type_ = getDefaultInstance().getType();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -3439,8 +3478,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       type_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -3449,9 +3488,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         java.util.Collections.emptyList();
 
     private void ensureLabelsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>(labels_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000004;
       }
     }
 
@@ -3719,7 +3758,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public Builder clearLabels() {
       if (labelsBuilder_ == null) {
         labels_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
       } else {
         labelsBuilder_.clear();
@@ -3875,7 +3914,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
                 com.google.api.LabelDescriptor,
                 com.google.api.LabelDescriptor.Builder,
                 com.google.api.LabelDescriptorOrBuilder>(
-                labels_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                labels_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
         labels_ = null;
       }
       return labelsBuilder_;
@@ -3912,8 +3951,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setMetricKindValue(int value) {
-
       metricKind_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -3931,9 +3970,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.api.MetricDescriptor.MetricKind getMetricKind() {
-      @SuppressWarnings("deprecation")
       com.google.api.MetricDescriptor.MetricKind result =
-          com.google.api.MetricDescriptor.MetricKind.valueOf(metricKind_);
+          com.google.api.MetricDescriptor.MetricKind.forNumber(metricKind_);
       return result == null ? com.google.api.MetricDescriptor.MetricKind.UNRECOGNIZED : result;
     }
     /**
@@ -3953,7 +3991,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000008;
       metricKind_ = value.getNumber();
       onChanged();
       return this;
@@ -3971,7 +4009,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearMetricKind() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       metricKind_ = 0;
       onChanged();
       return this;
@@ -4008,8 +4046,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setValueTypeValue(int value) {
-
       valueType_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -4027,9 +4065,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.api.MetricDescriptor.ValueType getValueType() {
-      @SuppressWarnings("deprecation")
       com.google.api.MetricDescriptor.ValueType result =
-          com.google.api.MetricDescriptor.ValueType.valueOf(valueType_);
+          com.google.api.MetricDescriptor.ValueType.forNumber(valueType_);
       return result == null ? com.google.api.MetricDescriptor.ValueType.UNRECOGNIZED : result;
     }
     /**
@@ -4049,7 +4086,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000010;
       valueType_ = value.getNumber();
       onChanged();
       return this;
@@ -4067,7 +4104,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearValueType() {
-
+      bitField0_ = (bitField0_ & ~0x00000010);
       valueType_ = 0;
       onChanged();
       return this;
@@ -4380,8 +4417,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       unit_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -4479,8 +4516,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearUnit() {
-
       unit_ = getDefaultInstance().getUnit();
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -4583,8 +4620,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       unit_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -4650,8 +4687,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -4667,8 +4704,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000040);
       onChanged();
       return this;
     }
@@ -4689,8 +4726,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -4765,8 +4802,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       displayName_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -4785,8 +4822,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-
       displayName_ = getDefaultInstance().getDisplayName();
+      bitField0_ = (bitField0_ & ~0x00000080);
       onChanged();
       return this;
     }
@@ -4810,8 +4847,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       displayName_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -4834,7 +4871,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return Whether the metadata field is set.
      */
     public boolean hasMetadata() {
-      return metadataBuilder_ != null || metadata_ != null;
+      return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      *
@@ -4871,11 +4908,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           throw new NullPointerException();
         }
         metadata_ = value;
-        onChanged();
       } else {
         metadataBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000100;
+      onChanged();
       return this;
     }
     /**
@@ -4891,11 +4928,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder builderForValue) {
       if (metadataBuilder_ == null) {
         metadata_ = builderForValue.build();
-        onChanged();
       } else {
         metadataBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000100;
+      onChanged();
       return this;
     }
     /**
@@ -4909,19 +4946,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     public Builder mergeMetadata(com.google.api.MetricDescriptor.MetricDescriptorMetadata value) {
       if (metadataBuilder_ == null) {
-        if (metadata_ != null) {
-          metadata_ =
-              com.google.api.MetricDescriptor.MetricDescriptorMetadata.newBuilder(metadata_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000100) != 0)
+            && metadata_ != null
+            && metadata_
+                != com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance()) {
+          getMetadataBuilder().mergeFrom(value);
         } else {
           metadata_ = value;
         }
-        onChanged();
       } else {
         metadataBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000100;
+      onChanged();
       return this;
     }
     /**
@@ -4934,14 +4971,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
     public Builder clearMetadata() {
-      if (metadataBuilder_ == null) {
-        metadata_ = null;
-        onChanged();
-      } else {
-        metadata_ = null;
+      bitField0_ = (bitField0_ & ~0x00000100);
+      metadata_ = null;
+      if (metadataBuilder_ != null) {
+        metadataBuilder_.dispose();
         metadataBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -4954,7 +4990,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
     public com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder getMetadataBuilder() {
-
+      bitField0_ |= 0x00000100;
       onChanged();
       return getMetadataFieldBuilder().getBuilder();
     }
@@ -5032,8 +5068,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setLaunchStageValue(int value) {
-
       launchStage_ = value;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -5050,8 +5086,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.api.LaunchStage getLaunchStage() {
-      @SuppressWarnings("deprecation")
-      com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
+      com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
       return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
     }
     /**
@@ -5070,7 +5105,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000200;
       launchStage_ = value.getNumber();
       onChanged();
       return this;
@@ -5087,7 +5122,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearLaunchStage() {
-
+      bitField0_ = (bitField0_ & ~0x00000200);
       launchStage_ = 0;
       onChanged();
       return this;
@@ -5097,10 +5132,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureMonitoredResourceTypesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000400) != 0)) {
         monitoredResourceTypes_ =
             new com.google.protobuf.LazyStringArrayList(monitoredResourceTypes_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000400;
       }
     }
     /**
@@ -5267,7 +5302,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     public Builder clearMonitoredResourceTypes() {
       monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000400);
       onChanged();
       return this;
     }
