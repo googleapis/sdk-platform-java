@@ -120,10 +120,12 @@ public class PagingTest {
             .getPage();
 
     Truth.assertThat(page.getValues()).containsExactly(0, 1, 2).inOrder();
+    Truth.assertThat(page.streamValues().count()).isEqualTo(3);
     Truth.assertThat(page.hasNextPage()).isTrue();
 
     page = page.getNextPage();
     Truth.assertThat(page.getValues()).containsExactly(3, 4).inOrder();
+    Truth.assertThat(page.streamValues().count()).isEqualTo(2);
     Truth.assertThat(page.hasNextPage()).isTrue();
 
     page = page.getNextPage();
@@ -131,6 +133,25 @@ public class PagingTest {
     Truth.assertThat(page.hasNextPage()).isFalse();
     Truth.assertThat(page.getNextPage()).isNull();
     Truth.assertThat(requestCapture.getAllValues()).containsExactly(0, 2, 4).inOrder();
+  }
+
+  @Test
+  public void streamByPage() {
+    ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
+    Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(3, 4)))
+        .thenReturn(ApiFutures.immediateFuture(Collections.emptyList()));
+
+    Page<Integer> page =
+        FakeCallableFactory.createPagedCallable(
+                callIntList,
+                PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
+                clientContext)
+            .call(0)
+            .getPage();
+
+    Truth.assertThat(page.streamAll().count()).isEqualTo(5);
   }
 
   @Test
