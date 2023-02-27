@@ -68,6 +68,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DENIED_PRINCIPALS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList deniedPrincipals_;
   /**
    *
@@ -253,6 +255,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int EXCEPTION_PRINCIPALS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList exceptionPrincipals_;
   /**
    *
@@ -338,6 +342,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DENIED_PERMISSIONS_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList deniedPermissions_;
   /**
    *
@@ -411,6 +417,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int EXCEPTION_PERMISSIONS_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList exceptionPermissions_;
   /**
    *
@@ -558,7 +566,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.type.ExprOrBuilder getDenialConditionOrBuilder() {
-    return getDenialCondition();
+    return denialCondition_ == null ? com.google.type.Expr.getDefaultInstance() : denialCondition_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -824,6 +832,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
       exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -832,10 +841,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       bitField0_ = (bitField0_ & ~0x00000004);
       exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000008);
-      if (denialConditionBuilder_ == null) {
-        denialCondition_ = null;
-      } else {
-        denialCondition_ = null;
+      denialCondition_ = null;
+      if (denialConditionBuilder_ != null) {
+        denialConditionBuilder_.dispose();
         denialConditionBuilder_ = null;
       }
       return this;
@@ -863,7 +871,15 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v2.DenyRule buildPartial() {
       com.google.iam.v2.DenyRule result = new com.google.iam.v2.DenyRule(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v2.DenyRule result) {
       if (((bitField0_ & 0x00000001) != 0)) {
         deniedPrincipals_ = deniedPrincipals_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -884,13 +900,14 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
         bitField0_ = (bitField0_ & ~0x00000008);
       }
       result.exceptionPermissions_ = exceptionPermissions_;
-      if (denialConditionBuilder_ == null) {
-        result.denialCondition_ = denialCondition_;
-      } else {
-        result.denialCondition_ = denialConditionBuilder_.build();
+    }
+
+    private void buildPartial0(com.google.iam.v2.DenyRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.denialCondition_ =
+            denialConditionBuilder_ == null ? denialCondition_ : denialConditionBuilder_.build();
       }
-      onBuilt();
-      return result;
     }
 
     @java.lang.Override
@@ -1038,7 +1055,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
             case 42:
               {
                 input.readMessage(getDenialConditionFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 42
             default:
@@ -2161,7 +2178,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the denialCondition field is set.
      */
     public boolean hasDenialCondition() {
-      return denialConditionBuilder_ != null || denialCondition_ != null;
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      *
@@ -2214,11 +2231,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         denialCondition_ = value;
-        onChanged();
       } else {
         denialConditionBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -2241,11 +2258,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setDenialCondition(com.google.type.Expr.Builder builderForValue) {
       if (denialConditionBuilder_ == null) {
         denialCondition_ = builderForValue.build();
-        onChanged();
       } else {
         denialConditionBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -2267,17 +2284,18 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeDenialCondition(com.google.type.Expr value) {
       if (denialConditionBuilder_ == null) {
-        if (denialCondition_ != null) {
-          denialCondition_ =
-              com.google.type.Expr.newBuilder(denialCondition_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000010) != 0)
+            && denialCondition_ != null
+            && denialCondition_ != com.google.type.Expr.getDefaultInstance()) {
+          getDenialConditionBuilder().mergeFrom(value);
         } else {
           denialCondition_ = value;
         }
-        onChanged();
       } else {
         denialConditionBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -2298,14 +2316,13 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public Builder clearDenialCondition() {
-      if (denialConditionBuilder_ == null) {
-        denialCondition_ = null;
-        onChanged();
-      } else {
-        denialCondition_ = null;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      denialCondition_ = null;
+      if (denialConditionBuilder_ != null) {
+        denialConditionBuilder_.dispose();
         denialConditionBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -2326,7 +2343,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public com.google.type.Expr.Builder getDenialConditionBuilder() {
-
+      bitField0_ |= 0x00000010;
       onChanged();
       return getDenialConditionFieldBuilder().getBuilder();
     }
