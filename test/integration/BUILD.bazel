@@ -25,7 +25,7 @@ API_GAPIC_TARGETS = {
     # Java package remapping in gapic.yaml
     "logging": "@com_google_googleapis//google/logging/v2:logging_java_gapic",
     # Has a gapic.yaml.
-    "redis": "@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic",
+    "redis": "@com_google_googleapis//google/cloud/redis/v1:redis_java_gapic",
     # Exercises storage-specific edge cases.
     "storage": "@com_google_googleapis//google/storage/v2:storage_java_gapic",
     # No gRPC service config.
@@ -82,10 +82,10 @@ java_gapic_test(
 java_gapic_test(
     name = "redis_java_gapic_test_suite",
     test_classes = [
-        "com.google.cloud.redis.v1beta1.CloudRedisClientTest",
-        "com.google.cloud.redis.v1beta1.CloudRedisClientHttpJsonTest",
+        "com.google.cloud.redis.v1.CloudRedisClientTest",
+        "com.google.cloud.redis.v1.CloudRedisClientHttpJsonTest",
     ],
-    runtime_deps = ["@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic_test"],
+    runtime_deps = ["@com_google_googleapis//google/cloud/redis/v1:redis_java_gapic_test"],
 )
 
 # Storage API.
