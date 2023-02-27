@@ -83,7 +83,7 @@ java_gapic_test(
     name = "redis_java_gapic_test_suite",
     test_classes = [
         "com.google.cloud.redis.v1beta1.CloudRedisClientTest",
-        "com.google.cloud.redis.v1beta1.CloudRedisClientHttpJsonTest.java",
+        "com.google.cloud.redis.v1beta1.CloudRedisClientHttpJsonTest",
     ],
     runtime_deps = ["@com_google_googleapis//google/cloud/redis/v1beta1:redis_java_gapic_test"],
 )
