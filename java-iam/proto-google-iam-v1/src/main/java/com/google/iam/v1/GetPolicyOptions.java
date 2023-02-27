@@ -65,7 +65,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int REQUESTED_POLICY_VERSION_FIELD_NUMBER = 1;
-  private int requestedPolicyVersion_;
+  private int requestedPolicyVersion_ = 0;
   /**
    *
    *
@@ -290,8 +290,8 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       requestedPolicyVersion_ = 0;
-
       return this;
     }
 
@@ -318,9 +318,18 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.iam.v1.GetPolicyOptions buildPartial() {
       com.google.iam.v1.GetPolicyOptions result = new com.google.iam.v1.GetPolicyOptions(this);
-      result.requestedPolicyVersion_ = requestedPolicyVersion_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.GetPolicyOptions result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.requestedPolicyVersion_ = requestedPolicyVersion_;
+      }
     }
 
     @java.lang.Override
@@ -400,7 +409,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
             case 8:
               {
                 requestedPolicyVersion_ = input.readInt32();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             default:
@@ -419,6 +428,8 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private int requestedPolicyVersion_;
     /**
@@ -477,6 +488,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     public Builder setRequestedPolicyVersion(int value) {
 
       requestedPolicyVersion_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -505,7 +517,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearRequestedPolicyVersion() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       requestedPolicyVersion_ = 0;
       onChanged();
       return this;

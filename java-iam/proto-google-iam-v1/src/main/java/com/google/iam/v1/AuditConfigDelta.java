@@ -228,7 +228,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int ACTION_FIELD_NUMBER = 1;
-  private int action_;
+  private int action_ = 0;
   /**
    *
    *
@@ -259,14 +259,15 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.iam.v1.AuditConfigDelta.Action getAction() {
-    @SuppressWarnings("deprecation")
     com.google.iam.v1.AuditConfigDelta.Action result =
-        com.google.iam.v1.AuditConfigDelta.Action.valueOf(action_);
+        com.google.iam.v1.AuditConfigDelta.Action.forNumber(action_);
     return result == null ? com.google.iam.v1.AuditConfigDelta.Action.UNRECOGNIZED : result;
   }
 
   public static final int SERVICE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object service_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object service_ = "";
   /**
    *
    *
@@ -321,7 +322,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int EXEMPTED_MEMBER_FIELD_NUMBER = 3;
-  private volatile java.lang.Object exemptedMember_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object exemptedMember_ = "";
   /**
    *
    *
@@ -374,7 +377,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int LOG_TYPE_FIELD_NUMBER = 4;
-  private volatile java.lang.Object logType_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object logType_ = "";
   /**
    *
    *
@@ -649,14 +654,11 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       action_ = 0;
-
       service_ = "";
-
       exemptedMember_ = "";
-
       logType_ = "";
-
       return this;
     }
 
@@ -683,12 +685,27 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.iam.v1.AuditConfigDelta buildPartial() {
       com.google.iam.v1.AuditConfigDelta result = new com.google.iam.v1.AuditConfigDelta(this);
-      result.action_ = action_;
-      result.service_ = service_;
-      result.exemptedMember_ = exemptedMember_;
-      result.logType_ = logType_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.AuditConfigDelta result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.action_ = action_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.service_ = service_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.exemptedMember_ = exemptedMember_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.logType_ = logType_;
+      }
     }
 
     @java.lang.Override
@@ -741,14 +758,17 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       }
       if (!other.getService().isEmpty()) {
         service_ = other.service_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getExemptedMember().isEmpty()) {
         exemptedMember_ = other.exemptedMember_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (!other.getLogType().isEmpty()) {
         logType_ = other.logType_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -780,25 +800,25 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
             case 8:
               {
                 action_ = input.readEnum();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 18:
               {
                 service_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 exemptedMember_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 34:
               {
                 logType_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             default:
@@ -817,6 +837,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private int action_ = 0;
     /**
@@ -849,8 +871,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setActionValue(int value) {
-
       action_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -868,9 +890,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.iam.v1.AuditConfigDelta.Action getAction() {
-      @SuppressWarnings("deprecation")
       com.google.iam.v1.AuditConfigDelta.Action result =
-          com.google.iam.v1.AuditConfigDelta.Action.valueOf(action_);
+          com.google.iam.v1.AuditConfigDelta.Action.forNumber(action_);
       return result == null ? com.google.iam.v1.AuditConfigDelta.Action.UNRECOGNIZED : result;
     }
     /**
@@ -890,7 +911,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000001;
       action_ = value.getNumber();
       onChanged();
       return this;
@@ -908,7 +929,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearAction() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       action_ = 0;
       onChanged();
       return this;
@@ -984,8 +1005,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       service_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1004,8 +1025,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearService() {
-
       service_ = getDefaultInstance().getService();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1029,8 +1050,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       service_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1102,8 +1123,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       exemptedMember_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1121,8 +1142,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearExemptedMember() {
-
       exemptedMember_ = getDefaultInstance().getExemptedMember();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1145,8 +1166,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       exemptedMember_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1218,8 +1239,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       logType_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1237,8 +1258,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearLogType() {
-
       logType_ = getDefaultInstance().getLogType();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1261,8 +1282,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       logType_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
