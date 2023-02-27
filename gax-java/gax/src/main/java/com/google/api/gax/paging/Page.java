@@ -55,8 +55,8 @@ public interface Page<ResourceT> {
   Page<ResourceT> getNextPage();
 
   /**
-   * Returns an iterable that traverses all the elements of the underlying data source. The data
-   * is fetched lazily page by page, where each page may contain multiple elements. A new page is
+   * Returns an iterable that traverses all the elements of the underlying data source. The data is
+   * fetched lazily page by page, where each page may contain multiple elements. A new page is
    * fetched whenever the elements of any particular page are exhausted.
    */
   Iterable<ResourceT> iterateAll();
@@ -65,8 +65,8 @@ public interface Page<ResourceT> {
   Iterable<ResourceT> getValues();
 
   /**
-   * Returns a stream that traverses all the elements of the underlying data source. The data
-   * is fetched lazily page by page, where each page may contain multiple elements. A new page is
+   * Returns a stream that traverses all the elements of the underlying data source. The data is
+   * fetched lazily page by page, where each page may contain multiple elements. A new page is
    * fetched whenever the elements of any particular page are exhausted.
    */
   default Stream<ResourceT> streamAll() {
