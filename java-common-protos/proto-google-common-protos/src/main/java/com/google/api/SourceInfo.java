@@ -65,6 +65,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SOURCE_FILES_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> sourceFiles_;
   /**
    *
@@ -326,6 +328,7 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (sourceFilesBuilder_ == null) {
         sourceFiles_ = java.util.Collections.emptyList();
       } else {
@@ -358,7 +361,15 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.SourceInfo buildPartial() {
       com.google.api.SourceInfo result = new com.google.api.SourceInfo(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.SourceInfo result) {
       if (sourceFilesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           sourceFiles_ = java.util.Collections.unmodifiableList(sourceFiles_);
@@ -368,8 +379,10 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.sourceFiles_ = sourceFilesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.SourceInfo result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

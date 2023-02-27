@@ -157,7 +157,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * <code>map&lt;string, string&gt; resource_tags = 3 [(.google.api.field_behavior) = OPTIONAL];
    * </code>
    */
-
   /* nullable */
   java.lang.String getResourceTagsOrDefault(
       java.lang.String key,

@@ -74,7 +74,9 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ELEMENT_FIELD_NUMBER = 1;
-  private volatile java.lang.Object element_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object element_ = "";
   /**
    *
    *
@@ -139,7 +141,9 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int OLD_VALUE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object oldValue_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object oldValue_ = "";
   /**
    *
    *
@@ -190,7 +194,9 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NEW_VALUE_FIELD_NUMBER = 3;
-  private volatile java.lang.Object newValue_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object newValue_ = "";
   /**
    *
    *
@@ -241,7 +247,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CHANGE_TYPE_FIELD_NUMBER = 4;
-  private int changeType_;
+  private int changeType_ = 0;
   /**
    *
    *
@@ -270,12 +276,13 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.ChangeType getChangeType() {
-    @SuppressWarnings("deprecation")
-    com.google.api.ChangeType result = com.google.api.ChangeType.valueOf(changeType_);
+    com.google.api.ChangeType result = com.google.api.ChangeType.forNumber(changeType_);
     return result == null ? com.google.api.ChangeType.UNRECOGNIZED : result;
   }
 
   public static final int ADVICES_FIELD_NUMBER = 5;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Advice> advices_;
   /**
    *
@@ -583,21 +590,18 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       element_ = "";
-
       oldValue_ = "";
-
       newValue_ = "";
-
       changeType_ = 0;
-
       if (advicesBuilder_ == null) {
         advices_ = java.util.Collections.emptyList();
       } else {
         advices_ = null;
         advicesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000010);
       return this;
     }
 
@@ -623,22 +627,40 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.ConfigChange buildPartial() {
       com.google.api.ConfigChange result = new com.google.api.ConfigChange(this);
-      int from_bitField0_ = bitField0_;
-      result.element_ = element_;
-      result.oldValue_ = oldValue_;
-      result.newValue_ = newValue_;
-      result.changeType_ = changeType_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.ConfigChange result) {
       if (advicesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000010) != 0)) {
           advices_ = java.util.Collections.unmodifiableList(advices_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000010);
         }
         result.advices_ = advices_;
       } else {
         result.advices_ = advicesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.ConfigChange result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.element_ = element_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.oldValue_ = oldValue_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.newValue_ = newValue_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.changeType_ = changeType_;
+      }
     }
 
     @java.lang.Override
@@ -688,14 +710,17 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.ConfigChange.getDefaultInstance()) return this;
       if (!other.getElement().isEmpty()) {
         element_ = other.element_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getOldValue().isEmpty()) {
         oldValue_ = other.oldValue_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getNewValue().isEmpty()) {
         newValue_ = other.newValue_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (other.changeType_ != 0) {
@@ -705,7 +730,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         if (!other.advices_.isEmpty()) {
           if (advices_.isEmpty()) {
             advices_ = other.advices_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000010);
           } else {
             ensureAdvicesIsMutable();
             advices_.addAll(other.advices_);
@@ -718,7 +743,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
             advicesBuilder_.dispose();
             advicesBuilder_ = null;
             advices_ = other.advices_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000010);
             advicesBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getAdvicesFieldBuilder()
@@ -757,25 +782,25 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 element_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 oldValue_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 newValue_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 32:
               {
                 changeType_ = input.readEnum();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 32
             case 42:
@@ -894,8 +919,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       element_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -919,8 +944,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearElement() {
-
       element_ = getDefaultInstance().getElement();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -949,8 +974,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       element_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1019,8 +1044,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       oldValue_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1037,8 +1062,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOldValue() {
-
       oldValue_ = getDefaultInstance().getOldValue();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1060,8 +1085,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       oldValue_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1130,8 +1155,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       newValue_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1148,8 +1173,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNewValue() {
-
       newValue_ = getDefaultInstance().getNewValue();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1171,8 +1196,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       newValue_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1206,8 +1231,8 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setChangeTypeValue(int value) {
-
       changeType_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1224,8 +1249,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.ChangeType getChangeType() {
-      @SuppressWarnings("deprecation")
-      com.google.api.ChangeType result = com.google.api.ChangeType.valueOf(changeType_);
+      com.google.api.ChangeType result = com.google.api.ChangeType.forNumber(changeType_);
       return result == null ? com.google.api.ChangeType.UNRECOGNIZED : result;
     }
     /**
@@ -1244,7 +1268,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000008;
       changeType_ = value.getNumber();
       onChanged();
       return this;
@@ -1261,7 +1285,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearChangeType() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       changeType_ = 0;
       onChanged();
       return this;
@@ -1270,9 +1294,9 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.api.Advice> advices_ = java.util.Collections.emptyList();
 
     private void ensureAdvicesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000010) != 0)) {
         advices_ = new java.util.ArrayList<com.google.api.Advice>(advices_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000010;
       }
     }
 
@@ -1493,7 +1517,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     public Builder clearAdvices() {
       if (advicesBuilder_ == null) {
         advices_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000010);
         onChanged();
       } else {
         advicesBuilder_.clear();
@@ -1616,7 +1640,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.Advice,
                 com.google.api.Advice.Builder,
                 com.google.api.AdviceOrBuilder>(
-                advices_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                advices_, ((bitField0_ & 0x00000010) != 0), getParentForChildren(), isClean());
         advices_ = null;
       }
       return advicesBuilder_;
