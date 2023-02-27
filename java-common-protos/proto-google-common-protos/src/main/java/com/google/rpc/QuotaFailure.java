@@ -194,7 +194,9 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int SUBJECT_FIELD_NUMBER = 1;
-    private volatile java.lang.Object subject_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object subject_ = "";
     /**
      *
      *
@@ -247,7 +249,9 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int DESCRIPTION_FIELD_NUMBER = 2;
-    private volatile java.lang.Object description_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object description_ = "";
     /**
      *
      *
@@ -513,10 +517,9 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         subject_ = "";
-
         description_ = "";
-
         return this;
       }
 
@@ -544,10 +547,21 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       public com.google.rpc.QuotaFailure.Violation buildPartial() {
         com.google.rpc.QuotaFailure.Violation result =
             new com.google.rpc.QuotaFailure.Violation(this);
-        result.subject_ = subject_;
-        result.description_ = description_;
+        if (bitField0_ != 0) {
+          buildPartial0(result);
+        }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.rpc.QuotaFailure.Violation result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.subject_ = subject_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.description_ = description_;
+        }
       }
 
       @java.lang.Override
@@ -599,10 +613,12 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         if (other == com.google.rpc.QuotaFailure.Violation.getDefaultInstance()) return this;
         if (!other.getSubject().isEmpty()) {
           subject_ = other.subject_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.getDescription().isEmpty()) {
           description_ = other.description_;
+          bitField0_ |= 0x00000002;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -634,13 +650,13 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
               case 10:
                 {
                   subject_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 18:
                 {
                   description_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 18
               default:
@@ -659,6 +675,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private java.lang.Object subject_ = "";
       /**
@@ -727,8 +745,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         subject_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -746,8 +764,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearSubject() {
-
         subject_ = getDefaultInstance().getSubject();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -770,8 +788,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         subject_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -852,8 +870,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         description_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -874,8 +892,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearDescription() {
-
         description_ = getDefaultInstance().getDescription();
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -901,8 +919,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         description_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -972,6 +990,8 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int VIOLATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.QuotaFailure.Violation> violations_;
   /**
    *
@@ -1243,6 +1263,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (violationsBuilder_ == null) {
         violations_ = java.util.Collections.emptyList();
       } else {
@@ -1275,7 +1296,15 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.QuotaFailure buildPartial() {
       com.google.rpc.QuotaFailure result = new com.google.rpc.QuotaFailure(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.rpc.QuotaFailure result) {
       if (violationsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           violations_ = java.util.Collections.unmodifiableList(violations_);
@@ -1285,8 +1314,10 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.violations_ = violationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.rpc.QuotaFailure result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

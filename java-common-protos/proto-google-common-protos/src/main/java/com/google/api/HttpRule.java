@@ -348,7 +348,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
@@ -812,7 +814,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BODY_FIELD_NUMBER = 7;
-  private volatile java.lang.Object body_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object body_ = "";
   /**
    *
    *
@@ -869,7 +873,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RESPONSE_BODY_FIELD_NUMBER = 12;
-  private volatile java.lang.Object responseBody_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object responseBody_ = "";
   /**
    *
    *
@@ -926,6 +932,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ADDITIONAL_BINDINGS_FIELD_NUMBER = 11;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.HttpRule> additionalBindings_;
   /**
    *
@@ -1536,22 +1544,20 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       if (customBuilder_ != null) {
         customBuilder_.clear();
       }
       body_ = "";
-
       responseBody_ = "";
-
       if (additionalBindingsBuilder_ == null) {
         additionalBindings_ = java.util.Collections.emptyList();
       } else {
         additionalBindings_ = null;
         additionalBindingsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000200);
       patternCase_ = 0;
       pattern_ = null;
       return this;
@@ -1579,44 +1585,46 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.HttpRule buildPartial() {
       com.google.api.HttpRule result = new com.google.api.HttpRule(this);
-      int from_bitField0_ = bitField0_;
-      result.selector_ = selector_;
-      if (patternCase_ == 2) {
-        result.pattern_ = pattern_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      if (patternCase_ == 3) {
-        result.pattern_ = pattern_;
-      }
-      if (patternCase_ == 4) {
-        result.pattern_ = pattern_;
-      }
-      if (patternCase_ == 5) {
-        result.pattern_ = pattern_;
-      }
-      if (patternCase_ == 6) {
-        result.pattern_ = pattern_;
-      }
-      if (patternCase_ == 8) {
-        if (customBuilder_ == null) {
-          result.pattern_ = pattern_;
-        } else {
-          result.pattern_ = customBuilder_.build();
-        }
-      }
-      result.body_ = body_;
-      result.responseBody_ = responseBody_;
+      buildPartialOneofs(result);
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.HttpRule result) {
       if (additionalBindingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000200) != 0)) {
           additionalBindings_ = java.util.Collections.unmodifiableList(additionalBindings_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000200);
         }
         result.additionalBindings_ = additionalBindings_;
       } else {
         result.additionalBindings_ = additionalBindingsBuilder_.build();
       }
+    }
+
+    private void buildPartial0(com.google.api.HttpRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.body_ = body_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.responseBody_ = responseBody_;
+      }
+    }
+
+    private void buildPartialOneofs(com.google.api.HttpRule result) {
       result.patternCase_ = patternCase_;
-      onBuilt();
-      return result;
+      result.pattern_ = this.pattern_;
+      if (patternCase_ == 8 && customBuilder_ != null) {
+        result.pattern_ = customBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -1666,21 +1674,24 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.HttpRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getBody().isEmpty()) {
         body_ = other.body_;
+        bitField0_ |= 0x00000080;
         onChanged();
       }
       if (!other.getResponseBody().isEmpty()) {
         responseBody_ = other.responseBody_;
+        bitField0_ |= 0x00000100;
         onChanged();
       }
       if (additionalBindingsBuilder_ == null) {
         if (!other.additionalBindings_.isEmpty()) {
           if (additionalBindings_.isEmpty()) {
             additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000200);
           } else {
             ensureAdditionalBindingsIsMutable();
             additionalBindings_.addAll(other.additionalBindings_);
@@ -1693,7 +1704,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
             additionalBindingsBuilder_.dispose();
             additionalBindingsBuilder_ = null;
             additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000200);
             additionalBindingsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getAdditionalBindingsFieldBuilder()
@@ -1778,7 +1789,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -1819,7 +1830,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
             case 58:
               {
                 body_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000080;
                 break;
               } // case 58
             case 66:
@@ -1843,7 +1854,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
             case 98:
               {
                 responseBody_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000100;
                 break;
               } // case 98
             default:
@@ -1943,8 +1954,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1961,8 +1972,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1984,8 +1995,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -2896,7 +2907,6 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       }
       patternCase_ = 8;
       onChanged();
-      ;
       return customBuilder_;
     }
 
@@ -2973,8 +2983,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       body_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -2994,8 +3004,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearBody() {
-
       body_ = getDefaultInstance().getBody();
+      bitField0_ = (bitField0_ & ~0x00000080);
       onChanged();
       return this;
     }
@@ -3020,8 +3030,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       body_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -3099,8 +3109,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       responseBody_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -3120,8 +3130,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearResponseBody() {
-
       responseBody_ = getDefaultInstance().getResponseBody();
+      bitField0_ = (bitField0_ & ~0x00000100);
       onChanged();
       return this;
     }
@@ -3146,8 +3156,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       responseBody_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -3156,9 +3166,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureAdditionalBindingsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000200) != 0)) {
         additionalBindings_ = new java.util.ArrayList<com.google.api.HttpRule>(additionalBindings_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000200;
       }
     }
 
@@ -3395,7 +3405,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     public Builder clearAdditionalBindings() {
       if (additionalBindingsBuilder_ == null) {
         additionalBindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000200);
         onChanged();
       } else {
         additionalBindingsBuilder_.clear();
@@ -3531,7 +3541,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.HttpRule.Builder,
                 com.google.api.HttpRuleOrBuilder>(
                 additionalBindings_,
-                ((bitField0_ & 0x00000001) != 0),
+                ((bitField0_ & 0x00000200) != 0),
                 getParentForChildren(),
                 isClean());
         additionalBindings_ = null;

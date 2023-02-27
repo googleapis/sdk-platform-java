@@ -227,7 +227,9 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int FIELD_FIELD_NUMBER = 1;
-    private volatile java.lang.Object field_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object field_ = "";
     /**
      *
      *
@@ -332,7 +334,9 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int DESCRIPTION_FIELD_NUMBER = 2;
-    private volatile java.lang.Object description_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object description_ = "";
     /**
      *
      *
@@ -588,10 +592,9 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         field_ = "";
-
         description_ = "";
-
         return this;
       }
 
@@ -619,10 +622,21 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       public com.google.rpc.BadRequest.FieldViolation buildPartial() {
         com.google.rpc.BadRequest.FieldViolation result =
             new com.google.rpc.BadRequest.FieldViolation(this);
-        result.field_ = field_;
-        result.description_ = description_;
+        if (bitField0_ != 0) {
+          buildPartial0(result);
+        }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.rpc.BadRequest.FieldViolation result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.field_ = field_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.description_ = description_;
+        }
       }
 
       @java.lang.Override
@@ -674,10 +688,12 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         if (other == com.google.rpc.BadRequest.FieldViolation.getDefaultInstance()) return this;
         if (!other.getField().isEmpty()) {
           field_ = other.field_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.getDescription().isEmpty()) {
           description_ = other.description_;
+          bitField0_ |= 0x00000002;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -709,13 +725,13 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
               case 10:
                 {
                   field_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 18:
                 {
                   description_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 18
               default:
@@ -734,6 +750,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private java.lang.Object field_ = "";
       /**
@@ -880,8 +898,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         field_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -925,8 +943,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearField() {
-
         field_ = getDefaultInstance().getField();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -975,8 +993,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         field_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -1042,8 +1060,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         description_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1059,8 +1077,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearDescription() {
-
         description_ = getDefaultInstance().getDescription();
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -1081,8 +1099,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         description_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1152,6 +1170,8 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int FIELD_VIOLATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.BadRequest.FieldViolation> fieldViolations_;
   /**
    *
@@ -1416,6 +1436,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (fieldViolationsBuilder_ == null) {
         fieldViolations_ = java.util.Collections.emptyList();
       } else {
@@ -1448,7 +1469,15 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.BadRequest buildPartial() {
       com.google.rpc.BadRequest result = new com.google.rpc.BadRequest(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.rpc.BadRequest result) {
       if (fieldViolationsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           fieldViolations_ = java.util.Collections.unmodifiableList(fieldViolations_);
@@ -1458,8 +1487,10 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.fieldViolations_ = fieldViolationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.rpc.BadRequest result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override
