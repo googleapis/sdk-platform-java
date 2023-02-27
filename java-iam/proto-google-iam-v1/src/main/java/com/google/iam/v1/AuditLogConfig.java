@@ -263,7 +263,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LOG_TYPE_FIELD_NUMBER = 1;
-  private int logType_;
+  private int logType_ = 0;
   /**
    *
    *
@@ -292,13 +292,14 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.iam.v1.AuditLogConfig.LogType getLogType() {
-    @SuppressWarnings("deprecation")
     com.google.iam.v1.AuditLogConfig.LogType result =
-        com.google.iam.v1.AuditLogConfig.LogType.valueOf(logType_);
+        com.google.iam.v1.AuditLogConfig.LogType.forNumber(logType_);
     return result == null ? com.google.iam.v1.AuditLogConfig.LogType.UNRECOGNIZED : result;
   }
 
   public static final int EXEMPTED_MEMBERS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList exemptedMembers_;
   /**
    *
@@ -593,10 +594,10 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       logType_ = 0;
-
       exemptedMembers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -622,15 +623,27 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.AuditLogConfig buildPartial() {
       com.google.iam.v1.AuditLogConfig result = new com.google.iam.v1.AuditLogConfig(this);
-      int from_bitField0_ = bitField0_;
-      result.logType_ = logType_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        exemptedMembers_ = exemptedMembers_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.exemptedMembers_ = exemptedMembers_;
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v1.AuditLogConfig result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        exemptedMembers_ = exemptedMembers_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.exemptedMembers_ = exemptedMembers_;
+    }
+
+    private void buildPartial0(com.google.iam.v1.AuditLogConfig result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.logType_ = logType_;
+      }
     }
 
     @java.lang.Override
@@ -684,7 +697,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       if (!other.exemptedMembers_.isEmpty()) {
         if (exemptedMembers_.isEmpty()) {
           exemptedMembers_ = other.exemptedMembers_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensureExemptedMembersIsMutable();
           exemptedMembers_.addAll(other.exemptedMembers_);
@@ -720,7 +733,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 logType_ = input.readEnum();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 18:
@@ -778,8 +791,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLogTypeValue(int value) {
-
       logType_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -796,9 +809,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.iam.v1.AuditLogConfig.LogType getLogType() {
-      @SuppressWarnings("deprecation")
       com.google.iam.v1.AuditLogConfig.LogType result =
-          com.google.iam.v1.AuditLogConfig.LogType.valueOf(logType_);
+          com.google.iam.v1.AuditLogConfig.LogType.forNumber(logType_);
       return result == null ? com.google.iam.v1.AuditLogConfig.LogType.UNRECOGNIZED : result;
     }
     /**
@@ -817,7 +829,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000001;
       logType_ = value.getNumber();
       onChanged();
       return this;
@@ -834,7 +846,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLogType() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       logType_ = 0;
       onChanged();
       return this;
@@ -844,9 +856,9 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureExemptedMembersIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         exemptedMembers_ = new com.google.protobuf.LazyStringArrayList(exemptedMembers_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
     /**
@@ -997,7 +1009,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearExemptedMembers() {
       exemptedMembers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
