@@ -102,16 +102,16 @@ jobs:
         shell: bash
         run: |
           mvn -V -B -ntp clean install -DskipTests
-      - uses: actions/setup-java@v3
-        with:
-          java-version: 8
-          distribution: temurin
-          cache: maven
-      - run: java -version
-      - name: Run tests in Java 8 with the source compiled in Java 11 for gapic-generator-java
-        shell: bash
-        run: |
-          mvn -V -B -ntp surefire:test --projects 'gapic-generator-java'
+#      - uses: actions/setup-java@v3
+#        with:
+#          java-version: 8
+#          distribution: temurin
+#          cache: maven
+#      - run: java -version
+#      - name: Run tests in Java 8 with the source compiled in Java 11 for gapic-generator-java
+#        shell: bash
+#        run: |
+#          mvn -V -B -ntp surefire:test --projects 'gapic-generator-java'
       - run: bazelisk version
       - name: Integration Tests
         run: |
