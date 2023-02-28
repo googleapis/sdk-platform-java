@@ -1,17 +1,17 @@
 # Format:
 # module:released-version:current-version
 
-gapic-generator-java:2.15.1:2.15.2-SNAPSHOT
-api-common:2.6.1:2.6.2-SNAPSHOT
-gax:2.23.1:2.23.2-SNAPSHOT
-gax-grpc:2.23.1:2.23.2-SNAPSHOT
-gax-httpjson:0.108.1:0.108.2-SNAPSHOT
-proto-google-common-protos:2.14.1:2.14.2-SNAPSHOT
-grpc-google-common-protos:2.14.1:2.14.2-SNAPSHOT
-proto-google-iam-v1:1.9.1:1.9.2-SNAPSHOT
-grpc-google-iam-v1:1.9.1:1.9.2-SNAPSHOT
-proto-google-iam-v2beta:1.9.1:1.9.2-SNAPSHOT
-grpc-google-iam-v2beta:1.9.1:1.9.2-SNAPSHOT
-google-iam-policy:1.9.1:1.9.2-SNAPSHOT
-proto-google-iam-v2:1.9.1:1.9.2-SNAPSHOT
-grpc-google-iam-v2:1.9.1:1.9.2-SNAPSHOT
+gapic-generator-java:2.15.2:2.15.2
+api-common:2.6.2:2.6.2
+gax:2.23.2:2.23.2
+gax-grpc:2.23.2:2.23.2
+gax-httpjson:0.108.2:0.108.2
+proto-google-common-protos:2.14.2:2.14.2
+grpc-google-common-protos:2.14.2:2.14.2
+proto-google-iam-v1:1.9.2:1.9.2
+grpc-google-iam-v1:1.9.2:1.9.2
+proto-google-iam-v2beta:1.9.2:1.9.2
+grpc-google-iam-v2beta:1.9.2:1.9.2
+google-iam-policy:1.9.2:1.9.2
+proto-google-iam-v2:1.9.2:1.9.2
+grpc-google-iam-v2:1.9.2:1.9.2

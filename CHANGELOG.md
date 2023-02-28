@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.15.2](https://github.com/googleapis/gapic-generator-java/compare/v2.15.1...v2.15.2) (2023-02-28)
+
+
+### Bug Fixes
+
+* Change the default scope of gax from implementation to api in auto-generated gradle files for self-service client libraries. ([#1374](https://github.com/googleapis/gapic-generator-java/issues/1374)) ([eee7573](https://github.com/googleapis/gapic-generator-java/commit/eee757347a93f75e767870c90814322b29ed5275))
+
+
+### Dependencies
+
+* Update dependency com.google.http-client:google-http-client-bom to v1.43.0 ([#1377](https://github.com/googleapis/gapic-generator-java/issues/1377)) ([df3e35f](https://github.com/googleapis/gapic-generator-java/commit/df3e35f862724b4465a886f716afa8dd0b23d27f))
+* Update dependency gradle to v7.6.1 ([#1376](https://github.com/googleapis/gapic-generator-java/issues/1376)) ([5d61dcb](https://github.com/googleapis/gapic-generator-java/commit/5d61dcb1ef504ba0553c9ae33faab363b5650f4f))
+
 ## [2.15.1](https://github.com/googleapis/gapic-generator-java/compare/v2.15.0...v2.15.1) (2023-02-15)
 
 
