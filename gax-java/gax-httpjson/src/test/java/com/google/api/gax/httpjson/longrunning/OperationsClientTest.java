@@ -29,22 +29,28 @@
  */
 package com.google.api.gax.httpjson.longrunning;
 
+import com.google.api.HttpRule;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPagedResponse;
+import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsCallableFactory;
 import com.google.api.gax.httpjson.longrunning.stub.HttpJsonOperationsStub;
 import com.google.api.gax.httpjson.testing.MockHttpService;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
+import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
+import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +66,22 @@ public class OperationsClientTest {
 
   @BeforeClass
   public static void startStaticServer() throws IOException {
+    HttpJsonOperationsStub.create(
+        ClientContext.newBuilder()
+            .setCredentials(NoCredentialsProvider.create().getCredentials())
+            .setDefaultCallContext(FakeCallContext.createDefault())
+            .build(),
+        new HttpJsonOperationsCallableFactory(),
+        TypeRegistry.newBuilder().build(),
+        ImmutableMap.of(
+            "google.longrunning.Operations.ListOperations",
+            HttpRule.newBuilder().setGet("/v1/{name=**}/operations").build(),
+            "google.longrunning.Operations.GetOperation",
+            HttpRule.newBuilder().setGet("/v1/{name=**/operations/*}").build(),
+            "google.longrunning.Operations.DeleteOperation",
+            HttpRule.newBuilder().setDelete("/v1/{name=**/operations/*}").build(),
+            "google.longrunning.Operations.CancelOperation",
+            HttpRule.newBuilder().setPost("/v1/{name=**/operations/*}:cancel").build()));
     mockService =
         new MockHttpService(
             HttpJsonOperationsStub.getMethodDescriptors(), OperationsSettings.getDefaultEndpoint());

@@ -142,12 +142,6 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     }
 
     @BetaApi
-    public Builder<RequestT> setAdditionalPaths(List<String> rawAdditionalPaths) {
-      this.rawAdditionalPaths = rawAdditionalPaths;
-      return this;
-    }
-
-    @BetaApi
     public Builder<RequestT> setAdditionalPaths(String... rawAdditionalPaths) {
       this.rawAdditionalPaths = Arrays.asList(rawAdditionalPaths);
       return this;

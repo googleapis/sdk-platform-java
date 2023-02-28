@@ -49,45 +49,42 @@ import org.junit.Test;
 
 public class HttpJsonOperationsStubTest {
 
-  private static HttpJsonOperationsStub httpJsonOperationsStub;
-
   @BeforeClass
   public static void setUp() throws Exception {
-    httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(
-            ClientContext.newBuilder()
-                .setCredentials(NoCredentialsProvider.create().getCredentials())
-                .setDefaultCallContext(FakeCallContext.createDefault())
+    HttpJsonOperationsStub.create(
+        ClientContext.newBuilder()
+            .setCredentials(NoCredentialsProvider.create().getCredentials())
+            .setDefaultCallContext(FakeCallContext.createDefault())
+            .build(),
+        new HttpJsonOperationsCallableFactory(),
+        TypeRegistry.newBuilder().build(),
+        ImmutableMap.of(
+            "google.longrunning.Operations.ListOperations",
+            HttpRule.newBuilder()
+                .setGet("testList")
+                .addAdditionalBindings(HttpRule.newBuilder().setGet("testList2"))
                 .build(),
-            new HttpJsonOperationsCallableFactory(),
-            TypeRegistry.newBuilder().build(),
-            ImmutableMap.of(
-                "google.longrunning.Operations.ListOperations",
-                HttpRule.newBuilder()
-                    .setGet("testList")
-                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testList2"))
-                    .build(),
-                "google.longrunning.Operations.GetOperation",
-                HttpRule.newBuilder()
-                    .setGet("testGet")
-                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testGet2"))
-                    .build(),
-                "google.longrunning.Operations.DeleteOperation",
-                HttpRule.newBuilder()
-                    .setDelete("testDelete")
-                    .addAdditionalBindings(HttpRule.newBuilder().setDelete("testDelete2"))
-                    .build(),
-                "google.longrunning.Operations.CancelOperation",
-                HttpRule.newBuilder()
-                    .setPost("testCancel")
-                    .addAdditionalBindings(HttpRule.newBuilder().setPost("testCancel2"))
-                    .build()));
+            "google.longrunning.Operations.GetOperation",
+            HttpRule.newBuilder()
+                .setGet("testGet")
+                .addAdditionalBindings(HttpRule.newBuilder().setGet("testGet2"))
+                .build(),
+            "google.longrunning.Operations.DeleteOperation",
+            HttpRule.newBuilder()
+                .setDelete("testDelete")
+                .addAdditionalBindings(HttpRule.newBuilder().setDelete("testDelete2"))
+                .build(),
+            "google.longrunning.Operations.CancelOperation",
+            HttpRule.newBuilder()
+                .setPost("testCancel")
+                .addAdditionalBindings(HttpRule.newBuilder().setPost("testCancel2"))
+                .build()));
   }
 
   @Test
   public void testMethodDescriptorsURI() {
     List<ApiMethodDescriptor> apiMethodDescriptorList =
-        httpJsonOperationsStub.getAllMethodDescriptors();
+        HttpJsonOperationsStub.getMethodDescriptors();
     assertThat(apiMethodDescriptorList.get(0).getRequestFormatter().getPathTemplate().toRawString())
         .isEqualTo("testList");
     assertThat(apiMethodDescriptorList.get(1).getRequestFormatter().getPathTemplate().toRawString())
@@ -103,7 +100,7 @@ public class HttpJsonOperationsStubTest {
     // getAllMethodDescriptors() returns the MethodDescriptors in specific order
     // The order is: List, Get, Delete, Cancel
     List<ApiMethodDescriptor> apiMethodDescriptorList =
-        httpJsonOperationsStub.getAllMethodDescriptors();
+        HttpJsonOperationsStub.getMethodDescriptors();
     ProtoMessageRequestFormatter<ListOperationsRequest>
         listOperationsRequestProtoMessageRequestFormatter =
             (ProtoMessageRequestFormatter<ListOperationsRequest>)

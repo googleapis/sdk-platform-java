@@ -46,7 +46,6 @@ import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPa
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableList;
 import com.google.longrunning.CancelOperationRequest;
 import com.google.longrunning.DeleteOperationRequest;
 import com.google.longrunning.GetOperationRequest;
@@ -61,7 +60,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -205,13 +203,12 @@ public class HttpJsonOperationsStub extends OperationsStub {
 
   public static final HttpJsonOperationsStub create(OperationsStubSettings settings)
       throws IOException {
-    return new HttpJsonOperationsStub(settings, ClientContext.create(settings), new HashMap<>());
+    return new HttpJsonOperationsStub(settings, ClientContext.create(settings));
   }
 
   public static final HttpJsonOperationsStub create(ClientContext clientContext)
       throws IOException {
-    return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(), clientContext, new HashMap<>());
+    return new HttpJsonOperationsStub(OperationsStubSettings.newBuilder().build(), clientContext);
   }
 
   public static final HttpJsonOperationsStub create(
@@ -220,8 +217,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
         OperationsStubSettings.newBuilder().build(),
         clientContext,
         callableFactory,
-        TypeRegistry.getEmptyTypeRegistry(),
-        new HashMap<>());
+        TypeRegistry.getEmptyTypeRegistry());
   }
 
   public static final HttpJsonOperationsStub create(
@@ -230,11 +226,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
       TypeRegistry typeRegistry)
       throws IOException {
     return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(),
-        clientContext,
-        callableFactory,
-        typeRegistry,
-        new HashMap<>());
+        OperationsStubSettings.newBuilder().build(), clientContext, callableFactory, typeRegistry);
   }
 
   // We choose to only override these two constructors
@@ -271,6 +263,16 @@ public class HttpJsonOperationsStub extends OperationsStub {
    * so that it is easy to make a subclass, but otherwise, the static factory methods should be
    * preferred.
    */
+  protected HttpJsonOperationsStub(OperationsStubSettings settings, ClientContext clientContext)
+      throws IOException {
+    this(
+        settings,
+        clientContext,
+        new HttpJsonOperationsCallableFactory(),
+        TypeRegistry.getEmptyTypeRegistry(),
+        new HashMap<>());
+  }
+
   protected HttpJsonOperationsStub(
       OperationsStubSettings settings,
       ClientContext clientContext,
@@ -289,6 +291,15 @@ public class HttpJsonOperationsStub extends OperationsStub {
    * so that it is easy to make a subclass, but otherwise, the static factory methods should be
    * preferred.
    */
+  protected HttpJsonOperationsStub(
+      OperationsStubSettings settings,
+      ClientContext clientContext,
+      HttpJsonStubCallableFactory callableFactory,
+      TypeRegistry typeRegistry)
+      throws IOException {
+    this(settings, clientContext, callableFactory, typeRegistry, new HashMap<>());
+  }
+
   protected HttpJsonOperationsStub(
       OperationsStubSettings settings,
       ClientContext clientContext,
@@ -345,39 +356,26 @@ public class HttpJsonOperationsStub extends OperationsStub {
     backgroundResources = new BackgroundResourceAggregation(clientContext.getBackgroundResources());
   }
 
-  /**
-   * Parse the HttpRule for the HttpVerb containing the custom URI.
-   *
-   * <p>This ignores the `Custom` HttpRule. Operation proto only supports GET, POST, DELETE and
-   * Custom requires special logic.
-   *
-   * @param httpRule HttpRule to parse
-   * @return Custom HttpRule's URI value
-   */
+  // OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those
+  // HttpVerbs to be used
   private static String getValueBasedOnPatternCase(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
         return httpRule.getGet();
-      case 3:
-        return httpRule.getPut();
       case 4:
         return httpRule.getPost();
       case 5:
         return httpRule.getDelete();
-      case 6:
-        return httpRule.getPatch();
       default:
-        return null;
+        throw new IllegalArgumentException(
+            "Operations HttpRule should only contain GET/POST/DELETE. Invalid: "
+                + httpRule.getSelector());
     }
   }
 
-  /**
-   * This is to allow libraries to customize the Operation MethodDescriptors from the service yaml
-   * file
-   *
-   * @param customOperationHttpBindings Mapping of Mixin RPC to the HttpRule
-   */
-  private static void updateDefaultApiMethodDescriptors(
+  //  This is to allow libraries to customize the Operation MethodDescriptors from the service yaml
+  // file
+  private void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
@@ -392,7 +390,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           customOperationHttpBindings.get(LRO_LIST_OPERATIONS)
                               .getAdditionalBindingsList().stream()
                               .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
-                              .collect(Collectors.toList()))
+                              .toArray(String[]::new))
                       .build())
               .build();
     }
@@ -410,7 +408,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           customOperationHttpBindings.get(LRO_GET_OPERATION)
                               .getAdditionalBindingsList().stream()
                               .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
-                              .collect(Collectors.toList()))
+                              .toArray(String[]::new))
                       .build())
               .build();
     }
@@ -429,7 +427,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           customOperationHttpBindings.get(LRO_DELETE_OPERATION)
                               .getAdditionalBindingsList().stream()
                               .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
-                              .collect(Collectors.toList()))
+                              .toArray(String[]::new))
                       .build())
               .build();
     }
@@ -448,25 +446,10 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           customOperationHttpBindings.get(LRO_CANCEL_OPERATION)
                               .getAdditionalBindingsList().stream()
                               .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
-                              .collect(Collectors.toList()))
+                              .toArray(String[]::new))
                       .build())
               .build();
     }
-  }
-
-  /**
-   * Wrapper to get a list of the MethodDescriptors similar to `getMethodDescriptors()`. Difference
-   * is that this gets the modified MethodDescriptors with any customized values
-   *
-   * @return List of the custom MethodDescriptors
-   */
-  @InternalApi
-  public List<ApiMethodDescriptor> getAllMethodDescriptors() {
-    return ImmutableList.of(
-        listOperationsMethodDescriptor,
-        getOperationMethodDescriptor,
-        deleteOperationMethodDescriptor,
-        cancelOperationMethodDescriptor);
   }
 
   @InternalApi
