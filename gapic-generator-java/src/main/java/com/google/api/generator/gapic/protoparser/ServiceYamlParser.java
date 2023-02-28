@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
@@ -44,7 +45,7 @@ public class ServiceYamlParser {
       return Optional.empty();
     }
 
-    Yaml yaml = new Yaml(new SafeConstructor());
+    Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
     Map<String, Object> yamlMap = yaml.load(fileContents);
     Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
     String jsonString = gson.toJson(yamlMap, LinkedHashMap.class);
