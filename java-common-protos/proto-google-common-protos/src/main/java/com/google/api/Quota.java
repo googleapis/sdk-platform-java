@@ -105,6 +105,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LIMITS_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.QuotaLimit> limits_;
   /**
    *
@@ -173,6 +175,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int METRIC_RULES_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.MetricRule> metricRules_;
   /**
    *
@@ -490,6 +494,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (limitsBuilder_ == null) {
         limits_ = java.util.Collections.emptyList();
       } else {
@@ -529,7 +534,15 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Quota buildPartial() {
       com.google.api.Quota result = new com.google.api.Quota(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Quota result) {
       if (limitsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           limits_ = java.util.Collections.unmodifiableList(limits_);
@@ -548,8 +561,10 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.metricRules_ = metricRulesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Quota result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

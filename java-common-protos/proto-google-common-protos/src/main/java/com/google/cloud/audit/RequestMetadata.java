@@ -70,7 +70,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
   }
 
   public static final int CALLER_IP_FIELD_NUMBER = 1;
-  private volatile java.lang.Object callerIp_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object callerIp_ = "";
   /**
    *
    *
@@ -139,7 +141,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
   }
 
   public static final int CALLER_SUPPLIED_USER_AGENT_FIELD_NUMBER = 2;
-  private volatile java.lang.Object callerSuppliedUserAgent_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object callerSuppliedUserAgent_ = "";
   /**
    *
    *
@@ -206,7 +210,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
   }
 
   public static final int CALLER_NETWORK_FIELD_NUMBER = 3;
-  private volatile java.lang.Object callerNetwork_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object callerNetwork_ = "";
   /**
    *
    *
@@ -324,7 +330,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestAttributesOrBuilder() {
-    return getRequestAttributes();
+    return requestAttributes_ == null
+        ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
+        : requestAttributes_;
   }
 
   public static final int DESTINATION_ATTRIBUTES_FIELD_NUMBER = 8;
@@ -384,7 +392,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationAttributesOrBuilder() {
-    return getDestinationAttributes();
+    return destinationAttributes_ == null
+        ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
+        : destinationAttributes_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -630,22 +640,18 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       callerIp_ = "";
-
       callerSuppliedUserAgent_ = "";
-
       callerNetwork_ = "";
-
-      if (requestAttributesBuilder_ == null) {
-        requestAttributes_ = null;
-      } else {
-        requestAttributes_ = null;
+      requestAttributes_ = null;
+      if (requestAttributesBuilder_ != null) {
+        requestAttributesBuilder_.dispose();
         requestAttributesBuilder_ = null;
       }
-      if (destinationAttributesBuilder_ == null) {
-        destinationAttributes_ = null;
-      } else {
-        destinationAttributes_ = null;
+      destinationAttributes_ = null;
+      if (destinationAttributesBuilder_ != null) {
+        destinationAttributesBuilder_.dispose();
         destinationAttributesBuilder_ = null;
       }
       return this;
@@ -675,21 +681,36 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     public com.google.cloud.audit.RequestMetadata buildPartial() {
       com.google.cloud.audit.RequestMetadata result =
           new com.google.cloud.audit.RequestMetadata(this);
-      result.callerIp_ = callerIp_;
-      result.callerSuppliedUserAgent_ = callerSuppliedUserAgent_;
-      result.callerNetwork_ = callerNetwork_;
-      if (requestAttributesBuilder_ == null) {
-        result.requestAttributes_ = requestAttributes_;
-      } else {
-        result.requestAttributes_ = requestAttributesBuilder_.build();
-      }
-      if (destinationAttributesBuilder_ == null) {
-        result.destinationAttributes_ = destinationAttributes_;
-      } else {
-        result.destinationAttributes_ = destinationAttributesBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.RequestMetadata result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.callerIp_ = callerIp_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.callerSuppliedUserAgent_ = callerSuppliedUserAgent_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.callerNetwork_ = callerNetwork_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.requestAttributes_ =
+            requestAttributesBuilder_ == null
+                ? requestAttributes_
+                : requestAttributesBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.destinationAttributes_ =
+            destinationAttributesBuilder_ == null
+                ? destinationAttributes_
+                : destinationAttributesBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -739,14 +760,17 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
       if (other == com.google.cloud.audit.RequestMetadata.getDefaultInstance()) return this;
       if (!other.getCallerIp().isEmpty()) {
         callerIp_ = other.callerIp_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getCallerSuppliedUserAgent().isEmpty()) {
         callerSuppliedUserAgent_ = other.callerSuppliedUserAgent_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getCallerNetwork().isEmpty()) {
         callerNetwork_ = other.callerNetwork_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (other.hasRequestAttributes()) {
@@ -784,33 +808,33 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
             case 10:
               {
                 callerIp_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 callerSuppliedUserAgent_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 callerNetwork_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 58:
               {
                 input.readMessage(
                     getRequestAttributesFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 58
             case 66:
               {
                 input.readMessage(
                     getDestinationAttributesFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 66
             default:
@@ -829,6 +853,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object callerIp_ = "";
     /**
@@ -921,8 +947,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
       if (value == null) {
         throw new NullPointerException();
       }
-
       callerIp_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -948,8 +974,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearCallerIp() {
-
       callerIp_ = getDefaultInstance().getCallerIp();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -980,8 +1006,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       callerIp_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1074,8 +1100,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
       if (value == null) {
         throw new NullPointerException();
       }
-
       callerSuppliedUserAgent_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1100,8 +1126,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearCallerSuppliedUserAgent() {
-
       callerSuppliedUserAgent_ = getDefaultInstance().getCallerSuppliedUserAgent();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1131,8 +1157,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       callerSuppliedUserAgent_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1213,8 +1239,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
       if (value == null) {
         throw new NullPointerException();
       }
-
       callerNetwork_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1235,8 +1261,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearCallerNetwork() {
-
       callerNetwork_ = getDefaultInstance().getCallerNetwork();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1262,8 +1288,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       callerNetwork_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1291,7 +1317,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return Whether the requestAttributes field is set.
      */
     public boolean hasRequestAttributes() {
-      return requestAttributesBuilder_ != null || requestAttributes_ != null;
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      *
@@ -1338,11 +1364,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
           throw new NullPointerException();
         }
         requestAttributes_ = value;
-        onChanged();
       } else {
         requestAttributesBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1363,11 +1389,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
         com.google.rpc.context.AttributeContext.Request.Builder builderForValue) {
       if (requestAttributesBuilder_ == null) {
         requestAttributes_ = builderForValue.build();
-        onChanged();
       } else {
         requestAttributesBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1386,19 +1412,19 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      */
     public Builder mergeRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
       if (requestAttributesBuilder_ == null) {
-        if (requestAttributes_ != null) {
-          requestAttributes_ =
-              com.google.rpc.context.AttributeContext.Request.newBuilder(requestAttributes_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000008) != 0)
+            && requestAttributes_ != null
+            && requestAttributes_
+                != com.google.rpc.context.AttributeContext.Request.getDefaultInstance()) {
+          getRequestAttributesBuilder().mergeFrom(value);
         } else {
           requestAttributes_ = value;
         }
-        onChanged();
       } else {
         requestAttributesBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1416,14 +1442,13 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
      */
     public Builder clearRequestAttributes() {
-      if (requestAttributesBuilder_ == null) {
-        requestAttributes_ = null;
-        onChanged();
-      } else {
-        requestAttributes_ = null;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      requestAttributes_ = null;
+      if (requestAttributesBuilder_ != null) {
+        requestAttributesBuilder_.dispose();
         requestAttributesBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1441,7 +1466,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
      */
     public com.google.rpc.context.AttributeContext.Request.Builder getRequestAttributesBuilder() {
-
+      bitField0_ |= 0x00000008;
       onChanged();
       return getRequestAttributesFieldBuilder().getBuilder();
     }
@@ -1522,7 +1547,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return Whether the destinationAttributes field is set.
      */
     public boolean hasDestinationAttributes() {
-      return destinationAttributesBuilder_ != null || destinationAttributes_ != null;
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      *
@@ -1567,11 +1592,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
           throw new NullPointerException();
         }
         destinationAttributes_ = value;
-        onChanged();
       } else {
         destinationAttributesBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -1591,11 +1616,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
         com.google.rpc.context.AttributeContext.Peer.Builder builderForValue) {
       if (destinationAttributesBuilder_ == null) {
         destinationAttributes_ = builderForValue.build();
-        onChanged();
       } else {
         destinationAttributesBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -1613,19 +1638,19 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      */
     public Builder mergeDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
       if (destinationAttributesBuilder_ == null) {
-        if (destinationAttributes_ != null) {
-          destinationAttributes_ =
-              com.google.rpc.context.AttributeContext.Peer.newBuilder(destinationAttributes_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000010) != 0)
+            && destinationAttributes_ != null
+            && destinationAttributes_
+                != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
+          getDestinationAttributesBuilder().mergeFrom(value);
         } else {
           destinationAttributes_ = value;
         }
-        onChanged();
       } else {
         destinationAttributesBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -1642,14 +1667,13 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
      */
     public Builder clearDestinationAttributes() {
-      if (destinationAttributesBuilder_ == null) {
-        destinationAttributes_ = null;
-        onChanged();
-      } else {
-        destinationAttributes_ = null;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      destinationAttributes_ = null;
+      if (destinationAttributesBuilder_ != null) {
+        destinationAttributesBuilder_.dispose();
         destinationAttributesBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1666,7 +1690,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
      */
     public com.google.rpc.context.AttributeContext.Peer.Builder getDestinationAttributesBuilder() {
-
+      bitField0_ |= 0x00000010;
       onChanged();
       return getDestinationAttributesFieldBuilder().getBuilder();
     }
