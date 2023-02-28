@@ -120,12 +120,10 @@ public class PagingTest {
             .getPage();
 
     Truth.assertThat(page.getValues()).containsExactly(0, 1, 2).inOrder();
-    Truth.assertThat(page.streamValues().count()).isEqualTo(3);
     Truth.assertThat(page.hasNextPage()).isTrue();
 
     page = page.getNextPage();
     Truth.assertThat(page.getValues()).containsExactly(3, 4).inOrder();
-    Truth.assertThat(page.streamValues().count()).isEqualTo(2);
     Truth.assertThat(page.hasNextPage()).isTrue();
 
     page = page.getNextPage();
@@ -136,7 +134,36 @@ public class PagingTest {
   }
 
   @Test
-  public void streamByPage() {
+  public void streamedByPage() {
+    ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
+    Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(3, 4)))
+        .thenReturn(ApiFutures.immediateFuture(Collections.emptyList()));
+
+    Page<Integer> page =
+        FakeCallableFactory.createPagedCallable(
+                callIntList,
+                PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
+                clientContext)
+            .call(0)
+            .getPage();
+
+    Truth.assertThat(page.streamValues().count()).isEqualTo(3);
+    Truth.assertThat(page.hasNextPage()).isTrue();
+
+    page = page.getNextPage();
+    Truth.assertThat(page.streamValues().count()).isEqualTo(2);
+    Truth.assertThat(page.hasNextPage()).isTrue();
+
+    page = page.getNextPage();
+    Truth.assertThat(page.streamValues().count()).isEqualTo(0);
+    Truth.assertThat(page.hasNextPage()).isFalse();
+    Truth.assertThat(page.getNextPage()).isNull();
+  }
+
+  @Test
+  public void streamedAll() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
