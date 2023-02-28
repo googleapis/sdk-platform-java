@@ -78,7 +78,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int CANONICAL_SCOPES_FIELD_NUMBER = 1;
-  private volatile java.lang.Object canonicalScopes_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object canonicalScopes_ = "";
   /**
    *
    *
@@ -341,8 +343,8 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       canonicalScopes_ = "";
-
       return this;
     }
 
@@ -368,9 +370,18 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public com.google.api.OAuthRequirements buildPartial() {
       com.google.api.OAuthRequirements result = new com.google.api.OAuthRequirements(this);
-      result.canonicalScopes_ = canonicalScopes_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.OAuthRequirements result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.canonicalScopes_ = canonicalScopes_;
+      }
     }
 
     @java.lang.Override
@@ -420,6 +431,7 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
       if (other == com.google.api.OAuthRequirements.getDefaultInstance()) return this;
       if (!other.getCanonicalScopes().isEmpty()) {
         canonicalScopes_ = other.canonicalScopes_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -451,7 +463,7 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
             case 10:
               {
                 canonicalScopes_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             default:
@@ -470,6 +482,8 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object canonicalScopes_ = "";
     /**
@@ -544,8 +558,8 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       canonicalScopes_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -565,8 +579,8 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearCanonicalScopes() {
-
       canonicalScopes_ = getDefaultInstance().getCanonicalScopes();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -591,8 +605,8 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       canonicalScopes_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }

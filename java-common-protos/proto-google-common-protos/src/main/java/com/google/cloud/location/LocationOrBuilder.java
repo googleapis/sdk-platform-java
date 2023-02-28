@@ -148,7 +148,6 @@ public interface LocationOrBuilder
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
-
   /* nullable */
   java.lang.String getLabelsOrDefault(
       java.lang.String key,

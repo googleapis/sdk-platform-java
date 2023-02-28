@@ -120,7 +120,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SUMMARY_FIELD_NUMBER = 1;
-  private volatile java.lang.Object summary_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object summary_ = "";
   /**
    *
    *
@@ -175,6 +177,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PAGES_FIELD_NUMBER = 5;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Page> pages_;
   /**
    *
@@ -243,6 +247,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RULES_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.DocumentationRule> rules_;
   /**
    *
@@ -317,7 +323,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DOCUMENTATION_ROOT_URL_FIELD_NUMBER = 4;
-  private volatile java.lang.Object documentationRootUrl_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object documentationRootUrl_ = "";
   /**
    *
    *
@@ -366,7 +374,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SERVICE_ROOT_URL_FIELD_NUMBER = 6;
-  private volatile java.lang.Object serviceRootUrl_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object serviceRootUrl_ = "";
   /**
    *
    *
@@ -421,7 +431,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int OVERVIEW_FIELD_NUMBER = 2;
-  private volatile java.lang.Object overview_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object overview_ = "";
   /**
    *
    *
@@ -784,28 +796,25 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       summary_ = "";
-
       if (pagesBuilder_ == null) {
         pages_ = java.util.Collections.emptyList();
       } else {
         pages_ = null;
         pagesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
       } else {
         rules_ = null;
         rulesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000004);
       documentationRootUrl_ = "";
-
       serviceRootUrl_ = "";
-
       overview_ = "";
-
       return this;
     }
 
@@ -831,31 +840,49 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Documentation buildPartial() {
       com.google.api.Documentation result = new com.google.api.Documentation(this);
-      int from_bitField0_ = bitField0_;
-      result.summary_ = summary_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Documentation result) {
       if (pagesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           pages_ = java.util.Collections.unmodifiableList(pages_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.pages_ = pages_;
       } else {
         result.pages_ = pagesBuilder_.build();
       }
       if (rulesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.rules_ = rules_;
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      result.documentationRootUrl_ = documentationRootUrl_;
-      result.serviceRootUrl_ = serviceRootUrl_;
-      result.overview_ = overview_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Documentation result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.summary_ = summary_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.documentationRootUrl_ = documentationRootUrl_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.serviceRootUrl_ = serviceRootUrl_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.overview_ = overview_;
+      }
     }
 
     @java.lang.Override
@@ -905,13 +932,14 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.Documentation.getDefaultInstance()) return this;
       if (!other.getSummary().isEmpty()) {
         summary_ = other.summary_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (pagesBuilder_ == null) {
         if (!other.pages_.isEmpty()) {
           if (pages_.isEmpty()) {
             pages_ = other.pages_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensurePagesIsMutable();
             pages_.addAll(other.pages_);
@@ -924,7 +952,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
             pagesBuilder_.dispose();
             pagesBuilder_ = null;
             pages_ = other.pages_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
             pagesBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getPagesFieldBuilder()
@@ -938,7 +966,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         if (!other.rules_.isEmpty()) {
           if (rules_.isEmpty()) {
             rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureRulesIsMutable();
             rules_.addAll(other.rules_);
@@ -951,7 +979,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
             rulesBuilder_.dispose();
             rulesBuilder_ = null;
             rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
             rulesBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getRulesFieldBuilder()
@@ -963,14 +991,17 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDocumentationRootUrl().isEmpty()) {
         documentationRootUrl_ = other.documentationRootUrl_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       if (!other.getServiceRootUrl().isEmpty()) {
         serviceRootUrl_ = other.serviceRootUrl_;
+        bitField0_ |= 0x00000010;
         onChanged();
       }
       if (!other.getOverview().isEmpty()) {
         overview_ = other.overview_;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -1002,13 +1033,13 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 summary_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 overview_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 18
             case 26:
@@ -1026,7 +1057,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
             case 34:
               {
                 documentationRootUrl_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             case 42:
@@ -1044,7 +1075,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
             case 50:
               {
                 serviceRootUrl_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 50
             default:
@@ -1136,8 +1167,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       summary_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1156,8 +1187,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSummary() {
-
       summary_ = getDefaultInstance().getSummary();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1181,8 +1212,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       summary_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1190,9 +1221,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.api.Page> pages_ = java.util.Collections.emptyList();
 
     private void ensurePagesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         pages_ = new java.util.ArrayList<com.google.api.Page>(pages_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
 
@@ -1402,7 +1433,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     public Builder clearPages() {
       if (pagesBuilder_ == null) {
         pages_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
       } else {
         pagesBuilder_.clear();
@@ -1516,7 +1547,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         pagesBuilder_ =
             new com.google.protobuf.RepeatedFieldBuilderV3<
                 com.google.api.Page, com.google.api.Page.Builder, com.google.api.PageOrBuilder>(
-                pages_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                pages_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
         pages_ = null;
       }
       return pagesBuilder_;
@@ -1526,9 +1557,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureRulesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         rules_ = new java.util.ArrayList<com.google.api.DocumentationRule>(rules_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
       }
     }
 
@@ -1752,7 +1783,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     public Builder clearRules() {
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
       } else {
         rulesBuilder_.clear();
@@ -1880,7 +1911,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.DocumentationRule,
                 com.google.api.DocumentationRule.Builder,
                 com.google.api.DocumentationRuleOrBuilder>(
-                rules_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
+                rules_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
         rules_ = null;
       }
       return rulesBuilder_;
@@ -1947,8 +1978,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       documentationRootUrl_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1964,8 +1995,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDocumentationRootUrl() {
-
       documentationRootUrl_ = getDefaultInstance().getDocumentationRootUrl();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1986,8 +2017,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       documentationRootUrl_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2062,8 +2093,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       serviceRootUrl_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2082,8 +2113,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearServiceRootUrl() {
-
       serviceRootUrl_ = getDefaultInstance().getServiceRootUrl();
+      bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
@@ -2107,8 +2138,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       serviceRootUrl_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2210,8 +2241,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       overview_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2239,8 +2270,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOverview() {
-
       overview_ = getDefaultInstance().getOverview();
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -2273,8 +2304,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       overview_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }

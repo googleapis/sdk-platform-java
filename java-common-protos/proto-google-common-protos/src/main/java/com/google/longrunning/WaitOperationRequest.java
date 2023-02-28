@@ -68,7 +68,9 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -165,7 +167,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    */
   @java.lang.Override
   public com.google.protobuf.DurationOrBuilder getTimeoutOrBuilder() {
-    return getTimeout();
+    return timeout_ == null ? com.google.protobuf.Duration.getDefaultInstance() : timeout_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -379,12 +381,11 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
-      if (timeoutBuilder_ == null) {
-        timeout_ = null;
-      } else {
-        timeout_ = null;
+      timeout_ = null;
+      if (timeoutBuilder_ != null) {
+        timeoutBuilder_.dispose();
         timeoutBuilder_ = null;
       }
       return this;
@@ -414,14 +415,21 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
     public com.google.longrunning.WaitOperationRequest buildPartial() {
       com.google.longrunning.WaitOperationRequest result =
           new com.google.longrunning.WaitOperationRequest(this);
-      result.name_ = name_;
-      if (timeoutBuilder_ == null) {
-        result.timeout_ = timeout_;
-      } else {
-        result.timeout_ = timeoutBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.longrunning.WaitOperationRequest result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.timeout_ = timeoutBuilder_ == null ? timeout_ : timeoutBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -471,6 +479,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
       if (other == com.google.longrunning.WaitOperationRequest.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.hasTimeout()) {
@@ -505,13 +514,13 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 input.readMessage(getTimeoutFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -530,6 +539,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object name_ = "";
     /**
@@ -592,8 +603,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -609,8 +620,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -631,8 +642,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -657,7 +668,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * @return Whether the timeout field is set.
      */
     public boolean hasTimeout() {
-      return timeoutBuilder_ != null || timeout_ != null;
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      *
@@ -696,11 +707,11 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
           throw new NullPointerException();
         }
         timeout_ = value;
-        onChanged();
       } else {
         timeoutBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -717,11 +728,11 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
     public Builder setTimeout(com.google.protobuf.Duration.Builder builderForValue) {
       if (timeoutBuilder_ == null) {
         timeout_ = builderForValue.build();
-        onChanged();
       } else {
         timeoutBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -737,17 +748,18 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      */
     public Builder mergeTimeout(com.google.protobuf.Duration value) {
       if (timeoutBuilder_ == null) {
-        if (timeout_ != null) {
-          timeout_ =
-              com.google.protobuf.Duration.newBuilder(timeout_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000002) != 0)
+            && timeout_ != null
+            && timeout_ != com.google.protobuf.Duration.getDefaultInstance()) {
+          getTimeoutBuilder().mergeFrom(value);
         } else {
           timeout_ = value;
         }
-        onChanged();
       } else {
         timeoutBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -762,14 +774,13 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * <code>.google.protobuf.Duration timeout = 2;</code>
      */
     public Builder clearTimeout() {
-      if (timeoutBuilder_ == null) {
-        timeout_ = null;
-        onChanged();
-      } else {
-        timeout_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      timeout_ = null;
+      if (timeoutBuilder_ != null) {
+        timeoutBuilder_.dispose();
         timeoutBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -784,7 +795,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * <code>.google.protobuf.Duration timeout = 2;</code>
      */
     public com.google.protobuf.Duration.Builder getTimeoutBuilder() {
-
+      bitField0_ |= 0x00000002;
       onChanged();
       return getTimeoutFieldBuilder().getBuilder();
     }
