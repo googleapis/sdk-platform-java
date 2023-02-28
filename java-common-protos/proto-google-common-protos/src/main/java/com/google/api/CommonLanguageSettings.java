@@ -68,7 +68,9 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
   }
 
   public static final int REFERENCE_DOCS_URI_FIELD_NUMBER = 1;
-  private volatile java.lang.Object referenceDocsUri_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object referenceDocsUri_ = "";
   /**
    *
    *
@@ -125,16 +127,18 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
   }
 
   public static final int DESTINATIONS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<java.lang.Integer> destinations_;
+
   private static final com.google.protobuf.Internal.ListAdapter.Converter<
           java.lang.Integer, com.google.api.ClientLibraryDestination>
       destinations_converter_ =
           new com.google.protobuf.Internal.ListAdapter.Converter<
               java.lang.Integer, com.google.api.ClientLibraryDestination>() {
             public com.google.api.ClientLibraryDestination convert(java.lang.Integer from) {
-              @SuppressWarnings("deprecation")
               com.google.api.ClientLibraryDestination result =
-                  com.google.api.ClientLibraryDestination.valueOf(from);
+                  com.google.api.ClientLibraryDestination.forNumber(from);
               return result == null ? com.google.api.ClientLibraryDestination.UNRECOGNIZED : result;
             }
           };
@@ -441,10 +445,10 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       referenceDocsUri_ = "";
-
       destinations_ = java.util.Collections.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -472,15 +476,27 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     public com.google.api.CommonLanguageSettings buildPartial() {
       com.google.api.CommonLanguageSettings result =
           new com.google.api.CommonLanguageSettings(this);
-      int from_bitField0_ = bitField0_;
-      result.referenceDocsUri_ = referenceDocsUri_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        destinations_ = java.util.Collections.unmodifiableList(destinations_);
-        bitField0_ = (bitField0_ & ~0x00000001);
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.destinations_ = destinations_;
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.CommonLanguageSettings result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        destinations_ = java.util.Collections.unmodifiableList(destinations_);
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.destinations_ = destinations_;
+    }
+
+    private void buildPartial0(com.google.api.CommonLanguageSettings result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.referenceDocsUri_ = referenceDocsUri_;
+      }
     }
 
     @java.lang.Override
@@ -530,12 +546,13 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       if (other == com.google.api.CommonLanguageSettings.getDefaultInstance()) return this;
       if (!other.getReferenceDocsUri().isEmpty()) {
         referenceDocsUri_ = other.referenceDocsUri_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.destinations_.isEmpty()) {
         if (destinations_.isEmpty()) {
           destinations_ = other.destinations_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensureDestinationsIsMutable();
           destinations_.addAll(other.destinations_);
@@ -571,7 +588,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
             case 10:
               {
                 referenceDocsUri_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 16:
@@ -685,8 +702,8 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       if (value == null) {
         throw new NullPointerException();
       }
-
       referenceDocsUri_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -706,8 +723,8 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      */
     @java.lang.Deprecated
     public Builder clearReferenceDocsUri() {
-
       referenceDocsUri_ = getDefaultInstance().getReferenceDocsUri();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -732,8 +749,8 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       referenceDocsUri_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -741,9 +758,9 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     private java.util.List<java.lang.Integer> destinations_ = java.util.Collections.emptyList();
 
     private void ensureDestinationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         destinations_ = new java.util.ArrayList<java.lang.Integer>(destinations_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
     /**
@@ -868,7 +885,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      */
     public Builder clearDestinations() {
       destinations_ = java.util.Collections.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }

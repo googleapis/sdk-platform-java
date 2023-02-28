@@ -128,11 +128,13 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public com.google.protobuf.StructOrBuilder getPayloadOrBuilder() {
-    return getPayload();
+    return payload_ == null ? com.google.protobuf.Struct.getDefaultInstance() : payload_;
   }
 
   public static final int RESOURCE_TYPE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object resourceType_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object resourceType_ = "";
   /**
    *
    *
@@ -195,6 +197,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
             "");
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> resourceTags_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -272,8 +275,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * </code>
    */
   @java.lang.Override
-  public java.lang.String getResourceTagsOrDefault(
-      java.lang.String key, java.lang.String defaultValue) {
+  public /* nullable */ java.lang.String getResourceTagsOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
     if (key == null) {
       throw new NullPointerException("map key");
     }
@@ -308,6 +313,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   }
 
   public static final int VIOLATION_INFO_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.cloud.audit.ViolationInfo> violationInfo_;
   /**
    *
@@ -645,14 +652,13 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (payloadBuilder_ == null) {
-        payload_ = null;
-      } else {
-        payload_ = null;
+      bitField0_ = 0;
+      payload_ = null;
+      if (payloadBuilder_ != null) {
+        payloadBuilder_.dispose();
         payloadBuilder_ = null;
       }
       resourceType_ = "";
-
       internalGetMutableResourceTags().clear();
       if (violationInfoBuilder_ == null) {
         violationInfo_ = java.util.Collections.emptyList();
@@ -660,7 +666,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         violationInfo_ = null;
         violationInfoBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000008);
       return this;
     }
 
@@ -688,26 +694,38 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public com.google.cloud.audit.OrgPolicyViolationInfo buildPartial() {
       com.google.cloud.audit.OrgPolicyViolationInfo result =
           new com.google.cloud.audit.OrgPolicyViolationInfo(this);
-      int from_bitField0_ = bitField0_;
-      if (payloadBuilder_ == null) {
-        result.payload_ = payload_;
-      } else {
-        result.payload_ = payloadBuilder_.build();
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.resourceType_ = resourceType_;
-      result.resourceTags_ = internalGetResourceTags();
-      result.resourceTags_.makeImmutable();
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.cloud.audit.OrgPolicyViolationInfo result) {
       if (violationInfoBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000008) != 0)) {
           violationInfo_ = java.util.Collections.unmodifiableList(violationInfo_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000008);
         }
         result.violationInfo_ = violationInfo_;
       } else {
         result.violationInfo_ = violationInfoBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.OrgPolicyViolationInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.payload_ = payloadBuilder_ == null ? payload_ : payloadBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.resourceType_ = resourceType_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.resourceTags_ = internalGetResourceTags();
+        result.resourceTags_.makeImmutable();
+      }
     }
 
     @java.lang.Override
@@ -760,14 +778,16 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       if (!other.getResourceType().isEmpty()) {
         resourceType_ = other.resourceType_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       internalGetMutableResourceTags().mergeFrom(other.internalGetResourceTags());
+      bitField0_ |= 0x00000004;
       if (violationInfoBuilder_ == null) {
         if (!other.violationInfo_.isEmpty()) {
           if (violationInfo_.isEmpty()) {
             violationInfo_ = other.violationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000008);
           } else {
             ensureViolationInfoIsMutable();
             violationInfo_.addAll(other.violationInfo_);
@@ -780,7 +800,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
             violationInfoBuilder_.dispose();
             violationInfoBuilder_ = null;
             violationInfo_ = other.violationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000008);
             violationInfoBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getViolationInfoFieldBuilder()
@@ -819,13 +839,13 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
             case 10:
               {
                 input.readMessage(getPayloadFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 resourceType_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
@@ -837,6 +857,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
                 internalGetMutableResourceTags()
                     .getMutableMap()
                     .put(resourceTags__.getKey(), resourceTags__.getValue());
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 34:
@@ -891,7 +912,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * @return Whether the payload field is set.
      */
     public boolean hasPayload() {
-      return payloadBuilder_ != null || payload_ != null;
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      *
@@ -930,11 +951,11 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
           throw new NullPointerException();
         }
         payload_ = value;
-        onChanged();
       } else {
         payloadBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -951,11 +972,11 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public Builder setPayload(com.google.protobuf.Struct.Builder builderForValue) {
       if (payloadBuilder_ == null) {
         payload_ = builderForValue.build();
-        onChanged();
       } else {
         payloadBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -971,17 +992,18 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     public Builder mergePayload(com.google.protobuf.Struct value) {
       if (payloadBuilder_ == null) {
-        if (payload_ != null) {
-          payload_ =
-              com.google.protobuf.Struct.newBuilder(payload_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000001) != 0)
+            && payload_ != null
+            && payload_ != com.google.protobuf.Struct.getDefaultInstance()) {
+          getPayloadBuilder().mergeFrom(value);
         } else {
           payload_ = value;
         }
-        onChanged();
       } else {
         payloadBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -996,14 +1018,13 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
      */
     public Builder clearPayload() {
-      if (payloadBuilder_ == null) {
-        payload_ = null;
-        onChanged();
-      } else {
-        payload_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      payload_ = null;
+      if (payloadBuilder_ != null) {
+        payloadBuilder_.dispose();
         payloadBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1018,7 +1039,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
      */
     public com.google.protobuf.Struct.Builder getPayloadBuilder() {
-
+      bitField0_ |= 0x00000001;
       onChanged();
       return getPayloadFieldBuilder().getBuilder();
     }
@@ -1132,8 +1153,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       if (value == null) {
         throw new NullPointerException();
       }
-
       resourceType_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1150,8 +1171,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder clearResourceType() {
-
       resourceType_ = getDefaultInstance().getResourceType();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1173,8 +1194,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       resourceType_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1192,8 +1213,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.String>
         internalGetMutableResourceTags() {
-      onChanged();
-      ;
       if (resourceTags_ == null) {
         resourceTags_ =
             com.google.protobuf.MapField.newMapField(ResourceTagsDefaultEntryHolder.defaultEntry);
@@ -1201,6 +1220,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       if (!resourceTags_.isMutable()) {
         resourceTags_ = resourceTags_.copy();
       }
+      bitField0_ |= 0x00000004;
+      onChanged();
       return resourceTags_;
     }
 
@@ -1270,8 +1291,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     @java.lang.Override
-    public java.lang.String getResourceTagsOrDefault(
-        java.lang.String key, java.lang.String defaultValue) {
+    public /* nullable */ java.lang.String getResourceTagsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
       if (key == null) {
         throw new NullPointerException("map key");
       }
@@ -1306,6 +1329,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     }
 
     public Builder clearResourceTags() {
+      bitField0_ = (bitField0_ & ~0x00000004);
       internalGetMutableResourceTags().getMutableMap().clear();
       return this;
     }
@@ -1334,6 +1358,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableResourceTags() {
+      bitField0_ |= 0x00000004;
       return internalGetMutableResourceTags().getMutableMap();
     }
     /**
@@ -1358,8 +1383,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       if (value == null) {
         throw new NullPointerException("map value");
       }
-
       internalGetMutableResourceTags().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000004;
       return this;
     }
     /**
@@ -1379,6 +1404,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     public Builder putAllResourceTags(java.util.Map<java.lang.String, java.lang.String> values) {
       internalGetMutableResourceTags().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000004;
       return this;
     }
 
@@ -1386,10 +1412,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         java.util.Collections.emptyList();
 
     private void ensureViolationInfoIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000008) != 0)) {
         violationInfo_ =
             new java.util.ArrayList<com.google.cloud.audit.ViolationInfo>(violationInfo_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000008;
       }
     }
 
@@ -1626,7 +1652,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public Builder clearViolationInfo() {
       if (violationInfoBuilder_ == null) {
         violationInfo_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000008);
         onChanged();
       } else {
         violationInfoBuilder_.clear();
@@ -1763,7 +1789,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
                 com.google.cloud.audit.ViolationInfo.Builder,
                 com.google.cloud.audit.ViolationInfoOrBuilder>(
                 violationInfo_,
-                ((bitField0_ & 0x00000002) != 0),
+                ((bitField0_ & 0x00000008) != 0),
                 getParentForChildren(),
                 isClean());
         violationInfo_ = null;

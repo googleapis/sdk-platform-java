@@ -72,7 +72,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object id_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object id_ = "";
   /**
    *
    *
@@ -125,7 +127,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ISSUER_FIELD_NUMBER = 2;
-  private volatile java.lang.Object issuer_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object issuer_ = "";
   /**
    *
    *
@@ -182,7 +186,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int JWKS_URI_FIELD_NUMBER = 3;
-  private volatile java.lang.Object jwksUri_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object jwksUri_ = "";
   /**
    *
    *
@@ -251,7 +257,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int AUDIENCES_FIELD_NUMBER = 4;
-  private volatile java.lang.Object audiences_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object audiences_ = "";
   /**
    *
    *
@@ -328,7 +336,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int AUTHORIZATION_URL_FIELD_NUMBER = 5;
-  private volatile java.lang.Object authorizationUrl_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object authorizationUrl_ = "";
   /**
    *
    *
@@ -379,6 +389,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int JWT_LOCATIONS_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.JwtLocation> jwtLocations_;
   /**
    *
@@ -758,23 +770,19 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       id_ = "";
-
       issuer_ = "";
-
       jwksUri_ = "";
-
       audiences_ = "";
-
       authorizationUrl_ = "";
-
       if (jwtLocationsBuilder_ == null) {
         jwtLocations_ = java.util.Collections.emptyList();
       } else {
         jwtLocations_ = null;
         jwtLocationsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000020);
       return this;
     }
 
@@ -800,23 +808,43 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.AuthProvider buildPartial() {
       com.google.api.AuthProvider result = new com.google.api.AuthProvider(this);
-      int from_bitField0_ = bitField0_;
-      result.id_ = id_;
-      result.issuer_ = issuer_;
-      result.jwksUri_ = jwksUri_;
-      result.audiences_ = audiences_;
-      result.authorizationUrl_ = authorizationUrl_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.AuthProvider result) {
       if (jwtLocationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000020) != 0)) {
           jwtLocations_ = java.util.Collections.unmodifiableList(jwtLocations_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000020);
         }
         result.jwtLocations_ = jwtLocations_;
       } else {
         result.jwtLocations_ = jwtLocationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.AuthProvider result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.id_ = id_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.issuer_ = issuer_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.jwksUri_ = jwksUri_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.audiences_ = audiences_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.authorizationUrl_ = authorizationUrl_;
+      }
     }
 
     @java.lang.Override
@@ -866,29 +894,34 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.AuthProvider.getDefaultInstance()) return this;
       if (!other.getId().isEmpty()) {
         id_ = other.id_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getIssuer().isEmpty()) {
         issuer_ = other.issuer_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getJwksUri().isEmpty()) {
         jwksUri_ = other.jwksUri_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (!other.getAudiences().isEmpty()) {
         audiences_ = other.audiences_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       if (!other.getAuthorizationUrl().isEmpty()) {
         authorizationUrl_ = other.authorizationUrl_;
+        bitField0_ |= 0x00000010;
         onChanged();
       }
       if (jwtLocationsBuilder_ == null) {
         if (!other.jwtLocations_.isEmpty()) {
           if (jwtLocations_.isEmpty()) {
             jwtLocations_ = other.jwtLocations_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000020);
           } else {
             ensureJwtLocationsIsMutable();
             jwtLocations_.addAll(other.jwtLocations_);
@@ -901,7 +934,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
             jwtLocationsBuilder_.dispose();
             jwtLocationsBuilder_ = null;
             jwtLocations_ = other.jwtLocations_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000020);
             jwtLocationsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getJwtLocationsFieldBuilder()
@@ -940,31 +973,31 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 id_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 issuer_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 jwksUri_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 34:
               {
                 audiences_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             case 42:
               {
                 authorizationUrl_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 42
             case 50:
@@ -1065,8 +1098,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       id_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1084,8 +1117,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearId() {
-
       id_ = getDefaultInstance().getId();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1108,8 +1141,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       id_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1187,8 +1220,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       issuer_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1208,8 +1241,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearIssuer() {
-
       issuer_ = getDefaultInstance().getIssuer();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1234,8 +1267,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       issuer_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1331,8 +1364,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       jwksUri_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1358,8 +1391,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearJwksUri() {
-
       jwksUri_ = getDefaultInstance().getJwksUri();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1390,8 +1423,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       jwksUri_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1499,8 +1532,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       audiences_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1530,8 +1563,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAudiences() {
-
       audiences_ = getDefaultInstance().getAudiences();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1566,8 +1599,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       audiences_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1636,8 +1669,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       authorizationUrl_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1654,8 +1687,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAuthorizationUrl() {
-
       authorizationUrl_ = getDefaultInstance().getAuthorizationUrl();
+      bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
@@ -1677,8 +1710,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       authorizationUrl_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1687,9 +1720,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureJwtLocationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000020) != 0)) {
         jwtLocations_ = new java.util.ArrayList<com.google.api.JwtLocation>(jwtLocations_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000020;
       }
     }
 
@@ -2056,7 +2089,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
     public Builder clearJwtLocations() {
       if (jwtLocationsBuilder_ == null) {
         jwtLocations_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000020);
         onChanged();
       } else {
         jwtLocationsBuilder_.clear();
@@ -2275,7 +2308,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.JwtLocation,
                 com.google.api.JwtLocation.Builder,
                 com.google.api.JwtLocationOrBuilder>(
-                jwtLocations_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                jwtLocations_, ((bitField0_ & 0x00000020) != 0), getParentForChildren(), isClean());
         jwtLocations_ = null;
       }
       return jwtLocationsBuilder_;

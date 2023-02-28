@@ -63,7 +63,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NUMERATOR_FIELD_NUMBER = 1;
-  private long numerator_;
+  private long numerator_ = 0L;
   /**
    *
    *
@@ -81,7 +81,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DENOMINATOR_FIELD_NUMBER = 2;
-  private long denominator_;
+  private long denominator_ = 0L;
   /**
    *
    *
@@ -300,10 +300,9 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       numerator_ = 0L;
-
       denominator_ = 0L;
-
       return this;
     }
 
@@ -329,10 +328,21 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.Fraction buildPartial() {
       com.google.type.Fraction result = new com.google.type.Fraction(this);
-      result.numerator_ = numerator_;
-      result.denominator_ = denominator_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.Fraction result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.numerator_ = numerator_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.denominator_ = denominator_;
+      }
     }
 
     @java.lang.Override
@@ -415,13 +425,13 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 numerator_ = input.readInt64();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 16:
               {
                 denominator_ = input.readInt64();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             default:
@@ -440,6 +450,8 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private long numerator_;
     /**
@@ -472,6 +484,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     public Builder setNumerator(long value) {
 
       numerator_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -487,7 +500,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNumerator() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       numerator_ = 0L;
       onChanged();
       return this;
@@ -526,6 +539,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     public Builder setDenominator(long value) {
 
       denominator_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -542,7 +556,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDenominator() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       denominator_ = 0L;
       onChanged();
       return this;

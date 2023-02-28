@@ -69,6 +69,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int CURRENT_LOCATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList currentLocations_;
   /**
    *
@@ -154,6 +156,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int ORIGINAL_LOCATIONS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList originalLocations_;
   /**
    *
@@ -457,6 +461,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       currentLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
       originalLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -488,7 +493,15 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public com.google.cloud.audit.ResourceLocation buildPartial() {
       com.google.cloud.audit.ResourceLocation result =
           new com.google.cloud.audit.ResourceLocation(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.cloud.audit.ResourceLocation result) {
       if (((bitField0_ & 0x00000001) != 0)) {
         currentLocations_ = currentLocations_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -499,8 +512,10 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
         bitField0_ = (bitField0_ & ~0x00000002);
       }
       result.originalLocations_ = originalLocations_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.ResourceLocation result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

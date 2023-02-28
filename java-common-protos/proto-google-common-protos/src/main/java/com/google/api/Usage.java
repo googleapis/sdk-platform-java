@@ -67,6 +67,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int REQUIREMENTS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList requirements_;
   /**
    *
@@ -156,6 +158,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RULES_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.UsageRule> rules_;
   /**
    *
@@ -229,7 +233,9 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PRODUCER_NOTIFICATION_CHANNEL_FIELD_NUMBER = 7;
-  private volatile java.lang.Object producerNotificationChannel_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object producerNotificationChannel_ = "";
   /**
    *
    *
@@ -510,6 +516,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       requirements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
       if (rulesBuilder_ == null) {
@@ -520,7 +527,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ = (bitField0_ & ~0x00000002);
       producerNotificationChannel_ = "";
-
       return this;
     }
 
@@ -546,7 +552,15 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Usage buildPartial() {
       com.google.api.Usage result = new com.google.api.Usage(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Usage result) {
       if (((bitField0_ & 0x00000001) != 0)) {
         requirements_ = requirements_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -561,9 +575,13 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      result.producerNotificationChannel_ = producerNotificationChannel_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Usage result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.producerNotificationChannel_ = producerNotificationChannel_;
+      }
     }
 
     @java.lang.Override
@@ -650,6 +668,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getProducerNotificationChannel().isEmpty()) {
         producerNotificationChannel_ = other.producerNotificationChannel_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -700,7 +719,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
             case 58:
               {
                 producerNotificationChannel_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 58
             default:
@@ -1392,8 +1411,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       producerNotificationChannel_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1415,8 +1434,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProducerNotificationChannel() {
-
       producerNotificationChannel_ = getDefaultInstance().getProducerNotificationChannel();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1443,8 +1462,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       producerNotificationChannel_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

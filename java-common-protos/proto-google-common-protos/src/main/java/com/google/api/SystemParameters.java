@@ -71,6 +71,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int RULES_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.SystemParameterRule> rules_;
   /**
    *
@@ -444,6 +446,7 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
       } else {
@@ -477,7 +480,15 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.api.SystemParameters buildPartial() {
       com.google.api.SystemParameters result = new com.google.api.SystemParameters(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.SystemParameters result) {
       if (rulesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
@@ -487,8 +498,10 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.SystemParameters result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

@@ -65,6 +65,8 @@ public final class Backend extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RULES_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.BackendRule> rules_;
   /**
    *
@@ -331,6 +333,7 @@ public final class Backend extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
       } else {
@@ -363,7 +366,15 @@ public final class Backend extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Backend buildPartial() {
       com.google.api.Backend result = new com.google.api.Backend(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Backend result) {
       if (rulesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
@@ -373,8 +384,10 @@ public final class Backend extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Backend result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

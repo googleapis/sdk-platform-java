@@ -204,7 +204,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int REGION_CODE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object regionCode_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object regionCode_ = "";
     /**
      *
      *
@@ -259,7 +261,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int NUMBER_FIELD_NUMBER = 2;
-    private volatile java.lang.Object number_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object number_ = "";
     /**
      *
      *
@@ -523,10 +527,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         regionCode_ = "";
-
         number_ = "";
-
         return this;
       }
 
@@ -554,10 +557,21 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       public com.google.type.PhoneNumber.ShortCode buildPartial() {
         com.google.type.PhoneNumber.ShortCode result =
             new com.google.type.PhoneNumber.ShortCode(this);
-        result.regionCode_ = regionCode_;
-        result.number_ = number_;
+        if (bitField0_ != 0) {
+          buildPartial0(result);
+        }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.type.PhoneNumber.ShortCode result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.regionCode_ = regionCode_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.number_ = number_;
+        }
       }
 
       @java.lang.Override
@@ -609,10 +623,12 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         if (other == com.google.type.PhoneNumber.ShortCode.getDefaultInstance()) return this;
         if (!other.getRegionCode().isEmpty()) {
           regionCode_ = other.regionCode_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.getNumber().isEmpty()) {
           number_ = other.number_;
+          bitField0_ |= 0x00000002;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -644,13 +660,13 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
               case 10:
                 {
                   regionCode_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 18:
                 {
                   number_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 18
               default:
@@ -669,6 +685,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private java.lang.Object regionCode_ = "";
       /**
@@ -740,8 +758,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         regionCode_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -760,8 +778,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearRegionCode() {
-
         regionCode_ = getDefaultInstance().getRegionCode();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -785,8 +803,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         regionCode_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -855,8 +873,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         number_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -873,8 +891,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearNumber() {
-
         number_ = getDefaultInstance().getNumber();
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -896,8 +914,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         number_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1177,7 +1195,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int EXTENSION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object extension_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object extension_ = "";
   /**
    *
    *
@@ -1487,11 +1507,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (shortCodeBuilder_ != null) {
         shortCodeBuilder_.clear();
       }
       extension_ = "";
-
       kindCase_ = 0;
       kind_ = null;
       return this;
@@ -1519,20 +1539,27 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.PhoneNumber buildPartial() {
       com.google.type.PhoneNumber result = new com.google.type.PhoneNumber(this);
-      if (kindCase_ == 1) {
-        result.kind_ = kind_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      if (kindCase_ == 2) {
-        if (shortCodeBuilder_ == null) {
-          result.kind_ = kind_;
-        } else {
-          result.kind_ = shortCodeBuilder_.build();
-        }
-      }
-      result.extension_ = extension_;
-      result.kindCase_ = kindCase_;
+      buildPartialOneofs(result);
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.PhoneNumber result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.extension_ = extension_;
+      }
+    }
+
+    private void buildPartialOneofs(com.google.type.PhoneNumber result) {
+      result.kindCase_ = kindCase_;
+      result.kind_ = this.kind_;
+      if (kindCase_ == 2 && shortCodeBuilder_ != null) {
+        result.kind_ = shortCodeBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -1582,6 +1609,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.type.PhoneNumber.getDefaultInstance()) return this;
       if (!other.getExtension().isEmpty()) {
         extension_ = other.extension_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       switch (other.getKindCase()) {
@@ -1644,7 +1672,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
             case 26:
               {
                 extension_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -1677,6 +1705,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
+    private int bitField0_;
 
     /**
      *
@@ -2104,7 +2134,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       }
       kindCase_ = 2;
       onChanged();
-      ;
       return shortCodeBuilder_;
     }
 
@@ -2190,8 +2219,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       extension_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -2214,8 +2243,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExtension() {
-
       extension_ = getDefaultInstance().getExtension();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -2243,8 +2272,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       extension_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

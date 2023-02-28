@@ -66,7 +66,9 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ROLE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object role_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object role_ = "";
   /**
    *
    *
@@ -117,6 +119,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MEMBERS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList members_;
   /**
    *
@@ -364,7 +368,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.type.ExprOrBuilder getConditionOrBuilder() {
-    return getCondition();
+    return condition_ == null ? com.google.type.Expr.getDefaultInstance() : condition_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -589,14 +593,13 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       role_ = "";
-
       members_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
-      if (conditionBuilder_ == null) {
-        condition_ = null;
-      } else {
-        condition_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      condition_ = null;
+      if (conditionBuilder_ != null) {
+        conditionBuilder_.dispose();
         conditionBuilder_ = null;
       }
       return this;
@@ -624,20 +627,30 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.Binding buildPartial() {
       com.google.iam.v1.Binding result = new com.google.iam.v1.Binding(this);
-      int from_bitField0_ = bitField0_;
-      result.role_ = role_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        members_ = members_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
-      result.members_ = members_;
-      if (conditionBuilder_ == null) {
-        result.condition_ = condition_;
-      } else {
-        result.condition_ = conditionBuilder_.build();
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v1.Binding result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        members_ = members_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.members_ = members_;
+    }
+
+    private void buildPartial0(com.google.iam.v1.Binding result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.role_ = role_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.condition_ = conditionBuilder_ == null ? condition_ : conditionBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -687,12 +700,13 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.iam.v1.Binding.getDefaultInstance()) return this;
       if (!other.getRole().isEmpty()) {
         role_ = other.role_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.members_.isEmpty()) {
         if (members_.isEmpty()) {
           members_ = other.members_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensureMembersIsMutable();
           members_.addAll(other.members_);
@@ -731,7 +745,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 role_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -744,7 +758,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
             case 26:
               {
                 input.readMessage(getConditionFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -830,8 +844,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       role_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -848,8 +862,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRole() {
-
       role_ = getDefaultInstance().getRole();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -871,8 +885,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       role_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -881,9 +895,9 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureMembersIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         members_ = new com.google.protobuf.LazyStringArrayList(members_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
     /**
@@ -1258,7 +1272,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearMembers() {
       members_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1339,7 +1353,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the condition field is set.
      */
     public boolean hasCondition() {
-      return conditionBuilder_ != null || condition_ != null;
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      *
@@ -1390,11 +1404,11 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         condition_ = value;
-        onChanged();
       } else {
         conditionBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1417,11 +1431,11 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     public Builder setCondition(com.google.type.Expr.Builder builderForValue) {
       if (conditionBuilder_ == null) {
         condition_ = builderForValue.build();
-        onChanged();
       } else {
         conditionBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1443,16 +1457,18 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeCondition(com.google.type.Expr value) {
       if (conditionBuilder_ == null) {
-        if (condition_ != null) {
-          condition_ = com.google.type.Expr.newBuilder(condition_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000004) != 0)
+            && condition_ != null
+            && condition_ != com.google.type.Expr.getDefaultInstance()) {
+          getConditionBuilder().mergeFrom(value);
         } else {
           condition_ = value;
         }
-        onChanged();
       } else {
         conditionBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1473,14 +1489,13 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr condition = 3;</code>
      */
     public Builder clearCondition() {
-      if (conditionBuilder_ == null) {
-        condition_ = null;
-        onChanged();
-      } else {
-        condition_ = null;
+      bitField0_ = (bitField0_ & ~0x00000004);
+      condition_ = null;
+      if (conditionBuilder_ != null) {
+        conditionBuilder_.dispose();
         conditionBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1501,7 +1516,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr condition = 3;</code>
      */
     public com.google.type.Expr.Builder getConditionBuilder() {
-
+      bitField0_ |= 0x00000004;
       onChanged();
       return getConditionFieldBuilder().getBuilder();
     }
