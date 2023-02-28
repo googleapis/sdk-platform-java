@@ -372,7 +372,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   }
 
   /* This is to allow libraries to customize the Operation MethodDescriptors from the service yaml file */
-  private void updateDefaultApiMethodDescriptors(
+  private static void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
