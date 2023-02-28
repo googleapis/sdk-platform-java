@@ -1150,9 +1150,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .build());
   }
 
-  // Build an Expr that creates an HttpRule. Creates a builder and adds the http verb, custom path,
-  // and any additional bindings.
-  // `additional_bindings` can only be nested one layer deep, so we only check once
+  /* Build an Expr that creates an HttpRule. Creates a builder and adds the http verb, custom path, and any additional bindings. `additional_bindings` can only be nested one layer deep, so we only check once */
   private Expr createHttpRuleExpr(HttpRule httpRule, boolean checkAdditionalBindings) {
     Expr httpRuleBuilderExpr =
         MethodInvocationExpr.builder()
@@ -1163,6 +1161,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     httpRuleBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(httpRuleBuilderExpr)
+            // toLowerCase as the PatternCase result is all uppercase
             .setMethodName(setMethodFormat(httpRule.getPatternCase().toString().toLowerCase()))
             .setArguments(
                 ValueExpr.withValue(
@@ -1190,8 +1189,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return httpRuleBuilderExpr;
   }
 
-  // Parses the Service Yaml file's for custom HttpRules. Filter the HttpRules for ones that match
-  // Operations
+  /* Parses the Service Yaml file's for custom HttpRules. Filter the HttpRules for ones that match Operations */
   private Map<String, HttpRule> parseOperationsCustomHttpRules(GapicContext context) {
     Predicate<HttpRule> predicate = x -> x.getSelector().contains(LRO_NAME_PREFIX);
     com.google.api.Service service = context.serviceYamlProto();
@@ -1203,9 +1201,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         .collect(Collectors.toMap(HttpRule::getSelector, x -> x));
   }
 
-  // This is meant to be used for the OperationsClient Mixin
-  // OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those
-  // HttpVerbs to be used
+  /* This is meant to be used for the OperationsClient Mixin OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those HttpVerbs to be used */
   private String getOperationsURIValueFromHttpRule(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:

@@ -66,6 +66,8 @@ public class OperationsClientTest {
 
   @BeforeClass
   public static void startStaticServer() throws IOException {
+    // We run this to ensure that the static MethodDescriptors have the default values
+    // and are not modified by any other test that ran
     HttpJsonOperationsStub.create(
         ClientContext.newBuilder()
             .setCredentials(NoCredentialsProvider.create().getCredentials())

@@ -229,8 +229,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
         OperationsStubSettings.newBuilder().build(), clientContext, callableFactory, typeRegistry);
   }
 
-  // We choose to only override these two constructors
-  // The generator can generate these two combinations with custom HttpRules
+  /* We choose to only override these two create methods. The generator can generate these two combinations with custom HttpRules */
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
@@ -356,8 +355,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
     backgroundResources = new BackgroundResourceAggregation(clientContext.getBackgroundResources());
   }
 
-  // OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those
-  // HttpVerbs to be used
+  /* OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those HttpVerbs to be used */
   private static String getValueBasedOnPatternCase(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
@@ -373,8 +371,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
     }
   }
 
-  //  This is to allow libraries to customize the Operation MethodDescriptors from the service yaml
-  // file
+  /* This is to allow libraries to customize the Operation MethodDescriptors from the service yaml file */
   private void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
