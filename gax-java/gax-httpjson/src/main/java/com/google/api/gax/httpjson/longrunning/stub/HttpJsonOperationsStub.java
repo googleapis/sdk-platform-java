@@ -229,7 +229,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
         OperationsStubSettings.newBuilder().build(), clientContext, callableFactory, typeRegistry);
   }
 
-  /* We choose to only override these two create methods. The generator can generate these two combinations with custom HttpRules */
+  /* We choose to only overload these two create methods below. The generator can generate these two combinations with custom HttpRules */
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
