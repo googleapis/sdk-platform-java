@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -429,6 +430,41 @@ public class IdentityClientTest {
 
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getUsersList().get(0), resources.get(0));
+
+    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    ListUsersRequest actualRequest = ((ListUsersRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void listUsersTest2() throws Exception {
+    User responsesElement = User.newBuilder().build();
+    ListUsersResponse expectedResponse =
+        ListUsersResponse.newBuilder()
+            .setNextPageToken("")
+            .addAllUsers(Arrays.asList(responsesElement))
+            .build();
+    mockIdentity.addResponse(expectedResponse);
+
+    ListUsersRequest request =
+        ListUsersRequest.newBuilder()
+            .setPageSize(883849137)
+            .setPageToken("pageToken873572522")
+            .build();
+
+    ListUsersPagedResponse pagedListResponse = client.listUsers(request);
+
+    Stream<User> resources = pagedListResponse.getPage().streamAll();
+
+    Assert.assertEquals(1, resources.count());
+    Assert.assertEquals(responsesElement, resources.findFirst().get());
 
     List<AbstractMessage> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
