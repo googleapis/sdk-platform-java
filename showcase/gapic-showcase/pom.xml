@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <fmt.skip>true</fmt.skip>
+<!--    <fmt.skip>true</fmt.skip>-->
   </properties>
 
   <profiles>
@@ -160,6 +160,10 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.truth</groupId>
+      <artifactId>truth</artifactId>
     </dependency>
 
     <dependency>
