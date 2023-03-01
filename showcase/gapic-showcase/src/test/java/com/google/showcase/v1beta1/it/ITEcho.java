@@ -9,9 +9,13 @@ import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ServerStream;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.protobuf.Timestamp;
 import com.google.rpc.Status;
+import com.google.showcase.v1beta1.BlockRequest;
+import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -31,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -66,8 +70,8 @@ public class ITEcho {
     httpjsonClient = EchoClient.create(httpjsonEchoSettings);
   }
 
-  @After
-  public void destroyClient() {
+  @AfterClass
+  public static void destroyClient() {
     grpcClient.close();
     httpjsonClient.close();
   }
@@ -86,6 +90,18 @@ public class ITEcho {
     EchoResponse echoResponse =
         httpjsonClient.echo(EchoRequest.newBuilder().setContent(content).build());
     assertThat(echoResponse.getContent()).isEqualTo(content);
+  }
+
+  @Test
+  public void testEchoHttpJson_checkStatusCode() {
+    try {
+      httpjsonClient.echo(
+          EchoRequest.newBuilder()
+              .setError(Status.newBuilder().setCode(StatusCode.Code.NOT_FOUND.getHttpStatusCode()))
+              .build());
+    } catch (ApiException e) {
+      e.printStackTrace();
+    }
   }
 
   /* This tests that server-side streaming returns the correct content and the server returns the correct number of responses */
@@ -203,10 +219,43 @@ public class ITEcho {
       OperationFuture<WaitResponse, WaitMetadata> operationFutureFailure =
           httpjsonClient.waitAsync(
               WaitRequest.newBuilder()
+                  .setSuccess(WaitResponse.newBuilder().setContent("Content").build())
                   .setEndTime(Timestamp.newBuilder().setSeconds(futureTimeInSecondsFromEpoch))
-                  .setError(Status.newBuilder().setCode(400))
                   .build());
       assertThrows(CancellationException.class, operationFutureFailure::get);
+    }
+  }
+
+  @Test
+  public void testBlockHttpJson() {
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for this
+    // test
+    int delayInSeconds = 3;
+    String content = "content";
+    BlockResponse blockResponse =
+        httpjsonClient.block(
+            BlockRequest.newBuilder()
+                .setSuccess(BlockResponse.newBuilder().setContent(content).build())
+                .setResponseDelay(
+                    com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
+                .build());
+    assertThat(blockResponse.getContent()).isEqualTo(content);
+  }
+
+  @Test
+  public void testBlockHttpJson_throwsInternalException() {
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for this
+    // test
+    int delayInSeconds = 10;
+    try {
+      httpjsonClient.block(
+          BlockRequest.newBuilder()
+              .setSuccess(BlockResponse.newBuilder().setContent("Content"))
+              .setResponseDelay(
+                  com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
+              .build());
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }
