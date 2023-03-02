@@ -21,6 +21,8 @@
     <module>java-common-protos</module>
     <module>java-iam</module>
     <module>gapic-generator-java-bom</module>
+    <module>showcase</module>
+    <module>coverage-report</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>
