@@ -93,19 +93,21 @@ public class ITEcho {
     assertThat(echoResponse.getContent()).isEqualTo(content);
   }
 
-  /* Ignore this test for now since it returns a 500 Internal Error */
+  /*
+  This tests has the server return an error back as the result.
+  We use 404 NOT_FOUND Status as that has the same gRPC <-> HttpJson code mapping (showcase sever has a map that translates the code)
+  The showcase server expects a gRPC Status Code and the result is the HttpJson's mapped value
+   */
   @Test
   public void testEchoHttpJson_checkError() {
+    StatusCode.Code cancelledStatusCode = StatusCode.Code.NOT_FOUND;
     try {
       httpjsonClient.echo(
-              EchoRequest.newBuilder()
-                      .setError(
-                              Status.newBuilder()
-                                      .setCode(StatusCode.Code.CANCELLED.getHttpStatusCode())
-                                      .build())
-                      .build());
+          EchoRequest.newBuilder()
+              .setError(Status.newBuilder().setCode(cancelledStatusCode.ordinal()).build())
+              .build());
     } catch (ApiException e) {
-      e.printStackTrace();
+      assertThat(e.getStatusCode().getCode()).isEqualTo(cancelledStatusCode);
     }
   }
 
@@ -233,22 +235,24 @@ public class ITEcho {
 
   @Test
   public void testBlockGRPC() {
-    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a reasonable delay for this test
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a reasonable delay for this
+    // test
     int delayInSeconds = 3;
     String content = "grpcBlockContent";
     BlockResponse blockResponse =
-            grpcClient.block(
-                    BlockRequest.newBuilder()
-                            .setSuccess(BlockResponse.newBuilder().setContent(content).build())
-                            .setResponseDelay(
-                                    com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
-                            .build());
+        grpcClient.block(
+            BlockRequest.newBuilder()
+                .setSuccess(BlockResponse.newBuilder().setContent(content).build())
+                .setResponseDelay(
+                    com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
+                .build());
     assertThat(blockResponse.getContent()).isEqualTo(content);
   }
 
   @Test
   public void testBlockHttpJson() {
-    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a reasonable delay for this test
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a reasonable delay for this
+    // test
     int delayInSeconds = 3;
     String content = "httpjsonBlockContent";
     BlockResponse blockResponse =
@@ -267,23 +271,29 @@ public class ITEcho {
     // test
     int delayInSeconds = 10;
     assertThrows(
-            DeadlineExceededException.class,
-            () -> grpcClient.block(
-                    BlockRequest.newBuilder()
-                            .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_10SecDelay1"))
-                            .setResponseDelay(
-                                    com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
-                            .build()));
+        DeadlineExceededException.class,
+        () ->
+            grpcClient.block(
+                BlockRequest.newBuilder()
+                    .setSuccess(
+                        BlockResponse.newBuilder().setContent("gRPCBlockContent_10SecDelay1"))
+                    .setResponseDelay(
+                        com.google.protobuf.Duration.newBuilder()
+                            .setSeconds(delayInSeconds)
+                            .build())
+                    .build()));
     try {
-      grpcClient.block(BlockRequest.newBuilder()
+      grpcClient.block(
+          BlockRequest.newBuilder()
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_10SecDelay2"))
               .setResponseDelay(
-                      com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
+                  com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
               .build());
     } catch (DeadlineExceededException e) {
       assertThat(e.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
     }
   }
+
   @Ignore
   @Test
   public void testBlockHttpJson_throwsCancellationException() {
@@ -291,12 +301,16 @@ public class ITEcho {
     // test
     int delayInSeconds = 10;
     assertThrows(
-            CancellationException.class,
-            () -> httpjsonClient.block(
-                    BlockRequest.newBuilder()
-                            .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockContent_10SecDelay"))
-                            .setResponseDelay(
-                                    com.google.protobuf.Duration.newBuilder().setSeconds(delayInSeconds).build())
-                            .build()));
+        CancellationException.class,
+        () ->
+            httpjsonClient.block(
+                BlockRequest.newBuilder()
+                    .setSuccess(
+                        BlockResponse.newBuilder().setContent("httpjsonBlockContent_10SecDelay"))
+                    .setResponseDelay(
+                        com.google.protobuf.Duration.newBuilder()
+                            .setSeconds(delayInSeconds)
+                            .build())
+                    .build()));
   }
 }
