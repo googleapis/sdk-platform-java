@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.cloud</groupId>
   <artifactId>gapic-showcase</artifactId>
@@ -19,7 +19,8 @@
   </parent>
 
   <properties>
-<!--    <fmt.skip>true</fmt.skip>-->
+    <!--    <fmt.skip>true</fmt.skip>-->
+    <gapic.showcase.version>0.25.0</gapic.showcase.version>
   </properties>
 
   <profiles>
@@ -72,6 +73,33 @@
                     <argument>run</argument>
                     <argument>//showcase:update_gapic</argument>
                   </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>enable-integration-tests</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.googlecode.maven-download-plugin</groupId>
+            <artifactId>download-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <executions>
+              <execution>
+                <id>download-compliance-suite</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>wget</goal>
+                </goals>
+                <configuration>
+                  <url>
+                    https://raw.githubusercontent.com/googleapis/gapic-showcase/v${gapic.showcase.version}/server/services/compliance_suite.json
+                  </url>
+                  <outputDirectory>src/test/resources</outputDirectory>
                 </configuration>
               </execution>
             </executions>
@@ -153,6 +181,11 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java-util</artifactId>
     </dependency>
 
     <!-- Test dependencies -->

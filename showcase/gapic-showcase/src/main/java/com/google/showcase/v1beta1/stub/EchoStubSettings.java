@@ -479,10 +479,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       definitions.put("retry_policy_1_params", settings);
       settings =
           RetrySettings.newBuilder()
-              .setInitialRpcTimeout(Duration.ofMillis(5000L))
+              .setInitialRpcTimeout(Duration.ofMillis(1000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(5000L))
-              .setTotalTimeout(Duration.ofMillis(5000L))
+              .setMaxRpcTimeout(Duration.ofMillis(3000L))
+              .setTotalTimeout(Duration.ofMillis(3000L))
               .build();
       definitions.put("no_retry_0_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
