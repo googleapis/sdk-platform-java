@@ -15,6 +15,7 @@
         <clirr.skip>true</clirr.skip>
         <enforcer.skip>true</enforcer.skip>
         <maven.compiler.release>8</maven.compiler.release>
+        <fmt.skip>true</fmt.skip>
     </properties>
 
         <dependencies>
@@ -61,18 +62,6 @@
                             <goal>report-aggregate</goal>
                         </goals>
                         <phase>integration-test</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.coveo</groupId>
-                <artifactId>fmt-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
