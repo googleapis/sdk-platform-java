@@ -12,7 +12,6 @@
     GAPIC Showcase is an API that demonstrates Generated API Client (GAPIC) features and common API
     patterns used by Google.
   </description>
-
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>gapic-showcase-parent</artifactId>
