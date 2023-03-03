@@ -5,13 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.cloud</groupId>
   <artifactId>gapic-showcase</artifactId>
-  <version>0.0.1-SHAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>GAPIC Showcase Client</name>
   <description>
     GAPIC Showcase is an API that demonstrates Generated API Client (GAPIC) features and common API
     patterns used by Google.
   </description>
+
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>gapic-showcase-parent</artifactId>
@@ -98,22 +99,6 @@
                 <format>XML</format>
                 <format>HTML</format>
               </formats>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-            <configuration>
-              <skip>true</skip>
             </configuration>
           </execution>
         </executions>
