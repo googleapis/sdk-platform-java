@@ -62,7 +62,7 @@ public class ITStreams {
     create100Users();
     ListUsersRequest request = ListUsersRequest.newBuilder()
         .setPageSize(50)
-        .setPageToken("PageToken123")
+        .setPageToken("pageToken873572522")
         .build();
     ListUsersPagedResponse response = client.listUsers(request);
     assertEquals(100, response.getPage().streamAll().count());
@@ -73,7 +73,7 @@ public class ITStreams {
     create100Users();
     ListUsersRequest request = ListUsersRequest.newBuilder()
         .setPageSize(50)
-        .setPageToken("PageToken123")
+        .setPageToken("pageToken873572522")
         .build();
     Page<User> pages = client.listUsers(request).getPage();
     assertEquals(50, pages.streamValues().count());
