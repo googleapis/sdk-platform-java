@@ -40,7 +40,7 @@ public class ITStreams {
   @Before
   public void initClient() throws GeneralSecurityException, IOException {
     IdentitySettings identitySettings =
-        IdentitySettings.newBuilder()
+        IdentitySettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 IdentitySettings.defaultHttpJsonTransportProviderBuilder()
