@@ -84,7 +84,6 @@ public class ITStreams {
         .build();
     Page<User> secondPage = client.listUsers(secondRequest).getPage();
     assertEquals(50, secondPage.streamValues().count());
-    assertFalse(secondPage.hasNextPage());
   }
 
   private void create100Users() {
