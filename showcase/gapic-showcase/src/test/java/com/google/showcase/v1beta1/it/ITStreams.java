@@ -51,16 +51,26 @@ public class ITStreams {
                     .build())
             .build();
     client = IdentityClient.create(identitySettings);
+    create100Users();
   }
 
   @After
   public void destroyClient() {
+    ListUsersRequest request = ListUsersRequest.newBuilder()
+        .setPageSize(100)
+        .build();
+    // Delete all users before destroy client to
+    // avoid interference between tests.
+    client
+        .listUsers(request)
+        .getPage()
+        .streamAll()
+        .forEach(user -> client.deleteUser(user.getName()));
     client.close();
   }
 
   @Test
   public void verifyStreamAll() {
-    create100Users();
     ListUsersRequest request = ListUsersRequest.newBuilder()
         .setPageSize(50)
         .build();
@@ -70,7 +80,6 @@ public class ITStreams {
 
   @Test
   public void verifyStreamValues() {
-    create100Users();
     ListUsersRequest firstRequest = ListUsersRequest.newBuilder()
         .setPageSize(50)
         .build();
@@ -84,6 +93,7 @@ public class ITStreams {
         .build();
     Page<User> secondPage = client.listUsers(secondRequest).getPage();
     assertEquals(50, secondPage.streamValues().count());
+    assertFalse(secondPage.hasNextPage());
   }
 
   private void create100Users() {
