@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1.it;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -70,13 +71,20 @@ public class ITStreams {
   @Test
   public void verifyStreamValues() {
     create100Users();
-    ListUsersRequest request = ListUsersRequest.newBuilder()
+    ListUsersRequest firstRequest = ListUsersRequest.newBuilder()
         .setPageSize(50)
         .build();
-    Page<User> pages = client.listUsers(request).getPage();
-    assertEquals(50, pages.streamValues().count());
-    assertEquals(50, pages.getNextPage().streamValues().count());
-    assertFalse(pages.hasNextPage());
+    Page<User> firstPage = client.listUsers(firstRequest).getPage();
+    assertEquals(50, firstPage.streamValues().count());
+    assertTrue(firstPage.hasNextPage());
+
+    ListUsersRequest secondRequest = ListUsersRequest.newBuilder()
+        .setPageSize(50)
+        .setPageToken(firstPage.getNextPageToken())
+        .build();
+    Page<User> secondPage = client.listUsers(secondRequest).getPage();
+    assertEquals(50, secondPage.streamValues().count());
+    assertFalse(secondPage.hasNextPage());
   }
 
   private void create100Users() {
