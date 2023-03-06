@@ -68,15 +68,19 @@ public class ITCompliance {
     complianceClient.close();
   }
 
+  /*
+  Note: For PATCH requests, Gax HttpJson sets the HttpVerb as POST and sets the
+  `x-http-method-override` method as PATCH.
+   */
   @Test
-  public void testCompliance() {
+  public void testCompliance() throws IOException {
     for (ComplianceGroup compliancegroup : complianceSuite.getGroupList()) {
       ProtocolStringList protocolStringList = compliancegroup.getRpcsList();
       for (RepeatRequest repeatRequest : compliancegroup.getRequestsList()) {
         for (String rpcName : protocolStringList) {
           if (complianceValidRpcSet.containsKey(rpcName)) {
             System.out.printf(
-                "Running group `%s`: RPC Name %s with Request Name: %s\n",
+                "Testing group: `%s`- RPC Name: `%s` with Request Name: `%s`\n",
                 compliancegroup.getName(), rpcName, repeatRequest.getName());
             RepeatResponse response = complianceValidRpcSet.get(rpcName).apply(repeatRequest);
             assertThat(response.getRequest().getInfo()).isEqualTo(repeatRequest.getInfo());
