@@ -24,7 +24,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Unit Tests
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS -Dcheckstyle.skip -T 1C
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
@@ -49,7 +49,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Install with Java 11
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests -T 1C
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS -DskipTests -T 1C
 
       - uses: actions/setup-java@v3
         with:

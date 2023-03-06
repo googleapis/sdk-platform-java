@@ -32,6 +32,7 @@ create_settings_xml_file "settings.xml"
 
 mvn clean deploy -B \
   -DskipTests=true \
+  -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS \
   -Dclirr.skip=true \
   --settings ${MAVEN_SETTINGS_FILE} \
   -Dgpg.executable=gpg \
@@ -46,6 +47,7 @@ then
   mvn nexus-staging:release -B \
     -P release-staging-repository \
     -DperformRelease=true \
+    -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS \
     --settings=${MAVEN_SETTINGS_FILE}
 else
   echo "AUTORELEASE_PR is not set. Not releasing."

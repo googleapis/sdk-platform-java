@@ -36,7 +36,7 @@ jobs:
         native-image: true
     - name: Install maven modules
       run: |
-        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS
     - name: Install showcase server
       run: |
         sudo mkdir -p /usr/src/showcase
@@ -52,4 +52,4 @@ jobs:
         java -version
         sudo apt-get update -y
         sudo apt-get install libxml2-utils
-        mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
+        mvn test -Pnative,-showcase -Denforcer.skip=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS -ntp -B 
