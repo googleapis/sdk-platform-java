@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <!--    <fmt.skip>true</fmt.skip>-->
+    <fmt.skip>true</fmt.skip>
     <gapic.showcase.version>0.25.0</gapic.showcase.version>
   </properties>
 

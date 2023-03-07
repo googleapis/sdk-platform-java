@@ -73,7 +73,7 @@ public class ITCompliance {
   `x-http-method-override` method as PATCH.
    */
   @Test
-  public void testCompliance() throws IOException {
+  public void testCompliance() {
     for (ComplianceGroup compliancegroup : complianceSuite.getGroupList()) {
       ProtocolStringList protocolStringList = compliancegroup.getRpcsList();
       for (RepeatRequest repeatRequest : compliancegroup.getRequestsList()) {

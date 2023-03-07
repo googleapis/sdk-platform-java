@@ -199,8 +199,8 @@ public class ITEcho {
                 .setInitialRpcTimeout(Duration.ZERO)
                 .setRpcTimeoutMultiplier(1.0)
                 .setMaxRpcTimeout(Duration.ZERO)
-                // We set the future timeout to 10 seconds in the future, but the total timeout is 5
-                // seconds
+                // We set the future timeout to 10 seconds in the future, but the total timeout is
+                // 5 seconds
                 .setTotalTimeout(Duration.ofMillis(5000L))
                 .build());
     EchoStubSettings.Builder builder = EchoStubSettings.newHttpJsonBuilder();
@@ -265,8 +265,8 @@ public class ITEcho {
 
   @Test
   public void testBlockGRPC_throwsDeadlineExceededException() {
-    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for this
-    // test
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for
+    // this test
     int delayInSeconds = 10;
     assertThrows(
         DeadlineExceededException.class,
@@ -297,8 +297,8 @@ public class ITEcho {
   @Ignore
   @Test
   public void testBlockHttpJson_throwsDeadlineExceededException() {
-    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for this
-    // test
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for
+    // this test
     int delayInSeconds = 10;
     assertThrows(
         DeadlineExceededException.class,
