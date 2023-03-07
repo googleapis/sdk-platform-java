@@ -5,19 +5,16 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
-import com.google.protobuf.FieldMask;
 import com.google.showcase.v1beta1.CreateUserRequest;
 import com.google.showcase.v1beta1.DeleteUserRequest;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.ListUsersRequest;
-import com.google.showcase.v1beta1.UpdateUserRequest;
 import com.google.showcase.v1beta1.User;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -106,28 +103,32 @@ public class ITIdentity {
     User getUserResponse = httpjsonClient.getUser(user.getName());
     assertThat(getUserResponse).isEqualTo(user);
 
-    UpdateUserRequest updateUserRequest =
-        UpdateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(user.getName())
-                    .setDisplayName(user.getDisplayName())
-                    .setEmail("janedoe@jane.com")
-                    .setHeightFeet(6.0)
-                    .setEnableNotifications(true)
-                    .build())
-            .setUpdateMask(
-                FieldMask.newBuilder()
-                    .addAllPaths(Arrays.asList("email", "height_feet", "enable_notifications"))
-                    .build())
-            .build();
-    User updatedUser = httpjsonClient.updateUser(updateUserRequest);
-
-    assertThat(updatedUser).isNotEqualTo(user);
-    assertThat(updatedUser.getEmail()).isNotEqualTo(user.getEmail());
-    assertThat(updatedUser.getHeightFeet()).isNotEqualTo(user.getHeightFeet());
-    assertThat(updatedUser.getEnableNotifications()).isNotEqualTo(user.getEnableNotifications());
-    assertThat(updatedUser.getAge()).isNull();
+    // TODO(https://github.com/googleapis/gapic-showcase/issues/1263): Resolve Showcase UpdateMask
+    // issue
+    //    UpdateUserRequest updateUserRequest =
+    //        UpdateUserRequest.newBuilder()
+    //            .setUser(
+    //                User.newBuilder()
+    //                    .setName(user.getName())
+    //                    .setDisplayName(user.getDisplayName())
+    //                    .setEmail("janedoe@jane.com")
+    //                    .setHeightFeet(6.0)
+    //                    .setEnableNotifications(true)
+    //                    .build())
+    //            .setUpdateMask(
+    //                FieldMask.newBuilder()
+    //                    .addAllPaths(Arrays.asList("email", "height_feet",
+    // "enable_notifications"))
+    //                    .build())
+    //            .build();
+    //    User updatedUser = httpjsonClient.updateUser(updateUserRequest);
+    //
+    //    assertThat(updatedUser).isNotEqualTo(user);
+    //    assertThat(updatedUser.getEmail()).isNotEqualTo(user.getEmail());
+    //    assertThat(updatedUser.getHeightFeet()).isNotEqualTo(user.getHeightFeet());
+    //
+    // assertThat(updatedUser.getEnableNotifications()).isNotEqualTo(user.getEnableNotifications());
+    //    assertThat(updatedUser.getAge()).isNull();
 
     httpjsonClient.deleteUser(DeleteUserRequest.newBuilder().setName(user.getName()).build());
 

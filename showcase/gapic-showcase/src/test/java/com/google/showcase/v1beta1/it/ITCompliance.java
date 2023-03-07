@@ -60,7 +60,12 @@ public class ITCompliance {
             "Compliance.RepeatDataBodyPut",
             x -> complianceClient.repeatDataBodyPut(x),
             "Compliance.RepeatDataBodyPatch",
-            x -> complianceClient.repeatDataBodyPatch(x));
+            x -> complianceClient.repeatDataBodyPatch(x),
+            // TODO(lawrence): Figure out what is causing this test failure
+            //            "Compliance.RepeatDataPathResource",
+            //            x -> complianceClient.repeatDataPathResource(x),
+            "Compliance.RepeatDataPathTrailingResource",
+            x -> complianceClient.repeatDataPathTrailingResource(x));
   }
 
   @AfterClass
