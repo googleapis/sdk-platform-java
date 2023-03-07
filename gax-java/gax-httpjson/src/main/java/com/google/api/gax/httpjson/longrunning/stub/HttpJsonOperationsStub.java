@@ -299,13 +299,12 @@ public class HttpJsonOperationsStub extends OperationsStub {
     this(settings, clientContext, callableFactory, typeRegistry, new HashMap<>());
   }
 
-  protected HttpJsonOperationsStub(
+  private HttpJsonOperationsStub(
       OperationsStubSettings settings,
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
       TypeRegistry typeRegistry,
-      Map<String, HttpRule> customHttpBindings)
-      throws IOException {
+      Map<String, HttpRule> customHttpBindings) {
     updateDefaultApiMethodDescriptors(customHttpBindings);
 
     HttpJsonCallSettings<ListOperationsRequest, ListOperationsResponse>
