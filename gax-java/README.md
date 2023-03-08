@@ -159,7 +159,7 @@ retries, pagination, batching, utilities and core logic.
 ### gax-grpc
 
 This depends on gax module from the above, and has all the gRPC-specific logic,
-which could not go to the gax mobuld because of this dependency on gRPC.
+which could not go to the gax module because of this dependency on gRPC.
 Basically it has gRPC-specific implementations of the interfaces and abstract classes defined in gax.
 
 - `com.google.api.gax.grpc` - Contains classes that provide functionality on top
