@@ -229,20 +229,6 @@ public class HttpJsonOperationsStub extends OperationsStub {
         OperationsStubSettings.newBuilder().build(), clientContext, callableFactory, typeRegistry);
   }
 
-  /* We choose to only overload these two create methods below. The generator can generate these two combinations with custom HttpRules */
-  public static final HttpJsonOperationsStub create(
-      ClientContext clientContext,
-      HttpJsonStubCallableFactory callableFactory,
-      Map<String, HttpRule> customHttpBindings)
-      throws IOException {
-    return new HttpJsonOperationsStub(
-        OperationsStubSettings.newBuilder().build(),
-        clientContext,
-        callableFactory,
-        TypeRegistry.getEmptyTypeRegistry(),
-        customHttpBindings);
-  }
-
   public static final HttpJsonOperationsStub create(
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory,
@@ -270,19 +256,6 @@ public class HttpJsonOperationsStub extends OperationsStub {
         new HttpJsonOperationsCallableFactory(),
         TypeRegistry.getEmptyTypeRegistry(),
         new HashMap<>());
-  }
-
-  protected HttpJsonOperationsStub(
-      OperationsStubSettings settings,
-      ClientContext clientContext,
-      Map<String, HttpRule> customHttpBindings)
-      throws IOException {
-    this(
-        settings,
-        clientContext,
-        new HttpJsonOperationsCallableFactory(),
-        TypeRegistry.getEmptyTypeRegistry(),
-        customHttpBindings);
   }
 
   /**
