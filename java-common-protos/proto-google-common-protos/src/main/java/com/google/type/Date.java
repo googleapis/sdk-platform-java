@@ -73,7 +73,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int YEAR_FIELD_NUMBER = 1;
-  private int year_;
+  private int year_ = 0;
   /**
    *
    *
@@ -92,7 +92,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MONTH_FIELD_NUMBER = 2;
-  private int month_;
+  private int month_ = 0;
   /**
    *
    *
@@ -111,7 +111,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DAY_FIELD_NUMBER = 3;
-  private int day_;
+  private int day_ = 0;
   /**
    *
    *
@@ -350,12 +350,10 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       year_ = 0;
-
       month_ = 0;
-
       day_ = 0;
-
       return this;
     }
 
@@ -381,11 +379,24 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.Date buildPartial() {
       com.google.type.Date result = new com.google.type.Date(this);
-      result.year_ = year_;
-      result.month_ = month_;
-      result.day_ = day_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.Date result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.year_ = year_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.month_ = month_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.day_ = day_;
+      }
     }
 
     @java.lang.Override
@@ -471,19 +482,19 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 year_ = input.readInt32();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 16:
               {
                 month_ = input.readInt32();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 24:
               {
                 day_ = input.readInt32();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             default:
@@ -502,6 +513,8 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private int year_;
     /**
@@ -536,6 +549,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
     public Builder setYear(int value) {
 
       year_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -552,7 +566,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearYear() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       year_ = 0;
       onChanged();
       return this;
@@ -591,6 +605,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
     public Builder setMonth(int value) {
 
       month_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -607,7 +622,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMonth() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       month_ = 0;
       onChanged();
       return this;
@@ -648,6 +663,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
     public Builder setDay(int value) {
 
       day_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -665,7 +681,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDay() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       day_ = 0;
       onChanged();
       return this;

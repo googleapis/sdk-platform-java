@@ -65,7 +65,9 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CURRENCY_CODE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object currencyCode_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object currencyCode_ = "";
   /**
    *
    *
@@ -114,7 +116,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int UNITS_FIELD_NUMBER = 2;
-  private long units_;
+  private long units_ = 0L;
   /**
    *
    *
@@ -133,7 +135,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NANOS_FIELD_NUMBER = 3;
-  private int nanos_;
+  private int nanos_ = 0;
   /**
    *
    *
@@ -365,12 +367,10 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       currencyCode_ = "";
-
       units_ = 0L;
-
       nanos_ = 0;
-
       return this;
     }
 
@@ -396,11 +396,24 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.Money buildPartial() {
       com.google.type.Money result = new com.google.type.Money(this);
-      result.currencyCode_ = currencyCode_;
-      result.units_ = units_;
-      result.nanos_ = nanos_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.Money result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.currencyCode_ = currencyCode_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.units_ = units_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.nanos_ = nanos_;
+      }
     }
 
     @java.lang.Override
@@ -450,6 +463,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.type.Money.getDefaultInstance()) return this;
       if (!other.getCurrencyCode().isEmpty()) {
         currencyCode_ = other.currencyCode_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.getUnits() != 0L) {
@@ -487,19 +501,19 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 currencyCode_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 16:
               {
                 units_ = input.readInt64();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 24:
               {
                 nanos_ = input.readInt32();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             default:
@@ -518,6 +532,8 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object currencyCode_ = "";
     /**
@@ -580,8 +596,8 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       currencyCode_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -597,8 +613,8 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCurrencyCode() {
-
       currencyCode_ = getDefaultInstance().getCurrencyCode();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -619,8 +635,8 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       currencyCode_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -658,6 +674,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
     public Builder setUnits(long value) {
 
       units_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -674,7 +691,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearUnits() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       units_ = 0L;
       onChanged();
       return this;
@@ -721,6 +738,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
     public Builder setNanos(int value) {
 
       nanos_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -741,7 +759,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNanos() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       nanos_ = 0;
       onChanged();
       return this;

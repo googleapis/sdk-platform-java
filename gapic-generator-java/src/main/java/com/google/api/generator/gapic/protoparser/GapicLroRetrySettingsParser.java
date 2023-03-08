@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
@@ -64,7 +65,7 @@ public class GapicLroRetrySettingsParser {
       return Optional.empty();
     }
 
-    Yaml yaml = new Yaml(new SafeConstructor());
+    Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
     Map<String, Object> yamlMap = yaml.load(fileContents);
     return parseFromMap(yamlMap);
   }

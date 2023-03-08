@@ -162,7 +162,9 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 1;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -431,11 +433,11 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (denyRuleBuilder_ != null) {
         denyRuleBuilder_.clear();
       }
       description_ = "";
-
       kindCase_ = 0;
       kind_ = null;
       return this;
@@ -464,17 +466,27 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v2beta.PolicyRule buildPartial() {
       com.google.iam.v2beta.PolicyRule result = new com.google.iam.v2beta.PolicyRule(this);
-      if (kindCase_ == 2) {
-        if (denyRuleBuilder_ == null) {
-          result.kind_ = kind_;
-        } else {
-          result.kind_ = denyRuleBuilder_.build();
-        }
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.description_ = description_;
-      result.kindCase_ = kindCase_;
+      buildPartialOneofs(result);
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v2beta.PolicyRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.description_ = description_;
+      }
+    }
+
+    private void buildPartialOneofs(com.google.iam.v2beta.PolicyRule result) {
+      result.kindCase_ = kindCase_;
+      result.kind_ = this.kind_;
+      if (kindCase_ == 2 && denyRuleBuilder_ != null) {
+        result.kind_ = denyRuleBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -524,6 +536,7 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.iam.v2beta.PolicyRule.getDefaultInstance()) return this;
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       switch (other.getKindCase()) {
@@ -566,7 +579,7 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 10
             case 18:
@@ -605,6 +618,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
+    private int bitField0_;
 
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.iam.v2beta.DenyRule,
@@ -807,7 +822,6 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
       }
       kindCase_ = 2;
       onChanged();
-      ;
       return denyRuleBuilder_;
     }
 
@@ -875,8 +889,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -893,8 +907,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -916,8 +930,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

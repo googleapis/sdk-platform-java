@@ -331,6 +331,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ROUTING_PARAMETERS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.RoutingParameter> routingParameters_;
   /**
    *
@@ -885,6 +887,7 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (routingParametersBuilder_ == null) {
         routingParameters_ = java.util.Collections.emptyList();
       } else {
@@ -917,7 +920,15 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.RoutingRule buildPartial() {
       com.google.api.RoutingRule result = new com.google.api.RoutingRule(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.RoutingRule result) {
       if (routingParametersBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           routingParameters_ = java.util.Collections.unmodifiableList(routingParameters_);
@@ -927,8 +938,10 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.routingParameters_ = routingParametersBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.RoutingRule result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

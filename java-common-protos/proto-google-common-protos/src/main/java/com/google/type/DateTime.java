@@ -127,7 +127,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int YEAR_FIELD_NUMBER = 1;
-  private int year_;
+  private int year_ = 0;
   /**
    *
    *
@@ -146,7 +146,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MONTH_FIELD_NUMBER = 2;
-  private int month_;
+  private int month_ = 0;
   /**
    *
    *
@@ -164,7 +164,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DAY_FIELD_NUMBER = 3;
-  private int day_;
+  private int day_ = 0;
   /**
    *
    *
@@ -183,7 +183,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int HOURS_FIELD_NUMBER = 4;
-  private int hours_;
+  private int hours_ = 0;
   /**
    *
    *
@@ -203,7 +203,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MINUTES_FIELD_NUMBER = 5;
-  private int minutes_;
+  private int minutes_ = 0;
   /**
    *
    *
@@ -221,7 +221,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SECONDS_FIELD_NUMBER = 6;
-  private int seconds_;
+  private int seconds_ = 0;
   /**
    *
    *
@@ -240,7 +240,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NANOS_FIELD_NUMBER = 7;
-  private int nanos_;
+  private int nanos_ = 0;
   /**
    *
    *
@@ -668,20 +668,14 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       year_ = 0;
-
       month_ = 0;
-
       day_ = 0;
-
       hours_ = 0;
-
       minutes_ = 0;
-
       seconds_ = 0;
-
       nanos_ = 0;
-
       if (utcOffsetBuilder_ != null) {
         utcOffsetBuilder_.clear();
       }
@@ -715,30 +709,48 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.DateTime buildPartial() {
       com.google.type.DateTime result = new com.google.type.DateTime(this);
-      result.year_ = year_;
-      result.month_ = month_;
-      result.day_ = day_;
-      result.hours_ = hours_;
-      result.minutes_ = minutes_;
-      result.seconds_ = seconds_;
-      result.nanos_ = nanos_;
-      if (timeOffsetCase_ == 8) {
-        if (utcOffsetBuilder_ == null) {
-          result.timeOffset_ = timeOffset_;
-        } else {
-          result.timeOffset_ = utcOffsetBuilder_.build();
-        }
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      if (timeOffsetCase_ == 9) {
-        if (timeZoneBuilder_ == null) {
-          result.timeOffset_ = timeOffset_;
-        } else {
-          result.timeOffset_ = timeZoneBuilder_.build();
-        }
-      }
-      result.timeOffsetCase_ = timeOffsetCase_;
+      buildPartialOneofs(result);
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.DateTime result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.year_ = year_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.month_ = month_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.day_ = day_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.hours_ = hours_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.minutes_ = minutes_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.seconds_ = seconds_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.nanos_ = nanos_;
+      }
+    }
+
+    private void buildPartialOneofs(com.google.type.DateTime result) {
+      result.timeOffsetCase_ = timeOffsetCase_;
+      result.timeOffset_ = this.timeOffset_;
+      if (timeOffsetCase_ == 8 && utcOffsetBuilder_ != null) {
+        result.timeOffset_ = utcOffsetBuilder_.build();
+      }
+      if (timeOffsetCase_ == 9 && timeZoneBuilder_ != null) {
+        result.timeOffset_ = timeZoneBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -852,43 +864,43 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 year_ = input.readInt32();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 16:
               {
                 month_ = input.readInt32();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 24:
               {
                 day_ = input.readInt32();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             case 32:
               {
                 hours_ = input.readInt32();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 32
             case 40:
               {
                 minutes_ = input.readInt32();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 40
             case 48:
               {
                 seconds_ = input.readInt32();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 48
             case 56:
               {
                 nanos_ = input.readInt32();
-
+                bitField0_ |= 0x00000040;
                 break;
               } // case 56
             case 66:
@@ -934,6 +946,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    private int bitField0_;
+
     private int year_;
     /**
      *
@@ -967,6 +981,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setYear(int value) {
 
       year_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -983,7 +998,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearYear() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       year_ = 0;
       onChanged();
       return this;
@@ -1020,6 +1035,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setMonth(int value) {
 
       month_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1035,7 +1051,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMonth() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       month_ = 0;
       onChanged();
       return this;
@@ -1074,6 +1090,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setDay(int value) {
 
       day_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1090,7 +1107,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDay() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       day_ = 0;
       onChanged();
       return this;
@@ -1131,6 +1148,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setHours(int value) {
 
       hours_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1148,7 +1166,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHours() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       hours_ = 0;
       onChanged();
       return this;
@@ -1185,6 +1203,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setMinutes(int value) {
 
       minutes_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1200,7 +1219,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMinutes() {
-
+      bitField0_ = (bitField0_ & ~0x00000010);
       minutes_ = 0;
       onChanged();
       return this;
@@ -1239,6 +1258,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setSeconds(int value) {
 
       seconds_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -1255,7 +1275,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSeconds() {
-
+      bitField0_ = (bitField0_ & ~0x00000020);
       seconds_ = 0;
       onChanged();
       return this;
@@ -1294,6 +1314,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public Builder setNanos(int value) {
 
       nanos_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1310,7 +1331,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNanos() {
-
+      bitField0_ = (bitField0_ & ~0x00000040);
       nanos_ = 0;
       onChanged();
       return this;
@@ -1536,7 +1557,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       }
       timeOffsetCase_ = 8;
       onChanged();
-      ;
       return utcOffsetBuilder_;
     }
 
@@ -1741,7 +1761,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       }
       timeOffsetCase_ = 9;
       onChanged();
-      ;
       return timeZoneBuilder_;
     }
 
