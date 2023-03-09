@@ -155,6 +155,32 @@ To generate a production GAPIC API:
    ```
    and then rebuild gapic-generator-java (`mvn clean install`).
 
+## Debugging the Plugin under googleapis with local gapic-generator-java (end-to-end debugging)
+
+To debug the local generator starting from protobuf compiler plugin
+
+1. Add [Remote JVM debug configuration](https://www.jetbrains.com/help/idea/tutorial-remote-debug.html) and breakpoints for the local generator in Intellij.
+
+2. In [googleapis](https://github.com/googleapis/googleapis) root directory, run the following commands:
+   1. Set `JVM_DEBUG_PORT` environment variable.
+       ```shell
+       export JVM_DEBUG_PORT=5005
+       ```
+   2. Run the command to build a client library, e.g., `java-monitoring`, with `--subcommands` flag to output commands spawned by `bazel build`.
+      ```shell
+      bazel build --subcommands //google/monitoring/v3:google-cloud-monitoring-v3-java
+      ```
+   3. In the output, try to find the command like the below one, the `darwin_arm64-opt-exec-2B5CBBC6` part maybe different on your environment.
+      Also, different client libraries have different proto files.
+      ```shell
+      bazel-out/darwin_arm64-opt-exec-2B5CBBC6/bin/external/com_google_protobuf/protoc --experimental_allow_proto3_optional '--plugin=protoc-gen-java_gapic=bazel-out/darwin_arm64-opt-exec-2B5CBBC6/bin/external/gapic_generator_java/protoc-gen-java_gapic' '--java_gapic_out=metadata:bazel-out/darwin_arm64-fastbuild/bin/google/monitoring/v3/monitoring_java_gapic_srcjar_raw.srcjar.zip' '--java_gapic_opt=transport=grpc,rest-numeric-enums,grpc-service-config=google/monitoring/v3/monitoring_grpc_service_config.json,gapic-config=google/monitoring/v3/monitoring_gapic.yaml,api-service-config=google/monitoring/v3/monitoring.yaml' '-Igoogle/monitoring/v3/alert.proto=google/monitoring/v3/alert.proto' '-Igoogle/monitoring/v3/alert_service.proto=google/monitoring/v3/alert_service.proto' '-Igoogle/monitoring/v3/common.proto=google/monitoring/v3/common.proto' '-Igoogle/monitoring/v3/dropped_labels.proto=google/monitoring/v3/dropped_labels.proto' '-Igoogle/monitoring/v3/group.proto=google/monitoring/v3/group.proto' '-Igoogle/monitoring/v3/group_service.proto=google/monitoring/v3/group_service.proto' '-Igoogle/monitoring/v3/metric.proto=google/monitoring/v3/metric.proto' '-Igoogle/monitoring/v3/metric_service.proto=google/monitoring/v3/metric_service.proto' '-Igoogle/monitoring/v3/mutation_record.proto=google/monitoring/v3/mutation_record.proto' '-Igoogle/monitoring/v3/notification.proto=google/monitoring/v3/notification.proto' '-Igoogle/monitoring/v3/notification_service.proto=google/monitoring/v3/notification_service.proto' '-Igoogle/monitoring/v3/query_service.proto=google/monitoring/v3/query_service.proto' '-Igoogle/monitoring/v3/service.proto=google/monitoring/v3/service.proto' '-Igoogle/monitoring/v3/service_service.proto=google/monitoring/v3/service_service.proto' '-Igoogle/monitoring/v3/snooze.proto=google/monitoring/v3/snooze.proto' '-Igoogle/monitoring/v3/snooze_service.proto=google/monitoring/v3/snooze_service.proto' '-Igoogle/monitoring/v3/span_context.proto=google/monitoring/v3/span_context.proto' '-Igoogle/monitoring/v3/uptime.proto=google/monitoring/v3/uptime.proto' '-Igoogle/monitoring/v3/uptime_service.proto=google/monitoring/v3/uptime_service.proto' '-Igoogle/api/annotations.proto=google/api/annotations.proto' '-Igoogle/api/http.proto=google/api/http.proto' '-Igoogle/protobuf/descriptor.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/descriptor_proto/google/protobuf/descriptor.proto' '-Igoogle/api/client.proto=google/api/client.proto' '-Igoogle/api/launch_stage.proto=google/api/launch_stage.proto' '-Igoogle/protobuf/duration.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/duration_proto/google/protobuf/duration.proto' '-Igoogle/api/distribution.proto=google/api/distribution.proto' '-Igoogle/protobuf/any.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/any_proto/google/protobuf/any.proto' '-Igoogle/protobuf/timestamp.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/timestamp_proto/google/protobuf/timestamp.proto' '-Igoogle/api/field_behavior.proto=google/api/field_behavior.proto' '-Igoogle/api/label.proto=google/api/label.proto' '-Igoogle/api/metric.proto=google/api/metric.proto' '-Igoogle/api/monitored_resource.proto=google/api/monitored_resource.proto' '-Igoogle/protobuf/struct.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/struct_proto/google/protobuf/struct.proto' '-Igoogle/api/resource.proto=google/api/resource.proto' '-Igoogle/rpc/status.proto=google/rpc/status.proto' '-Igoogle/type/calendar_period.proto=google/type/calendar_period.proto' '-Igoogle/protobuf/empty.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/empty_proto/google/protobuf/empty.proto' '-Igoogle/protobuf/field_mask.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/field_mask_proto/google/protobuf/field_mask.proto' '-Igoogle/protobuf/wrappers.proto=bazel-out/darwin_arm64-fastbuild/bin/external/com_google_protobuf/_virtual_imports/wrappers_proto/google/protobuf/wrappers.proto' '-Igoogle/cloud/common_resources.proto=google/cloud/common_resources.proto' google/monitoring/v3/alert.proto google/monitoring/v3/alert_service.proto google/monitoring/v3/common.proto google/monitoring/v3/dropped_labels.proto google/monitoring/v3/group.proto google/monitoring/v3/group_service.proto google/monitoring/v3/metric.proto google/monitoring/v3/metric_service.proto google/monitoring/v3/mutation_record.proto google/monitoring/v3/notification.proto google/monitoring/v3/notification_service.proto google/monitoring/v3/query_service.proto google/monitoring/v3/service.proto google/monitoring/v3/service_service.proto google/monitoring/v3/snooze.proto google/monitoring/v3/snooze_service.proto google/monitoring/v3/span_context.proto google/monitoring/v3/uptime.proto google/monitoring/v3/uptime_service.proto google/cloud/common_resources.proto
+      ```
+   4. Run the above command.
+      
+      It shows nothing because it's waiting for a debugger to attach.
+
+3. In the local generator, start the Remote JVM Debug configuration and you can debug the generator in Intellij.
+
 ## FAQ
 
 ### Error in workspace: workspace() got unexpected keyword argument 'managed_directories'
