@@ -163,7 +163,7 @@ To generate a production GAPIC API:
        export JVM_DEBUG_PORT=5005
        ```
       The protobuf compiler runs the `protoc-gen-java_gapic` shell script (a wrapper of java command with an option to specify JVM debugging). 
-      We set the environment variable `JVM_DEBUG_PORT` to initialize the debug mode.
+      We set the environment variable `JVM_DEBUG_PORT` to enable the debug option.
 
    2. Run the command to build a client library, e.g., `java-monitoring`, with `--subcommands` flag to output commands spawned by `bazel build`.
       ```shell
