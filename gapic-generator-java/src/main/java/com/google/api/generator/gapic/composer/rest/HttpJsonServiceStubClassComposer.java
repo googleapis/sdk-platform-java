@@ -1190,7 +1190,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   /* Parses the Service Yaml file's for custom HttpRules. Filter the HttpRules for ones that match Operations */
-  private Map<String, HttpRule> parseOperationsCustomHttpRules(GapicContext context) {
+  Map<String, HttpRule> parseOperationsCustomHttpRules(GapicContext context) {
     Predicate<HttpRule> predicate = x -> x.getSelector().contains(LRO_NAME_PREFIX);
     com.google.api.Service service = context.serviceYamlProto();
     if (service == null || service.getHttp() == null) {
@@ -1202,7 +1202,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   /* This is meant to be used for the OperationsClient Mixin OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those HttpVerbs to be used */
-  private String getOperationsURIValueFromHttpRule(HttpRule httpRule) {
+  String getOperationsURIValueFromHttpRule(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
         return httpRule.getGet();
