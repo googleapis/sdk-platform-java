@@ -122,9 +122,18 @@ public class HttpJsonServiceStubClassComposerTest {
   public void parseOperationsCustomHttpRules_shouldReturnMapIfContextContainsValidServiceYaml() {
     List<HttpRule> httpRuleList =
         ImmutableList.of(
-            HttpRule.newBuilder().setSelector("google.longrunning.Operations.Get").setGet("testGet").build(),
-            HttpRule.newBuilder().setSelector("google.longrunning.Operations.Post").setPost("testPost").build(),
-            HttpRule.newBuilder().setSelector("google.longrunning.Operations.Delete").setDelete("testDelete").build());
+            HttpRule.newBuilder()
+                .setSelector("google.longrunning.Operations.Get")
+                .setGet("testGet")
+                .build(),
+            HttpRule.newBuilder()
+                .setSelector("google.longrunning.Operations.Post")
+                .setPost("testPost")
+                .build(),
+            HttpRule.newBuilder()
+                .setSelector("google.longrunning.Operations.Delete")
+                .setDelete("testDelete")
+                .build());
     GapicContext contextServiceYaml = RestTestProtoLoader.instance().parseCompliance();
     contextServiceYaml =
         contextServiceYaml
