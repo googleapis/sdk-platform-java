@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson.longrunning;
 
-import com.google.api.HttpRule;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPagedResponse;
@@ -44,7 +43,6 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
@@ -66,8 +64,6 @@ public class OperationsClientTest {
 
   @BeforeClass
   public static void startStaticServer() throws IOException {
-    // We run this to ensure that the static MethodDescriptors have the default values
-    // and are not modified by any other test that ran
     HttpJsonOperationsStub httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
             ClientContext.newBuilder()
@@ -75,16 +71,7 @@ public class OperationsClientTest {
                 .setDefaultCallContext(FakeCallContext.createDefault())
                 .build(),
             new HttpJsonOperationsCallableFactory(),
-            TypeRegistry.newBuilder().build(),
-            ImmutableMap.of(
-                "google.longrunning.Operations.ListOperations",
-                HttpRule.newBuilder().setGet("/v1/{name=**}/operations").build(),
-                "google.longrunning.Operations.GetOperation",
-                HttpRule.newBuilder().setGet("/v1/{name=**/operations/*}").build(),
-                "google.longrunning.Operations.DeleteOperation",
-                HttpRule.newBuilder().setDelete("/v1/{name=**/operations/*}").build(),
-                "google.longrunning.Operations.CancelOperation",
-                HttpRule.newBuilder().setPost("/v1/{name=**/operations/*}:cancel").build()));
+            TypeRegistry.newBuilder().build());
     mockService =
         new MockHttpService(
             httpJsonOperationsStub.getAllMethodDescriptors(),
