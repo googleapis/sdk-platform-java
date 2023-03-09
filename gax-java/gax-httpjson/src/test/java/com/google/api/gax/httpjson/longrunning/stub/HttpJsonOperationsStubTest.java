@@ -43,48 +43,34 @@ import com.google.longrunning.DeleteOperationRequest;
 import com.google.longrunning.GetOperationRequest;
 import com.google.longrunning.ListOperationsRequest;
 import com.google.protobuf.TypeRegistry;
+import java.io.IOException;
 import java.util.List;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class HttpJsonOperationsStubTest {
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    HttpJsonOperationsStub.create(
-        ClientContext.newBuilder()
-            .setCredentials(NoCredentialsProvider.create().getCredentials())
-            .setDefaultCallContext(FakeCallContext.createDefault())
-            .build(),
-        new HttpJsonOperationsCallableFactory(),
-        TypeRegistry.newBuilder().build(),
-        ImmutableMap.of(
-            "google.longrunning.Operations.ListOperations",
-            HttpRule.newBuilder()
-                .setGet("testList")
-                .addAdditionalBindings(HttpRule.newBuilder().setGet("testList2"))
-                .build(),
-            "google.longrunning.Operations.GetOperation",
-            HttpRule.newBuilder()
-                .setGet("testGet")
-                .addAdditionalBindings(HttpRule.newBuilder().setGet("testGet2"))
-                .build(),
-            "google.longrunning.Operations.DeleteOperation",
-            HttpRule.newBuilder()
-                .setDelete("testDelete")
-                .addAdditionalBindings(HttpRule.newBuilder().setDelete("testDelete2"))
-                .build(),
-            "google.longrunning.Operations.CancelOperation",
-            HttpRule.newBuilder()
-                .setPost("testCancel")
-                .addAdditionalBindings(HttpRule.newBuilder().setPost("testCancel2"))
-                .build()));
-  }
-
   @Test
-  public void testMethodDescriptorsURI() {
+  public void testMethodDescriptorsURI() throws IOException {
+    HttpJsonOperationsStub httpJsonOperationsStub =
+        HttpJsonOperationsStub.create(
+            ClientContext.newBuilder()
+                .setCredentials(NoCredentialsProvider.create().getCredentials())
+                .setDefaultCallContext(FakeCallContext.createDefault())
+                .build(),
+            new HttpJsonOperationsCallableFactory(),
+            TypeRegistry.newBuilder().build(),
+            ImmutableMap.of(
+                "google.longrunning.Operations.ListOperations",
+                HttpRule.newBuilder().setGet("testList").build(),
+                "google.longrunning.Operations.GetOperation",
+                HttpRule.newBuilder().setGet("testGet").build(),
+                "google.longrunning.Operations.DeleteOperation",
+                HttpRule.newBuilder().setDelete("testDelete").build(),
+                "google.longrunning.Operations.CancelOperation",
+                HttpRule.newBuilder().setPost("testCancel").build()));
+    // The order is: List, Get, Delete, Cancel
     List<ApiMethodDescriptor> apiMethodDescriptorList =
-        HttpJsonOperationsStub.getMethodDescriptors();
+        httpJsonOperationsStub.getAllMethodDescriptors();
     assertThat(apiMethodDescriptorList.get(0).getRequestFormatter().getPathTemplate().toRawString())
         .isEqualTo("testList");
     assertThat(apiMethodDescriptorList.get(1).getRequestFormatter().getPathTemplate().toRawString())
@@ -96,11 +82,40 @@ public class HttpJsonOperationsStubTest {
   }
 
   @Test
-  public void testMethodDescriptorsAdditionalBindings() {
-    // getAllMethodDescriptors() returns the MethodDescriptors in specific order
+  public void testMethodDescriptorsAdditionalBindings() throws IOException {
+    // We set a random URI in this OperationsStub, otherwise PathTemplate won't compile
+    HttpJsonOperationsStub httpJsonOperationsStub =
+        HttpJsonOperationsStub.create(
+            ClientContext.newBuilder()
+                .setCredentials(NoCredentialsProvider.create().getCredentials())
+                .setDefaultCallContext(FakeCallContext.createDefault())
+                .build(),
+            new HttpJsonOperationsCallableFactory(),
+            TypeRegistry.newBuilder().build(),
+            ImmutableMap.of(
+                "google.longrunning.Operations.ListOperations",
+                HttpRule.newBuilder()
+                    .setGet("test")
+                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testList2"))
+                    .build(),
+                "google.longrunning.Operations.GetOperation",
+                HttpRule.newBuilder()
+                    .setGet("test")
+                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testGet2"))
+                    .build(),
+                "google.longrunning.Operations.DeleteOperation",
+                HttpRule.newBuilder()
+                    .setDelete("test")
+                    .addAdditionalBindings(HttpRule.newBuilder().setDelete("testDelete2"))
+                    .build(),
+                "google.longrunning.Operations.CancelOperation",
+                HttpRule.newBuilder()
+                    .setPost("test")
+                    .addAdditionalBindings(HttpRule.newBuilder().setPost("testCancel2"))
+                    .build()));
     // The order is: List, Get, Delete, Cancel
     List<ApiMethodDescriptor> apiMethodDescriptorList =
-        HttpJsonOperationsStub.getMethodDescriptors();
+        httpJsonOperationsStub.getAllMethodDescriptors();
     ProtoMessageRequestFormatter<ListOperationsRequest>
         listOperationsRequestProtoMessageRequestFormatter =
             (ProtoMessageRequestFormatter<ListOperationsRequest>)

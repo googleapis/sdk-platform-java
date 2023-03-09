@@ -46,6 +46,7 @@ import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPa
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.CancelOperationRequest;
 import com.google.longrunning.DeleteOperationRequest;
 import com.google.longrunning.GetOperationRequest;
@@ -55,7 +56,6 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +78,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private static final String LRO_CANCEL_OPERATION =
       "google.longrunning.Operations.CancelOperation";
 
-  private static ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
+  private ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
       listOperationsMethodDescriptor =
           ApiMethodDescriptor.<ListOperationsRequest, ListOperationsResponse>newBuilder()
               .setFullMethodName("google.longrunning.Operations/ListOperations")
@@ -112,7 +112,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .build())
               .build();
 
-  private static ApiMethodDescriptor<GetOperationRequest, Operation> getOperationMethodDescriptor =
+  private ApiMethodDescriptor<GetOperationRequest, Operation> getOperationMethodDescriptor =
       ApiMethodDescriptor.<GetOperationRequest, Operation>newBuilder()
           .setFullMethodName("google.longrunning.Operations/GetOperation")
           .setHttpMethod(HttpMethods.GET)
@@ -141,55 +141,53 @@ public class HttpJsonOperationsStub extends OperationsStub {
                   GetOperationRequest.newBuilder().setName(compoundOperationId).build())
           .build();
 
-  private static ApiMethodDescriptor<DeleteOperationRequest, Empty>
-      deleteOperationMethodDescriptor =
-          ApiMethodDescriptor.<DeleteOperationRequest, Empty>newBuilder()
-              .setFullMethodName("google.longrunning.Operations/DeleteOperation")
-              .setHttpMethod(HttpMethods.DELETE)
-              .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<DeleteOperationRequest>newBuilder()
-                      .setPath(
-                          "/v1/{name=**/operations/*}",
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<DeleteOperationRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(request -> new HashMap<>())
-                      .setRequestBodyExtractor(request -> null)
-                      .build())
-              .setResponseParser(
-                  ProtoMessageResponseParser.<Empty>newBuilder()
-                      .setDefaultInstance(Empty.getDefaultInstance())
-                      .build())
-              .build();
+  private ApiMethodDescriptor<DeleteOperationRequest, Empty> deleteOperationMethodDescriptor =
+      ApiMethodDescriptor.<DeleteOperationRequest, Empty>newBuilder()
+          .setFullMethodName("google.longrunning.Operations/DeleteOperation")
+          .setHttpMethod(HttpMethods.DELETE)
+          .setRequestFormatter(
+              ProtoMessageRequestFormatter.<DeleteOperationRequest>newBuilder()
+                  .setPath(
+                      "/v1/{name=**/operations/*}",
+                      request -> {
+                        Map<String, String> fields = new HashMap<>();
+                        ProtoRestSerializer<DeleteOperationRequest> serializer =
+                            ProtoRestSerializer.create();
+                        serializer.putPathParam(fields, "name", request.getName());
+                        return fields;
+                      })
+                  .setQueryParamsExtractor(request -> new HashMap<>())
+                  .setRequestBodyExtractor(request -> null)
+                  .build())
+          .setResponseParser(
+              ProtoMessageResponseParser.<Empty>newBuilder()
+                  .setDefaultInstance(Empty.getDefaultInstance())
+                  .build())
+          .build();
 
-  private static ApiMethodDescriptor<CancelOperationRequest, Empty>
-      cancelOperationMethodDescriptor =
-          ApiMethodDescriptor.<CancelOperationRequest, Empty>newBuilder()
-              .setFullMethodName("google.longrunning.Operations/CancelOperation")
-              .setHttpMethod(HttpMethods.POST)
-              .setRequestFormatter(
-                  ProtoMessageRequestFormatter.<CancelOperationRequest>newBuilder()
-                      .setPath(
-                          "/v1/{name=**/operations/*}:cancel",
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<CancelOperationRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
-                      .setQueryParamsExtractor(request -> new HashMap<>())
-                      .setRequestBodyExtractor(request -> null)
-                      .build())
-              .setResponseParser(
-                  ProtoMessageResponseParser.<Empty>newBuilder()
-                      .setDefaultInstance(Empty.getDefaultInstance())
-                      .build())
-              .build();
+  private ApiMethodDescriptor<CancelOperationRequest, Empty> cancelOperationMethodDescriptor =
+      ApiMethodDescriptor.<CancelOperationRequest, Empty>newBuilder()
+          .setFullMethodName("google.longrunning.Operations/CancelOperation")
+          .setHttpMethod(HttpMethods.POST)
+          .setRequestFormatter(
+              ProtoMessageRequestFormatter.<CancelOperationRequest>newBuilder()
+                  .setPath(
+                      "/v1/{name=**/operations/*}:cancel",
+                      request -> {
+                        Map<String, String> fields = new HashMap<>();
+                        ProtoRestSerializer<CancelOperationRequest> serializer =
+                            ProtoRestSerializer.create();
+                        serializer.putPathParam(fields, "name", request.getName());
+                        return fields;
+                      })
+                  .setQueryParamsExtractor(request -> new HashMap<>())
+                  .setRequestBodyExtractor(request -> null)
+                  .build())
+          .setResponseParser(
+              ProtoMessageResponseParser.<Empty>newBuilder()
+                  .setDefaultInstance(Empty.getDefaultInstance())
+                  .build())
+          .build();
 
   private final UnaryCallable<ListOperationsRequest, ListOperationsResponse> listOperationsCallable;
   private final UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
@@ -344,7 +342,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   }
 
   /* This is to allow libraries to customize the Operation MethodDescriptors from the service yaml file */
-  private static void updateDefaultApiMethodDescriptors(
+  private void updateDefaultApiMethodDescriptors(
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
@@ -421,14 +419,19 @@ public class HttpJsonOperationsStub extends OperationsStub {
     }
   }
 
+  /* This function returns the list of method descriptors (custom or default) */
+  @InternalApi
+  public List<ApiMethodDescriptor> getAllMethodDescriptors() {
+    return ImmutableList.of(
+        listOperationsMethodDescriptor,
+        getOperationMethodDescriptor,
+        deleteOperationMethodDescriptor,
+        cancelOperationMethodDescriptor);
+  }
+
   @InternalApi
   public static List<ApiMethodDescriptor> getMethodDescriptors() {
-    List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
-    methodDescriptors.add(listOperationsMethodDescriptor);
-    methodDescriptors.add(getOperationMethodDescriptor);
-    methodDescriptors.add(deleteOperationMethodDescriptor);
-    methodDescriptors.add(cancelOperationMethodDescriptor);
-    return methodDescriptors;
+    return ImmutableList.of();
   }
 
   @Override

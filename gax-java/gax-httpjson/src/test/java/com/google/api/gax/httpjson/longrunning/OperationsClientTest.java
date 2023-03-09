@@ -68,25 +68,27 @@ public class OperationsClientTest {
   public static void startStaticServer() throws IOException {
     // We run this to ensure that the static MethodDescriptors have the default values
     // and are not modified by any other test that ran
-    HttpJsonOperationsStub.create(
-        ClientContext.newBuilder()
-            .setCredentials(NoCredentialsProvider.create().getCredentials())
-            .setDefaultCallContext(FakeCallContext.createDefault())
-            .build(),
-        new HttpJsonOperationsCallableFactory(),
-        TypeRegistry.newBuilder().build(),
-        ImmutableMap.of(
-            "google.longrunning.Operations.ListOperations",
-            HttpRule.newBuilder().setGet("/v1/{name=**}/operations").build(),
-            "google.longrunning.Operations.GetOperation",
-            HttpRule.newBuilder().setGet("/v1/{name=**/operations/*}").build(),
-            "google.longrunning.Operations.DeleteOperation",
-            HttpRule.newBuilder().setDelete("/v1/{name=**/operations/*}").build(),
-            "google.longrunning.Operations.CancelOperation",
-            HttpRule.newBuilder().setPost("/v1/{name=**/operations/*}:cancel").build()));
+    HttpJsonOperationsStub httpJsonOperationsStub =
+        HttpJsonOperationsStub.create(
+            ClientContext.newBuilder()
+                .setCredentials(NoCredentialsProvider.create().getCredentials())
+                .setDefaultCallContext(FakeCallContext.createDefault())
+                .build(),
+            new HttpJsonOperationsCallableFactory(),
+            TypeRegistry.newBuilder().build(),
+            ImmutableMap.of(
+                "google.longrunning.Operations.ListOperations",
+                HttpRule.newBuilder().setGet("/v1/{name=**}/operations").build(),
+                "google.longrunning.Operations.GetOperation",
+                HttpRule.newBuilder().setGet("/v1/{name=**/operations/*}").build(),
+                "google.longrunning.Operations.DeleteOperation",
+                HttpRule.newBuilder().setDelete("/v1/{name=**/operations/*}").build(),
+                "google.longrunning.Operations.CancelOperation",
+                HttpRule.newBuilder().setPost("/v1/{name=**/operations/*}:cancel").build()));
     mockService =
         new MockHttpService(
-            HttpJsonOperationsStub.getMethodDescriptors(), OperationsSettings.getDefaultEndpoint());
+            httpJsonOperationsStub.getAllMethodDescriptors(),
+            OperationsSettings.getDefaultEndpoint());
     OperationsSettings settings =
         OperationsSettings.newBuilder()
             .setTransportChannelProvider(
