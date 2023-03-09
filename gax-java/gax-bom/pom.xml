@@ -48,6 +48,7 @@
         <groupId>com.google.api</groupId>
         <artifactId>gax</artifactId>
         <version>2.23.3-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
+        <type>test-jar</type>
         <classifier>testlib</classifier>
       </dependency>
       <dependency>
@@ -59,6 +60,7 @@
         <groupId>com.google.api</groupId>
         <artifactId>gax-grpc</artifactId>
         <version>2.23.3-SNAPSHOT</version><!-- {x-version-update:gax-grpc:current} -->
+        <type>test-jar</type>
         <classifier>testlib</classifier>
       </dependency>
       <dependency>
@@ -70,6 +72,7 @@
         <groupId>com.google.api</groupId>
         <artifactId>gax-httpjson</artifactId>
         <version>0.108.3-SNAPSHOT</version><!-- {x-version-update:gax-httpjson:current} -->
+        <type>test-jar</type>
         <classifier>testlib</classifier>
       </dependency>
     </dependencies>

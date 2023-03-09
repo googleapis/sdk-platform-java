@@ -374,6 +374,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
     <dependency>
@@ -383,6 +384,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
     <dependency>
@@ -392,6 +394,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
     <dependency>
