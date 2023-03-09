@@ -155,7 +155,7 @@ To generate a production GAPIC API:
    ```
    and then rebuild gapic-generator-java (`mvn clean install`).
 
-## Debugging the Plugin under googleapis with local gapic-generator-java
+## Debugging the Plugin under googleapis with gapic-generator-java
 
 To debug the generator starting from protobuf compiler plugin
 
