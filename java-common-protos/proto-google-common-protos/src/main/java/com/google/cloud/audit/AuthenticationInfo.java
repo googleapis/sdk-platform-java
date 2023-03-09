@@ -72,7 +72,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   }
 
   public static final int PRINCIPAL_EMAIL_FIELD_NUMBER = 1;
-  private volatile java.lang.Object principalEmail_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object principalEmail_ = "";
   /**
    *
    *
@@ -131,7 +133,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   }
 
   public static final int AUTHORITY_SELECTOR_FIELD_NUMBER = 2;
-  private volatile java.lang.Object authoritySelector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object authoritySelector_ = "";
   /**
    *
    *
@@ -235,11 +239,15 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public com.google.protobuf.StructOrBuilder getThirdPartyPrincipalOrBuilder() {
-    return getThirdPartyPrincipal();
+    return thirdPartyPrincipal_ == null
+        ? com.google.protobuf.Struct.getDefaultInstance()
+        : thirdPartyPrincipal_;
   }
 
   public static final int SERVICE_ACCOUNT_KEY_NAME_FIELD_NUMBER = 5;
-  private volatile java.lang.Object serviceAccountKeyName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object serviceAccountKeyName_ = "";
   /**
    *
    *
@@ -294,6 +302,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   }
 
   public static final int SERVICE_ACCOUNT_DELEGATION_INFO_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo>
       serviceAccountDelegationInfo_;
   /**
@@ -397,7 +407,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   }
 
   public static final int PRINCIPAL_SUBJECT_FIELD_NUMBER = 8;
-  private volatile java.lang.Object principalSubject_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object principalSubject_ = "";
   /**
    *
    *
@@ -699,27 +711,23 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       principalEmail_ = "";
-
       authoritySelector_ = "";
-
-      if (thirdPartyPrincipalBuilder_ == null) {
-        thirdPartyPrincipal_ = null;
-      } else {
-        thirdPartyPrincipal_ = null;
+      thirdPartyPrincipal_ = null;
+      if (thirdPartyPrincipalBuilder_ != null) {
+        thirdPartyPrincipalBuilder_.dispose();
         thirdPartyPrincipalBuilder_ = null;
       }
       serviceAccountKeyName_ = "";
-
       if (serviceAccountDelegationInfoBuilder_ == null) {
         serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
       } else {
         serviceAccountDelegationInfo_ = null;
         serviceAccountDelegationInfoBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000010);
       principalSubject_ = "";
-
       return this;
     }
 
@@ -747,28 +755,47 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     public com.google.cloud.audit.AuthenticationInfo buildPartial() {
       com.google.cloud.audit.AuthenticationInfo result =
           new com.google.cloud.audit.AuthenticationInfo(this);
-      int from_bitField0_ = bitField0_;
-      result.principalEmail_ = principalEmail_;
-      result.authoritySelector_ = authoritySelector_;
-      if (thirdPartyPrincipalBuilder_ == null) {
-        result.thirdPartyPrincipal_ = thirdPartyPrincipal_;
-      } else {
-        result.thirdPartyPrincipal_ = thirdPartyPrincipalBuilder_.build();
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.serviceAccountKeyName_ = serviceAccountKeyName_;
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.cloud.audit.AuthenticationInfo result) {
       if (serviceAccountDelegationInfoBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000010) != 0)) {
           serviceAccountDelegationInfo_ =
               java.util.Collections.unmodifiableList(serviceAccountDelegationInfo_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000010);
         }
         result.serviceAccountDelegationInfo_ = serviceAccountDelegationInfo_;
       } else {
         result.serviceAccountDelegationInfo_ = serviceAccountDelegationInfoBuilder_.build();
       }
-      result.principalSubject_ = principalSubject_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.AuthenticationInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.principalEmail_ = principalEmail_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.authoritySelector_ = authoritySelector_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.thirdPartyPrincipal_ =
+            thirdPartyPrincipalBuilder_ == null
+                ? thirdPartyPrincipal_
+                : thirdPartyPrincipalBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.serviceAccountKeyName_ = serviceAccountKeyName_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.principalSubject_ = principalSubject_;
+      }
     }
 
     @java.lang.Override
@@ -818,10 +845,12 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       if (other == com.google.cloud.audit.AuthenticationInfo.getDefaultInstance()) return this;
       if (!other.getPrincipalEmail().isEmpty()) {
         principalEmail_ = other.principalEmail_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getAuthoritySelector().isEmpty()) {
         authoritySelector_ = other.authoritySelector_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (other.hasThirdPartyPrincipal()) {
@@ -829,13 +858,14 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       if (!other.getServiceAccountKeyName().isEmpty()) {
         serviceAccountKeyName_ = other.serviceAccountKeyName_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       if (serviceAccountDelegationInfoBuilder_ == null) {
         if (!other.serviceAccountDelegationInfo_.isEmpty()) {
           if (serviceAccountDelegationInfo_.isEmpty()) {
             serviceAccountDelegationInfo_ = other.serviceAccountDelegationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000010);
           } else {
             ensureServiceAccountDelegationInfoIsMutable();
             serviceAccountDelegationInfo_.addAll(other.serviceAccountDelegationInfo_);
@@ -848,7 +878,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
             serviceAccountDelegationInfoBuilder_.dispose();
             serviceAccountDelegationInfoBuilder_ = null;
             serviceAccountDelegationInfo_ = other.serviceAccountDelegationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000010);
             serviceAccountDelegationInfoBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getServiceAccountDelegationInfoFieldBuilder()
@@ -861,6 +891,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       if (!other.getPrincipalSubject().isEmpty()) {
         principalSubject_ = other.principalSubject_;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -892,26 +923,26 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
             case 10:
               {
                 principalEmail_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 authoritySelector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 34:
               {
                 input.readMessage(
                     getThirdPartyPrincipalFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 34
             case 42:
               {
                 serviceAccountKeyName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 42
             case 50:
@@ -931,7 +962,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
             case 66:
               {
                 principalSubject_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 66
             default:
@@ -1029,8 +1060,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       if (value == null) {
         throw new NullPointerException();
       }
-
       principalEmail_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1051,8 +1082,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearPrincipalEmail() {
-
       principalEmail_ = getDefaultInstance().getPrincipalEmail();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1078,8 +1109,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       principalEmail_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1148,8 +1179,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       if (value == null) {
         throw new NullPointerException();
       }
-
       authoritySelector_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1166,8 +1197,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearAuthoritySelector() {
-
       authoritySelector_ = getDefaultInstance().getAuthoritySelector();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1189,8 +1220,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       authoritySelector_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1216,7 +1247,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return Whether the thirdPartyPrincipal field is set.
      */
     public boolean hasThirdPartyPrincipal() {
-      return thirdPartyPrincipalBuilder_ != null || thirdPartyPrincipal_ != null;
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      *
@@ -1259,11 +1290,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
           throw new NullPointerException();
         }
         thirdPartyPrincipal_ = value;
-        onChanged();
       } else {
         thirdPartyPrincipalBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1281,11 +1312,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     public Builder setThirdPartyPrincipal(com.google.protobuf.Struct.Builder builderForValue) {
       if (thirdPartyPrincipalBuilder_ == null) {
         thirdPartyPrincipal_ = builderForValue.build();
-        onChanged();
       } else {
         thirdPartyPrincipalBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1302,19 +1333,18 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder mergeThirdPartyPrincipal(com.google.protobuf.Struct value) {
       if (thirdPartyPrincipalBuilder_ == null) {
-        if (thirdPartyPrincipal_ != null) {
-          thirdPartyPrincipal_ =
-              com.google.protobuf.Struct.newBuilder(thirdPartyPrincipal_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000004) != 0)
+            && thirdPartyPrincipal_ != null
+            && thirdPartyPrincipal_ != com.google.protobuf.Struct.getDefaultInstance()) {
+          getThirdPartyPrincipalBuilder().mergeFrom(value);
         } else {
           thirdPartyPrincipal_ = value;
         }
-        onChanged();
       } else {
         thirdPartyPrincipalBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1330,14 +1360,13 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
      */
     public Builder clearThirdPartyPrincipal() {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        thirdPartyPrincipal_ = null;
-        onChanged();
-      } else {
-        thirdPartyPrincipal_ = null;
+      bitField0_ = (bitField0_ & ~0x00000004);
+      thirdPartyPrincipal_ = null;
+      if (thirdPartyPrincipalBuilder_ != null) {
+        thirdPartyPrincipalBuilder_.dispose();
         thirdPartyPrincipalBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1353,7 +1382,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
      */
     public com.google.protobuf.Struct.Builder getThirdPartyPrincipalBuilder() {
-
+      bitField0_ |= 0x00000004;
       onChanged();
       return getThirdPartyPrincipalFieldBuilder().getBuilder();
     }
@@ -1477,8 +1506,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       if (value == null) {
         throw new NullPointerException();
       }
-
       serviceAccountKeyName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1497,8 +1526,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearServiceAccountKeyName() {
-
       serviceAccountKeyName_ = getDefaultInstance().getServiceAccountKeyName();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1522,8 +1551,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       serviceAccountKeyName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1532,11 +1561,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
 
     private void ensureServiceAccountDelegationInfoIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000010) != 0)) {
         serviceAccountDelegationInfo_ =
             new java.util.ArrayList<com.google.cloud.audit.ServiceAccountDelegationInfo>(
                 serviceAccountDelegationInfo_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000010;
       }
     }
 
@@ -1824,7 +1853,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     public Builder clearServiceAccountDelegationInfo() {
       if (serviceAccountDelegationInfoBuilder_ == null) {
         serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000010);
         onChanged();
       } else {
         serviceAccountDelegationInfoBuilder_.clear();
@@ -1994,7 +2023,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
                 com.google.cloud.audit.ServiceAccountDelegationInfo.Builder,
                 com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>(
                 serviceAccountDelegationInfo_,
-                ((bitField0_ & 0x00000001) != 0),
+                ((bitField0_ & 0x00000010) != 0),
                 getParentForChildren(),
                 isClean());
         serviceAccountDelegationInfo_ = null;
@@ -2066,8 +2095,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       if (value == null) {
         throw new NullPointerException();
       }
-
       principalSubject_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2084,8 +2113,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearPrincipalSubject() {
-
       principalSubject_ = getDefaultInstance().getPrincipalSubject();
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -2107,8 +2136,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       principalSubject_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }

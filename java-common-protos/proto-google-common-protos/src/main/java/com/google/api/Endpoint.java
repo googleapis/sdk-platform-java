@@ -85,7 +85,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -134,6 +136,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ALIASES_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList aliases_;
   /**
    *
@@ -219,7 +223,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TARGET_FIELD_NUMBER = 101;
-  private volatile java.lang.Object target_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object target_ = "";
   /**
    *
    *
@@ -276,7 +282,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ALLOW_CORS_FIELD_NUMBER = 5;
-  private boolean allowCors_;
+  private boolean allowCors_ = false;
   /**
    *
    *
@@ -542,14 +548,12 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       target_ = "";
-
       allowCors_ = false;
-
       return this;
     }
 
@@ -575,17 +579,33 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Endpoint buildPartial() {
       com.google.api.Endpoint result = new com.google.api.Endpoint(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        aliases_ = aliases_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.aliases_ = aliases_;
-      result.target_ = target_;
-      result.allowCors_ = allowCors_;
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Endpoint result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        aliases_ = aliases_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.aliases_ = aliases_;
+    }
+
+    private void buildPartial0(com.google.api.Endpoint result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.target_ = target_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.allowCors_ = allowCors_;
+      }
     }
 
     @java.lang.Override
@@ -635,12 +655,13 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.Endpoint.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.aliases_.isEmpty()) {
         if (aliases_.isEmpty()) {
           aliases_ = other.aliases_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensureAliasesIsMutable();
           aliases_.addAll(other.aliases_);
@@ -649,6 +670,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getTarget().isEmpty()) {
         target_ = other.target_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (other.getAllowCors() != false) {
@@ -683,7 +705,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -696,13 +718,13 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
             case 40:
               {
                 allowCors_ = input.readBool();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 40
             case 810:
               {
                 target_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 810
             default:
@@ -785,8 +807,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -802,8 +824,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -824,8 +846,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -834,9 +856,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureAliasesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         aliases_ = new com.google.protobuf.LazyStringArrayList(aliases_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
     /**
@@ -1019,7 +1041,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Deprecated
     public Builder clearAliases() {
       aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1125,8 +1147,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       target_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1146,8 +1168,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTarget() {
-
       target_ = getDefaultInstance().getTarget();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1172,8 +1194,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       target_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1219,6 +1241,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     public Builder setAllowCors(boolean value) {
 
       allowCors_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1239,7 +1262,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowCors() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       allowCors_ = false;
       onChanged();
       return this;

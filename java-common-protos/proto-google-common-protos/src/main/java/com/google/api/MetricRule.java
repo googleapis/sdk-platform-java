@@ -77,7 +77,9 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
@@ -140,6 +142,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
             0L);
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.Long> metricCosts_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.Long> internalGetMetricCosts() {
@@ -471,8 +474,8 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       internalGetMutableMetricCosts().clear();
       return this;
     }
@@ -499,12 +502,22 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.MetricRule buildPartial() {
       com.google.api.MetricRule result = new com.google.api.MetricRule(this);
-      int from_bitField0_ = bitField0_;
-      result.selector_ = selector_;
-      result.metricCosts_ = internalGetMetricCosts();
-      result.metricCosts_.makeImmutable();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.MetricRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.metricCosts_ = internalGetMetricCosts();
+        result.metricCosts_.makeImmutable();
+      }
     }
 
     @java.lang.Override
@@ -554,9 +567,11 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.MetricRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       internalGetMutableMetricCosts().mergeFrom(other.internalGetMetricCosts());
+      bitField0_ |= 0x00000002;
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -586,7 +601,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -598,6 +613,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableMetricCosts()
                     .getMutableMap()
                     .put(metricCosts__.getKey(), metricCosts__.getValue());
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -683,8 +699,8 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -701,8 +717,8 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -724,8 +740,8 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -743,8 +759,6 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.Long>
         internalGetMutableMetricCosts() {
-      onChanged();
-      ;
       if (metricCosts_ == null) {
         metricCosts_ =
             com.google.protobuf.MapField.newMapField(MetricCostsDefaultEntryHolder.defaultEntry);
@@ -752,6 +766,8 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
       if (!metricCosts_.isMutable()) {
         metricCosts_ = metricCosts_.copy();
       }
+      bitField0_ |= 0x00000002;
+      onChanged();
       return metricCosts_;
     }
 
@@ -848,6 +864,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearMetricCosts() {
+      bitField0_ = (bitField0_ & ~0x00000002);
       internalGetMutableMetricCosts().getMutableMap().clear();
       return this;
     }
@@ -874,6 +891,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.Long> getMutableMetricCosts() {
+      bitField0_ |= 0x00000002;
       return internalGetMutableMetricCosts().getMutableMap();
     }
     /**
@@ -895,6 +913,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
       }
 
       internalGetMutableMetricCosts().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000002;
       return this;
     }
     /**
@@ -912,6 +931,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllMetricCosts(java.util.Map<java.lang.String, java.lang.Long> values) {
       internalGetMutableMetricCosts().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000002;
       return this;
     }
 

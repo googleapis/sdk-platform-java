@@ -69,7 +69,9 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RESOURCE_TYPE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object resourceType_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object resourceType_ = "";
   /**
    *
    *
@@ -122,7 +124,9 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RESOURCE_NAME_FIELD_NUMBER = 2;
-  private volatile java.lang.Object resourceName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object resourceName_ = "";
   /**
    *
    *
@@ -177,7 +181,9 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int OWNER_FIELD_NUMBER = 3;
-  private volatile java.lang.Object owner_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object owner_ = "";
   /**
    *
    *
@@ -230,7 +236,9 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 4;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -502,14 +510,11 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       resourceType_ = "";
-
       resourceName_ = "";
-
       owner_ = "";
-
       description_ = "";
-
       return this;
     }
 
@@ -535,12 +540,27 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.ResourceInfo buildPartial() {
       com.google.rpc.ResourceInfo result = new com.google.rpc.ResourceInfo(this);
-      result.resourceType_ = resourceType_;
-      result.resourceName_ = resourceName_;
-      result.owner_ = owner_;
-      result.description_ = description_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.rpc.ResourceInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.resourceType_ = resourceType_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.resourceName_ = resourceName_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.owner_ = owner_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.description_ = description_;
+      }
     }
 
     @java.lang.Override
@@ -590,18 +610,22 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.rpc.ResourceInfo.getDefaultInstance()) return this;
       if (!other.getResourceType().isEmpty()) {
         resourceType_ = other.resourceType_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getResourceName().isEmpty()) {
         resourceName_ = other.resourceName_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getOwner().isEmpty()) {
         owner_ = other.owner_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -633,25 +657,25 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 resourceType_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 resourceName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 owner_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 34:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             default:
@@ -670,6 +694,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object resourceType_ = "";
     /**
@@ -738,8 +764,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       resourceType_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -757,8 +783,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearResourceType() {
-
       resourceType_ = getDefaultInstance().getResourceType();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -781,8 +807,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       resourceType_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -857,8 +883,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       resourceName_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -877,8 +903,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearResourceName() {
-
       resourceName_ = getDefaultInstance().getResourceName();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -902,8 +928,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       resourceName_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -975,8 +1001,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       owner_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -994,8 +1020,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOwner() {
-
       owner_ = getDefaultInstance().getOwner();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1018,8 +1044,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       owner_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1091,8 +1117,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1110,8 +1136,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1134,8 +1160,8 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }

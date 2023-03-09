@@ -125,7 +125,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int VERSION_FIELD_NUMBER = 1;
-  private int version_;
+  private int version_ = 0;
   /**
    *
    *
@@ -160,6 +160,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BINDINGS_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.Binding> bindings_;
   /**
    *
@@ -268,6 +270,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int AUDIT_CONFIGS_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.AuditConfig> auditConfigs_;
   /**
    *
@@ -337,7 +341,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ETAG_FIELD_NUMBER = 3;
-  private com.google.protobuf.ByteString etag_;
+  private com.google.protobuf.ByteString etag_ = com.google.protobuf.ByteString.EMPTY;
   /**
    *
    *
@@ -645,24 +649,23 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       version_ = 0;
-
       if (bindingsBuilder_ == null) {
         bindings_ = java.util.Collections.emptyList();
       } else {
         bindings_ = null;
         bindingsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       if (auditConfigsBuilder_ == null) {
         auditConfigs_ = java.util.Collections.emptyList();
       } else {
         auditConfigs_ = null;
         auditConfigsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000004);
       etag_ = com.google.protobuf.ByteString.EMPTY;
-
       return this;
     }
 
@@ -688,29 +691,43 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.Policy buildPartial() {
       com.google.iam.v1.Policy result = new com.google.iam.v1.Policy(this);
-      int from_bitField0_ = bitField0_;
-      result.version_ = version_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v1.Policy result) {
       if (bindingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           bindings_ = java.util.Collections.unmodifiableList(bindings_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.bindings_ = bindings_;
       } else {
         result.bindings_ = bindingsBuilder_.build();
       }
       if (auditConfigsBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           auditConfigs_ = java.util.Collections.unmodifiableList(auditConfigs_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.auditConfigs_ = auditConfigs_;
       } else {
         result.auditConfigs_ = auditConfigsBuilder_.build();
       }
-      result.etag_ = etag_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.Policy result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.version_ = version_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.etag_ = etag_;
+      }
     }
 
     @java.lang.Override
@@ -765,7 +782,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         if (!other.bindings_.isEmpty()) {
           if (bindings_.isEmpty()) {
             bindings_ = other.bindings_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureBindingsIsMutable();
             bindings_.addAll(other.bindings_);
@@ -778,7 +795,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             bindingsBuilder_.dispose();
             bindingsBuilder_ = null;
             bindings_ = other.bindings_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
             bindingsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getBindingsFieldBuilder()
@@ -792,7 +809,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         if (!other.auditConfigs_.isEmpty()) {
           if (auditConfigs_.isEmpty()) {
             auditConfigs_ = other.auditConfigs_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureAuditConfigsIsMutable();
             auditConfigs_.addAll(other.auditConfigs_);
@@ -805,7 +822,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             auditConfigsBuilder_.dispose();
             auditConfigsBuilder_ = null;
             auditConfigs_ = other.auditConfigs_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
             auditConfigsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getAuditConfigsFieldBuilder()
@@ -847,13 +864,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 version_ = input.readInt32();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 26:
               {
                 etag_ = input.readBytes();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 26
             case 34:
@@ -964,6 +981,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder setVersion(int value) {
 
       version_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -996,7 +1014,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearVersion() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       version_ = 0;
       onChanged();
       return this;
@@ -1005,9 +1023,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.iam.v1.Binding> bindings_ = java.util.Collections.emptyList();
 
     private void ensureBindingsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         bindings_ = new java.util.ArrayList<com.google.iam.v1.Binding>(bindings_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
 
@@ -1307,7 +1325,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder clearBindings() {
       if (bindingsBuilder_ == null) {
         bindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
       } else {
         bindingsBuilder_.clear();
@@ -1482,7 +1500,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
                 com.google.iam.v1.Binding,
                 com.google.iam.v1.Binding.Builder,
                 com.google.iam.v1.BindingOrBuilder>(
-                bindings_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                bindings_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
         bindings_ = null;
       }
       return bindingsBuilder_;
@@ -1492,9 +1510,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureAuditConfigsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         auditConfigs_ = new java.util.ArrayList<com.google.iam.v1.AuditConfig>(auditConfigs_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
       }
     }
 
@@ -1709,7 +1727,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder clearAuditConfigs() {
       if (auditConfigsBuilder_ == null) {
         auditConfigs_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
       } else {
         auditConfigsBuilder_.clear();
@@ -1830,7 +1848,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
                 com.google.iam.v1.AuditConfig,
                 com.google.iam.v1.AuditConfig.Builder,
                 com.google.iam.v1.AuditConfigOrBuilder>(
-                auditConfigs_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
+                auditConfigs_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
         auditConfigs_ = null;
       }
       return auditConfigsBuilder_;
@@ -1888,8 +1906,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       etag_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1915,7 +1933,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearEtag() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       etag_ = getDefaultInstance().getEtag();
       onChanged();
       return this;
