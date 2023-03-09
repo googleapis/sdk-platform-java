@@ -36,6 +36,8 @@ import com.google.common.truth.Truth;
 import com.google.longrunning.ListOperationsRequest;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Field;
+import com.google.protobuf.util.JsonFormat;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,9 +49,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class HttpRequestRunnableTest {
+  private static final String MEDIA_TYPE = "application/json; charset=utf-8";
+
   private static Field requestMessage;
+  private static Field bodyRequestMessage;
   private static final String ENDPOINT = "https://www.googleapis.com/animals/v1/projects";
   private static HttpRequestFormatter<Field> requestFormatter;
+  private static HttpRequestFormatter<Field> bodyRequestFormatter;
   private static HttpResponseParser<Empty> responseParser;
 
   @SuppressWarnings("unchecked")
@@ -62,6 +68,15 @@ public class HttpRequestRunnableTest {
             .setDefaultValue("bird")
             .setJsonName("mouse")
             .setTypeUrl("small")
+            .build();
+
+    bodyRequestMessage =
+        Field.newBuilder()
+            .setName("feline ☺ → ←")
+            .setNumber(2)
+            .setDefaultValue("bird ☺ → ←")
+            .setJsonName("mouse ☺ → ←")
+            .setTypeUrl("small ☺ → ←")
             .build();
 
     requestFormatter =
@@ -89,6 +104,22 @@ public class HttpRequestRunnableTest {
                   return fields;
                 })
             .setRequestBodyExtractor(request -> null)
+            .build();
+
+    bodyRequestFormatter =
+        ProtoMessageRequestFormatter.<Field>newBuilder()
+            .setPath(
+                "/name/{name=*}",
+                request -> {
+                  Map<String, String> fields = new HashMap<>();
+                  ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                  serializer.putPathParam(fields, "name", request.getName());
+                  return fields;
+                })
+            .setQueryParamsExtractor(request -> new HashMap<>())
+            .setRequestBodyExtractor(
+                request ->
+                    ProtoRestSerializer.create().toBody("*", request.toBuilder().build(), true))
             .build();
 
     responseParser = Mockito.mock(HttpResponseParser.class);
@@ -176,5 +207,41 @@ public class HttpRequestRunnableTest {
     Truth.assertThat(httpRequest.getUrl().toString()).isEqualTo(expectedUrl);
     Truth.assertThat(httpRequest.getRequestMethod()).isEqualTo("POST");
     Truth.assertThat(httpRequest.getHeaders().get("X-HTTP-Method-Override")).isEqualTo("PATCH");
+  }
+
+  /*
+  We use a separate RequestFormatter as formatting the body requests sets the charset to be UTF-8.
+  The other tests above do not have a set a body request and sent as EmptyContent which has a null Type/ CharSet
+  */
+  @Test
+  public void testUnicodeValuesInBody() throws IOException {
+    ApiMethodDescriptor<Field, Empty> methodDescriptor =
+        ApiMethodDescriptor.<Field, Empty>newBuilder()
+            .setFullMethodName("house.cat.get")
+            .setHttpMethod("PUT")
+            .setRequestFormatter(bodyRequestFormatter)
+            .setResponseParser(responseParser)
+            .build();
+
+    HttpRequestRunnable<Field, Empty> httpRequestRunnable =
+        new HttpRequestRunnable<>(
+            bodyRequestMessage,
+            methodDescriptor,
+            "www.googleapis.com/animals/v1/projects",
+            HttpJsonCallOptions.newBuilder().build(),
+            new MockHttpTransport(),
+            HttpJsonMetadata.newBuilder().build(),
+            (result) -> {});
+
+    HttpRequest httpRequest = httpRequestRunnable.createHttpRequest();
+    Truth.assertThat(httpRequest.getContent().getType()).isEqualTo(MEDIA_TYPE);
+    try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+      httpRequest.getContent().writeTo(byteArrayOutputStream);
+      String output = byteArrayOutputStream.toString();
+      Field.Builder expectedBuilder = Field.newBuilder();
+      JsonFormat.parser().merge(output, expectedBuilder);
+      Field expected = expectedBuilder.build();
+      Truth.assertThat(expected).isEqualTo(bodyRequestMessage);
+    }
   }
 }
