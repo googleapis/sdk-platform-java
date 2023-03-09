@@ -112,6 +112,18 @@
     },
     {
       "packagePatterns": [
+        "^com.google.api"
+      ],
+      "groupName": "Google API dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.http-client"
+      ],
+      "groupName": "Google HTTP Client dependencies"
+    },
+    {
+      "packagePatterns": [
         "^io.opencensus"
       ],
       "groupName": "OpenCensus dependencies"
