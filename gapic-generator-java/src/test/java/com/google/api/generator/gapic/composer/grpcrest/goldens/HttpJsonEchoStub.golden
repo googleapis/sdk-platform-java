@@ -22,6 +22,7 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.TypeRegistry;
@@ -311,9 +312,24 @@ public class HttpJsonEchoStub extends EchoStub {
                             fields, "fooBar.name", request.getFooBar().getName());
                         return fields;
                       })
-                  .setAdditionalPaths(
-                      "/v1beta1/{fooBar.name=cats/*/dogs/*}/echo:foo",
-                      "/v1beta1/{fooBar.name=turtles/*/parrots/*}/echo:foo")
+                  .setAdditionalPathsExtractor(
+                      PathTemplate.create("/v1beta1/{fooBar.name=cats/*/dogs/*}/echo:foo"),
+                      request -> {
+                        Map<String, String> fields = new HashMap<>();
+                        ProtoRestSerializer<EchoRequest> serializer = ProtoRestSerializer.create();
+                        serializer.putPathParam(
+                            fields, "fooBar.name", request.getFooBar().getName());
+                        return fields;
+                      })
+                  .setAdditionalPathsExtractor(
+                      PathTemplate.create("/v1beta1/{fooBar.name=turtles/*/parrots/*}/echo:foo"),
+                      request -> {
+                        Map<String, String> fields = new HashMap<>();
+                        ProtoRestSerializer<EchoRequest> serializer = ProtoRestSerializer.create();
+                        serializer.putPathParam(
+                            fields, "fooBar.name", request.getFooBar().getName());
+                        return fields;
+                      })
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();

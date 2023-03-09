@@ -34,6 +34,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.protobuf.Message;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,6 +53,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
   private final FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor;
   private final List<String> additionalRawPaths;
   private final List<PathTemplate> additionalPathTemplates;
+  private final Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
+      additionalPathsExtractorMap;
 
   private ProtoMessageRequestFormatter(
       FieldsExtractor<RequestT, String> requestBodyExtractor,
@@ -60,7 +63,9 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
       PathTemplate pathTemplate,
       FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor,
       List<String> additionalRawPaths,
-      List<PathTemplate> additionalPathTemplates) {
+      List<PathTemplate> additionalPathTemplates,
+      Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
+          additionalPathsExtractorMap) {
     this.requestBodyExtractor = requestBodyExtractor;
     this.queryParamsExtractor = queryParamsExtractor;
     this.rawPath = rawPath;
@@ -68,6 +73,7 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     this.pathVarsExtractor = pathVarsExtractor;
     this.additionalRawPaths = additionalRawPaths;
     this.additionalPathTemplates = additionalPathTemplates;
+    this.additionalPathsExtractorMap = additionalPathsExtractorMap;
   }
 
   public static <RequestT extends Message>
@@ -98,7 +104,21 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
   /* {@inheritDoc} */
   @Override
   public String getPath(RequestT apiMessage) {
-    return pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+    String path = pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+    if (pathTemplate.matches(path)) {
+      return path;
+    } else {
+      for (Map.Entry<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>> entrySet :
+          additionalPathsExtractorMap.entrySet()) {
+        PathTemplate additionalPathTemplate = entrySet.getKey();
+        FieldsExtractor<RequestT, Map<String, String>> fieldsExtractor = entrySet.getValue();
+        path = additionalPathTemplate.instantiate(fieldsExtractor.extract(apiMessage));
+        if (additionalPathTemplate.matches(path)) {
+          return path;
+        }
+      }
+    }
+    return path;
   }
 
   @BetaApi
@@ -121,6 +141,12 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     private String rawPath;
     private FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor;
     private List<String> rawAdditionalPaths;
+    private Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
+        additionalPathsExtractorMap;
+
+    public Builder() {
+      this.additionalPathsExtractorMap = new HashMap<>();
+    }
 
     public Builder<RequestT> setRequestBodyExtractor(
         FieldsExtractor<RequestT, String> requestBodyExtractor) {
@@ -147,6 +173,12 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
       return this;
     }
 
+    public Builder<RequestT> setAdditionalPathsExtractor(
+        PathTemplate template, FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor) {
+      this.additionalPathsExtractorMap.put(template, pathVarsExtractor);
+      return this;
+    }
+
     @InternalApi
     public Builder<RequestT> updateRawPath(String rawPath) {
       this.rawPath = rawPath;
@@ -167,7 +199,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
           PathTemplate.create(rawPath),
           pathVarsExtractor,
           rawAdditionalPaths,
-          rawAdditionalPaths.stream().map(PathTemplate::create).collect(Collectors.toList()));
+          rawAdditionalPaths.stream().map(PathTemplate::create).collect(Collectors.toList()),
+          additionalPathsExtractorMap);
     }
   }
 }

@@ -115,6 +115,10 @@ public class HttpRuleParser {
             httpRule.getAdditionalBindingsList().stream()
                 .map(HttpRuleParser::getHttpVerbPattern)
                 .collect(Collectors.toList()))
+        .setAdditionalBindings(
+            httpRule.getAdditionalBindingsList().stream()
+                .map(x -> parseHttpRuleHelper(x, inputMessageOpt, messageTypes))
+                .collect(Collectors.toList()))
         .setPathParameters(
             validateAndConstructHttpBindings(
                 pathParamNames, message, messageTypes, patternSampleValues))

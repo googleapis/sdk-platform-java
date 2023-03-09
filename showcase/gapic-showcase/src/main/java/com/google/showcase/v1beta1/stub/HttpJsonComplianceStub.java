@@ -28,6 +28,7 @@ import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
@@ -278,8 +279,23 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                                 fields, "info.fString", request.getInfo().getFString());
                             return fields;
                           })
-                      .setAdditionalPaths(
-                          "/v1beta1/repeat/{info.fChild.fString=first/*}/{info.fString=second/*}/bool/{info.fBool}:childfirstpathresource")
+                      .setAdditionalPathsExtractor(
+                          PathTemplate.create(
+                              "/v1beta1/repeat/{info.fChild.fString=first/*}/{info.fString=second/*}/bool/{info.fBool}:childfirstpathresource"),
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(
+                                fields, "info.fBool", request.getInfo().getFBool());
+                            serializer.putPathParam(
+                                fields,
+                                "info.fChild.fString",
+                                request.getInfo().getFChild().getFString());
+                            serializer.putPathParam(
+                                fields, "info.fString", request.getInfo().getFString());
+                            return fields;
+                          })
                       .setQueryParamsExtractor(
                           request -> {
                             Map<String, List<String>> fields = new HashMap<>();

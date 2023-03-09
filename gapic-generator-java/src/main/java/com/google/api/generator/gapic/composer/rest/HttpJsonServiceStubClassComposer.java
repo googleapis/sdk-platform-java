@@ -55,12 +55,14 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
@@ -107,6 +109,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             ApiMethodDescriptor.class,
             ArrayList.class,
             FieldsExtractor.class,
+            ImmutableMap.class,
             InternalApi.class,
             HashMap.class,
             HttpJsonCallSettings.class,
@@ -114,7 +117,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             HttpJsonStubCallableFactory.class,
             HttpRule.class,
             Map.class,
-            ImmutableMap.class,
+            PathTemplate.class,
             ProtoMessageRequestFormatter.class,
             ProtoMessageResponseParser.class,
             ProtoRestSerializer.class,
@@ -363,14 +366,28 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .apply(expr);
 
     if (!protoMethod.httpBindings().lowerCamelAdditionalPatterns().isEmpty()) {
-      expr =
-          methodMaker
-              .apply(
-                  "setAdditionalPaths",
-                  protoMethod.httpBindings().lowerCamelAdditionalPatterns().stream()
-                      .map(a -> ValueExpr.withValue(StringObjectValue.withValue(a)))
-                      .collect(Collectors.toList()))
-              .apply(expr);
+      for (HttpBindings httpBindings : protoMethod.httpBindings().additionalBindings()) {
+        expr =
+            methodMaker
+                .apply(
+                    "setAdditionalPathsExtractor",
+                    Arrays.asList(
+                        MethodInvocationExpr.builder()
+                            .setStaticReferenceType(
+                                FIXED_REST_TYPESTORE.get(PathTemplate.class.getSimpleName()))
+                            .setMethodName("create")
+                            .setArguments(
+                                ValueExpr.withValue(
+                                    StringObjectValue.withValue(httpBindings.lowerCamelPattern())))
+                            .build(),
+                        createFieldsExtractorClassInstance(
+                            protoMethod,
+                            extractorVarType,
+                            httpBindings.pathParameters(),
+                            "putPathParam",
+                            restNumericEnumsEnabled)))
+                .apply(expr);
+      }
     }
     TypeNode fieldsVarGenericType =
         TypeNode.withReference(

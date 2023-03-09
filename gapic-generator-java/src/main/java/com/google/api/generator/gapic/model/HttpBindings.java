@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -108,11 +109,14 @@ public abstract class HttpBindings {
 
   public abstract boolean isAsteriskBody();
 
+  public abstract List<HttpBindings> additionalBindings();
+
   public static HttpBindings.Builder builder() {
     return new AutoValue_HttpBindings.Builder()
         .setPathParameters(ImmutableSet.of())
         .setQueryParameters(ImmutableSet.of())
-        .setBodyParameters(ImmutableSet.of());
+        .setBodyParameters(ImmutableSet.of())
+        .setAdditionalBindings(ImmutableList.of());
   }
 
   // Protobuf fields and template patterns follow snake_case style. When translated into actual Java
@@ -165,6 +169,8 @@ public abstract class HttpBindings {
     public abstract HttpBindings.Builder setBodyParameters(Set<HttpBinding> bodyParameters);
 
     public abstract HttpBindings.Builder setIsAsteriskBody(boolean asteriskBody);
+
+    public abstract HttpBindings.Builder setAdditionalBindings(List<HttpBindings> httpBindings);
 
     public abstract HttpBindings autoBuild();
 
