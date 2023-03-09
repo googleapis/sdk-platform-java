@@ -155,23 +155,21 @@ To generate a production GAPIC API:
    ```
    and then rebuild gapic-generator-java (`mvn clean install`).
 
-## Debugging the Plugin under googleapis with gapic-generator-java
-
-To debug the generator starting from protobuf compiler plugin
+## Debugging the gapic-generator-java running on protobuf compiler
 
 1. In [googleapis](https://github.com/googleapis/googleapis) root directory, run the following commands:
    1. Set `JVM_DEBUG_PORT` environment variable.
        ```shell
        export JVM_DEBUG_PORT=5005
        ```
-      The proto compiler runs the `protoc-gen-java_gapic` shell script (a wrapper of java command with an option to specify JVM debugging). 
+      The protobuf compiler runs the `protoc-gen-java_gapic` shell script (a wrapper of java command with an option to specify JVM debugging). 
       We set the environment variable `JVM_DEBUG_PORT` to initialize the debug mode.
 
    2. Run the command to build a client library, e.g., `java-monitoring`, with `--subcommands` flag to output commands spawned by `bazel build`.
       ```shell
       bazel build --subcommands //google/monitoring/v3:google-cloud-monitoring-v3-java
       ```
-   3. In the output, find the command of proto compiler invocation with gapic-generator-java plugin (the `darwin_arm64-opt-exec-2B5CBBC6` part maybe different on your environment).
+   3. In the output, find the command of protobuf compiler invocation with gapic-generator-java plugin (the `darwin_arm64-opt-exec-2B5CBBC6` part may be different on your environment).
       
       Note that different client libraries have different proto files.
       ```shell
@@ -181,12 +179,12 @@ To debug the generator starting from protobuf compiler plugin
       
       It shows nothing because it's waiting for a debugger to attach.
 
-2. In the generator, add [Remote JVM debug configuration](https://www.jetbrains.com/help/idea/tutorial-remote-debug.html) for the generator in Intellij.
+2. In the IntelliJ that has gapic-generator-java, add [Remote JVM debug configuration](https://www.jetbrains.com/help/idea/tutorial-remote-debug.html).
 
 3. Set a breakpoint, e.g., in the 1st line in the main method in [Main](src/main/java/com/google/api/generator/Main.java) (this line always get called).
 
 4. Start the Remote JVM Debug configuration and you can debug the generator in Intellij.
-   ![img.png](debug.png)
+   ![IntelliJ Debug Screenshot](debug.png)
 
 ## FAQ
 
