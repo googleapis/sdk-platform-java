@@ -51,6 +51,10 @@ public class HttpJsonOperationsStubTest {
 
   @Test
   public void testMethodDescriptorsURI() throws IOException {
+    String operationListURI = "testList";
+    String operationGetURI = "testGet";
+    String operationDeleteURI = "testDelete";
+    String operationCancelURI = "testCancel";
     HttpJsonOperationsStub httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
             ClientContext.newBuilder()
@@ -61,29 +65,33 @@ public class HttpJsonOperationsStubTest {
             TypeRegistry.newBuilder().build(),
             ImmutableMap.of(
                 "google.longrunning.Operations.ListOperations",
-                HttpRule.newBuilder().setGet("testList").build(),
+                HttpRule.newBuilder().setGet(operationListURI).build(),
                 "google.longrunning.Operations.GetOperation",
-                HttpRule.newBuilder().setGet("testGet").build(),
+                HttpRule.newBuilder().setGet(operationGetURI).build(),
                 "google.longrunning.Operations.DeleteOperation",
-                HttpRule.newBuilder().setDelete("testDelete").build(),
+                HttpRule.newBuilder().setDelete(operationDeleteURI).build(),
                 "google.longrunning.Operations.CancelOperation",
-                HttpRule.newBuilder().setPost("testCancel").build()));
+                HttpRule.newBuilder().setPost(operationCancelURI).build()));
     // The order is: List, Get, Delete, Cancel
     List<ApiMethodDescriptor> apiMethodDescriptorList =
         httpJsonOperationsStub.getAllMethodDescriptors();
     assertThat(apiMethodDescriptorList.get(0).getRequestFormatter().getPathTemplate().toRawString())
-        .isEqualTo("testList");
+        .isEqualTo(operationListURI);
     assertThat(apiMethodDescriptorList.get(1).getRequestFormatter().getPathTemplate().toRawString())
-        .isEqualTo("testGet");
+        .isEqualTo(operationGetURI);
     assertThat(apiMethodDescriptorList.get(2).getRequestFormatter().getPathTemplate().toRawString())
-        .isEqualTo("testDelete");
+        .isEqualTo(operationDeleteURI);
     assertThat(apiMethodDescriptorList.get(3).getRequestFormatter().getPathTemplate().toRawString())
-        .isEqualTo("testCancel");
+        .isEqualTo(operationCancelURI);
   }
 
   @Test
   public void testMethodDescriptorsAdditionalBindings() throws IOException {
     // We set a random URI in this OperationsStub, otherwise PathTemplate won't compile
+    String operationListAdditionalBindingURI = "testList2";
+    String operationGetAdditionalBindingURI = "testGet2";
+    String operationDeleteAdditionalBindingURI = "testDelete2";
+    String operationCancelAdditionalBindingURI = "testCancel2";
     HttpJsonOperationsStub httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
             ClientContext.newBuilder()
@@ -96,22 +104,26 @@ public class HttpJsonOperationsStubTest {
                 "google.longrunning.Operations.ListOperations",
                 HttpRule.newBuilder()
                     .setGet("test")
-                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testList2"))
+                    .addAdditionalBindings(
+                        HttpRule.newBuilder().setGet(operationListAdditionalBindingURI))
                     .build(),
                 "google.longrunning.Operations.GetOperation",
                 HttpRule.newBuilder()
                     .setGet("test")
-                    .addAdditionalBindings(HttpRule.newBuilder().setGet("testGet2"))
+                    .addAdditionalBindings(
+                        HttpRule.newBuilder().setGet(operationGetAdditionalBindingURI))
                     .build(),
                 "google.longrunning.Operations.DeleteOperation",
                 HttpRule.newBuilder()
                     .setDelete("test")
-                    .addAdditionalBindings(HttpRule.newBuilder().setDelete("testDelete2"))
+                    .addAdditionalBindings(
+                        HttpRule.newBuilder().setDelete(operationDeleteAdditionalBindingURI))
                     .build(),
                 "google.longrunning.Operations.CancelOperation",
                 HttpRule.newBuilder()
                     .setPost("test")
-                    .addAdditionalBindings(HttpRule.newBuilder().setPost("testCancel2"))
+                    .addAdditionalBindings(
+                        HttpRule.newBuilder().setPost(operationCancelAdditionalBindingURI))
                     .build()));
     // The order is: List, Get, Delete, Cancel
     List<ApiMethodDescriptor> apiMethodDescriptorList =
@@ -127,7 +139,7 @@ public class HttpJsonOperationsStubTest {
                 .getAdditionalPathTemplates()
                 .get(0)
                 .toRawString())
-        .isEqualTo("testList2");
+        .isEqualTo(operationListAdditionalBindingURI);
     ProtoMessageRequestFormatter<GetOperationRequest>
         getOperationRequestProtoMessageRequestFormatter =
             (ProtoMessageRequestFormatter<GetOperationRequest>)
@@ -139,7 +151,7 @@ public class HttpJsonOperationsStubTest {
                 .getAdditionalPathTemplates()
                 .get(0)
                 .toRawString())
-        .isEqualTo("testGet2");
+        .isEqualTo(operationGetAdditionalBindingURI);
     ProtoMessageRequestFormatter<DeleteOperationRequest>
         deleteOperationRequestProtoMessageRequestFormatter =
             (ProtoMessageRequestFormatter<DeleteOperationRequest>)
@@ -151,7 +163,7 @@ public class HttpJsonOperationsStubTest {
                 .getAdditionalPathTemplates()
                 .get(0)
                 .toRawString())
-        .isEqualTo("testDelete2");
+        .isEqualTo(operationDeleteAdditionalBindingURI);
     ProtoMessageRequestFormatter<CancelOperationRequest>
         cancelOperationRequestProtoMessageRequestFormatter =
             (ProtoMessageRequestFormatter<CancelOperationRequest>)
@@ -163,6 +175,6 @@ public class HttpJsonOperationsStubTest {
                 .getAdditionalPathTemplates()
                 .get(0)
                 .toRawString())
-        .isEqualTo("testCancel2");
+        .isEqualTo(operationCancelAdditionalBindingURI);
   }
 }

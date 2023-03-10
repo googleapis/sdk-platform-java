@@ -89,7 +89,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     assertThat(echoServiceDescriptor.getName()).isEqualTo("Echo");
 
-    String serviceYamlFileName = "showcase_v1beta1.yaml";
+    String serviceYamlFileName = "echo_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
     Optional<com.google.api.Service> serviceYamlOpt =
         ServiceYamlParser.parse(serviceYamlPath.toString());

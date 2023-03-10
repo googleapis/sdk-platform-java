@@ -326,7 +326,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   }
 
   /* OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those HttpVerbs to be used */
-  private static String getValueBasedOnPatternCase(HttpRule httpRule) {
+  private String getValueBasedOnPatternCase(HttpRule httpRule) {
     switch (httpRule.getPatternCase().getNumber()) {
       case 2:
         return httpRule.getGet();
@@ -356,7 +356,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .setAdditionalPaths(
                           customOperationHttpBindings.get(LRO_LIST_OPERATIONS)
                               .getAdditionalBindingsList().stream()
-                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .map(this::getValueBasedOnPatternCase)
                               .toArray(String[]::new))
                       .build())
               .build();
@@ -374,7 +374,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .setAdditionalPaths(
                           customOperationHttpBindings.get(LRO_GET_OPERATION)
                               .getAdditionalBindingsList().stream()
-                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .map(this::getValueBasedOnPatternCase)
                               .toArray(String[]::new))
                       .build())
               .build();
@@ -393,7 +393,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .setAdditionalPaths(
                           customOperationHttpBindings.get(LRO_DELETE_OPERATION)
                               .getAdditionalBindingsList().stream()
-                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .map(this::getValueBasedOnPatternCase)
                               .toArray(String[]::new))
                       .build())
               .build();
@@ -412,14 +412,17 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .setAdditionalPaths(
                           customOperationHttpBindings.get(LRO_CANCEL_OPERATION)
                               .getAdditionalBindingsList().stream()
-                              .map(HttpJsonOperationsStub::getValueBasedOnPatternCase)
+                              .map(this::getValueBasedOnPatternCase)
                               .toArray(String[]::new))
                       .build())
               .build();
     }
   }
 
-  /* This function returns the list of method descriptors (custom or default) */
+  /*
+  This function returns the list of method descriptors (custom or default).
+  This is meant to be called only for tests.
+  */
   @InternalApi
   public List<ApiMethodDescriptor> getAllMethodDescriptors() {
     return ImmutableList.of(
