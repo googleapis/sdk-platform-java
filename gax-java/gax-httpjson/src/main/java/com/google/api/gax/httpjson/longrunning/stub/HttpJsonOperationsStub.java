@@ -46,6 +46,7 @@ import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPa
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.longrunning.CancelOperationRequest;
 import com.google.longrunning.DeleteOperationRequest;
@@ -423,6 +424,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   This function returns the list of method descriptors (custom or default).
   This is meant to be called only for tests.
   */
+  @VisibleForTesting
   @InternalApi
   public List<ApiMethodDescriptor> getAllMethodDescriptors() {
     return ImmutableList.of(
