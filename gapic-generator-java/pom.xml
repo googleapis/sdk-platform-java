@@ -374,6 +374,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
       <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
@@ -384,6 +385,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
       <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
@@ -394,6 +396,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
       <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
