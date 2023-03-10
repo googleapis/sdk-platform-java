@@ -88,6 +88,12 @@
         <type>test-jar</type>
         <classifier>testlib</classifier>
       </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-httpjson</artifactId>
+        <version>0.108.3-SNAPSHOT</version><!-- {x-version-update:gax-httpjson:current} -->
+        <classifier>testlib</classifier>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
