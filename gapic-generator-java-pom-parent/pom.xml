@@ -98,6 +98,11 @@
 
     <profile>
       <id>test-coverage</id>
+      <activation>
+        <property>
+          <name>enableTestCoverage</name>
+        </property>
+      </activation>
       <build>
         <pluginManagement>
           <plugins>

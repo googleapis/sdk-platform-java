@@ -21,8 +21,6 @@
     <module>java-common-protos</module>
     <module>java-iam</module>
     <module>gapic-generator-java-bom</module>
-    <module>showcase</module>
-    <module>coverage-report</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>
@@ -78,6 +76,19 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>activate-test-coverage</id>
+      <activation>
+        <property>
+          <name>enableTestCoverage</name>
+        </property>
+      </activation>
+      <modules>
+        <module>showcase</module>
+        <module>coverage-report</module>
+      </modules>
     </profile>
   </profiles>
 

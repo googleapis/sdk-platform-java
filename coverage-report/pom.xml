@@ -16,6 +16,10 @@
         <enforcer.skip>true</enforcer.skip>
         <maven.compiler.release>8</maven.compiler.release>
         <fmt.skip>true</fmt.skip>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/coverage-report/target/site/
+            jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
         <dependencies>
