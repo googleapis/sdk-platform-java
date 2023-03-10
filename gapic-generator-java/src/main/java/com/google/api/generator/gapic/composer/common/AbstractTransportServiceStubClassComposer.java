@@ -649,6 +649,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     if (generateOperationsStubLogic(service)) {
       secondCtorExprs.addAll(
           createOperationsStubInitExpr(
+              context,
               service,
               thisExpr,
               operationsStubClassVarExpr,
@@ -758,6 +759,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   protected List<Expr> createOperationsStubInitExpr(
+      GapicContext context,
       Service service,
       Expr thisExpr,
       VariableExpr operationsStubClassVarExpr,

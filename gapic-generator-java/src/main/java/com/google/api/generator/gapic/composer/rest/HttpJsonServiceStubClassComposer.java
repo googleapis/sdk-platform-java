@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
+import com.google.api.HttpRule;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
@@ -63,6 +64,7 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,10 +75,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceStubClassComposer {
-
   private static final HttpJsonServiceStubClassComposer INSTANCE =
       new HttpJsonServiceStubClassComposer();
 
@@ -89,6 +91,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                   .setType(FIXED_REST_TYPESTORE.get(TypeRegistry.class.getSimpleName()))
                   .build())
           .build();
+  private static final String LRO_NAME_PREFIX = "google.longrunning.Operations";
 
   protected HttpJsonServiceStubClassComposer() {
     super(RestContext.instance());
@@ -109,7 +112,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             HttpJsonCallSettings.class,
             HttpJsonOperationSnapshot.class,
             HttpJsonStubCallableFactory.class,
+            HttpRule.class,
             Map.class,
+            ImmutableMap.class,
             ProtoMessageRequestFormatter.class,
             ProtoMessageResponseParser.class,
             ProtoRestSerializer.class,
@@ -1075,6 +1080,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
 
   @Override
   protected List<Expr> createOperationsStubInitExpr(
+      GapicContext context,
       Service service,
       Expr thisExpr,
       VariableExpr operationsStubClassVarExpr,
@@ -1089,6 +1095,47 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
       arguments.add(TYPE_REGISTRY_VAR_EXPR);
     }
 
+    // If the Service contains custom HttpRules for Operations, we pass a map of the custom rules to
+    // the Operations Client
+    Map<String, HttpRule> operationCustomHttpRules = parseOperationsCustomHttpRules(context);
+    if (operationCustomHttpRules.size() > 0) {
+      Expr operationCustomHttpBindingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .setMethodName("builder")
+              .setGenerics(
+                  Arrays.asList(
+                      TypeNode.STRING.reference(),
+                      FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()).reference()))
+              .build();
+
+      // Sorting is done to ensure consistent ordering of the entries in the Custom HttpRule Map
+      for (String selector :
+          operationCustomHttpRules.keySet().stream().sorted().collect(Collectors.toList())) {
+        HttpRule httpRule = operationCustomHttpRules.get(selector);
+        Expr httpRuleBuilderExpr = createHttpRuleExpr(httpRule, true);
+
+        operationCustomHttpBindingsBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+                .setMethodName("put")
+                .setArguments(
+                    Arrays.asList(
+                        ValueExpr.withValue(StringObjectValue.withValue(selector)),
+                        httpRuleBuilderExpr))
+                .build();
+      }
+
+      operationCustomHttpBindingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(operationCustomHttpBindingsBuilderExpr)
+              .setMethodName("build")
+              .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .build();
+
+      arguments.add(operationCustomHttpBindingsBuilderExpr);
+    }
+
     return Collections.singletonList(
         AssignmentExpr.builder()
             .setVariableExpr(
@@ -1101,6 +1148,73 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                     .setReturnType(operationsStubClassVarExpr.type())
                     .build())
             .build());
+  }
+
+  /* Build an Expr that creates an HttpRule. Creates a builder and adds the http verb, custom path, and any additional bindings. `additional_bindings` can only be nested one layer deep, so we only check once */
+  private Expr createHttpRuleExpr(HttpRule httpRule, boolean checkAdditionalBindings) {
+    Expr httpRuleBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+            .setMethodName("newBuilder")
+            .build();
+
+    httpRuleBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(httpRuleBuilderExpr)
+            // toLowerCase as the PatternCase result is all uppercase
+            .setMethodName(setMethodFormat(httpRule.getPatternCase().toString().toLowerCase()))
+            .setArguments(
+                ValueExpr.withValue(
+                    StringObjectValue.withValue(getOperationsURIValueFromHttpRule(httpRule))))
+            .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+            .build();
+
+    if (checkAdditionalBindings) {
+      for (HttpRule additionalBindings : httpRule.getAdditionalBindingsList()) {
+        httpRuleBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(httpRuleBuilderExpr)
+                .setMethodName("addAdditionalBindings")
+                .setArguments(Arrays.asList(createHttpRuleExpr(additionalBindings, false)))
+                .build();
+      }
+    }
+
+    httpRuleBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(httpRuleBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(FIXED_REST_TYPESTORE.get(HttpRule.class.getSimpleName()))
+            .build();
+    return httpRuleBuilderExpr;
+  }
+
+  /* Parses the Service Yaml file's for custom HttpRules. Filter the HttpRules for ones that match Operations */
+  Map<String, HttpRule> parseOperationsCustomHttpRules(GapicContext context) {
+    Predicate<HttpRule> predicate = x -> x.getSelector().contains(LRO_NAME_PREFIX);
+    com.google.api.Service service = context.serviceYamlProto();
+    if (service == null || service.getHttp() == null) {
+      return ImmutableMap.of();
+    }
+    return service.getHttp().getRulesList().stream()
+        .filter(predicate)
+        .collect(Collectors.toMap(HttpRule::getSelector, x -> x));
+  }
+
+  /* This is meant to be used for the OperationsClient Mixin OperationsClient's RPCs are mapped to GET/POST/DELETE and this function only expects those HttpVerbs to be used */
+  String getOperationsURIValueFromHttpRule(HttpRule httpRule) {
+    switch (httpRule.getPatternCase().getNumber()) {
+      case 2:
+        return httpRule.getGet();
+      case 4:
+        return httpRule.getPost();
+      case 5:
+        return httpRule.getDelete();
+      default:
+        throw new IllegalArgumentException(
+            "Operations HttpRule should only contain GET/POST/DELETE. Invalid: "
+                + httpRule.getSelector());
+    }
   }
 
   @Override
