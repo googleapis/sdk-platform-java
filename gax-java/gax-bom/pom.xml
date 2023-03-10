@@ -12,6 +12,7 @@
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-shared-config</artifactId>
     <version>1.5.5</version>
+    <relativePath/>
   </parent>
 
   <developers>
@@ -53,6 +54,12 @@
       </dependency>
       <dependency>
         <groupId>com.google.api</groupId>
+        <artifactId>gax</artifactId>
+        <version>2.23.3-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
         <artifactId>gax-grpc</artifactId>
         <version>2.23.3-SNAPSHOT</version><!-- {x-version-update:gax-grpc:current} -->
       </dependency>
@@ -65,6 +72,12 @@
       </dependency>
       <dependency>
         <groupId>com.google.api</groupId>
+        <artifactId>gax-grpc</artifactId>
+        <version>2.23.3-SNAPSHOT</version><!-- {x-version-update:gax-grpc:current} -->
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
         <artifactId>gax-httpjson</artifactId>
         <version>0.108.3-SNAPSHOT</version><!-- {x-version-update:gax-httpjson:current} -->
       </dependency>
@@ -73,6 +86,12 @@
         <artifactId>gax-httpjson</artifactId>
         <version>0.108.3-SNAPSHOT</version><!-- {x-version-update:gax-httpjson:current} -->
         <type>test-jar</type>
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-httpjson</artifactId>
+        <version>0.108.3-SNAPSHOT</version><!-- {x-version-update:gax-httpjson:current} -->
         <classifier>testlib</classifier>
       </dependency>
     </dependencies>
