@@ -35,7 +35,6 @@ import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Message;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,12 +66,14 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     this.rawPath = rawPath;
     this.pathTemplate = pathTemplate;
     this.pathVarsExtractor = pathVarsExtractor;
-    this.additionalPathsExtractorMap = additionalPathsExtractorMap;
+    // RPCs may not define additional bindings -- Set as an empty map
+    this.additionalPathsExtractorMap =
+        additionalPathsExtractorMap == null ? ImmutableMap.of() : additionalPathsExtractorMap;
   }
 
   public static <RequestT extends Message>
       ProtoMessageRequestFormatter.Builder<RequestT> newBuilder() {
-    return new Builder<RequestT>().setAdditionalPathsExtractorMap(ImmutableMap.of());
+    return new Builder<>();
   }
 
   public Builder<RequestT> toBuilder() {
@@ -142,10 +143,6 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     private FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor;
     private Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
         additionalPathsExtractorMap;
-
-    public Builder() {
-      this.additionalPathsExtractorMap = new HashMap<>();
-    }
 
     public Builder<RequestT> setRequestBodyExtractor(
         FieldsExtractor<RequestT, String> requestBodyExtractor) {
