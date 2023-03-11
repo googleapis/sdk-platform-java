@@ -30,6 +30,8 @@
 
 package com.google.api.gax.httpjson;
 
+import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
@@ -81,7 +83,15 @@ public class ProtoMessageRequestFormatterTest {
                   ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
                   return serializer.toBody("field", request, false);
                 })
-            .setAdditionalPaths("/api/v1/names/{name=field_name1/**}/hello")
+            .setAdditionalPathsExtractorMap(
+                ImmutableMap.of(
+                    PathTemplate.create("/api/v1/names/{name=field_name1/**}/hello"),
+                    request -> {
+                      Map<String, String> fields = new HashMap<>();
+                      ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                      serializer.putPathParam(fields, "name", request.getName());
+                      return fields;
+                    }))
             .build();
   }
 
