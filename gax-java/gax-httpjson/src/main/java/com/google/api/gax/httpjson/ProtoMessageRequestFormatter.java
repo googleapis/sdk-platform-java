@@ -179,9 +179,10 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
       return this;
     }
 
-    public Builder<RequestT> setAdditionalPathsExtractor(
-        PathTemplate template, FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor) {
-      this.additionalPathsExtractorMap.put(template, pathVarsExtractor);
+    public Builder<RequestT> setAdditionalPathsExtractorMap(
+        Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
+            additionalPathsExtractorMap) {
+      this.additionalPathsExtractorMap = additionalPathsExtractorMap;
       return this;
     }
 
