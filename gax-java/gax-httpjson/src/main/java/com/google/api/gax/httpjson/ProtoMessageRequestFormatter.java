@@ -32,6 +32,7 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Message;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -130,7 +131,7 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
   @BetaApi
   @Override
   public List<PathTemplate> getAdditionalPathTemplates() {
-    return additionalPathTemplates;
+    return ImmutableList.copyOf(additionalPathsExtractorMap.keySet());
   }
 
   /* {@inheritDoc} */
