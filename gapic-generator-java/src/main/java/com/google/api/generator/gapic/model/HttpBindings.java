@@ -128,12 +128,6 @@ public abstract class HttpBindings {
     return lowerCamelPattern(pattern(), pathParameters());
   }
 
-  public List<String> lowerCamelAdditionalPatterns() {
-    return additionalPatterns().stream()
-        .map(a -> lowerCamelPattern(a, pathParameters()))
-        .collect(Collectors.toList());
-  }
-
   private static String lowerCamelPattern(String originalPattern, Set<HttpBinding> pathParameters) {
     String lowerCamelPattern = originalPattern;
     for (HttpBinding pathParam : pathParameters) {
