@@ -9,6 +9,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
@@ -312,24 +313,32 @@ public class HttpJsonEchoStub extends EchoStub {
                             fields, "fooBar.name", request.getFooBar().getName());
                         return fields;
                       })
-                  .setAdditionalPathsExtractor(
-                      PathTemplate.create("/v1beta1/{fooBar.name=cats/*/dogs/*}/echo:foo"),
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<EchoRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putPathParam(
-                            fields, "fooBar.name", request.getFooBar().getName());
-                        return fields;
-                      })
-                  .setAdditionalPathsExtractor(
-                      PathTemplate.create("/v1beta1/{fooBar.name=turtles/*/parrots/*}/echo:foo"),
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<EchoRequest> serializer = ProtoRestSerializer.create();
-                        serializer.putPathParam(
-                            fields, "fooBar.name", request.getFooBar().getName());
-                        return fields;
-                      })
+                  .setAdditionalPathsExtractorMap(
+                      ImmutableMap
+                          .<PathTemplate, FieldsExtractor<EchoRequest, Map<String, String>>>
+                              builder()
+                          .put(
+                              PathTemplate.create("/v1beta1/{fooBar.name=cats/*/dogs/*}/echo:foo"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<EchoRequest> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(
+                                    fields, "fooBar.name", request.getFooBar().getName());
+                                return fields;
+                              })
+                          .put(
+                              PathTemplate.create(
+                                  "/v1beta1/{fooBar.name=turtles/*/parrots/*}/echo:foo"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<EchoRequest> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(
+                                    fields, "fooBar.name", request.getFooBar().getName());
+                                return fields;
+                              })
+                          .build())
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();

@@ -21,6 +21,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
 import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
@@ -29,6 +30,7 @@ import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
@@ -279,23 +281,28 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                                 fields, "info.fString", request.getInfo().getFString());
                             return fields;
                           })
-                      .setAdditionalPathsExtractor(
-                          PathTemplate.create(
-                              "/v1beta1/repeat/{info.fChild.fString=first/*}/{info.fString=second/*}/bool/{info.fBool}:childfirstpathresource"),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<RepeatRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(
-                                fields, "info.fBool", request.getInfo().getFBool());
-                            serializer.putPathParam(
-                                fields,
-                                "info.fChild.fString",
-                                request.getInfo().getFChild().getFString());
-                            serializer.putPathParam(
-                                fields, "info.fString", request.getInfo().getFString());
-                            return fields;
-                          })
+                      .setAdditionalPathsExtractorMap(
+                          ImmutableMap
+                              .<PathTemplate, FieldsExtractor<RepeatRequest, Map<String, String>>>
+                                  builder()
+                              .put(
+                                  PathTemplate.create(
+                                      "/v1beta1/repeat/{info.fChild.fString=first/*}/{info.fString=second/*}/bool/{info.fBool}:childfirstpathresource"),
+                                  request -> {
+                                    Map<String, String> fields = new HashMap<>();
+                                    ProtoRestSerializer<RepeatRequest> serializer =
+                                        ProtoRestSerializer.create();
+                                    serializer.putPathParam(
+                                        fields, "info.fBool", request.getInfo().getFBool());
+                                    serializer.putPathParam(
+                                        fields,
+                                        "info.fChild.fString",
+                                        request.getInfo().getFChild().getFString());
+                                    serializer.putPathParam(
+                                        fields, "info.fString", request.getInfo().getFString());
+                                    return fields;
+                                  })
+                              .build())
                       .setQueryParamsExtractor(
                           request -> {
                             Map<String, List<String>> fields = new HashMap<>();

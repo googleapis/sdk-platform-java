@@ -25,6 +25,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
 import com.google.api.gax.httpjson.HttpJsonStubCallableFactory;
@@ -271,15 +272,20 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         serializer.putPathParam(fields, "parent", request.getParent());
                         return fields;
                       })
-                  .setAdditionalPathsExtractor(
-                      PathTemplate.create("/v1beta1/{parent=users/*/profile}/blurbs"),
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<CreateBlurbRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "parent", request.getParent());
-                        return fields;
-                      })
+                  .setAdditionalPathsExtractorMap(
+                      ImmutableMap
+                          .<PathTemplate, FieldsExtractor<CreateBlurbRequest, Map<String, String>>>
+                              builder()
+                          .put(
+                              PathTemplate.create("/v1beta1/{parent=users/*/profile}/blurbs"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<CreateBlurbRequest> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(fields, "parent", request.getParent());
+                                return fields;
+                              })
+                          .build())
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
@@ -315,15 +321,20 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         serializer.putPathParam(fields, "name", request.getName());
                         return fields;
                       })
-                  .setAdditionalPathsExtractor(
-                      PathTemplate.create("/v1beta1/{name=users/*/profile/blurbs/*}"),
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<GetBlurbRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "name", request.getName());
-                        return fields;
-                      })
+                  .setAdditionalPathsExtractorMap(
+                      ImmutableMap
+                          .<PathTemplate, FieldsExtractor<GetBlurbRequest, Map<String, String>>>
+                              builder()
+                          .put(
+                              PathTemplate.create("/v1beta1/{name=users/*/profile/blurbs/*}"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<GetBlurbRequest> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(fields, "name", request.getName());
+                                return fields;
+                              })
+                          .build())
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
@@ -356,15 +367,21 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         serializer.putPathParam(fields, "blurb.name", request.getBlurb().getName());
                         return fields;
                       })
-                  .setAdditionalPathsExtractor(
-                      PathTemplate.create("/v1beta1/{blurb.name=users/*/profile/blurbs/*}"),
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<UpdateBlurbRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "blurb.name", request.getBlurb().getName());
-                        return fields;
-                      })
+                  .setAdditionalPathsExtractorMap(
+                      ImmutableMap
+                          .<PathTemplate, FieldsExtractor<UpdateBlurbRequest, Map<String, String>>>
+                              builder()
+                          .put(
+                              PathTemplate.create("/v1beta1/{blurb.name=users/*/profile/blurbs/*}"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<UpdateBlurbRequest> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(
+                                    fields, "blurb.name", request.getBlurb().getName());
+                                return fields;
+                              })
+                          .build())
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
@@ -400,15 +417,20 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         serializer.putPathParam(fields, "name", request.getName());
                         return fields;
                       })
-                  .setAdditionalPathsExtractor(
-                      PathTemplate.create("/v1beta1/{name=users/*/profile/blurbs/*}"),
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<DeleteBlurbRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "name", request.getName());
-                        return fields;
-                      })
+                  .setAdditionalPathsExtractorMap(
+                      ImmutableMap
+                          .<PathTemplate, FieldsExtractor<DeleteBlurbRequest, Map<String, String>>>
+                              builder()
+                          .put(
+                              PathTemplate.create("/v1beta1/{name=users/*/profile/blurbs/*}"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<DeleteBlurbRequest> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(fields, "name", request.getName());
+                                return fields;
+                              })
+                          .build())
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();
@@ -442,15 +464,21 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             serializer.putPathParam(fields, "parent", request.getParent());
                             return fields;
                           })
-                      .setAdditionalPathsExtractor(
-                          PathTemplate.create("/v1beta1/{parent=users/*/profile}/blurbs"),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<ListBlurbsRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "parent", request.getParent());
-                            return fields;
-                          })
+                      .setAdditionalPathsExtractorMap(
+                          ImmutableMap
+                              .<PathTemplate,
+                                  FieldsExtractor<ListBlurbsRequest, Map<String, String>>>
+                                  builder()
+                              .put(
+                                  PathTemplate.create("/v1beta1/{parent=users/*/profile}/blurbs"),
+                                  request -> {
+                                    Map<String, String> fields = new HashMap<>();
+                                    ProtoRestSerializer<ListBlurbsRequest> serializer =
+                                        ProtoRestSerializer.create();
+                                    serializer.putPathParam(fields, "parent", request.getParent());
+                                    return fields;
+                                  })
+                              .build())
                       .setQueryParamsExtractor(
                           request -> {
                             Map<String, List<String>> fields = new HashMap<>();
@@ -486,15 +514,22 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             serializer.putPathParam(fields, "parent", request.getParent());
                             return fields;
                           })
-                      .setAdditionalPathsExtractor(
-                          PathTemplate.create("/v1beta1/{parent=users/*/profile}/blurbs:search"),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<SearchBlurbsRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "parent", request.getParent());
-                            return fields;
-                          })
+                      .setAdditionalPathsExtractorMap(
+                          ImmutableMap
+                              .<PathTemplate,
+                                  FieldsExtractor<SearchBlurbsRequest, Map<String, String>>>
+                                  builder()
+                              .put(
+                                  PathTemplate.create(
+                                      "/v1beta1/{parent=users/*/profile}/blurbs:search"),
+                                  request -> {
+                                    Map<String, String> fields = new HashMap<>();
+                                    ProtoRestSerializer<SearchBlurbsRequest> serializer =
+                                        ProtoRestSerializer.create();
+                                    serializer.putPathParam(fields, "parent", request.getParent());
+                                    return fields;
+                                  })
+                              .build())
                       .setQueryParamsExtractor(
                           request -> {
                             Map<String, List<String>> fields = new HashMap<>();
@@ -534,15 +569,22 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             serializer.putPathParam(fields, "name", request.getName());
                             return fields;
                           })
-                      .setAdditionalPathsExtractor(
-                          PathTemplate.create("/v1beta1/{name=users/*/profile}/blurbs:stream"),
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<StreamBlurbsRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
+                      .setAdditionalPathsExtractorMap(
+                          ImmutableMap
+                              .<PathTemplate,
+                                  FieldsExtractor<StreamBlurbsRequest, Map<String, String>>>
+                                  builder()
+                              .put(
+                                  PathTemplate.create(
+                                      "/v1beta1/{name=users/*/profile}/blurbs:stream"),
+                                  request -> {
+                                    Map<String, String> fields = new HashMap<>();
+                                    ProtoRestSerializer<StreamBlurbsRequest> serializer =
+                                        ProtoRestSerializer.create();
+                                    serializer.putPathParam(fields, "name", request.getName());
+                                    return fields;
+                                  })
+                              .build())
                       .setQueryParamsExtractor(
                           request -> {
                             Map<String, List<String>> fields = new HashMap<>();

@@ -365,12 +365,26 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         restNumericEnumsEnabled)))
             .apply(expr);
 
-    if (!protoMethod.httpBindings().lowerCamelAdditionalPatterns().isEmpty()) {
+    if (!protoMethod.httpBindings().additionalBindings().isEmpty()) {
+      Expr additionalBindingsExtractorMapExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .setMethodName("builder")
+              .setGenerics(
+                  Arrays.asList(
+                      FIXED_REST_TYPESTORE.get(PathTemplate.class.getSimpleName()).reference(),
+                      TypeNode.withReference(
+                              ConcreteReference.builder().setClazz(FieldsExtractor.class)
+                                      .setGenerics(protoMethod.inputType().reference(),
+                                              extractorVarType.reference()).build())
+                          .reference()))
+              .build();
       for (HttpBindings httpBindings : protoMethod.httpBindings().additionalBindings()) {
-        expr =
-            methodMaker
-                .apply(
-                    "setAdditionalPathsExtractor",
+        additionalBindingsExtractorMapExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(additionalBindingsExtractorMapExpr)
+                .setMethodName("put")
+                .setArguments(
                     Arrays.asList(
                         MethodInvocationExpr.builder()
                             .setStaticReferenceType(
@@ -386,8 +400,20 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                             httpBindings.pathParameters(),
                             "putPathParam",
                             restNumericEnumsEnabled)))
-                .apply(expr);
+                .build();
       }
+      additionalBindingsExtractorMapExpr =
+              MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(additionalBindingsExtractorMapExpr)
+                      .setMethodName("build")
+                      .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+                      .build();
+      expr =
+          methodMaker
+              .apply(
+                  "setAdditionalPathsExtractorMap",
+                  Arrays.asList(additionalBindingsExtractorMapExpr))
+              .apply(expr);
     }
     TypeNode fieldsVarGenericType =
         TypeNode.withReference(
