@@ -37,6 +37,8 @@ import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
 import java.util.Collections;
@@ -72,7 +74,19 @@ public class HttpJsonDirectCallableTest {
                         serializer.putPathParam(fields, "name", request.getName());
                         return fields;
                       })
-                  .setAdditionalPaths("/fake/v1/name/{name=john/*}")
+                  .setAdditionalPathsExtractorMap(
+                      ImmutableMap
+                          .<PathTemplate, FieldsExtractor<Field, Map<String, String>>>builder()
+                          .put(
+                              PathTemplate.create("/fake/v1/name/{name=john/*}"),
+                              request -> {
+                                Map<String, String> fields = new HashMap<>();
+                                ProtoRestSerializer<Field> serializer =
+                                    ProtoRestSerializer.create();
+                                serializer.putPathParam(fields, "name", request.getName());
+                                return fields;
+                              })
+                          .build())
                   .setQueryParamsExtractor(
                       request -> {
                         Map<String, List<String>> fields = new HashMap<>();

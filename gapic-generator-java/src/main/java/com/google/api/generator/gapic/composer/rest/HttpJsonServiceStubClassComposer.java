@@ -374,9 +374,12 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                   Arrays.asList(
                       FIXED_REST_TYPESTORE.get(PathTemplate.class.getSimpleName()).reference(),
                       TypeNode.withReference(
-                              ConcreteReference.builder().setClazz(FieldsExtractor.class)
-                                      .setGenerics(protoMethod.inputType().reference(),
-                                              extractorVarType.reference()).build())
+                              ConcreteReference.builder()
+                                  .setClazz(FieldsExtractor.class)
+                                  .setGenerics(
+                                      protoMethod.inputType().reference(),
+                                      extractorVarType.reference())
+                                  .build())
                           .reference()))
               .build();
       for (HttpBindings httpBindings : protoMethod.httpBindings().additionalBindings()) {
@@ -403,11 +406,11 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                 .build();
       }
       additionalBindingsExtractorMapExpr =
-              MethodInvocationExpr.builder()
-                      .setExprReferenceExpr(additionalBindingsExtractorMapExpr)
-                      .setMethodName("build")
-                      .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
-                      .build();
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(additionalBindingsExtractorMapExpr)
+              .setMethodName("build")
+              .setReturnType(FIXED_REST_TYPESTORE.get(ImmutableMap.class.getSimpleName()))
+              .build();
       expr =
           methodMaker
               .apply(
