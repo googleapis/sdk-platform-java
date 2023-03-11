@@ -102,16 +102,14 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     String path = pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
     if (pathTemplate.matches(path)) {
       return path;
-    } else {
-      for (Map.Entry<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>> entrySet :
-          additionalPathsExtractorMap.entrySet()) {
-        PathTemplate additionalPathTemplate = entrySet.getKey();
-        FieldsExtractor<RequestT, Map<String, String>> pathExtractor = entrySet.getValue();
-        String additionalPath =
-            additionalPathTemplate.instantiate(pathExtractor.extract(apiMessage));
-        if (additionalPathTemplate.matches(additionalPath)) {
-          return additionalPath;
-        }
+    }
+    for (Map.Entry<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>> entrySet :
+        additionalPathsExtractorMap.entrySet()) {
+      PathTemplate additionalPathTemplate = entrySet.getKey();
+      FieldsExtractor<RequestT, Map<String, String>> pathExtractor = entrySet.getValue();
+      String additionalPath = additionalPathTemplate.instantiate(pathExtractor.extract(apiMessage));
+      if (additionalPathTemplate.matches(additionalPath)) {
+        return additionalPath;
       }
     }
     throw new IllegalStateException("No matching paths for Request: " + apiMessage);

@@ -365,6 +365,8 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
                         restNumericEnumsEnabled)))
             .apply(expr);
 
+    // If an RPC defines additional bindings, create a map between the PathTemplate
+    // and the FieldExtractor for the PathTemplate
     if (!protoMethod.httpBindings().additionalBindings().isEmpty()) {
       Expr additionalBindingsExtractorMapExpr =
           MethodInvocationExpr.builder()
