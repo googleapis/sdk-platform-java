@@ -35,6 +35,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.FieldsExtractor;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonLongRunningClient;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshot;
@@ -46,6 +47,7 @@ import com.google.api.gax.httpjson.longrunning.OperationsClient.ListOperationsPa
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.longrunning.CancelOperationRequest;
@@ -61,6 +63,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -79,6 +82,40 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private static final String LRO_CANCEL_OPERATION =
       "google.longrunning.Operations.CancelOperation";
 
+  private final FieldsExtractor<ListOperationsRequest, Map<String, String>>
+      LRO_LIST_PATH_EXTRACTOR =
+          request -> {
+            Map<String, String> fields = new HashMap<>();
+            ProtoRestSerializer<ListOperationsRequest> serializer = ProtoRestSerializer.create();
+            serializer.putPathParam(fields, "name", request.getName());
+            return fields;
+          };
+  private final FieldsExtractor<GetOperationRequest, Map<String, String>> LRO_GET_PATH_EXTRACTOR =
+      request -> {
+        Map<String, String> fields = new HashMap<>();
+        ProtoRestSerializer<GetOperationRequest> serializer = ProtoRestSerializer.create();
+        serializer.putPathParam(fields, "name", request.getName());
+        return fields;
+      };
+
+  private final FieldsExtractor<DeleteOperationRequest, Map<String, String>>
+      LRO_DELETE_PATH_EXTRACTOR =
+          request -> {
+            Map<String, String> fields = new HashMap<>();
+            ProtoRestSerializer<DeleteOperationRequest> serializer = ProtoRestSerializer.create();
+            serializer.putPathParam(fields, "name", request.getName());
+            return fields;
+          };
+
+  private final FieldsExtractor<CancelOperationRequest, Map<String, String>>
+      LRO_CANCEL_PATH_EXTRACTOR =
+          request -> {
+            Map<String, String> fields = new HashMap<>();
+            ProtoRestSerializer<CancelOperationRequest> serializer = ProtoRestSerializer.create();
+            serializer.putPathParam(fields, "name", request.getName());
+            return fields;
+          };
+
   private ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
       listOperationsMethodDescriptor =
           ApiMethodDescriptor.<ListOperationsRequest, ListOperationsResponse>newBuilder()
@@ -86,15 +123,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
               .setHttpMethod(HttpMethods.GET)
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<ListOperationsRequest>newBuilder()
-                      .setPath(
-                          "/v1/{name=**}/operations",
-                          request -> {
-                            Map<String, String> fields = new HashMap<>();
-                            ProtoRestSerializer<ListOperationsRequest> serializer =
-                                ProtoRestSerializer.create();
-                            serializer.putPathParam(fields, "name", request.getName());
-                            return fields;
-                          })
+                      .setPath("/v1/{name=**}/operations", LRO_LIST_PATH_EXTRACTOR)
                       .setQueryParamsExtractor(
                           request -> {
                             Map<String, List<String>> fields = new HashMap<>();
@@ -119,15 +148,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
           .setHttpMethod(HttpMethods.GET)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<GetOperationRequest>newBuilder()
-                  .setPath(
-                      "/v1/{name=**/operations/*}",
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<GetOperationRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "name", request.getName());
-                        return fields;
-                      })
+                  .setPath("/v1/{name=**/operations/*}", LRO_GET_PATH_EXTRACTOR)
                   .setQueryParamsExtractor(request -> new HashMap<>())
                   .setRequestBodyExtractor(request -> null)
                   .build())
@@ -148,15 +169,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
           .setHttpMethod(HttpMethods.DELETE)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<DeleteOperationRequest>newBuilder()
-                  .setPath(
-                      "/v1/{name=**/operations/*}",
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<DeleteOperationRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "name", request.getName());
-                        return fields;
-                      })
+                  .setPath("/v1/{name=**/operations/*}", LRO_DELETE_PATH_EXTRACTOR)
                   .setQueryParamsExtractor(request -> new HashMap<>())
                   .setRequestBodyExtractor(request -> null)
                   .build())
@@ -172,15 +185,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
           .setHttpMethod(HttpMethods.POST)
           .setRequestFormatter(
               ProtoMessageRequestFormatter.<CancelOperationRequest>newBuilder()
-                  .setPath(
-                      "/v1/{name=**/operations/*}:cancel",
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<CancelOperationRequest> serializer =
-                            ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "name", request.getName());
-                        return fields;
-                      })
+                  .setPath("/v1/{name=**/operations/*}:cancel", LRO_CANCEL_PATH_EXTRACTOR)
                   .setQueryParamsExtractor(request -> new HashMap<>())
                   .setRequestBodyExtractor(request -> null)
                   .build())
@@ -354,11 +359,12 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           listOperationsMethodDescriptor.getRequestFormatter())
                       .toBuilder()
                       .updateRawPath(customOperationHttpBindings.get(LRO_LIST_OPERATIONS).getGet())
-                      .setAdditionalPaths(
+                      .setAdditionalPathsExtractorMap(
                           customOperationHttpBindings.get(LRO_LIST_OPERATIONS)
                               .getAdditionalBindingsList().stream()
                               .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
+                              .map(PathTemplate::create)
+                              .collect(Collectors.toMap(x -> x, x -> LRO_LIST_PATH_EXTRACTOR)))
                       .build())
               .build();
     }
@@ -372,11 +378,12 @@ public class HttpJsonOperationsStub extends OperationsStub {
                           getOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
                       .updateRawPath(customOperationHttpBindings.get(LRO_GET_OPERATION).getGet())
-                      .setAdditionalPaths(
+                      .setAdditionalPathsExtractorMap(
                           customOperationHttpBindings.get(LRO_GET_OPERATION)
                               .getAdditionalBindingsList().stream()
                               .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
+                              .map(PathTemplate::create)
+                              .collect(Collectors.toMap(x -> x, x -> LRO_GET_PATH_EXTRACTOR)))
                       .build())
               .build();
     }
@@ -391,11 +398,12 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .toBuilder()
                       .updateRawPath(
                           customOperationHttpBindings.get(LRO_DELETE_OPERATION).getDelete())
-                      .setAdditionalPaths(
+                      .setAdditionalPathsExtractorMap(
                           customOperationHttpBindings.get(LRO_DELETE_OPERATION)
                               .getAdditionalBindingsList().stream()
                               .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
+                              .map(PathTemplate::create)
+                              .collect(Collectors.toMap(x -> x, x -> LRO_DELETE_PATH_EXTRACTOR)))
                       .build())
               .build();
     }
@@ -410,11 +418,12 @@ public class HttpJsonOperationsStub extends OperationsStub {
                       .toBuilder()
                       .updateRawPath(
                           customOperationHttpBindings.get(LRO_CANCEL_OPERATION).getPost())
-                      .setAdditionalPaths(
+                      .setAdditionalPathsExtractorMap(
                           customOperationHttpBindings.get(LRO_CANCEL_OPERATION)
                               .getAdditionalBindingsList().stream()
                               .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
+                              .map(PathTemplate::create)
+                              .collect(Collectors.toMap(x -> x, x -> LRO_CANCEL_PATH_EXTRACTOR)))
                       .build())
               .build();
     }
