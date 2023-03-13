@@ -49,8 +49,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class HttpRequestRunnableTest {
-  private static final String MEDIA_TYPE = "application/json; charset=utf-8";
-
   private static Field requestMessage;
   private static Field bodyRequestMessage;
   private static final String ENDPOINT = "https://www.googleapis.com/animals/v1/projects";
@@ -234,14 +232,16 @@ public class HttpRequestRunnableTest {
             (result) -> {});
 
     HttpRequest httpRequest = httpRequestRunnable.createHttpRequest();
-    Truth.assertThat(httpRequest.getContent().getType()).isEqualTo(MEDIA_TYPE);
+    Truth.assertThat(httpRequest.getContent().getType())
+        .isEqualTo("application/json; charset=utf-8");
     try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+      // writeTo() uses the Charset when writing to the stream
       httpRequest.getContent().writeTo(byteArrayOutputStream);
       String output = byteArrayOutputStream.toString();
       Field.Builder expectedBuilder = Field.newBuilder();
       JsonFormat.parser().merge(output, expectedBuilder);
-      Field expected = expectedBuilder.build();
-      Truth.assertThat(expected).isEqualTo(bodyRequestMessage);
+      Field result = expectedBuilder.build();
+      Truth.assertThat(result).isEqualTo(bodyRequestMessage);
     }
   }
 }
