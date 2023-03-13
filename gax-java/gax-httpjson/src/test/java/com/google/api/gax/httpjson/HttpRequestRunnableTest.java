@@ -210,8 +210,8 @@ public class HttpRequestRunnableTest {
   }
 
   /*
-  We use a separate RequestFormatter as formatting the body requests sets the charset to be UTF-8.
-  The other tests above do not have a set a body request and sent as EmptyContent which has a null Type/ CharSet
+  We use a separate RequestFormatter because formatting the body requests is what sets the charset to be UTF-8.
+  The other tests above do not have a set a body request and instead send an EmptyContent (null Type/ CharSet)
   */
   @Test
   public void testUnicodeValuesInBody() throws IOException {
