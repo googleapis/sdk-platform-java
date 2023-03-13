@@ -68,6 +68,8 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
   }
 
   public static final int PERMISSIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringList permissions_;
   /**
    *
@@ -336,6 +338,7 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
       return this;
@@ -365,14 +368,24 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     public com.google.iam.v1.TestIamPermissionsResponse buildPartial() {
       com.google.iam.v1.TestIamPermissionsResponse result =
           new com.google.iam.v1.TestIamPermissionsResponse(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v1.TestIamPermissionsResponse result) {
       if (((bitField0_ & 0x00000001) != 0)) {
         permissions_ = permissions_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000001);
       }
       result.permissions_ = permissions_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.TestIamPermissionsResponse result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

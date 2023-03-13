@@ -150,7 +150,6 @@ public interface JavaSettingsOrBuilder
    *
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
-
   /* nullable */
   java.lang.String getServiceClassNamesOrDefault(
       java.lang.String key,

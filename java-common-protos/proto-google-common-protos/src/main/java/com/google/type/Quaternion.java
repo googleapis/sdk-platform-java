@@ -105,7 +105,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int X_FIELD_NUMBER = 1;
-  private double x_;
+  private double x_ = 0D;
   /**
    *
    *
@@ -123,7 +123,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int Y_FIELD_NUMBER = 2;
-  private double y_;
+  private double y_ = 0D;
   /**
    *
    *
@@ -141,7 +141,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int Z_FIELD_NUMBER = 3;
-  private double z_;
+  private double z_ = 0D;
   /**
    *
    *
@@ -159,7 +159,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int W_FIELD_NUMBER = 4;
-  private double w_;
+  private double w_ = 0D;
   /**
    *
    *
@@ -450,14 +450,11 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       x_ = 0D;
-
       y_ = 0D;
-
       z_ = 0D;
-
       w_ = 0D;
-
       return this;
     }
 
@@ -483,12 +480,27 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.Quaternion buildPartial() {
       com.google.type.Quaternion result = new com.google.type.Quaternion(this);
-      result.x_ = x_;
-      result.y_ = y_;
-      result.z_ = z_;
-      result.w_ = w_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.Quaternion result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.x_ = x_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.y_ = y_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.z_ = z_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.w_ = w_;
+      }
     }
 
     @java.lang.Override
@@ -577,25 +589,25 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
             case 9:
               {
                 x_ = input.readDouble();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 9
             case 17:
               {
                 y_ = input.readDouble();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 17
             case 25:
               {
                 z_ = input.readDouble();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 25
             case 33:
               {
                 w_ = input.readDouble();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 33
             default:
@@ -614,6 +626,8 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private double x_;
     /**
@@ -646,6 +660,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setX(double value) {
 
       x_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -661,7 +676,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearX() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       x_ = 0D;
       onChanged();
       return this;
@@ -698,6 +713,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setY(double value) {
 
       y_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -713,7 +729,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearY() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       y_ = 0D;
       onChanged();
       return this;
@@ -750,6 +766,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setZ(double value) {
 
       z_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -765,7 +782,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearZ() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       z_ = 0D;
       onChanged();
       return this;
@@ -802,6 +819,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setW(double value) {
 
       w_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -817,7 +835,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearW() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       w_ = 0D;
       onChanged();
       return this;

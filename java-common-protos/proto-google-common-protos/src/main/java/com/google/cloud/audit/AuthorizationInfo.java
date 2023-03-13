@@ -69,7 +69,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int RESOURCE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object resource_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object resource_ = "";
   /**
    *
    *
@@ -126,7 +128,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int PERMISSION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object permission_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object permission_ = "";
   /**
    *
    *
@@ -175,7 +179,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int GRANTED_FIELD_NUMBER = 3;
-  private boolean granted_;
+  private boolean granted_ = false;
   /**
    *
    *
@@ -251,7 +255,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.ResourceOrBuilder
       getResourceAttributesOrBuilder() {
-    return getResourceAttributes();
+    return resourceAttributes_ == null
+        ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
+        : resourceAttributes_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -482,16 +488,13 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       resource_ = "";
-
       permission_ = "";
-
       granted_ = false;
-
-      if (resourceAttributesBuilder_ == null) {
-        resourceAttributes_ = null;
-      } else {
-        resourceAttributes_ = null;
+      resourceAttributes_ = null;
+      if (resourceAttributesBuilder_ != null) {
+        resourceAttributesBuilder_.dispose();
         resourceAttributesBuilder_ = null;
       }
       return this;
@@ -521,16 +524,30 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     public com.google.cloud.audit.AuthorizationInfo buildPartial() {
       com.google.cloud.audit.AuthorizationInfo result =
           new com.google.cloud.audit.AuthorizationInfo(this);
-      result.resource_ = resource_;
-      result.permission_ = permission_;
-      result.granted_ = granted_;
-      if (resourceAttributesBuilder_ == null) {
-        result.resourceAttributes_ = resourceAttributes_;
-      } else {
-        result.resourceAttributes_ = resourceAttributesBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.AuthorizationInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.resource_ = resource_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.permission_ = permission_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.granted_ = granted_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.resourceAttributes_ =
+            resourceAttributesBuilder_ == null
+                ? resourceAttributes_
+                : resourceAttributesBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -580,10 +597,12 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       if (other == com.google.cloud.audit.AuthorizationInfo.getDefaultInstance()) return this;
       if (!other.getResource().isEmpty()) {
         resource_ = other.resource_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getPermission().isEmpty()) {
         permission_ = other.permission_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (other.getGranted() != false) {
@@ -621,26 +640,26 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
             case 10:
               {
                 resource_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 permission_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 24:
               {
                 granted_ = input.readBool();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             case 42:
               {
                 input.readMessage(
                     getResourceAttributesFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 42
             default:
@@ -659,6 +678,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object resource_ = "";
     /**
@@ -733,8 +754,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       resource_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -754,8 +775,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearResource() {
-
       resource_ = getDefaultInstance().getResource();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -780,8 +801,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       resource_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -847,8 +868,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       permission_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -864,8 +885,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearPermission() {
-
       permission_ = getDefaultInstance().getPermission();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -886,8 +907,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       permission_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -925,6 +946,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     public Builder setGranted(boolean value) {
 
       granted_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -941,7 +963,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearGranted() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       granted_ = false;
       onChanged();
       return this;
@@ -969,7 +991,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return Whether the resourceAttributes field is set.
      */
     public boolean hasResourceAttributes() {
-      return resourceAttributesBuilder_ != null || resourceAttributes_ != null;
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      *
@@ -1014,11 +1036,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
           throw new NullPointerException();
         }
         resourceAttributes_ = value;
-        onChanged();
       } else {
         resourceAttributesBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1038,11 +1060,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         com.google.rpc.context.AttributeContext.Resource.Builder builderForValue) {
       if (resourceAttributesBuilder_ == null) {
         resourceAttributes_ = builderForValue.build();
-        onChanged();
       } else {
         resourceAttributesBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1060,19 +1082,19 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      */
     public Builder mergeResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
       if (resourceAttributesBuilder_ == null) {
-        if (resourceAttributes_ != null) {
-          resourceAttributes_ =
-              com.google.rpc.context.AttributeContext.Resource.newBuilder(resourceAttributes_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000008) != 0)
+            && resourceAttributes_ != null
+            && resourceAttributes_
+                != com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()) {
+          getResourceAttributesBuilder().mergeFrom(value);
         } else {
           resourceAttributes_ = value;
         }
-        onChanged();
       } else {
         resourceAttributesBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1089,14 +1111,13 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
      */
     public Builder clearResourceAttributes() {
-      if (resourceAttributesBuilder_ == null) {
-        resourceAttributes_ = null;
-        onChanged();
-      } else {
-        resourceAttributes_ = null;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      resourceAttributes_ = null;
+      if (resourceAttributesBuilder_ != null) {
+        resourceAttributesBuilder_.dispose();
         resourceAttributesBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1113,7 +1134,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
      */
     public com.google.rpc.context.AttributeContext.Resource.Builder getResourceAttributesBuilder() {
-
+      bitField0_ |= 0x00000008;
       onChanged();
       return getResourceAttributesFieldBuilder().getBuilder();
     }

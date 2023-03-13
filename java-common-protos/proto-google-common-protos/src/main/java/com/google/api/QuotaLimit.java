@@ -83,7 +83,9 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 6;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -138,7 +140,9 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -191,7 +195,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DEFAULT_LIMIT_FIELD_NUMBER = 3;
-  private long defaultLimit_;
+  private long defaultLimit_ = 0L;
   /**
    *
    *
@@ -216,7 +220,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MAX_LIMIT_FIELD_NUMBER = 4;
-  private long maxLimit_;
+  private long maxLimit_ = 0L;
   /**
    *
    *
@@ -240,7 +244,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int FREE_TIER_FIELD_NUMBER = 7;
-  private long freeTier_;
+  private long freeTier_ = 0L;
   /**
    *
    *
@@ -264,7 +268,9 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DURATION_FIELD_NUMBER = 5;
-  private volatile java.lang.Object duration_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object duration_ = "";
   /**
    *
    *
@@ -315,7 +321,9 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int METRIC_FIELD_NUMBER = 8;
-  private volatile java.lang.Object metric_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object metric_ = "";
   /**
    *
    *
@@ -368,7 +376,9 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int UNIT_FIELD_NUMBER = 9;
-  private volatile java.lang.Object unit_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object unit_ = "";
   /**
    *
    *
@@ -440,6 +450,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
             0L);
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.Long> values_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.Long> internalGetValues() {
@@ -534,7 +545,9 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 12;
-  private volatile java.lang.Object displayName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object displayName_ = "";
   /**
    *
    *
@@ -891,25 +904,17 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       description_ = "";
-
       defaultLimit_ = 0L;
-
       maxLimit_ = 0L;
-
       freeTier_ = 0L;
-
       duration_ = "";
-
       metric_ = "";
-
       unit_ = "";
-
       internalGetMutableValues().clear();
       displayName_ = "";
-
       return this;
     }
 
@@ -935,20 +940,46 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.QuotaLimit buildPartial() {
       com.google.api.QuotaLimit result = new com.google.api.QuotaLimit(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
-      result.description_ = description_;
-      result.defaultLimit_ = defaultLimit_;
-      result.maxLimit_ = maxLimit_;
-      result.freeTier_ = freeTier_;
-      result.duration_ = duration_;
-      result.metric_ = metric_;
-      result.unit_ = unit_;
-      result.values_ = internalGetValues();
-      result.values_.makeImmutable();
-      result.displayName_ = displayName_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.QuotaLimit result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.description_ = description_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.defaultLimit_ = defaultLimit_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.maxLimit_ = maxLimit_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.freeTier_ = freeTier_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.duration_ = duration_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.metric_ = metric_;
+      }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.unit_ = unit_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.values_ = internalGetValues();
+        result.values_.makeImmutable();
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.displayName_ = displayName_;
+      }
     }
 
     @java.lang.Override
@@ -998,10 +1029,12 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.QuotaLimit.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (other.getDefaultLimit() != 0L) {
@@ -1015,19 +1048,24 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDuration().isEmpty()) {
         duration_ = other.duration_;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       if (!other.getMetric().isEmpty()) {
         metric_ = other.metric_;
+        bitField0_ |= 0x00000040;
         onChanged();
       }
       if (!other.getUnit().isEmpty()) {
         unit_ = other.unit_;
+        bitField0_ |= 0x00000080;
         onChanged();
       }
       internalGetMutableValues().mergeFrom(other.internalGetValues());
+      bitField0_ |= 0x00000100;
       if (!other.getDisplayName().isEmpty()) {
         displayName_ = other.displayName_;
+        bitField0_ |= 0x00000200;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -1059,49 +1097,49 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
             case 18:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 24:
               {
                 defaultLimit_ = input.readInt64();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             case 32:
               {
                 maxLimit_ = input.readInt64();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 32
             case 42:
               {
                 duration_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 42
             case 50:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 50
             case 56:
               {
                 freeTier_ = input.readInt64();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 56
             case 66:
               {
                 metric_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000040;
                 break;
               } // case 66
             case 74:
               {
                 unit_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000080;
                 break;
               } // case 74
             case 82:
@@ -1113,12 +1151,13 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableValues()
                     .getMutableMap()
                     .put(values__.getKey(), values__.getValue());
+                bitField0_ |= 0x00000100;
                 break;
               } // case 82
             case 98:
               {
                 displayName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000200;
                 break;
               } // case 98
             default:
@@ -1210,8 +1249,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1230,8 +1269,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1255,8 +1294,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1328,8 +1367,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1347,8 +1386,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1371,8 +1410,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1422,6 +1461,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     public Builder setDefaultLimit(long value) {
 
       defaultLimit_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1444,7 +1484,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDefaultLimit() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       defaultLimit_ = 0L;
       onChanged();
       return this;
@@ -1493,6 +1533,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     public Builder setMaxLimit(long value) {
 
       maxLimit_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1514,7 +1555,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMaxLimit() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       maxLimit_ = 0L;
       onChanged();
       return this;
@@ -1563,6 +1604,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     public Builder setFreeTier(long value) {
 
       freeTier_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1584,7 +1626,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearFreeTier() {
-
+      bitField0_ = (bitField0_ & ~0x00000010);
       freeTier_ = 0L;
       onChanged();
       return this;
@@ -1654,8 +1696,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       duration_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -1672,8 +1714,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDuration() {
-
       duration_ = getDefaultInstance().getDuration();
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -1695,8 +1737,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       duration_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -1768,8 +1810,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       metric_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1787,8 +1829,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMetric() {
-
       metric_ = getDefaultInstance().getMetric();
+      bitField0_ = (bitField0_ & ~0x00000040);
       onChanged();
       return this;
     }
@@ -1811,8 +1853,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       metric_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1896,8 +1938,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       unit_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -1919,8 +1961,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearUnit() {
-
       unit_ = getDefaultInstance().getUnit();
+      bitField0_ = (bitField0_ & ~0x00000080);
       onChanged();
       return this;
     }
@@ -1947,8 +1989,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       unit_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -1964,14 +2006,14 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.Long>
         internalGetMutableValues() {
-      onChanged();
-      ;
       if (values_ == null) {
         values_ = com.google.protobuf.MapField.newMapField(ValuesDefaultEntryHolder.defaultEntry);
       }
       if (!values_.isMutable()) {
         values_ = values_.copy();
       }
+      bitField0_ |= 0x00000100;
+      onChanged();
       return values_;
     }
 
@@ -2060,6 +2102,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearValues() {
+      bitField0_ = (bitField0_ & ~0x00000100);
       internalGetMutableValues().getMutableMap().clear();
       return this;
     }
@@ -2084,6 +2127,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.Long> getMutableValues() {
+      bitField0_ |= 0x00000100;
       return internalGetMutableValues().getMutableMap();
     }
     /**
@@ -2103,6 +2147,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       }
 
       internalGetMutableValues().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000100;
       return this;
     }
     /**
@@ -2118,6 +2163,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllValues(java.util.Map<java.lang.String, java.lang.Long> values) {
       internalGetMutableValues().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000100;
       return this;
     }
 
@@ -2191,8 +2237,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       displayName_ = value;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2211,8 +2257,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-
       displayName_ = getDefaultInstance().getDisplayName();
+      bitField0_ = (bitField0_ & ~0x00000200);
       onChanged();
       return this;
     }
@@ -2236,8 +2282,8 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       displayName_ = value;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
