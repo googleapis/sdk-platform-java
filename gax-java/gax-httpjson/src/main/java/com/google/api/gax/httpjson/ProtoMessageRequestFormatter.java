@@ -148,6 +148,12 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     }
 
     @InternalApi
+    public Builder<RequestT> updateRawPath(String rawPath) {
+      this.rawPath = rawPath;
+      return this;
+    }
+
+    @InternalApi
     public Builder<RequestT> updateRawPath(String target, String replacement) {
       this.rawPath = this.rawPath.replace(target, replacement);
       return this;
