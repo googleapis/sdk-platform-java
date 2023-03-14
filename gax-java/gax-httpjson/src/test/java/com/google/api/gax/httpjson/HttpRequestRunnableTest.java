@@ -53,7 +53,6 @@ public class HttpRequestRunnableTest {
   private static Field bodyRequestMessage;
   private static final String ENDPOINT = "https://www.googleapis.com/animals/v1/projects";
   private static HttpRequestFormatter<Field> requestFormatter;
-  private static HttpRequestFormatter<Field> bodyRequestFormatter;
   private static HttpResponseParser<Empty> responseParser;
 
   @SuppressWarnings("unchecked")
@@ -102,22 +101,6 @@ public class HttpRequestRunnableTest {
                   return fields;
                 })
             .setRequestBodyExtractor(request -> null)
-            .build();
-
-    bodyRequestFormatter =
-        ProtoMessageRequestFormatter.<Field>newBuilder()
-            .setPath(
-                "/name/{name=*}",
-                request -> {
-                  Map<String, String> fields = new HashMap<>();
-                  ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
-                  serializer.putPathParam(fields, "name", request.getName());
-                  return fields;
-                })
-            .setQueryParamsExtractor(request -> new HashMap<>())
-            .setRequestBodyExtractor(
-                request ->
-                    ProtoRestSerializer.create().toBody("*", request.toBuilder().build(), true))
             .build();
 
     responseParser = Mockito.mock(HttpResponseParser.class);
@@ -213,6 +196,22 @@ public class HttpRequestRunnableTest {
   */
   @Test
   public void testUnicodeValuesInBody() throws IOException {
+    HttpRequestFormatter<Field> bodyRequestFormatter =
+        ProtoMessageRequestFormatter.<Field>newBuilder()
+            .setPath(
+                "/name/{name=*}",
+                request -> {
+                  Map<String, String> fields = new HashMap<>();
+                  ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                  serializer.putPathParam(fields, "name", request.getName());
+                  return fields;
+                })
+            .setQueryParamsExtractor(request -> new HashMap<>())
+            .setRequestBodyExtractor(
+                request ->
+                    ProtoRestSerializer.create().toBody("*", request.toBuilder().build(), true))
+            .build();
+
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
         ApiMethodDescriptor.<Field, Empty>newBuilder()
             .setFullMethodName("house.cat.get")
