@@ -1,0 +1,5 @@
+add-base-resource-name:
+- service-package: com.google.cloud.monitoring.v3
+  message:
+  - ListAlertPoliciesRequest
+  - AnotherMessage
