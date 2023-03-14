@@ -2,6 +2,7 @@ package com.google.api.generator.gapic.protoparser;
 
 import static com.google.api.generator.gapic.protoparser.CustomizationParser.parseAddBaseResourceNameCustomization;
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -19,5 +20,11 @@ public class CustomizationParserTest {
     assertThat(messages).containsAnyIn(new String[] {
         "com.google.cloud.monitoring.v3.ListAlertPoliciesRequest",
         "com.google.cloud.monitoring.v3.AnotherRequest"});
+  }
+
+  @Test
+  public void parseNonExistedCustomizationTest() {
+    List<String> messages = parseAddBaseResourceNameCustomization("nonExisted.yaml");
+    assertTrue(messages.isEmpty());
   }
 }

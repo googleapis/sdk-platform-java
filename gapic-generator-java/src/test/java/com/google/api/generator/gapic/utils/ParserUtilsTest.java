@@ -1,6 +1,7 @@
 package com.google.api.generator.gapic.utils;
 
 import static com.google.api.generator.gapic.utils.ParserUtils.parseMapFromYamlFile;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Path;
@@ -19,5 +20,17 @@ public class ParserUtilsTest {
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<Map<String, Object>> yamlMapOpt = parseMapFromYamlFile(yamlPath.toString());
     assertTrue(yamlMapOpt.isPresent());
+  }
+
+  @Test
+  public void parseMapFromNullYamlFileTest() {
+    Optional<Map<String, Object>> yamlMapOpt = parseMapFromYamlFile(null);
+    assertFalse(yamlMapOpt.isPresent());
+  }
+
+  @Test
+  public void parseMapFromNonExistedYamlFileTest() {
+    Optional<Map<String, Object>> yamlMapOpt = parseMapFromYamlFile("nonExisted.yaml");
+    assertFalse(yamlMapOpt.isPresent());
   }
 }
