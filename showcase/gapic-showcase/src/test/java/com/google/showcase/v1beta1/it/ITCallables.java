@@ -1,5 +1,7 @@
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -19,20 +21,17 @@ import com.google.showcase.v1beta1.WaitMetadata;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
 import io.grpc.ManagedChannelBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.threeten.bp.Instant;
-import org.threeten.bp.temporal.ChronoUnit;
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.threeten.bp.Instant;
+import org.threeten.bp.temporal.ChronoUnit;
 
 public class ITCallables {
   private static EchoClient grpcClient;
@@ -41,24 +40,24 @@ public class ITCallables {
   @BeforeClass
   public static void createClient() throws IOException, GeneralSecurityException {
     EchoSettings grpcEchoSettings =
-            EchoSettings.newHttpJsonBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            InstantiatingGrpcChannelProvider.newBuilder()
-                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                                    .build())
-                    .build();
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                InstantiatingGrpcChannelProvider.newBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
     grpcClient = EchoClient.create(grpcEchoSettings);
     EchoSettings httpjsonEchoSettings =
-            EchoSettings.newHttpJsonBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                    .setHttpTransport(
-                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                    .setEndpoint("http://localhost:7469")
-                                    .build())
-                    .build();
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
     httpjsonClient = EchoClient.create(httpjsonEchoSettings);
   }
 
@@ -72,7 +71,7 @@ public class ITCallables {
   public void testEchoHttpJson() {
     String content = "httpjson-echo";
     EchoResponse echoResponse =
-            httpjsonClient.echo(EchoRequest.newBuilder().setContent(content).build());
+        httpjsonClient.echo(EchoRequest.newBuilder().setContent(content).build());
     assertThat(echoResponse.getContent()).isEqualTo(content);
   }
 
@@ -87,9 +86,9 @@ public class ITCallables {
     StatusCode.Code cancelledStatusCode = StatusCode.Code.NOT_FOUND;
     try {
       httpjsonClient.echo(
-              EchoRequest.newBuilder()
-                      .setError(Status.newBuilder().setCode(cancelledStatusCode.ordinal()).build())
-                      .build());
+          EchoRequest.newBuilder()
+              .setError(Status.newBuilder().setCode(cancelledStatusCode.ordinal()).build())
+              .build());
     } catch (ApiException e) {
       assertThat(e.getStatusCode().getCode()).isEqualTo(cancelledStatusCode);
     }
@@ -101,9 +100,9 @@ public class ITCallables {
   public void testExpandHttpJson() {
     String content = "Testing the entire response is the same";
     ServerStream<EchoResponse> echoResponses =
-            httpjsonClient
-                    .expandCallable()
-                    .call(ExpandRequest.newBuilder().setContent(content).build());
+        httpjsonClient
+            .expandCallable()
+            .call(ExpandRequest.newBuilder().setContent(content).build());
     int numResponses = 0;
     List<String> values = new ArrayList<>();
     for (EchoResponse echoResponse : echoResponses) {
@@ -125,12 +124,12 @@ public class ITCallables {
     String content = "A series of words that will be sent back one by one";
 
     EchoClient.PagedExpandPagedResponse pagedExpandPagedResponse =
-            httpjsonClient.pagedExpand(
-                    PagedExpandRequest.newBuilder()
-                            .setContent(content)
-                            .setPageSize(pageSize)
-                            .setPageToken(String.valueOf(pageToken))
-                            .build());
+        httpjsonClient.pagedExpand(
+            PagedExpandRequest.newBuilder()
+                .setContent(content)
+                .setPageSize(pageSize)
+                .setPageToken(String.valueOf(pageToken))
+                .build());
     String[] words = content.split(" ");
     String[] expected = Arrays.copyOfRange(words, pageToken, words.length);
     int numResponses = 0;
@@ -160,11 +159,11 @@ public class ITCallables {
     String content = "content";
     long futureTimeInSecondsFromEpoch = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
     OperationFuture<WaitResponse, WaitMetadata> operationFutureSuccess =
-            httpjsonClient.waitAsync(
-                    WaitRequest.newBuilder()
-                            .setEndTime(Timestamp.newBuilder().setSeconds(futureTimeInSecondsFromEpoch))
-                            .setSuccess(WaitResponse.newBuilder().setContent(content).build())
-                            .build());
+        httpjsonClient.waitAsync(
+            WaitRequest.newBuilder()
+                .setEndTime(Timestamp.newBuilder().setSeconds(futureTimeInSecondsFromEpoch))
+                .setSuccess(WaitResponse.newBuilder().setContent(content).build())
+                .build());
     WaitResponse waitResponseSuccess = operationFutureSuccess.get();
     assertThat(waitResponseSuccess.getContent()).isEqualTo(content);
   }
