@@ -15,7 +15,7 @@ public class ParserUtilsTest {
 
   @Test
   public void parseMapFromYamlFileTest() {
-    String yamlFilename = "dataproc_gapic.yaml";
+    String yamlFilename = "customization_test.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<Map<String, Object>> yamlMapOpt = parseMapFromYamlFile(yamlPath.toString());
     assertTrue(yamlMapOpt.isPresent());
