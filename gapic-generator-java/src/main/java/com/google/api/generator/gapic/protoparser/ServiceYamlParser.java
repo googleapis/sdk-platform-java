@@ -14,41 +14,25 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import com.google.common.base.Strings;
+import static com.google.api.generator.gapic.utils.ParserUtils.parseMapFromYamlFile;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 public class ServiceYamlParser {
   public static Optional<com.google.api.Service> parse(String serviceYamlFilePath) {
-    if (Strings.isNullOrEmpty(serviceYamlFilePath) || !(new File(serviceYamlFilePath)).exists()) {
+    Optional<Map<String, Object>> yamlMapOpt = parseMapFromYamlFile(serviceYamlFilePath);
+    if (!yamlMapOpt.isPresent()) {
       return Optional.empty();
     }
 
-    String fileContents = null;
-    try {
-      fileContents =
-          new String(Files.readAllBytes(Paths.get(serviceYamlFilePath)), StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      return Optional.empty();
-    }
-
-    Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
-    Map<String, Object> yamlMap = yaml.load(fileContents);
     Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
-    String jsonString = gson.toJson(yamlMap, LinkedHashMap.class);
+    String jsonString = gson.toJson(yamlMapOpt.get(), LinkedHashMap.class);
     // Use the full name instead of an import, to avoid reader confusion with this and
     // model.Service.
     com.google.api.Service.Builder serviceBuilder = com.google.api.Service.newBuilder();

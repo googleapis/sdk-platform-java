@@ -198,7 +198,7 @@ public class MethodSignatureParser {
         return typeToField;
       }
 
-      // Parse the resource name tyeps.
+      // Parse the resource name types.
       List<ResourceName> resourceNameArgs =
           ResourceReferenceParser.parseResourceNames(
               field.resourceReference(),
@@ -214,7 +214,7 @@ public class MethodSignatureParser {
                   Collectors.toMap(
                       r -> r.type(),
                       r ->
-                          // Contruct a new field using the parent resource.
+                          // Contract a new field using the parent resource.
                           field
                               .toBuilder()
                               .setResourceReference(
@@ -234,7 +234,7 @@ public class MethodSignatureParser {
                   String resourceTypeName = e.getValue().resourceReference().resourceTypeString();
                   int indexOfSlash = resourceTypeName.indexOf("/");
                   // We assume that the corresponding Java resource name helper type (i.e. the key)
-                  // ends in *Name. Check that it matches the expeced resource name type.
+                  // ends in *Name. Check that it matches the expected resource name type.
                   Preconditions.checkState(
                       resourceJavaTypeName
                           .substring(0, resourceJavaTypeName.length() - 4)

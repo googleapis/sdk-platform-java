@@ -14,19 +14,12 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import static com.google.api.generator.gapic.utils.ParserUtils.parseMapFromYamlFile;
+
 import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Strings;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Optional;
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 public class GapicLanguageSettingsParser {
   private static final String YAML_KEY_LANGUAGE_SETTINGS = "language_settings";
@@ -42,24 +35,12 @@ public class GapicLanguageSettingsParser {
 
   @VisibleForTesting
   static Optional<GapicLanguageSettings> parse(String gapicYamlConfigFilePath) {
-    if (Strings.isNullOrEmpty(gapicYamlConfigFilePath)
-        || !(new File(gapicYamlConfigFilePath)).exists()) {
+    Optional<Map<String, Object>> yamlMapOpt = parseMapFromYamlFile(gapicYamlConfigFilePath);
+    if (!yamlMapOpt.isPresent()) {
       return Optional.empty();
     }
 
-    String fileContents = null;
-
-    try {
-      fileContents =
-          new String(
-              Files.readAllBytes(Paths.get(gapicYamlConfigFilePath)), StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      return Optional.empty();
-    }
-
-    Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
-    Map<String, Object> yamlMap = yaml.load(fileContents);
-    return parseFromMap(yamlMap);
+    return parseFromMap(yamlMapOpt.get());
   }
 
   private static Optional<GapicLanguageSettings> parseFromMap(Map<String, Object> yamlMap) {
