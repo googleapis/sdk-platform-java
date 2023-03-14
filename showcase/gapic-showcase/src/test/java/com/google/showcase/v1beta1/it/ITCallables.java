@@ -28,6 +28,7 @@ import org.threeten.bp.temporal.ChronoUnit;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -118,7 +119,7 @@ public class ITCallables {
   /* This tests that pagination returns the correct number of pages + responses and the content is
   correct */
   @Test
-  public void testPagedExpandHttpJson() {
+  public void testPagedExpandWithTokenHttpJson() {
     int pageSize = 2;
     int pageToken = 1;
     String content = "A series of words that will be sent back one by one";
@@ -130,28 +131,27 @@ public class ITCallables {
                             .setPageSize(pageSize)
                             .setPageToken(String.valueOf(pageToken))
                             .build());
-    int numPages = 0;
+    String[] words = content.split(" ");
+    String[] expected = Arrays.copyOfRange(words, pageToken, words.length);
     int numResponses = 0;
-    List<String> values = new ArrayList<>();
+    int numPages = 0;
     for (EchoClient.PagedExpandPage page : pagedExpandPagedResponse.iteratePages()) {
       for (EchoResponse echoResponse : page.getValues()) {
-        values.add(echoResponse.getContent());
+        assertThat(echoResponse.getContent()).isEqualTo(expected[numResponses]);
         numResponses++;
       }
       numPages++;
     }
 
-    int contentLength = content.split(" ").length;
+    int contentLength = words.length;
     boolean isDivisible = ((contentLength - pageToken) % pageSize) == 0;
     // If the responses can't be evenly split into pages, then the extra responses will go to an
     // additional page
     int numExpectedPages = ((contentLength - pageToken) / pageSize) + (isDivisible ? 0 : 1);
     int numExpectedResponses = contentLength - pageToken;
-    String expectedResponse = "series of words that will be sent back one by one";
 
     assertThat(numPages).isEqualTo(numExpectedPages);
     assertThat(numResponses).isEqualTo(numExpectedResponses);
-    assertThat(String.join(" ", values.toArray(new String[0]))).isEqualTo(expectedResponse);
   }
 
   @Test
