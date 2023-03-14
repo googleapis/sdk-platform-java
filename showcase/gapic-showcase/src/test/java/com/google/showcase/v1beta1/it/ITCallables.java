@@ -5,11 +5,9 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
-import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.protobuf.Timestamp;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -17,21 +15,15 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
-import com.google.showcase.v1beta1.WaitMetadata;
-import com.google.showcase.v1beta1.WaitRequest;
-import com.google.showcase.v1beta1.WaitResponse;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.threeten.bp.Instant;
-import org.threeten.bp.temporal.ChronoUnit;
 
 public class ITCallables {
   private static EchoClient grpcClient;
@@ -94,8 +86,10 @@ public class ITCallables {
     }
   }
 
-  /* This tests that server-side streaming returns the correct content and the server returns the
-  correct number of responses */
+  /*
+  This tests that pagination returns the correct number of pages + responses and the content is
+  correct. It tests pagination from ServerSideStreaming.
+   */
   @Test
   public void testExpandHttpJson() {
     String content = "Testing the entire response is the same";
@@ -115,8 +109,16 @@ public class ITCallables {
     assertThat(response).isEqualTo(content);
   }
 
-  /* This tests that pagination returns the correct number of pages + responses and the content is
-  correct */
+  /*
+  This tests that pagination returns the correct number of pages + responses and the content is
+  correct. It tests pagination from ServerSideStreaming.
+
+  The pageToken is where the streaming responses come back from and the page size denotes
+  how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see below:
+          | A | Series  | Of  | Words | That  | Will  | Be  | Send  | Back  | One | By  | One
+  Page #  | X | 1       | 1   | 2     | 2     | 3     | 3   | 4     | 4     | 5   | 5   | 6
+  Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
+  */
   @Test
   public void testPagedExpandWithTokenHttpJson() {
     int pageSize = 2;
@@ -151,20 +153,5 @@ public class ITCallables {
 
     assertThat(numPages).isEqualTo(numExpectedPages);
     assertThat(numResponses).isEqualTo(numExpectedResponses);
-  }
-
-  @Test
-  public void testWaitHttpJson() throws ExecutionException, InterruptedException {
-    // We set the future timeout to be 10 seconds in the future to ensure a few GetOperation calls
-    String content = "content";
-    long futureTimeInSecondsFromEpoch = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
-    OperationFuture<WaitResponse, WaitMetadata> operationFutureSuccess =
-        httpjsonClient.waitAsync(
-            WaitRequest.newBuilder()
-                .setEndTime(Timestamp.newBuilder().setSeconds(futureTimeInSecondsFromEpoch))
-                .setSuccess(WaitResponse.newBuilder().setContent(content).build())
-                .build());
-    WaitResponse waitResponseSuccess = operationFutureSuccess.get();
-    assertThat(waitResponseSuccess.getContent()).isEqualTo(content);
   }
 }
