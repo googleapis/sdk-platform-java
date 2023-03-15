@@ -25,6 +25,9 @@ jobs:
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip
       - run: bazelisk version
+      - name: Install maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
