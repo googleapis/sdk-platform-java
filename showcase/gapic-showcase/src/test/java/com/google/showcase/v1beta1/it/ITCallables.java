@@ -70,25 +70,25 @@ public class ITCallables {
   /*
    This tests has the server return an error back as the result.
    We use 404 NOT_FOUND Status as that has the same gRPC <-> HttpJson code mapping (showcase sever
-  has a map that translates the code)
+   has a map that translates the code)
    The showcase server expects a gRPC Status Code and the result is the HttpJson's mapped value
     */
   @Test
   public void testEchoHttpJson_checkError() {
-    StatusCode.Code cancelledStatusCode = StatusCode.Code.NOT_FOUND;
+    StatusCode.Code notFoundStatusCode = StatusCode.Code.NOT_FOUND;
     try {
       httpjsonClient.echo(
           EchoRequest.newBuilder()
-              .setError(Status.newBuilder().setCode(cancelledStatusCode.ordinal()).build())
+              .setError(Status.newBuilder().setCode(notFoundStatusCode.ordinal()).build())
               .build());
     } catch (ApiException e) {
-      assertThat(e.getStatusCode().getCode()).isEqualTo(cancelledStatusCode);
+      assertThat(e.getStatusCode().getCode()).isEqualTo(notFoundStatusCode);
     }
   }
 
   /*
   This tests that pagination returns the correct number of pages + responses and the content is
-  correct. It tests pagination from ServerSideStreaming.
+  correct. It tests pagination from Server-Side Streaming.
    */
   @Test
   public void testExpandHttpJson() {
