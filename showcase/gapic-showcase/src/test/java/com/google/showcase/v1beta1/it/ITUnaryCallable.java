@@ -78,16 +78,16 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testGrpc_echoMessageBack() {
+  public void testGrpc_receiveContent() {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }
 
   @Test
-  public void testGrpc_cancelledError_echoErrorBack() {
+  public void testGrpc_serverResponseError_throwsException() {
     Status cancelledStatus = Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
-    EchoRequest requestWithError = EchoRequest.newBuilder().setError(cancelledStatus).build();
-    CancelledException exception = assertThrows(CancelledException.class, () -> grpcClient.echo(requestWithError));
+    EchoRequest requestWithServerError = EchoRequest.newBuilder().setError(cancelledStatus).build();
+    CancelledException exception = assertThrows(CancelledException.class, () -> grpcClient.echo(requestWithServerError));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.CANCELLED);
   }
 
