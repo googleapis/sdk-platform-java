@@ -50,7 +50,6 @@ import org.mockito.Mockito;
 
 public class HttpRequestRunnableTest {
   private static Field requestMessage;
-  private static Field bodyRequestMessage;
   private static final String ENDPOINT = "https://www.googleapis.com/animals/v1/projects";
   private static HttpRequestFormatter<Field> requestFormatter;
   private static HttpResponseParser<Empty> responseParser;
@@ -65,15 +64,6 @@ public class HttpRequestRunnableTest {
             .setDefaultValue("bird")
             .setJsonName("mouse")
             .setTypeUrl("small")
-            .build();
-
-    bodyRequestMessage =
-        Field.newBuilder()
-            .setName("feline ☺ → ←")
-            .setNumber(2)
-            .setDefaultValue("bird ☺ → ←")
-            .setJsonName("mouse ☺ → ←")
-            .setTypeUrl("small ☺ → ←")
             .build();
 
     requestFormatter =
@@ -210,6 +200,15 @@ public class HttpRequestRunnableTest {
             .setRequestBodyExtractor(
                 request ->
                     ProtoRestSerializer.create().toBody("*", request.toBuilder().build(), true))
+            .build();
+
+    Field bodyRequestMessage =
+        Field.newBuilder()
+            .setName("feline ☺ → ←")
+            .setNumber(2)
+            .setDefaultValue("bird ☺ → ←")
+            .setJsonName("mouse ☺ → ←")
+            .setTypeUrl("small ☺ → ←")
             .build();
 
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
