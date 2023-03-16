@@ -23,7 +23,7 @@ jobs:
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip
+              -Dfmt.skip -DenableTestCoverage
       - run: bazelisk version
       - name: Install maven modules
         run: |
@@ -74,7 +74,6 @@ jobs:
           set -x
           export JAVA_HOME=$JAVA11_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
-          
           # Why not compile? It's because the process needs to package jar so
           # that gapic-generator-java module can use testlib modules of gax.
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
