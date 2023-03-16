@@ -77,6 +77,19 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>activate-test-coverage</id>
+      <activation>
+        <property>
+          <name>enableTestCoverage</name>
+        </property>
+      </activation>
+      <modules>
+        <module>showcase</module>
+        <module>coverage-report</module>
+      </modules>
+    </profile>
   </profiles>
 
 </project>
