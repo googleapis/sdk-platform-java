@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.cloud</groupId>
   <artifactId>gapic-showcase</artifactId>
-  <version>0.0.1-SHAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>GAPIC Showcase Client</name>
   <description>
@@ -176,18 +176,21 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>
