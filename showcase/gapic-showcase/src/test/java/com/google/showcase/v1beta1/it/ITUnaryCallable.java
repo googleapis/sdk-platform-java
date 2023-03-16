@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 
 package com.google.showcase.v1beta1.it;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -34,8 +37,6 @@ import java.security.GeneralSecurityException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ITUnaryCallable {
 
@@ -77,31 +78,31 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testGrpc() {
-    assertEquals("grpc-echo?", echoGrpc("grpc-echo?"));
-    assertEquals("grpc-echo!", echoGrpc("grpc-echo!"));
+  public void testGrpc_echoMessageBack() {
+    assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
+    assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }
 
   @Test
-  public void testGrpc_cancelledError() {
+  public void testGrpc_cancelledError_echoErrorBack() {
     Status cancelledStatus = Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
     EchoRequest requestWithError = EchoRequest.newBuilder().setError(cancelledStatus).build();
     CancelledException exception = assertThrows(CancelledException.class, () -> grpcClient.echo(requestWithError));
-    assertEquals(GrpcStatusCode.Code.CANCELLED, exception.getStatusCode().getCode());
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.CANCELLED);
   }
 
   @Test
   public void testGrpc_shutdown() {
-    assertFalse(grpcClient.isShutdown());
+    assertThat(grpcClient.isShutdown()).isFalse();
     grpcClient.shutdown();
-    assertTrue(grpcClient.isShutdown());
+    assertThat(grpcClient.isShutdown()).isTrue();
   }
 
 
   @Test
   public void testHttpJson() {
-    assertEquals("http-echo?", echoHttpJson("http-echo?"));
-    assertEquals("http-echo!", echoHttpJson("http-echo!"));
+    assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
+    assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
   }
 
   private String echoGrpc(String value) {

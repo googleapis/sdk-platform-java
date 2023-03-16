@@ -163,6 +163,13 @@
     </dependency>
 
     <dependency>
+      <groupId>com.google.truth</groupId>
+      <artifactId>truth</artifactId>
+      <version>1.1.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-gapic-showcase-v1beta1</artifactId>
       <scope>test</scope>
