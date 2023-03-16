@@ -219,7 +219,7 @@
     </plugins>
   </reporting>
 
-  <!-- Omit java-iam results when analyzing showcase test coverage on SonarCloud   -->
+  <!-- Skip java-iam when analyzing showcase test coverage on SonarCloud   -->
   <profiles>
     <profile>
       <id>showcase-sonar-analysis</id>

@@ -77,7 +77,7 @@
       </build>
     </profile>
 
-    <!-- Omit gapic-generator-java results when analyzing showcase test coverage on SonarCloud   -->
+    <!-- Skip gapic-generator-java when analyzing showcase test coverage on SonarCloud   -->
     <profile>
       <id>showcase-sonar-analysis</id>
       <activation>

@@ -175,7 +175,7 @@
     </plugins>
   </reporting>
 
-  <!-- Omit google-common-protos results when analyzing showcase test coverage on SonarCloud   -->
+  <!-- Skip google-common-protos when analyzing showcase test coverage on SonarCloud   -->
   <profiles>
     <profile>
       <id>showcase-sonar-analysis</id>
