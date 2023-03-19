@@ -20,6 +20,11 @@ jobs:
           distribution: temurin
           cache: maven
       - run: java -version
+      - name: Compatibility check
+        run: |
+          #  package jar so that gapic-generator-java module can use 
+          #  testlib modules of gax 
+          mvn package clirr:check -DskipTests
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
