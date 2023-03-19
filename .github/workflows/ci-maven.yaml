@@ -154,17 +154,17 @@ jobs:
   compatibility check:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
-      with:
-        java-version: 11
-        distribution: temurin
-        cache: maven
-    - run: java -version
-    - name: Java Linter
-      #  package jar so that gapic-generator-java module can use
-      #  testlib modules of gax
-      run: mvn package clirr:check -DskipTests
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Java Linter
+        #  package jar so that gapic-generator-java module can use
+        #  testlib modules of gax
+        run: mvn package clirr:check -DskipTests
 
   showcase:
     runs-on: ubuntu-22.04
