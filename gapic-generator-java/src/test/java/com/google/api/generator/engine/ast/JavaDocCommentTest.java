@@ -254,7 +254,6 @@ public class JavaDocCommentTest {
     String paramDescription1 = "The name of the shelf where books are published to.";
     String paramName2 = "shelf";
     String paramDescription2 = "The shelf to create.";
-    String returnText = "This is the method return text.";
     String paragraph1 =
         "This class provides the ability to make remote calls to the backing service through"
             + " method calls that map to API methods. Sample code to get started:";
@@ -276,7 +275,6 @@ public class JavaDocCommentTest {
             .addParagraph(paragraph2)
             .addOrderedList(orderedList)
             .addParam(paramName2, paramDescription2)
-            .setReturn(returnText)
             .build();
     String expected =
         LineFormatter.lines(
@@ -292,7 +290,6 @@ public class JavaDocCommentTest {
             "</ol>\n",
             "@param shelfName The name of the shelf where books are published to.\n",
             "@param shelf The shelf to create.\n",
-            "@return This is the method return text.\n",
             "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
             "@deprecated Use the {@link ArchivedBookName} class instead.\n",
             "@return This is the method return text.");
