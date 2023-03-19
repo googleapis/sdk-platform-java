@@ -161,7 +161,7 @@ jobs:
           distribution: temurin
           cache: maven
       - run: java -version
-      - name: Java Linter
+      - name: Compatibility check
         #  package jar so that gapic-generator-java module can use
         #  testlib modules of gax
         run: mvn package clirr:check -DskipTests
