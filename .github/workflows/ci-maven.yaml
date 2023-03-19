@@ -151,7 +151,7 @@ jobs:
         # Exclude the root project
         run: mvn -B -ntp fmt:check
 
-  compatibility check:
+  compatibility:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
