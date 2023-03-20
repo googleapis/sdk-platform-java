@@ -86,7 +86,7 @@ public class ITServerSideStreaming {
             .expandCallable()
             .call(ExpandRequest.newBuilder().setContent(content).setError(cancelledStatus).build());
     Iterator<EchoResponse> echoResponseIterator = responseStream.iterator();
-    
+
     assertThat(echoResponseIterator.next().getContent()).isEqualTo("The");
     assertThat(echoResponseIterator.next().getContent()).isEqualTo("rain");
     assertThat(echoResponseIterator.next().getContent()).isEqualTo("in");
