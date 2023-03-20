@@ -33,7 +33,6 @@ import com.google.showcase.v1beta1.EchoSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
