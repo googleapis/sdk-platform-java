@@ -44,7 +44,7 @@ public class ITUnaryCallable {
   private static EchoClient httpJsonClient;
 
   @BeforeClass
-  public void createClients() throws IOException, GeneralSecurityException {
+  public static void createClients() throws IOException, GeneralSecurityException {
     // Create gRPC Echo Client
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -71,7 +71,7 @@ public class ITUnaryCallable {
   }
 
   @AfterClass
-  public void destroyClient() {
+  public static void destroyClient() {
     grpcClient.close();
     httpJsonClient.close();
   }
