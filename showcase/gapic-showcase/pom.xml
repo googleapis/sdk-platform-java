@@ -103,7 +103,7 @@
         <artifactId>fmt-maven-plugin</artifactId>
         <version>2.9</version>
         <configuration>
-          <filesNamePattern>IT.*\.java</filesNamePattern>
+          <filesNamePattern>(IT.*\.java)|(.*Test.java)</filesNamePattern>
         </configuration>
       </plugin>
     </plugins>
