@@ -95,10 +95,28 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     return requestBodyExtractor.extract(apiMessage);
   }
 
-  /* {@inheritDoc} */
+  /**
+   * Returns the relative URL path created from the path parameters from the given message. Attempts
+   * to match the with the default PathTemplate. If there is not match, it attempts to match with
+   * the templates in the additionalPathTemplates.
+   *
+   * @param apiMessage Request object to extract fields from
+   * @return Path of a matching URL
+   */
   @Override
   public String getPath(RequestT apiMessage) {
-    return pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+    String path = pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+    if (pathTemplate.matches(path)) {
+      return path;
+    }
+    for (PathTemplate additionalPathTemplate : additionalPathTemplates) {
+      String additionalPath =
+          additionalPathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+      if (additionalPathTemplate.matches(additionalPath)) {
+        return additionalPath;
+      }
+    }
+    throw new IllegalArgumentException("No matching paths for Request: " + apiMessage);
   }
 
   @BetaApi

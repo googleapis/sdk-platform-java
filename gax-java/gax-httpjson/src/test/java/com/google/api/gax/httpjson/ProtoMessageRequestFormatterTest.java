@@ -30,6 +30,8 @@
 
 package com.google.api.gax.httpjson;
 
+import static org.junit.Assert.assertThrows;
+
 import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
@@ -129,6 +131,27 @@ public class ProtoMessageRequestFormatterTest {
     // Test toBuilder() case
     path = formatter.toBuilder().build().getPath(field);
     Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/aggregated");
+  }
+
+  @Test
+  public void getPath_additionalPaths() {
+    Field fieldWithLongerName = field.toBuilder().setName("field_name1/random_text").build();
+    String path = formatter.getPath(fieldWithLongerName);
+    Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/random_text/aggregated");
+
+    Field fieldWithRandomValues =
+        field.toBuilder().setName("field_name1/random_text/random_text1").build();
+    path = formatter.getPath(fieldWithRandomValues);
+    Truth.assertThat(path)
+        .isEqualTo("api/v1/names/field_name1/random_text/random_text1/aggregated");
+  }
+
+  @Test
+  public void getPath_throwsIllegalArgumentException() {
+    Field fieldNotMatching = field.toBuilder().setName("name_does_not_match").build();
+    IllegalArgumentException exception =
+        assertThrows(IllegalArgumentException.class, () -> formatter.getPath(fieldNotMatching));
+    Truth.assertThat(exception).hasMessageThat().contains("No matching paths for Request");
   }
 
   @Test
