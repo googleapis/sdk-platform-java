@@ -15,3 +15,5 @@ grpc-google-iam-v2beta:1.9.3:1.9.4-SNAPSHOT
 google-iam-policy:1.9.3:1.9.4-SNAPSHOT
 proto-google-iam-v2:1.9.3:1.9.4-SNAPSHOT
 grpc-google-iam-v2:1.9.3:1.9.4-SNAPSHOT
+google-cloud-core:2.13.0:2.14.0-SNAPSHOT
+google-cloud-shared-dependencies:3.5.0:3.6.0-SNAPSHOT
