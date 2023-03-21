@@ -35,6 +35,7 @@ import java.io.IOException;
 /**
  * Provides an interface to hold and acquire the credentials that will be used to call the service.
  */
+@FunctionalInterface
 public interface CredentialsProvider {
   /**
    * Gets the credentials which will be used to call the service. If the credentials have not been

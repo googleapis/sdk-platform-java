@@ -33,6 +33,7 @@ import com.google.api.core.InternalExtensionOnly;
 
 /** Provides an interface to provide the environment variable values. */
 @InternalExtensionOnly
+@FunctionalInterface
 public interface EnvironmentProvider {
   /** Returns the environment variable value. */
   String getenv(String name);

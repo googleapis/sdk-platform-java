@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import java.util.Map;
 
 /** Provider of headers to put on http requests. */
+@FunctionalInterface
 public interface HeaderProvider {
 
   /** Get the headers to put on http requests. */

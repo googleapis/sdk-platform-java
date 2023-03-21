@@ -39,6 +39,7 @@ import java.util.Stack;
  */
 public class ValidationException extends IllegalArgumentException {
 
+  @FunctionalInterface
   public interface Supplier<T> {
     T get();
   }

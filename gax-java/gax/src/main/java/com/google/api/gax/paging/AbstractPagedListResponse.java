@@ -94,6 +94,7 @@ public abstract class AbstractPagedListResponse<
     };
   }
 
+  @FunctionalInterface
   private interface Next<T> {
     T next(T current);
   }

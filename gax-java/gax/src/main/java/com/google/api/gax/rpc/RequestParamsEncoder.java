@@ -39,6 +39,7 @@ import com.google.api.core.InternalApi;
  * @param <RequestT> request message type
  */
 @InternalApi("For use by transport-specific implementations")
+@FunctionalInterface
 public interface RequestParamsEncoder<RequestT> {
 
   /**

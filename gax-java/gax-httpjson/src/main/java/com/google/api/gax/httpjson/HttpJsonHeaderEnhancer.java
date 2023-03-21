@@ -34,6 +34,7 @@ import com.google.api.core.BetaApi;
 
 /** Interface for functionality to enhance headers for an http-json call. */
 @BetaApi
+@FunctionalInterface
 public interface HttpJsonHeaderEnhancer {
   void enhance(HttpHeaders headers);
 }

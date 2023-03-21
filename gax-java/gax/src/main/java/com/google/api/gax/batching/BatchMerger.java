@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.batching;
 
+@FunctionalInterface
 public interface BatchMerger<B> {
   void merge(B batch, B newBatch);
 }
