@@ -1,12 +1,11 @@
 ## Coverage Report
 
-This module gathers aggregated jacoco test coverage metrics across the `gax-java` and `showcase` modules. The purpose of
-the metrics is to provide insights into how much of GAX code is being exercised by showcase and GAX tests and where 
-(unit tests versus integration tests). They will also provide information on any change in coverage observed
-as showcase tests continue to be added to the repository.
+This module gathers aggregated jacoco test coverage metrics across the `api--common`, `gax-java` and `showcase` modules. The purpose of
+the metrics is to provide insights into how much of api-common and GAX code is being exercised by showcase, GAX and api-common tests and where 
+(unit tests versus integration tests). They will also track any change in coverage as showcase tests continue to be added to the repository.
 
 ### Unit Test Coverage
-In order to view aggregate unit test coverage of GAX in both `gax-java` and `showcase`:
+In order to view aggregate unit test coverage of api-common and GAX in `api-common`, `gax-java` and `showcase`:
 
 1. At the root of the repository, run `mvn clean test -DenableTestCoverage`.
 2. The metrics can be found at `gapic-generator-java/coverage-report/target/site/jacoco-aggregate/index.html`
@@ -15,7 +14,7 @@ In order to view aggregate unit test coverage of GAX in both `gax-java` and `sho
 
 ### Integration Test Coverage
 
-In order to view aggregate integration test coverage of GAX in both `gax-java` and `showcase`:
+In order to view aggregate integration test coverage of api-common and GAX in `api-common`, `gax-java` and `showcase`:
 
 1. At the root of the repository, run `mvn clean verify -DskipUnitTests -DenableTestCoverage -Penable-integration-tests`.
 2. The metrics can be found at `gapic-generator-java/coverage-report/target/site/jacoco-aggregate/index.html`
