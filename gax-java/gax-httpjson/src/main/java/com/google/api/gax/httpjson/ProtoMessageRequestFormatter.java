@@ -101,22 +101,23 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
    * the templates in the additionalPathTemplates.
    *
    * @param apiMessage Request object to extract fields from
-   * @return Path of a matching URL
+   * @return Path of a matching valid URL or the default Path URL
    */
   @Override
   public String getPath(RequestT apiMessage) {
-    String path = pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+    Map<String, String> pathVarsMap = pathVarsExtractor.extract(apiMessage);
+    String path = pathTemplate.instantiate(pathVarsMap);
     if (pathTemplate.matches(path)) {
       return path;
     }
     for (PathTemplate additionalPathTemplate : additionalPathTemplates) {
-      String additionalPath =
-          additionalPathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+      String additionalPath = additionalPathTemplate.instantiate(pathVarsMap);
       if (additionalPathTemplate.matches(additionalPath)) {
         return additionalPath;
       }
     }
-    throw new IllegalArgumentException("No matching paths for Request: " + apiMessage);
+    // If there are no matches, we return the default path
+    return path;
   }
 
   @BetaApi

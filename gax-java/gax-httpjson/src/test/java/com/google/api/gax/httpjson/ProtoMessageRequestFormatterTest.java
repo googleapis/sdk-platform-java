@@ -30,8 +30,6 @@
 
 package com.google.api.gax.httpjson;
 
-import static org.junit.Assert.assertThrows;
-
 import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
@@ -147,11 +145,11 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPath_throwsIllegalArgumentException() {
+  public void getPath_noMatches() {
+    // If there are no valid matches, it will return with the default path's url
     Field fieldNotMatching = field.toBuilder().setName("name_does_not_match").build();
-    IllegalArgumentException exception =
-        assertThrows(IllegalArgumentException.class, () -> formatter.getPath(fieldNotMatching));
-    Truth.assertThat(exception).hasMessageThat().contains("No matching paths for Request");
+    String path = formatter.getPath(fieldNotMatching);
+    Truth.assertThat(path).isEqualTo("api/v1/names/name_does_not_match/aggregated");
   }
 
   @Test
