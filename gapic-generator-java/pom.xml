@@ -76,6 +76,19 @@
         </plugins>
       </build>
     </profile>
+
+    <!-- Skip gapic-generator-java when analyzing showcase test coverage on SonarCloud   -->
+    <profile>
+      <id>showcase-sonar-analysis</id>
+      <activation>
+        <property>
+          <name>enableTestCoverage</name>
+        </property>
+      </activation>
+      <properties>
+        <sonar.skip>true</sonar.skip>
+      </properties>
+    </profile>
   </profiles>
 
   <build>
