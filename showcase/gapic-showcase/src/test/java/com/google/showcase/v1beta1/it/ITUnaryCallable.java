@@ -33,18 +33,18 @@ import com.google.showcase.v1beta1.EchoSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ITUnaryCallable {
 
-  private static EchoClient grpcClient;
+  private EchoClient grpcClient;
 
-  private static EchoClient httpJsonClient;
+  private EchoClient httpJsonClient;
 
-  @BeforeClass
-  public static void createClients() throws IOException, GeneralSecurityException {
+  @Before
+  public void createClients() throws IOException, GeneralSecurityException {
     // Create gRPC Echo Client
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -70,8 +70,8 @@ public class ITUnaryCallable {
     httpJsonClient = EchoClient.create(httpJsonEchoSettings);
   }
 
-  @AfterClass
-  public static void destroyClient() {
+  @After
+  public void destroyClient() {
     grpcClient.close();
     httpJsonClient.close();
   }
