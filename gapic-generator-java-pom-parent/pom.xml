@@ -177,7 +177,6 @@
       </build>
     </profile>
   </profiles>
-  
   <repositories>
     <repository>
       <id>google-maven-central-copy</id>
