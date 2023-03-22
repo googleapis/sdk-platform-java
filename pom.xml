@@ -20,7 +20,9 @@
     <module>gapic-generator-java</module>
     <module>java-common-protos</module>
     <module>java-iam</module>
+    <module>java-core</module>
     <module>gapic-generator-java-bom</module>
+    <module>java-shared-dependencies</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>
