@@ -23,8 +23,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcStatusCode;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
-import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.CancelledException;
+import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
@@ -115,14 +115,12 @@ public class ITUnaryCallable {
   @Test
   public void testHttpJson_serverResponseError_throwsException() {
     StatusCode.Code notFoundStatusCode = StatusCode.Code.NOT_FOUND;
-    ApiException exception =
-        assertThrows(
-            ApiException.class,
-            () ->
-                httpJsonClient.echo(
-                    EchoRequest.newBuilder()
-                        .setError(Status.newBuilder().setCode(notFoundStatusCode.ordinal()).build())
-                        .build()));
+    EchoRequest requestWithServerError =
+        EchoRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(notFoundStatusCode.ordinal()).build())
+            .build();
+    NotFoundException exception =
+        assertThrows(NotFoundException.class, () -> httpJsonClient.echo(requestWithServerError));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(notFoundStatusCode);
   }
 
