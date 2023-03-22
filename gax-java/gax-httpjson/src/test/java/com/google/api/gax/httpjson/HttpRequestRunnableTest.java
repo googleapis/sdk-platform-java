@@ -236,7 +236,7 @@ public class HttpRequestRunnableTest {
     try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
       // writeTo() uses the Charset when writing to the stream
       httpRequest.getContent().writeTo(byteArrayOutputStream);
-      String output = byteArrayOutputStream.toString(StandardCharsets.UTF_8.toString());
+      String output = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
       Field.Builder expectedBuilder = Field.newBuilder();
       JsonFormat.parser().merge(output, expectedBuilder);
       Field result = expectedBuilder.build();
