@@ -95,8 +95,89 @@
         </plugins>
       </build>
     </profile>
-  </profiles>
 
+    <profile>
+      <id>test-coverage</id>
+      <activation>
+        <property>
+          <name>enableTestCoverage</name>
+        </property>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>3.0.0-M8</version>
+              <configuration>
+                <!-- Excludes integration tests and smoke tests when unit tests are run -->
+                <excludes>
+                  <exclude>**/*SmokeTest.java</exclude>
+                  <exclude>**/IT*.java</exclude>
+                </excludes>
+                <reportNameSuffix>sponge_log</reportNameSuffix>
+                <argLine>${surefire.jacoco.args}</argLine>
+                <skipTests>${skipUnitTests}</skipTests>
+              </configuration>
+            </plugin>
+
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <version>3.0.0</version>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>integration-test</goal>
+                    <goal>verify</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <forkedProcessTimeoutInSeconds>3600</forkedProcessTimeoutInSeconds>
+                <reportNameSuffix>sponge_log</reportNameSuffix>
+                <includes>
+                  <include>**/IT*.java</include>
+                  <include>**/*SmokeTest.java</include>
+                </includes>
+                <argLine>${failsafe.jacoco.args}</argLine>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.8</version>
+            <executions>
+              <execution>
+                <id>unit-test-execution</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+                <configuration>
+                  <propertyName>surefire.jacoco.args</propertyName>
+                </configuration>
+              </execution>
+              <execution>
+                <id>integration-test-execution</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+                <configuration>
+                  <propertyName>failsafe.jacoco.args</propertyName>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
   <repositories>
     <repository>
       <id>google-maven-central-copy</id>
