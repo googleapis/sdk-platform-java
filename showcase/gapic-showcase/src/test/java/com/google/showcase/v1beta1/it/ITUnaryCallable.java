@@ -23,6 +23,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcStatusCode;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
+import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.rpc.Status;
@@ -100,9 +101,36 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testHttpJson() {
+  public void testHttpJson_receiveContent() {
     assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
     assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
+  }
+
+  /*
+  This tests has the server return an error back as the result.
+  We use 404 NOT_FOUND Status as that has the same gRPC <-> HttpJson code mapping (showcase sever
+  has a map that translates the code)
+  The showcase server expects a gRPC Status Code and the result is the HttpJson's mapped value
+   */
+  @Test
+  public void testEchoHttpJson_checkError() {
+    StatusCode.Code notFoundStatusCode = StatusCode.Code.NOT_FOUND;
+    ApiException exception =
+        assertThrows(
+            ApiException.class,
+            () ->
+                httpJsonClient.echo(
+                    EchoRequest.newBuilder()
+                        .setError(Status.newBuilder().setCode(notFoundStatusCode.ordinal()).build())
+                        .build()));
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(notFoundStatusCode);
+  }
+
+  @Test
+  public void testHttpJson_shutdown() {
+    assertThat(httpJsonClient.isShutdown()).isFalse();
+    httpJsonClient.shutdown();
+    assertThat(httpJsonClient.isShutdown()).isTrue();
   }
 
   private String echoGrpc(String value) {
