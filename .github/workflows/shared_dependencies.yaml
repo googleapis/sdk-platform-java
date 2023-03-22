@@ -4,6 +4,8 @@ on:
     - main
   pull_request:
     paths:
+    - 'gapic-generator-java-bom/**'
+    - 'gapic-generator-java-pom-parent/**'
     - 'java-shared-dependencies/**'
 name: shared-dependencies version check
 jobs:
