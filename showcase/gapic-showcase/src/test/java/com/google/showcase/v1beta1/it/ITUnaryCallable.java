@@ -33,16 +33,15 @@ import com.google.showcase.v1beta1.EchoSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ITUnaryCallable {
 
-  private static EchoClient grpcClient;
+  private EchoClient grpcClient;
 
-  private static EchoClient httpJsonClient;
+  private EchoClient httpJsonClient;
 
   @Before
   public void createClients() throws IOException, GeneralSecurityException {
@@ -59,15 +58,15 @@ public class ITUnaryCallable {
 
     // Create Http JSON Echo Client
     EchoSettings httpJsonEchoSettings =
-            EchoSettings.newHttpJsonBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                    .setHttpTransport(
-                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                    .setEndpoint("http://localhost:7469")
-                                    .build())
-                    .build();
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
     httpJsonClient = EchoClient.create(httpJsonEchoSettings);
   }
 
@@ -78,16 +77,18 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testGrpc_echoMessageBack() {
+  public void testGrpc_receiveContent() {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }
 
   @Test
-  public void testGrpc_cancelledError_echoErrorBack() {
-    Status cancelledStatus = Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
-    EchoRequest requestWithError = EchoRequest.newBuilder().setError(cancelledStatus).build();
-    CancelledException exception = assertThrows(CancelledException.class, () -> grpcClient.echo(requestWithError));
+  public void testGrpc_serverResponseError_throwsException() {
+    Status cancelledStatus =
+        Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
+    EchoRequest requestWithServerError = EchoRequest.newBuilder().setError(cancelledStatus).build();
+    CancelledException exception =
+        assertThrows(CancelledException.class, () -> grpcClient.echo(requestWithServerError));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.CANCELLED);
   }
 
@@ -97,7 +98,6 @@ public class ITUnaryCallable {
     grpcClient.shutdown();
     assertThat(grpcClient.isShutdown()).isTrue();
   }
-
 
   @Test
   public void testHttpJson() {
