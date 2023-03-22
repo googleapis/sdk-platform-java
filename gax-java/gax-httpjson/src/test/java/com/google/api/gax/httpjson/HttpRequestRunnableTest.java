@@ -36,7 +36,10 @@ import com.google.common.truth.Truth;
 import com.google.longrunning.ListOperationsRequest;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Field;
+import com.google.protobuf.util.JsonFormat;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -176,5 +179,68 @@ public class HttpRequestRunnableTest {
     Truth.assertThat(httpRequest.getUrl().toString()).isEqualTo(expectedUrl);
     Truth.assertThat(httpRequest.getRequestMethod()).isEqualTo("POST");
     Truth.assertThat(httpRequest.getHeaders().get("X-HTTP-Method-Override")).isEqualTo("PATCH");
+  }
+
+  /*
+  We use a separate RequestFormatter because formatting the body requests is what sets the charset to be UTF-8.
+  The other tests above do not have a set a body request and instead send an EmptyContent (null Type/ CharSet)
+  */
+  @Test
+  public void testUnicodeValuesInBody() throws IOException {
+    HttpRequestFormatter<Field> bodyRequestFormatter =
+        ProtoMessageRequestFormatter.<Field>newBuilder()
+            .setPath(
+                "/name/{name=*}",
+                request -> {
+                  Map<String, String> fields = new HashMap<>();
+                  ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                  serializer.putPathParam(fields, "name", request.getName());
+                  return fields;
+                })
+            .setQueryParamsExtractor(request -> new HashMap<>())
+            .setRequestBodyExtractor(
+                request ->
+                    ProtoRestSerializer.create().toBody("*", request.toBuilder().build(), true))
+            .build();
+
+    Field bodyRequestMessage =
+        Field.newBuilder()
+            .setName("feline ☺ → ←")
+            .setNumber(2)
+            .setDefaultValue("bird ☺ → ←")
+            .setJsonName("mouse ☺ → ←")
+            .setTypeUrl("small ☺ → ←")
+            .build();
+
+    ApiMethodDescriptor<Field, Empty> methodDescriptor =
+        ApiMethodDescriptor.<Field, Empty>newBuilder()
+            .setFullMethodName("house.cat.get")
+            .setHttpMethod("PUT")
+            .setRequestFormatter(bodyRequestFormatter)
+            .setResponseParser(responseParser)
+            .build();
+
+    HttpRequestRunnable<Field, Empty> httpRequestRunnable =
+        new HttpRequestRunnable<>(
+            bodyRequestMessage,
+            methodDescriptor,
+            "www.googleapis.com/animals/v1/projects",
+            HttpJsonCallOptions.newBuilder().build(),
+            new MockHttpTransport(),
+            HttpJsonMetadata.newBuilder().build(),
+            (result) -> {});
+
+    HttpRequest httpRequest = httpRequestRunnable.createHttpRequest();
+    Truth.assertThat(httpRequest.getContent().getType())
+        .isEqualTo("application/json; charset=utf-8");
+    try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+      // writeTo() uses the Charset when writing to the stream
+      httpRequest.getContent().writeTo(byteArrayOutputStream);
+      String output = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
+      Field.Builder expectedBuilder = Field.newBuilder();
+      JsonFormat.parser().merge(output, expectedBuilder);
+      Field result = expectedBuilder.build();
+      Truth.assertThat(result).isEqualTo(bodyRequestMessage);
+    }
   }
 }

@@ -28,7 +28,7 @@
 
     <licenses>
         <license>
-            <name>BSD</name>
+            <name>BSD-3-Clause</name>
             <url>https://github.com/googleapis/api-common-java/blob/main/LICENSE</url>
         </license>
     </licenses>
