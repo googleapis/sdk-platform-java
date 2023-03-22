@@ -27,7 +27,7 @@
 
   <licenses>
     <license>
-      <name>BSD</name>
+      <name>BSD-3-Clause</name>
       <url>https://github.com/googleapis/gax-java/blob/master/LICENSE</url>
     </license>
   </licenses>
