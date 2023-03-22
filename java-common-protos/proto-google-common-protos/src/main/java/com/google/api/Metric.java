@@ -77,7 +77,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TYPE_FIELD_NUMBER = 3;
-  private volatile java.lang.Object type_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object type_ = "";
   /**
    *
    *
@@ -139,6 +141,7 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
             "");
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
@@ -199,7 +202,10 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   @java.lang.Override
-  public java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue) {
+  public /* nullable */ java.lang.String getLabelsOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
     if (key == null) {
       throw new NullPointerException("map key");
     }
@@ -458,8 +464,8 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       type_ = "";
-
       internalGetMutableLabels().clear();
       return this;
     }
@@ -486,12 +492,22 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Metric buildPartial() {
       com.google.api.Metric result = new com.google.api.Metric(this);
-      int from_bitField0_ = bitField0_;
-      result.type_ = type_;
-      result.labels_ = internalGetLabels();
-      result.labels_.makeImmutable();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.Metric result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.type_ = type_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.labels_ = internalGetLabels();
+        result.labels_.makeImmutable();
+      }
     }
 
     @java.lang.Override
@@ -541,9 +557,11 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.Metric.getDefaultInstance()) return this;
       if (!other.getType().isEmpty()) {
         type_ = other.type_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       internalGetMutableLabels().mergeFrom(other.internalGetLabels());
+      bitField0_ |= 0x00000002;
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -579,12 +597,13 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableLabels()
                     .getMutableMap()
                     .put(labels__.getKey(), labels__.getValue());
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 type_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 26
             default:
@@ -670,8 +689,8 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       type_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -688,8 +707,8 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearType() {
-
       type_ = getDefaultInstance().getType();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -711,8 +730,8 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       type_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -728,14 +747,14 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.String>
         internalGetMutableLabels() {
-      onChanged();
-      ;
       if (labels_ == null) {
         labels_ = com.google.protobuf.MapField.newMapField(LabelsDefaultEntryHolder.defaultEntry);
       }
       if (!labels_.isMutable()) {
         labels_ = labels_.copy();
       }
+      bitField0_ |= 0x00000002;
+      onChanged();
       return labels_;
     }
 
@@ -790,8 +809,10 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
     @java.lang.Override
-    public java.lang.String getLabelsOrDefault(
-        java.lang.String key, java.lang.String defaultValue) {
+    public /* nullable */ java.lang.String getLabelsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
       if (key == null) {
         throw new NullPointerException("map key");
       }
@@ -821,6 +842,7 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearLabels() {
+      bitField0_ = (bitField0_ & ~0x00000002);
       internalGetMutableLabels().getMutableMap().clear();
       return this;
     }
@@ -844,6 +866,7 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
+      bitField0_ |= 0x00000002;
       return internalGetMutableLabels().getMutableMap();
     }
     /**
@@ -863,8 +886,8 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException("map value");
       }
-
       internalGetMutableLabels().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000002;
       return this;
     }
     /**
@@ -879,6 +902,7 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllLabels(java.util.Map<java.lang.String, java.lang.String> values) {
       internalGetMutableLabels().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000002;
       return this;
     }
 

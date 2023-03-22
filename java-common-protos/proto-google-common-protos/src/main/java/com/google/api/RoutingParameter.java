@@ -67,7 +67,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int FIELD_FIELD_NUMBER = 1;
-  private volatile java.lang.Object field_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object field_ = "";
   /**
    *
    *
@@ -116,7 +118,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int PATH_TEMPLATE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object pathTemplate_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object pathTemplate_ = "";
   /**
    *
    *
@@ -456,10 +460,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       field_ = "";
-
       pathTemplate_ = "";
-
       return this;
     }
 
@@ -485,10 +488,21 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.api.RoutingParameter buildPartial() {
       com.google.api.RoutingParameter result = new com.google.api.RoutingParameter(this);
-      result.field_ = field_;
-      result.pathTemplate_ = pathTemplate_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.RoutingParameter result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.field_ = field_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.pathTemplate_ = pathTemplate_;
+      }
     }
 
     @java.lang.Override
@@ -538,10 +552,12 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
       if (other == com.google.api.RoutingParameter.getDefaultInstance()) return this;
       if (!other.getField().isEmpty()) {
         field_ = other.field_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getPathTemplate().isEmpty()) {
         pathTemplate_ = other.pathTemplate_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -573,13 +589,13 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
             case 10:
               {
                 field_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 pathTemplate_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -598,6 +614,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object field_ = "";
     /**
@@ -660,8 +678,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       field_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -677,8 +695,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearField() {
-
       field_ = getDefaultInstance().getField();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -699,8 +717,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       field_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -901,8 +919,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       pathTemplate_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -963,8 +981,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearPathTemplate() {
-
       pathTemplate_ = getDefaultInstance().getPathTemplate();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1030,8 +1048,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       pathTemplate_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

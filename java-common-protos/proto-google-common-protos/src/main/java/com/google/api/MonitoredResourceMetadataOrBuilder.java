@@ -124,7 +124,6 @@ public interface MonitoredResourceMetadataOrBuilder
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
-
   /* nullable */
   java.lang.String getUserLabelsOrDefault(
       java.lang.String key,

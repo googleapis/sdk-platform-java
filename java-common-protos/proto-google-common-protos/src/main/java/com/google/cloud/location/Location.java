@@ -81,7 +81,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -132,7 +134,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LOCATION_ID_FIELD_NUMBER = 4;
-  private volatile java.lang.Object locationId_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object locationId_ = "";
   /**
    *
    *
@@ -181,7 +185,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 5;
-  private volatile java.lang.Object displayName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object displayName_ = "";
   /**
    *
    *
@@ -244,6 +250,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
             "");
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
@@ -304,7 +311,10 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   @java.lang.Override
-  public java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue) {
+  public /* nullable */ java.lang.String getLabelsOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
     if (key == null) {
       throw new NullPointerException("map key");
     }
@@ -379,7 +389,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getMetadataOrBuilder() {
-    return getMetadata();
+    return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -646,17 +656,14 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       locationId_ = "";
-
       displayName_ = "";
-
       internalGetMutableLabels().clear();
-      if (metadataBuilder_ == null) {
-        metadata_ = null;
-      } else {
-        metadata_ = null;
+      metadata_ = null;
+      if (metadataBuilder_ != null) {
+        metadataBuilder_.dispose();
         metadataBuilder_ = null;
       }
       return this;
@@ -685,19 +692,31 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.cloud.location.Location buildPartial() {
       com.google.cloud.location.Location result = new com.google.cloud.location.Location(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
-      result.locationId_ = locationId_;
-      result.displayName_ = displayName_;
-      result.labels_ = internalGetLabels();
-      result.labels_.makeImmutable();
-      if (metadataBuilder_ == null) {
-        result.metadata_ = metadata_;
-      } else {
-        result.metadata_ = metadataBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.cloud.location.Location result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.locationId_ = locationId_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.displayName_ = displayName_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.labels_ = internalGetLabels();
+        result.labels_.makeImmutable();
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.metadata_ = metadataBuilder_ == null ? metadata_ : metadataBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -747,17 +766,21 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.cloud.location.Location.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getLocationId().isEmpty()) {
         locationId_ = other.locationId_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getDisplayName().isEmpty()) {
         displayName_ = other.displayName_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       internalGetMutableLabels().mergeFrom(other.internalGetLabels());
+      bitField0_ |= 0x00000008;
       if (other.hasMetadata()) {
         mergeMetadata(other.getMetadata());
       }
@@ -790,7 +813,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -802,24 +825,25 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableLabels()
                     .getMutableMap()
                     .put(labels__.getKey(), labels__.getValue());
+                bitField0_ |= 0x00000008;
                 break;
               } // case 18
             case 26:
               {
                 input.readMessage(getMetadataFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 26
             case 34:
               {
                 locationId_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 34
             case 42:
               {
                 displayName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 42
             default:
@@ -905,8 +929,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -923,8 +947,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -946,8 +970,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1013,8 +1037,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       locationId_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1030,8 +1054,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLocationId() {
-
       locationId_ = getDefaultInstance().getLocationId();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1052,8 +1076,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       locationId_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1122,8 +1146,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       displayName_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1140,8 +1164,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-
       displayName_ = getDefaultInstance().getDisplayName();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1163,8 +1187,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       displayName_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1180,14 +1204,14 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.String>
         internalGetMutableLabels() {
-      onChanged();
-      ;
       if (labels_ == null) {
         labels_ = com.google.protobuf.MapField.newMapField(LabelsDefaultEntryHolder.defaultEntry);
       }
       if (!labels_.isMutable()) {
         labels_ = labels_.copy();
       }
+      bitField0_ |= 0x00000008;
+      onChanged();
       return labels_;
     }
 
@@ -1242,8 +1266,10 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
     @java.lang.Override
-    public java.lang.String getLabelsOrDefault(
-        java.lang.String key, java.lang.String defaultValue) {
+    public /* nullable */ java.lang.String getLabelsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
       if (key == null) {
         throw new NullPointerException("map key");
       }
@@ -1273,6 +1299,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearLabels() {
+      bitField0_ = (bitField0_ & ~0x00000008);
       internalGetMutableLabels().getMutableMap().clear();
       return this;
     }
@@ -1296,6 +1323,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
+      bitField0_ |= 0x00000008;
       return internalGetMutableLabels().getMutableMap();
     }
     /**
@@ -1315,8 +1343,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException("map value");
       }
-
       internalGetMutableLabels().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000008;
       return this;
     }
     /**
@@ -1331,6 +1359,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllLabels(java.util.Map<java.lang.String, java.lang.String> values) {
       internalGetMutableLabels().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000008;
       return this;
     }
 
@@ -1353,7 +1382,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the metadata field is set.
      */
     public boolean hasMetadata() {
-      return metadataBuilder_ != null || metadata_ != null;
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      *
@@ -1390,11 +1419,11 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         metadata_ = value;
-        onChanged();
       } else {
         metadataBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -1410,11 +1439,11 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
     public Builder setMetadata(com.google.protobuf.Any.Builder builderForValue) {
       if (metadataBuilder_ == null) {
         metadata_ = builderForValue.build();
-        onChanged();
       } else {
         metadataBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -1429,16 +1458,18 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeMetadata(com.google.protobuf.Any value) {
       if (metadataBuilder_ == null) {
-        if (metadata_ != null) {
-          metadata_ = com.google.protobuf.Any.newBuilder(metadata_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000010) != 0)
+            && metadata_ != null
+            && metadata_ != com.google.protobuf.Any.getDefaultInstance()) {
+          getMetadataBuilder().mergeFrom(value);
         } else {
           metadata_ = value;
         }
-        onChanged();
       } else {
         metadataBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -1452,14 +1483,13 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 3;</code>
      */
     public Builder clearMetadata() {
-      if (metadataBuilder_ == null) {
-        metadata_ = null;
-        onChanged();
-      } else {
-        metadata_ = null;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      metadata_ = null;
+      if (metadataBuilder_ != null) {
+        metadataBuilder_.dispose();
         metadataBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1473,7 +1503,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 3;</code>
      */
     public com.google.protobuf.Any.Builder getMetadataBuilder() {
-
+      bitField0_ |= 0x00000010;
       onChanged();
       return getMetadataFieldBuilder().getBuilder();
     }

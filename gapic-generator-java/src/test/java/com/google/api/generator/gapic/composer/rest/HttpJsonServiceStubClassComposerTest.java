@@ -14,6 +14,11 @@
 
 package com.google.api.generator.gapic.composer.rest;
 
+import static org.junit.Assert.assertThrows;
+
+import com.google.api.CustomHttpPattern;
+import com.google.api.Http;
+import com.google.api.HttpRule;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Field;
@@ -23,9 +28,12 @@ import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
+import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,16 +47,29 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateServiceClasses() {
+  public void generateComplianceServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseCompliance();
-    Service echoProtoService = context.services().get(0);
-    GapicClass clazz = composer.generate(context, echoProtoService);
+    Service complianceProtoServices = context.services().get(0);
+    GapicClass clazz = composer.generate(context, complianceProtoServices);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "HttpJsonComplianceStub.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonComplianceStub.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateEchoServiceClasses() {
+    GapicContext context = RestTestProtoLoader.instance().parseEcho();
+    Service echoProtoService = context.services().get(0);
+    GapicClass clazz = composer.generate(context, echoProtoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "HttpJsonEchoStub.golden", visitor.write());
+    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonEchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -95,5 +116,81 @@ public class HttpJsonServiceStubClassComposerTest {
         HttpBinding.builder().setField(field).setName("doesNotMatter").build();
     String actual = composer.getBindingFieldMethodName(httpBinding, 4, 1, "Value");
     Truth.assertThat(actual).isEqualTo("getValue");
+  }
+
+  @Test
+  public void parseOperationsCustomHttpRules_shouldReturnMapIfContextContainsValidServiceYaml() {
+    List<HttpRule> httpRuleList =
+        ImmutableList.of(
+            HttpRule.newBuilder()
+                .setSelector("google.longrunning.Operations.Get")
+                .setGet("testGet")
+                .build(),
+            HttpRule.newBuilder()
+                .setSelector("google.longrunning.Operations.Post")
+                .setPost("testPost")
+                .build(),
+            HttpRule.newBuilder()
+                .setSelector("google.longrunning.Operations.Delete")
+                .setDelete("testDelete")
+                .build());
+    GapicContext contextServiceYaml = RestTestProtoLoader.instance().parseCompliance();
+    contextServiceYaml =
+        contextServiceYaml
+            .toBuilder()
+            .setServiceYamlProto(
+                com.google.api.Service.newBuilder()
+                    .setHttp(Http.newBuilder().addAllRules(httpRuleList))
+                    .build())
+            .build();
+    Map<String, HttpRule> httpRuleMap = composer.parseOperationsCustomHttpRules(contextServiceYaml);
+    Truth.assertThat(httpRuleMap.isEmpty()).isFalse();
+    Truth.assertThat(httpRuleMap.size()).isEqualTo(httpRuleList.size());
+  }
+
+  @Test
+  public void parseOperationsCustomHttpRules_shouldReturnEmptyMapIfContextHasInvalidServiceYaml() {
+    GapicContext contextNullServiceYaml = RestTestProtoLoader.instance().parseCompliance();
+    contextNullServiceYaml = contextNullServiceYaml.toBuilder().setServiceYamlProto(null).build();
+    Map<String, HttpRule> httpRuleMapNull =
+        composer.parseOperationsCustomHttpRules(contextNullServiceYaml);
+    Truth.assertThat(httpRuleMapNull.isEmpty()).isTrue();
+
+    GapicContext contextEmptyServiceYaml = RestTestProtoLoader.instance().parseCompliance();
+    contextNullServiceYaml =
+        contextEmptyServiceYaml
+            .toBuilder()
+            .setServiceYamlProto(com.google.api.Service.newBuilder().build())
+            .build();
+    Map<String, HttpRule> httpRuleMapEmpty =
+        composer.parseOperationsCustomHttpRules(contextNullServiceYaml);
+    Truth.assertThat(httpRuleMapEmpty.isEmpty()).isTrue();
+  }
+
+  @Test
+  public void testGetOperationsURIValueFromHttpRule() {
+    HttpRule getHttpRule = HttpRule.newBuilder().setGet("Get").build();
+    Truth.assertThat(composer.getOperationsURIValueFromHttpRule(getHttpRule)).isEqualTo("Get");
+    HttpRule postHttpRule = HttpRule.newBuilder().setPost("Post").build();
+    Truth.assertThat(composer.getOperationsURIValueFromHttpRule(postHttpRule)).isEqualTo("Post");
+    HttpRule deleteHttpRule = HttpRule.newBuilder().setDelete("Delete").build();
+    Truth.assertThat(composer.getOperationsURIValueFromHttpRule(deleteHttpRule))
+        .isEqualTo("Delete");
+
+    HttpRule patchHttpRule = HttpRule.newBuilder().setPatch("Patch").build();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> composer.getOperationsURIValueFromHttpRule(patchHttpRule));
+    HttpRule putHttpRule = HttpRule.newBuilder().setPut("Put").build();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> composer.getOperationsURIValueFromHttpRule(putHttpRule));
+    HttpRule customHttpRule =
+        HttpRule.newBuilder()
+            .setCustom(CustomHttpPattern.newBuilder().setPath("Custom").build())
+            .build();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> composer.getOperationsURIValueFromHttpRule(customHttpRule));
   }
 }

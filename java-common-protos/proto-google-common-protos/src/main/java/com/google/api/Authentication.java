@@ -81,6 +81,8 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RULES_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.AuthenticationRule> rules_;
   /**
    *
@@ -155,6 +157,8 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PROVIDERS_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.AuthProvider> providers_;
   /**
    *
@@ -443,6 +447,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
       } else {
@@ -482,7 +487,15 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Authentication buildPartial() {
       com.google.api.Authentication result = new com.google.api.Authentication(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Authentication result) {
       if (rulesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
@@ -501,8 +514,10 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.providers_ = providersBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Authentication result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

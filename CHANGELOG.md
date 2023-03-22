@@ -1,5 +1,46 @@
 # Changelog
 
+## [2.15.3](https://github.com/googleapis/gapic-generator-java/compare/v2.15.2...v2.15.3) (2023-03-14)
+
+
+### Bug Fixes
+
+* Allow custom HttpRules for REST LROs ([#1288](https://github.com/googleapis/gapic-generator-java/issues/1288)) ([f8ccd2a](https://github.com/googleapis/gapic-generator-java/commit/f8ccd2a1428f96f0ff3231247964c272144b8dc9))
+
+
+### Dependencies
+
+* Update actions/checkout action to v3 ([#1365](https://github.com/googleapis/gapic-generator-java/issues/1365)) ([84036c7](https://github.com/googleapis/gapic-generator-java/commit/84036c706620a6c7aef05aeaa5969e7dd0b4674b))
+* Update dependency com.google.api.grpc:grpc-google-common-protos to v2.14.2 ([#1451](https://github.com/googleapis/gapic-generator-java/issues/1451)) ([9566040](https://github.com/googleapis/gapic-generator-java/commit/95660400209c114a460a7d4170da4f093e6e3526))
+* Update dependency com.google.api.grpc:grpc-google-iam-v1 to v1.9.2 ([#1452](https://github.com/googleapis/gapic-generator-java/issues/1452)) ([b30359b](https://github.com/googleapis/gapic-generator-java/commit/b30359bd2a35c3f267b58748012d080bf3f1edf8))
+* Update dependency com.google.code.gson:gson to v2.10.1 ([#1443](https://github.com/googleapis/gapic-generator-java/issues/1443)) ([0ccf457](https://github.com/googleapis/gapic-generator-java/commit/0ccf457a774bd3dbe3b101d82222bdc39f6e5b0e))
+* Update dependency com.google.errorprone:error_prone_annotations to v2.18.0 ([#1459](https://github.com/googleapis/gapic-generator-java/issues/1459)) ([2671dcf](https://github.com/googleapis/gapic-generator-java/commit/2671dcf9131591acaa96d474412ce414fef54a6f))
+* Update dependency io.grpc:grpc-core to v1.53.0 ([#1463](https://github.com/googleapis/gapic-generator-java/issues/1463)) ([6762df6](https://github.com/googleapis/gapic-generator-java/commit/6762df6e121382545cc6da1375553f3de79acb2d))
+* Update dependency io.perfmark:perfmark-api to v0.26.0 ([#1465](https://github.com/googleapis/gapic-generator-java/issues/1465)) ([174f3d8](https://github.com/googleapis/gapic-generator-java/commit/174f3d82408e569028ba5c025b1bc9823e8cdb93))
+* Update dependency net.bytebuddy:byte-buddy to v1.14.1 ([#1467](https://github.com/googleapis/gapic-generator-java/issues/1467)) ([c0d851a](https://github.com/googleapis/gapic-generator-java/commit/c0d851a2afde63b07a620771177c6eb2cf29dc25))
+* Update dependency net.bytebuddy:byte-buddy to v1.14.2 ([#1481](https://github.com/googleapis/gapic-generator-java/issues/1481)) ([cbceed2](https://github.com/googleapis/gapic-generator-java/commit/cbceed21237a5dba62cc318ad0c1903a8d7768f3))
+* Update dependency org.apache.commons:commons-lang3 to v3.12.0 ([#1468](https://github.com/googleapis/gapic-generator-java/issues/1468)) ([2506b91](https://github.com/googleapis/gapic-generator-java/commit/2506b91196f8cbf7f7297af15e01529e7ee51270))
+* Update dependency org.graalvm.sdk:graal-sdk to v22.3.1 ([#1444](https://github.com/googleapis/gapic-generator-java/issues/1444)) ([edb5d12](https://github.com/googleapis/gapic-generator-java/commit/edb5d12689400d0a127b240fc68f12c00e7db0a8))
+* Update dependency org.threeten:threetenbp to v1.6.5 ([#1446](https://github.com/googleapis/gapic-generator-java/issues/1446)) ([842b9e3](https://github.com/googleapis/gapic-generator-java/commit/842b9e398caa6ea273d790c0bc577e7ec22cad39))
+* Update google api dependencies ([#1470](https://github.com/googleapis/gapic-generator-java/issues/1470)) ([e1667f1](https://github.com/googleapis/gapic-generator-java/commit/e1667f1a0eee9a3b9977eae6ee2ae27e06185ad9))
+* Update google auth library dependencies to v1.16.0 ([#1471](https://github.com/googleapis/gapic-generator-java/issues/1471)) ([de67f4e](https://github.com/googleapis/gapic-generator-java/commit/de67f4e2c772ecb1b4a8f7a3d58c5bce564cf788))
+* Update google http client dependencies to v1.43.0 ([#1472](https://github.com/googleapis/gapic-generator-java/issues/1472)) ([524eddb](https://github.com/googleapis/gapic-generator-java/commit/524eddb17488701d0217ee270cdba804b2f8d09b))
+* Update google http client dependencies to v1.43.1 ([#1487](https://github.com/googleapis/gapic-generator-java/issues/1487)) ([da52fdd](https://github.com/googleapis/gapic-generator-java/commit/da52fdd34c6c1c9d329ff6d1834eee2311ed80c6))
+* Update netty dependencies ([#1448](https://github.com/googleapis/gapic-generator-java/issues/1448)) ([97079ef](https://github.com/googleapis/gapic-generator-java/commit/97079ef6b0115d7ed14ffd6060d63b03c0cbd4fd))
+
+## [2.15.2](https://github.com/googleapis/gapic-generator-java/compare/v2.15.1...v2.15.2) (2023-02-28)
+
+
+### Bug Fixes
+
+* Change the default scope of gax from implementation to api in auto-generated gradle files for self-service client libraries. ([#1374](https://github.com/googleapis/gapic-generator-java/issues/1374)) ([eee7573](https://github.com/googleapis/gapic-generator-java/commit/eee757347a93f75e767870c90814322b29ed5275))
+
+
+### Dependencies
+
+* Update dependency com.google.http-client:google-http-client-bom to v1.43.0 ([#1377](https://github.com/googleapis/gapic-generator-java/issues/1377)) ([df3e35f](https://github.com/googleapis/gapic-generator-java/commit/df3e35f862724b4465a886f716afa8dd0b23d27f))
+* Update dependency gradle to v7.6.1 ([#1376](https://github.com/googleapis/gapic-generator-java/issues/1376)) ([5d61dcb](https://github.com/googleapis/gapic-generator-java/commit/5d61dcb1ef504ba0553c9ae33faab363b5650f4f))
+
 ## [2.15.1](https://github.com/googleapis/gapic-generator-java/compare/v2.15.0...v2.15.1) (2023-02-15)
 
 

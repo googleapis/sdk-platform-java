@@ -253,7 +253,9 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int MONITORED_RESOURCE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object monitoredResource_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object monitoredResource_ = "";
     /**
      *
      *
@@ -304,6 +306,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int METRICS_FIELD_NUMBER = 2;
+
+    @SuppressWarnings("serial")
     private com.google.protobuf.LazyStringList metrics_;
     /**
      *
@@ -584,10 +588,10 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         monitoredResource_ = "";
-
         metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -615,15 +619,28 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Monitoring.MonitoringDestination buildPartial() {
         com.google.api.Monitoring.MonitoringDestination result =
             new com.google.api.Monitoring.MonitoringDestination(this);
-        int from_bitField0_ = bitField0_;
-        result.monitoredResource_ = monitoredResource_;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          metrics_ = metrics_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000001);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
-        result.metrics_ = metrics_;
         onBuilt();
         return result;
+      }
+
+      private void buildPartialRepeatedFields(
+          com.google.api.Monitoring.MonitoringDestination result) {
+        if (((bitField0_ & 0x00000002) != 0)) {
+          metrics_ = metrics_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.metrics_ = metrics_;
+      }
+
+      private void buildPartial0(com.google.api.Monitoring.MonitoringDestination result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.monitoredResource_ = monitoredResource_;
+        }
       }
 
       @java.lang.Override
@@ -676,12 +693,13 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           return this;
         if (!other.getMonitoredResource().isEmpty()) {
           monitoredResource_ = other.monitoredResource_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.metrics_.isEmpty()) {
           if (metrics_.isEmpty()) {
             metrics_ = other.metrics_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureMetricsIsMutable();
             metrics_.addAll(other.metrics_);
@@ -717,7 +735,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
               case 10:
                 {
                   monitoredResource_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 18:
@@ -810,8 +828,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         monitoredResource_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -828,8 +846,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMonitoredResource() {
-
         monitoredResource_ = getDefaultInstance().getMonitoredResource();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -851,8 +869,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         monitoredResource_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -861,9 +879,9 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.LazyStringArrayList.EMPTY;
 
       private void ensureMetricsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           metrics_ = new com.google.protobuf.LazyStringArrayList(metrics_);
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000002;
         }
       }
       /**
@@ -1006,7 +1024,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder clearMetrics() {
         metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -1099,6 +1117,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PRODUCER_DESTINATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Monitoring.MonitoringDestination> producerDestinations_;
   /**
    *
@@ -1195,6 +1215,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONSUMER_DESTINATIONS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Monitoring.MonitoringDestination> consumerDestinations_;
   /**
    *
@@ -1546,6 +1568,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (producerDestinationsBuilder_ == null) {
         producerDestinations_ = java.util.Collections.emptyList();
       } else {
@@ -1585,7 +1608,15 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Monitoring buildPartial() {
       com.google.api.Monitoring result = new com.google.api.Monitoring(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Monitoring result) {
       if (producerDestinationsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           producerDestinations_ = java.util.Collections.unmodifiableList(producerDestinations_);
@@ -1604,8 +1635,10 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.consumerDestinations_ = consumerDestinationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Monitoring result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override
