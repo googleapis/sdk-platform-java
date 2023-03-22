@@ -106,12 +106,6 @@ public class ITUnaryCallable {
     assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
   }
 
-  /*
-  This tests has the server return an error back as the result.
-  We use 404 NOT_FOUND Status as that has the same gRPC <-> HttpJson code mapping
-  (showcase sever has a map that translates the code). The showcase server expects
-  a gRPC Status Code and the result is the HttpJson's mapped value
-   */
   @Test
   public void testHttpJson_serverResponseError_throwsException() {
     StatusCode.Code notFoundStatusCode = StatusCode.Code.NOT_FOUND;
