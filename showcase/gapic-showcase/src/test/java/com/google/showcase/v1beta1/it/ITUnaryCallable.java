@@ -107,14 +107,13 @@ public class ITUnaryCallable {
 
   @Test
   public void testHttpJson_serverResponseError_throwsException() {
-    StatusCode.Code cancelledStatusCode = StatusCode.Code.CANCELLED;
     EchoRequest requestWithServerError =
         EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(cancelledStatusCode.ordinal()).build())
+            .setError(Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build())
             .build();
     CancelledException exception =
         assertThrows(CancelledException.class, () -> httpJsonClient.echo(requestWithServerError));
-    assertThat(exception.getStatusCode().getCode()).isEqualTo(cancelledStatusCode);
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
   }
 
   @Test
