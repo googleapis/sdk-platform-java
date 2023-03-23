@@ -2,26 +2,6 @@ workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# gax-java and its transitive dependencies must be imported before
-# gapic-generator-java dependencies to match the order in googleapis repository,
-# which in its turn, prioritizes actual generated clients runtime dependencies
-# over the generator dependencies.
-local_repository(
-   name = "com_google_api_gax_java",
-   path = "gax-java",
-)
-
-load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
-
-com_google_api_gax_java_properties(
-    name = "com_google_api_gax_java_properties",
-    file = "@com_google_api_gax_java//:dependencies.properties",
-)
-
-load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_repositories")
-
-com_google_api_gax_java_repositories()
-
 _googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
 http_archive(
