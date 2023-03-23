@@ -24,7 +24,6 @@ import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcStatusCode;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.CancelledException;
-import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
@@ -108,14 +107,14 @@ public class ITUnaryCallable {
 
   @Test
   public void testHttpJson_serverResponseError_throwsException() {
-    StatusCode.Code notFoundStatusCode = StatusCode.Code.NOT_FOUND;
+    StatusCode.Code cancelledStatusCode = StatusCode.Code.CANCELLED;
     EchoRequest requestWithServerError =
         EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(notFoundStatusCode.ordinal()).build())
+            .setError(Status.newBuilder().setCode(cancelledStatusCode.ordinal()).build())
             .build();
-    NotFoundException exception =
-        assertThrows(NotFoundException.class, () -> httpJsonClient.echo(requestWithServerError));
-    assertThat(exception.getStatusCode().getCode()).isEqualTo(notFoundStatusCode);
+    CancelledException exception =
+        assertThrows(CancelledException.class, () -> httpJsonClient.echo(requestWithServerError));
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(cancelledStatusCode);
   }
 
   @Test
