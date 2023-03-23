@@ -19,7 +19,6 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.CancelledException;
@@ -40,9 +39,7 @@ import org.junit.Test;
 public class ITServerSideStreaming {
 
   private static EchoClient grpcClient;
-
-  private static EchoClient httpJsonClient;
-
+  
   @Before
   public void createClients() throws IOException, GeneralSecurityException {
     // Create gRPC Echo Client
@@ -55,25 +52,11 @@ public class ITServerSideStreaming {
                     .build())
             .build();
     grpcClient = EchoClient.create(grpcEchoSettings);
-
-    // Create Http JSON Echo Client
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    httpJsonClient = EchoClient.create(httpJsonEchoSettings);
   }
 
   @After
   public void destroyClient() {
     grpcClient.close();
-    httpJsonClient.close();
   }
 
   @Test
