@@ -91,6 +91,9 @@
         <module>showcase</module>
         <module>coverage-report</module>
       </modules>
+      <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+      </properties>
     </profile>
   </profiles>
 
