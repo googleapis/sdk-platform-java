@@ -27,7 +27,7 @@
     <checkstyle.skip>true</checkstyle.skip>
     <clirr.skip>true</clirr.skip>
     <enforcer.skip>true</enforcer.skip>
-    <skipUnitTests>true</skipUnitTests>
+<!--    <skipUnitTests>true</skipUnitTests>-->
   </properties>
 
   <dependencyManagement>
@@ -74,26 +74,22 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M8</version>
             <configuration>
-              <skip>${skipUnitTests}</skip>
+              <!-- Excludes integration tests and smoke tests when unit tests are run -->
+              <excludes>
+                <exclude>**/*SmokeTest.java</exclude>
+                <exclude>**/IT*.java</exclude>
+                <exclude>**/MessagingClientHttpJsonTest.java</exclude>
+              </excludes>
+              <reportNameSuffix>sponge_log</reportNameSuffix>
+              <argLine>${surefire.jacoco.args}</argLine>
+              <skipTests>${skipUnitTests}</skipTests>
             </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <forkCount>1C</forkCount>
-              <reuseForks>true</reuseForks>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
     </profile>
-
   </profiles>
 
 </project>

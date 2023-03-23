@@ -8,7 +8,7 @@ as showcase tests continue to be added to the repository.
 ### Unit Test Coverage
 In order to view aggregate unit test coverage of GAX in both `gax-java` and `showcase`:
 
-1. At the root of the repository, run `mvn clean test -DenableTestCoverage`.
+1. At the root of the repository, run `mvn clean test -DenableTestCoverage -DskipUnitTests=false`.
 2. The metrics can be found at `gapic-generator-java/coverage-report/target/site/jacoco-aggregate/index.html`
 
 ![Screenshot 2023-03-03 at 6 32 50 PM](https://user-images.githubusercontent.com/66699525/222854612-787b4dde-f9a3-469a-8227-8f46dc0a4a20.png)
