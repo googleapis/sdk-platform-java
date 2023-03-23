@@ -26,7 +26,9 @@ import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.collect.ImmutableList;
 import com.google.rpc.Status;
-import com.google.showcase.v1beta1.*;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.EchoSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -39,7 +41,7 @@ import org.junit.Test;
 public class ITServerSideStreaming {
 
   private static EchoClient grpcClient;
-  
+
   @Before
   public void createClients() throws IOException, GeneralSecurityException {
     // Create gRPC Echo Client
