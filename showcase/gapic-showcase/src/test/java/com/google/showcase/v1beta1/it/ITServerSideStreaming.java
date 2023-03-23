@@ -41,7 +41,7 @@ import org.junit.Test;
 
 public class ITServerSideStreaming {
 
-  private static EchoClient grpcClient;
+  private EchoClient grpcClient;
 
   @Before
   public void createClients() throws IOException, GeneralSecurityException {
@@ -75,7 +75,7 @@ public class ITServerSideStreaming {
     assertThat(responses)
         .containsExactlyElementsIn(
             ImmutableList.of(
-                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"));
+                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!")).inOrder();
   }
 
   @Test
