@@ -3,9 +3,9 @@ on:
     branches:
       - main
   pull_request:
-name: ci-maven
+name: ci
 env:
-  SHOWCASE_VERSION: 0.25.0
+  SHOWCASE_VERSION: 0.26.0
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -181,7 +181,10 @@ jobs:
       - name: Install maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-
+      - name: Java Linter
+        working-directory: showcase
+        run: |
+          mvn -B -ntp fmt:check
       - name: Showcase golden tests
         working-directory: showcase
         run: |

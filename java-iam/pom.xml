@@ -98,7 +98,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-iam-policy</artifactId>
-        <version>1.9.4-SNAPSHOT</version><!-- {x-version-update:google-iam-policy:current} -->
+        <version>1.11.0</version><!-- {x-version-update:google-iam-policy:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
@@ -218,4 +218,19 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <!-- Skip java-iam when analyzing showcase test coverage on SonarCloud   -->
+  <profiles>
+    <profile>
+      <id>showcase-sonar-analysis</id>
+      <activation>
+        <property>
+          <name>enableTestCoverage</name>
+        </property>
+      </activation>
+      <properties>
+        <sonar.skip>true</sonar.skip>
+      </properties>
+    </profile>
+  </profiles>
 </project>

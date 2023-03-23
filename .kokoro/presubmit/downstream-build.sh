@@ -34,57 +34,35 @@ cp settings.xml "${HOME}/.m2"
 mvn -B -ntp install --projects '!gapic-generator-java' \
   -Dcheckstyle.skip -Dfmt.skip -DskipTests
 
-# Read current BOM version
-GAPIC_BOM_VERSION=$(sed -e 's/xmlns=".*"//' gapic-generator-java-bom/pom.xml | xmllint --xpath '/project/version/text()' -)
+# Read the shared dependencies version
+# Namespace (xmlns) prevents xmllint from specifying tag names in XPath
+SHARED_DEPS_VERSION=$(sed -e 's/xmlns=".*"//' java-shared-dependencies/pom.xml | xmllint --xpath '/project/version/text()' -)
+
+if [ -z "${SHARED_DEPS_VERSION}" ]; then
+  echo "Shared dependencies version is not found in pom.xml"
+  exit 1
+fi
 
 ### Round 2
-# Run the updated GAPIC BOM against HEAD of java-shared-dependencies
+# Update the shared-dependencies version in google-cloud-jar-parent
 git clone "https://github.com/googleapis/google-cloud-java.git" --depth=1
-pushd google-cloud-java/java-shared-dependencies/first-party-dependencies
-
-# Replace GAPIC BOM version
+pushd google-cloud-java/google-cloud-jar-parent
 xmllint --shell pom.xml <<EOF
 setns x=http://maven.apache.org/POM/4.0.0
-cd .//x:artifactId[text()="gapic-generator-java-bom"]
+cd .//x:artifactId[text()="google-cloud-shared-dependencies"]
 cd ../x:version
-set ${GAPIC_BOM_VERSION}
+set ${SHARED_DEPS_VERSION}
 save pom.xml
 EOF
 
 echo "Modifications to java-shared-dependencies:"
 git diff
 echo
-
-# Namespace (xmlns) prevents xmllint from specifying tag names in XPath
-SHARED_DEPS_VERSION=$(sed -e 's/xmlns=".*"//' pom.xml | xmllint --xpath '/project/version/text()' -)
-if [ -z "${SHARED_DEPS_VERSION}" ]; then
-  echo "Shared dependencies version is not found in pom.xml"
-  exit 1
-fi
-
 popd
-pushd google-cloud-java
-mvn -B -V -ntp install --also-make --projects \
-    java-shared-dependencies,java-shared-dependencies/first-party-dependencies,java-shared-dependencies/third-party-dependencies \
-    -DskipTests=true \
-    -Dmaven.javadoc.skip=true \
-    -Dgcloud.download.skip=true \
-    -Denforcer.skip=true
 
 ### Round 3
-# Install google-cloud-core-bom (part of java-shared-dependencies)
-echo "Installing java-core"
-mvn -B -V -ntp install -DskipTests --also-make -f java-core \
-    -DskipTests=true \
-    -Dmaven.javadoc.skip=true \
-    -Dgcloud.download.skip=true \
-    -Denforcer.skip=true
-popd
-
-### Round 4
 # Run the updated java-shared-dependencies BOM against google-cloud-java
 pushd google-cloud-java
-
 source ./.kokoro/common.sh
 RETURN_CODE=0
 setup_application_credentials
