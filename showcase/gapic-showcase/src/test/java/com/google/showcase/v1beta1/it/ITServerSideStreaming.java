@@ -75,7 +75,8 @@ public class ITServerSideStreaming {
     assertThat(responses)
         .containsExactlyElementsIn(
             ImmutableList.of(
-                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!")).inOrder();
+                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
+        .inOrder();
   }
 
   @Test
