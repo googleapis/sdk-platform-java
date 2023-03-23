@@ -44,7 +44,6 @@ import java.util.Map;
  * @param <RequestT> request message type
  */
 @InternalApi("For use by transport-specific implementations")
-@FunctionalInterface
 public interface RequestParamsExtractor<RequestT> {
   /**
    * Extracts specific fields from the {@code request} and returns them in a form of key-value
