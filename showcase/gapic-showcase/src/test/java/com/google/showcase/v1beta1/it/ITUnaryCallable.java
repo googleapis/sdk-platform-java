@@ -100,9 +100,27 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testHttpJson() {
+  public void testHttpJson_receiveContent() {
     assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
     assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
+  }
+
+  @Test
+  public void testHttpJson_serverResponseError_throwsException() {
+    EchoRequest requestWithServerError =
+        EchoRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build())
+            .build();
+    CancelledException exception =
+        assertThrows(CancelledException.class, () -> httpJsonClient.echo(requestWithServerError));
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
+  }
+
+  @Test
+  public void testHttpJson_shutdown() {
+    assertThat(httpJsonClient.isShutdown()).isFalse();
+    httpJsonClient.shutdown();
+    assertThat(httpJsonClient.isShutdown()).isTrue();
   }
 
   private String echoGrpc(String value) {
