@@ -29,6 +29,7 @@ import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.ExpandRequest;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
