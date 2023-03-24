@@ -2,17 +2,6 @@ load("@rules_java//java:defs.bzl", "java_binary", "java_proto_library")
 
 package(default_visibility = ["//visibility:public"])
 
-SPRING_DEPS = [
-    "@maven//:org_springframework_boot_spring_boot_starter",
-    "@maven//:org_springframework_boot_spring_boot_autoconfigure",
-    "@maven//:org_springframework_boot_spring_boot",
-    "@maven//:org_springframework_spring_context",
-    "@maven//:org_springframework_spring_beans",
-    "@maven//:com_google_cloud_spring_cloud_gcp_core",
-    "@maven//:com_google_cloud_spring_cloud_gcp_autoconfigure",
-    "@maven//:commons_logging_commons_logging",
-]
-
 java_binary(
     name = "protoc-gen-java_gapic",
     main_class = "com.google.api.generator.Main",
@@ -22,7 +11,7 @@ java_binary(
 java_binary(
     name = "protoc-gen-java_gapic_spring",
     main_class = "com.google.api.generator.spring.Main",
-    runtime_deps = ["@maven//:com_google_api_gapic_generator_java"] + SPRING_DEPS,
+    runtime_deps = ["@maven//:com_google_api_gapic_generator_java"],
 )
 
 # Request dumper binary, which dumps the CodeGeneratorRequest to a file on disk
