@@ -318,14 +318,26 @@ public final class Watchdog implements Runnable, BackgroundResource {
         switch (this.state) {
           case IDLE:
             if (!idleTimeout.isZero() && waitTime >= idleTimeout.toMillis()) {
-              myError = new WatchdogTimeoutException("Canceled due to idle connection", false);
+              myError =
+                  new WatchdogTimeoutException(
+                      "Canceled idle connection after "
+                          + waitTime
+                          + " ms (threshold: "
+                          + idleTimeout.toMillis()
+                          + " ms)",
+                      false);
             }
             break;
           case WAITING:
             if (!waitTimeout.isZero() && waitTime >= waitTimeout.toMillis()) {
               myError =
                   new WatchdogTimeoutException(
-                      "Canceled due to timeout waiting for next response", true);
+                      "Canceled RPC after waiting for next response for "
+                          + waitTime
+                          + " ms (threshold: "
+                          + waitTimeout.toMillis()
+                          + " ms)",
+                      true);
             }
             break;
         }
