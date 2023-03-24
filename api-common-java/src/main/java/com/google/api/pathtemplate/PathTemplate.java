@@ -1119,7 +1119,7 @@ public class PathTemplate {
   // the list iterator in its state.
   private static boolean peek(ListIterator<Segment> segments, SegmentKind... kinds) {
     int start = segments.nextIndex();
-    boolean success = false;
+    boolean success = true;
     for (SegmentKind kind : kinds) {
       if (!segments.hasNext() || segments.next().kind() != kind) {
         success = false;
