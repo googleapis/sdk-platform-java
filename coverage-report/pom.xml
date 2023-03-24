@@ -27,7 +27,6 @@
                 <groupId>com.google.cloud</groupId>
                 <artifactId>gapic-showcase</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>

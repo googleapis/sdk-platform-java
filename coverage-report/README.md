@@ -10,7 +10,7 @@ In order to view aggregate unit test coverage of api-common and GAX in `api-comm
 1. At the root of the repository, run `mvn clean test -DenableTestCoverage`.
 2. The metrics can be found at `gapic-generator-java/coverage-report/target/site/jacoco-aggregate/index.html`
 
-![Screenshot 2023-03-21 at 12 25 41 PM](https://user-images.githubusercontent.com/66699525/226675190-5225e778-99d4-44d0-8177-29d48d1c35ee.png)
+![Screenshot 2023-03-23 at 4 29 36 PM](https://user-images.githubusercontent.com/66699525/227346653-b50ec440-71f9-49f4-be21-3976c7f995c7.png)
 
 ### Integration Test Coverage
 
@@ -19,4 +19,4 @@ In order to view aggregate integration test coverage of api-common and GAX in `a
 1. At the root of the repository, run `mvn clean verify -DskipUnitTests -DenableTestCoverage -Penable-integration-tests`.
 2. The metrics can be found at `gapic-generator-java/coverage-report/target/site/jacoco-aggregate/index.html`
 
-![Screenshot 2023-03-21 at 12 26 26 PM](https://user-images.githubusercontent.com/66699525/226675461-97a1c4b5-a90f-470d-b0c8-51e63a35a548.png)
+![Screenshot 2023-03-23 at 4 33 11 PM](https://user-images.githubusercontent.com/66699525/227348487-f1ba2bb8-7577-4280-a1a1-7aa78e242f12.png)
