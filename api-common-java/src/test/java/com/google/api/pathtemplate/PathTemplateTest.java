@@ -840,6 +840,27 @@ public class PathTemplateTest {
     Truth.assertThat(url).isEqualTo("v1/shelves/s1/books/b1");
   }
 
+  @Test
+  public void testTemplateStringConversionWithUnbound() {
+    PathTemplate template = PathTemplate.create("v1/shelves/*/books/**");
+    Truth.assertThat(template.toRawString()).isEqualTo("v1/shelves/{$0=*}/books/{$1=**}");
+    Truth.assertThat(template.toString()).isEqualTo("v1/shelves/*/books/**");
+  }
+
+  @Test
+  public void testTemplateStringConversionWithBinding() {
+    PathTemplate template = PathTemplate.create("v1/shelves/{shelf=*}/books/{book=**}");
+    Truth.assertThat(template.toRawString()).isEqualTo("v1/shelves/{shelf=*}/books/{book=**}");
+    Truth.assertThat(template.toString()).isEqualTo("v1/shelves/{shelf}/books/{book=**}");
+  }
+
+  @Test
+  public void testSubTemplate() {
+    PathTemplate template = PathTemplate.create("v1/shelves/{shelf}/books/{book=books/*/**}");
+    Truth.assertThat(template.subTemplate("shelf").toString()).isEqualTo("*");
+    Truth.assertThat(template.subTemplate("book").toString()).isEqualTo("books/*/**");
+  }
+
   private static void assertPositionalMatch(Map<String, String> match, String... expected) {
     Truth.assertThat(match).isNotNull();
     int i = 0;
