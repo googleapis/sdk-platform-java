@@ -27,7 +27,6 @@
     <checkstyle.skip>true</checkstyle.skip>
     <clirr.skip>true</clirr.skip>
     <enforcer.skip>true</enforcer.skip>
-    <skipUnitTests>true</skipUnitTests>
   </properties>
 
   <dependencyManagement>
@@ -80,8 +79,16 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M8</version>
             <configuration>
-              <skip>${skipUnitTests}</skip>
+              <!-- Exclude MessagingClientHttpJsonTest which is currently failing.
+              See https://github.com/googleapis/gapic-generator-java/issues/1547 -->
+              <!-- TODO(1547): Remove this exclusion once MessagingClientHttpJsonTest#updateBlurbTest is fixed -->
+              <excludes>
+                <exclude>**/MessagingClientHttpJsonTest.java</exclude>
+              </excludes>
+              <reportNameSuffix>sponge_log</reportNameSuffix>
+              <skipTests>${skipUnitTests}</skipTests>
             </configuration>
           </plugin>
           <plugin>
