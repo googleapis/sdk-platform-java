@@ -82,7 +82,6 @@
                 <exclude>**/MessagingClientHttpJsonTest.java</exclude>
               </excludes>
               <reportNameSuffix>sponge_log</reportNameSuffix>
-              <argLine>${surefire.jacoco.args}</argLine>
               <skipTests>${skipUnitTests}</skipTests>
             </configuration>
           </plugin>
