@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -125,6 +126,12 @@ public abstract class HttpBindings {
   //   in .java file:  "/global/instanceTemplates/{instanceTemplate=*}"
   public String lowerCamelPattern() {
     return lowerCamelPattern(pattern(), pathParameters());
+  }
+
+  public List<String> lowerCamelAdditionalPatterns() {
+    return additionalPatterns().stream()
+        .map(a -> lowerCamelPattern(a, pathParameters()))
+        .collect(Collectors.toList());
   }
 
   private static String lowerCamelPattern(String originalPattern, Set<HttpBinding> pathParameters) {
