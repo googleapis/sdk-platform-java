@@ -116,7 +116,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
         return additionalPath;
       }
     }
-    // If there are no matches, we return the default path
+    // If there are no matches, we return the default path, this is for backwards compatibility.
+    //TODO: Log this scenario once we implemented the Cloud SDK logging.
     return path;
   }
 
