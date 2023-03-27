@@ -111,8 +111,11 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     if (pathTemplate.matches(path)) {
       return path;
     }
-    for (PathTemplate additionalPathTemplate : additionalPathTemplates) {
-      String additionalPath = additionalPathTemplate.instantiate(pathVarsMap);
+    for (Map.Entry<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>> entrySet :
+        additionalPathsExtractorMap.entrySet()) {
+      PathTemplate additionalPathTemplate = entrySet.getKey();
+      FieldsExtractor<RequestT, Map<String, String>> pathExtractor = entrySet.getValue();
+      String additionalPath = additionalPathTemplate.instantiate(pathExtractor.extract(apiMessage));
       if (additionalPathTemplate.matches(additionalPath)) {
         return additionalPath;
       }
