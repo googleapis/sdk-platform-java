@@ -526,9 +526,10 @@ public interface MetricDescriptorOrBuilder
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -542,9 +543,10 @@ public interface MetricDescriptorOrBuilder
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -558,9 +560,10 @@ public interface MetricDescriptorOrBuilder
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -575,9 +578,10 @@ public interface MetricDescriptorOrBuilder
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
