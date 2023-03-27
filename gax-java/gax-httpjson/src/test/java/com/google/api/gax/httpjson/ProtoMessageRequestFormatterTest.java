@@ -91,6 +91,13 @@ public class ProtoMessageRequestFormatterTest {
                       ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
                       serializer.putPathParam(fields, "name", request.getName());
                       return fields;
+                    },
+                    PathTemplate.create("/api/v2/names/{name=random/*/random2/*/random3/**}/test"),
+                    request -> {
+                      Map<String, String> fields = new HashMap<>();
+                      ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                      serializer.putPathParam(fields, "name", request.getName());
+                      return fields;
                     }))
             .build();
   }
@@ -179,23 +186,33 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPathTemplates() {
-    String path =
-        formatter
-            .getAdditionalPathTemplates()
-            .get(0)
-            .instantiate(Collections.singletonMap("name", "field_name1"));
-    Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/hello");
+  public void getAdditionalPathTemplates() {
+    List<PathTemplate> additionalPathTemplates = formatter.getAdditionalPathTemplates();
+
+    Truth.assertThat(additionalPathTemplates.size()).isEqualTo(2);
+
+    String path1 =
+        additionalPathTemplates.get(0).instantiate(Collections.singletonMap("name", "field_name1"));
+    Truth.assertThat(path1).isEqualTo("api/v1/names/field_name1/hello");
+
+    String path2 =
+        additionalPathTemplates
+            .get(1)
+            .instantiate(
+                Collections.singletonMap(
+                    "name", "random/testing/random2/testing/random3/testing/testing2"));
+    Truth.assertThat(path2)
+        .isEqualTo("api/v2/names/random/testing/random2/testing/random3/testing/testing2/test");
 
     // Test toBuilder() case
-    path =
+    path1 =
         formatter
             .toBuilder()
             .build()
             .getAdditionalPathTemplates()
             .get(0)
             .instantiate(Collections.singletonMap("name", "field_name1"));
-    Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/hello");
+    Truth.assertThat(path1).isEqualTo("api/v1/names/field_name1/hello");
   }
 
   @Test

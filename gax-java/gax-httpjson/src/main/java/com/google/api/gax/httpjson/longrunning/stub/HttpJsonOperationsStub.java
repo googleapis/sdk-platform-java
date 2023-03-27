@@ -82,7 +82,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
   private static final String LRO_CANCEL_OPERATION =
       "google.longrunning.Operations.CancelOperation";
 
-  private final FieldsExtractor<ListOperationsRequest, Map<String, String>>
+  private static final FieldsExtractor<ListOperationsRequest, Map<String, String>>
       LRO_LIST_PATH_EXTRACTOR =
           request -> {
             Map<String, String> fields = new HashMap<>();
@@ -90,15 +90,16 @@ public class HttpJsonOperationsStub extends OperationsStub {
             serializer.putPathParam(fields, "name", request.getName());
             return fields;
           };
-  private final FieldsExtractor<GetOperationRequest, Map<String, String>> LRO_GET_PATH_EXTRACTOR =
-      request -> {
-        Map<String, String> fields = new HashMap<>();
-        ProtoRestSerializer<GetOperationRequest> serializer = ProtoRestSerializer.create();
-        serializer.putPathParam(fields, "name", request.getName());
-        return fields;
-      };
+  private static final FieldsExtractor<GetOperationRequest, Map<String, String>>
+      LRO_GET_PATH_EXTRACTOR =
+          request -> {
+            Map<String, String> fields = new HashMap<>();
+            ProtoRestSerializer<GetOperationRequest> serializer = ProtoRestSerializer.create();
+            serializer.putPathParam(fields, "name", request.getName());
+            return fields;
+          };
 
-  private final FieldsExtractor<DeleteOperationRequest, Map<String, String>>
+  private static final FieldsExtractor<DeleteOperationRequest, Map<String, String>>
       LRO_DELETE_PATH_EXTRACTOR =
           request -> {
             Map<String, String> fields = new HashMap<>();
@@ -107,7 +108,7 @@ public class HttpJsonOperationsStub extends OperationsStub {
             return fields;
           };
 
-  private final FieldsExtractor<CancelOperationRequest, Map<String, String>>
+  private static final FieldsExtractor<CancelOperationRequest, Map<String, String>>
       LRO_CANCEL_PATH_EXTRACTOR =
           request -> {
             Map<String, String> fields = new HashMap<>();
