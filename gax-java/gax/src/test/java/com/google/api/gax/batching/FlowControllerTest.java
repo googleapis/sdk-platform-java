@@ -524,10 +524,10 @@ public class FlowControllerTest {
     final AtomicInteger totalDecreased = new AtomicInteger(0);
     final AtomicInteger releasedCounter = new AtomicInteger(0);
 
-    List<Future> reserveThreads =
+    List<Future<?>> reserveThreads =
         testConcurrentUpdates(
             flowController, 100, 100, 10, totalIncreased, totalDecreased, releasedCounter);
-    for (Future t : reserveThreads) {
+    for (Future<?> t : reserveThreads) {
       t.get(200, TimeUnit.MILLISECONDS);
     }
     assertEquals(reserveThreads.size(), releasedCounter.get());
@@ -557,10 +557,10 @@ public class FlowControllerTest {
     AtomicInteger totalIncreased = new AtomicInteger(0);
     AtomicInteger totalDecreased = new AtomicInteger(0);
     AtomicInteger releasedCounter = new AtomicInteger(0);
-    List<Future> reserveThreads =
+    List<Future<?>> reserveThreads =
         testConcurrentUpdates(
             flowController, 100, 100, 100, totalIncreased, totalDecreased, releasedCounter);
-    for (Future t : reserveThreads) {
+    for (Future<?> t : reserveThreads) {
       t.get(200, TimeUnit.MILLISECONDS);
     }
     assertEquals(reserveThreads.size(), releasedCounter.get());
@@ -732,7 +732,7 @@ public class FlowControllerTest {
         .isAtLeast(currentTime);
   }
 
-  private List<Future> testConcurrentUpdates(
+  private List<Future<?>> testConcurrentUpdates(
       final FlowController flowController,
       final int increaseStepRange,
       final int decreaseStepRange,
@@ -772,8 +772,8 @@ public class FlowControllerTest {
             }
           }
         };
-    List<Future> updateFuture = new ArrayList<>();
-    List<Future> reserveReleaseFuture = new ArrayList<>();
+    List<Future<?>> updateFuture = new ArrayList<>();
+    List<Future<?>> reserveReleaseFuture = new ArrayList<>();
     ExecutorService executors = Executors.newFixedThreadPool(10);
     ExecutorService reserveExecutor = Executors.newFixedThreadPool(10);
     for (int i = 0; i < 5; i++) {
@@ -781,7 +781,7 @@ public class FlowControllerTest {
       updateFuture.add(executors.submit(decreaseRunnable));
       reserveReleaseFuture.add(reserveExecutor.submit(reserveReleaseRunnable));
     }
-    for (Future t : updateFuture) {
+    for (Future<?> t : updateFuture) {
       t.get(50, TimeUnit.MILLISECONDS);
     }
     executors.shutdown();
