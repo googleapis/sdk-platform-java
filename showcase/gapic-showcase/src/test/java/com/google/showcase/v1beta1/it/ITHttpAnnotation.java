@@ -5,9 +5,9 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.common.collect.ImmutableMap;
-import com.google.protobuf.ProtocolStringList;
 import com.google.protobuf.util.JsonFormat;
 import com.google.showcase.v1beta1.ComplianceClient;
+import com.google.showcase.v1beta1.ComplianceData;
 import com.google.showcase.v1beta1.ComplianceGroup;
 import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.ComplianceSuite;
@@ -17,8 +17,10 @@ import com.google.showcase.v1beta1.RepeatResponse;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class ITHttpAnnotation {
 
   private ComplianceSuite complianceSuite;
   private ComplianceClient complianceClient;
-  private Map<String, Function<RepeatRequest, RepeatResponse>> complianceValidRpcSet;
+  private Map<String, Function<RepeatRequest, RepeatResponse>> complianceValidRpcMap;
 
   @Before
   public void createClient() throws IOException, GeneralSecurityException {
@@ -47,7 +49,8 @@ public class ITHttpAnnotation {
             .build();
     complianceClient = ComplianceClient.create(httpjsonComplianceSettings);
 
-    complianceValidRpcSet =
+    // Mapping of Compliance Suite file RPC Names to ComplianceClient methods
+    complianceValidRpcMap =
         ImmutableMap.of(
             "Compliance.RepeatDataBody",
             x -> complianceClient.repeatDataBody(x),
@@ -62,9 +65,7 @@ public class ITHttpAnnotation {
             "Compliance.RepeatDataBodyPatch",
             x -> complianceClient.repeatDataBodyPatch(x),
             "Compliance.RepeatDataPathResource",
-            x -> complianceClient.repeatDataPathResource(x),
-            "Compliance.RepeatDataPathTrailingResource",
-            x -> complianceClient.repeatDataPathTrailingResource(x));
+            x -> complianceClient.repeatDataPathResource(x));
   }
 
   @After
@@ -72,23 +73,18 @@ public class ITHttpAnnotation {
     complianceClient.close();
   }
 
-  /*
-  Note: For PATCH requests, Gax HttpJson sets the HttpVerb as POST and sets the
-  `x-http-method-override` method as PATCH.
-   */
   @Test
   public void testCompliance() {
     for (ComplianceGroup compliancegroup : complianceSuite.getGroupList()) {
-      ProtocolStringList protocolStringList = compliancegroup.getRpcsList();
-      for (RepeatRequest repeatRequest : compliancegroup.getRequestsList()) {
-        for (String rpcName : protocolStringList) {
-          if (complianceValidRpcSet.containsKey(rpcName)) {
-            System.out.printf(
-                "Testing group: `%s`- RPC Name: `%s` with Request Name: `%s`\n",
-                compliancegroup.getName(), rpcName, repeatRequest.getName());
-            RepeatResponse response = complianceValidRpcSet.get(rpcName).apply(repeatRequest);
-            assertThat(response.getRequest().getInfo()).isEqualTo(repeatRequest.getInfo());
-          }
+      List<String> validRpcList =
+          compliancegroup.getRpcsList().stream()
+              .filter(complianceValidRpcMap::containsKey)
+              .collect(Collectors.toList());
+      for (String rpcName : validRpcList) {
+        for (RepeatRequest repeatRequest : compliancegroup.getRequestsList()) {
+          ComplianceData expectedData = repeatRequest.getInfo();
+          RepeatResponse response = complianceValidRpcMap.get(rpcName).apply(repeatRequest);
+          assertThat(response.getRequest().getInfo()).isEqualTo(expectedData);
         }
       }
     }

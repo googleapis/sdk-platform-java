@@ -16,3 +16,5 @@ target/
 .vscode/settings.json
 
 *.iml
+
+showcase/gapic-showcase/src/test/resources/*

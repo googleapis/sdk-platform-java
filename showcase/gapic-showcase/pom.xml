@@ -18,6 +18,10 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <gapic-showcase.version>0.26.0</gapic-showcase.version>
+  </properties>
+
   <profiles>
     <profile>
       <id>enable-golden-tests</id>
@@ -92,9 +96,10 @@
                 </goals>
                 <configuration>
                   <url>
-                    https://raw.githubusercontent.com/googleapis/gapic-showcase/v0.26.0/server/services/compliance_suite.json
+                    https://raw.githubusercontent.com/googleapis/gapic-showcase/v${gapic-showcase.version}/server/services/compliance_suite.json
                   </url>
                   <outputDirectory>src/test/resources</outputDirectory>
+                  <!-- Set this to always download the latest version and overwrite the existing file -->
                   <overwrite>true</overwrite>
                 </configuration>
               </execution>
