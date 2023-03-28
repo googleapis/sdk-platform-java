@@ -57,9 +57,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-/**
- * Tests for {@link FlowController}.
- */
+/** Tests for {@link FlowController}. */
 @RunWith(JUnit4.class)
 public class FlowControllerTest {
 
@@ -600,14 +598,11 @@ public class FlowControllerTest {
     // will be blocked by reserve 10
     TestableThread t =
         new TestableThread(
-            new Runnable() {
-              @Override
-              public void run() {
-                try {
-                  flowController.reserve(0, 100);
-                } catch (FlowControlException e) {
-                  throw new AssertionError(e);
-                }
+            () -> {
+              try {
+                flowController.reserve(0, 100);
+              } catch (FlowControlException e) {
+                throw new AssertionError(e);
               }
             });
     t.start();
@@ -646,14 +641,11 @@ public class FlowControllerTest {
                 .build());
     TestableThread t =
         new TestableThread(
-            new Runnable() {
-              @Override
-              public void run() {
-                try {
-                  flowController.reserve(initial + 10, 10);
-                } catch (FlowControlException e) {
-                  throw new AssertionError(e);
-                }
+            () -> {
+              try {
+                flowController.reserve(initial + 10, 10);
+              } catch (FlowControlException e) {
+                throw new AssertionError(e);
               }
             });
     t.start();
@@ -802,7 +794,6 @@ public class FlowControllerTest {
    * timeout.
    */
   private static class TestableThread {
-
     private final Thread thread;
     private final ArrayBlockingQueue<Boolean> hasStarted = new ArrayBlockingQueue<>(1);
 
@@ -815,23 +806,17 @@ public class FlowControllerTest {
               });
     }
 
-    /**
-     * @see Thread#start()
-     */
+    /** @see Thread#start() */
     public void start() {
       thread.start();
     }
 
-    /**
-     * @see Thread#getState()
-     */
+    /** @see Thread#getState() */
     public State getState() {
       return thread.getState();
     }
 
-    /**
-     * @see Thread#join(long)
-     */
+    /** @see Thread#join(long) */
     public void join(long millis) throws InterruptedException {
       thread.join(millis);
     }
