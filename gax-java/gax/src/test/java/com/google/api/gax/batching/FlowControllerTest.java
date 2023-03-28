@@ -612,8 +612,7 @@ public class FlowControllerTest {
             });
     t.start();
     t.assertStartsWithin(200, TimeUnit.MILLISECONDS);
-    // wait for thread to start, and check it should be blocked
-    Thread.sleep(50);
+    // thread should be blocked
     assertEquals(State.WAITING, t.getState());
     // increase and decrease should not be blocked
     int increase = 5, decrease = 20;
