@@ -17,4 +17,4 @@ target/
 
 *.iml
 
-showcase/gapic-showcase/src/test/resources/*
+showcase/gapic-showcase/src/test/resources/compliance_suite.json

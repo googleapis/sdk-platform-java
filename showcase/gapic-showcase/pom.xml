@@ -79,35 +79,6 @@
         </plugins>
       </build>
     </profile>
-    <profile>
-      <id>enable-integration-tests</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.googlecode.maven-download-plugin</groupId>
-            <artifactId>download-maven-plugin</artifactId>
-            <version>1.6.8</version>
-            <executions>
-              <execution>
-                <id>download-compliance-suite</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>
-                    https://raw.githubusercontent.com/googleapis/gapic-showcase/v${gapic-showcase.version}/server/services/compliance_suite.json
-                  </url>
-                  <outputDirectory>src/test/resources</outputDirectory>
-                  <!-- Set this to always download the latest version and overwrite the existing file -->
-                  <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
   </profiles>
 
   <build>
@@ -138,6 +109,28 @@
         <configuration>
           <filesNamePattern>(IT.*\.java)|(.*Test.java)</filesNamePattern>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <executions>
+          <execution>
+            <id>download-compliance-suite</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>
+                https://raw.githubusercontent.com/googleapis/gapic-showcase/v${gapic-showcase.version}/server/services/compliance_suite.json
+              </url>
+              <outputDirectory>src/test/resources</outputDirectory>
+              <!-- Set this to always download the latest version and overwrite the existing file -->
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

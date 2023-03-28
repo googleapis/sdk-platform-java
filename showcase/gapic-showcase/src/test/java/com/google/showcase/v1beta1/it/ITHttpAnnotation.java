@@ -14,8 +14,8 @@ import com.google.showcase.v1beta1.ComplianceSuite;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,13 @@ public class ITHttpAnnotation {
   @Before
   public void createClient() throws IOException, GeneralSecurityException {
     ComplianceSuite.Builder builder = ComplianceSuite.newBuilder();
-    JsonFormat.parser().merge(new FileReader("src/test/resources/compliance_suite.json"), builder);
+    JsonFormat.parser()
+        .merge(
+            new InputStreamReader(
+                ITHttpAnnotation.class
+                    .getClassLoader()
+                    .getResourceAsStream("compliance_suite.json")),
+            builder);
     complianceSuite = builder.build();
 
     ComplianceSettings httpjsonComplianceSettings =
