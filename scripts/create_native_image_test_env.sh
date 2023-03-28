@@ -34,8 +34,7 @@ fi
 
 GRAALVM_BRANCH="${GRAALVM_VERSION}_update"
 
-### Round 1: Add gapic-generator-java and update graal-sdk version in GAX.
-# If gapic-generator-java is not present, clone it and add it to submodule project
+## Round 1: Add gapic-generator-java and update graal-sdk version in GAX.
 if [ ! -d "gapic-generator-java" ]; then
   echo "Create gapic-generator-java submodule if one does not exist"
   git submodule add --force https://github.com/googleapis/gapic-generator-java.git
@@ -137,7 +136,7 @@ git commit -m "chore: update shared-dependencies version for testing"
 git push origin "${GRAALVM_BRANCH}"
 popd
 
-### Round 5: Add java-bigtable if not present and update versions of shared-dependencies and java-shared-config.
+## Round 5: Add java-bigtable if not present and update versions of shared-dependencies and java-shared-config.
 if [ ! -d "java-bigtable" ]; then
   echo "Create java-bigtable submodule if one does not exist"
   git submodule add --force https://github.com/googleapis/java-bigtable.git
@@ -186,6 +185,7 @@ git commit -m "chore: update shared-dependencies version for testing"
 git push origin "${GRAALVM_BRANCH}"
 popd
 
+## Round 7: Push modified repos to submodule repository.
 git add gapic-generator-java
 git add java-shared-config
 git add java-pubsub
