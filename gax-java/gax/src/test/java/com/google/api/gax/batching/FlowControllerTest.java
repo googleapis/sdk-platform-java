@@ -39,11 +39,13 @@ import static org.junit.Assert.fail;
 
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
+import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.SettableFuture;
 import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,7 +57,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-/** Tests for {@link FlowController}. */
+/**
+ * Tests for {@link FlowController}.
+ */
 @RunWith(JUnit4.class)
 public class FlowControllerTest {
 
@@ -594,8 +598,8 @@ public class FlowControllerTest {
                 .build());
     flowController.reserve(0, 10);
     // will be blocked by reserve 10
-    Thread t =
-        new Thread(
+    TestableThread t =
+        new TestableThread(
             new Runnable() {
               @Override
               public void run() {
@@ -606,6 +610,7 @@ public class FlowControllerTest {
               }
             });
     t.start();
+    t.assertStartsWithin(200, TimeUnit.MILLISECONDS);
     // wait for thread to start, and check it should be blocked
     Thread.sleep(50);
     assertEquals(State.WAITING, t.getState());
@@ -615,7 +620,7 @@ public class FlowControllerTest {
     flowController.increaseThresholds(0, increase);
     // releasing 10 permits should unblock t
     flowController.release(0, 10);
-    t.join();
+    t.join(200);
     int expectedNewThreshold = initial - decrease + increase;
     assertEquals(expectedNewThreshold, flowController.getCurrentRequestBytesLimit().longValue());
     flowController.release(0, 100);
@@ -639,8 +644,8 @@ public class FlowControllerTest {
                 .setMaxOutstandingRequestBytes(100L)
                 .setLimitExceededBehavior(LimitExceededBehavior.Block)
                 .build());
-    Thread t =
-        new Thread(
+    TestableThread t =
+        new TestableThread(
             new Runnable() {
               @Override
               public void run() {
@@ -651,8 +656,8 @@ public class FlowControllerTest {
               }
             });
     t.start();
-    // wait for thread to start, and check it should be blocked
-    Thread.sleep(50);
+    t.assertStartsWithin(200, TimeUnit.MILLISECONDS);
+    // thread should be blocked
     assertEquals(State.WAITING, t.getState());
     // increase and decrease should not be blocked
     int increase = 5, decrease = 20;
@@ -663,7 +668,7 @@ public class FlowControllerTest {
     flowController.release(1, 1);
     // increasing permits to unblock
     flowController.increaseThresholds(50, 0);
-    t.join();
+    t.join(200);
   }
 
   @Test
@@ -788,5 +793,67 @@ public class FlowControllerTest {
     }
     executors.shutdown();
     return reserveReleaseFuture;
+  }
+
+  /**
+   * Uses a BlockingQueue to implement an efficient assertion that the thread starts within a given
+   * timeout, otherwise fails and tries to determine if the test would have passed with an increased
+   * timeout.
+   */
+  private static class TestableThread {
+
+    private final Thread thread;
+    private final ArrayBlockingQueue<Boolean> hasStarted = new ArrayBlockingQueue<>(1);
+
+    TestableThread(Runnable runnable) {
+      this.thread =
+          new Thread(
+              () -> {
+                hasStarted.add(true);
+                runnable.run();
+              });
+    }
+
+    /**
+     * @see Thread#start()
+     */
+    public void start() {
+      thread.start();
+    }
+
+    /**
+     * @see Thread#getState()
+     */
+    public State getState() {
+      return thread.getState();
+    }
+
+    /**
+     * @see Thread#join(long)
+     */
+    public void join(long millis) throws InterruptedException {
+      thread.join(millis);
+    }
+
+    /**
+     * Block until the thread has been started. On timeout, waits an additional 2 seconds to see if
+     * the thread is ever started, but fails regardless.
+     */
+    public void assertStartsWithin(long timeout, TimeUnit timeUnit)
+        throws IllegalStateException, InterruptedException {
+      Boolean wasStarted = hasStarted.poll(timeout, timeUnit);
+      if (wasStarted == null) {
+        // Timeout. Wait to see if it eventually starts. Fail regardless.
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        wasStarted = hasStarted.poll(2, TimeUnit.SECONDS);
+        String msg = "Timeout expired while waiting for thread to start";
+        if (wasStarted == null) {
+          msg += ", and did not start after an additional 2 seconds.";
+        } else {
+          msg += ". Thread started after additional duration: " + stopwatch.elapsed();
+        }
+        fail(msg);
+      }
+    }
   }
 }
