@@ -309,129 +309,81 @@ public final class TestingGrpc {
 
   /**
    */
-  public static abstract class TestingImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void createSession(com.google.showcase.v1beta1.CreateSessionRequest request,
+    default void createSession(com.google.showcase.v1beta1.CreateSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Session> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateSessionMethod(), responseObserver);
     }
 
     /**
      */
-    public void getSession(com.google.showcase.v1beta1.GetSessionRequest request,
+    default void getSession(com.google.showcase.v1beta1.GetSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Session> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetSessionMethod(), responseObserver);
     }
 
     /**
      */
-    public void listSessions(com.google.showcase.v1beta1.ListSessionsRequest request,
+    default void listSessions(com.google.showcase.v1beta1.ListSessionsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListSessionsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListSessionsMethod(), responseObserver);
     }
 
     /**
      */
-    public void deleteSession(com.google.showcase.v1beta1.DeleteSessionRequest request,
+    default void deleteSession(com.google.showcase.v1beta1.DeleteSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteSessionMethod(), responseObserver);
     }
 
     /**
      */
-    public void reportSession(com.google.showcase.v1beta1.ReportSessionRequest request,
+    default void reportSession(com.google.showcase.v1beta1.ReportSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ReportSessionResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReportSessionMethod(), responseObserver);
     }
 
     /**
      */
-    public void listTests(com.google.showcase.v1beta1.ListTestsRequest request,
+    default void listTests(com.google.showcase.v1beta1.ListTestsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListTestsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListTestsMethod(), responseObserver);
     }
 
     /**
      */
-    public void deleteTest(com.google.showcase.v1beta1.DeleteTestRequest request,
+    default void deleteTest(com.google.showcase.v1beta1.DeleteTestRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteTestMethod(), responseObserver);
     }
 
     /**
      */
-    public void verifyTest(com.google.showcase.v1beta1.VerifyTestRequest request,
+    default void verifyTest(com.google.showcase.v1beta1.VerifyTestRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.VerifyTestResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getVerifyTestMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getCreateSessionMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.CreateSessionRequest,
-                com.google.showcase.v1beta1.Session>(
-                  this, METHODID_CREATE_SESSION)))
-          .addMethod(
-            getGetSessionMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.GetSessionRequest,
-                com.google.showcase.v1beta1.Session>(
-                  this, METHODID_GET_SESSION)))
-          .addMethod(
-            getListSessionsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ListSessionsRequest,
-                com.google.showcase.v1beta1.ListSessionsResponse>(
-                  this, METHODID_LIST_SESSIONS)))
-          .addMethod(
-            getDeleteSessionMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.DeleteSessionRequest,
-                com.google.protobuf.Empty>(
-                  this, METHODID_DELETE_SESSION)))
-          .addMethod(
-            getReportSessionMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ReportSessionRequest,
-                com.google.showcase.v1beta1.ReportSessionResponse>(
-                  this, METHODID_REPORT_SESSION)))
-          .addMethod(
-            getListTestsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ListTestsRequest,
-                com.google.showcase.v1beta1.ListTestsResponse>(
-                  this, METHODID_LIST_TESTS)))
-          .addMethod(
-            getDeleteTestMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.DeleteTestRequest,
-                com.google.protobuf.Empty>(
-                  this, METHODID_DELETE_TEST)))
-          .addMethod(
-            getVerifyTestMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.VerifyTestRequest,
-                com.google.showcase.v1beta1.VerifyTestResponse>(
-                  this, METHODID_VERIFY_TEST)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Testing.
    */
-  public static final class TestingStub extends io.grpc.stub.AbstractAsyncStub<TestingStub> {
+  public static abstract class TestingImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return TestingGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Testing.
+   */
+  public static final class TestingStub
+      extends io.grpc.stub.AbstractAsyncStub<TestingStub> {
     private TestingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -509,8 +461,10 @@ public final class TestingGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Testing.
    */
-  public static final class TestingBlockingStub extends io.grpc.stub.AbstractBlockingStub<TestingBlockingStub> {
+  public static final class TestingBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<TestingBlockingStub> {
     private TestingBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -580,8 +534,10 @@ public final class TestingGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Testing.
    */
-  public static final class TestingFutureStub extends io.grpc.stub.AbstractFutureStub<TestingFutureStub> {
+  public static final class TestingFutureStub
+      extends io.grpc.stub.AbstractFutureStub<TestingFutureStub> {
     private TestingFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -672,10 +628,10 @@ public final class TestingGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final TestingImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(TestingImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -730,6 +686,67 @@ public final class TestingGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getCreateSessionMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.CreateSessionRequest,
+              com.google.showcase.v1beta1.Session>(
+                service, METHODID_CREATE_SESSION)))
+        .addMethod(
+          getGetSessionMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.GetSessionRequest,
+              com.google.showcase.v1beta1.Session>(
+                service, METHODID_GET_SESSION)))
+        .addMethod(
+          getListSessionsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ListSessionsRequest,
+              com.google.showcase.v1beta1.ListSessionsResponse>(
+                service, METHODID_LIST_SESSIONS)))
+        .addMethod(
+          getDeleteSessionMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.DeleteSessionRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_DELETE_SESSION)))
+        .addMethod(
+          getReportSessionMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ReportSessionRequest,
+              com.google.showcase.v1beta1.ReportSessionResponse>(
+                service, METHODID_REPORT_SESSION)))
+        .addMethod(
+          getListTestsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ListTestsRequest,
+              com.google.showcase.v1beta1.ListTestsResponse>(
+                service, METHODID_LIST_TESTS)))
+        .addMethod(
+          getDeleteTestMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.DeleteTestRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_DELETE_TEST)))
+        .addMethod(
+          getVerifyTestMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.VerifyTestRequest,
+              com.google.showcase.v1beta1.VerifyTestResponse>(
+                service, METHODID_VERIFY_TEST)))
+        .build();
   }
 
   private static abstract class TestingBaseDescriptorSupplier

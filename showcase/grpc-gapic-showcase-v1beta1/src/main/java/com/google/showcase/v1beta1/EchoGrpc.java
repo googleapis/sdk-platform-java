@@ -340,143 +340,88 @@ public final class EchoGrpc {
 
   /**
    */
-  public static abstract class EchoImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void echo(com.google.showcase.v1beta1.EchoRequest request,
+    default void echo(com.google.showcase.v1beta1.EchoRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getEchoMethod(), responseObserver);
     }
 
     /**
      */
-    public void expand(com.google.showcase.v1beta1.ExpandRequest request,
+    default void expand(com.google.showcase.v1beta1.ExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getExpandMethod(), responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> collect(
+    default io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> collect(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getCollectMethod(), responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> chat(
+    default io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> chat(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getChatMethod(), responseObserver);
     }
 
     /**
      */
-    public void pagedExpand(com.google.showcase.v1beta1.PagedExpandRequest request,
+    default void pagedExpand(com.google.showcase.v1beta1.PagedExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPagedExpandMethod(), responseObserver);
     }
 
     /**
      */
-    public void pagedExpandLegacy(com.google.showcase.v1beta1.PagedExpandLegacyRequest request,
+    default void pagedExpandLegacy(com.google.showcase.v1beta1.PagedExpandLegacyRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPagedExpandLegacyMethod(), responseObserver);
     }
 
     /**
      */
-    public void pagedExpandLegacyMapped(com.google.showcase.v1beta1.PagedExpandRequest request,
+    default void pagedExpandLegacyMapped(com.google.showcase.v1beta1.PagedExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPagedExpandLegacyMappedMethod(), responseObserver);
     }
 
     /**
      */
-    public void wait(com.google.showcase.v1beta1.WaitRequest request,
+    default void wait(com.google.showcase.v1beta1.WaitRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getWaitMethod(), responseObserver);
     }
 
     /**
      */
-    public void block(com.google.showcase.v1beta1.BlockRequest request,
+    default void block(com.google.showcase.v1beta1.BlockRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.BlockResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getBlockMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getEchoMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.EchoRequest,
-                com.google.showcase.v1beta1.EchoResponse>(
-                  this, METHODID_ECHO)))
-          .addMethod(
-            getExpandMethod(),
-            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ExpandRequest,
-                com.google.showcase.v1beta1.EchoResponse>(
-                  this, METHODID_EXPAND)))
-          .addMethod(
-            getCollectMethod(),
-            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.EchoRequest,
-                com.google.showcase.v1beta1.EchoResponse>(
-                  this, METHODID_COLLECT)))
-          .addMethod(
-            getChatMethod(),
-            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.EchoRequest,
-                com.google.showcase.v1beta1.EchoResponse>(
-                  this, METHODID_CHAT)))
-          .addMethod(
-            getPagedExpandMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.PagedExpandRequest,
-                com.google.showcase.v1beta1.PagedExpandResponse>(
-                  this, METHODID_PAGED_EXPAND)))
-          .addMethod(
-            getPagedExpandLegacyMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.PagedExpandLegacyRequest,
-                com.google.showcase.v1beta1.PagedExpandResponse>(
-                  this, METHODID_PAGED_EXPAND_LEGACY)))
-          .addMethod(
-            getPagedExpandLegacyMappedMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.PagedExpandRequest,
-                com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse>(
-                  this, METHODID_PAGED_EXPAND_LEGACY_MAPPED)))
-          .addMethod(
-            getWaitMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.WaitRequest,
-                com.google.longrunning.Operation>(
-                  this, METHODID_WAIT)))
-          .addMethod(
-            getBlockMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.BlockRequest,
-                com.google.showcase.v1beta1.BlockResponse>(
-                  this, METHODID_BLOCK)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Echo.
    */
-  public static final class EchoStub extends io.grpc.stub.AbstractAsyncStub<EchoStub> {
+  public static abstract class EchoImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return EchoGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Echo.
+   */
+  public static final class EchoStub
+      extends io.grpc.stub.AbstractAsyncStub<EchoStub> {
     private EchoStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -562,8 +507,10 @@ public final class EchoGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Echo.
    */
-  public static final class EchoBlockingStub extends io.grpc.stub.AbstractBlockingStub<EchoBlockingStub> {
+  public static final class EchoBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<EchoBlockingStub> {
     private EchoBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -627,8 +574,10 @@ public final class EchoGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Echo.
    */
-  public static final class EchoFutureStub extends io.grpc.stub.AbstractFutureStub<EchoFutureStub> {
+  public static final class EchoFutureStub
+      extends io.grpc.stub.AbstractFutureStub<EchoFutureStub> {
     private EchoFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -704,10 +653,10 @@ public final class EchoGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final EchoImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(EchoImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -764,6 +713,74 @@ public final class EchoGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getEchoMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.EchoRequest,
+              com.google.showcase.v1beta1.EchoResponse>(
+                service, METHODID_ECHO)))
+        .addMethod(
+          getExpandMethod(),
+          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ExpandRequest,
+              com.google.showcase.v1beta1.EchoResponse>(
+                service, METHODID_EXPAND)))
+        .addMethod(
+          getCollectMethod(),
+          io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.EchoRequest,
+              com.google.showcase.v1beta1.EchoResponse>(
+                service, METHODID_COLLECT)))
+        .addMethod(
+          getChatMethod(),
+          io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.EchoRequest,
+              com.google.showcase.v1beta1.EchoResponse>(
+                service, METHODID_CHAT)))
+        .addMethod(
+          getPagedExpandMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.PagedExpandRequest,
+              com.google.showcase.v1beta1.PagedExpandResponse>(
+                service, METHODID_PAGED_EXPAND)))
+        .addMethod(
+          getPagedExpandLegacyMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.PagedExpandLegacyRequest,
+              com.google.showcase.v1beta1.PagedExpandResponse>(
+                service, METHODID_PAGED_EXPAND_LEGACY)))
+        .addMethod(
+          getPagedExpandLegacyMappedMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.PagedExpandRequest,
+              com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse>(
+                service, METHODID_PAGED_EXPAND_LEGACY_MAPPED)))
+        .addMethod(
+          getWaitMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.WaitRequest,
+              com.google.longrunning.Operation>(
+                service, METHODID_WAIT)))
+        .addMethod(
+          getBlockMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.BlockRequest,
+              com.google.showcase.v1beta1.BlockResponse>(
+                service, METHODID_BLOCK)))
+        .build();
   }
 
   private static abstract class EchoBaseDescriptorSupplier
