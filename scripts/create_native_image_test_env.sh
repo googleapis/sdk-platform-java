@@ -23,12 +23,12 @@ EOF
 }
 
 if [ -z "$GRAALVM_VERSION" ]; then
-  echo "Please provide GRAALVM_VERSION"
+  echo "Please specify GRAALVM_VERSION"
   exit 1
 fi
 
 if [ -z "$NATIVE_MAVEN_PLUGIN" ]; then
-  echo "Please provide NATIVE_MAVEN_PLUGIN"
+  echo "Please specify NATIVE_MAVEN_PLUGIN"
   exit 1
 fi
 
@@ -56,11 +56,16 @@ pushd gapic-generator-java
 SHARED_DEPS_VERSION=$(sed -e 's/xmlns=".*"//' java-shared-dependencies/pom.xml | xmllint --xpath '/project/version/text()' -)
 echo $SHARED_DEPS_VERSION
 
-git diff
-git checkout -b "${GRAALVM_BRANCH}"
-git add gax-java/pom.xml
-git commit -m "chore: update graalvm-sdk's version in GAX for testing"
-git push origin "${GRAALVM_BRANCH}"
+if [ ! `git branch --list $(GRAALVM_BRANCH)` ]
+then
+   git diff
+   git checkout -b "${GRAALVM_BRANCH}"
+   git add gax-java/pom.xml
+   git commit -m "chore: update graalvm-sdk's version in GAX for testing"
+   git push origin "${GRAALVM_BRANCH}"
+fi
+
+
 popd
 
 ## Round 2: Add java-shared-config if not present and update native-maven-plugin's version
@@ -93,10 +98,13 @@ echo "Modified native-maven-plugin in shared-config"
 git diff
 
 # Create branch on github
-git checkout -b "${GRAALVM_BRANCH}"
-git add pom.xml
-git commit -m "chore: update native-maven-plugin's version in java-shared-config for testing"
-git push origin "${GRAALVM_BRANCH}"
+if [ ! "$(git branch --list "$GRAALVM_BRANCH")" ]
+then
+   git checkout -b "${GRAALVM_BRANCH}"
+   git add pom.xml
+   git commit -m "chore: update native-maven-plugin's version in java-shared-config for testing"
+   git push origin "${GRAALVM_BRANCH}"
+fi
 popd
 
 ## Round 3: Add java-pubsub if not present and update versions of shared-dependencies and java-shared-config.
@@ -112,10 +120,13 @@ modify_shared_dependencies
 echo "Modified shared-config and shared-dependencies versions in java-pubsub"
 git diff
 
-git checkout -b graalvm-submodule-test2
-git add pom.xml
-git commit -m "chore: update shared-dependencies version for testing"
-git push origin graalvm-submodule-test2
+if [ ! "$(git branch --list "$GRAALVM_BRANCH")" ]
+then
+   git checkout -b "${GRAALVM_BRANCH}"
+   git add pom.xml
+   git commit -m "chore: update shared-dependencies version for testing"
+   git push origin "${GRAALVM_BRANCH}"
+fi
 popd
 
 ## Round 4: Add java-bigquery if not present and update versions of shared-dependencies and java-shared-config.
@@ -130,10 +141,14 @@ modify_shared_config
 modify_shared_dependencies
 echo "Modified shared-config and shared-dependencies versions in java-bigquery"
 git diff
-git checkout -b "${GRAALVM_BRANCH}"
-git add pom.xml
-git commit -m "chore: update shared-dependencies version for testing"
-git push origin "${GRAALVM_BRANCH}"
+
+if [ ! "$(git branch --list "$GRAALVM_BRANCH")" ]
+then
+   git checkout -b "${GRAALVM_BRANCH}"
+   git add pom.xml
+   git commit -m "chore: update shared-dependencies version for testing"
+   git push origin "${GRAALVM_BRANCH}"
+fi
 popd
 
 ## Round 5: Add java-bigtable if not present and update versions of shared-dependencies and java-shared-config.
@@ -158,12 +173,16 @@ modify_shared_config
 echo "Modified shared-config and shared-dependencies versions in java-bigtable"
 git diff
 
-git checkout -b "${GRAALVM_BRANCH}"
-git add pom.xml
-git add google-cloud-bigtable-deps-bom/pom.xml
-git add google-cloud-bigtable-bom/pom.xml
-git commit -m "chore: update shared-dependencies version for testing"
-git push origin "${GRAALVM_BRANCH}"
+if [ ! "$(git branch --list "$GRAALVM_BRANCH")" ]
+then
+   git checkout -b "${GRAALVM_BRANCH}"
+   git add pom.xml
+   git add google-cloud-bigtable-deps-bom/pom.xml
+   git add google-cloud-bigtable-bom/pom.xml
+   git commit -m "chore: update shared-dependencies version for testing"
+   git push origin "${GRAALVM_BRANCH}"
+fi
+
 popd
 
 ## Round 6: Add java-spanner-jdbc if not present and update versions of shared-dependencies and java-shared-config.
@@ -179,10 +198,13 @@ modify_shared_dependencies
 echo "Modified shared-config and shared-dependencies versions in java-spanner-jdbc"
 git diff
 
-git checkout -b "${GRAALVM_BRANCH}"
-git add pom.xml
-git commit -m "chore: update shared-dependencies version for testing"
-git push origin "${GRAALVM_BRANCH}"
+if [ ! "$(git branch --list "$GRAALVM_BRANCH")" ]
+then
+   git checkout -b "${GRAALVM_BRANCH}"
+   git add pom.xml
+   git commit -m "chore: update shared-dependencies version for testing"
+   git push origin "${GRAALVM_BRANCH}"
+fi
 popd
 
 ## Round 7: Push modified repos to submodule repository.
@@ -192,5 +214,39 @@ git add java-pubsub
 git add java-bigquery
 git add java-bigtable
 git add java-spanner-jdbc
-git commit -m "chore: populate the submodule project"
-git push origin main
+git commit -m "chore: populate the submodule project" --allow-empty
+
+## Round 8: Run Tests
+# mvn clean install for gapic-generator-java
+pushd gapic-generator-java
+mvn -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Denforcer.skip -Dfmt.skip -DskipTests
+
+# mvn clean install for java-shared-config
+popd
+pushd java-shared-config
+mvn -B -ntp install -Dcheckstyle.skip -Dfmt.skip -DskipTests -Denforcer.skip
+
+# Run native image tests for java-pubsub
+popd
+pushd java-pubsub
+mvn clean install -Dcheckstyle.skip -DskipTests -Denforcer.skip
+mvn test -Pnative '-Dtest=!com.google.cloud.pubsub.it.ITPubSubTest#testTopicPolicy, IT*, *ClientTest' -DfailIfNoTests=false
+
+# Run native image tests for java-bigquery
+popd
+pushd java-bigquery
+mvn clean install -Dcheckstyle.skip -DskipTests -Denforcer.skip
+mvn test -Pnative \
+-Dtest='!com.google.cloud.bigquery.it.ITBigQueryTest#testDatasetUpdateAccess+testSetPermExternalTableSchema+testTableIAM+testAuthorizeDataset,!com.google.cloud.bigquery.it.ITNightlyBigQueryTest#testIterateAndOrder+testIterateAndOrderDefaultConnSettings+testMultipleRuns,!com.google.cloud.bigquery.it.ITRemoteUDFTest, IT*, *ClientTest'
+
+# Run native image test for java-bigtable
+popd
+pushd java-bigtable
+mvn clean install -Dcheckstyle.skip -DskipTests -Denforcer.skip
+mvn test -Pnative
+
+# Run native image test for java-spanner-jdbc
+popd
+pushd java-spanner-jdbc
+mvn clean install -Dcheckstyle.skip -DskipTests -Denforcer.skip
+mvn test -Pnative
