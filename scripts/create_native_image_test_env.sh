@@ -57,10 +57,6 @@ pushd gapic-generator-java
 SHARED_DEPS_VERSION=$(sed -e 's/xmlns=".*"//' java-shared-dependencies/pom.xml | xmllint --xpath '/project/version/text()' -)
 echo $SHARED_DEPS_VERSION
 
-# Publish this repo's modules to local maven to make them available for downstream libraries
-#mvn -B -ntp install --projects '!gapic-generator-java' \
-#  -Dcheckstyle.skip -Dfmt.skip -DskipTests -Denforcer.skip
-
 git diff
 git checkout -b "${GRAALVM_BRANCH}"
 git add gax-java/pom.xml
