@@ -19,14 +19,11 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Map;
 import java.util.function.Function;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ITCompliance {
+public class ITHttpAnnotation {
 
   private ComplianceSuite complianceSuite;
   private ComplianceClient complianceClient;
@@ -39,35 +36,35 @@ public class ITCompliance {
     complianceSuite = builder.build();
 
     ComplianceSettings httpjsonComplianceSettings =
-            ComplianceSettings.newHttpJsonBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                    .setHttpTransport(
-                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                    .setEndpoint("http://localhost:7469")
-                                    .build())
-                    .build();
+        ComplianceSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
     complianceClient = ComplianceClient.create(httpjsonComplianceSettings);
 
     complianceValidRpcSet =
-            ImmutableMap.of(
-                    "Compliance.RepeatDataBody",
-                    x -> complianceClient.repeatDataBody(x),
-                    "Compliance.RepeatDataBodyInfo",
-                    x -> complianceClient.repeatDataBodyInfo(x),
-                    "Compliance.RepeatDataQuery",
-                    x -> complianceClient.repeatDataQuery(x),
-                    "Compliance.RepeatDataSimplePath",
-                    x -> complianceClient.repeatDataSimplePath(x),
-                    "Compliance.RepeatDataBodyPut",
-                    x -> complianceClient.repeatDataBodyPut(x),
-                    "Compliance.RepeatDataBodyPatch",
-                    x -> complianceClient.repeatDataBodyPatch(x),
-                    "Compliance.RepeatDataPathResource",
-                    x -> complianceClient.repeatDataPathResource(x),
-                    "Compliance.RepeatDataPathTrailingResource",
-                    x -> complianceClient.repeatDataPathTrailingResource(x));
+        ImmutableMap.of(
+            "Compliance.RepeatDataBody",
+            x -> complianceClient.repeatDataBody(x),
+            "Compliance.RepeatDataBodyInfo",
+            x -> complianceClient.repeatDataBodyInfo(x),
+            "Compliance.RepeatDataQuery",
+            x -> complianceClient.repeatDataQuery(x),
+            "Compliance.RepeatDataSimplePath",
+            x -> complianceClient.repeatDataSimplePath(x),
+            "Compliance.RepeatDataBodyPut",
+            x -> complianceClient.repeatDataBodyPut(x),
+            "Compliance.RepeatDataBodyPatch",
+            x -> complianceClient.repeatDataBodyPatch(x),
+            "Compliance.RepeatDataPathResource",
+            x -> complianceClient.repeatDataPathResource(x),
+            "Compliance.RepeatDataPathTrailingResource",
+            x -> complianceClient.repeatDataPathTrailingResource(x));
   }
 
   @After
@@ -87,8 +84,8 @@ public class ITCompliance {
         for (String rpcName : protocolStringList) {
           if (complianceValidRpcSet.containsKey(rpcName)) {
             System.out.printf(
-                    "Testing group: `%s`- RPC Name: `%s` with Request Name: `%s`\n",
-                    compliancegroup.getName(), rpcName, repeatRequest.getName());
+                "Testing group: `%s`- RPC Name: `%s` with Request Name: `%s`\n",
+                compliancegroup.getName(), rpcName, repeatRequest.getName());
             RepeatResponse response = complianceValidRpcSet.get(rpcName).apply(repeatRequest);
             assertThat(response.getRequest().getInfo()).isEqualTo(repeatRequest.getInfo());
           }
