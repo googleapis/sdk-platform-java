@@ -217,7 +217,7 @@ public class HttpRuleParser {
     if (pattern == null || pattern.isEmpty()) {
       return varPattern;
     }
-    Matcher m = TEMPLATE_VALS_PATTERN.matcher(PathTemplate.create(pattern).toString());
+    Matcher m = TEMPLATE_VALS_PATTERN.matcher(PathTemplate.create(pattern).toRawString());
 
     while (m.find()) {
       varPattern.put(m.group("var"), m.group("template"));
