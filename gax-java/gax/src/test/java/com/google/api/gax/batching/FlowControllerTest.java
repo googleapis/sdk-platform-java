@@ -606,6 +606,7 @@ public class FlowControllerTest {
                 try {
                   flowController.reserve(0, 100);
                 } catch (FlowControlException e) {
+                  throw new AssertionError(e);
                 }
               }
             });
@@ -652,6 +653,7 @@ public class FlowControllerTest {
                 try {
                   flowController.reserve(initial + 10, 10);
                 } catch (FlowControlException e) {
+                  throw new AssertionError(e);
                 }
               }
             });
