@@ -51,7 +51,6 @@ import java.util.List;
  */
 @BetaApi
 public class MtlsProvider {
-  @FunctionalInterface
   interface ProcessProvider {
     public Process createProcess(InputStream metadata) throws IOException;
   }
