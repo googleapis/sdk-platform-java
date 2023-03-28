@@ -31,6 +31,8 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
 import java.util.Iterator;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import javax.annotation.Nonnull;
 
 /**
@@ -87,6 +89,10 @@ public class ServerStream<V> implements Iterable<V> {
     consumed = true;
 
     return iterator;
+  }
+
+  public Stream<V> stream() {
+    return StreamSupport.stream(this.spliterator(), false);
   }
 
   /**
