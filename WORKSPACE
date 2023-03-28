@@ -32,11 +32,21 @@ load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 
 rules_jvm_external_setup()
 
-load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
-    artifacts = PROTOBUF_MAVEN_ARTIFACTS,
+    artifacts = [
+        "com.google.caliper:caliper:1.0-beta-3",
+        "com.google.code.findbugs:jsr305:3.0.2",
+        "com.google.code.gson:gson:2.8.9",
+        "com.google.errorprone:error_prone_annotations:2.5.1",
+        "com.google.j2objc:j2objc-annotations:1.3",
+        "com.google.guava:guava:31.1-jre",
+        "com.google.guava:guava-testlib:31.1-jre",
+        "com.google.truth:truth:1.1.2",
+        "junit:junit:4.13.2",
+        "org.mockito:mockito-core:4.3.1",
+    ],
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
@@ -53,7 +63,7 @@ maven_install(
     ],
 )
 
-protobuf_deps()
+# protobuf_deps()
 
 # Bazel rules.
 _rules_gapic_version = "0.5.5"
@@ -74,9 +84,9 @@ switched_rules_by_language(
     java = True,
 )
 
-load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+# load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
-grpc_java_repositories()
+# grpc_java_repositories()
 
 _disco_to_proto3_converter_commit = "ce8d8732120cdfb5bf4847c3238b5be8acde87e3"
 
