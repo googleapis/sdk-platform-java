@@ -45,8 +45,8 @@
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
-                <artifactId>api-common</artifactId> <!-- {x-version-update:api-common:current} -->
-                <version>2.6.4-SNAPSHOT</version>
+                <artifactId>api-common</artifactId>
+                <version>2.6.4-SNAPSHOT</version> <!-- {x-version-update:api-common:current} -->
             </dependency>
         </dependencies>
 
