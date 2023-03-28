@@ -92,7 +92,6 @@ EOF
 
 echo "Modified native-maven-plugin in shared-config"
 git diff
-mvn install
 
 # Create branch on github
 git checkout -b "${GRAALVM_BRANCH}"
