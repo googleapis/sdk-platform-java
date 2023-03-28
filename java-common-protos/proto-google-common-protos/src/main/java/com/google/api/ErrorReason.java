@@ -669,6 +669,48 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ORG_RESTRICTION_HEADER_INVALID = 28;</code>
    */
   ORG_RESTRICTION_HEADER_INVALID(28),
+  /**
+   *
+   *
+   * <pre>
+   * Unimplemented. Do not use.
+   * The request is calling a service that is not visible to the consumer.
+   * Example of an ErrorInfo when the consumer "projects/123" contacting
+   *  "pubsub.googleapis.com" service which is not visible to the consumer.
+   *     { "reason": "SERVICE_NOT_VISIBLE",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   * This response indicates the "pubsub.googleapis.com" is not visible to
+   * "projects/123" (or it may not exist).
+   * </pre>
+   *
+   * <code>SERVICE_NOT_VISIBLE = 29;</code>
+   */
+  SERVICE_NOT_VISIBLE(29),
+  /**
+   *
+   *
+   * <pre>
+   * The request is related to a project for which GCP access is suspended.
+   * Example of an ErrorInfo when the consumer "projects/123" fails to contact
+   * "pubsub.googleapis.com" service because GCP access is suspended:
+   *     { "reason": "GCP_SUSPENDED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   * This response indicates the associated GCP account has been suspended.
+   * </pre>
+   *
+   * <code>GCP_SUSPENDED = 30;</code>
+   */
+  GCP_SUSPENDED(30),
   UNRECOGNIZED(-1),
   ;
 
@@ -1304,6 +1346,48 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ORG_RESTRICTION_HEADER_INVALID = 28;</code>
    */
   public static final int ORG_RESTRICTION_HEADER_INVALID_VALUE = 28;
+  /**
+   *
+   *
+   * <pre>
+   * Unimplemented. Do not use.
+   * The request is calling a service that is not visible to the consumer.
+   * Example of an ErrorInfo when the consumer "projects/123" contacting
+   *  "pubsub.googleapis.com" service which is not visible to the consumer.
+   *     { "reason": "SERVICE_NOT_VISIBLE",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   * This response indicates the "pubsub.googleapis.com" is not visible to
+   * "projects/123" (or it may not exist).
+   * </pre>
+   *
+   * <code>SERVICE_NOT_VISIBLE = 29;</code>
+   */
+  public static final int SERVICE_NOT_VISIBLE_VALUE = 29;
+  /**
+   *
+   *
+   * <pre>
+   * The request is related to a project for which GCP access is suspended.
+   * Example of an ErrorInfo when the consumer "projects/123" fails to contact
+   * "pubsub.googleapis.com" service because GCP access is suspended:
+   *     { "reason": "GCP_SUSPENDED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   * This response indicates the associated GCP account has been suspended.
+   * </pre>
+   *
+   * <code>GCP_SUSPENDED = 30;</code>
+   */
+  public static final int GCP_SUSPENDED_VALUE = 30;
 
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
@@ -1385,6 +1469,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
         return ORG_RESTRICTION_VIOLATION;
       case 28:
         return ORG_RESTRICTION_HEADER_INVALID;
+      case 29:
+        return SERVICE_NOT_VISIBLE;
+      case 30:
+        return GCP_SUSPENDED;
       default:
         return null;
     }

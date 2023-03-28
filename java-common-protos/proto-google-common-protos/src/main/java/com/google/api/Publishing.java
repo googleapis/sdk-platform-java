@@ -49,6 +49,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     docTagPrefix_ = "";
     organization_ = 0;
     librarySettings_ = java.util.Collections.emptyList();
+    protoReferenceDocumentationUri_ = "";
   }
 
   @java.lang.Override
@@ -598,6 +599,59 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     return librarySettings_.get(index);
   }
 
+  public static final int PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER = 110;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object protoReferenceDocumentationUri_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @return The protoReferenceDocumentationUri.
+   */
+  @java.lang.Override
+  public java.lang.String getProtoReferenceDocumentationUri() {
+    java.lang.Object ref = protoReferenceDocumentationUri_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      protoReferenceDocumentationUri_ = s;
+      return s;
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @return The bytes for protoReferenceDocumentationUri.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes() {
+    java.lang.Object ref = protoReferenceDocumentationUri_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      protoReferenceDocumentationUri_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -641,6 +695,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
     for (int i = 0; i < librarySettings_.size(); i++) {
       output.writeMessage(109, librarySettings_.get(i));
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protoReferenceDocumentationUri_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(
+          output, 110, protoReferenceDocumentationUri_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -686,6 +744,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       size +=
           com.google.protobuf.CodedOutputStream.computeMessageSize(109, librarySettings_.get(i));
     }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protoReferenceDocumentationUri_)) {
+      size +=
+          com.google.protobuf.GeneratedMessageV3.computeStringSize(
+              110, protoReferenceDocumentationUri_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -710,6 +773,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     if (!getDocTagPrefix().equals(other.getDocTagPrefix())) return false;
     if (organization_ != other.organization_) return false;
     if (!getLibrarySettingsList().equals(other.getLibrarySettingsList())) return false;
+    if (!getProtoReferenceDocumentationUri().equals(other.getProtoReferenceDocumentationUri()))
+      return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -745,6 +810,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + LIBRARY_SETTINGS_FIELD_NUMBER;
       hash = (53 * hash) + getLibrarySettingsList().hashCode();
     }
+    hash = (37 * hash) + PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER;
+    hash = (53 * hash) + getProtoReferenceDocumentationUri().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -904,6 +971,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         librarySettingsBuilder_.clear();
       }
       bitField0_ = (bitField0_ & ~0x00000100);
+      protoReferenceDocumentationUri_ = "";
       return this;
     }
 
@@ -982,6 +1050,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       if (((from_bitField0_ & 0x00000080) != 0)) {
         result.organization_ = organization_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.protoReferenceDocumentationUri_ = protoReferenceDocumentationUri_;
       }
     }
 
@@ -1122,6 +1193,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
           }
         }
       }
+      if (!other.getProtoReferenceDocumentationUri().isEmpty()) {
+        protoReferenceDocumentationUri_ = other.protoReferenceDocumentationUri_;
+        bitField0_ |= 0x00000200;
+        onChanged();
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -1216,6 +1292,12 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
                 }
                 break;
               } // case 874
+            case 882:
+              {
+                protoReferenceDocumentationUri_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000200;
+                break;
+              } // case 882
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -2814,6 +2896,117 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         librarySettings_ = null;
       }
       return librarySettingsBuilder_;
+    }
+
+    private java.lang.Object protoReferenceDocumentationUri_ = "";
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @return The protoReferenceDocumentationUri.
+     */
+    public java.lang.String getProtoReferenceDocumentationUri() {
+      java.lang.Object ref = protoReferenceDocumentationUri_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        protoReferenceDocumentationUri_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @return The bytes for protoReferenceDocumentationUri.
+     */
+    public com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes() {
+      java.lang.Object ref = protoReferenceDocumentationUri_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        protoReferenceDocumentationUri_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @param value The protoReferenceDocumentationUri to set.
+     * @return This builder for chaining.
+     */
+    public Builder setProtoReferenceDocumentationUri(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      protoReferenceDocumentationUri_ = value;
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearProtoReferenceDocumentationUri() {
+      protoReferenceDocumentationUri_ = getDefaultInstance().getProtoReferenceDocumentationUri();
+      bitField0_ = (bitField0_ & ~0x00000200);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @param value The bytes for protoReferenceDocumentationUri to set.
+     * @return This builder for chaining.
+     */
+    public Builder setProtoReferenceDocumentationUriBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      protoReferenceDocumentationUri_ = value;
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
     }
 
     @java.lang.Override

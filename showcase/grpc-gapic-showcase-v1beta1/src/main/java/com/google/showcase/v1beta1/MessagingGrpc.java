@@ -495,213 +495,123 @@ public final class MessagingGrpc {
 
   /**
    */
-  public static abstract class MessagingImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void createRoom(com.google.showcase.v1beta1.CreateRoomRequest request,
+    default void createRoom(com.google.showcase.v1beta1.CreateRoomRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Room> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateRoomMethod(), responseObserver);
     }
 
     /**
      */
-    public void getRoom(com.google.showcase.v1beta1.GetRoomRequest request,
+    default void getRoom(com.google.showcase.v1beta1.GetRoomRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Room> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetRoomMethod(), responseObserver);
     }
 
     /**
      */
-    public void updateRoom(com.google.showcase.v1beta1.UpdateRoomRequest request,
+    default void updateRoom(com.google.showcase.v1beta1.UpdateRoomRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Room> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateRoomMethod(), responseObserver);
     }
 
     /**
      */
-    public void deleteRoom(com.google.showcase.v1beta1.DeleteRoomRequest request,
+    default void deleteRoom(com.google.showcase.v1beta1.DeleteRoomRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteRoomMethod(), responseObserver);
     }
 
     /**
      */
-    public void listRooms(com.google.showcase.v1beta1.ListRoomsRequest request,
+    default void listRooms(com.google.showcase.v1beta1.ListRoomsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListRoomsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListRoomsMethod(), responseObserver);
     }
 
     /**
      */
-    public void createBlurb(com.google.showcase.v1beta1.CreateBlurbRequest request,
+    default void createBlurb(com.google.showcase.v1beta1.CreateBlurbRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Blurb> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateBlurbMethod(), responseObserver);
     }
 
     /**
      */
-    public void getBlurb(com.google.showcase.v1beta1.GetBlurbRequest request,
+    default void getBlurb(com.google.showcase.v1beta1.GetBlurbRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Blurb> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetBlurbMethod(), responseObserver);
     }
 
     /**
      */
-    public void updateBlurb(com.google.showcase.v1beta1.UpdateBlurbRequest request,
+    default void updateBlurb(com.google.showcase.v1beta1.UpdateBlurbRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Blurb> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateBlurbMethod(), responseObserver);
     }
 
     /**
      */
-    public void deleteBlurb(com.google.showcase.v1beta1.DeleteBlurbRequest request,
+    default void deleteBlurb(com.google.showcase.v1beta1.DeleteBlurbRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteBlurbMethod(), responseObserver);
     }
 
     /**
      */
-    public void listBlurbs(com.google.showcase.v1beta1.ListBlurbsRequest request,
+    default void listBlurbs(com.google.showcase.v1beta1.ListBlurbsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListBlurbsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListBlurbsMethod(), responseObserver);
     }
 
     /**
      */
-    public void searchBlurbs(com.google.showcase.v1beta1.SearchBlurbsRequest request,
+    default void searchBlurbs(com.google.showcase.v1beta1.SearchBlurbsRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSearchBlurbsMethod(), responseObserver);
     }
 
     /**
      */
-    public void streamBlurbs(com.google.showcase.v1beta1.StreamBlurbsRequest request,
+    default void streamBlurbs(com.google.showcase.v1beta1.StreamBlurbsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamBlurbsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getStreamBlurbsMethod(), responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.CreateBlurbRequest> sendBlurbs(
+    default io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.CreateBlurbRequest> sendBlurbs(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SendBlurbsResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getSendBlurbsMethod(), responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ConnectRequest> connect(
+    default io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ConnectRequest> connect(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamBlurbsResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getConnectMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getCreateRoomMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.CreateRoomRequest,
-                com.google.showcase.v1beta1.Room>(
-                  this, METHODID_CREATE_ROOM)))
-          .addMethod(
-            getGetRoomMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.GetRoomRequest,
-                com.google.showcase.v1beta1.Room>(
-                  this, METHODID_GET_ROOM)))
-          .addMethod(
-            getUpdateRoomMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.UpdateRoomRequest,
-                com.google.showcase.v1beta1.Room>(
-                  this, METHODID_UPDATE_ROOM)))
-          .addMethod(
-            getDeleteRoomMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.DeleteRoomRequest,
-                com.google.protobuf.Empty>(
-                  this, METHODID_DELETE_ROOM)))
-          .addMethod(
-            getListRoomsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ListRoomsRequest,
-                com.google.showcase.v1beta1.ListRoomsResponse>(
-                  this, METHODID_LIST_ROOMS)))
-          .addMethod(
-            getCreateBlurbMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.CreateBlurbRequest,
-                com.google.showcase.v1beta1.Blurb>(
-                  this, METHODID_CREATE_BLURB)))
-          .addMethod(
-            getGetBlurbMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.GetBlurbRequest,
-                com.google.showcase.v1beta1.Blurb>(
-                  this, METHODID_GET_BLURB)))
-          .addMethod(
-            getUpdateBlurbMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.UpdateBlurbRequest,
-                com.google.showcase.v1beta1.Blurb>(
-                  this, METHODID_UPDATE_BLURB)))
-          .addMethod(
-            getDeleteBlurbMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.DeleteBlurbRequest,
-                com.google.protobuf.Empty>(
-                  this, METHODID_DELETE_BLURB)))
-          .addMethod(
-            getListBlurbsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ListBlurbsRequest,
-                com.google.showcase.v1beta1.ListBlurbsResponse>(
-                  this, METHODID_LIST_BLURBS)))
-          .addMethod(
-            getSearchBlurbsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.SearchBlurbsRequest,
-                com.google.longrunning.Operation>(
-                  this, METHODID_SEARCH_BLURBS)))
-          .addMethod(
-            getStreamBlurbsMethod(),
-            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.StreamBlurbsRequest,
-                com.google.showcase.v1beta1.StreamBlurbsResponse>(
-                  this, METHODID_STREAM_BLURBS)))
-          .addMethod(
-            getSendBlurbsMethod(),
-            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.CreateBlurbRequest,
-                com.google.showcase.v1beta1.SendBlurbsResponse>(
-                  this, METHODID_SEND_BLURBS)))
-          .addMethod(
-            getConnectMethod(),
-            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ConnectRequest,
-                com.google.showcase.v1beta1.StreamBlurbsResponse>(
-                  this, METHODID_CONNECT)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Messaging.
    */
-  public static final class MessagingStub extends io.grpc.stub.AbstractAsyncStub<MessagingStub> {
+  public static abstract class MessagingImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return MessagingGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Messaging.
+   */
+  public static final class MessagingStub
+      extends io.grpc.stub.AbstractAsyncStub<MessagingStub> {
     private MessagingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -827,8 +737,10 @@ public final class MessagingGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Messaging.
    */
-  public static final class MessagingBlockingStub extends io.grpc.stub.AbstractBlockingStub<MessagingBlockingStub> {
+  public static final class MessagingBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<MessagingBlockingStub> {
     private MessagingBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -927,8 +839,10 @@ public final class MessagingGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Messaging.
    */
-  public static final class MessagingFutureStub extends io.grpc.stub.AbstractFutureStub<MessagingFutureStub> {
+  public static final class MessagingFutureStub
+      extends io.grpc.stub.AbstractFutureStub<MessagingFutureStub> {
     private MessagingFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -1049,10 +963,10 @@ public final class MessagingGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final MessagingImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(MessagingImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -1129,6 +1043,109 @@ public final class MessagingGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getCreateRoomMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.CreateRoomRequest,
+              com.google.showcase.v1beta1.Room>(
+                service, METHODID_CREATE_ROOM)))
+        .addMethod(
+          getGetRoomMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.GetRoomRequest,
+              com.google.showcase.v1beta1.Room>(
+                service, METHODID_GET_ROOM)))
+        .addMethod(
+          getUpdateRoomMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.UpdateRoomRequest,
+              com.google.showcase.v1beta1.Room>(
+                service, METHODID_UPDATE_ROOM)))
+        .addMethod(
+          getDeleteRoomMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.DeleteRoomRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_DELETE_ROOM)))
+        .addMethod(
+          getListRoomsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ListRoomsRequest,
+              com.google.showcase.v1beta1.ListRoomsResponse>(
+                service, METHODID_LIST_ROOMS)))
+        .addMethod(
+          getCreateBlurbMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.CreateBlurbRequest,
+              com.google.showcase.v1beta1.Blurb>(
+                service, METHODID_CREATE_BLURB)))
+        .addMethod(
+          getGetBlurbMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.GetBlurbRequest,
+              com.google.showcase.v1beta1.Blurb>(
+                service, METHODID_GET_BLURB)))
+        .addMethod(
+          getUpdateBlurbMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.UpdateBlurbRequest,
+              com.google.showcase.v1beta1.Blurb>(
+                service, METHODID_UPDATE_BLURB)))
+        .addMethod(
+          getDeleteBlurbMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.DeleteBlurbRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_DELETE_BLURB)))
+        .addMethod(
+          getListBlurbsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ListBlurbsRequest,
+              com.google.showcase.v1beta1.ListBlurbsResponse>(
+                service, METHODID_LIST_BLURBS)))
+        .addMethod(
+          getSearchBlurbsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.SearchBlurbsRequest,
+              com.google.longrunning.Operation>(
+                service, METHODID_SEARCH_BLURBS)))
+        .addMethod(
+          getStreamBlurbsMethod(),
+          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.StreamBlurbsRequest,
+              com.google.showcase.v1beta1.StreamBlurbsResponse>(
+                service, METHODID_STREAM_BLURBS)))
+        .addMethod(
+          getSendBlurbsMethod(),
+          io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.CreateBlurbRequest,
+              com.google.showcase.v1beta1.SendBlurbsResponse>(
+                service, METHODID_SEND_BLURBS)))
+        .addMethod(
+          getConnectMethod(),
+          io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ConnectRequest,
+              com.google.showcase.v1beta1.StreamBlurbsResponse>(
+                service, METHODID_CONNECT)))
+        .build();
   }
 
   private static abstract class MessagingBaseDescriptorSupplier

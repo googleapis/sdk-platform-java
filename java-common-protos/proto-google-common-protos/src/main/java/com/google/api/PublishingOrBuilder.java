@@ -355,4 +355,31 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
   com.google.api.ClientLibrarySettingsOrBuilder getLibrarySettingsOrBuilder(int index);
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @return The protoReferenceDocumentationUri.
+   */
+  java.lang.String getProtoReferenceDocumentationUri();
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @return The bytes for protoReferenceDocumentationUri.
+   */
+  com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes();
 }

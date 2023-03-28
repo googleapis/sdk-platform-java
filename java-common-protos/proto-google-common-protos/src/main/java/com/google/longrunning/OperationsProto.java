@@ -132,11 +132,11 @@ public final class OperationsProto {
           + "ongrunning.Operation\"\000\032\035\312A\032longrunning.g"
           + "oogleapis.com:Z\n\016operation_info\022\036.google"
           + ".protobuf.MethodOptions\030\231\010 \001(\0132!.google."
-          + "longrunning.OperationInfoB\227\001\n\026com.google"
-          + ".longrunningB\017OperationsProtoP\001Z=google."
-          + "golang.org/genproto/googleapis/longrunni"
-          + "ng;longrunning\370\001\001\252\002\022Google.LongRunning\312\002"
-          + "\022Google\\LongRunningb\006proto3"
+          + "longrunning.OperationInfoB\235\001\n\026com.google"
+          + ".longrunningB\017OperationsProtoP\001ZCcloud.g"
+          + "oogle.com/go/longrunning/autogen/longrun"
+          + "ningpb;longrunningpb\370\001\001\252\002\022Google.LongRun"
+          + "ning\312\002\022Google\\LongRunningb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

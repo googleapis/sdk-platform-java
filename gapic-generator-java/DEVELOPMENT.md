@@ -109,16 +109,22 @@ To generate a production GAPIC API:
         strip_prefix = "gapic-generator-java-%s" % _gapic_generator_java_version,
         urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
     )
+    
+    # gax-java is part of gapic-generator-java repository
+    http_archive(
+        name = "com_google_api_gax_java",
+        strip_prefix = "gapic-generator-java-%s/gax-java" % _gapic_generator_java_version,
+        urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
+    )
    ```
 
    to
-
    ```
-    _gapic_generator_java_version = "2.13.1-SNAPSHOT"
-
+    _gapic_generator_java_version = "2.15.4-SNAPSHOT"
+    
     maven_install(
         artifacts = [
-           "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
         ],
         #Update this False for local development
         fail_on_missing_checksum = False,
@@ -128,10 +134,16 @@ To generate a production GAPIC API:
         ]
     )
     
-   local_repository(
-       name = "gapic_generator_java",
-       path = "/absolute/path/to/your/local/gapic-generator-java",
-   )
+    local_repository(
+        name = "gapic_generator_java",
+        path = "/absolute/path/to/your/local/gapic-generator-java",
+    )
+    
+    # gax-java is part of gapic-generator-java repository
+    local_repository(
+        name = "com_google_api_gax_java",
+        path = "/absolute/path/to/your/local/gapic-generator-java/gax-java",
+    )
    ```
 
    Note: At the time of writing, the gapic-generator version was `2.13.0`. Update the version to the latest version in the pom.xml
