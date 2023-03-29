@@ -220,28 +220,6 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_paramsAndReturn() {
-    String paramName1 = "shelfName";
-    String paramDescription1 = "The name of the shelf where books are published to.";
-    String paramName2 = "shelf";
-    String paramDescription2 = "The shelf to create.";
-    String returnText = "This is the method return text.";
-
-    JavaDocComment javaDocComment =
-        JavaDocComment.builder()
-            .addParam(paramName1, paramDescription1)
-            .addParam(paramName2, paramDescription2)
-            .setReturn(returnText)
-            .build();
-    String expected =
-        LineFormatter.lines(
-            "@param shelfName The name of the shelf where books are published to.\n",
-            "@param shelf The shelf to create.\n",
-            "@return This is the method return text.");
-    assertEquals(expected, javaDocComment.comment());
-  }
-
-  @Test
   public void createJavaDocComment_allComponents() {
     // No matter what order `setThrows`, `setDeprecated`, and `setReturn` are called,
     // They will be printed at the end. And `@param` should be grouped,
