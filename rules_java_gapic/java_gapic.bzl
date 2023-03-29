@@ -273,8 +273,6 @@ def java_gapic_library(
         **kwargs
     )
 
-    print("postprocessing done.\n")
-
     resource_name_name = "%s_resource_name" % name
     resource_name_deps = [resource_name_name]
     native.java_library(
