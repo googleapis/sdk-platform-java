@@ -92,9 +92,10 @@ public class ITHttpAnnotation {
               .filter(complianceValidRpcMap::containsKey)
               .collect(Collectors.toList());
       for (String rpcName : validRpcList) {
+        Function<RepeatRequest, RepeatResponse> rpc = complianceValidRpcMap.get(rpcName);
         for (RepeatRequest repeatRequest : compliancegroup.getRequestsList()) {
           ComplianceData expectedData = repeatRequest.getInfo();
-          RepeatResponse response = complianceValidRpcMap.get(rpcName).apply(repeatRequest);
+          RepeatResponse response = rpc.apply(repeatRequest);
           assertThat(response.getRequest().getInfo()).isEqualTo(expectedData);
         }
       }
