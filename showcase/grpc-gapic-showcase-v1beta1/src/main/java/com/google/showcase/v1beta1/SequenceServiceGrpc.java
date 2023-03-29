@@ -154,59 +154,46 @@ public final class SequenceServiceGrpc {
 
   /**
    */
-  public static abstract class SequenceServiceImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request,
+    default void createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Sequence> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateSequenceMethod(), responseObserver);
     }
 
     /**
      */
-    public void getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request,
+    default void getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetSequenceReportMethod(), responseObserver);
     }
 
     /**
      */
-    public void attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request,
+    default void attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAttemptSequenceMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getCreateSequenceMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.CreateSequenceRequest,
-                com.google.showcase.v1beta1.Sequence>(
-                  this, METHODID_CREATE_SEQUENCE)))
-          .addMethod(
-            getGetSequenceReportMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.GetSequenceReportRequest,
-                com.google.showcase.v1beta1.SequenceReport>(
-                  this, METHODID_GET_SEQUENCE_REPORT)))
-          .addMethod(
-            getAttemptSequenceMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.AttemptSequenceRequest,
-                com.google.protobuf.Empty>(
-                  this, METHODID_ATTEMPT_SEQUENCE)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service SequenceService.
    */
-  public static final class SequenceServiceStub extends io.grpc.stub.AbstractAsyncStub<SequenceServiceStub> {
+  public static abstract class SequenceServiceImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return SequenceServiceGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service SequenceService.
+   */
+  public static final class SequenceServiceStub
+      extends io.grpc.stub.AbstractAsyncStub<SequenceServiceStub> {
     private SequenceServiceStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -244,8 +231,10 @@ public final class SequenceServiceGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service SequenceService.
    */
-  public static final class SequenceServiceBlockingStub extends io.grpc.stub.AbstractBlockingStub<SequenceServiceBlockingStub> {
+  public static final class SequenceServiceBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<SequenceServiceBlockingStub> {
     private SequenceServiceBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -280,8 +269,10 @@ public final class SequenceServiceGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service SequenceService.
    */
-  public static final class SequenceServiceFutureStub extends io.grpc.stub.AbstractFutureStub<SequenceServiceFutureStub> {
+  public static final class SequenceServiceFutureStub
+      extends io.grpc.stub.AbstractFutureStub<SequenceServiceFutureStub> {
     private SequenceServiceFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -327,10 +318,10 @@ public final class SequenceServiceGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final SequenceServiceImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(SequenceServiceImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -365,6 +356,32 @@ public final class SequenceServiceGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getCreateSequenceMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.CreateSequenceRequest,
+              com.google.showcase.v1beta1.Sequence>(
+                service, METHODID_CREATE_SEQUENCE)))
+        .addMethod(
+          getGetSequenceReportMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.GetSequenceReportRequest,
+              com.google.showcase.v1beta1.SequenceReport>(
+                service, METHODID_GET_SEQUENCE_REPORT)))
+        .addMethod(
+          getAttemptSequenceMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.AttemptSequenceRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_ATTEMPT_SEQUENCE)))
+        .build();
   }
 
   private static abstract class SequenceServiceBaseDescriptorSupplier
