@@ -11,7 +11,6 @@ import com.google.showcase.v1beta1.ComplianceData;
 import com.google.showcase.v1beta1.ComplianceGroup;
 import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.ComplianceSuite;
-import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class ITHttpAnnotation {
         ComplianceSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                ComplianceSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
@@ -59,19 +58,19 @@ public class ITHttpAnnotation {
     complianceValidRpcMap =
         ImmutableMap.of(
             "Compliance.RepeatDataBody",
-            x -> complianceClient.repeatDataBody(x),
+            complianceClient::repeatDataBody,
             "Compliance.RepeatDataBodyInfo",
-            x -> complianceClient.repeatDataBodyInfo(x),
+            complianceClient::repeatDataBodyInfo,
             "Compliance.RepeatDataQuery",
-            x -> complianceClient.repeatDataQuery(x),
+            complianceClient::repeatDataQuery,
             "Compliance.RepeatDataSimplePath",
-            x -> complianceClient.repeatDataSimplePath(x),
+            complianceClient::repeatDataSimplePath,
             "Compliance.RepeatDataBodyPut",
-            x -> complianceClient.repeatDataBodyPut(x),
+            complianceClient::repeatDataBodyPut,
             "Compliance.RepeatDataBodyPatch",
-            x -> complianceClient.repeatDataBodyPatch(x),
+            complianceClient::repeatDataBodyPatch,
             "Compliance.RepeatDataPathResource",
-            x -> complianceClient.repeatDataPathResource(x));
+            complianceClient::repeatDataPathResource);
   }
 
   @After
@@ -79,8 +78,14 @@ public class ITHttpAnnotation {
     complianceClient.close();
   }
 
+  /*
+  This test loops through all the testing groups (which test different aspects of the http annotation)
+  and calls the listed RPC Names (which are the different HttpVerbs) with the given request. The response's
+  info should be the same as the request's. This tests that the request is set correctly into the corresponding
+  URL/Body/Query.
+   */
   @Test
-  public void testCompliance() {
+  public void testHttpAnnotations() {
     for (ComplianceGroup compliancegroup : complianceSuite.getGroupList()) {
       List<String> validRpcList =
           compliancegroup.getRpcsList().stream()
