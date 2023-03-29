@@ -279,7 +279,7 @@ def java_gapic_library(
         name = resource_name_name,
         srcs = ["%s-resource-name.srcjar" % srcjar_name],
         deps = [
-            "@com_google_api_api_common//jar",
+            "@maven//:com_google_api_api_common",
             "@com_google_guava_guava//jar",
             "@javax_annotation_javax_annotation_api//jar",
         ],
@@ -296,11 +296,11 @@ def java_gapic_library(
         "@com_google_guava_guava//jar",
         "@com_google_code_findbugs_jsr305//jar",
         "@org_threeten_threetenbp//jar",
-        "@io_opencensus_opencensus_api//jar",
+        "@maven//:io_opencensus_opencensus_api",
         "@com_google_auth_google_auth_library_credentials//jar",
         "@com_google_auth_google_auth_library_oauth2_http//jar",
         "@com_google_http_client_google_http_client//jar",
-        "@javax_annotation_javax_annotation_api//jar",
+        "@maven//:javax_annotation_javax_annotation_api",
     ]
 
     if not transport or transport == "grpc":
