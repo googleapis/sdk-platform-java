@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +74,18 @@ public class ITServerSideStreaming {
     }
 
     assertThat(responses)
+        .containsExactlyElementsIn(
+            ImmutableList.of(
+                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
+        .inOrder();
+  }
+
+  @Test
+  public void testGrpc_receiveStreamedContentStreamAPI() {
+    String content = "The rain in Spain stays mainly on the plain!";
+    ServerStream<EchoResponse> responseStream =
+        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
+    assertThat(responseStream.stream().collect(Collectors.toList()))
         .containsExactlyElementsIn(
             ImmutableList.of(
                 "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
