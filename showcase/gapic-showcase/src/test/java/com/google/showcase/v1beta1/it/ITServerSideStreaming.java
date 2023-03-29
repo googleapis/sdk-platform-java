@@ -85,7 +85,10 @@ public class ITServerSideStreaming {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
-    assertThat(responseStream.stream().collect(Collectors.toList()))
+    assertThat(responseStream
+        .stream()
+        .map(EchoResponse::getContent)
+        .collect(Collectors.toList()))
         .containsExactlyElementsIn(
             ImmutableList.of(
                 "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
