@@ -35,7 +35,6 @@ import java.util.List;
 /** Provider of custom REST ClientInterceptors. */
 @BetaApi(
     "The surface for adding custom interceptors is not stable yet and may change in the future.")
-@FunctionalInterface
 public interface HttpJsonInterceptorProvider {
 
   /**
