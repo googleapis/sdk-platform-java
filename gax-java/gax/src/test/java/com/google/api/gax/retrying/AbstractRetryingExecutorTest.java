@@ -236,15 +236,15 @@ public abstract class AbstractRetryingExecutorTest {
         getExecutor(getAlgorithm(retrySettings, 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     boolean res = future.cancel(false);
-
     assertTrue(res);
+    assertTrue(future.isCancelled());
+
+    // Assert that the callable's call() is not invoked
+    verifyNoMoreInteractions(tracer);
 
     future.setAttemptFuture(executor.submit(future));
-
     assertFutureCancel(future);
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
-
-    verifyNoMoreInteractions(tracer);
   }
 
   @Test
