@@ -6,3 +6,4 @@ jinja2
 keyring
 secretstorage
 cryptography>=39.0.1
+certifi>=2022.12.07
