@@ -280,8 +280,8 @@ def java_gapic_library(
         srcs = ["%s-resource-name.srcjar" % srcjar_name],
         deps = [
             "@maven//:com_google_api_api_common",
-            "@com_google_guava_guava//jar",
-            "@javax_annotation_javax_annotation_api//jar",
+            "@maven//:com_google_guava_guava",
+            "@maven//:javax_annotation_javax_annotation_api",
         ],
         **kwargs
     )
@@ -291,15 +291,15 @@ def java_gapic_library(
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_protobuf//:protobuf_java",
-        "@com_google_api_api_common//jar",
+        "@maven//:com_google_api_api_common",
         "@com_google_api_gax_java//gax:gax",
-        "@com_google_guava_guava//jar",
-        "@com_google_code_findbugs_jsr305//jar",
-        "@org_threeten_threetenbp//jar",
+        "@maven//:com_google_guava_guava",
+        "@maven//:com_google_code_findbugs_jsr305",
+        "@maven//:org_threeten_threetenbp",
         "@maven//:io_opencensus_opencensus_api",
-        "@com_google_auth_google_auth_library_credentials//jar",
-        "@com_google_auth_google_auth_library_oauth2_http//jar",
-        "@com_google_http_client_google_http_client//jar",
+        "@maven//:com_google_auth_google_auth_library_credentials",
+        "@maven//:com_google_auth_google_auth_library_oauth2_http",
+        "@maven//:com_google_http_client_google_http_client",
         "@maven//:javax_annotation_javax_annotation_api",
     ]
 
@@ -334,17 +334,17 @@ def java_gapic_library(
     actual_test_deps = [
         "@com_google_googleapis//google/type:type_java_proto",  # Commonly used.
         "@com_google_api_gax_java//gax:gax_testlib",
-        "@com_google_code_gson_gson//jar",
-        "@junit_junit//jar",
+        "@maven//:com_google_code_gson_gson",
+        "@maven//:junit_junit",
     ]
 
     if not transport or transport == "grpc":
         actual_test_deps += [
             "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
-            "@io_grpc_grpc_java//auth:auth",
-            "@io_grpc_grpc_netty_shaded//jar",
-            "@io_grpc_grpc_java//stub:stub",
-            "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+            "@maven//:io_grpc_grpc_auth",
+            "@maven//:io_grpc_grpc_netty_shaded",
+            "@maven//:io_grpc_grpc_stub",
+            "@maven//:io_opencensus_opencensus_contrib_grpc_metrics",
         ]
     elif transport == "rest":
         actual_test_deps += [
@@ -353,9 +353,9 @@ def java_gapic_library(
     elif transport == "grpc+rest":
         actual_test_deps += [
             "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
-            "@io_grpc_grpc_java//auth:auth",
-            "@io_grpc_grpc_netty_shaded//jar",
-            "@io_grpc_grpc_java//stub:stub",
+            "@maven//:io_grpc_grpc_auth",
+            "@maven//:io_grpc_grpc_netty_shaded",
+            "@maven//:io_grpc_grpc_stub",
             "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
             "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
         ]

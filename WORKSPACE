@@ -2,6 +2,11 @@ workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+local_repository(
+   name = "com_google_api_gax_java",
+   path = "gax-java",
+)
+
 _googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
 http_archive(
@@ -121,21 +126,19 @@ maven_install(
     artifacts = [
       "io.opencensus:opencensus-api:0.31.1",
       "com.google.api:api-common:2.6.3",
-"javax.annotation:javax.annotation-api:1.3.2",
-    ],
-    repositories = ["https://repo.maven.apache.org/maven2/"],
-)
-maven_install(
-    name = "org_threeten_threetenbp",
-    artifacts = [
-      "org.threeten:threetenbp:1.6.7"
-    ],
-    repositories = ["https://repo.maven.apache.org/maven2/"],
-)
-maven_install(
-    name = "com_google_guava_guava",
-    artifacts = [
-      "com.google.guava:guava:31.1-jre"
+      "javax.annotation:javax.annotation-api:1.3.2",
+      "com.google.api:api-common:2.6.3",
+      "com.google.http-client:google-http-client:1.43.1",
+      "com.google.code.gson:gson:2.10.1",
+      "com.google.auth:google-auth-library-credentials:1.16.0",
+      "com.google.auth:google-auth-library-oauth2-http:1.16.0",
+      "com.google.guava:guava:31.1-jre",
+      "org.threeten:threetenbp:1.6.7",
+      "junit:junit:4.13.2",
+      "com.google.code.findbugs:jsr305:3.0.2",
+      "io.grpc:grpc-auth:1.54.0",
+      "io.grpc:grpc-netty-shaded:1.54.0",
+      "io.grpc:grpc-stub:1.54.0",
     ],
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
