@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.junit.After;
@@ -80,11 +81,12 @@ public class ITHttpAnnotation {
 
   @Test
   public void testHttpAnnotations_conversionsResources() {
-    ComplianceGroup complianceGroup =
+    Optional<ComplianceGroup> complianceGroupOptional =
         complianceSuite.getGroupList().stream()
             .filter(x -> x.getName().equals("Fully working conversions, resources"))
-            .findFirst()
-            .get();
+            .findFirst();
+    assertThat(complianceGroupOptional.isPresent()).isTrue();
+    ComplianceGroup complianceGroup = complianceGroupOptional.get();
     List<String> validRpcList =
         complianceGroup.getRpcsList().stream()
             .filter(complianceValidRpcMap::containsKey)
@@ -101,11 +103,12 @@ public class ITHttpAnnotation {
 
   @Test
   public void testHttpAnnotations_bindings() {
-    ComplianceGroup complianceGroup =
-        complianceSuite.getGroupList().stream()
-            .filter(x -> x.getName().equals("Binding selection testing"))
-            .findFirst()
-            .get();
+    Optional<ComplianceGroup> complianceGroupOptional =
+            complianceSuite.getGroupList().stream()
+                    .filter(x -> x.getName().equals("Binding selection testing"))
+                    .findFirst();
+    assertThat(complianceGroupOptional.isPresent()).isTrue();
+    ComplianceGroup complianceGroup = complianceGroupOptional.get();
     List<String> validRpcList =
         complianceGroup.getRpcsList().stream()
             .filter(complianceValidRpcMap::containsKey)
@@ -122,11 +125,12 @@ public class ITHttpAnnotation {
 
   @Test
   public void testHttpAnnotations_nonPathRequests() {
-    ComplianceGroup complianceGroup =
-        complianceSuite.getGroupList().stream()
-            .filter(x -> x.getName().equals("Cases that apply to non-path requests"))
-            .findFirst()
-            .get();
+    Optional<ComplianceGroup> complianceGroupOptional =
+            complianceSuite.getGroupList().stream()
+                    .filter(x -> x.getName().equals("Cases that apply to non-path requests"))
+                    .findFirst();
+    assertThat(complianceGroupOptional.isPresent()).isTrue();
+    ComplianceGroup complianceGroup = complianceGroupOptional.get();
     List<String> validRpcList =
         complianceGroup.getRpcsList().stream()
             .filter(complianceValidRpcMap::containsKey)
@@ -143,11 +147,12 @@ public class ITHttpAnnotation {
 
   @Test
   public void testHttpAnnotations_conversionsNoResources() {
-    ComplianceGroup complianceGroup =
-        complianceSuite.getGroupList().stream()
-            .filter(x -> x.getName().equals("Fully working conversions, no resources"))
-            .findFirst()
-            .get();
+    Optional<ComplianceGroup> complianceGroupOptional =
+            complianceSuite.getGroupList().stream()
+                    .filter(x -> x.getName().equals("Fully working conversions, no resources"))
+                    .findFirst();
+    assertThat(complianceGroupOptional.isPresent()).isTrue();
+    ComplianceGroup complianceGroup = complianceGroupOptional.get();
     List<String> validRpcList =
         complianceGroup.getRpcsList().stream()
             .filter(complianceValidRpcMap::containsKey)
