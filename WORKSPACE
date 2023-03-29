@@ -7,6 +7,14 @@ local_repository(
    path = "gax-java",
 )
 
+load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
+
+com_google_api_gax_java_properties(
+    name = "com_google_api_gax_java_properties",
+    file = "@com_google_api_gax_java//:dependencies.properties",
+)
+
+
 _googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
 http_archive(
@@ -139,6 +147,15 @@ maven_install(
       "io.grpc:grpc-auth:1.54.0",
       "io.grpc:grpc-netty-shaded:1.54.0",
       "io.grpc:grpc-stub:1.54.0",
+    ],
+    repositories = ["https://repo.maven.apache.org/maven2/"],
+)
+
+# For gRPC build
+maven_install(
+    name = "com_google_guava_guava",
+    artifacts = [
+      "com.google.guava:guava:31.1-jre",
     ],
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
