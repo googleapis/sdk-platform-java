@@ -112,6 +112,9 @@ public class ScheduledRetryingExecutor<ResponseT>
   @Override
   public ApiFuture<ResponseT> submit(RetryingFuture<ResponseT> retryingFuture) {
     try {
+      if (retryingFuture.isCancelled()) {
+        return ApiFutures.immediateCancelledFuture();
+      }
       ListenableFuture<ResponseT> attemptFuture =
           scheduler.schedule(
               retryingFuture.getCallable(),

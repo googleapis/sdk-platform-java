@@ -223,14 +223,14 @@ public abstract class AbstractRetryingExecutorTest {
 
   @Test
   public void testCancelOuterFutureBeforeStart() throws Exception {
-    FailingCallable callable = new FailingCallable(4, "request", "SUCCESS", tracer);
+    FailingCallable callable = new FailingCallable(0, "request", "SUCCESS", tracer);
 
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1_000L))
             .setMaxRetryDelay(Duration.ofMillis(1_000L))
-            .setTotalTimeout(Duration.ofMillis(10_0000L))
+            .setTotalTimeout(Duration.ofMillis(10_000L))
             .build();
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(retrySettings, 0, null));
