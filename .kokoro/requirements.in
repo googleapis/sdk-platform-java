@@ -5,3 +5,4 @@ click<8.1.0
 jinja2
 keyring
 secretstorage
+cryptography>=39.0.1
