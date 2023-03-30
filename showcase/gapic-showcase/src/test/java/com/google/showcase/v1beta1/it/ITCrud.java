@@ -25,32 +25,39 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class ITCrud {
 
-  @Parameterized.Parameters
-  public static IdentitySettings[] data() throws IOException, GeneralSecurityException {
-    return new IdentitySettings[] {
-      // gRPC Identity Settings
-      IdentitySettings.newBuilder()
-          .setCredentialsProvider(NoCredentialsProvider.create())
-          .setTransportChannelProvider(
-              InstantiatingGrpcChannelProvider.newBuilder()
-                  .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                  .build())
-          .build(),
-      // HttpJson Identity Settings
-      IdentitySettings.newHttpJsonBuilder()
-          .setCredentialsProvider(NoCredentialsProvider.create())
-          .setTransportChannelProvider(
-              EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                  .setHttpTransport(
-                      new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                  .setEndpoint("http://localhost:7469")
-                  .build())
-          .build()
-    };
+  @Parameterized.Parameters(name = "CRUD Transport: {0}")
+  public static String[] transports() {
+    return new String[] {"gRPC", "httpjson"};
   }
 
   @Parameterized.Parameter(0)
-  public IdentitySettings identitySettings;
+  public String transportName;
+
+  private IdentitySettings getTransportSettings(String transportName)
+      throws IOException, GeneralSecurityException {
+    switch (transportName) {
+      case "gRPC":
+        return IdentitySettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                InstantiatingGrpcChannelProvider.newBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+      case "httpjson":
+        return IdentitySettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+      default:
+        throw new IllegalArgumentException("Invalid transport name: " + transportName);
+    }
+  }
 
   private void cleanupData(IdentityClient identityClient) {
     IdentityClient.ListUsersPagedResponse pagedResponse =
@@ -63,7 +70,8 @@ public class ITCrud {
   }
 
   @Test
-  public void testUserCRUD() throws IOException {
+  public void testUserCRUD() throws IOException, GeneralSecurityException {
+    IdentitySettings identitySettings = getTransportSettings(transportName);
     try (IdentityClient identityClient = IdentityClient.create(identitySettings)) {
       cleanupData(identityClient);
 
