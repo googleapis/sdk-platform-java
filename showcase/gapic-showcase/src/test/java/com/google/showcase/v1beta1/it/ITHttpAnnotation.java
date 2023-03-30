@@ -95,25 +95,18 @@ public class ITHttpAnnotation {
     complianceClient.close();
   }
 
-  private ComplianceGroup getComplianceGroup(String groupName) {
+  @Test
+  public void testComplianceGroup() {
     Optional<ComplianceGroup> complianceGroupOptional =
         complianceSuite.getGroupList().stream()
             .filter(x -> x.getName().equals(groupName))
             .findFirst();
-    // throws NoSuchElementException if there is no ComplianceGroup name match
-    return complianceGroupOptional.get();
-  }
-
-  private List<String> getValidRpcList(ComplianceGroup complianceGroup) {
-    return complianceGroup.getRpcsList().stream()
-        .filter(complianceValidRpcMap::containsKey)
-        .collect(Collectors.toList());
-  }
-
-  @Test
-  public void testComplianceGroup() {
-    ComplianceGroup complianceGroup = getComplianceGroup(groupName);
-    List<String> validRpcList = getValidRpcList(complianceGroup);
+    assertThat(complianceGroupOptional.isPresent()).isTrue();
+    ComplianceGroup complianceGroup = complianceGroupOptional.get();
+    List<String> validRpcList =
+        complianceGroup.getRpcsList().stream()
+            .filter(complianceValidRpcMap::containsKey)
+            .collect(Collectors.toList());
     for (String rpcName : validRpcList) {
       Function<RepeatRequest, RepeatResponse> rpc = complianceValidRpcMap.get(rpcName);
       for (RepeatRequest repeatRequest : complianceGroup.getRequestsList()) {
