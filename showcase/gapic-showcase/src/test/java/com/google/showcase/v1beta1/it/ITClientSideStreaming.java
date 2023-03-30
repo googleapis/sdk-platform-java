@@ -32,7 +32,6 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -45,7 +44,7 @@ public class ITClientSideStreaming {
   private EchoClient grpcClient;
 
   @Before
-  public void createClients() throws IOException, GeneralSecurityException {
+  public void createClients() throws IOException {
     // Create gRPC Echo Client
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -69,15 +68,10 @@ public class ITClientSideStreaming {
     CollectStreamObserver<EchoResponse> responseObserver = new CollectStreamObserver<>();
     ApiStreamObserver<EchoRequest> requestObserver =
         grpcClient.collectCallable().clientStreamingCall(responseObserver);
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("The").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("rain").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("in").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("Spain").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("stays").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("mainly").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("on").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("the").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("plain").build());
+    String content = "The rain in Spain stays mainly on the plain";
+    for (String message : content.split("\\s")) {
+      requestObserver.onNext(EchoRequest.newBuilder().setContent(message).build());
+    }
     requestObserver.onCompleted();
 
     List<EchoResponse> serverResponse = responseObserver.future().get();
@@ -91,10 +85,10 @@ public class ITClientSideStreaming {
     CollectStreamObserver<EchoResponse> responseObserver = new CollectStreamObserver<>();
     ApiStreamObserver<EchoRequest> requestObserver =
         grpcClient.collectCallable().clientStreamingCall(responseObserver);
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("The").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("rain").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("in").build());
-    requestObserver.onNext(EchoRequest.newBuilder().setContent("Spain").build());
+    String content = "The rain in Spain stays mainly on the plain";
+    for (String message : content.split("\\s")) {
+      requestObserver.onNext(EchoRequest.newBuilder().setContent(message).build());
+    }
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
     requestObserver.onNext(EchoRequest.newBuilder().setError(cancelledStatus).build());
@@ -107,6 +101,11 @@ public class ITClientSideStreaming {
     assertThat(cancelledException.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
   }
 
+  /**
+   * Implementation of {@link ApiStreamObserver} to accumulate streamed content.
+   *
+   * @param <T>
+   */
   private class CollectStreamObserver<T> implements ApiStreamObserver<T> {
 
     private final SettableApiFuture<List<T>> future = SettableApiFuture.create();
