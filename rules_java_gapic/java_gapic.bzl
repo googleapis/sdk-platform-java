@@ -356,7 +356,7 @@ def java_gapic_library(
             "@maven//:io_grpc_grpc_auth",
             "@maven//:io_grpc_grpc_netty_shaded",
             "@maven//:io_grpc_grpc_stub",
-            "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
+            "@maven//:io_opencensus_opencensus_contrib_grpc_metrics",
             "@com_google_api_gax_java//gax-httpjson:gax_httpjson_testlib",
         ]
     else:

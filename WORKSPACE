@@ -133,6 +133,7 @@ http_archive(
 maven_install(
     artifacts = [
       "io.opencensus:opencensus-api:0.31.1",
+      "io.opencensus:opencensus-contrib-grpc-metrics:0.31.1",
       "com.google.api:api-common:2.6.3",
       "javax.annotation:javax.annotation-api:1.3.2",
       "com.google.api:api-common:2.6.3",
