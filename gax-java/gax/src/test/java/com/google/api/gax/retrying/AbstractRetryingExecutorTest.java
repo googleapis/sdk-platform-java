@@ -42,6 +42,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import com.google.api.core.ApiFuture;
@@ -239,12 +240,12 @@ public abstract class AbstractRetryingExecutorTest {
     assertTrue(res);
     assertTrue(future.isCancelled());
 
-    // Assert that the callable's call() is not invoked
-    verifyNoMoreInteractions(tracer);
-
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
-    assertFutureCancel(future);
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
+
+    // Assert that the callable's call() is not invoked
+    verifyNoInteractions(tracer);
   }
 
   @Test
