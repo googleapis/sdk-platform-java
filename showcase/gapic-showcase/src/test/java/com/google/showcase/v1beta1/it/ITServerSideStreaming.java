@@ -20,7 +20,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
@@ -32,7 +31,6 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.junit.After;
@@ -44,13 +42,13 @@ public class ITServerSideStreaming {
   private EchoClient grpcClient;
 
   @Before
-  public void createClients() throws IOException, GeneralSecurityException {
+  public void createClients() throws IOException {
     // Create gRPC Echo Client
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                InstantiatingGrpcChannelProvider.newBuilder()
+                EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
             .build();

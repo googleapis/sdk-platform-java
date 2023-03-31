@@ -21,7 +21,6 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
@@ -50,7 +49,7 @@ public class ITClientSideStreaming {
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                InstantiatingGrpcChannelProvider.newBuilder()
+                EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
             .build();
