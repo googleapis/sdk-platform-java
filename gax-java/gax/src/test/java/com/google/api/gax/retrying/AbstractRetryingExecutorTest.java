@@ -223,8 +223,11 @@ public abstract class AbstractRetryingExecutorTest {
   }
 
   @Test
-  public void testCancelOuterFutureBeforeStart() throws Exception {
-    FailingCallable callable = new FailingCallable(0, "request", "SUCCESS", tracer);
+  public void testCancelOuterFutureBeforeStart() {
+    // Use MockCallable instead of FailingCallable as we do not need the request to be re-tried.
+    // For this test, the callable should attempt to run and then see that the external future
+    // is cancelled and that the callable's execution has ended.
+    MockCallable callable = new MockCallable(tracer, "request", "SUCCESS");
 
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
@@ -244,7 +247,7 @@ public abstract class AbstractRetryingExecutorTest {
     future.setAttemptFuture(executor.submit(future));
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
 
-    // Assert that the callable's call() is not invoked
+    // Assert that the tracer attempt has run
     verifyNoInteractions(tracer);
   }
 
