@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -27,6 +42,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+// This test runs from the parameters in the compliance_suite.json file
+// The file is downloaded from the gapic-showcase repo. Each compliance
+// group is a set of HttpJson behaviors we want to test for. Each group
+// tests the product of the rpc list and requests list.
 @RunWith(Parameterized.class)
 public class ITHttpAnnotation {
 
@@ -45,7 +64,7 @@ public class ITHttpAnnotation {
 
   private ComplianceSuite complianceSuite;
   private ComplianceClient complianceClient;
-  private Map<String, Function<RepeatRequest, RepeatResponse>> complianceValidRpcMap;
+  private Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
 
   @Before
   public void createClient() throws IOException, GeneralSecurityException {
@@ -72,7 +91,7 @@ public class ITHttpAnnotation {
     complianceClient = ComplianceClient.create(httpjsonComplianceSettings);
 
     // Mapping of Compliance Suite file RPC Names to ComplianceClient methods
-    complianceValidRpcMap =
+    validComplianceRpcMap =
         ImmutableMap.of(
             "Compliance.RepeatDataBody",
             complianceClient::repeatDataBody,
@@ -95,6 +114,9 @@ public class ITHttpAnnotation {
     complianceClient.close();
   }
 
+  // Verify that the input's info is the same as the response's info
+  // This ensures that the entire group's behavior over HttpJson
+  // works as intended
   @Test
   public void testComplianceGroup() {
     Optional<ComplianceGroup> complianceGroupOptional =
@@ -105,10 +127,10 @@ public class ITHttpAnnotation {
     ComplianceGroup complianceGroup = complianceGroupOptional.get();
     List<String> validRpcList =
         complianceGroup.getRpcsList().stream()
-            .filter(complianceValidRpcMap::containsKey)
+            .filter(validComplianceRpcMap::containsKey)
             .collect(Collectors.toList());
     for (String rpcName : validRpcList) {
-      Function<RepeatRequest, RepeatResponse> rpc = complianceValidRpcMap.get(rpcName);
+      Function<RepeatRequest, RepeatResponse> rpc = validComplianceRpcMap.get(rpcName);
       for (RepeatRequest repeatRequest : complianceGroup.getRequestsList()) {
         ComplianceData expectedData = repeatRequest.getInfo();
         RepeatResponse response = rpc.apply(repeatRequest);
