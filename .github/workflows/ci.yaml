@@ -174,7 +174,7 @@ jobs:
       - run: python3 --version
       - run: python3 -m pip install --require-hashes -r .kokoro/requirements.txt
       - run: python3 -m releasetool publish-reporter-script > /tmp/publisher-script
-      - run: . tmp/publisher-script
+      - run: . /tmp/publisher-script
 
   showcase:
     runs-on: ubuntu-22.04
