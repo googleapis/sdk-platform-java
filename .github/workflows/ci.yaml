@@ -169,7 +169,6 @@ jobs:
   requirements-kokoro:
     runs-on: ubuntu-latest
     container: gcr.io/cloud-devrel-public-resources/java11
-    shell: bash
     steps:
       - uses: actions/checkout@v3
       - run: python3 --version
