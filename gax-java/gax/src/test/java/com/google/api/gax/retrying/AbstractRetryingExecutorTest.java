@@ -247,7 +247,7 @@ public abstract class AbstractRetryingExecutorTest {
     future.setAttemptFuture(executor.submit(future));
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
 
-    // Assert that the tracer attempt has run
+    // Assert that no tracer attempt has run
     verifyNoInteractions(tracer);
   }
 
