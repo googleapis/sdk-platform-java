@@ -64,7 +64,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContent() {
+  public void testGrpc_receiveStreamedContent() throws GeneralSecurityException {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -81,7 +81,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContentStreamAPI() {
+  public void testGrpc_receiveStreamedContentStreamAPI() throws GeneralSecurityException {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -93,7 +93,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_serverError_receiveErrorAfterLastWordInStream() {
+  public void testGrpc_serverError_receiveErrorAfterLastWordInStream() throws GeneralSecurityException {
     String content = "The rain in Spain";
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
