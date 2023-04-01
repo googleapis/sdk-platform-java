@@ -93,6 +93,7 @@ public class ServerStream<V> implements Iterable<V> {
 
   /**
    * Returns a sequential {@code Stream} with server responses as its source.
+   *
    * @return a sequential {@code Stream} over the elements in server responses
    */
   public Stream<V> stream() {
