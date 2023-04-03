@@ -32,6 +32,7 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.junit.After;
@@ -45,7 +46,7 @@ public class ITServerSideStreaming {
   private EchoClient httpjsonClient;
 
   @Before
-  public void createClients() throws IOException {
+  public void createClients() throws IOException, GeneralSecurityException {
     // Create gRPC Echo Client
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
