@@ -26,6 +26,16 @@
       "matchStrings": ["version\\.io_grpc=(?<currentValue>.+?)\\n"],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^\\.github/workflows/.*\\.yaml$"],
+      "matchStrings": ["SHOWCASE_VERSION: (?<currentValue>.+?)\\n"],
+      "datasourceTemplate": "go"
+    },
+    {
+      "fileMatch": ["^showcase/gapic-showcase/pom\\.xml$"],
+      "matchStrings": ["<gapic-showcase.version>(?<currentValue>.+?)</gapic-showcase.version>\\n"],
+      "datasourceTemplate": "go"
     }
   ],
   "packageRules": [
