@@ -7,7 +7,8 @@
 # - Modifies the gapic-generator-bom version in java-shared-dependencies.
 # - Updates the version of native-maven-plugin in java-shared-config.
 # - Updates the java-shared-config and java-shared-dependencies versions in the handwritten libraries listed.
-# - Adds all the repositories with the associated changes to the submodule project.
+# - Adds gapic-generator-java, java-shared-config and handwritten libraries listed previously
+#   with the associated changes, to the submodule project.
 
 set -eo pipefail
 
