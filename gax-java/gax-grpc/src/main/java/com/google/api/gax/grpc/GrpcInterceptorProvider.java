@@ -33,7 +33,6 @@ import io.grpc.ClientInterceptor;
 import java.util.List;
 
 /** Provider of custom gRPC ClientInterceptors. */
-@FunctionalInterface
 public interface GrpcInterceptorProvider {
 
   /**
