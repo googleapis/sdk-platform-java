@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -11,6 +26,7 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.ListUsersRequest;
+import com.google.showcase.v1beta1.ListUsersResponse;
 import com.google.showcase.v1beta1.UpdateUserRequest;
 import com.google.showcase.v1beta1.User;
 import java.io.IOException;
@@ -58,67 +74,81 @@ public class ITCrud {
     }
   }
 
+  // This test runs through the four CRUD operations. The operations
+  // build off each other and all exist inside this one test case
+  // The tests run the order of:
+  // 1. Create (Jane Doe)
+  // 2. List (Jane Doe has been created)
+  // 3. Update (Jane Doe has been updated)
+  // 4. Delete (Jane Doe no longer exists)
   @Test
-  public void testHttpJson_UserCRUD() {
-    CreateUserRequest createUserRequest =
-        CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setDisplayName("Jane Doe")
-                    .setEmail("janedoe@example.com")
-                    .setNickname("Doe")
-                    .setHeightFeet(5)
-                    .build())
+  public void testHttpJson_CRUD() {
+    User userRequest =
+        User.newBuilder()
+            .setDisplayName("Jane Doe")
+            .setEmail("janedoe@example.com")
+            .setNickname("Doe")
+            .setHeightFeet(5)
+            .setAge(25)
             .build();
-    User user = httpJsonClient.createUser(createUserRequest);
-    User expected = createUserRequest.getUser();
+    CreateUserRequest createUserRequest =
+        CreateUserRequest.newBuilder().setUser(userRequest).build();
+    User createUserResponse = httpJsonClient.createUser(createUserRequest);
 
-    assertThat(user.getName()).isNotEmpty();
-    assertThat(user.getDisplayName()).isEqualTo(expected.getDisplayName());
-    assertThat(user.getEmail()).isEqualTo(expected.getEmail());
-    assertThat(user.getCreateTime()).isNotNull();
-    assertThat(user.getUpdateTime()).isNotNull();
-    assertThat(user.getNickname()).isEqualTo(expected.getNickname());
-    assertThat(user.getHeightFeet()).isEqualTo(expected.getHeightFeet());
-    assertThat(user.getAge()).isNotNull();
-    assertThat(user.getEnableNotifications()).isNotNull();
+    assertThat(createUserResponse.getDisplayName()).isEqualTo(userRequest.getDisplayName());
+    assertThat(createUserResponse.getEmail()).isEqualTo(userRequest.getEmail());
+    assertThat(createUserResponse.getNickname()).isEqualTo(userRequest.getNickname());
+    assertThat(createUserResponse.getHeightFeet()).isEqualTo(userRequest.getHeightFeet());
+    assertThat(createUserResponse.getAge()).isEqualTo(userRequest.getAge());
 
-    ListUsersRequest listUsersRequest = ListUsersRequest.newBuilder().setPageSize(5).build();
+    // Assert that the server populates these fields
+    assertThat(createUserResponse.getName()).isNotEmpty();
+    assertThat(createUserResponse.getCreateTime()).isNotNull();
+    assertThat(createUserResponse.getUpdateTime()).isNotNull();
+    assertThat(createUserResponse.getEnableNotifications()).isNotNull();
+
+    // Assert that only one User exists and that the user is Jane Doe
+    // We run this for both List (Pagination) and Get
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
-        httpJsonClient.listUsers(listUsersRequest);
-    assertThat(listUsersPagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(1);
+        httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+    ListUsersResponse listUsersResponse = listUsersPagedResponse.getPage().getResponse();
+    assertThat(listUsersResponse.getUsersList().size()).isEqualTo(1);
+    User listUserResponse = listUsersResponse.getUsers(0);
+    assertThat(listUserResponse).isEqualTo(createUserResponse);
 
-    User listUserResponse = listUsersPagedResponse.getPage().getResponse().getUsers(0);
-    assertThat(listUserResponse).isEqualTo(user);
+    // Get User
+    User getUserResponse = httpJsonClient.getUser(createUserResponse.getName());
+    assertThat(getUserResponse).isEqualTo(createUserResponse);
 
-    User getUserResponse = httpJsonClient.getUser(user.getName());
-    assertThat(getUserResponse).isEqualTo(user);
-
+    User expectedUpdatedUser =
+        createUserResponse
+            .toBuilder()
+            .setEmail("janedoe@jane.com")
+            .setHeightFeet(6.0)
+            .setEnableNotifications(true)
+            .build();
     UpdateUserRequest updateUserRequest =
         UpdateUserRequest.newBuilder()
-            .setUser(
-                user.toBuilder()
-                    .setEmail("janedoe@jane.com")
-                    .setHeightFeet(6.0)
-                    .setEnableNotifications(true)
-                    .build())
+            .setUser(expectedUpdatedUser)
             .setUpdateMask(
                 FieldMask.newBuilder()
                     .addAllPaths(Arrays.asList("email", "height_feet", "enable_notifications"))
                     .build())
             .build();
-    User updatedUser = httpJsonClient.updateUser(updateUserRequest);
+    User updateUserResponse = httpJsonClient.updateUser(updateUserRequest);
 
-    assertThat(updatedUser).isNotEqualTo(user);
-    assertThat(updatedUser.getEmail()).isNotEqualTo(user.getEmail());
-    assertThat(updatedUser.getHeightFeet()).isNotEqualTo(user.getHeightFeet());
+    // Assert that the fields are updated correctly
+    assertThat(updateUserResponse).isNotEqualTo(createUserResponse);
+    assertThat(updateUserResponse.getEmail()).isEqualTo(expectedUpdatedUser.getEmail());
+    assertThat(updateUserResponse.getHeightFeet()).isEqualTo(expectedUpdatedUser.getHeightFeet());
+    assertThat(updateUserResponse.getEnableNotifications())
+        .isEqualTo(expectedUpdatedUser.getEnableNotifications());
 
-    assertThat(updatedUser.getEnableNotifications()).isNotEqualTo(user.getEnableNotifications());
-    assertThat(updatedUser.getAge()).isNotNull();
+    httpJsonClient.deleteUser(
+        DeleteUserRequest.newBuilder().setName(createUserResponse.getName()).build());
 
-    httpJsonClient.deleteUser(DeleteUserRequest.newBuilder().setName(user.getName()).build());
-
-    listUsersPagedResponse = httpJsonClient.listUsers(listUsersRequest);
+    listUsersPagedResponse =
+        httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     assertThat(listUsersPagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
   }
 }
