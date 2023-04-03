@@ -20,12 +20,14 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
+import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import org.junit.After;
@@ -33,10 +35,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ITRetry {
+  private EchoClient grpcClient;
   private EchoClient httpJsonClient;
 
   @Before
   public void createClients() throws IOException, GeneralSecurityException {
+    // Create gRPC Echo Client
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                InstantiatingGrpcChannelProvider.newBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    grpcClient = EchoClient.create(grpcEchoSettings);
     // Create Http JSON Echo Client
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -53,14 +66,35 @@ public class ITRetry {
 
   @After
   public void destroyClient() {
+    grpcClient.close();
     httpJsonClient.close();
+  }
+
+  @Test
+  public void testGRPC_throwsDeadlineExceededException() {
+    // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for
+    // this test
+    int delayInSeconds = 20;
+    DeadlineExceededException exception =
+        assertThrows(
+            DeadlineExceededException.class,
+            () ->
+                grpcClient.block(
+                    BlockRequest.newBuilder()
+                        .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_Delay"))
+                        .setResponseDelay(
+                            com.google.protobuf.Duration.newBuilder()
+                                .setSeconds(delayInSeconds)
+                                .build())
+                        .build()));
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
   }
 
   @Test
   public void testHttpJson_throwsDeadlineExceededException() {
     // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for
     // this test
-    int delayInSeconds = 10;
+    int delayInSeconds = 20;
     DeadlineExceededException exception =
         assertThrows(
             DeadlineExceededException.class,
@@ -68,8 +102,7 @@ public class ITRetry {
                 httpJsonClient.block(
                     BlockRequest.newBuilder()
                         .setSuccess(
-                            BlockResponse.newBuilder()
-                                .setContent("httpjsonBlockContent_10SecDelay1"))
+                            BlockResponse.newBuilder().setContent("httpjsonBlockContent_Delay"))
                         .setResponseDelay(
                             com.google.protobuf.Duration.newBuilder()
                                 .setSeconds(delayInSeconds)

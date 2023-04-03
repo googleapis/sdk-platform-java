@@ -33,6 +33,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
 import com.google.api.gax.httpjson.HttpRequestRunnable.ResultListener;
 import com.google.api.gax.httpjson.HttpRequestRunnable.RunnableResult;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,8 +43,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
+import org.threeten.bp.Duration;
+import org.threeten.bp.Instant;
 
 /**
  * This class serves as main implementation of {@link HttpJsonClientCall} for REST transport and is
@@ -88,6 +94,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final HttpTransport httpTransport;
   private final Executor executor;
+  private final ScheduledExecutorService deadlineCancellationExecutor;
 
   //
   // Request-specific data (provided by client code) before we get a response.
@@ -128,6 +135,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     this.httpTransport = httpTransport;
     this.executor = executor;
     this.closed = false;
+    this.deadlineCancellationExecutor = Executors.newScheduledThreadPool(1);
   }
 
   @Override
@@ -160,6 +168,27 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       Preconditions.checkState(this.listener == null, "The call is already started");
       this.listener = responseListener;
       this.requestHeaders = requestHeaders;
+
+      // Check that the deadline hasn't expired. Otherwise, we close the connection immediately
+      long remainingNanos = 0;
+      Duration durationBetween = Duration.between(Instant.now(), callOptions.getDeadline());
+      if (!durationBetween.isNegative()) {
+        remainingNanos = durationBetween.toNanos();
+      }
+      this.deadlineCancellationExecutor.schedule(
+          () -> {
+            close(
+                StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+                "Deadline exceeded",
+                new HttpJsonStatusRuntimeException(
+                    StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+                    "Deadline exceeded",
+                    null),
+                true);
+            deliver();
+          },
+          remainingNanos,
+          TimeUnit.NANOSECONDS);
     }
   }
 
