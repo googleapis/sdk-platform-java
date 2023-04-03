@@ -66,7 +66,6 @@ public class TemplatedResourceName implements Map<String, String> {
   // =====================
 
   /** Represents a resource name resolver which can be registered with this class. */
-  @FunctionalInterface
   public interface Resolver {
     /** Resolves the resource name into a resource by calling the underlying API. */
     <T> T resolve(Class<T> resourceType, TemplatedResourceName name, @Nullable String version);
