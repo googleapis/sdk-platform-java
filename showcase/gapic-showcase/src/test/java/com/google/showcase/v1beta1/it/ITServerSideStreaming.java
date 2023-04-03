@@ -32,6 +32,7 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class ITServerSideStreaming {
   private EchoClient httpjsonClient;
 
   @Before
-  public void createClients() throws IOException {
+  public void createClients() throws IOException, GeneralSecurityException {
     // Create gRPC Echo Client
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -78,7 +79,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContent() throws GeneralSecurityException {
+  public void testGrpc_receiveStreamedContent() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -95,7 +96,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContentStreamAPI() throws GeneralSecurityException {
+  public void testGrpc_receiveStreamedContentStreamAPI() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -107,7 +108,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_serverError_receiveErrorAfterLastWordInStream() throws GeneralSecurityException {
+  public void testGrpc_serverError_receiveErrorAfterLastWordInStream() {
     String content = "The rain in Spain";
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
