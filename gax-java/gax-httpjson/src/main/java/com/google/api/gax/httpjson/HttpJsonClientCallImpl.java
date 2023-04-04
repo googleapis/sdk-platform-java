@@ -169,32 +169,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       this.listener = responseListener;
       this.requestHeaders = requestHeaders;
     }
-    // Check that the call options has a deadline
-    if (callOptions.getDeadline() != null) {
-      // Check that the deadline hasn't expired. Otherwise, we close the connection immediately
-      long remainingNanos = 0;
-      Duration durationBetween = Duration.between(Instant.now(), callOptions.getDeadline());
-      if (!durationBetween.isNegative()) {
-        remainingNanos = durationBetween.toNanos();
-      }
-      this.deadlineCancellationExecutor.schedule(
-          this::closeAndNotifyListeners, remainingNanos, TimeUnit.NANOSECONDS);
-    }
-  }
-
-  // We do not need to trigger the deliver() loop again as we have already closed
-  // the runnable task and added the OnCloseNotificationTask. We can notify the
-  // FutureListener that the there is an exception (DEADLINE_EXCEEDED)
-  private void closeAndNotifyListeners() {
-    synchronized (lock) {
-      close(
-          StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
-          "Deadline exceeded",
-          new HttpJsonStatusRuntimeException(
-              StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
-          true);
-    }
-    notifyListeners();
   }
 
   @Override
@@ -253,6 +227,33 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       localRunnable = requestRunnable;
     }
     executor.execute(localRunnable);
+
+    // Check that the call options has a deadline and start it after starting the HTTP request
+    if (callOptions.getDeadline() != null) {
+      // Check that the deadline hasn't expired. Otherwise, we close the connection immediately
+      long remainingNanos = 0;
+      Duration durationBetween = Duration.between(Instant.now(), callOptions.getDeadline());
+      if (!durationBetween.isNegative()) {
+        remainingNanos = durationBetween.toNanos();
+      }
+      this.deadlineCancellationExecutor.schedule(
+              this::closeAndNotifyListeners, remainingNanos, TimeUnit.NANOSECONDS);
+    }
+  }
+
+  // No need to trigger the deliver() loop again as we have already closed the runnable
+  // task and added the OnCloseNotificationTask. We notify the FutureListener that the
+  // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED)
+  private void closeAndNotifyListeners() {
+    synchronized (lock) {
+      close(
+              StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+              "Deadline exceeded",
+              new HttpJsonStatusRuntimeException(
+                      StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
+              true);
+    }
+    notifyListeners();
   }
 
   @Override
