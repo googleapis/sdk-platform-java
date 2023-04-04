@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# This script creates a submodule project with all the necessary repositories and changes needed to test
+# This script creates a submodule project with all the necessary repositories (forked) and changes needed to test
 # GraalVM updates with handwritten libraries (including, pubsub, bigquery, bigtable and spanner-jdbc).
+# It serves two main purposes; first, it allows for the creation of a testing environment that can be shared with
+# teammates and second, given that the submodule leverages creation of test branches in the (forked) repositories,
+# any extra configurations necessary for making the library compatible with GraalVM can easily be sent for review as a PR
+# from the branch itself.
 # At a high-level, the script will do the following:
 # - Modifies graal-sdk version in gapic-generator-java/gax
 # - Modifies the gapic-generator-bom version in java-shared-dependencies.
@@ -9,7 +13,6 @@
 # - Updates the java-shared-config and java-shared-dependencies versions in the handwritten libraries listed.
 # - Adds gapic-generator-java, java-shared-config and handwritten libraries listed previously
 #   with the associated changes, to the submodule project.
-
 set -eo pipefail
 
 function modify_shared_config() {
