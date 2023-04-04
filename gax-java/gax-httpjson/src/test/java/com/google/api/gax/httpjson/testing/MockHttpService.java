@@ -208,6 +208,8 @@ public final class MockHttpService extends MockHttpTransport {
 
     @Override
     public MockLowLevelHttpResponse getHttpResponse(String httpMethod, String fullTargetUrl) {
+      // We use Thread.sleep to mimic a long server response. Most tests should not
+      // require a sleep and can return a response immediately.
       try {
         Thread.sleep(delay.toMillis());
       } catch (InterruptedException e) {

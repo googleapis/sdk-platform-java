@@ -182,6 +182,9 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     }
   }
 
+  // We do not need to trigger the deliver() loop again as we have already closed
+  // the runnable task and added the OnCloseNotificationTask. We can notify the
+  // FutureListener that the there is an exception (DEADLINE_EXCEEDED)
   private void closeAndNotifyListeners() {
     synchronized (lock) {
       close(

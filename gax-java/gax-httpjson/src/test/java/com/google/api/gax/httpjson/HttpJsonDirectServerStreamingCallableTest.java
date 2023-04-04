@@ -34,6 +34,7 @@ import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
 import com.google.api.gax.httpjson.testing.MockHttpService;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
@@ -65,6 +66,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class HttpJsonDirectServerStreamingCallableTest {
@@ -144,7 +146,9 @@ public class HttpJsonDirectServerStreamingCallableTest {
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
-            .setDefaultCallContext(HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT))
+            .setDefaultCallContext(
+                HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
+                    .withTimeout(Duration.ofSeconds(3)))
             .build();
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
     streamingCallable =
@@ -324,6 +328,26 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
     Money expected = Money.newBuilder().setCurrencyCode("USD").setUnits(127).build();
     Truth.assertThat(responseData).containsExactly(expected);
+  }
+
+  // This test ensures that the server-side streaming does not exceed the timeout value
+  @Test
+  public void testDeadlineExceededServerStreaming() throws InterruptedException {
+    MOCK_SERVICE.addResponse(
+        new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE}, Duration.ofSeconds(5));
+    Color request = Color.newBuilder().setRed(0.5f).build();
+    CountDownLatch latch = new CountDownLatch(1);
+    MoneyObserver moneyObserver = new MoneyObserver(false, latch);
+
+    streamingCallable.call(request, moneyObserver);
+
+    moneyObserver.controller.request(2);
+    // Set the latch's await time to above the context's timeout value to ensure that
+    // the latch has been released.
+    Truth.assertThat(latch.await(5000, TimeUnit.MILLISECONDS)).isTrue();
+
+    Truth.assertThat(moneyObserver.error).isInstanceOf(DeadlineExceededException.class);
+    Truth.assertThat(moneyObserver.error).hasMessageThat().isEqualTo("Deadline exceeded");
   }
 
   static class MoneyObserver extends StateCheckingResponseObserver<Money> {
