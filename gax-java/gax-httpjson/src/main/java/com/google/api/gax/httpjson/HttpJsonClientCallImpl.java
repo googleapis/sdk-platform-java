@@ -178,11 +178,11 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         remainingNanos = durationBetween.toNanos();
       }
       this.deadlineCancellationExecutor.schedule(
-          this::closeAndDeliver, remainingNanos, TimeUnit.NANOSECONDS);
+          this::closeAndNotifyListeners, remainingNanos, TimeUnit.NANOSECONDS);
     }
   }
 
-  private void closeAndDeliver() {
+  private void closeAndNotifyListeners() {
     synchronized (lock) {
       close(
           StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
@@ -191,7 +191,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
               StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
           true);
     }
-    deliver();
+    notifyListeners();
   }
 
   @Override

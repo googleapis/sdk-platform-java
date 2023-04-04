@@ -46,6 +46,7 @@ import com.google.common.collect.Multimap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import org.threeten.bp.Duration;
 
 /**
  * Mocks an HTTPTransport. Expected responses and exceptions can be added to a queue from which this
@@ -85,6 +86,11 @@ public final class MockHttpService extends MockHttpTransport {
   /** Add an ApiMessage to the response queue. */
   public synchronized void addResponse(Object response) {
     responseHandlers.add(new MessageResponseFactory(endpoint, serviceMethodDescriptors, response));
+  }
+
+  public synchronized void addResponse(Object response, Duration delay) {
+    responseHandlers.add(
+        new MessageResponseFactory(endpoint, serviceMethodDescriptors, response, delay));
   }
 
   /** Add an expected null response (empty HTTP response body) with a custom status code. */
@@ -182,16 +188,31 @@ public final class MockHttpService extends MockHttpTransport {
     private final List<ApiMethodDescriptor> serviceMethodDescriptors;
     private final Object response;
     private final String endpoint;
+    private final Duration delay;
 
     public MessageResponseFactory(
         String endpoint, List<ApiMethodDescriptor> serviceMethodDescriptors, Object response) {
+      this(endpoint, serviceMethodDescriptors, response, Duration.ofNanos(0));
+    }
+
+    public MessageResponseFactory(
+        String endpoint,
+        List<ApiMethodDescriptor> serviceMethodDescriptors,
+        Object response,
+        Duration delay) {
       this.endpoint = endpoint;
       this.serviceMethodDescriptors = ImmutableList.copyOf(serviceMethodDescriptors);
       this.response = response;
+      this.delay = delay;
     }
 
     @Override
     public MockLowLevelHttpResponse getHttpResponse(String httpMethod, String fullTargetUrl) {
+      try {
+        Thread.sleep(delay.toMillis());
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
       MockLowLevelHttpResponse httpResponse = new MockLowLevelHttpResponse();
 
       String relativePath = getRelativePath(fullTargetUrl);

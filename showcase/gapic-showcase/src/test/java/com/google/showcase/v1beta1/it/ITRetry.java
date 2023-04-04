@@ -74,19 +74,13 @@ public class ITRetry {
   public void testGRPC_throwsDeadlineExceededException() {
     // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for
     // this test
-    int delayInSeconds = 20;
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_Delay"))
+            .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(10).build())
+            .build();
     DeadlineExceededException exception =
-        assertThrows(
-            DeadlineExceededException.class,
-            () ->
-                grpcClient.block(
-                    BlockRequest.newBuilder()
-                        .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_Delay"))
-                        .setResponseDelay(
-                            com.google.protobuf.Duration.newBuilder()
-                                .setSeconds(delayInSeconds)
-                                .build())
-                        .build()));
+        assertThrows(DeadlineExceededException.class, () -> grpcClient.block(blockRequest));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
   }
 
@@ -94,20 +88,13 @@ public class ITRetry {
   public void testHttpJson_throwsDeadlineExceededException() {
     // Default timeout for UnaryCall is 5 seconds -- We want to ensure a long enough delay for
     // this test
-    int delayInSeconds = 20;
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_Delay"))
+            .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(10).build())
+            .build();
     DeadlineExceededException exception =
-        assertThrows(
-            DeadlineExceededException.class,
-            () ->
-                httpJsonClient.block(
-                    BlockRequest.newBuilder()
-                        .setSuccess(
-                            BlockResponse.newBuilder().setContent("httpjsonBlockContent_Delay"))
-                        .setResponseDelay(
-                            com.google.protobuf.Duration.newBuilder()
-                                .setSeconds(delayInSeconds)
-                                .build())
-                        .build()));
+        assertThrows(DeadlineExceededException.class, () -> httpJsonClient.block(blockRequest));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
   }
 }
