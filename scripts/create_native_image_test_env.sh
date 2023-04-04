@@ -50,6 +50,12 @@ if [ -z "$ORGANIZATION" ]; then
   exit 1
 fi
 
+# This script assumes that you've already created a new github repository.
+if [ ! -d ".git" ]; then
+  echo "Please make sure that you are running this script from a new github repository. You may need to call 'git init'"
+  exit 1
+fi
+
 GRAALVM_BRANCH="${GRAALVM_VERSION}_update"
 
 ## Round 1: Add gapic-generator-java and update graal-sdk version in GAX.
