@@ -32,6 +32,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.google.common.truth.Truth.assertThat;
+
 public class ITBidiStreaming {
 
   private EchoClient grpcClient;
@@ -65,7 +67,7 @@ public class ITBidiStreaming {
 
     // then
     List<String> actual = responseObserver.getFuture().get();
-    Truth.assertThat(actual).containsExactlyElementsIn(expected);
+    assertThat(actual).containsExactlyElementsIn(expected).inOrder();
   }
 
   private static class TestResponseObserver implements ResponseObserver<EchoResponse> {
