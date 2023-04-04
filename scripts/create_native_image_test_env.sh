@@ -52,7 +52,7 @@ fi
 
 # This script assumes that you've already created a new github repository.
 if [ ! -d ".git" ]; then
-  echo "Please make sure that you are running this script from a new github repository. You may need to call 'git init'"
+  echo "Missing '.git' file. Please make sure that you are running this script from a new github repository."
   exit 1
 fi
 
