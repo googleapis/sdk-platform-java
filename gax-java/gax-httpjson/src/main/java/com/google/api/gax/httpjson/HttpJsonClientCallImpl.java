@@ -169,26 +169,29 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       this.listener = responseListener;
       this.requestHeaders = requestHeaders;
 
-      // Check that the deadline hasn't expired. Otherwise, we close the connection immediately
-      long remainingNanos = 0;
-      Duration durationBetween = Duration.between(Instant.now(), callOptions.getDeadline());
-      if (!durationBetween.isNegative()) {
-        remainingNanos = durationBetween.toNanos();
+      // Check that the call options has a deadline
+      if (callOptions.getDeadline() != null) {
+        // Check that the deadline hasn't expired. Otherwise, we close the connection immediately
+        long remainingNanos = 0;
+        Duration durationBetween = Duration.between(Instant.now(), callOptions.getDeadline());
+        if (!durationBetween.isNegative()) {
+          remainingNanos = durationBetween.toNanos();
+        }
+        this.deadlineCancellationExecutor.schedule(
+            () -> {
+              close(
+                  StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+                  "Deadline exceeded",
+                  new HttpJsonStatusRuntimeException(
+                      StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+                      "Deadline exceeded",
+                      null),
+                  true);
+              deliver();
+            },
+            remainingNanos,
+            TimeUnit.NANOSECONDS);
       }
-      this.deadlineCancellationExecutor.schedule(
-          () -> {
-            close(
-                StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
-                "Deadline exceeded",
-                new HttpJsonStatusRuntimeException(
-                    StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
-                    "Deadline exceeded",
-                    null),
-                true);
-            deliver();
-          },
-          remainingNanos,
-          TimeUnit.NANOSECONDS);
     }
   }
 

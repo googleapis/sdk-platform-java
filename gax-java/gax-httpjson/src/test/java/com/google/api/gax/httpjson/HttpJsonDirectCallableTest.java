@@ -167,7 +167,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     Field request = createTestMessage(2);
     Field expectedResponse = createTestMessage(2);
@@ -199,7 +202,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     Field request = createTestMessage(2);
     Field expectedResponse = createTestMessage(2);
@@ -228,7 +234,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     ApiException exception =
         ApiExceptionFactory.createException(
@@ -257,7 +266,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     MOCK_SERVICE.addNullResponse();
 
@@ -283,7 +295,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
     MOCK_SERVICE.addNullResponse(400);
 
     try {
