@@ -32,6 +32,7 @@ public class TestClientInitializer {
                                 EchoSettings.defaultGrpcTransportProviderBuilder()
                                         .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                                         .build())
+
                         .build();
         return EchoClient.create(grpcEchoSettings);
     }
