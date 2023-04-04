@@ -455,7 +455,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           "retry_policy_1_codes",
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
-                  StatusCode.Code.UNAVAILABLE, StatusCode.Code.UNKNOWN, StatusCode.Code.DEADLINE_EXCEEDED)));
+                  StatusCode.Code.UNAVAILABLE, StatusCode.Code.UNKNOWN)));
       definitions.put(
           "no_retry_0_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
       RETRYABLE_CODE_DEFINITIONS = definitions.build();
@@ -471,10 +471,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               .setInitialRetryDelay(Duration.ofMillis(100L))
               .setRetryDelayMultiplier(2.0)
               .setMaxRetryDelay(Duration.ofMillis(3000L))
-              .setInitialRpcTimeout(Duration.ofMillis(5000L))
+              .setInitialRpcTimeout(Duration.ofMillis(10000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(5000L))
-              .setTotalTimeout(Duration.ofMillis(25000L))
+              .setMaxRpcTimeout(Duration.ofMillis(10000L))
+              .setTotalTimeout(Duration.ofMillis(10000L))
               .build();
       definitions.put("retry_policy_1_params", settings);
       settings =
@@ -601,8 +601,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       builder
           .blockSettings()
-          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
-          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
       builder
           .waitOperationSettings()
