@@ -126,7 +126,7 @@ public final class ApiFutures {
             exceptionType,
             new ApiFunctionToGuavaFunction<X, V>(callback),
             executor);
-    return new ListenableFutureToApiFuture<>(catchingFuture);
+    return new ListenableFutureToApiFuture<V>(catchingFuture);
   }
 
   /**
@@ -153,9 +153,12 @@ public final class ApiFutures {
         Futures.catchingAsync(
             listenableFutureForApiFuture(input),
             exceptionType,
-            exception -> {
-              ApiFuture<V> result = callback.apply(exception);
-              return listenableFutureForApiFuture(result);
+            new AsyncFunction<X, V>() {
+              @Override
+              public ListenableFuture<V> apply(X exception) throws Exception {
+                ApiFuture<V> result = callback.apply(exception);
+                return listenableFutureForApiFuture(result);
+              }
             },
             executor);
     return new ListenableFutureToApiFuture<>(catchingFuture);
@@ -169,7 +172,7 @@ public final class ApiFutures {
    * @see Futures#immediateFuture(Object)
    */
   public static <V> ApiFuture<V> immediateFuture(V value) {
-    return new ListenableFutureToApiFuture<>(Futures.immediateFuture(value));
+    return new ListenableFutureToApiFuture<>(Futures.<V>immediateFuture(value));
   }
 
   /**
@@ -180,7 +183,7 @@ public final class ApiFutures {
    * @see Futures#immediateFailedFuture(Throwable)
    */
   public static <V> ApiFuture<V> immediateFailedFuture(Throwable throwable) {
-    return new ListenableFutureToApiFuture<>(Futures.immediateFailedFuture(throwable));
+    return new ListenableFutureToApiFuture<V>(Futures.<V>immediateFailedFuture(throwable));
   }
 
   /**
@@ -192,7 +195,7 @@ public final class ApiFutures {
    * @see Futures#immediateCancelledFuture()
    */
   public static <V> ApiFuture<V> immediateCancelledFuture() {
-    return new ListenableFutureToApiFuture<>(Futures.immediateCancelledFuture());
+    return new ListenableFutureToApiFuture<V>(Futures.<V>immediateCancelledFuture());
   }
 
   /**
@@ -250,8 +253,11 @@ public final class ApiFutures {
         Futures.allAsList(
             Iterables.transform(
                 futures,
-                (Function<ApiFuture<? extends V>, ListenableFuture<? extends V>>)
-                    ApiFutures::listenableFutureForApiFuture)));
+                new Function<ApiFuture<? extends V>, ListenableFuture<? extends V>>() {
+                  public ListenableFuture<? extends V> apply(ApiFuture<? extends V> apiFuture) {
+                    return listenableFutureForApiFuture(apiFuture);
+                  }
+                })));
   }
 
   /**
@@ -276,8 +282,11 @@ public final class ApiFutures {
         Futures.successfulAsList(
             Iterables.transform(
                 futures,
-                (Function<ApiFuture<? extends V>, ListenableFuture<? extends V>>)
-                    ApiFutures::listenableFutureForApiFuture)));
+                new Function<ApiFuture<? extends V>, ListenableFuture<? extends V>>() {
+                  public ListenableFuture<? extends V> apply(ApiFuture<? extends V> apiFuture) {
+                    return listenableFutureForApiFuture(apiFuture);
+                  }
+                })));
   }
 
   /**
@@ -314,7 +323,12 @@ public final class ApiFutures {
     ListenableFuture<O> listenableOutput =
         Futures.transformAsync(
             listenableInput,
-            anotherInput -> listenableFutureForApiFuture(function.apply(anotherInput)),
+            new AsyncFunction<I, O>() {
+              @Override
+              public ListenableFuture<O> apply(I input) throws Exception {
+                return listenableFutureForApiFuture(function.apply(input));
+              }
+            },
             executor);
     return new ListenableFutureToApiFuture<>(listenableOutput);
   }
@@ -325,7 +339,7 @@ public final class ApiFutures {
       // prefer to use the wrapped ListenableFuture to reduce the number of layers
       listenableFuture = ((AbstractApiFuture<V>) apiFuture).getInternalListenableFuture();
     } else {
-      listenableFuture = new ApiFutureToListenableFuture<>(apiFuture);
+      listenableFuture = new ApiFutureToListenableFuture<V>(apiFuture);
     }
     return listenableFuture;
   }
