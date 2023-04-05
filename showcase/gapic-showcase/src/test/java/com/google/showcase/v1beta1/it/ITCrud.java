@@ -102,12 +102,15 @@ public class ITCrud {
     assertThat(createUserResponse.getUpdateTime()).isNotNull();
     assertThat(createUserResponse.getEnableNotifications()).isNotNull();
 
-    // Assert that only one User exists and that the user is Jane Doe
-    // Run this for both List (Pagination) and Get
+    // Assert that only one User exists
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     ListUsersResponse listUsersResponse = listUsersPagedResponse.getPage().getResponse();
     assertThat(listUsersResponse.getUsersList().size()).isEqualTo(1);
+
+    // Assert that the user that exists is Jane Doe. Check that the response
+    // from both List (pagination) and Get returns Jane Doe
+    // List Users
     User listUserResponse = listUsersResponse.getUsers(0);
     assertThat(listUserResponse).isEqualTo(createUserResponse);
 
@@ -119,7 +122,7 @@ public class ITCrud {
     UpdateUserRequest updateUserRequest =
         UpdateUserRequest.newBuilder()
             .setUser(
-                createUserResponse
+                getUserResponse
                     .toBuilder()
                     .setAge(50)
                     .setNickname("Smith")
