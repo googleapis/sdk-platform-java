@@ -75,11 +75,11 @@ public class ITCrud {
   }
 
   // This test runs through the four CRUD operations. The operations are
-  // set to build off each other. They exist inside this one test case
-  // The tests run the order of: Create -> List -> Update -> Delete
+  // set to build off each other and live inside this one test case.
+  // The tests run in the order of: Create -> List -> Update -> Delete
   @Test
   public void testHttpJson_CRUD() {
-    User userRequest =
+    User user =
         User.newBuilder()
             .setDisplayName("Jane Doe")
             .setEmail("janedoe@example.com")
@@ -88,13 +88,13 @@ public class ITCrud {
             .setAge(25)
             .build();
     User createUserResponse =
-        httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(userRequest).build());
+        httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(user).build());
 
-    assertThat(createUserResponse.getDisplayName()).isEqualTo(userRequest.getDisplayName());
-    assertThat(createUserResponse.getEmail()).isEqualTo(userRequest.getEmail());
-    assertThat(createUserResponse.getNickname()).isEqualTo(userRequest.getNickname());
-    assertThat(createUserResponse.getHeightFeet()).isEqualTo(userRequest.getHeightFeet());
-    assertThat(createUserResponse.getAge()).isEqualTo(userRequest.getAge());
+    assertThat(createUserResponse.getDisplayName()).isEqualTo(user.getDisplayName());
+    assertThat(createUserResponse.getEmail()).isEqualTo(user.getEmail());
+    assertThat(createUserResponse.getNickname()).isEqualTo(user.getNickname());
+    assertThat(createUserResponse.getHeightFeet()).isEqualTo(user.getHeightFeet());
+    assertThat(createUserResponse.getAge()).isEqualTo(user.getAge());
 
     // Assert that the server populates these fields
     assertThat(createUserResponse.getName()).isNotEmpty();
@@ -119,31 +119,34 @@ public class ITCrud {
     assertThat(getUserResponse).isEqualTo(createUserResponse);
 
     // Update multiple fields in the User. Age + Nickname are not included in the FieldMask
-    UpdateUserRequest updateUserRequest =
-        UpdateUserRequest.newBuilder()
-            .setUser(
-                getUserResponse
-                    .toBuilder()
-                    .setAge(50)
-                    .setNickname("Smith")
-                    .setEmail("janedoe@jane.com")
-                    .setHeightFeet(6.0)
-                    .setEnableNotifications(true)
-                    .build())
-            .setUpdateMask(
-                FieldMask.newBuilder()
-                    .addAllPaths(Arrays.asList("email", "height_feet", "enable_notifications"))
-                    .build())
+    User updateUser =
+        getUserResponse
+            .toBuilder()
+            .setAge(50)
+            .setNickname("Smith")
+            .setEmail("janedoe@jane.com")
+            .setHeightFeet(6.0)
+            .setEnableNotifications(true)
             .build();
-    User updateUserResponse = httpJsonClient.updateUser(updateUserRequest);
+    User updateUserResponse =
+        httpJsonClient.updateUser(
+            UpdateUserRequest.newBuilder()
+                .setUser(updateUser)
+                .setUpdateMask(
+                    FieldMask.newBuilder()
+                        .addAllPaths(Arrays.asList("email", "height_feet", "enable_notifications"))
+                        .build())
+                .build());
 
     // Assert that only the fields in the FieldMask are updated correctly
     assertThat(updateUserResponse).isNotEqualTo(getUserResponse);
     assertThat(updateUserResponse.getAge()).isEqualTo(getUserResponse.getAge());
     assertThat(updateUserResponse.getNickname()).isEqualTo(getUserResponse.getNickname());
-    assertThat(updateUserResponse.getEmail()).isEqualTo("janedoe@jane.com");
-    assertThat(updateUserResponse.getHeightFeet()).isEqualTo(6.0);
-    assertThat(updateUserResponse.getEnableNotifications()).isEqualTo(true);
+
+    assertThat(updateUserResponse.getEmail()).isEqualTo(updateUser.getEmail());
+    assertThat(updateUserResponse.getHeightFeet()).isEqualTo(updateUser.getHeightFeet());
+    assertThat(updateUserResponse.getEnableNotifications())
+        .isEqualTo(updateUser.getEnableNotifications());
 
     // Delete the User
     httpJsonClient.deleteUser(
