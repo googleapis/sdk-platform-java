@@ -69,6 +69,8 @@ public class ITCommonServiceMixins {
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =
         grpcClient.listLocations(request);
 
+    // The showcase server always returns a fixed list of locations.
+    // See https://github.com/googleapis/gapic-showcase/blob/main/server/services/locations_service.go
     ArrayList<Location> actualLocations = new ArrayList<>();
     for (Location location : locationsPagedResponse.iterateAll()) {
       actualLocations.add(location);
