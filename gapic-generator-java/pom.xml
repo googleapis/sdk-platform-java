@@ -82,7 +82,7 @@
       <id>showcase-sonar-analysis</id>
       <activation>
         <property>
-          <name>enableTestCoverage</name>
+          <name>enableShowcaseTestCoverage</name>
         </property>
       </activation>
       <properties>

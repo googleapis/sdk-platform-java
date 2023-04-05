@@ -22,7 +22,6 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcStatusCode;
-import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.rpc.Status;
@@ -50,7 +49,7 @@ public class ITUnaryCallable {
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                InstantiatingGrpcChannelProvider.newBuilder()
+                EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
             .build();
