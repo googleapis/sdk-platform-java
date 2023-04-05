@@ -77,10 +77,7 @@ public class ITCrud {
   // This test runs through the four CRUD operations. The operations
   // build off each other and all exist inside this one test case
   // The tests run the order of:
-  // 1. Create (Jane Doe)
-  // 2. List (Jane Doe has been created)
-  // 3. Update (Jane Doe has been updated)
-  // 4. Delete (Jane Doe no longer exists)
+  // Create -> List -> Update -> qDelete
   @Test
   public void testHttpJson_CRUD() {
     User userRequest =
