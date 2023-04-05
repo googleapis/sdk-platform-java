@@ -57,7 +57,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
-import org.threeten.bp.Instant;
 
 /** A runnable object that creates and executes an HTTP request. */
 class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
@@ -191,14 +190,10 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
     HttpRequest httpRequest = buildRequest(requestFactory, url, jsonHttpContent);
 
-    Instant deadline = httpJsonCallOptions.getDeadline();
-    if (deadline != null) {
-      long readTimeout = Duration.between(Instant.now(), deadline).toMillis();
-      if (httpRequest.getReadTimeout() > 0
-          && httpRequest.getReadTimeout() < readTimeout
-          && readTimeout < Integer.MAX_VALUE) {
-        httpRequest.setReadTimeout((int) readTimeout);
-      }
+    Duration timeout = httpJsonCallOptions.getTimeout();
+    if (timeout != null) {
+      long readTimeoutMs = timeout.toMillis();
+      httpRequest.setReadTimeout((int) readTimeoutMs);
     }
 
     for (Map.Entry<String, Object> entry : headers.getHeaders().entrySet()) {

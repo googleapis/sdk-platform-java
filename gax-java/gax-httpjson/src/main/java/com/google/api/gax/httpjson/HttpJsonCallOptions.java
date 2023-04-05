@@ -34,6 +34,7 @@ import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
 import javax.annotation.Nullable;
+import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
 
 /** Options for an http-json call, including deadline and credentials. */
@@ -44,6 +45,9 @@ public abstract class HttpJsonCallOptions {
 
   @Nullable
   public abstract Instant getDeadline();
+
+  @Nullable
+  public abstract Duration getTimeout();
 
   @Nullable
   public abstract Credentials getCredentials();
@@ -69,6 +73,11 @@ public abstract class HttpJsonCallOptions {
       builder.setDeadline(newDeadline);
     }
 
+    Duration newTimeout = inputOptions.getTimeout();
+    if (newTimeout != null) {
+      builder.setTimeout(newTimeout);
+    }
+
     Credentials newCredentials = inputOptions.getCredentials();
     if (newCredentials != null) {
       builder.setCredentials(newCredentials);
@@ -85,6 +94,8 @@ public abstract class HttpJsonCallOptions {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setDeadline(Instant value);
+
+    public abstract Builder setTimeout(Duration value);
 
     public abstract Builder setCredentials(Credentials value);
 

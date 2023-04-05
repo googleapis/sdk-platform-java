@@ -34,8 +34,6 @@ import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import org.threeten.bp.Instant;
 
 /**
  * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCAll} from the given call context.
@@ -50,12 +48,12 @@ class HttpJsonClientCalls {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
 
-    // Try to convert the timeout into a deadline and use it if it occurs before the actual deadline
+    // Use the context's duration instead of calculating a future deadline  with the System clock
     if (httpJsonContext.getTimeout() != null) {
-      @Nonnull Instant newDeadline = Instant.now().plus(httpJsonContext.getTimeout());
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
-      if (callOptions.getDeadline() == null || newDeadline.isBefore(callOptions.getDeadline())) {
-        callOptions = callOptions.toBuilder().setDeadline(newDeadline).build();
+      if (callOptions.getTimeout() == null
+          || httpJsonContext.getTimeout().compareTo(callOptions.getTimeout()) < 0) {
+        callOptions = callOptions.toBuilder().setTimeout(httpJsonContext.getTimeout()).build();
         httpJsonContext = httpJsonContext.withCallOptions(callOptions);
       }
     }
