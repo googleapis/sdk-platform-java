@@ -74,10 +74,9 @@ public class ITCrud {
     }
   }
 
-  // This test runs through the four CRUD operations. The operations
-  // build off each other and all exist inside this one test case
-  // The tests run the order of:
-  // Create -> List -> Update -> qDelete
+  // This test runs through the four CRUD operations. The operations are
+  // set to build off each other. They exist inside this one test case
+  // The tests run the order of: Create -> List -> Update -> Delete
   @Test
   public void testHttpJson_CRUD() {
     User userRequest =
@@ -88,9 +87,8 @@ public class ITCrud {
             .setHeightFeet(5)
             .setAge(25)
             .build();
-    CreateUserRequest createUserRequest =
-        CreateUserRequest.newBuilder().setUser(userRequest).build();
-    User createUserResponse = httpJsonClient.createUser(createUserRequest);
+    User createUserResponse =
+        httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(userRequest).build());
 
     assertThat(createUserResponse.getDisplayName()).isEqualTo(userRequest.getDisplayName());
     assertThat(createUserResponse.getEmail()).isEqualTo(userRequest.getEmail());
@@ -105,7 +103,7 @@ public class ITCrud {
     assertThat(createUserResponse.getEnableNotifications()).isNotNull();
 
     // Assert that only one User exists and that the user is Jane Doe
-    // We run this for both List (Pagination) and Get
+    // Run this for both List (Pagination) and Get
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     ListUsersResponse listUsersResponse = listUsersPagedResponse.getPage().getResponse();
@@ -117,16 +115,18 @@ public class ITCrud {
     User getUserResponse = httpJsonClient.getUser(createUserResponse.getName());
     assertThat(getUserResponse).isEqualTo(createUserResponse);
 
-    User expectedUpdatedUser =
-        createUserResponse
-            .toBuilder()
-            .setEmail("janedoe@jane.com")
-            .setHeightFeet(6.0)
-            .setEnableNotifications(true)
-            .build();
+    // Update multiple fields in the User. Age + Nickname are not included in the FieldMask
     UpdateUserRequest updateUserRequest =
         UpdateUserRequest.newBuilder()
-            .setUser(expectedUpdatedUser)
+            .setUser(
+                createUserResponse
+                    .toBuilder()
+                    .setAge(50)
+                    .setNickname("Smith")
+                    .setEmail("janedoe@jane.com")
+                    .setHeightFeet(6.0)
+                    .setEnableNotifications(true)
+                    .build())
             .setUpdateMask(
                 FieldMask.newBuilder()
                     .addAllPaths(Arrays.asList("email", "height_feet", "enable_notifications"))
@@ -134,15 +134,17 @@ public class ITCrud {
             .build();
     User updateUserResponse = httpJsonClient.updateUser(updateUserRequest);
 
-    // Assert that the fields are updated correctly
-    assertThat(updateUserResponse).isNotEqualTo(createUserResponse);
-    assertThat(updateUserResponse.getEmail()).isEqualTo(expectedUpdatedUser.getEmail());
-    assertThat(updateUserResponse.getHeightFeet()).isEqualTo(expectedUpdatedUser.getHeightFeet());
-    assertThat(updateUserResponse.getEnableNotifications())
-        .isEqualTo(expectedUpdatedUser.getEnableNotifications());
+    // Assert that only the fields in the FieldMask are updated correctly
+    assertThat(updateUserResponse).isNotEqualTo(getUserResponse);
+    assertThat(updateUserResponse.getAge()).isEqualTo(getUserResponse.getAge());
+    assertThat(updateUserResponse.getNickname()).isEqualTo(getUserResponse.getNickname());
+    assertThat(updateUserResponse.getEmail()).isEqualTo("janedoe@jane.com");
+    assertThat(updateUserResponse.getHeightFeet()).isEqualTo(6.0);
+    assertThat(updateUserResponse.getEnableNotifications()).isEqualTo(true);
 
+    // Delete the User
     httpJsonClient.deleteUser(
-        DeleteUserRequest.newBuilder().setName(createUserResponse.getName()).build());
+        DeleteUserRequest.newBuilder().setName(getUserResponse.getName()).build());
 
     listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
