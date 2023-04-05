@@ -48,7 +48,7 @@ class HttpJsonClientCalls {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
 
-    // Use the context's duration instead of calculating a future deadline  with the System clock
+    // Use the context's timeout instead of calculating a future deadline with the System clock
     if (httpJsonContext.getTimeout() != null) {
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
       if (callOptions.getTimeout() == null
