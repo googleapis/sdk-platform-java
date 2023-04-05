@@ -9,7 +9,7 @@ on:
 # compilation.
 name: downstream
 env:
-  SHOWCASE_VERSION: 0.26.0
+  SHOWCASE_VERSION: 0.26.1
 jobs:
   # GraalVM job ensures the compatibility of GraaVM version
   graalvm:
