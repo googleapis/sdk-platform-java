@@ -46,6 +46,11 @@ public final class ApiFutures {
   private ApiFutures() {}
 
   /**
+   * Registers separate success and failure callbacks to be run when the {@link ApiFuture}'s
+   * computation is complete or, if the computation is already complete, immediately.
+   *
+   * @param future The future attach the callback to
+   * @param callback The callback to invoke when future is completed
    * @deprecated Use {@linkplain #addCallback(ApiFuture, ApiFutureCallback, Executor) the overload
    *     that requires an executor}. For identical behavior, pass {@link
    *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
@@ -64,9 +69,9 @@ public final class ApiFutures {
    * <p>Note that this method is a delegate of {@link Futures#addCallback(ListenableFuture,
    * FutureCallback, Executor)}.
    *
-   * @param future The future attach the callback to.
-   * @param callback The callback to invoke when future is completed.
-   * @param executor The executor to run callback when the future completes.
+   * @param future The future attach the callback to
+   * @param callback The callback to invoke when future is completed
+   * @param executor The executor to run callback when the future completes
    * @see Futures#addCallback(ListenableFuture, FutureCallback, Executor)
    */
   public static <V> void addCallback(
@@ -88,6 +93,15 @@ public final class ApiFutures {
   }
 
   /**
+   * Returns an {@link ApiFuture} whose result is taken from the given primary input or, if the
+   * primary input fails with the given exceptionType, from the result provided by the callback.
+   *
+   * @param input The primary input {@code ApiFuture}
+   * @param exceptionType The exception type that triggers use of {@code fallback}
+   * @param callback The {@link ApiFunction} to be called if input fails with the expected exception
+   *     type
+   * @return A future whose result is taken either from the given {@code input} or by the {@code
+   *     callback}
    * @deprecated Use {@linkplain #catching(ApiFuture, Class, ApiFunction, Executor) the overload
    *     that requires an executor}. For identical behavior, pass {@link
    *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
@@ -102,17 +116,19 @@ public final class ApiFutures {
   }
 
   /**
-   * Returns a {@link ApiFuture} whose result is taken from the given primary input or, if the
-   * primary input fails with the given exceptionType, from the result provided by the fallback.
+   * Returns an {@link ApiFuture} whose result is taken from the given primary input or, if the
+   * primary input fails with the given exceptionType, from the result provided by the callback.
    *
    * <p>Note that this method is a delegate of {@link Futures#catching(ListenableFuture, Class,
    * Function, Executor)}.
    *
    * @param input The primary input {@code ApiFuture}
-   * @param exceptionType The exception type that triggers use of {@code fallback}.
+   * @param exceptionType The exception type that triggers use of {@code fallback}
    * @param callback The {@link ApiFunction} to be called if input fails with the expected exception
-   *     type.
+   *     type
    * @param executor The executor that runs {@code fallback} if {@code input} fails
+   * @return A future whose result is taken either from the given {@code input} or by the {@code
+   *     callback}
    * @see Futures#catching(ListenableFuture, Class, Function, Executor)
    */
   public static <V, X extends Throwable> ApiFuture<V> catching(
@@ -131,7 +147,7 @@ public final class ApiFutures {
 
   /**
    * Returns a {@link ApiFuture} whose result is taken from the given primary input or, if the
-   * primary input fails with the given exceptionType, from the result provided by the fallback.
+   * primary input fails with the given exceptionType, from the result provided by the callback.
    *
    * <p>Note that this method is a delegate of {@link Futures#catchingAsync(ListenableFuture, Class,
    * AsyncFunction, Executor)}
@@ -141,6 +157,8 @@ public final class ApiFutures {
    * @param callback The {@link ApiAsyncFunction} to be called if {@code input} fails with the
    *     expected * exception type.
    * @param executor The executor that runs {@code fallback} if {@code input} fails
+   * @return A future whose result is taken either from the given {@code input} or by the {@code
+   *     callback}
    * @see Futures#catchingAsync(ListenableFuture, Class, AsyncFunction, Executor)
    */
   @BetaApi
@@ -169,6 +187,8 @@ public final class ApiFutures {
    *
    * <p>Note that this method is a delegate of {@link Futures#immediateFuture(Object)}.
    *
+   * @param value The value set to the {@code ApiFuture} upon construction
+   * @return A future that holds {@code value}
    * @see Futures#immediateFuture(Object)
    */
   public static <V> ApiFuture<V> immediateFuture(V value) {
@@ -180,6 +200,8 @@ public final class ApiFutures {
    *
    * <p>Note that this method is a delegate of {@link Futures#immediateFailedFuture(Throwable)}.
    *
+   * @param throwable The exception set to the {@code ApiFuture} upon construction
+   * @return A future that holds an exception
    * @see Futures#immediateFailedFuture(Throwable)
    */
   public static <V> ApiFuture<V> immediateFailedFuture(Throwable throwable) {
@@ -192,6 +214,7 @@ public final class ApiFutures {
    *
    * <p>Note that this method is a delegate of {@link Futures#immediateCancelledFuture()}.
    *
+   * @return A cancelled future
    * @see Futures#immediateCancelledFuture()
    */
   public static <V> ApiFuture<V> immediateCancelledFuture() {
@@ -199,6 +222,13 @@ public final class ApiFutures {
   }
 
   /**
+   * Returns a new {@code ApiFuture} whose result is derived from the result of the given {@code
+   * ApiFuture}.
+   *
+   * @param input The future to transform
+   * @param function A Function to transform the results of the provided future to the results of
+   *     the returned future
+   * @return A future that holds result of the transformation
    * @deprecated Use {@linkplain #transform(ApiFuture, ApiFunction, Executor) the overload that
    *     requires an executor}. For identical behavior, pass {@link
    *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
@@ -221,7 +251,7 @@ public final class ApiFutures {
    * @param function A Function to transform the results of the provided future to the results of
    *     the returned future.
    * @param executor Executor to run the function in.
-   * @return A future that holds result of the transformation.
+   * @return A future that holds result of the transformation
    * @see Futures#transform(ListenableFuture, Function, Executor)
    */
   public static <V, X> ApiFuture<X> transform(
@@ -290,6 +320,15 @@ public final class ApiFutures {
   }
 
   /**
+   * Returns a new {@code ApiFuture} whose result is asynchronously derived from the result of the
+   * given {@code ApiFuture}. If the given {@code Future} fails, the returned {@code ApiFuture}
+   * fails with the same exception (and the function is not invoked).
+   *
+   * @param input The future to transform
+   * @param function A function to transform the result of the input future to the result of the
+   *     output future
+   * @return A future that holds result of the function (if the input succeeded) or the original
+   *     input's failure (if not)
    * @deprecated Use {@linkplain #transformAsync(ApiFuture, ApiAsyncFunction, Executor)}, the
    *     overload that requires an executor. For identical behavior, pass {@link
    *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
